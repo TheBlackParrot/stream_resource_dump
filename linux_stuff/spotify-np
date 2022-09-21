@@ -1,0 +1,38 @@
+#!/bin/bash
+
+_NP_ROOT="/tmp/now_playing"
+mkdir -p "$_NP_ROOT"
+
+ART_FILE="$_NP_ROOT/art.jpg"
+ID_FILE="$_NP_ROOT/id.jpg"
+TITLE_FILE="$_NP_ROOT/title.txt"
+ARTIST_FILE="$_NP_ROOT/artist.txt"
+
+TRACKID_FIFO="$_NP_ROOT/trackid_fifo"
+
+if ! [ -p "$TRACKID_FIFO" ]; then
+	mkfifo "$TRACKID_FIFO"
+fi
+
+function handle_int() {
+	kill $TRACKID_PID
+	exit
+}
+trap handle_int INT
+
+playerctl -p spotify metadata --format '{{ mpris:trackid }}' --follow > $TRACKID_FIFO &
+TRACKID_PID=$!
+
+while read -r -u 3 NP_TRACKID; do
+	NP_ART=$(playerctl -p spotify metadata --format '{{ mpris:artUrl }}')
+	NP_TITLE=$(playerctl -p spotify metadata --format '{{ title }}')
+	NP_ARTIST=$(playerctl -p spotify metadata --format '{{ artist }}')
+	NP_ID=$(playerctl -p spotify metadata --format '{{ mpris:trackid }}')
+
+   	curl "$NP_ART" -o "$ART_FILE"
+   	curl "https://scannables.scdn.co/uri/plain/jpeg/FFFFFF/black/640/$NP_ID" -o "$ID_FILE"
+   	echo -ne "$NP_TITLE" > "$TITLE_FILE"
+   	echo -ne "$NP_ARTIST" > "$ARTIST_FILE"
+done 3<"$TRACKID_FIFO"
+
+wait

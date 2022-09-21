@@ -1,0 +1,1 @@
+I use an in-development version of Camera2. **These configs will not work with versions 0.6.95 and prior of Camera2.** If you want to use these configs, you must compile Camera2 from its GitHub repository at this time.

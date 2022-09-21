@@ -1,0 +1,44 @@
+{
+  "disableGlobalParticles": true,
+  "staticLightsToggle": false,
+  "menuLightColor": {
+    "r": 0.0,
+    "g": 0.0,
+    "b": 0.0,
+    "a": 0.0
+  },
+  "bombColor": {
+    "r": 0.7406738,
+    "g": 0.7406738,
+    "b": 0.7406738,
+    "a": 1.0
+  },
+  "wallBorderColor": {
+    "r": 1.0,
+    "g": 1.0,
+    "b": 1.0,
+    "a": 1.0
+  },
+  "disableDebris": false,
+  "disableSliceScore": true,
+  "transparentWalls": false,
+  "disableComboBreakEffect": false,
+  "disableWallRumbleAndParticles": true,
+  "disableSaberClash": true,
+  "disableBurnMarks": false,
+  "disableCampaignFireworks": true,
+  "disableCutParticles": false,
+  "disableBombExplosion": false,
+  "disableHealthWarning": false,
+  "basegameFulltextSearch": false,
+  "keepGameSettingsOnCancel": false,
+  "scrollSpeedMultiplier": 1.0,
+  "disableFakeWallBloom": false,
+  "disableBeatLines": false,
+  "disableCameraNoise": true,
+  "disableRawScore": true,
+  "enableCustomRumble": true,
+  "cutRumbleStrength": 0.4,
+  "rumbleChainElementsStrength": 0.3,
+  "rumbleArcsStrength": 0.0
+}

@@ -1,0 +1,19 @@
+{
+  "menuPlatform": "Disabled",
+  "gamePlatform": "Disabled",
+  "coloredNotes": false,
+  "onlyLevitatingNotes": true,
+  "customNotes": "Default",
+  "moreNotes": 200,
+  "menuEnvironment": "Glass Desert",
+  "musicFile": "Disabled",
+  "musicVolume": 0.2,
+  "musicFileForClear": "Disabled",
+  "musicVolumeForClear": 0.35,
+  "musicFileForFail": "Disabled",
+  "musicVolumeForFail": 0.2,
+  "musicFileForHighScore": "Default",
+  "musicVolumeForHighScore": 0.5,
+  "easterEgg": 0,
+  "nko": false
+}

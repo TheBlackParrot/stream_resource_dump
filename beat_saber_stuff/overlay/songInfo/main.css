@@ -1,0 +1,299 @@
+#artistWrap { color: var(--vibrantColor); }
+#mapperWrap { color: var(--vibrantColor); }
+#subtitle { color: var(--lightestColor); }
+#codeWrap { background-color: var(--darkestColor); }
+#progressWrap { background-color: var(--darkestColor); }
+#progress { background-color: var(--lightestColor); }
+
+body {
+	background-color: #444;
+	color: #fff;
+
+	font-family: var(--fontFamily);
+	transition: .5s;
+}
+
+.hide {
+	transition-timing-function: ease-in-out;
+	transform: translateY(var(--hideDirection));
+	opacity: 0;
+	transition: .5s;
+	filter: blur(50px);
+}
+
+.pause {
+	filter: grayscale(100%);
+}
+
+#artWrap, #artBehindWrap, #titleWrap, #artistWrap, #codeWrap, #shadowTrickery, #elapsedWrap, #durationWrap, #progressWrap, #mapperWrap, #aBB1, #aBB2, #statsWrap {
+	position: absolute;
+}
+
+#titleWrap, #artistWrap, #mapperWrap, #elapsedWrap, #durationWrap, #progressWrap, #statsWrap {
+	filter: var(--outlineFilter) var(--dropShadowFilter);
+}
+
+#artWrap {
+	z-index: 4;
+	top: 32px;
+	left: 32px;
+	width: 150px;
+	height: 150px;
+}
+
+#artBehindWrap {
+	z-index: 1;
+	top: 29px;
+	left: 29px;
+	width: 156px;
+	height: 156px;
+	filter: brightness(200%);
+}
+
+#aBB1 {
+	z-index: 2;
+	top: 29px;
+	left: 29px;
+	width: 156px;
+	height: 156px;
+    background-color: rgba(255, 255, 255);
+    mix-blend-mode: soft-light;
+}
+
+#aBB2 {
+	z-index: 3;
+	top: 29px;
+	left: 29px;
+	width: 156px;
+	height: 156px;
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+#art, #artBehind {
+	width: 100%;
+	height: 100%;
+}
+
+#titleWrap, #artistWrap, #mapperWrap, #statsWrap {
+	white-space: nowrap;
+	overflow: hidden;
+	height: 100px;
+}
+#title, #mapper, #artist, #subtitle {
+	overflow-x: none;
+	white-space: nowrap;
+}
+
+#titleWrap {
+	top: 38px;
+	left: 210px;
+}
+
+#title {
+	font-weight: var(--titleWeight);
+	font-size: 45pt;
+}
+
+#subtitle {
+	font-weight: var(--subtitleWeight);
+	font-size: 32pt;
+	margin-left: 12px;
+}
+
+#artistWrap, #mapperWrap, #statsWrap {
+	top: 115px;
+	left: 210px;
+}
+
+#artist, #mapper {
+	font-weight: var(--artistWeight);
+	font-size: 32pt;
+}
+
+#mapperPreText {
+	filter: brightness(67%) contrast(125%);
+	font-size: 24pt;
+	margin-right: 16px;
+	float: left;
+	line-height: 48px;
+	font-weight: var(--artistWeight);
+}
+
+#codeWrap {
+	width: 156px;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	top: 185px;
+	left: 29px;
+	font-size: 20pt;
+	font-weight: var(--codeWeight);
+	transition: .5s;
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
+}
+
+#shadowTrickery {
+	top: 29px;
+	left: 29px;
+	width: 156px;
+	height: 196px;
+	z-index: 0;
+	box-shadow: 0px 12px 14px -7px var(--shadowColor);
+}
+
+#elapsedWrap, #durationWrap {
+	height: 40px;
+	line-height: 40px;
+	font-size: 20pt;
+	font-weight: var(--timeWeight);
+	color: #fff;
+	top: 185px;
+}
+
+#elapsedWrap {
+	left: 210px;
+}
+
+#durationWrap {
+	left: calc(var(--progressBarWidth) + 315px);
+}
+
+#progressWrap, #progress {
+	border-radius: 8px;
+}
+
+#progressWrap {
+	top: 200px;
+	left: 290px;
+	height: 10px;
+	width: var(--progressBarWidth);
+}
+
+#progress {
+	height: 100%;
+	transition: .2s;
+}
+
+#artBGWrap {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 1300px;
+	height: 350px;
+	-webkit-filter: blur(var(--backgroundBlurAmount));
+	z-index: 0;
+	opacity: var(--backgroundOpacity);
+}
+
+#artBG {
+	position: fixed;
+	top: -48px;
+	left: -200px;
+	width: 1500px;
+	height: 410px;
+	background-image: url(../test.jpg);
+	background-size: cover;
+	background-position: left;
+	-webkit-mask-mode: alpha;
+	-webkit-mask-image: -webkit-radial-gradient(0% 0%, 90% 75%, rgba(0, 0, 0, 1) 90%, rgba(0, 0, 0, 0) 115%);
+}
+
+#diffWrap {
+	width: 156px;
+	height: 40px;
+	text-align: center;
+	line-height: 0px;
+	display: inline-block;
+}
+
+#mode {
+	width: 32px;
+	height: 32px;
+	position: relative;
+	top: -4px;
+}
+
+#difficulty {
+	line-height: 40px;
+	vertical-align: bottom;
+	margin-left: 2px;
+}
+
+#statsWrap {
+	z-index: 5;
+	font-size: 20pt;
+	font-weight: var(--statsWeight);
+	white-space: nowrap;
+	font-size: 0pt;
+	line-height: 40px;
+	display: flex;
+}
+
+#rankedWrap, #bloqsWrap, #npsWrap, #njsWrap, #tempoWrap, .statIcon, .statValue {
+	display: inline-block;
+	white-space: nowrap;
+	font-size: 20pt;
+}
+#rankedWrap, #bloqsWrap, #npsWrap, #njsWrap, #tempoWrap {
+	display: block;
+	line-height: 60px;
+	height: 36px;
+}
+.statColumn {
+	margin-right: 32px;
+	height: 60px;
+	line-height: 60px;
+	vertical-align: middle;
+	flex-direction: row;
+}
+.statIcon, .statValue {
+	height: 24px;
+	line-height: 24px;
+	margin: 0;
+	float: left;
+}
+.statIcon {
+	width: 32px;
+	text-align: left;
+	font-size: 16pt;
+}
+.statIcon img {
+	width: 24px;
+	height: 24px;
+}
+
+#nps:after {
+	content: "NPS";
+	font-size: 14pt;
+	margin-left: 5px;
+	color: var(--vibrantColor);
+}
+
+#njs:after {
+	content: "NJS";
+	font-size: 14pt;
+	margin-left: 5px;
+	color: var(--vibrantColor);
+}
+
+#tempo:after {
+	content: "BPM";
+	font-size: 14pt;
+	margin-left: 5px;
+	color: var(--vibrantColor);
+}
+
+#rankedWrap {
+	font-size: 32pt;
+}
+
+#avatar {
+	border-radius: 50%;
+	height: 48px;
+	width: 48px;
+	line-height: 0px;
+	float: left;
+	margin-right: 12px;
+	background-color: #000;
+}

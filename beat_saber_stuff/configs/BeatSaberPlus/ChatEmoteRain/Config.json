@@ -1,0 +1,67 @@
+﻿{
+  "Enabled": true,
+  "EnableMenu": true,
+  "MenuSize": 0.6,
+  "MenuSpeed": 2.0,
+  "EnableSong": true,
+  "SongSize": 0.6,
+  "SongSpeed": 2.0,
+  "EmoteDelay": 8,
+  "SubRain": true,
+  "SubRainEmoteCount": 20,
+  "MenuEmitters": [
+    {
+      "Enabled": true,
+      "Name": "Top",
+      "Size": 3.0,
+      "Speed": 0.4,
+      "PosX": 4.100001,
+      "PosY": -0.0999999046,
+      "PosZ": 6.90000057,
+      "RotX": 270.0,
+      "RotY": 29.0,
+      "RotZ": 0.0,
+      "SizeX": 9.0,
+      "SizeY": 4.5,
+      "SizeZ": 0.299999982
+    }
+  ],
+  "SongEmitters": [
+    {
+      "Enabled": true,
+      "Name": "LeftSide",
+      "Size": 1.80000007,
+      "Speed": 0.2,
+      "PosX": -5.49999952,
+      "PosY": -0.7000005,
+      "PosZ": 9.5,
+      "RotX": 270.0,
+      "RotY": 118.0,
+      "RotZ": 0.0,
+      "SizeX": 6.0,
+      "SizeY": 4.5,
+      "SizeZ": 4.39999962
+    },
+    {
+      "Enabled": true,
+      "Name": "RightSide",
+      "Size": 1.80000007,
+      "Speed": 0.2,
+      "PosX": 5.49999952,
+      "PosY": -0.7000005,
+      "PosZ": 9.5,
+      "RotX": 270.0,
+      "RotY": 241.999985,
+      "RotZ": 0.0,
+      "SizeX": 6.0,
+      "SizeY": 4.5,
+      "SizeZ": 4.39999962
+    }
+  ],
+  "ChatCommands": {
+    "ModeratorPower": false,
+    "VIPPower": false,
+    "SubscriberPower": false,
+    "UserPower": false
+  }
+}

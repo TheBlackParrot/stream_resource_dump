@@ -1,0 +1,103 @@
+{
+  "Version": "3.0.13",
+  "Clock": {
+    "Enabled": true,
+    "ShowInGame": false,
+    "Format": "HH:mm",
+    "Culture": "",
+    "Font": "Assistant",
+    "Size": 16.0,
+    "Opacity": 1.0,
+    "Color": "#FFFFFF",
+    "Position": {
+      "x": -2.299999,
+      "y": 3.15,
+      "z": 3.8
+    },
+    "Rotation": {
+      "x": 340.0,
+      "y": 330.0,
+      "z": 0.0
+    },
+    "Formats": [
+      "h:mm tt",
+      "h:mm:ss tt",
+      "HH:mm",
+      "HH:mm:ss",
+      "dddd",
+      "MMMM dd, yyyy | h:mm tt",
+      "e",
+      "e",
+      "e",
+      "e",
+      "%H %m",
+      "%H %m",
+      "%H %m",
+      "HH MM",
+      "HH MM"
+    ]
+  },
+  "Timer": {
+    "Enabled": false,
+    "NotifyInGame": true
+  },
+  "Breaktime": {
+    "Enabled": false,
+    "RandomizeMode": "None",
+    "MinimumBreakTime": 4.0,
+    "SelectedProfile": "osu!",
+    "Profiles": [
+      {
+        "Name": "Default",
+        "ImagePath": "Default.png",
+        "AudioPath": "Default.wav",
+        "ImageOpacity": 1.0,
+        "ShowText": true,
+        "TextColor": "#FFFFFF",
+        "ImageColor": "#FFFFFF",
+        "Animation": "FadeIn"
+      },
+      {
+        "Name": "osu!",
+        "ImagePath": "osu!.png",
+        "AudioPath": "osu!.wav",
+        "ImageOpacity": 1.0,
+        "ShowText": true,
+        "TextColor": "#FFFFFF",
+        "ImageColor": "#FFFFFF",
+        "Animation": "FadeIn"
+      },
+      {
+        "Name": "Bobbie",
+        "ImagePath": "Bobbie.png",
+        "AudioPath": "Bobbie.wav",
+        "ImageOpacity": 1.0,
+        "ShowText": true,
+        "TextColor": "#FFFFFF",
+        "ImageColor": "#FFFFFF",
+        "Animation": "None"
+      }
+    ],
+    "FirstLaunch": false
+  },
+  "Volume": {
+    "GoodCuts": 1.0,
+    "BadCuts": 0.7499999,
+    "Music": 0.5000001,
+    "SongPreview": 0.5,
+    "MenuBackground": 1.0,
+    "Fireworks": 0.0
+  },
+  "Misc": {
+    "BPMFixEnabled": false,
+    "ButtonLockMenu": true,
+    "ButtonLockRestart": true,
+    "ButtonLockContinue": true
+  },
+  "Optidra": {
+    "Enabled": false,
+    "InitialNotePoolSize": 25,
+    "InitialBombPoolSize": 25,
+    "InitialWallPoolSize": 25
+  }
+}

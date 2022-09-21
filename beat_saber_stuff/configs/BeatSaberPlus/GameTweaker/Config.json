@@ -1,0 +1,69 @@
+﻿{
+  "Enabled": true,
+  "RemoveDebris": false,
+  "RemoveAllCutParticles": false,
+  "RemoveObstacleParticles": true,
+  "RemoveSaberBurnMarks": true,
+  "RemoveSaberBurnMarkSparkles": true,
+  "RemoveSaberClashEffects": true,
+  "RemoveWorldParticles": true,
+  "Environment": {
+    "RemoveMusicBandLogo": true,
+    "RemoveFullComboLossAnimation": true,
+    "NoFake360HUD": false
+  },
+  "LevelSelection": {
+    "RemoveBaseGameFilterButton": true,
+    "DeleteSongButton": true,
+    "DeleteSongBrowserTrashcan": true,
+    "HighlightEnabled": false,
+    "HighlightPlayed": {
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "HighlightAllPlayed": {
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    }
+  },
+  "PlayerOptions": {
+    "JumpDurationIncrement": 1,
+    "ReorderPlayerSettings": true,
+    "MergeLightPressetOptions": true,
+    "OverrideLightIntensityOption": true,
+    "OverrideLightIntensity": 0.4999999
+  },
+  "MainMenu": {
+    "OverrideMenuEnvColors": true,
+    "BaseColor": {
+      "r": 0.251642853,
+      "g": 0.317449,
+      "b": 0.5522966,
+      "a": 1.0
+    },
+    "LevelClearedColor": {
+      "r": 0.203647852,
+      "g": 1.0,
+      "b": 0.466666669,
+      "a": 1.0
+    },
+    "LevelFailedColor": {
+      "r": 1.0,
+      "g": 0.0,
+      "b": 0.0,
+      "a": 1.0
+    },
+    "DisableEditorButtonOnMainMenu": true,
+    "RemoveNewContentPromotional": true,
+    "DisableFireworks": true
+  },
+  "Tools": {
+    "RemoveOldLogs": true,
+    "LogEntriesToKeep": 8,
+    "FPFCEscape": false
+  }
+}

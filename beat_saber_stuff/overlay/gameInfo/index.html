@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="../reset.css">
+	<link rel="stylesheet" type="text/css" href="../fonts.css">
+	<link rel="stylesheet" type="text/css" href="vars.css">
+	<link rel="stylesheet" type="text/css" href="main.css">
+	<link rel="stylesheet" type="text/css" href="animations.css">
+	<link rel="stylesheet" type="text/css" href="../fontawesome-free-5.15.4-web/css/all.min.css">
+	<script type="text/javascript" src="../jquery-3.6.0.min.js"></script>
+	<script type="text/javascript" src="vars.js"></script>
+</head>
+<body class="hide">
+	<div id="comboWrap">
+		<div id="combo">
+			<i class="fas fa-link"></i>
+			<div id="comboNums">
+			</div>
+		</div>
+		<div id="hitMiss">
+			<div id="bloqsHit">
+				<i class="fas fa-check-circle"></i> <span id="hitValue">0</span>
+			</div>
+			<div id="bloqsFC" style="display: none;">
+				<span>FC</span> <i class="fas fa-star"></i>
+			</div>
+			<div id="bloqsMissed">
+				<span id="missValue">???</span> <i class="fas fa-times-circle"></i>
+			</div>
+		</div>
+	</div>
+
+	<div id="healthWrap">
+		<div id="healthFilled"></div>
+	</div>
+
+	<!-- the shit i do to force monospace numbers. smh my head -->
+	<div id="bestAccWrap">
+		<div id="bestAcc">
+			<div class="flexSpacer"></div>
+			<div id="dlfksldfs" style="margin-right: 12px;"><i class="fas fa-award"></i></div>
+			<div id="bestAccNums">
+				<span class="bestAccNum" id="bestAccNum0">-</span>
+				<span class="bestAccNum" id="bestAccNum1">-</span>
+				<span class="bestAccDot">.</span>
+				<span class="bestAccNum" id="bestAccNum2">-</span>
+				<span class="bestAccNum" id="bestAccNum3">-</span>
+				<span class="bestAccPerc">%</span>
+			</div>
+			<div class="flexSpacer"></div>
+		</div>
+	</div>
+
+	<div id="ppWrap" style="display: none;"> <!-- condom joke here -->
+		<div id="pp">
+			<div class="flexSpacer"></div>
+			<div id="ppNums">
+			</div>
+			<div id="ppPost">pp</div>
+			<div class="flexSpacer"></div>
+		</div>
+	</div>
+
+	<div id="accWrap">
+		<div id="accNums">
+			<span class="accNum" id="accNum0">-</span>
+			<span class="accNum" id="accNum1">-</span>
+			<span class="accDot">.</span>
+			<span class="accNum" id="accNum2">-</span>
+			<span class="accNum" id="accNum3">-</span>
+			<span class="accPerc">%</span>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="pp.js"></script>
+	<script type="text/javascript" src="main.js"></script>
+</body>
+</html>

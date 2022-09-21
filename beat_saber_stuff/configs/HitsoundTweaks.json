@@ -1,0 +1,9 @@
+{
+  "IgnoreSaberSpeed": false,
+  "StaticSoundPos": false,
+  "EnableSpatialization": true,
+  "RandomPitchMin": 0.8,
+  "RandomPitchMax": 1.3,
+  "EnableChainElementHitsounds": true,
+  "ChainElementVolumeMultiplier": 0.67
+}

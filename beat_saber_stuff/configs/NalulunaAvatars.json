@@ -1,0 +1,421 @@
+{
+  "reset": false,
+  "firstRun": true,
+  "avatar": "Tox Gecko.vrm",
+  "applyOfficialOffset": false,
+  "hideHandsInHmd": false,
+  "hideAvatarsBodyInHmd": true,
+  "disableAvatarReflection": false,
+  "disableThumbnail": true,
+  "autodetectButtonId": false,
+  "leftControllerButtonId": 2,
+  "rightControllerButtonId": 0,
+  "leftControllerButton2Id": 8,
+  "rightControllerButton2Id": 9,
+  "facialExpression": true,
+  "autoBlink": true,
+  "fakeEyeTracking": true,
+  "autoBlendShape": true,
+  "overComboCondition": "",
+  "overComboBlendShape": "",
+  "everyCombo1Condition": "200",
+  "everyCombo1BlendShape": "Joy",
+  "everyCombo1Duration": "1-2",
+  "everyCombo2Condition": "",
+  "everyCombo2BlendShape": "",
+  "everyCombo2Duration": "",
+  "comboBreakCondition": "50",
+  "comboBreakBlendShape": "Angry",
+  "comboBreakDuration": "1-2",
+  "everyMiss1Condition": "",
+  "everyMiss1BlendShape": "",
+  "everyMiss1Duration": "",
+  "everyMiss2Condition": "",
+  "everyMiss2BlendShape": "",
+  "everyMiss2Duration": "",
+  "everyIdleSecCondition": "",
+  "everyIdleSecBlendShape": "",
+  "everyIdleSecDuration": "",
+  "everyComboSec1Condition": "",
+  "everyComboSec1BlendShape": "",
+  "everyComboSec1Duration": "",
+  "everyComboSec2Condition": "",
+  "everyComboSec2BlendShape": "",
+  "everyComboSec2Duration": "",
+  "levelClearedBlendShape": "Joy",
+  "levelClearedDuration": "5",
+  "levelFailedBlendShape": "Angry",
+  "levelFailedDuration": "5",
+  "blendShapePresetsUser": [
+    "Surprised"
+  ],
+  "blendShapesNoBlinkUser": [],
+  "blendShapesNoLipSyncUser": [],
+  "blendShapesNoTransitionUser": [],
+  "blendShapeNeutral": "Neutral",
+  "blendShapeLB": "",
+  "blendShapeLBKeep": false,
+  "blendShapeLB2": "",
+  "blendShapeLB2Keep": false,
+  "blendShapeLTLB": "",
+  "blendShapeLTLBKeep": false,
+  "blendShapeLTLB2": "Brows down",
+  "blendShapeLTLB2Keep": false,
+  "blendShapeRTLB": "",
+  "blendShapeRTLBKeep": false,
+  "blendShapeRTLB2": "",
+  "blendShapeRTLB2Keep": false,
+  "blendShapeLTRTLB": "",
+  "blendShapeLTRTLBKeep": false,
+  "blendShapeLTRTLB2": "",
+  "blendShapeLTRTLB2Keep": false,
+  "blendShapeRB": "",
+  "blendShapeRBKeep": false,
+  "blendShapeRB2": "",
+  "blendShapeRB2Keep": false,
+  "blendShapeRTRB": "",
+  "blendShapeRTRBKeep": false,
+  "blendShapeRTRB2": "",
+  "blendShapeRTRB2Keep": false,
+  "blendShapeLTRB": "",
+  "blendShapeLTRBKeep": false,
+  "blendShapeLTRB2": "",
+  "blendShapeLTRB2Keep": false,
+  "blendShapeLTRTRB": "",
+  "blendShapeLTRTRBKeep": false,
+  "blendShapeLTRTRB2": "",
+  "blendShapeLTRTRB2Keep": false,
+  "defaultFacialExpressionTransitionSpeed": 10.0,
+  "lipSync": true,
+  "lipSyncDevice": "(Default Device)",
+  "lipSyncDeviceSampleRate": 48000,
+  "lipSyncGain": 1,
+  "lipSyncThreshold": 4,
+  "lipSyncWeight": 3.0,
+  "lipSyncFrameRate": 60,
+  "lipSyncWeightAA": 1.0,
+  "lipSyncWeightE": 1.0,
+  "lipSyncWeightIH": 1.0,
+  "lipSyncWeightOH": 1.0,
+  "lipSyncWeightOU": 1.0,
+  "lipSyncEnableAsyncProcessing": true,
+  "handsPoseTest": "",
+  "handPoseGrab": "-34,-66,-80,32,-34,-66,-65,23,-49,-76,-45,-5,-62,-64,-68,-33,-84,-34,-12,23",
+  "handPosePresetsUser": {},
+  "handsPosePresetsUser": {
+    "OneTwo": "Point,Peace"
+  },
+  "fingerTracking": true,
+  "handsPose": false,
+  "handsPoseNeutral": "Natural",
+  "handsPoseLB": "Grab",
+  "handsPoseLBKeep": false,
+  "handsPoseLTLB": "",
+  "handsPoseLTLBKeep": false,
+  "handsPoseRB": "Grab",
+  "handsPoseRBKeep": false,
+  "handsPoseRTRB": "",
+  "handsPoseRTRBKeep": false,
+  "handsPoseLB2": "Grab",
+  "handsPoseLB2Keep": false,
+  "handsPoseLTLB2": "",
+  "handsPoseLTLB2Keep": false,
+  "handsPoseRB2": "Grab",
+  "handsPoseRB2Keep": false,
+  "handsPoseRTRB2": "",
+  "handsPoseRTRB2Keep": false,
+  "leftHandOffsetPosition": {
+    "x": -0.02,
+    "y": 0.04,
+    "z": -0.13
+  },
+  "leftHandOffsetRotation": {
+    "x": 55.0,
+    "y": 0.0,
+    "z": 90.0
+  },
+  "rightHandOffsetPosition": {
+    "x": 0.02,
+    "y": 0.04,
+    "z": -0.13
+  },
+  "rightHandOffsetRotation": {
+    "x": 55.0,
+    "y": 0.0,
+    "z": -90.0
+  },
+  "headOffsetPosition": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "leftHandTrackerOffsetPosition": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": -0.03
+  },
+  "leftHandTrackerOffsetRotation": {
+    "x": 0.0,
+    "y": -90.0,
+    "z": -90.0
+  },
+  "rightHandTrackerOffsetPosition": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": -0.03
+  },
+  "rightHandTrackerOffsetRotation": {
+    "x": 0.0,
+    "y": -90.0,
+    "z": -90.0
+  },
+  "leftHandCustomAvatarOffsetPosition": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "leftHandCustomAvatarOffsetRotation": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "rightHandCustomAvatarOffsetPosition": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "rightHandCustomAvatarOffsetRotation": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "leftFootOffsetPosition": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "leftFootOffsetRotation": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "rightFootOffsetPosition": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "rightFootOffsetRotation": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "lightRotation": {
+    "x": 40.0,
+    "y": 140.0,
+    "z": 0.0
+  },
+  "mapLighting": true,
+  "mapLightingColorIntensity": 0.3,
+  "mapLightingMinimumBrightness": 0.1,
+  "platformLightIntensity": 4.0,
+  "saberLighting": false,
+  "saberLightingIntensity": 2.0,
+  "saberLightingRange": 6.0,
+  "lightColor": {
+    "r": 0.8389598,
+    "g": 0.8521436,
+    "b": 1.0,
+    "a": 1.0
+  },
+  "lightIntensity": 1.3,
+  "ambientLightIntensity": 0.1,
+  "emissionLightingMix": false,
+  "locomotionFootDistance": 0.17,
+  "locomotionStepThreshold": 0.15,
+  "locomotionStepHeight": 0.04,
+  "locomotionRandomizeStepTarget": true,
+  "locomotionAvoidCrossedLegs": true,
+  "locomotionOffset": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": -0.010
+  },
+  "calibrationType": 0,
+  "calibrationScaleFixed": true,
+  "calibrationScale": 1.79,
+  "calibrationOffsetY": 0.0,
+  "calibrationOffsetZ": 0.0,
+  "pelvisOffsetY": 0.0,
+  "avatarArmScale": 1.0,
+  "avatarLegScale": 1.0,
+  "calibrationWait": 3,
+  "legSwivelOffset": 10.0,
+  "armSwivelOffset": 0.0,
+  "elbowBendingMode": 0,
+  "bodyPosStiffness": 1.3,
+  "fixSinkingFeet": false,
+  "vrmColliderFix": false,
+  "firstPersonCameraNearClip": 0.1,
+  "optimizeVRMRenderer": true,
+  "optimizeVRMSpringBones": true,
+  "groundHeightCorrection": false,
+  "trackerSmoothing": 0.2,
+  "headSmoothing": 0.0,
+  "handSmoothing": 0.0,
+  "scoreSaberReplayAvatar": true,
+  "scoreSaberReplayAvatarScale": 1.0,
+  "headOffsetPositionScoreSaberReplay": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": -0.2
+  },
+  "leftHandOffsetPositionScoreSaberReplay": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "rightHandOffsetPositionScoreSaberReplay": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "leftHandOffsetRotationScoreSaberReplay": {
+    "x": -90.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "rightHandOffsetRotationScoreSaberReplay": {
+    "x": -90.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "scoreSaberReplaySpectatorPosition": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": -2.0
+  },
+  "scoreSaberReplayRemoveDebris": false,
+  "worldScale": 1.0,
+  "enableAfk": false,
+  "mirrorQuality": 3,
+  "oculusModeTracker": false,
+  "trackingCorrection": true,
+  "vmcProtocolEnabled": false,
+  "vmcIgnoreBlendShape": false,
+  "vmcProtocolEstimation": 0.0,
+  "vmcProtocolListeningPort": 39539,
+  "vmcProtocolRemotePort": 39540,
+  "overlay": false,
+  "overlayHideInMenu": false,
+  "overlayKeyColor": {
+    "r": 0.0,
+    "g": 1.0,
+    "b": 0.0,
+    "a": 1.0
+  },
+  "overlayPosition": {
+    "x": 0.0,
+    "y": 0.0
+  },
+  "overlaySize": {
+    "x": 1000.0,
+    "y": 1000.0
+  },
+  "overlaySuperSampling": 1.0,
+  "overlayCameraPosition": {
+    "x": 0.0,
+    "y": 1.0,
+    "z": 4.0
+  },
+  "overlayCameraRotation": {
+    "x": 0.0,
+    "y": 180.0,
+    "z": 0.0
+  },
+  "overlayCameraFov": 30.0,
+  "overlayCameraTarget": -1,
+  "enableWindForce": false,
+  "windForceOnNote": 1.0,
+  "windForceOnWallHit": 1.0,
+  "manualTrackerMapping": true,
+  "trackingTimeout1": 50000000,
+  "forceExternalTrackerSource": false,
+  "trackerMapping": {
+    "Hip": "LHR-F32C2800",
+    "LeftFoot": "LHR-362141E4",
+    "RightFoot": "LHR-5137CADC",
+    "LeftElbow": "",
+    "RightElbow": "",
+    "LeftHand": "",
+    "LeftKnee": ""
+  },
+  "trackerIgnore": [],
+  "mirror1MenuVisible": true,
+  "mirror1GameVisible": false,
+  "mirror1OnlyVisibleInHmd": true,
+  "mirror1Quality": 8,
+  "mirror1CullingMask": 1032,
+  "mirror1Shader": 1,
+  "mirror1Effect": 0,
+  "mirror1TrackingTarget": 0,
+  "mirror1Width": 1.7,
+  "mirror1Height": 2.8,
+  "mirror1Position": {
+    "x": -1.7,
+    "y": 1.4,
+    "z": 4.3
+  },
+  "mirror1Rotation": {
+    "x": 5.000002,
+    "y": 159.0,
+    "z": 0.0
+  },
+  "mirror1FieldOfView": 40.0,
+  "mirror1Range": 0.68,
+  "mirror2MenuVisible": true,
+  "mirror2GameVisible": false,
+  "mirror2OnlyVisibleInHmd": true,
+  "mirror2Quality": 8,
+  "mirror2CullingMask": 1032,
+  "mirror2Shader": 1,
+  "mirror2Effect": 0,
+  "mirror2TrackingTarget": 0,
+  "mirror2Width": 1.7,
+  "mirror2Height": 2.8,
+  "mirror2Position": {
+    "x": -5.0,
+    "y": 1.4,
+    "z": -0.1999998
+  },
+  "mirror2Rotation": {
+    "x": 4.0,
+    "y": 87.0,
+    "z": 0.0
+  },
+  "mirror2FieldOfView": 40.0,
+  "mirror2Range": 0.82,
+  "mirror3MenuVisible": true,
+  "mirror3GameVisible": false,
+  "mirror3OnlyVisibleInHmd": true,
+  "mirror3Quality": 8,
+  "mirror3CullingMask": 1032,
+  "mirror3Shader": 1,
+  "mirror3Effect": 0,
+  "mirror3TrackingTarget": 0,
+  "mirror3Width": 1.7,
+  "mirror3Height": 2.8,
+  "mirror3Position": {
+    "x": 4.299999,
+    "y": 1.300001,
+    "z": 0.3999996
+  },
+  "mirror3Rotation": {
+    "x": 5.999994,
+    "y": -96.0,
+    "z": 0.0
+  },
+  "mirror3FieldOfView": 40.0,
+  "mirror3Range": 0.74,
+  "mirrorLedSpacing1": 4.0,
+  "mirrorLedSize1": 2.0
+}

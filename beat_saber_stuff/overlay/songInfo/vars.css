@@ -1,0 +1,30 @@
+:root {
+	--titleScrollAmount: 0px;
+	--artistScrollAmount: 0px;
+	--mapperScrollAmount: 0px;
+	--hideDirection: -400px;
+	--vibrantColor: rgb(200, 200, 200);
+	--lightestColor: rgb(255, 255, 255);
+	--darkestColor: rgb(72, 72, 72);
+	--fontFamily: "Manrope";
+	--titleWeight: 900;
+	--subtitleWeight: 700;
+	--artistWeight: 600;
+	--statsWeight: 700;
+	--timeWeight: 700;
+	--codeWeight: 800;
+	--backgroundBlurAmount: 9px;
+	--backgroundOpacity: 0.6;
+	--outlineColor: rgba(0, 0, 0, 0.5);
+	--shadowColor: #000;
+	--outlineFilter: drop-shadow(1px 0px 0px var(--outlineColor))
+			         drop-shadow(1px -1px 0px var(--outlineColor))
+			         drop-shadow(1px 1px 0px var(--outlineColor))
+			         drop-shadow(0px -1px 0px var(--outlineColor))
+			         drop-shadow(0px 1px 0px var(--outlineColor))
+					 drop-shadow(-1px 0px 0px var(--outlineColor))
+			         drop-shadow(-1px -1px 0px var(--outlineColor))
+			         drop-shadow(-1px 1px 0px var(--outlineColor));
+	--dropShadowFilter: drop-shadow(0px 3px 3px var(--shadowColor));
+	--progressBarWidth: 500px;
+}

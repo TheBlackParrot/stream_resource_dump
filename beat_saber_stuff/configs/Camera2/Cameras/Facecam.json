@@ -1,0 +1,71 @@
+{
+  "visibleObjects": {
+    "Walls": "Hidden",
+    "Debris": false,
+    "UI": false,
+    "Avatar": "ForceVisibleInFP",
+    "Floor": false,
+    "CutParticles": false,
+    "Notes": "Hidden",
+    "EverythingElse": false,
+    "Sabers": false
+  },
+  "type": "Attached",
+  "FOV": 22.7400017,
+  "layer": 3,
+  "antiAliasing": 4,
+  "renderScale": 1.1,
+  "orthographic": false,
+  "farZ": 6.0,
+  "viewRect": {
+    "x": 0.5408,
+    "y": 0.0,
+    "width": 0.4592,
+    "height": 1.0,
+    "locked": false
+  },
+  "Multiplayer": {
+    "followSpectatorPlattform": true
+  },
+  "Smoothfollow": {
+    "position": 3.5,
+    "rotation": 2.0,
+    "followReplayPosition": false,
+    "limits": {
+      "pos_x": "-Infinity:Infinity",
+      "pos_y": "-Infinity:Infinity",
+      "pos_z": "-Infinity:Infinity",
+      "rot_x": "0:0",
+      "rot_y": "-Infinity:Infinity",
+      "rot_z": "0:0"
+    },
+    "targetParent": "NalulunaAvatarsController/PlayerRoot/VRMAvatar/Armature/Hips/Spine/Chest/BSCameraAttach",
+    "pivotingOffset": true
+  },
+  "ModmapExtensions": {
+    "autoOpaqueWalls": false,
+    "autoHideHUD": false
+  },
+  "FPSLimiter": {
+    "fpsLimit": 0
+  },
+  "PostProcessing": {
+    "transparencyThreshold": 79.5,
+    "forceDepthTexture": true
+  },
+  "targetPos": {
+    "x": -1.3,
+    "y": 0.45,
+    "z": 2.5
+  },
+  "targetRot": {
+    "x": 6.5,
+    "y": 150.0,
+    "z": -2.0
+  },
+  "MovementScript": {
+    "scriptList": [],
+    "fromOrigin": true,
+    "enableInMenu": false
+  }
+}
