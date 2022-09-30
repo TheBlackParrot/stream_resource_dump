@@ -186,6 +186,10 @@ var eventFuncs = {
 		$("#bloqs").text("???");
 		$("#nps").text("???");
 		$("#njs").text("???");
+		$("#ssStars").text("Unranked");
+		$("#ssStars").removeClass("isRanked");
+		$("#blStars").text("Unranked");
+		$("#blStars").removeClass("isRanked");
 
 		$("#avatar").hide();
 
@@ -209,10 +213,11 @@ var eventFuncs = {
 			}
 
 			if(bsData.ranked && chartData.length) {
-				$("#rankedColumn").show();
-				$("#ranked").text(chartData.stars.toFixed(2));
+				$("#ssStars").html(`${chartData.stars.toFixed(2)} <i class="fas fa-star fa-fw"></i>`);
+				$("#ssStars").addClass("isRanked");
 			} else {
-				$("#rankedColumn").hide();
+				$("#ssStars").text("Unranked");
+				$("#ssStars").removeClass("isRanked");
 			}
 
 			let verified = bsData.uploader.verifiedMapper;
@@ -221,6 +226,32 @@ var eventFuncs = {
 				$("#avatar").show();
 			}
 		});
+
+		// .......yaaaaaaaay more proxies we love proxies yaaaaaaay
+		//getHTTP(`https://api.beatleader.xyz/map/hash/${map.hash}`, function(response) {
+		getHTTP(`./bl_proxy.php?hash=${map.hash}`, function(response) {
+			let _d = JSON.parse(response);
+			let blData = _d.data;
+			console.log(blData);
+
+			let chartData;
+			for(let i in blData.difficulties) {
+				let d = blData.difficulties[i];
+				if(d.modeName === map.characteristic && d.difficultyName === map.difficulty) {
+					chartData = d;
+				}
+			}
+
+			if(typeof chartData !== "undefined") {
+				if(chartData.stars) {
+					$("#blStars").html(`${chartData.stars.toFixed(2)} <i class="fas fa-star fa-fw"></i>`);
+					$("#blStars").addClass("isRanked");
+				} else {
+					$("#blStars").text("Unranked");
+					$("#blStars").removeClass("isRanked");
+				}
+			}
+		})
 
 		$("#difficulty").text(map.difficulty.replace("Plus", "+"));
 		curDiff = map.difficulty;

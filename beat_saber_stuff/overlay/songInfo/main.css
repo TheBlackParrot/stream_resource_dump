@@ -230,15 +230,32 @@ body {
 	display: flex;
 }
 
-#rankedWrap, #bloqsWrap, #npsWrap, #njsWrap, #tempoWrap, .statIcon, .statValue {
+#rankedWrap, #bloqsWrap, #npsWrap, #njsWrap, #tempoWrap, #blRankedWrap, #ssRankedWrap, .statIcon, .statValue {
 	display: inline-block;
 	white-space: nowrap;
 	font-size: 20pt;
 }
-#rankedWrap, #bloqsWrap, #npsWrap, #njsWrap, #tempoWrap {
+#rankedWrap, #bloqsWrap, #npsWrap, #njsWrap, #tempoWrap, #blRankedWrap, #ssRankedWrap {
 	display: block;
 	line-height: 60px;
 	height: 36px;
+}
+#blRankedWrap, #ssRankedWrap {
+	font-weight: 700;
+}
+.fa-star {
+	font-size: 12pt;
+	position: relative;
+	top: -4px;
+	color: var(--vibrantColor) !important;
+}
+#ssStars, #blStars {
+	opacity: 0.75;
+}
+.isRanked {
+	opacity: 1 !important;
+	color: #fff;
+	font-weight: 900;
 }
 .statColumn {
 	margin-right: 32px;
