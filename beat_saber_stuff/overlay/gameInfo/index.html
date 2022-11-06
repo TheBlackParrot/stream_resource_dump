@@ -10,7 +10,8 @@
 	<script type="text/javascript" src="../jquery-3.6.0.min.js"></script>
 	<script type="text/javascript" src="vars.js"></script>
 </head>
-<body class="hide">
+<!--<body class="hide">-->
+<body>
 	<div id="comboWrap">
 		<div id="combo">
 			<i class="fas fa-link"></i>
@@ -32,6 +33,12 @@
 
 	<div id="healthWrap">
 		<div id="healthFilled"></div>
+	</div>
+
+	<div id="deadWrap">
+		<div>
+			<i class="fas fa-skull"></i> DEAD
+		</div>
 	</div>
 
 	<!-- the shit i do to force monospace numbers. smh my head -->
@@ -72,7 +79,16 @@
 		</div>
 	</div>
 
+	<div id="modifierWrap">
+	</div>
+
 	<script type="text/javascript" src="pp.js"></script>
 	<script type="text/javascript" src="main.js"></script>
+	<script type="text/javascript">
+		//var _th_sep = (1000).toLocaleString();
+		var _dec_sep = (1.1).toLocaleString();
+		$(".bestAccDot").text(_dec_sep[1]);
+		$(".accDot").text(_dec_sep[1]);
+	</script>
 </body>
 </html>

@@ -114,12 +114,16 @@ var eventFuncs = {
 	},
 
 	"pause": function(data) {
+		elapsed = Math.floor(data.pauseTime);
+
 		console.log("PAUSED");
 		pauseStuff();
 		isPaused = true;
 	},
 
 	"resume": function(data) {
+		elapsed = Math.floor(data.resumeTime);
+
 		console.log("RESUMED");
 		resumeStuff();
 		isPaused = false;
@@ -208,12 +212,12 @@ var eventFuncs = {
 			$("#bsrCode").text(bsData.id);
 			if(chartData.length) {
 				$("#bloqs").text(chartData.notes.toLocaleString());
-				$("#nps").text(chartData.nps.toFixed(2));
-				$("#njs").text(chartData.njs);
+				$("#nps").text(chartData.nps.toFixed(2).toLocaleString());
+				$("#njs").text(chartData.njs.toLocaleString());
 			}
 
 			if(bsData.ranked && chartData.length) {
-				$("#ssStars").html(`${chartData.stars.toFixed(2)} <i class="fas fa-star fa-fw"></i>`);
+				$("#ssStars").html(`${chartData.stars.toFixed(2).toLocaleString()} <i class="fas fa-star fa-fw"></i>`);
 				$("#ssStars").addClass("isRanked");
 			} else {
 				$("#ssStars").text("Unranked");
@@ -244,7 +248,7 @@ var eventFuncs = {
 
 			if(typeof chartData !== "undefined") {
 				if(chartData.stars) {
-					$("#blStars").html(`${chartData.stars.toFixed(2)} <i class="fas fa-star fa-fw"></i>`);
+					$("#blStars").html(`${chartData.stars.toFixed(2).toLocaleString()} <i class="fas fa-star fa-fw"></i>`);
 					$("#blStars").addClass("isRanked");
 				} else {
 					$("#blStars").text("Unranked");

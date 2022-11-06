@@ -45,7 +45,7 @@ function startWebsocket() {
 			console.log(`%cBeat Saber v${data.gameVersion}`, 'font-weight: 700');
 		}
 
-		console.log(data);
+		//console.log(data);
 
 		if(data._type === "event") {
 			processMessage(data);
@@ -72,6 +72,8 @@ function showStuff() {
 	hits = 0;
 
 	$("body").removeClass("hide");
+
+	$("#deadWrap").hide();
 }
 function hideStuff() {
 	$("body").addClass("hide");
@@ -123,7 +125,7 @@ var eventFuncs = {
 		if(!isNaN(scoreData.score)) {
 			setHitMiss(scoreData.combo, scoreData.missCount);
 			
-			if(currentStars) {
+			if(currentStars && showRanked) {
 				setPP(Math.round(currentStars*PP_PER_STAR*ppFactorFromAcc(scoreData.accuracy*100)));
 			}
 
@@ -160,9 +162,11 @@ var eventFuncs = {
 				}
 			}
 
-			setBest(map, chartData);
+			if(showBest) {
+				setBest(map, chartData);
+			}
 
-			if(bsData.ranked) {
+			if(bsData.ranked && showRanked) {
 				currentStars = chartData.stars;
 				switchSubHeads();
 			} else {
@@ -195,6 +199,15 @@ function setHealth(health) {
 		$("#healthWrap").addClass("healthHide");
 	}, 3000);
 
+	if(health <= 0) {
+		$("#healthWrap").removeClass("healthShow");
+		$("#healthWrap").addClass("healthHide");
+
+		$("#deadWrap").show();
+		$("#deadWrap").removeClass("healthHide");
+		$("#deadWrap").addClass("healthShow");
+	}
+
 	oldHealth = health;
 }
 
@@ -219,6 +232,73 @@ function splitAcc(acc) {
 	];
 }
 
+var curAcc = 0;
+var finalAcc = 0;
+var animatingAccChange = false;
+function setAcc(acc) {
+	finalAcc = acc;
+
+	if(acc === 100 || acc === 0) {
+		finalNums = [null, null, null, null];
+		currentNums = [0, 0, 0, 0];
+		
+		$("#accNum0").text("-");
+		$("#accNum1").text("-");
+		$("#accNum2").text("-");
+		$("#accNum3").text("-");
+
+		return;
+	}
+
+	if(!animatingAccChange) {
+		animateAccChange();
+	}
+}
+
+var accChangeTO;
+var currentNums;
+function animateAccChange() {
+	animatingAccChange = true;
+	clearTimeout(accChangeTO);
+
+	if(curAcc === finalAcc) {
+		return;
+	}
+
+	let toChange = Math.round((finalAcc - curAcc)*100)/100;
+
+	if(!toChange) {
+		animatingAccChange = false;
+		return;
+	}
+
+	if(toChange > 0) {
+		curAcc += Math.ceil((toChange*100) / 10) / 100;
+	} else if(toChange < 0) {
+		curAcc += Math.floor((toChange*100) / 10) / 100;
+	}
+
+	let oldNums = currentNums.slice(0);
+	currentNums = splitAcc(curAcc);
+
+	let samesies = 0;
+	for(let i = 0; i < 4; i++) {
+		if(oldNums[i] === currentNums[i]) {
+			samesies++;
+			continue;
+		}
+
+		$(`#accNum${i}`).text(currentNums[i]);
+	}
+
+	if(samesies === 4) {
+		animatingAccChange = false;
+	}
+
+	accChangeTO = setTimeout(animateAccChange, 10);
+}
+
+/*
 function setAcc(acc) {
 	if(acc === 100 || acc === 0) {
 		finalNums = [null, null, null, null];
@@ -261,6 +341,7 @@ function animateAccChange() {
 		$(`#accNum${i}`).text(currentNums[i]);
 	}
 }
+*/
 
 var currentComboSpans = 0;
 function setCombo(combo) {
@@ -305,7 +386,7 @@ function setPP(pp) {
 var oldCombo = 0;
 var hits = 0;
 function setHitMiss(combo, missCount) {
-	$("#missValue").text(missCount);
+	$("#missValue").text(missCount.toLocaleString());
 
 	if(combo === oldCombo) {
 		return;
@@ -317,7 +398,7 @@ function setHitMiss(combo, missCount) {
 	}
 	
 	hits += combo - oldCombo;
-	$("#hitValue").text(hits);
+	$("#hitValue").text(hits.toLocaleString());
 
 	oldCombo = combo;
 
@@ -417,4 +498,7 @@ $(document).ready(function() {
 	$("#bestAccWrap").css("width", $("#accNums").css("width"));
 	$("#ppWrap").css("width", $("#accNums").css("width"));
 	$("#healthWrap").css("width", $("#accNums").css("width"));
+	$("#deadWrap").css("width", $("#accNums").css("width"));
 })
+
+$("#deadWrap").hide();

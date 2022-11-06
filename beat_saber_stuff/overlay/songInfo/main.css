@@ -314,3 +314,11 @@ body {
 	margin-right: 12px;
 	background-color: #000;
 }
+
+.showBSR:before {
+	content:  "!bsr ";
+	font-weight: 700;
+	opacity: 0.67;
+	font-size: 16pt;
+	margin-right: 2px;
+}

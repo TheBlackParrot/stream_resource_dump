@@ -159,3 +159,9 @@ const disableMovement = query.get("disableMovement") | false;
 if(disableMovement) {
 	$("body").removeClass("hide");
 }
+
+// By default, the overlay will show "!bsr" before the code in the BeatSaver code display box. Set this to 0 to hide it.
+const showBSR = query.get("showBSR");
+if(showBSR === "0") {
+	$(".showBSR").removeClass("showBSR");
+}
