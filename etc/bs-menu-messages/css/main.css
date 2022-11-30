@@ -1,0 +1,41 @@
+body {
+	background: #333;
+	color: #fff;
+	font-family: "Manrope";
+	font-weight: 600;
+	font-size: 18pt;
+}
+
+strong {
+	font-weight: 900;
+}
+
+.wrapwrap {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 590px;
+	height: 60px;
+	overflow: hidden;
+}
+
+.wrap {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 578px;
+	height: 60px;
+	overflow: hidden;
+	padding-left: 12px;
+	clip: rect(12px, 566px, 60px, 12px);
+}
+
+.message {
+	line-height: 60px;
+	width: 900px;
+	filter: var(--outlineFilter) drop-shadow(0px 1px 1px #000);
+}
+
+.fa-exclamation-triangle { color: #fd3; }
+.fa-info-circle { color: #6af; }
+.fa-heart { color: #f69; }

@@ -1,0 +1,12 @@
+:root {	
+	--outlineColor:  rgba(0, 0, 0, 0.5);
+	--outlineFilter: drop-shadow(1px 0px 0px var(--outlineColor))
+			         drop-shadow(1px -1px 0px var(--outlineColor))
+			         drop-shadow(1px 1px 0px var(--outlineColor))
+			         drop-shadow(0px -1px 0px var(--outlineColor))
+			         drop-shadow(0px 1px 0px var(--outlineColor))
+					 drop-shadow(-1px 0px 0px var(--outlineColor))
+			         drop-shadow(-1px -1px 0px var(--outlineColor))
+			         drop-shadow(-1px 1px 0px var(--outlineColor));
+	--currentCover: url(../test.jpg);
+}
