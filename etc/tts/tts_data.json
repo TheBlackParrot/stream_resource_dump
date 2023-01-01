@@ -1,0 +1,9 @@
+{
+	"buttsbot": {
+		"voice": 108,
+		"pitch": "x-high",
+		"pronunciation": "butts bot"
+	},
+
+	"theblackparrot": { "pronunciation": "the black parrot" }
+}
