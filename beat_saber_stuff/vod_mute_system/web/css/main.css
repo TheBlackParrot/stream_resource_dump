@@ -1,0 +1,142 @@
+body {
+	background: #333;
+	color: #fff;
+	font-family: "Sarabun";
+}
+
+.songDetails, .current {
+	font-size: 18pt;
+	filter: drop-shadow(1px 0px 0px rgba(0, 0, 0, 0.4))
+			drop-shadow(1px -1px 0px rgba(0, 0, 0, 0.4))
+			drop-shadow(1px 1px 0px rgba(0, 0, 0, 0.4))
+			drop-shadow(0px -1px 0px rgba(0, 0, 0, 0.4))
+			drop-shadow(0px 1px 0px rgba(0, 0, 0, 0.4))
+			drop-shadow(-1px 0px 0px rgba(0, 0, 0, 0.4))
+			drop-shadow(-1px -1px 0px rgba(0, 0, 0, 0.4))
+			drop-shadow(-1px 1px 0px rgba(0, 0, 0, 0.4))
+			drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.5));
+}
+
+
+.songTitle {
+	font-size: 17pt;
+	font-weight: 900;
+	line-height: 26px;
+	position: absolute;
+	left: 96px;
+	top: 16px;
+}
+.songArtist {
+	font-size: 13pt;
+	line-height: 26px;
+	position: absolute;
+	left: 96px;
+	top: 40px;
+}
+.songHash {
+	color: #999;
+	font-size: 8pt;
+	font-weight: 700;
+	font-family: monospace;
+	line-height: 14px;
+	position: absolute;
+	left: 97px;
+	top: 68px;
+}
+
+.songArt {
+	width: 70px;
+	height: 70px;
+	position: absolute;
+	top: 16px;
+	left: 16px;
+}
+.songArt img {
+	width: 100%;
+	height: 100%;
+	border-radius: 6px;
+}
+
+.buttons {
+	position: absolute;
+	top: 102px;
+	left: 16px;
+}
+
+.button {
+	width: 150px;
+	height: 50px;
+	line-height: 50px;
+	background: #008;
+	border-radius: 6px;
+	text-align: center;
+	vertical-align: middle;
+	display: inline-block;
+	margin-right: 16px;
+	font-size: 16pt;
+	font-weight: 900;
+	text-shadow: 0px -1px 0px #000;
+}
+
+.safeButton {
+	background: linear-gradient(#4a6, #173);
+	box-shadow: 0px -1px 0px #7d9,
+				0px 1px 0px #115511,
+				0px 2px 0px #0a500a,
+				0px 3px 0px #064706,
+				0px 4px 0px #004000;
+}
+.safeButton:active {
+	box-shadow: 0px 1px 0px #4a6,
+				0px -4px 0px #115511,
+				0px -3px 0px #0a500a,
+				0px -2px 0px #064706,
+				0px -1px 0px #004000;
+	position: relative;
+	top: 2px;
+}
+.unsafeButton {
+	background: linear-gradient(#a44, #721);
+	box-shadow: 0px -1px 0px #d77,
+				0px 1px 0px #551111,
+				0px 2px 0px #500a0a,
+				0px 3px 0px #470606,
+				0px 4px 0px #400000;
+}
+.unsafeButton:active {
+	box-shadow: 0px 1px 0px #a44,
+				0px -4px 0px #551111,
+				0px -3px 0px #500a0a,
+				0px -2px 0px #470606,
+				0px -1px 0px #400000;
+	position: relative;
+	top: 2px;
+}
+
+.current {
+	position: absolute;
+	top: 102px;
+	left: 356px;
+	font-weight: 900;
+	font-size: 20pt;
+	line-height: 50px;
+}
+
+.current div {
+	background-clip: text;
+	-webkit-background-clip: text;
+	-moz-background-clip: text;
+	-moz-text-fill-color: transparent;
+	-webkit-text-fill-color: transparent;
+}
+.unknown {
+	background: linear-gradient(#fff 40%, #444 100%);
+}
+.safe {
+	background: linear-gradient(#9fa 40%, #050 100%);
+	display: none;
+}
+.unsafe {
+	background: linear-gradient(#f77 40%, #500 100%);
+	display: none;
+}

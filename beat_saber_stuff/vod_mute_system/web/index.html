@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" type="text/css" href="css/reset.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+
+	<script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+</head>
+
+<body>
+	<div class="wrapper" style="display: none;">
+		<div class="songDetails">
+			<div class="songArt">
+				<img src="./test.jpg"/>
+			</div>
+			<div class="songTitle">Song Title</div>
+			<div class="songArtist">Song Artist</div>
+			<div class="songHash">hash</div>
+		</div>
+
+		<div class="current">
+			<div class="unknown">NOT FLAGGED</div>
+			<div class="safe">FLAGGED SAFE</div>
+			<div class="unsafe">FLAGGED UNSAFE</div>
+		</div>
+
+		<div class="buttons">
+			<div class="button safeButton" onmouseup="flag('safe');">SAFE</div>
+			<div class="button unsafeButton" onmouseup="flag('unsafe');">UNSAFE</div>
+		</div>
+	</div>
+</body>
+
+</html>

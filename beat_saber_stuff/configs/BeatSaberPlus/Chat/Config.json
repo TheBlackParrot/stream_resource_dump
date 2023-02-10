@@ -1,0 +1,75 @@
+﻿{
+  "Enabled": true,
+  "ChatSize": {
+    "x": 140.0,
+    "y": 130.0
+  },
+  "ReverseChatOrder": false,
+  "FontSize": 2.999999,
+  "AlignWithFloor": false,
+  "ShowLockIcon": false,
+  "FollowEnvironementRotation": false,
+  "ShowViewerCount": false,
+  "ShowFollowEvents": false,
+  "ShowSubscriptionEvents": true,
+  "ShowBitsCheeringEvents": true,
+  "ShowChannelPointsEvent": false,
+  "FilterViewersCommands": false,
+  "FilterBroadcasterCommands": false,
+  "BackgroundColor": {
+    "r": 1.0,
+    "g": 1.0,
+    "b": 1.0,
+    "a": 0.0
+  },
+  "HighlightColor": {
+    "r": 0.298899531,
+    "g": 0.13544625,
+    "b": 0.541261435,
+    "a": 1.0
+  },
+  "AccentColor": {
+    "r": 0.721591949,
+    "g": 0.552018,
+    "b": 0.9730293,
+    "a": 1.0
+  },
+  "TextColor": {
+    "r": 1.0,
+    "g": 1.0,
+    "b": 1.0,
+    "a": 1.0
+  },
+  "PingColor": {
+    "r": 0.648150563,
+    "g": 0.0,
+    "b": 0.2120334,
+    "a": 1.0
+  },
+  "MenuChatPosition": {
+    "x": -0.03667634,
+    "y": 0.0570156351,
+    "z": 2.828805
+  },
+  "MenuChatRotation": {
+    "x": 89.2194,
+    "y": 328.680145,
+    "z": 328.647339
+  },
+  "PlayingChatPosition": {
+    "x": -2.554447,
+    "y": 2.487346,
+    "z": -2.01005173
+  },
+  "PlayingChatRotation": {
+    "x": 347.599457,
+    "y": 235.794037,
+    "z": 2.32141423
+  },
+  "ModerationKeys": [
+    "/host",
+    "/unban",
+    "/untimeout",
+    "!bsr"
+  ]
+}

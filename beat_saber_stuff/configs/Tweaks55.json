@@ -14,13 +14,13 @@
     "a": 1.0
   },
   "wallBorderColor": {
-    "r": 1.0,
-    "g": 1.0,
-    "b": 1.0,
+    "r": 0.6810541,
+    "g": 0.6810541,
+    "b": 0.6810541,
     "a": 1.0
   },
   "disableDebris": false,
-  "disableSliceScore": true,
+  "disableSliceScore": false,
   "transparentWalls": false,
   "disableComboBreakEffect": false,
   "disableWallRumbleAndParticles": true,

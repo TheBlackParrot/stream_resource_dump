@@ -35,14 +35,14 @@
     "ReorderPlayerSettings": true,
     "MergeLightPressetOptions": true,
     "OverrideLightIntensityOption": true,
-    "OverrideLightIntensity": 0.4999999
+    "OverrideLightIntensity": 0.6
   },
   "MainMenu": {
     "OverrideMenuEnvColors": true,
     "BaseColor": {
-      "r": 0.251642853,
-      "g": 0.317449,
-      "b": 0.5522966,
+      "r": 0.6131423,
+      "g": 0.4938537,
+      "b": 1.0,
       "a": 1.0
     },
     "LevelClearedColor": {

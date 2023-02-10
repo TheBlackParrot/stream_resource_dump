@@ -1,0 +1,31 @@
+{
+	"obs": {
+		"ip": "127.0.0.1",
+		"port": 4455,
+		"password": "hunter2",
+		"sourceName": "Beat Saber Audio",
+		"vodAudioTrack": "2"
+	},
+
+	"bs": {
+		"ip": "127.0.0.1",
+		"port": 2947
+	},
+
+	"ws": {
+		"port": 2940
+	},
+
+	"script": {
+		"autoMuteOnUnknown": true,
+		"logUnknowns": true
+	},
+
+	"databases": {
+		"sync": true,
+		"preferUnsafeOnDuplicateEntries": true,
+		"list": [
+			"https://gist.githubusercontent.com/TheBlackParrot/ea2126f4f2af4f47455cd072d2e975e5/raw/db.json"
+		]
+	}
+}

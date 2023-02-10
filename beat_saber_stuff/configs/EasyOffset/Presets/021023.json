@@ -1,0 +1,41 @@
+﻿{
+  "Version": "2.0",
+  "UnixTimestamp": 1676013138,
+  "ControllerType": "Valve Index",
+  "LeftSaberPivotPosition": {
+    "x": 0.6999994,
+    "y": -3.20000029,
+    "z": -7.200001
+  },
+  "LeftSaberRotationEuler": {
+    "x": 40.7177277,
+    "y": 29.0954685,
+    "z": 9.166309
+  },
+  "LeftSaberZOffset": 6.970886,
+  "LeftSaberHasReference": true,
+  "LeftSaberReference": {
+    "x": -0.112997845,
+    "y": -0.4282796,
+    "z": 0.682451665,
+    "w": -0.5814359
+  },
+  "RightSaberPivotPosition": {
+    "x": 1.9,
+    "y": -1.8,
+    "z": -7.906017
+  },
+  "RightSaberRotationEuler": {
+    "x": 41.9501152,
+    "y": -26.09143,
+    "z": -5.76022339
+  },
+  "RightSaberZOffset": 9.452395,
+  "RightSaberHasReference": true,
+  "RightSaberReference": {
+    "x": 0.09905444,
+    "y": -0.378789872,
+    "z": 0.7116216,
+    "w": 0.583353341
+  }
+}
