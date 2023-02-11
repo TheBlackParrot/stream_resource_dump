@@ -79,7 +79,7 @@ saveDB();
 
 function logUnknown(map) {
 	let filename = `./logs/unknowns-${sessionTimestamp}.txt`;
-	let msg = `${map.hash} - ${map.sub_name === "" ? map.name : map.name + " " + map.sub_name} mapped by ${map.mapper}`;
+	let msg = `${map.hash} - ${map.sub_name === "" ? map.name : map.name + " " + map.sub_name} mapped by ${map.mapper}\r\n`;
 
 	try {
 		fs.appendFileSync(filename, msg, "utf8");
