@@ -10,35 +10,35 @@ import math
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import urllib.parse
 
+settings = None
+with open("settings.json", "r") as settingsFile:
+    settings = json.load(settingsFile)
+
 ttsStuff = None
 with open("tts_data.json", "r") as ttsStuffFile:
     ttsStuff = json.load(ttsStuffFile)
 dictReplace = None
 with open("dict.json", "r") as dictFile:
     dictReplace = json.load(dictFile)
-
-hostName = "127.0.0.1"
-serverPort = 8080
+faceReplace = None
+with open("faces.json", "r") as facesFile:
+    faceReplace = json.load(facesFile)
+symReplace = None
+with open("symbols.json", "r") as symFile:
+    symReplace = json.load(symFile)
 
 device = torch.device('cpu')
-torch.set_num_threads(12)
-local_file = 'model.pt'
+torch.set_num_threads(settings["tts"]["cpu_threads"])
 
-if not os.path.isfile(local_file):
-    torch.hub.download_url_to_file('https://models.silero.ai/models/tts/en/v3_en.pt',
-                                   local_file)  
+if not os.path.isfile(settings["tts"]["model_saveAs"]):
+    torch.hub.download_url_to_file(settings["tts"]["model"], settings["tts"]["model_saveAs"])
 
-model = torch.package.PackageImporter(local_file).load_pickle("tts_models", "model")
+model = torch.package.PackageImporter(settings["tts"]["model_saveAs"]).load_pickle("tts_models", "model")
 model.to(device)
-
-sample_rate = 48000
-
-messageVoice = 111
-nameVoice = 20
 
 class MyServer(BaseHTTPRequestHandler):
     def do_GET(self):
-        main_url = "http://" + hostName + ":" + str(serverPort) + self.path
+        main_url = "http://" + settings["http"]["ip"] + ":" + str(settings["http"]["port"]) + self.path
         url_parts = urllib.parse.urlparse(main_url)
         query_parts = urllib.parse.parse_qs(url_parts.query)
 
@@ -52,7 +52,7 @@ class MyServer(BaseHTTPRequestHandler):
 
         currentTTSData = {
             "say": _data,
-            "voice": nameVoice if _type == "name" else messageVoice,
+            "voice": settings["tts"]["name_voice"] if _type == "name" else settings["tts"]["message_voice"],
             "pitch": None
         }
 
@@ -76,31 +76,13 @@ class MyServer(BaseHTTPRequestHandler):
 
                 currentTTSData["say"] = " ".join([str(item) for item in name_parts])
         if _type == "msg":
-            #_name = query_parts['name'][0].lower()
+            for face in faceReplace:
+                _data = _data.replace(face, faceReplace[face])
 
-            _data = _data.replace(":", " ")
-            _data = _data.replace("*", " star ")
-            _data = _data.replace("/", " slash ")
-            _data = _data.replace("\\", " back slash ")
-            _data = _data.replace("@", " at ")
-            _data = _data.replace("#", " hashtag ")
-            _data = _data.replace("%", " percent ")
-            _data = _data.replace("^", " carrot ")
-            _data = _data.replace("&", " and ")
-            _data = _data.replace("+", " plus ")
-            _data = _data.replace("=", " equals ")
-            _data = _data.replace("\"", " quote ")
-            _data = _data.replace("$", " dollar ")
-            _data = _data.replace("£", " pound ")
-            _data = _data.replace("€", " euro ")
-            _data = _data.replace("¥", " yen ")
-            _data = _data.replace("<3", " heart ")
-            _data = _data.replace("<", " less than ")
-            _data = _data.replace(">", " greater than ")
-            _data = _data.replace("[", " left bracket ")
-            _data = _data.replace("]", " right bracket ")
-            _data = _data.replace("{", " left brace ")
-            _data = _data.replace("}", " right brace ")
+            for sym in symReplace:
+                _data = _data.replace(sym, symReplace[sym])
+
+            print(_data)
 
             all_words = _data.split(' ')
             all_wordsA = []
@@ -122,14 +104,20 @@ class MyServer(BaseHTTPRequestHandler):
                     all_wordsA.append(num2words(whole))
 
                     if len(parts) == 2:
-                        fractional = int(str(parts[1]).strip("0"))
-                        all_wordsA.append("point")
-                        print(fractional)
+                        if parts[1] != "0":
+                            fractional = int(str(parts[1]).strip("0"))
+                            all_wordsA.append("point")
+                            print(fractional)
 
-                        all_wordsA.append(num2words(fractional))
+                            all_wordsA.append(num2words(fractional))
 
             for word in all_wordsA:
                 for dash_part in word.split('-'):
+                    for sym in symReplace:
+                        dash_part = dash_part.replace(sym, "")
+                    for sym in settings["silenceSymbols"]:
+                        dash_part = dash_part.replace(sym, "")
+
                     if dash_part in dictReplace:
                         all_wordsB.append(dictReplace[dash_part])
                     else:
@@ -145,12 +133,16 @@ class MyServer(BaseHTTPRequestHandler):
 
         speaker='en_' + str(currentTTSData['voice'])
         print(currentTTSData["say"])
-        if currentTTSData['pitch'] == None:
-            audio = model.apply_tts(text=currentTTSData['say'], speaker=speaker, sample_rate=sample_rate)
-        else:
-            audio = model.apply_tts(ssml_text='<speak><prosody pitch="' + currentTTSData['pitch'] + '">' + currentTTSData['say'] + '</prosody></speak>', speaker=speaker, sample_rate=sample_rate)
+        if currentTTSData['say'] == "":
+            print("... nothing to say? wtf")
+            return
 
-        audio_out = bytes(Audio(audio, rate=sample_rate).data)
+        if currentTTSData['pitch'] == None:
+            audio = model.apply_tts(text=currentTTSData['say'], speaker=speaker, sample_rate=settings["tts"]["sample_rate"])
+        else:
+            audio = model.apply_tts(ssml_text='<speak><prosody pitch="' + currentTTSData['pitch'] + '">' + currentTTSData['say'] + '</prosody></speak>', speaker=speaker, sample_rate=settings["tts"]["sample_rate"])
+
+        audio_out = bytes(Audio(audio, rate=settings["tts"]["sample_rate"]).data)
         self.send_response(200)
         self.send_header("Content-Type", "audio/wav")
         self.send_header("Content-Length", len(audio_out))
@@ -158,8 +150,8 @@ class MyServer(BaseHTTPRequestHandler):
         self.wfile.write(audio_out)
 
 if __name__ == "__main__":        
-    webServer = HTTPServer((hostName, serverPort), MyServer)
-    print("Server started http://%s:%s" % (hostName, serverPort))
+    webServer = HTTPServer((settings["http"]["ip"], settings["http"]["port"]), MyServer)
+    print("Server started http://%s:%s" % (settings["http"]["ip"], settings["http"]["port"]))
 
     try:
         webServer.serve_forever()
