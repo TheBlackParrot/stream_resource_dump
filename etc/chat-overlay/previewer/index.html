@@ -1,0 +1,541 @@
+<html style="--nameColor:#BBB; --nameFont:Manrope; --nameWeight:900; --nameSize:16pt; --nameStyle:normal; --nameSpacing:1px; --msgFont:Manrope; --msgSize:16pt; --msgSpacing:0px; --msgWeight:700; --nameTransform:uppercase; --nameVariant:normal; --nameColorSecondary:#FFF; --nameAngle:170deg; --showPfp:inline-block; --pfpShape:10px;">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<link rel="stylesheet" type="text/css" href="../reset.css">
+	<link rel="stylesheet" type="text/css" href="../main.css">
+	<link rel="stylesheet" type="text/css" href="../fonts.css">
+
+	<style>
+		#wrapper {
+			top: 0px;
+		}
+
+		.sectionWrap {
+			border-top: 1px solid #aaa;
+			margin-top: 24px;
+			padding: 12px;
+			padding-top: 24px;
+		}
+
+		.section {
+    		display: inline-block;
+    		vertical-align: top;
+    		margin-right: 32px;
+		}
+		.fullSection {
+			width: auto;
+			display: block;
+			margin-right: 0px;
+		}
+
+		.head {
+			font-size: 20pt;
+			margin-bottom: 10px;
+			padding-bottom: 10px;
+			border-bottom: 1px solid #777;
+		}
+
+		.input {
+			line-height: 24px;
+			width: 300px;
+			display: flex;
+			margin-top: 8px;
+			margin-bottom: 8px;
+			vertical-align: middle;
+		}
+		.input select, .input input {
+			flex-grow: 1;
+		}
+		.input input[type="checkbox"] {
+			flex-grow: 0;
+			padding: 0;
+			margin: 0;
+			margin-right: 8px;
+			margin-top: 4px;
+			height: 16px;
+			width: 16px;
+		}
+
+		.inputName {
+			font-size: 14pt;
+			font-weight: 500;
+			padding-right: 16px;
+		}
+
+		#outputCommand {
+			background: #000;
+			padding: 12px;
+			font-family: monospace;
+			font-weight: 400;
+			font-size: 10pt;
+			margin-top: 8px;
+			border-radius: 4px;
+			border: 1px solid #888;
+		}
+
+		.evil {
+			filter: invert(1) drop-shadow(1px 0px 0px rgba(0, 0, 0, 0.45))
+					drop-shadow(1px -1px 0px rgba(0, 0, 0, 0.45))
+					drop-shadow(1px 1px 0px rgba(0, 0, 0, 0.45))
+					drop-shadow(0px -1px 0px rgba(0, 0, 0, 0.45))
+					drop-shadow(0px 1px 0px rgba(0, 0, 0, 0.45))
+					drop-shadow(-1px 0px 0px rgba(0, 0, 0, 0.45))
+					drop-shadow(-1px -1px 0px rgba(0, 0, 0, 0.45))
+					drop-shadow(-1px 1px 0px rgba(0, 0, 0, 0.45))
+					drop-shadow(0px 1px 2px #000);
+		}
+
+		#identityFlags {
+			font-weight: 400;
+			font-size: 12pt;
+			font-weight: 900;
+			line-height: 20px;
+		}
+
+		#identityFlags .flag {
+			vertical-align: middle;
+			margin-right: 6px;
+		}
+		#identityFlags div {
+			display: inline-block;
+			background: #111;
+			margin: 3px;
+			padding: 8px;
+			padding-left: 10px;
+			padding-right: 10px;
+			border-radius: 6px;
+			border: 1px solid #444;
+		}
+
+		.text {
+			font-size: 12pt;
+			font-weight: 700;
+			margin-top: 16px;
+		}
+
+		.mono {
+			font-family: monospace;
+			padding: 2px;
+			padding-left: 4px;
+			padding-right: 4px;
+			border-radius: 4px;
+			margin-left: 2px;
+			margin-right: 2px;
+			background-color: rgba(0, 0, 0, 0.2);
+		}
+	</style>
+
+	<script type="text/javascript" src="../jquery-3.6.0.min.js"></script>
+</head>
+<body>
+	<div id="wrapper" style="overflow: auto;">
+		<div class="chatBlock" data-msgidx="0">
+			<div class="userInfo ">
+				<div class="badges">
+					<img src="https://static-cdn.jtvnw.net/badges/v1/5527c58c-fb7d-422d-b71b-f309dcb85cc1/3"><img src="https://static-cdn.jtvnw.net/badges/v1/58729162-8485-4919-aa0b-12a00801cc93/3">
+				</div>
+				<div class="flags" style=""><span class="flaghomo flag" style="background-image: url('../flags/gay.svg'); display: inline-block;"></span><span class="flagaro flag" style="background-image: url('../flags/aromantic.svg'); display: inline-block;"></span><span class="flagpolyam flag" style="background-image: url('../flags/polyamorous_heart.png'); display: inline-block;"></span></div>
+				<div class="pronouns">
+					It / Its
+				</div>
+				<img class="pfp" src="obamna.jpg" style="display: var(--showPfp); border-radius: var(--pfpShape);"><div class="name" style="background-image: linear-gradient(var(--nameAngle), var(--nameColorSecondary) 0%, var(--nameColor) 75%); font-family: var(--nameFont); font-weight: var(--nameWeight); font-size: var(--nameSize); font-style: var(--nameStyle); letter-spacing: var(--nameSpacing); text-transform: var(--nameTransform); font-variant: var(--nameVariant);">
+					SampleUser69420
+				</div>
+			</div>
+			<div class="message" style="font-family: var(--msgFont); font-size: var(--msgSize); letter-spacing: var(--msgSpacing); font-weight: var(--msgWeight);">
+				This is a test message <span class="emote" style="background-image: url('https://static-cdn.jtvnw.net/emoticons/v2/305954156/default/dark/3.0');"><img src="https://static-cdn.jtvnw.net/emoticons/v2/305954156/default/dark/3.0"></span> Wow!
+			</div>
+		</div>
+		<div class="chatBlock" data-msgidx="1">
+			<div class="userInfo">
+				<div class="badges">
+					<img src="https://static-cdn.jtvnw.net/badges/v1/5527c58c-fb7d-422d-b71b-f309dcb85cc1/3"><img src="https://static-cdn.jtvnw.net/badges/v1/58729162-8485-4919-aa0b-12a00801cc93/3">
+				</div>
+				<div class="flags" style=""><span class="flagbi flag" style="background-image: url('../flags/bisexual.svg'); display: inline-block;"></span><span class="flagbiromantic flag" style="background-image: url('../flags/biromantic.png'); display: inline-block;"></span><span class="flagcis flag" style="background-image: url('../flags/cisgender.png'); display: inline-block;"></span><span class="flagpolyam flag" style="background-image: url('../flags/polyamorous_heart.png'); display: inline-block;"></span></div>
+				<div class="pronouns">
+					He / Him
+				</div>
+				<img class="pfp" src="obamna.jpg" style="display: var(--showPfp); border-radius: var(--pfpShape);"><div class="name" style="background-image: linear-gradient(var(--nameAngle), var(--nameColorSecondary) 0%, var(--nameColor) 75%); font-family: var(--nameFont); font-weight: var(--nameWeight); font-size: var(--nameSize); font-style: var(--nameStyle); letter-spacing: var(--nameSpacing); text-transform: var(--nameTransform); font-variant: var(--nameVariant);">
+					SampleUser69420
+				</div>
+			</div>
+			<div class="message" style="font-family: var(--msgFont); font-size: var(--msgSize); letter-spacing: var(--msgSpacing); font-weight: var(--msgWeight);">
+				Wikipedia is a multilingual free online encyclopedia written and maintained by a community of volunteers, known as Wikipedians, through open collaboration and using a wiki-based editing system called MediaWiki. Wikipedia is the largest and most-read reference work in history. It is consistently one of the 10 most popular websites ranked by Similarweb and formerly Alexa; as of 2023, Wikipedia was ranked the 5th most popular site in the world. It is hosted by the Wikimedia Foundation, an American non-profit organization funded mainly through donations.
+			</div>
+		</div>
+
+		<div class="chatBlock" data-msgidx="2">
+			<div class="userInfo">
+				<div class="flags" style=""><span class="flaghomo flag" style="background-image: url('../flags/gay.svg'); display: inline-block;"></span><span class="flagtrans flag" style="background-image: url('../flags/transgender.svg'); display: inline-block;"></span></div>
+				<img class="pfp evil" src="obamna.jpg" style="filter: inherit invert(100%); display: var(--showPfp); border-radius: var(--pfpShape);"><div class="name" style="background-image: linear-gradient(var(--nameAngle), var(--nameColorSecondary) 0%, var(--nameColor) 75%); font-family: var(--nameFont); font-weight: var(--nameWeight); font-size: var(--nameSize); font-style: var(--nameStyle); letter-spacing: var(--nameSpacing); text-transform: var(--nameTransform); font-variant: var(--nameVariant);">
+					SampleUser69420
+				</div>
+			</div>
+			<div class="message" style="font-family: var(--msgFont); font-size: var(--msgSize); letter-spacing: var(--msgSpacing); font-weight: var(--msgWeight);">
+				ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789 !@#$%^&*(){}[];:'",./?
+			</div>
+		</div>
+
+		<div class="sectionWrap">
+			<div class="section fullSection">
+				<div class="head">Command</div>
+				<div id="outputCommand">!chatsettings stuff</div>
+			</div>
+		</div>
+
+		<div class="sectionWrap">
+			<div class="section">
+				<div class="head">Name Settings</div>
+
+				<div class="input">
+					<span class="inputName">Test Data</span>
+					<input id="testName" type="text" size="1">
+				</div>
+
+				<div class="input">
+					<span class="inputName">Top Color</span>
+					<input id="nameColorSecondary" type="color" value="#FFFFFF">
+				</div>
+
+				<div class="input">
+					<span class="inputName">Bottom Color</span>
+					<input id="nameColor" type="color" value="#BBBBBB">
+				</div>
+
+				<div class="input">
+					<span class="inputName">Gradient Angle</span>
+					<input id="nameAngle" type="range" min="0" max="360" step="5"/>
+				</div>
+
+				<div class="input">
+					<span class="inputName">Font</span>
+					<select id="nameFont">
+					</select>
+				</div>
+
+				<div class="input">
+					<span class="inputName">Size</span>
+					<input id="nameSize" type="number" step="0.25" min="14" max="18"/>
+				</div>
+
+				<div class="input">
+					<input type="checkbox" id="italicizeName"/>
+					<span class="inputName">Italicize</span>
+				</div>
+
+				<div class="input">
+					<span class="inputName">Weight</span>
+					<select id="nameWeight">
+					</select>
+				</div>
+
+				<div class="input">
+					<span class="inputName">Transform</span>
+					<select id="nameTransform">
+						<option value="none">None</option>
+						<option value="lowercase">Lowercase</option>
+						<option value="uppercase">Uppercase</option>
+					</select>
+				</div>
+
+				<div class="input">
+					<span class="inputName">Variant</span>
+					<select id="nameVariant">
+						<option value="normal">Normal</option>
+						<option value="small-caps">Small Capitals</option>
+						<option value="unicase">Unicase</option>
+					</select>
+				</div>
+
+				<div class="input">
+					<span class="inputName">Letter Spacing</span>
+					<input id="nameSpacing" type="number" step="0.1" min="-4" max="5"/>
+				</div>
+
+				<div class="input">
+					<input type="checkbox" id="showPfp" checked/>
+					<span class="inputName" title="Only available for Broadcasters, Moderators, VIPs, and Subscribers">Show Avatar/PFP**</span>
+				</div>
+
+				<div class="input">
+					<span class="inputName">Avatar/PFP Shape</span>
+					<select id="pfpShape">
+						<option value="square">Square</option>
+						<option value="squircle">Rounded Square</option>
+						<option value="circle">Circle</option>
+					</select>
+				</div>
+
+				<div class="input">
+					<input type="checkbox" id="useUsername"/>
+					<span class="inputName">Use username over display name</span>
+				</div>
+			</div>
+			<div class="section">
+				<div class="head">Message Settings</div>
+
+				<div class="input">
+					<span class="inputName">Font</span>
+					<select id="msgFont">
+					</select>
+				</div>
+
+				<div class="input">
+					<span class="inputName">Size</span>
+					<input id="msgSize" type="number" step="0.25" min="14" max="18"/>
+				</div>
+
+				<div class="input">
+					<span class="inputName">Weight</span>
+					<select id="msgWeight">
+					</select>
+				</div>
+
+				<div class="input">
+					<span class="inputName">Letter Spacing</span>
+					<input id="msgSpacing" type="number" step="0.1" min="-2" max="2"/>
+				</div>
+			</div>
+		</div>
+
+		<div class="sectionWrap">
+			<div class="section fullSection">
+				<div class="head">Available Identity Flags</div>
+				<div id="identityFlags"></div>
+				<div class="text">Use <span class="mono">!flags flag flag flag flag flag</span> to set your identity flags. As an example, to use the gay and trans flag: <span class="mono">!flags gay trans</span></div>
+				<div class="text">If you want a flag and/or symbol that's not up here, please let me know! My Discord is <span class="mono">TheBlackParrot#5285</span></div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="../settings.js"></script>
+
+	<script>
+		var fontData;
+		const weightEnums = {
+			"100": "Thin",
+			"200": "Extra Light",
+			"300": "Light",
+			"400": "Regular",
+			"500": "Medium",
+			"600": "Semi-Bold",
+			"700": "Bold",
+			"800": "Extra Bold",
+			"900": "Black"
+		};
+
+		// name color, name font, name size, italic name, name weight, name transform, name variant, name spacing, msg font, msg size, msg weight, msg spacing
+		var cmdData = [
+			"#BBBBBB",
+			"Manrope",
+			"16",
+			"no",
+			"900",
+			"uppercase",
+			"normal",
+			"1",
+			"Manrope",
+			"16",
+			"700",
+			"0",
+			"#FFFFFF",
+			"170",
+			"yes",
+			"no",
+			"squircle"
+		];
+
+		window.addEventListener("load", function(event) {
+			$.get("../fonts.json", function(data) {
+				fontData = data;
+				let fonts = Object.keys(fontData);
+				fonts.sort();
+				fonts.reverse();
+				
+				for(let fontIdx in fonts) {
+					let fontName = fonts[fontIdx];
+					let font = fontData[fontName];
+
+					if(font.allowed.names) {
+						$("#nameFont").prepend($("<option>", { value: fontName, text: fontName }));
+					}
+
+					if(font.allowed.messages) {
+						$("#msgFont").prepend($("<option>", { value: fontName, text: fontName }));
+					}
+				}
+
+				$("#nameWeight").val("900");
+				$("#msgWeight").val("700");
+
+				$("#nameFont").val("Manrope").trigger("change");
+				$("#msgFont").val("Manrope").trigger("change");
+			});
+
+			$("#nameColor").val("#BBBBBB");
+			$("#nameColorSecondary").val("#FFFFFF");
+			$("#nameAngle").val(170);
+			$("#nameSize").val(16);
+			$("#italicizeName").val(false);
+			$("#nameTransform").val("uppercase");
+			$("#nameVariant").val("normal");
+			$("#nameSpacing").val(1);
+			$("#showPfp").val(true);
+			$("#pfpShape").val("squircle").trigger("change");
+			$("#useUsername").val(false);
+
+			$("#msgSize").val(16);
+			$("#msgSpacing").val(0);
+
+			$("#testName").val("SampleUser69420");
+
+			$("#outputCommand").text(`!chatsettings ${cmdData.join(" ")}`);
+			let _flags = Object.keys(settings.flags);
+			_flags.sort();
+			for(let i in _flags) {
+				let flag = _flags[i];
+				$("#identityFlags").append(`<div><span class="flag${flag} flag" style="background-image: url('../flags/${settings.flags[flag]}'); display: inline-block;"></span> ${flag}</div>`);
+			}
+		});
+
+		$("#nameFont").on("change", function(e) {
+			let optionSelected = $("#nameFont:selected", this);
+			let font = this.value;
+
+			$("#nameWeight").empty();
+
+			let weights = Object.keys(fontData[font]);
+			if(!("700" in fontData[font])) {
+				weights.push("700");
+			}
+			weights.sort();
+
+			for(let weightIdx in weights) {
+				let weight = weights[weightIdx];
+
+				if(!isNaN(parseInt(weight))) {
+					$("#nameWeight").append($("<option>", { value: weight, text: `${weightEnums[weight]} (${weight})` }));
+				}
+			}
+
+			$("#nameWeight").trigger("change");
+
+			$(":root").get(0).style.setProperty(`--nameFont`, font);
+			updateCmdData(1, font.split(" ").join("_"));
+		});
+		$("#msgFont").on("change", function(e) {
+			let optionSelected = $("#msgFont:selected", this);
+			let font = this.value;
+
+			$("#msgWeight").empty();
+
+			let weights = Object.keys(fontData[font]);
+			if(!("700" in fontData[font])) {
+				weights.push("700");
+			}
+			weights.sort();
+
+			for(let weightIdx in weights) {
+				let weight = weights[weightIdx];
+				
+				if(!isNaN(parseInt(weight))) {
+					$("#msgWeight").append($("<option>", { value: weight, text: `${weightEnums[weight]} (${weight})` }));
+				}
+			}
+
+			$("#msgWeight").trigger("change");
+
+			$(":root").get(0).style.setProperty(`--msgFont`, font);
+			updateCmdData(8, font.split(" ").join("_"));
+		});
+
+		$("#nameColor").on("input", function(e) {
+			$(":root").get(0).style.setProperty(`--nameColor`, this.value);
+			updateCmdData(0, this.value);
+		});
+		$("#nameColorSecondary").on("input", function(e) {
+			$(":root").get(0).style.setProperty(`--nameColorSecondary`, this.value);
+			updateCmdData(12, this.value);
+		});
+
+		$("#nameAngle").on("input", function(e) {
+			$(":root").get(0).style.setProperty(`--nameAngle`, `${this.value}deg`);
+			updateCmdData(13, this.value);
+		});
+
+		$("#nameSize").on("change", function(e) {
+			$(":root").get(0).style.setProperty(`--nameSize`, `${this.value}pt`);
+			updateCmdData(2, this.value);
+		});
+		$("#msgSize").on("change", function(e) {
+			$(":root").get(0).style.setProperty(`--msgSize`, `${this.value}pt`);
+			updateCmdData(9, this.value);
+		});
+
+		$("#italicizeName").on("change", function(e) {
+			$(":root").get(0).style.setProperty(`--nameStyle`, ($("#italicizeName").is(":checked") ? "italic" : "normal"));
+			updateCmdData(3, ($("#italicizeName").is(":checked") ? "yes" : "no"));
+		});
+
+		$("#nameWeight").on("change", function(e) {
+			$(":root").get(0).style.setProperty(`--nameWeight`, this.value);
+			updateCmdData(4, this.value);
+		});
+		$("#msgWeight").on("change", function(e) {
+			$(":root").get(0).style.setProperty(`--msgWeight`, this.value);
+			updateCmdData(10, this.value);
+		});
+
+		$("#nameSpacing").on("change", function(e) {
+			$(":root").get(0).style.setProperty(`--nameSpacing`, `${this.value}px`);
+			updateCmdData(7, this.value);
+		});
+		$("#msgSpacing").on("change", function(e) {
+			$(":root").get(0).style.setProperty(`--msgSpacing`, `${this.value}px`);
+			updateCmdData(11, this.value);
+		});
+
+		$("#testName").on("input", function(e) {
+			$(".name").text(this.value);
+		});
+
+		$("#nameTransform").on("change", function(e) {
+			$(":root").get(0).style.setProperty(`--nameTransform`, this.value);
+			updateCmdData(5, this.value);
+		});
+
+		$("#nameVariant").on("change", function(e) {
+			$(":root").get(0).style.setProperty(`--nameVariant`, this.value);
+			updateCmdData(6, this.value);
+		});
+
+		$("#showPfp").on("change", function(e) {
+			$(":root").get(0).style.setProperty(`--showPfp`, ($("#showPfp").is(":checked") ? "inline-block" : "none"));
+			updateCmdData(14, ($("#showPfp").is(":checked") ? "yes" : "no"));
+		});
+
+		$("#useUsername").on("change", function(e) {
+			updateCmdData(15, ($("#useUsername").is(":checked") ? "yes" : "no"));
+		});
+
+		$("#pfpShape").on("change", function(e) {
+			let cssVal;
+			switch(this.value) {
+				case "square": cssVal = "0px"; break;
+				case "squircle": cssVal = "10px"; break;
+				case "circle": cssVal = "100%"; break;
+			}
+
+			$(":root").get(0).style.setProperty(`--pfpShape`, cssVal);
+			updateCmdData(16, this.value);
+		});
+
+		function updateCmdData(idx, value) {
+			cmdData[idx] = value;
+			$("#outputCommand").text(`!chatsettings ${cmdData.join(" ")}`);
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,385 @@
+:root {
+	--shadowStuff: drop-shadow(1px 0px 0px rgba(0, 0, 0, 0.45))
+			drop-shadow(1px -1px 0px rgba(0, 0, 0, 0.45))
+			drop-shadow(1px 1px 0px rgba(0, 0, 0, 0.45))
+			drop-shadow(0px -1px 0px rgba(0, 0, 0, 0.45))
+			drop-shadow(0px 1px 0px rgba(0, 0, 0, 0.45))
+			drop-shadow(-1px 0px 0px rgba(0, 0, 0, 0.45))
+			drop-shadow(-1px -1px 0px rgba(0, 0, 0, 0.45))
+			drop-shadow(-1px 1px 0px rgba(0, 0, 0, 0.45))
+			drop-shadow(0px 1px 2px #000);
+}
+
+@keyframes slideInKF {
+	0% {
+		opacity: 0;
+		transform: scale(0.9) translateY(50px);
+		filter: brightness(2.0) contrast(115%) blur(5px);
+	}
+
+	100% {
+		opacity: 1;
+		transform: scale(1.0) translateY(0px);
+		filter: brightness(1.0) contrast(100%) blur(0px);
+	}
+}
+@keyframes slideOutKF {
+	0% {
+		opacity: 1;
+		transform: scale(1.0) translateY(0px);
+		filter: blur(0px);
+	}
+	100% {
+		opacity: 0;
+		transform: scale(0.9) translateY(-100px);
+		filter: blur(5px);
+	}
+}
+@keyframes userInfoInKF {
+	0% {
+		transform: translateY(20px);
+	}
+
+	100% {
+		transform: translateY(0px);
+	}
+}
+@keyframes justFadeInKF {
+	from { opacity: 0; }
+	to { opacity: 1; }
+}
+.slideIn {
+	animation-name: slideInKF;
+	animation-duration: .5s;
+	animation-fill-mode: forwards;
+	animation-iteration-count: 1;
+	animation-timing-function: ease;
+}
+.slideOut {
+	animation-name: slideOutKF;
+	animation-duration: .5s;
+	animation-fill-mode: forwards;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+}
+.userInfoIn {
+	animation-name: userInfoInKF;
+	animation-duration: .5s;
+	animation-fill-mode: forwards;
+	animation-iteration-count: 1;
+	animation-timing-function: ease;
+}
+.justFadeIn {
+	animation-name: justFadeInKF;
+	animation-duration: .5s;
+	animation-fill-mode: forwards;
+	animation-iteration-count: 1;
+	animation-timing-function: ease;
+}
+
+body {
+	font-family: "Manrope";
+	font-weight: 900;
+	color: #fff;
+	background: #333;
+	font-size: 16pt;
+	overflow: hidden;
+}
+
+#wrapper {
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+	min-width: 500px;
+}
+
+.chatBlock {
+	margin: 18px;
+	margin-top: 20px;
+}
+.badges, .pronouns, .name, .message, .pfp, .flags, .bsrArt, .bsrMapInfo, .bsrExtraInfo {
+	filter: drop-shadow(1px 0px 0px rgba(0, 0, 0, 0.45))
+			drop-shadow(1px -1px 0px rgba(0, 0, 0, 0.45))
+			drop-shadow(1px 1px 0px rgba(0, 0, 0, 0.45))
+			drop-shadow(0px -1px 0px rgba(0, 0, 0, 0.45))
+			drop-shadow(0px 1px 0px rgba(0, 0, 0, 0.45))
+			drop-shadow(-1px 0px 0px rgba(0, 0, 0, 0.45))
+			drop-shadow(-1px -1px 0px rgba(0, 0, 0, 0.45))
+			drop-shadow(-1px 1px 0px rgba(0, 0, 0, 0.45))
+			drop-shadow(0px 1px 2px #000);
+}
+
+.userInfo {
+	margin-bottom: 4px;
+}
+.userInfo div {
+	display: inline-block;
+	margin-right: 14px;
+}
+.userInfo div:last-child {
+	margin-right: 0px;
+}
+
+.chatBlock:first-child .userInfo {
+	display: block !important;
+}
+
+.badges, .flags {
+	vertical-align: middle;
+}
+.badges img {
+	width: 28px;
+	height: 28px;
+	margin-right: 2px;
+	vertical-align: sub; /* wtf */
+}
+
+.badges img:last-child, .flags img:last-child {
+	margin-right: 0px;
+}
+
+.flag {
+	width: 22px;
+	height: 22px;
+	background-size: cover;
+    background-position: center;
+    border-radius: 5px;
+    margin-right: 2px;
+}
+
+.name {
+	font-weight: 900;
+	-webkit-text-stroke: 1.25px transparent;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	vertical-align: middle;
+	padding-right: 4px;
+	height: 34px;
+	line-height: 34px;
+}
+
+.pronouns {
+	font-weight: 900;
+	text-transform: uppercase;
+	-webkit-text-stroke: 0.5px transparent;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	font-size: 12pt;
+	vertical-align: middle;
+	background-image: linear-gradient(170deg, rgb(255, 255, 255) -20%, rgb(128,128,128) 100%);
+}
+
+.emote {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    padding: 0.4em 0.3em;
+}
+.emote img {
+	opacity: 0;
+	display: inline-block;
+	height: 1em;
+}
+
+.message {
+	word-wrap: break-word;
+	line-height: 28px;
+	font-weight: 700;
+}
+
+.actionMessage {
+	font-style: italic;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+em {
+	font-style: italic;
+	padding-right: 4px;
+}
+strong {
+	background-color: #fff;
+	-webkit-text-stroke: 1.2px transparent;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+pre {
+	display: inline;
+}
+tt, code, pre {
+	background-color: rgba(0, 0, 0, 0.33);
+	font-family: monospace;
+	font-size: 14pt;
+	padding: 3px;
+}
+
+.pfp {
+	width: 34px;
+    margin-right: 10px;
+    vertical-align: middle;
+    border-radius: 10px;
+}
+
+.highlighted {
+	background: rgba(255, 255, 255, 0.25);
+	padding: 14px;
+	border-left: 8px solid #fff;
+	border-radius: 8px;
+	box-shadow: 0px 6px 4px -4px #000;
+}
+
+.bsrInfo {
+	word-wrap: break-word;
+	line-height: 26px;
+	margin-top: 12px;
+	white-space: nowrap;
+}
+
+.loading {
+	font-style: italic;
+	font-size: 14pt;
+	font-weight: 600;
+}
+
+.bsrArt, .bsrArt img, .bsrCode {
+	display: inline-block;
+	width: 80px;
+}
+.bsrArt, .bsrArt img {
+	height: 80px;
+}
+
+.bsrArt, .bsrCode {
+	margin-right: 10px;
+}
+
+.bsrArt img {
+	border-radius: 12px;
+}
+
+.bsrMapInfo {
+	display: inline-block;
+	vertical-align: top;
+	font-style: normal;
+	height: 86px;
+}
+
+.songTitle {
+	font-size: 18pt;
+	font-weight: 900;
+	position: relative;
+	top: 3px;
+	white-space: nowrap;
+}
+.songArtist {
+	font-weight: 600;
+	position: relative;
+	top: 5px;
+	white-space: nowrap;
+}
+.mapper {
+	font-weight: 600;
+	font-size: 11pt;
+	position: relative;
+	top: 2px;
+	white-space: nowrap;
+}
+
+.mapper:before {
+	content: "mapped by ";
+	opacity: 0.5;
+}
+
+.bsrExtraInfo {
+	font-style: normal;
+	font-size: 12pt;
+	font-weight: 900;
+	margin-top: 4px;
+	line-height: 20px;
+}
+
+.bsrCode {
+    background-image: linear-gradient(170deg, #333, #000);
+    border-radius: 4px;
+	text-align: center;
+}
+.bsrStats {
+	display: inline-block;
+}
+.bsrStats span {
+	margin-right: 24px;
+}
+.fa-thumbs-down {
+	margin-left: 10px;
+}
+.fas {
+	margin-right: 2px;
+}
+
+@keyframes omgRainbowKF {
+    from { background-position: 0px 0px; }
+    to { background-position: 600px 600px; }
+}
+
+.STREAMER_CAN_YOU_PLAY_REALITY_CHECK_ITS_MY_FAVORITE_MAP span,
+.STREAMER_CAN_YOU_PLAY_REALITY_CHECK_ITS_MY_FAVORITE_MAP div {
+	font-family: "Comic Neue";
+	background-size: 600px 600px;
+	background-repeat: repeat;
+	background-image: linear-gradient(
+		-90deg,
+		#F44 0%,
+		#FF0 16.67%,
+		#0F0 33.3%,
+		#4FF 50%,
+		#4AF 66.67%,
+		#F7F 83.33%,
+		#F44 100%
+	);
+	animation-name: omgRainbowKF;
+	animation-duration: 5s;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+.STREAMER_CAN_YOU_PLAY_REALITY_CHECK_ITS_MY_FAVORITE_MAP .mapper:before {
+	font-family: "Comic Neue";
+	content: "mapped by ";
+	background-size: 600px 600px;
+	background-repeat: repeat;
+	background-image: linear-gradient(
+		-90deg,
+		#F44 0%,
+		#FF0 16.67%,
+		#0F0 33.3%,
+		#4FF 50%,
+		#4AF 66.67%,
+		#F7F 83.33%,
+		#F44 100%
+	);
+	animation-name: omgRainbowKF;
+	animation-duration: 5s;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.STREAMER_CAN_YOU_PLAY_REALITY_CHECK_ITS_MY_FAVORITE_MAP .bsrCode {
+	animation-name: unset;
+	background-size: unset;
+	background-repeat: unset;
+    background-image: linear-gradient(170deg, #333, #000);
+    -webkit-background-clip: initial;
+    -webkit-text-fill-color: white;
+}
+
+img.emoji {
+   height: 1em;
+   width: 1em;
+   margin: 0 .05em 0 .1em;
+   vertical-align: -0.1em;
+}
