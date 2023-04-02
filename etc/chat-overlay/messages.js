@@ -602,15 +602,21 @@ function parseMessage(data) {
 	$(":root").get(0).style.setProperty(`--pfpShape${data.user.id}`, localStorage.getItem(`pfpShape_${data.user.id}`));
 	pfpBlock.css("border-radius", `var(--pfpShape${data.user.id})`);
 
-	if(data.user.badges.list) {
-		// todo: setting to bypass the role check on this
-		if("vip" in data.user.badges.list || "moderator" in data.user.badges.list || "subscriber" in data.user.badges.list || "broadcaster" in data.user.badges.list) {
-			if(!localStorage.getItem(`showpfp_${data.user.id}`)) { localStorage.setItem(`showpfp_${data.user.id}`, "yes"); }
+	if(!settings.chat.alwaysShowPFP) {
+		if(data.user.badges.list) {
+			if("vip" in data.user.badges.list || "moderator" in data.user.badges.list || "subscriber" in data.user.badges.list || "broadcaster" in data.user.badges.list) {
+				if(!localStorage.getItem(`showpfp_${data.user.id}`)) { localStorage.setItem(`showpfp_${data.user.id}`, "yes"); }
 
-			if(localStorage.getItem(`showpfp_${data.user.id}`) === "yes") {
-				userBlock.append(pfpBlock);
-				pfpBlock.show();
+				if(localStorage.getItem(`showpfp_${data.user.id}`) === "yes") {
+					userBlock.append(pfpBlock);
+					pfpBlock.show();
+				}
 			}
+		}
+	} else {
+		if(localStorage.getItem(`showpfp_${data.user.id}`) !== "no") {
+			userBlock.append(pfpBlock);
+			pfpBlock.show();
 		}
 	}
 

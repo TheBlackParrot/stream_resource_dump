@@ -1,6 +1,7 @@
 const settings = {
 	chat: {
 		secondsVisible: 45,
+		alwaysShowPFP: false,
 		hideAccounts: [
 			"streamlabs",
 			"streamelements",
