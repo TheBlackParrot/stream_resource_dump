@@ -325,7 +325,7 @@ const chatFuncs = {
 	},
 	"flag": function(data, args) { chatFuncs["flags"](data, args); },
 
-	"bsr": function(data, args) {
+	"bsr": function(data, args, msgElement) {
 		// todo: add a setting to disable this
 		// very much future todo: make this an external script or something. make a plugin system. idk.
 		if(!args.length) {
@@ -336,7 +336,12 @@ const chatFuncs = {
 			return;
 		}
 
-		let msgElement = $(`.chatBlock[data-msgUUID="${data.uuid}"]`);
+		if(!msgElement) {
+			// god i need to refactor this system
+			return true;
+		}
+
+		//let msgElement = $(`.chatBlock[data-msgUUID="${data.uuid}"]`);
 		msgElement.children(".message").remove();
 
 		let infoElement = $(`<div class="bsrInfo loading"></div>`);
@@ -395,8 +400,6 @@ const chatFuncs = {
 				infoElement.append(metadataElement).append(extraDataElement);
 			});
 		});
-
-		return true;
 	},
 
 	refreshpronouns: function(data, callback) {
@@ -792,7 +795,7 @@ function parseMessage(data) {
 	$("#wrapper").append(rootElement);
 
 	if(typeof wantedCommand === "function") {
-		wantedCommand(data, wantedArgs);
+		wantedCommand(data, wantedArgs, rootElement);
 	}
 
 	setTimeout(function() {
