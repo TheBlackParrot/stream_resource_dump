@@ -2,6 +2,8 @@ const settings = {
 	chat: {
 		secondsVisible: 45,
 		alwaysShowPFP: false,
+		opacityDecreaseStep: 0.07,
+		commandCharacter: "!",
 		hideAccounts: [
 			"streamlabs",
 			"streamelements",
@@ -18,7 +20,15 @@ const settings = {
 		],
 	},
 
+	cache: {
+		expireDelay: 604800
+	},
+
 	limits: {
+		bigEmoji: {
+			max: 10
+		},
+		
 		flags: {
 			max: 6
 		},
