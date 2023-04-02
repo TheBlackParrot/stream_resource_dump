@@ -232,7 +232,6 @@ const chatFuncs = {
 	},
 
 	"nametransform": function(data, args) {
-		// todo: normalize this with the pfpshape command, that should run better
 		let valid = ["none", "lowercase", "uppercase"];
 		let chosen = valid[0];
 
@@ -251,7 +250,6 @@ const chatFuncs = {
 	},
 
 	"namevariant": function(data, args) {
-		// todo: normalize this with the pfpshape command, that should run better
 		let valid = ["normal", "small-caps", "unicase"];
 		let chosen = valid[0];
 
@@ -397,9 +395,11 @@ const chatFuncs = {
 				infoElement.append(metadataElement).append(extraDataElement);
 			});
 		});
+
+		return true;
 	},
 
-	refreshpronouns: function(data) {
+	refreshpronouns: function(data, callback) {
 		$.get(`https://pronouns.alejo.io/api/users/${data.user.username}`, function(pnData) {
 			let fetched = { pronoun_id: "NONE" };
 			if(pnData.length) {
@@ -411,6 +411,10 @@ const chatFuncs = {
 			localStorage.setItem(`pn_${data.user.id}`, fetched.pronoun_id);
 			localStorage.setItem(`pn_${data.user.id}_expiry`, expiresAt);
 			console.log(`cached pronouns for ${data.user.username}, expires at ${new Date(expiresAt)}`);
+
+			if(typeof callback === "function") {
+				callback(fetched);
+			}
 		});
 	},
 
@@ -469,15 +473,12 @@ function parseMessage(data) {
 			wantedCommand = chatFuncs[cmd];
 		}
 
-		if(data.message.substr(0, 4) === "!bsr") {
-			// todo: move this outside of parseMessage
-			if(data.message.split(" ").length < 2) {
-				return;
-			}
-		} else {
-			if(typeof wantedCommand === "function") {
-				wantedCommand(data, wantedArgs);
-			}
+		let continueOn = false;
+		if(typeof wantedCommand === "function") {
+			continueOn = wantedCommand(data, wantedArgs);
+		}
+
+		if(!continueOn) {
 			return;
 		}
 	}
@@ -547,25 +548,13 @@ function parseMessage(data) {
 	}
 
 	if(recachePronouns) {
-		// todo: merge this and the !refreshpronouns command
 		console.log(`refreshing pronoun cache for ${data.user.username}`);
-		$.get(`https://pronouns.alejo.io/api/users/${data.user.username}`, function(pnData) {
-			let fetched = { pronoun_id: "NONE" };
-			if(pnData.length) {
-				fetched = pnData[0];
-			}
-
-			let expiresAt = Date.now() + (604800*1000);
-
-			localStorage.setItem(`pn_${data.user.id}`, fetched.pronoun_id);
-			localStorage.setItem(`pn_${data.user.id}_expiry`, expiresAt);
-			console.log(`cached pronouns for ${data.user.username}, expires at ${new Date(expiresAt)}`);
-
+		chatFuncs["refreshpronouns"](data, function(fetched) {
 			if(fetched.pronoun_id !== "NONE") {
 				pronounsBlock.text(pn[fetched.pronoun_id]);
 				pronounsBlock.show();
-			}
-		}) 
+			}			
+		});
 	} else {
 		if(pn[pronouns]) {
 			pronounsBlock.text(pn[pronouns]);
@@ -577,10 +566,22 @@ function parseMessage(data) {
 
 	let pfpBlock = $('<img class="pfp" src="" style="display: none;"/>');
 	let pfpURL = localStorage.getItem(`pfp_${data.user.id}`);
-	if(!pfpURL) {
-		// todo: add an expiry variable for this cached thing
-		console.log(`pfp not cached for ${data.user.username}`);
+	let pfpExpiry = parseInt(localStorage.getItem(`pfp_${data.user.id}_expiry`));
+	let recachePfp = false;
 
+	if(pfpURL) {
+		console.log(`pfp cached for ${data.user.username}`);
+
+		if(Date.now() > pfpExpiry || isNaN(pfpExpiry)) {
+			recachePfp = true;
+			console.log("...however, it is out of date");
+		}
+	} else {
+		recachePfp = true;
+	}
+
+	if(recachePfp) {
+		console.log(`refreshing pfp cache for ${data.user.username}`);
 		callTwitch({
 			"endpoint": "users",
 			"args": {
@@ -589,6 +590,7 @@ function parseMessage(data) {
 		}, function(rawUserResponse) {
 			console.log(rawUserResponse);
 			localStorage.setItem(`pfp_${data.user.id}`, rawUserResponse.data[0].profile_image_url);
+			localStorage.setItem(`pfp_${data.user.id}_expiry`, Date.now() + (604800*1000));
 			pfpBlock.attr("src", rawUserResponse.data[0].profile_image_url);
 		});
 	} else {
