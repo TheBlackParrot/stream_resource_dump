@@ -395,7 +395,7 @@
 					if(storedValue === null) {
 						localStorage.setItem(setting, settingValue);
 					} else {
-						settingValue = storedValue;
+						settingValue = storedValue.split("_").join(" ");
 						userSettings[setting] = storedValue;
 					}
 					let isBool = false;
