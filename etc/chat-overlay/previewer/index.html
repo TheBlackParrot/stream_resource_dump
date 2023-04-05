@@ -347,6 +347,27 @@
 			"squircle"
 		];
 
+		let userSettings = {
+			nameFont: "Manrope",
+			msgFont: "Manrope",
+			nameColor: "#BBBBBB",
+			nameColorSecondary: "#FFFFFF",
+			nameAngle: 170,
+			nameSize: 16,
+			italicizeName: "no",
+			nameTransform: "uppercase",
+			nameVariant: "normal",
+			nameSpacing: 1,
+			showPfp: "yes",
+			pfpShape: "squircle",
+			useUsername: "no",
+			msgSize: 16,
+			msgSpacing: 0,
+			testName: "SampleUser69420",
+			nameWeight: 900,
+			msgWeight: 700
+		};
+
 		window.addEventListener("load", function(event) {
 			$.get("../fonts.json", function(data) {
 				fontData = data;
@@ -367,31 +388,41 @@
 					}
 				}
 
-				$("#nameWeight").val("900");
-				$("#msgWeight").val("700");
+				for(let setting in userSettings) {
+					let settingValue = userSettings[setting];
+					let storedValue = localStorage.getItem(setting);
+					
+					if(storedValue === null) {
+						localStorage.setItem(setting, settingValue);
+					} else {
+						settingValue = storedValue;
+						userSettings[setting] = storedValue;
+					}
+					let isBool = false;
+					if(settingValue === "yes" || settingValue === "no") {
+						settingValue = (settingValue === "yes" ? true : false);
+						isBool = true;
+					}
+					if(setting.indexOf("Weight") !== -1) {
+						settingValue = parseInt(settingValue);
+					}
 
-				$("#nameFont").val("Manrope").trigger("change");
-				$("#msgFont").val("Manrope").trigger("change");
+					console.log(setting, settingValue);
+					$(`#${setting}`).val(settingValue);
+
+					if(isBool) {
+						if(settingValue) {
+							$(`#${setting}`).attr("checked", true);
+						} else {
+							$(`#${setting}`).removeAttr("checked");
+						}
+					}
+					$(`#${setting}`).trigger("change").trigger("input");
+				}
 			});
 
-			$("#nameColor").val("#BBBBBB");
-			$("#nameColorSecondary").val("#FFFFFF");
-			$("#nameAngle").val(170);
-			$("#nameSize").val(16);
-			$("#italicizeName").val(false);
-			$("#nameTransform").val("uppercase");
-			$("#nameVariant").val("normal");
-			$("#nameSpacing").val(1);
-			$("#showPfp").val(true);
-			$("#pfpShape").val("squircle").trigger("change");
-			$("#useUsername").val(false);
-
-			$("#msgSize").val(16);
-			$("#msgSpacing").val(0);
-
-			$("#testName").val("SampleUser69420");
-
 			$("#outputCommand").text(`!chatsettings ${cmdData.join(" ")}`);
+
 			let _flags = Object.keys(settings.flags);
 			_flags.sort();
 			for(let i in _flags) {
@@ -412,18 +443,28 @@
 			}
 			weights.sort();
 
+			let oldWeight = parseInt(localStorage.getItem("nameWeight"));
+			let lastDiff = 1000;
+			let wantedWeight = 100;
+
 			for(let weightIdx in weights) {
 				let weight = weights[weightIdx];
 
 				if(!isNaN(parseInt(weight))) {
 					$("#nameWeight").append($("<option>", { value: weight, text: `${weightEnums[weight]} (${weight})` }));
+					let diff = Math.abs(parseInt(weight) - oldWeight);
+					if(diff < lastDiff) {
+						wantedWeight = parseInt(weight);
+						lastDiff = diff;
+					}
 				}
 			}
 
+			$("#nameWeight").val(wantedWeight);
 			$("#nameWeight").trigger("change");
 
 			$(":root").get(0).style.setProperty(`--nameFont`, font);
-			updateCmdData(1, font.split(" ").join("_"));
+			updateCmdData(1, "nameFont", font.split(" ").join("_"));
 		});
 		$("#msgFont").on("change", function(e) {
 			let optionSelected = $("#msgFont:selected", this);
@@ -437,87 +478,98 @@
 			}
 			weights.sort();
 
+			let oldWeight = parseInt(localStorage.getItem("msgWeight"));
+			let lastDiff = 1000;
+			let wantedWeight = 100;
+
 			for(let weightIdx in weights) {
 				let weight = weights[weightIdx];
-				
+
 				if(!isNaN(parseInt(weight))) {
 					$("#msgWeight").append($("<option>", { value: weight, text: `${weightEnums[weight]} (${weight})` }));
+					let diff = Math.abs(parseInt(weight) - oldWeight);
+					if(diff < lastDiff) {
+						wantedWeight = parseInt(weight);
+						lastDiff = diff;
+					}
 				}
 			}
 
+			$("#msgWeight").val(wantedWeight);
 			$("#msgWeight").trigger("change");
 
 			$(":root").get(0).style.setProperty(`--msgFont`, font);
-			updateCmdData(8, font.split(" ").join("_"));
+			updateCmdData(8, "msgFont", font.split(" ").join("_"));
 		});
 
 		$("#nameColor").on("input", function(e) {
 			$(":root").get(0).style.setProperty(`--nameColor`, this.value);
-			updateCmdData(0, this.value);
+			updateCmdData(0, "nameColor", this.value);
 		});
 		$("#nameColorSecondary").on("input", function(e) {
 			$(":root").get(0).style.setProperty(`--nameColorSecondary`, this.value);
-			updateCmdData(12, this.value);
+			updateCmdData(12, "nameColorSecondary", this.value);
 		});
 
 		$("#nameAngle").on("input", function(e) {
 			$(":root").get(0).style.setProperty(`--nameAngle`, `${this.value}deg`);
-			updateCmdData(13, this.value);
+			updateCmdData(13, "nameAngle", this.value);
 		});
 
 		$("#nameSize").on("change", function(e) {
 			$(":root").get(0).style.setProperty(`--nameSize`, `${this.value}pt`);
-			updateCmdData(2, this.value);
+			updateCmdData(2, "nameSize", this.value);
 		});
 		$("#msgSize").on("change", function(e) {
 			$(":root").get(0).style.setProperty(`--msgSize`, `${this.value}pt`);
-			updateCmdData(9, this.value);
+			updateCmdData(9, "msgSize", this.value);
 		});
 
 		$("#italicizeName").on("change", function(e) {
 			$(":root").get(0).style.setProperty(`--nameStyle`, ($("#italicizeName").is(":checked") ? "italic" : "normal"));
-			updateCmdData(3, ($("#italicizeName").is(":checked") ? "yes" : "no"));
+			updateCmdData(3, "italicizeName", ($("#italicizeName").is(":checked") ? "yes" : "no"));
 		});
 
 		$("#nameWeight").on("change", function(e) {
 			$(":root").get(0).style.setProperty(`--nameWeight`, this.value);
-			updateCmdData(4, this.value);
+			updateCmdData(4, "nameWeight", this.value);
 		});
 		$("#msgWeight").on("change", function(e) {
 			$(":root").get(0).style.setProperty(`--msgWeight`, this.value);
-			updateCmdData(10, this.value);
+			updateCmdData(10, "msgWeight", this.value);
 		});
 
 		$("#nameSpacing").on("change", function(e) {
 			$(":root").get(0).style.setProperty(`--nameSpacing`, `${this.value}px`);
-			updateCmdData(7, this.value);
+			updateCmdData(7, "nameSpacing", this.value);
 		});
 		$("#msgSpacing").on("change", function(e) {
 			$(":root").get(0).style.setProperty(`--msgSpacing`, `${this.value}px`);
-			updateCmdData(11, this.value);
+			updateCmdData(11, "msgSpacing", this.value);
 		});
 
 		$("#testName").on("input", function(e) {
 			$(".name").text(this.value);
+			localStorage.setItem("testName", this.value);
 		});
 
 		$("#nameTransform").on("change", function(e) {
 			$(":root").get(0).style.setProperty(`--nameTransform`, this.value);
-			updateCmdData(5, this.value);
+			updateCmdData(5, "nameTransform", this.value);
 		});
 
 		$("#nameVariant").on("change", function(e) {
 			$(":root").get(0).style.setProperty(`--nameVariant`, this.value);
-			updateCmdData(6, this.value);
+			updateCmdData(6, "nameVariant", this.value);
 		});
 
 		$("#showPfp").on("change", function(e) {
 			$(":root").get(0).style.setProperty(`--showPfp`, ($("#showPfp").is(":checked") ? "inline-block" : "none"));
-			updateCmdData(14, ($("#showPfp").is(":checked") ? "yes" : "no"));
+			updateCmdData(14, "showPfp", ($("#showPfp").is(":checked") ? "yes" : "no"));
 		});
 
 		$("#useUsername").on("change", function(e) {
-			updateCmdData(15, ($("#useUsername").is(":checked") ? "yes" : "no"));
+			updateCmdData(15, "useUsername", ($("#useUsername").is(":checked") ? "yes" : "no"));
 		});
 
 		$("#pfpShape").on("change", function(e) {
@@ -529,11 +581,15 @@
 			}
 
 			$(":root").get(0).style.setProperty(`--pfpShape`, cssVal);
-			updateCmdData(16, this.value);
+			updateCmdData(16, "pfpShape", this.value);
 		});
 
-		function updateCmdData(idx, value) {
+		function updateCmdData(idx, key, value) {
 			cmdData[idx] = value;
+			userSettings[key] = value;
+
+			localStorage.setItem(key, value);
+			
 			$("#outputCommand").text(`!chatsettings ${cmdData.join(" ")}`);
 		}
 	</script>
