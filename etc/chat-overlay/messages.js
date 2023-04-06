@@ -332,7 +332,12 @@ const chatFuncs = {
 			return;
 		}
 
-		if(!(/[0-9a-f]$/i).test(args[0])) {
+		if(args[0].length > 5) {
+			return;
+		}
+
+		args[0] = args[0].toLowerCase();
+		if(!(/^[0-9a-f]+$/i).test(args[0])) {
 			return;
 		}
 
@@ -409,7 +414,7 @@ const chatFuncs = {
 				fetched = pnData[0];
 			}
 
-			let expiresAt = Date.now() + (604800*1000);
+			let expiresAt = Date.now() + (settings.cache.expireDelay * 1000);
 
 			localStorage.setItem(`pn_${data.user.id}`, fetched.pronoun_id);
 			localStorage.setItem(`pn_${data.user.id}_expiry`, expiresAt);
@@ -466,7 +471,7 @@ function parseMessage(data) {
 
 	let wantedCommand;
 	let wantedArgs;
-	if(data.message[0] === "!") {
+	if(data.message[0] === settings.chat.commandCharacter) {
 		let parts = data.message.substr(1).split(" ");
 		
 		let cmd = parts[0].toLowerCase();
@@ -593,7 +598,7 @@ function parseMessage(data) {
 		}, function(rawUserResponse) {
 			console.log(rawUserResponse);
 			localStorage.setItem(`pfp_${data.user.id}`, rawUserResponse.data[0].profile_image_url);
-			localStorage.setItem(`pfp_${data.user.id}_expiry`, Date.now() + (604800*1000));
+			localStorage.setItem(`pfp_${data.user.id}_expiry`, Date.now() + (settings.cache.expireDelay * 1000));
 			pfpBlock.attr("src", rawUserResponse.data[0].profile_image_url);
 		});
 	} else {
@@ -771,7 +776,7 @@ function parseMessage(data) {
 
 		let count = 0;
 		messageBlock.children(".emote,.emoji").each(function() {
-			if(count >= 10) {
+			if(count >= settings.limits.bigEmoji.max) {
 				$(this).remove();
 			}
 			count++;
@@ -782,7 +787,7 @@ function parseMessage(data) {
 
 	$(".chatBlock").each(function() {
 		let e = $(this);
-		let opacity = 1 - ((messageCount - parseInt($(this).attr("data-msgIdx")))*0.07);
+		let opacity = 1 - ((messageCount - parseInt($(this).attr("data-msgIdx"))) * settings.chat.opacityDecreaseStep);
 
 		$(this).children(".userInfo,.bsrInfo").css("transition", ".5s").css("filter", `opacity(${opacity})`);
 		$(this).children(".message").css("transition", ".5s").css("filter", `var(--shadowStuff) opacity(${opacity})`);

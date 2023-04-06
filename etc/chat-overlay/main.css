@@ -97,7 +97,7 @@ body {
 	margin: 18px;
 	margin-top: 20px;
 }
-.badges, .pronouns, .name, .message, .pfp, .flags, .bsrArt, .bsrMapInfo, .bsrExtraInfo {
+.badges, .pronouns, .name, .message, .pfp, .flags, .bsrArt, .bsrMapInfo, .bsrExtraInfo, .loading span, .loading i {
 	filter: drop-shadow(1px 0px 0px rgba(0, 0, 0, 0.45))
 			drop-shadow(1px -1px 0px rgba(0, 0, 0, 0.45))
 			drop-shadow(1px 1px 0px rgba(0, 0, 0, 0.45))
@@ -235,6 +235,7 @@ tt, code, pre {
 	line-height: 26px;
 	margin-top: 12px;
 	white-space: nowrap;
+	margin-bottom: 12px;
 }
 
 .loading {
