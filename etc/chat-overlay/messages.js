@@ -350,7 +350,7 @@ const chatFuncs = {
 		msgElement.children(".message").remove();
 
 		let infoElement = $(`<div class="bsrInfo loading"></div>`);
-		infoElement.html(`<i class="fas fa-spinner fa-pulse"></i> <span style="opacity: 0.67; margin-left: 6px;">getting information for <strong>${args[0]}</strong>...</span>`);
+		infoElement.html(`<i class="fas fa-spinner fa-pulse"></i> <span style="opacity: 0.67; margin-left: 6px;" class="loadingMsg">getting information for <strong>${args[0]}</strong>...</span>`);
 
 		msgElement.append(infoElement);
 
@@ -375,7 +375,7 @@ const chatFuncs = {
 				}
 
 				if(!canShowInfo) {
-					infoElement.html(`<i class="fas fa-times"></i> <span style="opacity: 0.67; margin-left: 6px;">could not show information for ${mapData.id}, BeatSaver account is too new</span>`);
+					infoElement.html(`<i class="fas fa-times"></i> <span style="opacity: 0.67; margin-left: 6px;" class="loadingMsg">could not show information for ${mapData.id}, BeatSaver account is too new</span>`);
 					return;
 				}
 
