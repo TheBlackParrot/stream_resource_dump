@@ -362,26 +362,26 @@ function doAlert() {
 			let alertAudioElem = $(`<audio id="alertAudio" autoplay style="position: absolute; bottom: -300px;" src="sounds/${alertData.audio}"></audio>`);
 			alertParentElem.append(alertAudioElem);
 
-	        alertAudioElem[0].oncanplaythrough = function(event) {
-	        	alertAudioElem[0].play();
-	        }
+			alertAudioElem[0].oncanplaythrough = function(event) {
+				alertAudioElem[0].play();
+			}
 		}
 
 		if(alertData.doTTS) {
-	        const req = new XMLHttpRequest()
-	        req.open('POST', `https://tiktok-tts.weilnet.workers.dev/api/generation`, false)
-	        req.setRequestHeader('Content-Type', 'application/json')
-	        req.send(JSON.stringify({
-	            text: `${alertData.name === "" ? alertData.username : alertData.name} ${alertMsgElem.text()}`,
-	            voice: "en_us_001"
-	        }));
+			const req = new XMLHttpRequest()
+			req.open('POST', `https://tiktok-tts.weilnet.workers.dev/api/generation`, false)
+			req.setRequestHeader('Content-Type', 'application/json')
+			req.send(JSON.stringify({
+				text: `${alertData.name === "" ? alertData.username : alertData.name} ${alertMsgElem.text()}`,
+				voice: "en_us_001"
+			}));
 
-	        let resp = JSON.parse(req.responseText);
-	        console.log(resp);
+			let resp = JSON.parse(req.responseText);
+			console.log(resp);
 
-	        if(resp.data === null) {
-	        	processAlertsTO = setTimeout(processAlerts, 7000);
-	        } else {
+			if(resp.data === null) {
+				processAlertsTO = setTimeout(processAlerts, 7000);
+			} else {
 				ttsAudioElem[0].src = `data:audio/mpeg;base64,${resp.data}`;
 				ttsAudioElem[0].volume = 0.67;
 				ttsAudioElem[0].oncanplaythrough = function(event) {
@@ -392,7 +392,7 @@ function doAlert() {
 					console.log("ENDED");
 					processAlertsTO = setTimeout(processAlerts, 2500);
 				}
-	        }
+			}
 		} else {
 			processAlertsTO = setTimeout(processAlerts, 7000);
 		}
