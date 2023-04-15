@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" type="text/css" href="reset.css">
+	<link rel="stylesheet" type="text/css" href="main.css">
+
+	<link rel="stylesheet" type="text/css" href="fontawesome-free-5.15.4-web/css/all.min.css">
+
+	<script type="text/javascript" src="jquery-3.6.0.min.js"></script>
+	<script type="text/javascript" src="jquery.marquee.min.js"></script>
+</head>
+
+<body>
+	<div id="testBar">
+	</div>
+
+	<img id="artOutline" src=""/>
+	<img id="artBG" src=""/>
+	<img id="art" src=""/>
+	<div id="artShadow"></div>
+
+	<div id="title"><span id="titleString"></span></div>
+	<div id="timeWrap">
+		<i class="fas fa-clock fa-fw"></i>
+		<span id="time">0:00</span>
+		<span id="duration">0:00</span>
+	</div>
+	<div id="secondary"></div>
+
+	<div id="comboWrap">
+		<i class="fa-fw fas fa-link"></i>
+		<div id="combo">
+			<div id="comboNums">
+				<span class="comboNum" id="comboNum0">0</span>
+			</div>
+		</div>
+	</div>
+
+	<div id="accWrap">
+		<div id="acc">
+			<span class="accNum" id="accNum0">0</span>
+			<span class="accNum" id="accNum1">0</span>
+			<span class="accDot">.</span>
+			<span class="accNum" id="accNum2">0</span>
+			<span class="accNum" id="accNum3">0</span>
+		</div>
+		<span id="accPerc">%</span>
+	</div>
+
+	<div id="hitMiss">
+		<i class="fa-fw fas fa-check"></i>
+		<div id="bloqsHit">
+			<span id="hitValue">0</span>
+		</div>
+
+		<br/>
+
+		<i class="fa-fw fas fa-star"></i>
+		<div id="bloqsFC">
+			<span>FC</span>
+		</div>
+
+		<i class="fa-fw fas fa-times" style="display: none;"></i>
+		<div id="bloqsMissed" style="display: none;">
+			<span id="missValue">0</span>
+		</div>
+	</div>
+
+	<div id="diffWrap">
+		<div id="diffIcon"></div>
+		<span id="diff">Uhhhh</span>
+	</div>
+
+	<div id="codeWrap" style="display: none;">
+		<span>!bsr </span><span id="bsrCode">1ad3b</span>
+	</div>
+
+	<script type="text/javascript" src="main.js"></script>
+	<script>
+		$("#comboWrap").css("width", $("#accWrap").css("width"));
+		$("#diffWrap").css("width", $("#timeWrap").css("width"));
+		$("#codeWrap").css("width", $("#timeWrap").css("width"));
+	</script>
+</body>
+
+</html>
