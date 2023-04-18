@@ -11,7 +11,7 @@
     "Sabers": true
   },
   "type": "FirstPerson",
-  "FOV": 50.0,
+  "FOV": 60.0,
   "layer": 2,
   "antiAliasing": 2,
   "renderScale": 1.0,
@@ -21,7 +21,7 @@
   "viewRect": {
     "x": 0.0,
     "y": 0.0,
-    "width": 1.39,
+    "width": 1.46,
     "height": 1.0,
     "locked": false
   },
@@ -55,11 +55,11 @@
   },
   "targetPos": {
     "x": 0.0,
-    "y": -0.07,
-    "z": -1.4
+    "y": -0.15,
+    "z": -1.2
   },
   "targetRot": {
-    "x": 2.6,
+    "x": 1.0,
     "y": 0.0,
     "z": 0.0
   }
