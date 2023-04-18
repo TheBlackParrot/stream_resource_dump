@@ -3,49 +3,29 @@
     "Menu": [
       "Menu"
     ],
-    "MultiplayerMenu": [
-      "Static Thirdperson"
-    ],
-    "Playing": [
-      "Facecam",
-      "Static Thirdperson",
-      "Centered FPV"
-    ],
-    "Playing360": [
-      "Static Thirdperson"
-    ],
-    "PlayingModmap": [
-      "Facecam",
-      "Static Thirdperson",
-      "Centered FPV"
-    ],
-    "PlayingMulti": [
-      "Static Thirdperson"
-    ],
-    "Replay": [
-      "Facecam",
-      "Centered FPV"
-    ],
+    "MultiplayerMenu": [],
+    "Playing": [],
+    "Playing360": [],
+    "PlayingModmap": [],
+    "PlayingMulti": [],
+    "Replay": [],
     "FPFC": [],
     "SpectatingMulti": []
   },
   "customScenes": {
     "Regular Scene": [
       "Back",
-      "Facecam"
+      "VT+ Glow Source"
     ],
     "Regular Menu": [
       "Menu"
     ],
-    "Menu Funny Moments": [
-      "Menu Images"
-    ],
+    "Menu Funny Moments": [],
     "Modcharts": [
-      "Centered FPV"
+      "Back",
+      "VT+ Glow Source"
     ],
-    "Thirdperson": [
-      "Static Thirdperson"
-    ]
+    "Thirdperson": []
   },
   "customSceneBindings": {
     "F7": "Regular Menu",
