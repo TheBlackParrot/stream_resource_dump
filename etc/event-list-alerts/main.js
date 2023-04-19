@@ -328,6 +328,7 @@ function doAlert() {
 	console.log(alertData);
 
 	$(".alert").remove();
+	processAlertsTO = -1;
 
 	$("#alert_wrapper").fadeIn(250, function() {
 		console.log("faded in");
@@ -451,7 +452,15 @@ client.on("subscription", (channel, username, methods, message, tags) => {
 	addAlert({username: username, name: tags['display-name'], showPFP: true, html: alertHtml, audio: "new-message-2.ogg"});
 });
 
+// absolutely frick you, twitch
+var keepSkippingUntilZero = 0;
+
 client.on("subgift", (channel, username, streakMonths, recipient, methods, tags) => {
+	if(keepSkippingUntilZero) {
+		keepSkippingUntilZero--;
+		return;
+	}
+
 	let name = username;
 	if("display-name" in tags) {
 		name = tags['display-name'];
@@ -490,6 +499,8 @@ client.on("submysterygift", (channel, username, numbOfSubs, methods, tags) => {
 		amountStr = `GIFTED SUB <span style="font-size: 14px;">x</span>${numbOfSubs.toLocaleString()}`;
 		alertHtml = `gifted <span class="alertBold alertThing">${numbOfSubs} ${plan} subscriptions</span> to viewers!`;
 	}
+
+	keepSkippingUntilZero = numbOfSubs;
 
 	sendEvent({name: name}, {text: amountStr});
 	addAlert({username: username, name: tags['display-name'], showPFP: true, html: alertHtml, audio: "new-message-5.ogg"});
@@ -537,7 +548,9 @@ var greetingMessages = [
 var customGreetingSounds = {
 	"ash_darkfire": "hello_gordon.wav",
 	"electricjourney": "adora.wav",
-	"swooshycueb": "trans_rights.ogg"
+	"swooshycueb": "trans_rights.ogg",
+	"naevisabers": "necoarc.ogg",
+	"rx_twit": "xp.ogg"
 };
 var greetingSoundAmount = 11;
 
