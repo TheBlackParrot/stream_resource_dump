@@ -7,9 +7,19 @@ const wss = new WebSocketServer.Server(settings.listen);
 var wsClients = [];
 var reconnectTimeout;
 var currentBattery = -1;
+var currentHeartRate = 0;
 
 function sendData(data) {
 	data = parseInt(data.toString());
+	currentHeartRate = data;
+
+	if(settings.vnyan.enabled) {
+		try {
+			vnyan.send(`HeartRate${data}`);
+		} catch(err) {
+			// do nothing
+		}
+	}
 
 	for(let wsIdx in wsClients) {
 		let client = wsClients[wsIdx];
@@ -76,7 +86,7 @@ wss.on("connection", function(client, req) {
 	wsClients.push(client);
 
 	client.send(JSON.stringify({
-		heartrate: 0,
+		heartrate: currentHeartRate,
 		ts: Date.now(),
 		battery: currentBattery,
 		inital: true
@@ -91,3 +101,31 @@ wss.on("connection", function(client, req) {
 		console.log(`${client.ip} did something it probably shouldn't have. wtf\r\n`);
 	}
 });
+
+
+var vnyan_reconTO = null;
+function vnyan_recon() {
+	if(vnyan_reconTO) { 
+		return;
+	}
+
+	console.log("Connection to VNyan failed, reconnecting in 15 seconds...");
+	vnyan_reconTO = setTimeout(startVNyanConnection, 15000);
+}
+
+var vnyan;
+function startVNyanConnection() {
+	vnyan_reconTO = null;
+
+	vnyan = new WebSocketServer.WebSocket(`ws://${settings.vnyan.host}:${settings.vnyan.port}/vnyan`);
+
+	vnyan.on("open", function() {
+		console.log("Connected to VNyan...");
+	});
+
+	vnyan.on('close', vnyan_recon);
+	vnyan.on('error', vnyan_recon);
+}
+if(settings.vnyan.enabled) {
+	startVNyanConnection();
+}

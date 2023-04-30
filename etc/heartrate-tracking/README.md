@@ -16,4 +16,5 @@ This script outputs data over a websocket whenever the device reads data, format
 ```
 `initial` will be present in received data once the websocket connection is established.
 ## Notes
-I haven't *extensively* tested the reconnect functions, if something breaks with auto-reconnecting, please let me know!
+This also exposes a websocket connection specifically meant for use with VNyan node graphs (as an alternative to its native Pulsoid integration). It will send out `HeartRate` websocket commands as it receives data. If you don't need this, disable it in the `settings.json` file.
+To use the data, make a websocket action listening for `HeartRate`, and map `[message]` to a *Set Parameter* action.
