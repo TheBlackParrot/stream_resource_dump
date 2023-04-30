@@ -1,0 +1,24 @@
+{
+	"obs": {
+		"ip": "127.0.0.1",
+		"port": 4455,
+		"password": "hunter2",
+		"scenes": {
+			"playing": "Beat Saber Gameplay",
+			"menu": "Beat Saber Menu",
+			"intermission": "Ad Wall"
+		}
+	},
+
+	"bsplus": {
+		"ip": "127.0.0.1",
+		"port": 2947,
+		"expressOnCombo": 250
+	},
+
+	"vnyan": {
+		"ip": "127.0.0.1",
+		"port": 4570,
+		"camSwitchDelay": 200
+	}
+}

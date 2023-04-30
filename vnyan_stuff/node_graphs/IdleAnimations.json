@@ -1,0 +1,646 @@
+{
+    "graphName": "Idle Animations",
+    "nodes": [
+        {
+            "id": "6171d32e-4591-4db5-b678-623b4cedc242",
+            "values": [
+                {
+                    "key": "triggerName",
+                    "value": "AFKIdleOn"
+                }
+            ],
+            "posX": -417.0,
+            "posY": 365.0,
+            "path": "Nodes/TriggerNode",
+            "inputSocketIds": [],
+            "outputSocketIds": [
+                "af18dfce-5a32-47ff-bb54-ff3185d991eb638180441213488023"
+            ]
+        },
+        {
+            "id": "fc834ab6-7a01-4f77-bfd9-8a7f974fc071",
+            "values": [
+                {
+                    "key": "bsValue",
+                    "value": "100"
+                },
+                {
+                    "key": "bsName",
+                    "value": "Float"
+                },
+                {
+                    "key": "isToggle",
+                    "value": "0"
+                },
+                {
+                    "key": "smoothTime",
+                    "value": "0"
+                }
+            ],
+            "posX": -174.0,
+            "posY": 301.0,
+            "path": "Nodes/BlendshapeNode",
+            "inputSocketIds": [
+                "3e0ae3f6-ed17-4144-875a-65973bea6b6f638180441441301886"
+            ],
+            "outputSocketIds": []
+        },
+        {
+            "id": "a9e53a84-e6e0-41f5-afc6-0e42365829d4",
+            "values": [
+                {
+                    "key": "bsValue",
+                    "value": "0"
+                },
+                {
+                    "key": "bsName",
+                    "value": "EyeMovement"
+                },
+                {
+                    "key": "isToggle",
+                    "value": "0"
+                },
+                {
+                    "key": "smoothTime",
+                    "value": "0"
+                }
+            ],
+            "posX": 47.0,
+            "posY": 303.0,
+            "path": "Nodes/BlendshapeNode",
+            "inputSocketIds": [
+                "b56a1b95-3441-4737-a782-f3404cc32dbc638180441885118750"
+            ],
+            "outputSocketIds": []
+        },
+        {
+            "id": "f8e54a2d-742f-4934-b1db-ae167b193997",
+            "values": [
+                {
+                    "key": "paramName",
+                    "value": "AllowBlinking"
+                },
+                {
+                    "key": "value",
+                    "value": "false"
+                }
+            ],
+            "posX": 262.0,
+            "posY": 338.0,
+            "path": "Nodes/SetTextParamNode",
+            "inputSocketIds": [
+                "387ca796-fa54-42a1-8855-84af010c7829638180442020633928"
+            ],
+            "outputSocketIds": []
+        },
+        {
+            "id": "247e2fd4-c1af-491a-9a13-72d8466a141f",
+            "values": [
+                {
+                    "key": "triggerName",
+                    "value": "AFKIdleOff"
+                }
+            ],
+            "posX": -418.0,
+            "posY": 63.0,
+            "path": "Nodes/TriggerNode",
+            "inputSocketIds": [],
+            "outputSocketIds": [
+                "782d3197-90ad-488b-8606-fa315244daea638180442299848206"
+            ]
+        },
+        {
+            "id": "c86baa19-4198-4f56-8777-943b7a583399",
+            "values": [
+                {
+                    "key": "bsValue",
+                    "value": "0"
+                },
+                {
+                    "key": "bsName",
+                    "value": "Float"
+                },
+                {
+                    "key": "isToggle",
+                    "value": "0"
+                },
+                {
+                    "key": "smoothTime",
+                    "value": "0"
+                }
+            ],
+            "posX": -174.0,
+            "posY": -5.0,
+            "path": "Nodes/BlendshapeNode",
+            "inputSocketIds": [
+                "4bde23bf-d738-4267-b1f2-c00212316fca638180442352872987"
+            ],
+            "outputSocketIds": []
+        },
+        {
+            "id": "17badace-3e53-4982-9987-84353d1eb54f",
+            "values": [
+                {
+                    "key": "bsValue",
+                    "value": "100"
+                },
+                {
+                    "key": "bsName",
+                    "value": "EyeMovement"
+                },
+                {
+                    "key": "isToggle",
+                    "value": "0"
+                },
+                {
+                    "key": "smoothTime",
+                    "value": "0"
+                }
+            ],
+            "posX": 49.0,
+            "posY": -6.0,
+            "path": "Nodes/BlendshapeNode",
+            "inputSocketIds": [
+                "d7c44701-e17f-4abe-a2fe-c8e1dc863ce2638180442393903260"
+            ],
+            "outputSocketIds": []
+        },
+        {
+            "id": "9676834c-fbfc-49b2-bcf4-a578ea530d22",
+            "values": [
+                {
+                    "key": "paramName",
+                    "value": "AllowBlinking"
+                },
+                {
+                    "key": "value",
+                    "value": "true"
+                }
+            ],
+            "posX": 267.0,
+            "posY": 32.0,
+            "path": "Nodes/SetTextParamNode",
+            "inputSocketIds": [
+                "e87bbdf7-ff13-4cfd-a52f-b2a12e91cc50638180442426686154"
+            ],
+            "outputSocketIds": []
+        },
+        {
+            "id": "5ae1a911-d3dd-4276-a6dc-f102574b2a33",
+            "values": [],
+            "posX": -440.00006103515627,
+            "posY": 989.0,
+            "path": "Nodes/AppStartNode",
+            "inputSocketIds": [],
+            "outputSocketIds": [
+                "d887ffb6-25c8-4c21-8f6c-99701756acb0638180442731021051"
+            ]
+        },
+        {
+            "id": "ced28eac-a510-4885-a9cf-1731c31807b1",
+            "values": [
+                {
+                    "key": "timerName",
+                    "value": "BlinkTimer"
+                }
+            ],
+            "posX": -436.0,
+            "posY": 825.0,
+            "path": "Nodes/TimerNode",
+            "inputSocketIds": [],
+            "outputSocketIds": [
+                "f90c6651-75a8-4844-bfef-422c91bef50a638180442779433367"
+            ]
+        },
+        {
+            "id": "c124f7be-6c26-4bdc-a259-ab2250fa9ced",
+            "values": [
+                {
+                    "key": "timerName",
+                    "value": "BlinkTimer"
+                },
+                {
+                    "key": "seconds",
+                    "value": "0"
+                }
+            ],
+            "posX": -212.66668701171876,
+            "posY": 989.9998779296875,
+            "path": "Nodes/SetTimerNode",
+            "inputSocketIds": [
+                "e1ff471c-a0a6-4178-a1fc-906fb8a92b48638180442945713356"
+            ],
+            "outputSocketIds": []
+        },
+        {
+            "id": "204ea9c8-3090-4943-8138-b7bf679ee61f",
+            "values": [
+                {
+                    "key": "timerName",
+                    "value": "BlinkTimer"
+                },
+                {
+                    "key": "seconds",
+                    "value": "[BlinkTimerInterval]"
+                }
+            ],
+            "posX": 5.0,
+            "posY": 590.0,
+            "path": "Nodes/SetTimerNode",
+            "inputSocketIds": [
+                "27e2dfbd-84c2-43b5-9df8-d092bb0982e8638180443102313630"
+            ],
+            "outputSocketIds": []
+        },
+        {
+            "id": "192a27df-66a5-4477-b2c7-4d7772096b8d",
+            "values": [
+                {
+                    "key": "paramName",
+                    "value": "BlinkTimerInterval"
+                },
+                {
+                    "key": "min",
+                    "value": "150"
+                },
+                {
+                    "key": "max",
+                    "value": "6000"
+                }
+            ],
+            "posX": 3.0,
+            "posY": 778.0,
+            "path": "Nodes/RandomParamNode",
+            "inputSocketIds": [
+                "9dfd537d-cefb-4421-85a3-92a6e6ad02e8638180443208367733"
+            ],
+            "outputSocketIds": []
+        },
+        {
+            "id": "96e1a19a-a8c7-4cc1-bee4-418ed9dde991",
+            "values": [],
+            "posX": -226.0,
+            "posY": 781.0,
+            "path": "Nodes/Ordered5Node",
+            "inputSocketIds": [
+                "cef8403e-c6e0-4d9a-839b-dc352516c5dc638180443549469886"
+            ],
+            "outputSocketIds": [
+                "ae280fb9-9be2-4985-b6b7-442f8725bcc5638180443549469943",
+                "fdb2683c-a725-4c3c-8ba8-05a6f8cf0137638180443549469956",
+                "df27c7eb-c93f-4b94-98a8-47be4de18d93638180443549469967",
+                "ee60cfb5-697f-48f3-b420-207663079cd4638180443549469978",
+                "315373cb-e561-40e9-a6ec-6ceca9978362638180443549469989"
+            ]
+        },
+        {
+            "id": "79f9aec8-d9f1-45f0-bdf2-793db5f10615",
+            "values": [
+                {
+                    "key": "value",
+                    "value": "<AllowBlinking>"
+                },
+                {
+                    "key": "compare",
+                    "value": "true"
+                },
+                {
+                    "key": "type",
+                    "value": "0"
+                }
+            ],
+            "posX": 303.0,
+            "posY": 786.0,
+            "path": "Nodes/CompareTextNode",
+            "inputSocketIds": [
+                "0a888653-44aa-4dd0-9f74-8761a4f182f3638180444075572307"
+            ],
+            "outputSocketIds": [
+                "c63cfd54-cb08-4b4f-a069-75dc303c63b8638180444075572390",
+                "02d9cebf-2f99-471c-9040-1fee415fbd96638180444075572461"
+            ]
+        },
+        {
+            "id": "889e300a-2bc6-4aaf-8631-3a3908f6ff37",
+            "values": [
+                {
+                    "key": "paramName",
+                    "value": "BlinkHoldInterval"
+                },
+                {
+                    "key": "min",
+                    "value": "30"
+                },
+                {
+                    "key": "max",
+                    "value": "250"
+                }
+            ],
+            "posX": 795.0,
+            "posY": 936.0,
+            "path": "Nodes/RandomParamNode",
+            "inputSocketIds": [
+                "8e866d84-b218-47b6-8a62-5cc4e7aaa031638180444689164713"
+            ],
+            "outputSocketIds": []
+        },
+        {
+            "id": "dd02beee-c3c3-4e0c-ac85-64e4b6ba14c6",
+            "values": [],
+            "posX": 565.0,
+            "posY": 867.0,
+            "path": "Nodes/Ordered5Node",
+            "inputSocketIds": [
+                "a8f32942-c58b-469b-8107-050315dd3a43638180445211786478"
+            ],
+            "outputSocketIds": [
+                "fd0cfb6b-0fc0-4576-aaab-f1832f19268b638180445211786535",
+                "8fded71c-8f3c-48b7-acbf-0cb2fb76c446638180445211786548",
+                "3e95a6e9-bf4f-45de-bc39-a38841bbd87f638180445211786559",
+                "da7e5e02-2d91-4670-b07e-e726022431ac638180445211786575",
+                "2fee33b4-0b5b-492e-addc-e679f9173ef2638180445211786586"
+            ]
+        },
+        {
+            "id": "2bc0bc03-c84a-491c-827e-aacb6fd5a797",
+            "values": [
+                {
+                    "key": "bsValue",
+                    "value": "100"
+                },
+                {
+                    "key": "bsName",
+                    "value": "Blink"
+                },
+                {
+                    "key": "isToggle",
+                    "value": "0"
+                },
+                {
+                    "key": "smoothTime",
+                    "value": "0.06"
+                }
+            ],
+            "posX": 796.667236328125,
+            "posY": 697.666015625,
+            "path": "Nodes/BlendshapeNode",
+            "inputSocketIds": [
+                "74a1835c-a2e1-4ccd-b4e5-c7c1b156a9c4638180445587462374"
+            ],
+            "outputSocketIds": []
+        },
+        {
+            "id": "1fc0f21d-4cf1-4c12-949d-9174baf6a1b9",
+            "values": [
+                {
+                    "key": "timerName",
+                    "value": "ResetBlink"
+                }
+            ],
+            "posX": 795.667236328125,
+            "posY": 255.66598510742188,
+            "path": "Nodes/TimerNode",
+            "inputSocketIds": [],
+            "outputSocketIds": [
+                "55d6da1d-f615-4e93-afcc-4d73a061046a638180445813142288"
+            ]
+        },
+        {
+            "id": "48b132d1-ce2d-41b1-9876-7dc7246d7462",
+            "values": [
+                {
+                    "key": "bsValue",
+                    "value": "0"
+                },
+                {
+                    "key": "bsName",
+                    "value": "Blink"
+                },
+                {
+                    "key": "isToggle",
+                    "value": "0"
+                },
+                {
+                    "key": "smoothTime",
+                    "value": "0.08"
+                }
+            ],
+            "posX": 1037.667236328125,
+            "posY": 240.66598510742188,
+            "path": "Nodes/BlendshapeNode",
+            "inputSocketIds": [
+                "ca03493f-2c01-45b3-8a9f-904d7a64a2d4638180445929977259"
+            ],
+            "outputSocketIds": []
+        },
+        {
+            "id": "e6e15b88-251f-440f-ad1f-a00253028916",
+            "values": [
+                {
+                    "key": "timerName",
+                    "value": "ResetBlink"
+                },
+                {
+                    "key": "seconds",
+                    "value": "[BlinkHoldInterval]"
+                }
+            ],
+            "posX": 798.667236328125,
+            "posY": 493.6659851074219,
+            "path": "Nodes/SetTimerNode",
+            "inputSocketIds": [
+                "25941fa6-bdd9-4617-b653-6ab0f4d337dd638180446131205907"
+            ],
+            "outputSocketIds": []
+        },
+        {
+            "id": "ac97d9b1-209c-4b09-a3b5-3671799b92e0",
+            "values": [
+                {
+                    "key": "command",
+                    "value": "AFKIdleOn"
+                }
+            ],
+            "posX": -394.3319091796875,
+            "posY": -260.66650390625,
+            "path": "Nodes/WebSocketNode",
+            "inputSocketIds": [],
+            "outputSocketIds": [
+                "0e766e1f-eda2-46df-b95b-70447fefefe6638180461512743310"
+            ]
+        },
+        {
+            "id": "bd03814f-5fd1-45f4-a92f-9e91c8cd6ef9",
+            "values": [
+                {
+                    "key": "triggerName",
+                    "value": "AFKIdleOn"
+                },
+                {
+                    "key": "callTime",
+                    "value": "1"
+                }
+            ],
+            "posX": -107.99884033203125,
+            "posY": -263.00152587890627,
+            "path": "Nodes/CallTriggerNode",
+            "inputSocketIds": [
+                "bc36eb81-68e3-4bf6-8521-734a48031888638180461655779223"
+            ],
+            "outputSocketIds": []
+        },
+        {
+            "id": "2d1482de-5edb-4669-9540-1ba40b7a0cfe",
+            "values": [
+                {
+                    "key": "command",
+                    "value": "AFKIdleOff"
+                }
+            ],
+            "posX": 153.6680908203125,
+            "posY": -261.66650390625,
+            "path": "Nodes/WebSocketNode",
+            "inputSocketIds": [],
+            "outputSocketIds": [
+                "8d9dc04c-0dee-4116-8d28-4b8e226a6b64638180461876275657"
+            ]
+        },
+        {
+            "id": "8f2ce33d-955e-4dc3-b5c1-024dd571d6d8",
+            "values": [
+                {
+                    "key": "triggerName",
+                    "value": "AFKIdleOff"
+                },
+                {
+                    "key": "callTime",
+                    "value": "1"
+                }
+            ],
+            "posX": 432.00115966796877,
+            "posY": -265.00152587890627,
+            "path": "Nodes/CallTriggerNode",
+            "inputSocketIds": [
+                "60aed938-f8fd-43f4-944e-64c0aaac909e638180461901658425"
+            ],
+            "outputSocketIds": []
+        },
+        {
+            "id": "143341df-d88a-4d27-b37d-a4e5d10fd16a",
+            "values": [
+                {
+                    "key": "triggerName",
+                    "value": "AFKIdleOn"
+                },
+                {
+                    "key": "callTime",
+                    "value": "0"
+                }
+            ],
+            "posX": 8.001155853271485,
+            "posY": 985.6650390625,
+            "path": "Nodes/CallTriggerNode",
+            "inputSocketIds": [
+                "fc866b2a-962f-4f5b-8b88-78dc9d81ba52638180466936511409"
+            ],
+            "outputSocketIds": []
+        }
+    ],
+    "connections": [
+        {
+            "id": "b9de8ab9-9a3e-4a75-954f-faf2cf7d01f5",
+            "outputSocketId": "af18dfce-5a32-47ff-bb54-ff3185d991eb638180441213488023",
+            "inputSocketId": "3e0ae3f6-ed17-4144-875a-65973bea6b6f638180441441301886"
+        },
+        {
+            "id": "a06ddbf8-2c6a-47dc-b100-3ecef12a71ef",
+            "outputSocketId": "af18dfce-5a32-47ff-bb54-ff3185d991eb638180441213488023",
+            "inputSocketId": "b56a1b95-3441-4737-a782-f3404cc32dbc638180441885118750"
+        },
+        {
+            "id": "94a58a83-5977-446a-8387-6bcef0e3d9aa",
+            "outputSocketId": "af18dfce-5a32-47ff-bb54-ff3185d991eb638180441213488023",
+            "inputSocketId": "387ca796-fa54-42a1-8855-84af010c7829638180442020633928"
+        },
+        {
+            "id": "cec0a1e6-734b-45bd-aa47-0d8a75fe1362",
+            "outputSocketId": "782d3197-90ad-488b-8606-fa315244daea638180442299848206",
+            "inputSocketId": "4bde23bf-d738-4267-b1f2-c00212316fca638180442352872987"
+        },
+        {
+            "id": "0d52f690-6328-435c-b3ad-64a70549cb2b",
+            "outputSocketId": "782d3197-90ad-488b-8606-fa315244daea638180442299848206",
+            "inputSocketId": "d7c44701-e17f-4abe-a2fe-c8e1dc863ce2638180442393903260"
+        },
+        {
+            "id": "a3c9cadb-c088-4d00-99e7-9c1f4378df34",
+            "outputSocketId": "782d3197-90ad-488b-8606-fa315244daea638180442299848206",
+            "inputSocketId": "e87bbdf7-ff13-4cfd-a52f-b2a12e91cc50638180442426686154"
+        },
+        {
+            "id": "9fe2be97-fd0b-4fa2-a29c-7bdfb58ffd8b",
+            "outputSocketId": "d887ffb6-25c8-4c21-8f6c-99701756acb0638180442731021051",
+            "inputSocketId": "e1ff471c-a0a6-4178-a1fc-906fb8a92b48638180442945713356"
+        },
+        {
+            "id": "dcde6e11-ff03-4b18-b87d-7b8a49b8d159",
+            "outputSocketId": "f90c6651-75a8-4844-bfef-422c91bef50a638180442779433367",
+            "inputSocketId": "cef8403e-c6e0-4d9a-839b-dc352516c5dc638180443549469886"
+        },
+        {
+            "id": "814d3893-d966-43a0-b170-b1bb8ae17384",
+            "outputSocketId": "ae280fb9-9be2-4985-b6b7-442f8725bcc5638180443549469943",
+            "inputSocketId": "9dfd537d-cefb-4421-85a3-92a6e6ad02e8638180443208367733"
+        },
+        {
+            "id": "83175c9c-3ea9-4d65-9e8f-edf533aeab6e",
+            "outputSocketId": "fdb2683c-a725-4c3c-8ba8-05a6f8cf0137638180443549469956",
+            "inputSocketId": "27e2dfbd-84c2-43b5-9df8-d092bb0982e8638180443102313630"
+        },
+        {
+            "id": "888b2821-439e-45f5-a447-0e50e87d6daf",
+            "outputSocketId": "df27c7eb-c93f-4b94-98a8-47be4de18d93638180443549469967",
+            "inputSocketId": "0a888653-44aa-4dd0-9f74-8761a4f182f3638180444075572307"
+        },
+        {
+            "id": "f21b1236-5c44-40a8-8d9b-f3358727ee5e",
+            "outputSocketId": "c63cfd54-cb08-4b4f-a069-75dc303c63b8638180444075572390",
+            "inputSocketId": "a8f32942-c58b-469b-8107-050315dd3a43638180445211786478"
+        },
+        {
+            "id": "b58fbd46-4bfb-4c6d-ae97-84ad1112d68d",
+            "outputSocketId": "fd0cfb6b-0fc0-4576-aaab-f1832f19268b638180445211786535",
+            "inputSocketId": "8e866d84-b218-47b6-8a62-5cc4e7aaa031638180444689164713"
+        },
+        {
+            "id": "9079ad32-7b7b-4714-8bdf-82b088223a38",
+            "outputSocketId": "8fded71c-8f3c-48b7-acbf-0cb2fb76c446638180445211786548",
+            "inputSocketId": "74a1835c-a2e1-4ccd-b4e5-c7c1b156a9c4638180445587462374"
+        },
+        {
+            "id": "5392278e-790b-49fa-b6c6-a1281b2ccd47",
+            "outputSocketId": "55d6da1d-f615-4e93-afcc-4d73a061046a638180445813142288",
+            "inputSocketId": "ca03493f-2c01-45b3-8a9f-904d7a64a2d4638180445929977259"
+        },
+        {
+            "id": "17126ed3-76bd-4772-92e7-5cbea275581b",
+            "outputSocketId": "0e766e1f-eda2-46df-b95b-70447fefefe6638180461512743310",
+            "inputSocketId": "bc36eb81-68e3-4bf6-8521-734a48031888638180461655779223"
+        },
+        {
+            "id": "92e546b7-1d85-44df-9f63-60ea052bcbc7",
+            "outputSocketId": "8d9dc04c-0dee-4116-8d28-4b8e226a6b64638180461876275657",
+            "inputSocketId": "60aed938-f8fd-43f4-944e-64c0aaac909e638180461901658425"
+        },
+        {
+            "id": "b04e84be-50cf-4cae-a6ba-200d8c4fb7dd",
+            "outputSocketId": "d887ffb6-25c8-4c21-8f6c-99701756acb0638180442731021051",
+            "inputSocketId": "fc866b2a-962f-4f5b-8b88-78dc9d81ba52638180466936511409"
+        },
+        {
+            "id": "f10160dc-96d9-4169-bc2e-9a3bf1b85033",
+            "outputSocketId": "2fee33b4-0b5b-492e-addc-e679f9173ef2638180445211786586",
+            "inputSocketId": "25941fa6-bdd9-4617-b653-6ab0f4d337dd638180446131205907"
+        }
+    ]
+}

@@ -1,0 +1,240 @@
+{
+    "graphName": "Camera Control",
+    "nodes": [
+        {
+            "id": "108b9a75-85b1-44e8-856d-2ea794e50e97",
+            "values": [
+                {
+                    "key": "triggerName",
+                    "value": "MenuCam"
+                }
+            ],
+            "posX": -287.9999694824219,
+            "posY": 207.00006103515626,
+            "path": "Nodes/TriggerNode",
+            "inputSocketIds": [],
+            "outputSocketIds": [
+                "b1929d4f-1765-4505-bab0-41646245fec4638177526961731785"
+            ]
+        },
+        {
+            "id": "5892b137-5af6-42b9-95d5-75223a4d975c",
+            "values": [
+                {
+                    "key": "camera",
+                    "value": "1"
+                },
+                {
+                    "key": "duration",
+                    "value": ""
+                }
+            ],
+            "posX": -57.0,
+            "posY": 270.66668701171877,
+            "path": "Nodes/CameraNode",
+            "inputSocketIds": [
+                "cf7c0543-4711-4832-917a-9ed1644274bc638177527080565084"
+            ],
+            "outputSocketIds": []
+        },
+        {
+            "id": "37fcdf8d-a1e0-4b1f-b2c8-f4d3e3dec75a",
+            "values": [
+                {
+                    "key": "triggerName",
+                    "value": "PlayingCam"
+                }
+            ],
+            "posX": -282.33331298828127,
+            "posY": -132.33334350585938,
+            "path": "Nodes/TriggerNode",
+            "inputSocketIds": [],
+            "outputSocketIds": [
+                "5b523944-ab97-4177-bc34-c2815f489de0638177527359052923"
+            ]
+        },
+        {
+            "id": "ef427796-5b9e-429f-98f9-b5af834ec263",
+            "values": [
+                {
+                    "key": "camera",
+                    "value": "2"
+                },
+                {
+                    "key": "duration",
+                    "value": ""
+                }
+            ],
+            "posX": -52.0,
+            "posY": -80.0,
+            "path": "Nodes/CameraNode",
+            "inputSocketIds": [
+                "9ebc7240-713e-419c-aacf-62f9325d304b638177527400729616"
+            ],
+            "outputSocketIds": []
+        },
+        {
+            "id": "a2a47f7a-f535-4fb9-900c-14a0ac80c3e4",
+            "values": [
+                {
+                    "key": "timerName",
+                    "value": "BlendshapeReset"
+                },
+                {
+                    "key": "seconds",
+                    "value": "0"
+                }
+            ],
+            "posX": 305.0,
+            "posY": -163.33335876464845,
+            "path": "Nodes/SetTimerNode",
+            "inputSocketIds": [
+                "f65f9af7-e372-4da2-b9fa-bcdcf9b06ab6638177557488841214"
+            ],
+            "outputSocketIds": []
+        },
+        {
+            "id": "ed946371-3efc-4ae4-a00a-efdbf57545ca",
+            "values": [
+                {
+                    "key": "triggerName",
+                    "value": "IntermissionCam"
+                }
+            ],
+            "posX": -275.9999694824219,
+            "posY": -484.0000305175781,
+            "path": "Nodes/TriggerNode",
+            "inputSocketIds": [],
+            "outputSocketIds": [
+                "373d1870-d143-4711-b42c-616da69d6a55638181418733109005"
+            ]
+        },
+        {
+            "id": "9bd3facb-9633-4e46-8844-b6a2d0bdb61b",
+            "values": [
+                {
+                    "key": "camera",
+                    "value": "19"
+                },
+                {
+                    "key": "duration",
+                    "value": "0"
+                }
+            ],
+            "posX": -50.0,
+            "posY": -429.0,
+            "path": "Nodes/CameraNode",
+            "inputSocketIds": [
+                "82bfe4c8-6ac3-4fc4-a465-a9cfe33f8a69638181419132793609"
+            ],
+            "outputSocketIds": []
+        },
+        {
+            "id": "e95a49d8-c2e3-4fa8-8097-64344eaa03d9",
+            "values": [
+                {
+                    "key": "triggerName",
+                    "value": "AFKIdleOn"
+                },
+                {
+                    "key": "callTime",
+                    "value": "1"
+                }
+            ],
+            "posX": -49.0,
+            "posY": -579.0,
+            "path": "Nodes/CallTriggerNode",
+            "inputSocketIds": [
+                "ab078a1f-8527-465b-a45a-92f1ebe2809f638181421196265394"
+            ],
+            "outputSocketIds": []
+        },
+        {
+            "id": "98ab5366-9f7d-46a9-ba44-7938b30c2e23",
+            "values": [
+                {
+                    "key": "triggerName",
+                    "value": "AFKIdleOff"
+                },
+                {
+                    "key": "callTime",
+                    "value": "1"
+                }
+            ],
+            "posX": -50.0,
+            "posY": -229.0,
+            "path": "Nodes/CallTriggerNode",
+            "inputSocketIds": [
+                "fd907c6b-520f-4307-af44-5326422ec213638181421342840268"
+            ],
+            "outputSocketIds": []
+        },
+        {
+            "id": "bebad364-24cf-4664-808a-a1161356c4b6",
+            "values": [
+                {
+                    "key": "triggerName",
+                    "value": "AFKIdleOff"
+                },
+                {
+                    "key": "callTime",
+                    "value": "1"
+                }
+            ],
+            "posX": -56.0,
+            "posY": 120.66670227050781,
+            "path": "Nodes/CallTriggerNode",
+            "inputSocketIds": [
+                "2a761417-c54f-434b-85c6-3f0aa9de3e21638181421631716826"
+            ],
+            "outputSocketIds": []
+        }
+    ],
+    "connections": [
+        {
+            "id": "9dbc8d13-8c75-40df-9b1e-506814edb87d",
+            "outputSocketId": "b1929d4f-1765-4505-bab0-41646245fec4638177526961731785",
+            "inputSocketId": "cf7c0543-4711-4832-917a-9ed1644274bc638177527080565084"
+        },
+        {
+            "id": "4178915c-1af0-41e2-9625-42e8a129d710",
+            "outputSocketId": "5b523944-ab97-4177-bc34-c2815f489de0638177527359052923",
+            "inputSocketId": "9ebc7240-713e-419c-aacf-62f9325d304b638177527400729616"
+        },
+        {
+            "id": "83679905-c6ea-49ca-84de-ea7bf9e755f4",
+            "outputSocketId": "b1929d4f-1765-4505-bab0-41646245fec4638177526961731785",
+            "inputSocketId": "f65f9af7-e372-4da2-b9fa-bcdcf9b06ab6638177557488841214"
+        },
+        {
+            "id": "80412134-8264-4d8a-af55-d3e4fd25b37d",
+            "outputSocketId": "5b523944-ab97-4177-bc34-c2815f489de0638177527359052923",
+            "inputSocketId": "f65f9af7-e372-4da2-b9fa-bcdcf9b06ab6638177557488841214"
+        },
+        {
+            "id": "161f5b68-ff29-46ba-8ac1-6286f4c4d9ee",
+            "outputSocketId": "373d1870-d143-4711-b42c-616da69d6a55638181418733109005",
+            "inputSocketId": "f65f9af7-e372-4da2-b9fa-bcdcf9b06ab6638177557488841214"
+        },
+        {
+            "id": "1a483b2a-3f0d-45d3-9e7d-731b10a17d73",
+            "outputSocketId": "373d1870-d143-4711-b42c-616da69d6a55638181418733109005",
+            "inputSocketId": "82bfe4c8-6ac3-4fc4-a465-a9cfe33f8a69638181419132793609"
+        },
+        {
+            "id": "b6c89bff-2179-436a-a81b-2c2688a98068",
+            "outputSocketId": "373d1870-d143-4711-b42c-616da69d6a55638181418733109005",
+            "inputSocketId": "ab078a1f-8527-465b-a45a-92f1ebe2809f638181421196265394"
+        },
+        {
+            "id": "eb3f1186-fe92-492e-b06b-0aedd14a293c",
+            "outputSocketId": "5b523944-ab97-4177-bc34-c2815f489de0638177527359052923",
+            "inputSocketId": "fd907c6b-520f-4307-af44-5326422ec213638181421342840268"
+        },
+        {
+            "id": "f3d13119-1ece-4248-99e7-4b43efdc5769",
+            "outputSocketId": "b1929d4f-1765-4505-bab0-41646245fec4638177526961731785",
+            "inputSocketId": "2a761417-c54f-434b-85c6-3f0aa9de3e21638181421631716826"
+        }
+    ]
+}
