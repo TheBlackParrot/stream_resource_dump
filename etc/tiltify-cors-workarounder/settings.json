@@ -1,0 +1,15 @@
+{
+	"auth": {
+		"id": "see developer portal",
+		"secret": "see developer portal"
+	},
+
+	"listen": {
+		"host": "127.0.0.1",
+		"port": "7117"
+	},
+
+	"campaign_overlay_id": "jdrf",
+	"campaign_id": "5573bce1-a2c5-49f2-839e-b111b98d97c4",
+	"poll_interval": 20
+}
