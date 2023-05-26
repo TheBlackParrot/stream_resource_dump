@@ -1,4 +1,4 @@
-This is a script I made to get around CORS stuff on Tiltify's REST API. I'm uploading it in its current state just to use as reference.
+This is a **Node.js** script I made to get around CORS stuff on Tiltify's REST API. I'm uploading it in its current state just to use as reference.
 
 ### settings.json
 The `auth` object contains the developer ID and secret key that you'll make in your Tiltify developer dashboard.
