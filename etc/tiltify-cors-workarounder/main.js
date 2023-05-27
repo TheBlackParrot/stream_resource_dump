@@ -19,10 +19,13 @@ wss.on("connection", function(client, req) {
 	console.log(`${client.ip} connected`);
 	wsClients.push(client);
 
-	client.send(JSON.stringify({
-		event: "campaign",
-		data: campaignData
-	}));
+	for(let campaignName in settings.campaigns) {
+		client.send(JSON.stringify({
+			event: "campaign",
+			campaign: campaignName,
+			data: campaignData[campaignName]
+		}));
+	}
  
 	client.on("close", function() {
 		console.log(`${client.ip} disconnected`);
@@ -36,7 +39,10 @@ wss.on("connection", function(client, req) {
 
 var accessToken;
 var pollInterval;
-var campaignData;
+var campaignData = {};
+for(let campaignName in settings.campaigns) {
+	campaignData[campaignName] = {};
+}
 function getTiltifyToken(callback) {
 	const reqData = JSON.stringify({
 		"client_id": settings.auth.id,
@@ -87,23 +93,26 @@ function getTiltifyToken(callback) {
 	req.end();
 }
 getTiltifyToken(function() {
-	const args = {
-		endpoint: `/api/public/campaigns/${settings.campaign_id}`
-	}
-
-	callTiltify(args, function(response) {
-		if(!("data" in response)) {
-			return;
+	for(let campaignName in settings.campaigns) {
+		let campaignID = settings.campaigns[campaignName];
+		const args = {
+			endpoint: `/api/public/campaigns/${campaignID}`
 		}
 
-		// >:(
-		response.data.amount_raised.value = parseFloat(response.data.amount_raised.value.toString().replace(",", ""));
-		response.data.total_amount_raised.value = parseFloat(response.data.total_amount_raised.value.toString().replace(",", ""));
+		callTiltify(args, function(response) {
+			if(!("data" in response)) {
+				return;
+			}
 
-		campaignData = response.data;
+			// >:(
+			response.data.amount_raised.value = parseFloat(response.data.amount_raised.value.toString().replace(",", ""));
+			response.data.total_amount_raised.value = parseFloat(response.data.total_amount_raised.value.toString().replace(",", ""));
 
-		broadcast("campaign", response.data);
-	});
+			campaignData[campaignName] = response.data;
+
+			broadcast("campaign", campaignName, response.data);
+		});
+	}
 });
 
 function callTiltify(inputData, callback) {
@@ -155,46 +164,48 @@ function callTiltify(inputData, callback) {
 	req.end();
 }
 
-function broadcast(event, data) {
+function broadcast(event, campaign, data) {
 	for(let wsIdx in wsClients) {
 		let client = wsClients[wsIdx];
-		client.send(JSON.stringify({event: event, data: data}));
+		client.send(JSON.stringify({event: event, campaign: campaign, data: data}));
 	}	
 }
 
-var lastPoll = new Date();
-//var lastPoll = new Date(new Date()-600000000);
-
 function pollTiltify() {
 	console.log("polling tiltify...");
+	let now = new Date().getTime();
 
-	// this api is... something, alright
-	const args = {
-		endpoint: `/api/public/campaigns/${settings.campaign_id}/donations?limit=100&completed_after=${encodeURIComponent(lastPoll.toISOString())}`
-	}
+	for(let campaignName in settings.campaigns) {
+		let campaignID = settings.campaigns[campaignName];
 
-	callTiltify(args, function(response) {
-		if(!("data" in response)) {
-			return;
+		const args = {
+			endpoint: `/api/public/campaigns/${campaignID}/donations?limit=100&completed_after=${encodeURIComponent(new Date(now - (settings.poll_interval*10000000)).toISOString())}`
 		}
 
-		console.log(`${response.data.length} new donations`);
-
-		lastPoll = new Date();
-
-		if(response.data.length) {
-			broadcast("donations", response.data);
-			for(let i in response.data) {
-				// why are you a string
-				let donation = response.data[i];
-				let amount = parseFloat(donation.amount.value.toString().replace(",", ""));
-
-				// why are there two of you what even
-				campaignData.amount_raised.value += amount;
-				campaignData.total_amount_raised.value += amount;
-
-				console.log(`campaign total is now ${campaignData.amount_raised.value} ${campaignData.amount_raised.currency}`);
+		callTiltify(args, function(response) {
+			if(!("data" in response)) {
+				return;
 			}
-		}
-	})
+
+			console.log(`[${campaignName}] ${response.data.length} new donations`);
+
+			if(response.data.length) {
+				for(let i in response.data) {
+					let donation = response.data[i];
+					donation.amount.value = parseFloat(donation.amount.value.toString().replace(",", ""));
+				}
+				broadcast("donations", campaignName, response.data);
+
+				for(let i in response.data) {
+					let donation = response.data[i];
+					let amount = parseFloat(donation.amount.value.toString().replace(",", ""));
+
+					campaignData[campaignName].amount_raised.value += amount;
+					campaignData[campaignName].total_amount_raised.value += amount;
+
+					console.log(`[${campaignName}] total is now ${campaignData[campaignName].amount_raised.value} ${campaignData[campaignName].amount_raised.currency}`);
+				}
+			}
+		})
+	}
 }
