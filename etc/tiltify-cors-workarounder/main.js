@@ -179,7 +179,7 @@ function pollTiltify() {
 		let campaignID = settings.campaigns[campaignName];
 
 		const args = {
-			endpoint: `/api/public/campaigns/${campaignID}/donations?limit=100&completed_after=${encodeURIComponent(new Date(now - (settings.poll_interval*10000000)).toISOString())}`
+			endpoint: `/api/public/campaigns/${campaignID}/donations?limit=100&completed_after=${encodeURIComponent(new Date(now - (settings.poll_interval*1000)).toISOString())}`
 		}
 
 		callTiltify(args, function(response) {
