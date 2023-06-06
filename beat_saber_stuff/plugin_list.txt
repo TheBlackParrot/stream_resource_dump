@@ -12,13 +12,16 @@ BeatSaverUpdater
 BeatSaverVoting
 BetterSongList
 BetterSongSearch
+BetterSort.LastPlayed
 BSIndexHapticFix
 BSNightcore
 Camera2
+Chirality
 CustomPlatforms
 CustomSaber
 EasyOffset
 Enhancements
+EnvironmentHider
 FastFail
 GottaGoFast
 HitsoundTweaks
@@ -28,6 +31,7 @@ MappingExtensions
 MemoryMinimizer
 MenuSaberColors
 NalulunaAudioLatency
+NalulunaHitbox
 NalulunaMenu
 NalulunaRewinder
 NjsFixer
@@ -38,6 +42,8 @@ SearchFixes
 SmoothedController
 SongDetailsCache
 SoundReplacer
+TakeMeToResults
 Tweaks55
 UITweaks
+Unfunny
 wipbot

@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "isomorphic-unfetch": "^4.0.2",
+    "spotify-url-info": "^3.2.3",
+    "ws": "^8.13.0"
+  }
+}

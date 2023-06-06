@@ -21,7 +21,7 @@
   "viewRect": {
     "x": 0.0,
     "y": 0.0,
-    "width": 1.46,
+    "width": 1.52,
     "height": 1.0,
     "locked": false
   },
@@ -29,8 +29,8 @@
     "followSpectatorPlattform": true
   },
   "Smoothfollow": {
-    "position": 6.5,
-    "rotation": 2.4,
+    "position": 10.0,
+    "rotation": 2.7,
     "followReplayPosition": true,
     "limits": {
       "pos_x": "-Infinity:Infinity",
@@ -59,7 +59,7 @@
     "z": -1.2
   },
   "targetRot": {
-    "x": 1.0,
+    "x": -1.0,
     "y": 0.0,
     "z": 0.0
   }

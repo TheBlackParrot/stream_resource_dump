@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" type="text/css" href="fontawesome-free-5.15.4-web/css/all.min.css">
+	<link rel="stylesheet" type="text/css" href="reset.css">
+	<style>
+		:root {
+			--beatInterval: 1s;
+			--colorDark: #000000;
+			--colorLight: #A695FF;
+		}
+		@keyframes beatKF {
+			0% {
+				transform: scale(1.0);
+			}
+			10% {
+				transform: scale(1.1);
+			}
+			100% {
+				transform: scale(1.0);
+			}
+		}
+		body {
+			background: #666;
+			font-family: "Manrope";
+			font-weight: 900;
+			font-variant: tabular-nums;
+			color: #fff;
+		}
+
+		#cur {
+			text-align: center;
+		}
+
+		#bluh {
+			height: 80px;
+			background: #999;
+			width: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: 1;
+		}
+
+		#wrapper {
+			position: relative;
+			z-index: 2;
+			margin: 16px;
+			width: 120px;
+			top: -3px;
+		}
+
+		.shadow {
+			background: #fff;
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			-webkit-text-stroke: 1px transparent;
+		}
+
+		.fa-heart {
+			font-size: 24px;
+			margin-right: 8px;
+			-webkit-text-stroke: 0px;
+			background-image: linear-gradient(170deg, #FFF 20%, var(--colorLight) 100%);
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			animation-name: beatKF;
+			animation-duration: var(--beatInterval);
+			animation-iteration-count: infinite;
+		}
+		#cur_value {
+			font-size: 36px;
+			vertical-align: sub;
+		}
+
+		#peak {
+			text-align: center;
+			margin-bottom: 6px;
+		}
+
+		.fa-angle-double-up {
+			margin-right: 6px;
+		}
+		.fa-globe, .fa-map, .fa-angle-double-up {
+			font-size: 16px;
+			background-image: linear-gradient(170deg, #FFF 0%, #FF95A6 75%);
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;			
+		}
+		#peak_value {
+			font-size: 16px;
+			padding-right: 3px;
+			background: #fff;
+			-webkit-text-stroke: 0.7px transparent;
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+		}
+
+		.transparent_number {
+			opacity: 0.25;
+		}
+		.transparent_number span, .shadow, .shadow-no-bold {
+			filter: drop-shadow(1px 0px 0px rgba(0, 0, 0, 0.5))
+					drop-shadow(1px -1px 0px rgba(0, 0, 0, 0.5))
+					drop-shadow(1px 1px 0px rgba(0, 0, 0, 0.5))
+					drop-shadow(0px -1px 0px rgba(0, 0, 0, 0.5))
+					drop-shadow(0px 1px 0px rgba(0, 0, 0, 0.5))
+					drop-shadow(-1px 0px 0px rgba(0, 0, 0, 0.5))
+					drop-shadow(-1px -1px 0px rgba(0, 0, 0, 0.5))
+					drop-shadow(-1px 1px 0px rgba(0, 0, 0, 0.5))
+					drop-shadow(0px 1px 1px #000);
+		}
+	</style>
+	
+	<script type="text/javascript" src="jquery-3.6.0.min.js"></script>
+	<script type="text/javascript">
+		var curHR = -1;
+		var finalHR = -1;
+
+		var mapHighestPeak = 0;
+		var overallHighestPeak = 0;
+
+		var showMapHighest = false;
+
+		function startBSWebsocket() {
+			console.log("Starting connection to BS+...");
+
+			let url = `ws://127.0.0.1:2947/socket`;
+			ws = new WebSocket(url);
+			ws._init = false;
+
+			ws.addEventListener("message", function(msg) {
+				var data = JSON.parse(msg.data);
+
+				if(!ws._init) {
+					ws._init = true;
+					console.log(`%cBeat Saber v${data.gameVersion}`, 'font-weight: 700');
+				}
+
+				if(data._type === "event") {
+					processMessage(data);
+				}
+			});
+
+			ws.addEventListener("open", function() {
+				console.log(`%cConnected to server at ${url}`, 'background-color: #484; color: #fff');
+			});
+
+			ws.addEventListener("close", function() {
+				console.log(`%cConnection to ${url} failed, retrying in 10 seconds...`, 'background-color: #a55; color: #fff');
+				setTimeout(startBSWebsocket, 10000);
+			});
+		}
+		startBSWebsocket();
+
+		function startHRWebsocket() {
+			console.log("Starting connection to the heart rate monitor server...");
+			let url = 'ws://10.161.8.200:8001';
+			ws = new WebSocket(url);
+
+			ws.addEventListener("message", function(msg) {
+				let data = JSON.parse(msg.data);
+				console.log(data);
+
+				finalHR = data.heartrate;
+
+				if(finalHR > overallHighestPeak) {
+					overallHighestPeak = finalHR;
+				}
+				if(finalHR > mapHighestPeak) {
+					mapHighestPeak = finalHR;
+				}
+
+				if(showMapHighest) {
+					$("#peak_value").text(mapHighestPeak);
+					$(".which-icon").removeClass("fa-globe").addClass("fa-map");
+				} else {
+					$("#peak_value").text(overallHighestPeak);
+					$(".which-icon").removeClass("fa-map").addClass("fa-globe");
+				}
+
+				$(":root").get(0).style.setProperty(`--beatInterval`, `${60/data.heartrate}s`);
+				animateHRChange();
+			});
+
+			ws.addEventListener("open", function() {
+				console.log(`%cConnected to server at ${url}`, 'background-color: #484; color: #fff');
+			});
+
+			ws.addEventListener("close", function() {
+				console.log(`%cConnection to ${url} failed, retrying in 10 seconds...`, 'background-color: #a55; color: #fff');
+				setTimeout(startHRWebsocket, 10000);
+			});
+		}
+		startHRWebsocket();
+
+		function processMessage(data) {
+			if(data._event !== "gameState") {
+				return;
+			}
+
+			if(data.gameStateChanged === "Playing") {
+				mapHighestPeak = 0;
+				showMapHighest = true;
+			} else {
+				showMapHighest = false;
+			}
+		}
+
+		var hrChangeTO;
+		function animateHRChange() {
+			animatingHRChange = true;
+			clearTimeout(hrChangeTO);
+
+			if(curHR === finalHR) {
+				return;
+			}
+
+			let toChange = finalHR - curHR;
+
+			if(!toChange) {
+				animatingAccChange = false;
+				return;
+			}
+
+			if(toChange > 0) {
+				curHR += 1;
+			} else if(toChange < 0) {
+				curHR -= 1;
+			}
+
+			// i'm very much aware of the XSS issues here. please shut up.
+			// there is absolutely no reason your heart rate monitor should be broadcasting non-number values.
+			// if it is, return it. immediately. Right now.
+			if(curHR < 10) {
+				// um... hopefully this only triggers on the initial value, yeah?
+				$("#cur_value").html(`<span class="transparent_number"><span>00</span></span><span class="shadow">${curHR}</span>`);
+			} else if(curHR < 100) {
+				$("#cur_value").html(`<span class="transparent_number"><span>0</span></span><span class="shadow">${curHR}</span>`);
+			} else {
+				$("#cur_value").html(`<span class="shadow">${curHR}</span>`);
+			}
+
+			hrChangeTO = setTimeout(animateHRChange, 10);
+		}
+
+		window.addEventListener("storage", function(event) {
+			switch(event.key) {
+				case "art_darkColor":
+					$(":root").get(0).style.setProperty("--colorDark", event.newValue);
+					break;
+
+				case "art_lightColor":
+					$(":root").get(0).style.setProperty("--colorLight", event.newValue);
+					break;
+			}
+		});
+		$(":root").get(0).style.setProperty("--colorLight", localStorage.getItem("art_lightColor"));
+		$(":root").get(0).style.setProperty("--colorDark", localStorage.getItem("art_darkColor"));
+	</script>
+</head>
+<body>
+	<div id="wrapper">
+		<div id="peak"><i class="fas fa-globe which-icon shadow-no-bold fa-fw"></i> <i class="fas fa-angle-double-up shadow"></i> <span id="peak_value" class="shadow"></span></div>
+		<div id="cur"><i class="fas fa-heart shadow-no-bold"></i> <span id="cur_value"></span></div>
+	</div>
+</body>
+</html>

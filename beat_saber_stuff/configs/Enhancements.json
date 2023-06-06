@@ -5,17 +5,17 @@
     "ShowInGame": false,
     "Format": "HH:mm",
     "Culture": "",
-    "Font": "Assistant",
-    "Size": 16.0,
+    "Font": "Default",
+    "Size": 20.0,
     "Opacity": 1.0,
     "Color": "#FFFFFF",
     "Position": {
-      "x": -2.299999,
-      "y": 3.15,
-      "z": 3.8
+      "x": -2.199999,
+      "y": 2.650001,
+      "z": 3.7
     },
     "Rotation": {
-      "x": 340.0,
+      "x": 355.0,
       "y": 330.0,
       "z": 0.0
     },
@@ -82,9 +82,9 @@
   },
   "Volume": {
     "GoodCuts": 1.0,
-    "BadCuts": 0.7499999,
-    "Music": 0.5000001,
-    "SongPreview": 0.5,
+    "BadCuts": 0.9999999,
+    "Music": 0.4500001,
+    "SongPreview": 0.4500001,
     "MenuBackground": 1.0,
     "Fireworks": 0.0
   },

@@ -1,6 +1,6 @@
 {
   "disableGlobalParticles": true,
-  "staticLightsToggle": false,
+  "staticLightsToggle": true,
   "menuLightColor": {
     "r": 0.0,
     "g": 0.0,
@@ -8,19 +8,19 @@
     "a": 0.0
   },
   "bombColor": {
-    "r": 0.7406738,
-    "g": 0.7406738,
-    "b": 0.7406738,
+    "r": 1.0,
+    "g": 0.0,
+    "b": 0.0,
     "a": 1.0
   },
   "wallBorderColor": {
-    "r": 0.6810541,
-    "g": 0.6810541,
-    "b": 0.6810541,
+    "r": 0.7891732,
+    "g": 0.7548387,
+    "b": 1.0,
     "a": 1.0
   },
   "disableDebris": false,
-  "disableSliceScore": false,
+  "disableSliceScore": true,
   "transparentWalls": false,
   "disableComboBreakEffect": false,
   "disableWallRumbleAndParticles": true,
@@ -30,15 +30,15 @@
   "disableCutParticles": false,
   "disableBombExplosion": false,
   "disableHealthWarning": false,
-  "basegameFulltextSearch": false,
-  "keepGameSettingsOnCancel": false,
+  "basegameFulltextSearch": true,
+  "keepGameSettingsOnCancel": true,
   "scrollSpeedMultiplier": 1.0,
-  "disableFakeWallBloom": false,
-  "disableBeatLines": false,
+  "disableFakeWallBloom": true,
+  "disableBeatLines": true,
   "disableCameraNoise": true,
   "disableRawScore": true,
   "enableCustomRumble": true,
-  "cutRumbleStrength": 0.4,
-  "rumbleChainElementsStrength": 0.3,
+  "cutRumbleStrength": 0.2,
+  "rumbleChainElementsStrength": 0.2,
   "rumbleArcsStrength": 0.0
 }

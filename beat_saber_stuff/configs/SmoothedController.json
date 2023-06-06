@@ -1,6 +1,6 @@
 {
   "Enabled": true,
-  "PositionSmoothing": 2.5,
-  "RotationSmoothing": 3.0,
+  "PositionSmoothing": 6.0,
+  "RotationSmoothing": 6.0,
   "SmallMovementThresholdAngle": 7.0
 }

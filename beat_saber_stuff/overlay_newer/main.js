@@ -422,3 +422,111 @@ function setHitMiss(combo, missCount) {
 		$(".fa-times").show();
 	}
 }
+
+window.addEventListener("storage", function(event) {
+	switch(event.key) {
+		case "art_darkColor":
+			$(":root").get(0).style.setProperty("--colorDark", event.newValue);
+			break;
+
+		case "art_lightColor":
+			$(":root").get(0).style.setProperty("--colorLight", event.newValue);
+			break;
+	}
+});
+$(":root").get(0).style.setProperty("--colorLight", localStorage.getItem("art_lightColor"));
+$(":root").get(0).style.setProperty("--colorDark", localStorage.getItem("art_darkColor"));
+
+function brightness(c) {
+	return Math.sqrt(
+		c[0] * c[0] * .241 + 
+		c[1] * c[1] * .691 + 
+		c[2] * c[2] * .068
+	);
+}
+
+function interp(var1, var2, weight) {
+	return (1 - weight) * var1 + (weight * var2);
+}
+
+var codeBGColor;
+$("#art").on("load", async function() {
+	let swatches = await Vibrant.from($(this).attr("src")).getSwatches();
+	console.log(swatches);
+	
+	let paletteRaw = [
+		[72, 72, 72],
+		[72, 72, 72]
+	]
+
+	let checks = ["LightVibrant", "DarkVibrant", "Muted", "LightMuted", "DarkMuted"];
+	for(let i in checks) {
+		let check = checks[i];
+		if(check in swatches) {
+			if(swatches[check] !== null) {
+				paletteRaw.push(swatches[check].getRgb());
+			}
+		}
+	}
+
+	let palette = [];
+
+	for(let i in paletteRaw) {
+		let color = paletteRaw[i];
+		palette.push({
+			brightness: brightness(color),
+			color: color
+		});
+	}
+
+	palette.sort(function(a, b) {
+		return b.brightness - a.brightness;
+	});
+
+	console.log(palette);
+
+	let darkestIgnoringDefaults = 0;
+	let darkestBrightness = 255;
+	for(let i in palette) {
+		let color = palette[i];
+		if(color.brightness < darkestBrightness && color.brightness !== 72) {
+			darkestIgnoringDefaults = i;
+			darkestBrightness = color.brightness;
+		}
+	}
+
+	let rawVibrantColor = vibrantColor = [255, 255, 255];
+	if(swatches.Vibrant !== null) {
+		rawVibrantColor = vibrantColor = swatches.Vibrant.getRgb();
+	}
+	if(brightness(rawVibrantColor) < 60) {
+		console.log("brightness less than 60");
+		console.log(rawVibrantColor);
+		let p = 25;
+		vibrantColor = rawVibrantColor.map(function(x) { 
+			return interp(x, 255, 0.2);
+		});
+		console.log(vibrantColor);
+	}
+
+	console.log(vibrantColor);
+
+	let useThisDarkOne = swatches["DarkVibrant"];
+	if(useThisDarkOne === null) {
+		useThisDarkOne = swatches["DarkMuted"].getRgb();
+	} else {
+		useThisDarkOne = useThisDarkOne.getRgb();
+	}
+
+	if(brightness(useThisDarkOne) < 32) {
+		ruseThisDarkOne = useThisDarkOne.slice(0);
+		useThisDarkOne = ruseThisDarkOne.map(function(x) { 
+			return interp(x, 255, 0.1);
+		});
+	}
+
+	$(":root").get(0).style.setProperty("--colorLight", `rgb(${vibrantColor.join(",")})`);
+	localStorage.setItem("art_lightColor", `rgb(${vibrantColor.join(",")})`);
+	$(":root").get(0).style.setProperty("--colorDark", `rgb(${palette[darkestIgnoringDefaults].color.join(",")})`);
+	localStorage.setItem("art_darkColor", `rgb(${useThisDarkOne.join(",")})`);
+});

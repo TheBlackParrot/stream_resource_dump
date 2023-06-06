@@ -1,0 +1,72 @@
+:root {
+	--colorDark: #000000;
+	--colorLight: #A695FF;
+}
+
+body {
+	font-family: "Manrope";
+	font-weight: 900;
+	background-color: #333;
+}
+
+#timezone, #clock {
+	filter: drop-shadow(1px 0px 0px rgba(0, 0, 0, 0.5))
+			drop-shadow(1px -1px 0px rgba(0, 0, 0, 0.5))
+			drop-shadow(1px 1px 0px rgba(0, 0, 0, 0.5))
+			drop-shadow(0px -1px 0px rgba(0, 0, 0, 0.5))
+			drop-shadow(0px 1px 0px rgba(0, 0, 0, 0.5))
+			drop-shadow(-1px 0px 0px rgba(0, 0, 0, 0.5))
+			drop-shadow(-1px -1px 0px rgba(0, 0, 0, 0.5))
+			drop-shadow(-1px 1px 0px rgba(0, 0, 0, 0.5))
+			drop-shadow(0px 1px 1px #000);
+}
+#clock, #seconds {
+	font-variant-numeric: tabular-nums;
+	letter-spacing: -0.02em;
+}
+
+#clock, #timezone {
+	position: absolute;
+}
+
+#timezone {
+	left: 10px;
+	top: 13px;
+	font-size: 16px;
+	background-image: linear-gradient(170deg, #FFF 20%, var(--colorLight) 100%);
+	width: 141px;
+	display: block;
+	text-align: center;
+	-webkit-text-stroke: 0.7px transparent;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+#clock {
+	position: absolute;
+	font-size: 36px;
+	top: 33px;
+	left: 10px;
+	background-image: linear-gradient(170deg, #FFF 40%, #000 160%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-webkit-text-stroke: 1px transparent;
+}
+
+#seconds {
+    font-size: 26px;
+}
+#seconds:before {
+	content: ":";
+}
+
+#bleh {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 80px;
+	height: 80px;
+	z-index: -1;
+	background-color: #f00;
+	display: none;
+}

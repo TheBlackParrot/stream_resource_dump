@@ -7,7 +7,6 @@ const fs = require("fs");
 const https = require("https");
 
 const obs = new OBSWebSocket();
-const bs = new WebSocket(`ws://${settings.bs.ip}:${settings.bs.port}/socket`);
 const srv = new WebSocket.WebSocketServer({ port: settings.ws.port });
 var srvClients = [];
 
@@ -100,7 +99,10 @@ async function connectOBS() {
 
 		await toggleVODAudio(0);
 	} catch (error) {
-		console.error('Failed to connect', error.code, error.message);
+		console.error('Failed to connect to OBS, retrying in 15 seconds...', error.code, error.message);
+		setTimeout(function() {
+			connectOBS();
+		}, 15000);
 	}
 }
 connectOBS();
@@ -132,13 +134,39 @@ async function toggleVODAudio(val) {
 	});
 }
 
-bs.on("message", function(raw) {
-	const data = JSON.parse(raw);
+var bs;
+var to = undefined;
+function startBSPlusConnection() {
+	to = undefined;
+	bs = new WebSocket(`ws://${settings.bs.ip}:${settings.bs.port}/socket`);
 
-	if(data._type === "event") {
-		processMessage(data);
-	}
-});
+	bs.on("open", function() {
+		console.log("Connected to BS+...");
+	});
+
+	bs.on("message", function(raw) {
+		const data = JSON.parse(raw);
+
+		if(data._type === "event") {
+			processMessage(data);
+		}
+	});
+
+	bs.on('close', function(data) {
+		if(typeof to === "undefined") {
+			console.log("Connection to BS+ failed, reconnecting in 15 seconds...");
+			to = setTimeout(startBSPlusConnection, 15000);
+		}
+	});
+
+	bs.on('error', function(data) {
+		if(typeof to === "undefined") {
+			console.log("Connection to BS+ failed, reconnecting in 15 seconds...");
+			to = setTimeout(startBSPlusConnection, 15000);
+		}
+	});
+}
+startBSPlusConnection();
 
 var gameState = "Menu";
 var mapInfo;
@@ -163,63 +191,70 @@ var eventFuncs = {
 		let allow = true;
 		let found = "";
 
-		if(db.safe.indexOf(map.hash) !== -1) {
-			console.log(`- ${map.hash} is marked safe, unmuting VOD audio`);
-			map.isVODSafe = 1;
-			found = "local";
-		} else if(db.unsafe.indexOf(map.hash) !== -1) {
-			console.log(`- ${map.hash} is marked unsafe, muting VOD audio`);
+		if(map.hash.indexOf("wip") !== -1) {
+			console.log(`- ${map.hash} is a WIP map, muting VOD audio`);
 			map.isVODSafe = 2;
 			allow = false;
 			found = "local";
 		} else {
-			let presentInRemote = false;
+			if(db.safe.indexOf(map.hash) !== -1) {
+				console.log(`- ${map.hash} is marked safe, unmuting VOD audio`);
+				map.isVODSafe = 1;
+				found = "local";
+			} else if(db.unsafe.indexOf(map.hash) !== -1) {
+				console.log(`- ${map.hash} is marked unsafe, muting VOD audio`);
+				map.isVODSafe = 2;
+				allow = false;
+				found = "local";
+			} else {
+				let presentInRemote = false;
 
-			if(settings.databases.sync) {
-				for(let url in remoteDB) {
-					let rDB = remoteDB[url];
+				if(settings.databases.sync) {
+					for(let url in remoteDB) {
+						let rDB = remoteDB[url];
 
-					if(rDB.safe.indexOf(map.hash) !== -1) {
-						presentInRemote = true;
+						if(rDB.safe.indexOf(map.hash) !== -1) {
+							presentInRemote = true;
 
-						if(found !== "") {
-							if(settings.databases.preferUnsafeOnDuplicateEntries && map.isVODSafe == 2) {
-								console.log(`! ${map.hash} conflict found in ${url} with ${found}, leaving marked as unsafe`);
+							if(found !== "") {
+								if(settings.databases.preferUnsafeOnDuplicateEntries && map.isVODSafe == 2) {
+									console.log(`! ${map.hash} conflict found in ${url} with ${found}, leaving marked as unsafe`);
+								} else {
+									console.log(`! ${map.hash} conflict found in ${url} with ${found}, preferring lowest index array`);
+									map.isVODSafe = 1;
+								}
 							} else {
-								console.log(`! ${map.hash} conflict found in ${url} with ${found}, preferring lowest index array`);
+								console.log(`- ${map.hash} is marked safe in ${url}, unmuting VOD audio`);
 								map.isVODSafe = 1;
 							}
-						} else {
-							console.log(`- ${map.hash} is marked safe in ${url}, unmuting VOD audio`);
-							map.isVODSafe = 1;
+
+							found = url;
+						} else if(rDB.unsafe.indexOf(map.hash) !== -1) {
+							presentInRemote = true;
+
+							console.log(`- ${map.hash} is marked unsafe in ${url}, muting VOD audio`);
+
+							if(found !== "") {
+								console.log(`! ${map.hash} conflict found in ${url} with ${found}`);
+							}
+
+							map.isVODSafe = 2;
+							allow = false;
+							found = url;
 						}
-
-						found = url;
-					} else if(rDB.unsafe.indexOf(map.hash) !== -1) {
-						presentInRemote = true;
-
-						console.log(`- ${map.hash} is marked unsafe in ${url}, muting VOD audio`);
-
-						if(found !== "") {
-							console.log(`! ${map.hash} conflict found in ${url} with ${found}`);
-						}
-
-						map.isVODSafe = 2;
-						allow = false;
-						found = url;
 					}
 				}
-			}
 
-			if(settings.script.logUnknowns && !presentInRemote) {
-				logUnknown(map);
-			}
+				if(settings.script.logUnknowns && !presentInRemote) {
+					logUnknown(map);
+				}
 
-			if(settings.script.autoMuteOnUnknown && !presentInRemote) {
-				console.log(`- ${map.hash} is unknown, muting VOD audio out of caution`);
-				allow = false;
-			} else if(!presentInRemote) {
-				console.log(`- ${map.hash} is unknown, letting VOD audio remain`);
+				if(settings.script.autoMuteOnUnknown && !presentInRemote) {
+					console.log(`- ${map.hash} is unknown, muting VOD audio out of caution`);
+					allow = false;
+				} else if(!presentInRemote) {
+					console.log(`- ${map.hash} is unknown, letting VOD audio remain`);
+				}
 			}
 		}
 

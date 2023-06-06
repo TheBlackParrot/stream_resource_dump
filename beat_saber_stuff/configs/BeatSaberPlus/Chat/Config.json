@@ -5,7 +5,7 @@
     "y": 130.0
   },
   "ReverseChatOrder": false,
-  "FontSize": 2.999999,
+  "FontSize": 3.69999838,
   "AlignWithFloor": false,
   "ShowLockIcon": false,
   "FollowEnvironementRotation": false,
@@ -17,9 +17,9 @@
   "FilterViewersCommands": false,
   "FilterBroadcasterCommands": false,
   "BackgroundColor": {
-    "r": 1.0,
-    "g": 1.0,
-    "b": 1.0,
+    "r": 0.0,
+    "g": 0.0,
+    "b": 0.0,
     "a": 0.0
   },
   "HighlightColor": {

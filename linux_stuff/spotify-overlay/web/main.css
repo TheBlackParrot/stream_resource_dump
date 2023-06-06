@@ -1,0 +1,156 @@
+:root {
+	--colorDark: #000000;
+	--colorLight: #FFFFFF;
+	--boldWeight: 900;
+	--regularWeight: 900;
+}
+
+@keyframes fadeIn {
+	0% {
+		transform: translateX(30px);
+		opacity: 0;
+	}
+	100% {
+		transform: translateX(0px);
+		opacity: 1;
+	}
+}
+
+@keyframes fadeOut {
+	0% {
+		transform: translateX(0px);
+		opacity: 1;
+	}
+	100% {
+		transform: translateX(30px);
+		opacity: 0;
+	}
+}
+
+.fadeIn, .fadeOut {
+	animation-duration: .5s;
+	animation-direction: forwards;
+	animation-fill-mode: forwards;
+	animation-iteration-count: 1;	
+}
+
+.fadeIn {
+	animation-name: fadeIn;
+}
+
+.fadeOut {
+	animation-name: fadeOut;
+}
+
+body {
+	background: #222;
+	color: #fff;
+	font-family: "Manrope";
+	overflow: hidden;
+}
+
+#testBar, #art, #artShadow, #artBG, #title, #artist, #scannable, #scannableShadow {
+	position: absolute;
+}
+
+#title, #artist {
+	filter: drop-shadow(1px 0px 0px rgba(0, 0, 0, 0.5))
+			drop-shadow(1px -1px 0px rgba(0, 0, 0, 0.5))
+			drop-shadow(1px 1px 0px rgba(0, 0, 0, 0.5))
+			drop-shadow(0px -1px 0px rgba(0, 0, 0, 0.5))
+			drop-shadow(0px 1px 0px rgba(0, 0, 0, 0.5))
+			drop-shadow(-1px 0px 0px rgba(0, 0, 0, 0.5))
+			drop-shadow(-1px -1px 0px rgba(0, 0, 0, 0.5))
+			drop-shadow(-1px 1px 0px rgba(0, 0, 0, 0.5))
+			drop-shadow(0px 1px 1px #000);
+}
+
+#testBar {
+	display: none;
+	background: #777;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 80px;
+}
+
+#artBG {
+	top: 12px;
+	left: 246px;
+	width: 56px;
+	height: 56px;
+	border-radius: 6px;
+}
+
+#artBG {
+	z-index: 2;
+	filter: contrast(50%) brightness(1.67);
+}
+
+#art {
+	top: 14px;
+	left: 248px;
+	width: 52px;
+	height: 52px;
+	border-radius: 6px;
+	z-index: 4;
+}
+
+#artShadow {
+	top: 12px;
+	left: 246px;
+	width: 56px;
+	height: 56px;
+}
+#artShadow, #scannableShadow {
+	border-radius: 6px;
+	z-index: 1;
+	box-shadow: 0px 8px 9px -5px #000;
+}
+
+#title {
+	top: 13px;
+	left: 312px;
+	font-size: 26px;
+	font-weight: var(--boldWeight);
+	color: #fff;
+	z-index: 4;
+}
+
+#artist {
+	top: 47px;
+	left: 312px;
+	z-index: 4;
+	padding-bottom: 6px;
+}
+
+#title, #artist {
+	width: calc(100vw - 328px);
+	white-space: nowrap;
+	overflow-x: clip;
+}
+
+#artistString {
+	font-size: 17px;
+	font-weight: var(--regularWeight);
+	background-image: linear-gradient(170deg, #FFF 20%, var(--colorLight) 100%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+#scannable {
+	top: 12px;
+	left: 16px;
+	width: 216px;
+	height: 54px;
+	border-radius: 8px;
+	z-index: 4;
+}
+
+#scannableShadow {
+	top: 12px;
+	left: 16px;
+	width: 216px;
+	height: 54px;
+}

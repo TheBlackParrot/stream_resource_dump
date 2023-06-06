@@ -31,24 +31,24 @@
     }
   },
   "PlayerOptions": {
-    "JumpDurationIncrement": 1,
+    "JumpDurationIncrement": 0,
     "ReorderPlayerSettings": true,
     "MergeLightPressetOptions": true,
     "OverrideLightIntensityOption": true,
-    "OverrideLightIntensity": 0.6
+    "OverrideLightIntensity": 1.0
   },
   "MainMenu": {
     "OverrideMenuEnvColors": true,
     "BaseColor": {
-      "r": 0.6131423,
-      "g": 0.4938537,
+      "r": 0.599065959,
+      "g": 0.5115881,
       "b": 1.0,
       "a": 1.0
     },
     "LevelClearedColor": {
-      "r": 0.203647852,
+      "r": 0.0,
       "g": 1.0,
-      "b": 0.466666669,
+      "b": 0.0,
       "a": 1.0
     },
     "LevelFailedColor": {

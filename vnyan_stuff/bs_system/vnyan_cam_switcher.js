@@ -13,6 +13,12 @@ var eventFuncs = {
 		if(currentScene === data.gameStateChanged) {
 			return;
 		} else {
+			if(oldHealth > 0 && !isPaused && data.gameStateChanged === "Menu") {
+				setTimeout(function() {
+					vnyan.send("Passed");
+				}, 100);
+			}
+
 			currentScene = data.gameStateChanged;
 			oldMiss = Infinity;
 			oldHealth = 0;
@@ -22,7 +28,7 @@ var eventFuncs = {
 	"score": function(data) {
 		let scoreData = data.scoreEvent;
 
-		if(oldComboMod > scoreData.combo % settings.bsplus.expressOnCombo && scoreData.missCount === oldMiss) {
+		if(scoreData.combo && oldComboMod > scoreData.combo % settings.bsplus.expressOnCombo && scoreData.missCount === oldMiss) {
 			vnyan.send("Joy");
 		}
 		oldComboMod = scoreData.combo % settings.bsplus.expressOnCombo;
@@ -36,6 +42,7 @@ var eventFuncs = {
 		}
 
 		oldHealth = scoreData.currentHealth;
+		isPaused = false;
 	},
 
 	"pause": function(data) {
@@ -67,9 +74,6 @@ async function onSceneTransitionStarted(event) {
 		case settings.obs.scenes.menu:
 			console.log("menu camera");
 			cam = "Menu";
-			if(oldHealth > 0 && !isPaused) {
-				vnyan.send("Passed");
-			}
 			oldHealth = 0;
 			break;
 
@@ -103,7 +107,6 @@ function startVNyanConnection() {
 
 	vnyan.on("open", function() {
 		console.log("Connected to VNyan...");
-		vnyan.send(`MenuCam`);
 	});
 
 	vnyan.on('close', vnyan_recon);

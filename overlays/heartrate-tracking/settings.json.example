@@ -1,0 +1,17 @@
+{
+	"listen": {
+		"host": "127.0.0.1",
+		"port": 8001
+	},
+
+	"device": {
+		"uuid": "",
+		"timeout": 30
+	},
+
+	"vnyan": {
+		"enabled": true,
+		"host": "127.0.0.1",
+		"port": 4539
+	}
+}
