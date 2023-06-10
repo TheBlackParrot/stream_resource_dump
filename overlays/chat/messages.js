@@ -785,7 +785,7 @@ function parseMessage(data) {
 	messageBlock = $(twemoji.parse(messageBlock[0]));
 
 	if(eprww.join("") === "") {
-		messageBlock.css("font-size", "48pt").css("line-height", "70px");
+		messageBlock.css("font-size", "0pt").css("line-height", "1em").css("letter-spacing", "0px");
 		messageBlock.children(".emote").css("font-size", "48pt").css("padding", "0px");
 
 		let count = 0;
@@ -817,10 +817,272 @@ function parseMessage(data) {
 		wantedCommand(data, wantedArgs, rootElement);
 	}
 
-	setTimeout(function() {
-		rootElement.removeClass("slideIn").addClass("slideOut");
-		rootElement.one("animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd", function() {
-			$(this).remove();
-		});
-	}, settings.chat.secondsVisible * 1000);
+	if(settings.chat.secondsVisible) {
+		setTimeout(function() {
+			rootElement.removeClass("slideIn").addClass("slideOut");
+			rootElement.one("animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd", function() {
+				$(this).remove();
+			});
+		}, settings.chat.secondsVisible * 1000);
+	}
+
+	checkForExternalBadges(data, badgeBlock);
 }
+
+var externalBadgeCache = {};
+
+function getFFZBadges(data, callback) {
+	let id = data.user.id;
+	console.log(`getting FFZ badges for ${data.user.username}...`);
+
+	$.ajax({
+		type: "GET",
+		url: `https://api.frankerfacez.com/v1/user/id/${id}`,
+
+		success: function(response) {
+			console.log(response);
+
+			externalBadgeCache[id].ffz = {
+				expires: Date.now() + 3600000,
+				badges: []
+			};
+
+			if(!("status" in response)) {
+				let badges = response.badges;
+				for(let i in badges) {
+					let badge = badges[i];
+					let badgeURL = badge.urls[4 in badge.urls ? 4 : 1];
+
+					externalBadgeCache[id].ffz.badges.push({
+						img: badgeURL,
+						color: badge.color
+					});
+				}
+			}
+
+			if(typeof callback === "function") {
+				callback(data, response);
+			}
+		}
+	})	
+}
+
+// 7TV just stores all their badge data in one URL, get it now
+var sevenTVCosmetics = {};
+var sevenTVBadges = [];
+var sevenTVPaints = [];
+function get7TVBadges() {
+	console.log("getting 7TV badges...");
+	$.ajax({
+		type: "GET",
+		url: `https://7tv.io/v2/cosmetics?user_identifier=twitch_id`,
+
+		success: function(response) {
+			sevenTVCosmetics = response;
+			sevenTVBadges = response.badges;
+			sevenTVPaints = response.paints;
+		}
+	})	
+}
+get7TVBadges();
+
+function parse7TVColor(color) {
+	if(!color) {
+		return "transparent";
+	}
+
+	let red = (color >> 24) & 0xFF;
+	let green = (color >> 16) & 0xFF;
+	let blue = (color >> 8) & 0xFF;
+	let alpha = (color & 0xFF);
+
+	return `${red}, ${green}, ${blue}, ${alpha/255}`;
+}
+
+function checkForExternalBadges(data, badgeBlock) {
+	console.log(data);
+	let id = data.user.id;
+
+	if(!(id in externalBadgeCache)) {
+		console.log(`external badges not cached for ${data.user.username}`);
+
+		externalBadgeCache[id] = {
+			ffz: {
+				expires: null,
+				badges: []
+			},
+			bttv: {
+				expires: null,
+				badges: []
+			},
+			seventv: {
+				expires: null,
+				badges: []
+			}
+		};
+
+		for(let i in sevenTVBadges) {
+			let stvBadge = sevenTVBadges[i];
+			if(stvBadge.users.indexOf(id) !== -1) {
+				externalBadgeCache[id].seventv.badges.push({
+					img: stvBadge.urls[stvBadge.urls.length-1][1]
+				});
+			}
+		}
+
+		getFFZBadges(data, function(data, response) {
+			console.log(`got external badges for ${data.user.username}`);
+			checkIfExternalBadgesDone(data, badgeBlock);
+		});
+	} else {
+		if(!("ffz" in externalBadgeCache[id])) {
+			externalBadgeCache[id].ffz = {
+				expires: null,
+				badges: []
+			};
+		}
+		if(!("bttv" in externalBadgeCache[id])) {
+			externalBadgeCache[id].bttv = {
+				expires: null,
+				badges: []
+			};
+		}
+		if(!("seventv" in externalBadgeCache[id])) {
+			externalBadgeCache[id].seventv = {
+				expires: null,
+				badges: []
+			};
+		}
+
+		if(Date.now() > externalBadgeCache[id].ffz.expires) {
+			getFFZBadges(data, function(data, response) {
+				checkIfExternalBadgesDone(data, badgeBlock);
+			});
+		} else {
+			renderExternalBadges(data, badgeBlock);
+		}
+	}
+}
+
+function renderExternalBadges(data, badgeBlock) {
+	if(!badgeBlock) {
+		return;
+	}
+
+	let id = data.user.id;
+
+	for(let service in externalBadgeCache[id]) {
+		let cacheData = externalBadgeCache[id][service];
+
+		for(let i in cacheData.badges) {
+			let badge = cacheData.badges[i];
+
+			let badgeElem = $(`<img src="${badge.img}"/>`).css("border-radius", "3px");
+			if("color" in badge) {
+				badgeElem.css("background-color", badge.color);
+			}
+
+			badgeBlock.append(badgeElem);
+		}
+	}	
+}
+
+function checkIfExternalBadgesDone(data, badgeBlock) {
+	let id = data.user.id;
+	let okToRender = true;
+
+	for(let service in externalBadgeCache[id]) {
+		let cacheData = externalBadgeCache[id][service];
+
+		if(cacheData.expires === null) {
+			continue;
+		}
+
+		if(Date.now() > cacheData.expires) {
+			okToRender = false;
+			break;
+		}
+	}
+
+	if(okToRender) {
+		renderExternalBadges(data, badgeBlock);
+	}
+}
+
+var bttvWS;
+function startBTTVWebsocket() {
+	console.log("Starting connection to BTTV...");
+
+	bttvWS = new WebSocket("wss://sockets.betterttv.net/ws");
+
+	bttvWS.addEventListener("message", function(msg) {
+		let data = JSON.parse(msg.data);
+		console.log(data);
+		if(!("data" in data)) {
+			console.log("no data");
+			return;
+		}
+		data = data.data; // sigh
+
+		if(!("badge" in data)) {
+			console.log("no badge object");
+			return;
+		}
+		if(!Object.keys(data.badge).length) {
+			console.log("badge object empty");
+			return;
+		}
+
+		let id = data.providerId;
+
+		if(!(id in externalBadgeCache)) {
+			externalBadgeCache[id] = {
+				ffz: {
+					expires: null,
+					badges: []
+				},
+				bttv: {
+					expires: null,
+					badges: []
+				},
+				seventv: {
+					expires: null,
+					badges: []
+				}
+			};
+		}
+
+		externalBadgeCache[id].bttv.badges = [{
+			img: data.badge.url
+		}];
+	});
+
+	bttvWS.addEventListener("open", function() {
+		console.log("Successfully connected to BTTV");
+		let waitForBroadcasterData = function() {
+			if(!("id" in broadcasterData)) {
+				console.log("no broadcaster data yet...");
+				setTimeout(waitForBroadcasterData, 1000);
+				return;
+			} else {
+				console.log("broadcaster data is present, joining BTTV channel...");
+			}
+
+			let msg = {
+				name: "join_channel",
+				data: {
+					name: `twitch:${broadcasterData.id}`
+				}
+			}
+
+			bttvWS.send(JSON.stringify(msg));
+		};
+		waitForBroadcasterData();
+	});
+
+	bttvWS.addEventListener("close", function() {
+		console.log("Disconnected from BTTV, trying again in 20 seconds...");
+		setTimeout(startBTTVWebsocket, 20000);
+	});
+}
+startBTTVWebsocket();
