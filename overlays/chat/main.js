@@ -34,6 +34,7 @@ if(allowedToProceed) {
 
 var twitchAccessToken;
 var broadcasterData = {};
+var channelData = {};
 var twitchBadges = [];
 var chatEmotes = {};
 
@@ -121,6 +122,17 @@ function setTwitchAccessToken() {
 					});
 
 					getGlobalChannelEmotes(broadcasterData);
+
+					console.log("getting channel information...");
+					callTwitch({
+						"endpoint": "channels",
+						"args": {
+							"broadcaster_id": broadcasterData.id
+						}
+					}, function(channelResponse) {
+						console.log("got channel information");
+						channelData = channelResponse.data[0];
+					})
 				})
 			} else {
 				console.log(data);
@@ -184,7 +196,8 @@ function getGlobalChannelEmotes(broadcasterData) {
 				let emote = data[idx];
 				chatEmotes[emote.code] = {
 					service: "bttv",
-					url: `https://cdn.betterttv.net/emote/${emote.id}/3x.${emote.imageType}`
+					url: `https://cdn.betterttv.net/emote/${emote.id}/3x.${emote.imageType}`,
+					id: emote.id
 				}
 			}
 
@@ -270,7 +283,8 @@ function getExternalChannelEmotes(broadcasterData) {
 				let emote = data.sharedEmotes[idx];
 				chatEmotes[emote.code] = {
 					service: "bttv",
-					url: `https://cdn.betterttv.net/emote/${emote.id}/3x.${emote.imageType}`
+					url: `https://cdn.betterttv.net/emote/${emote.id}/3x.${emote.imageType}`,
+					id: emote.id
 				}
 			}
 		},

@@ -272,6 +272,11 @@
 					<input type="checkbox" id="useUsername"/>
 					<span class="inputName">Use username over display name</span>
 				</div>
+
+				<div class="input">
+					<input type="checkbox" id="use7TVPaint"/>
+					<span class="inputName">Use 7TV Paint (if available)</span>
+				</div>
 			</div>
 			<div class="section">
 				<div class="head">Message Settings</div>
@@ -344,7 +349,8 @@
 			"170",
 			"yes",
 			"no",
-			"squircle"
+			"squircle",
+			"no"
 		];
 
 		let userSettings = {
@@ -365,7 +371,8 @@
 			msgSpacing: 0,
 			testName: "SampleUser69420",
 			nameWeight: 900,
-			msgWeight: 700
+			msgWeight: 700,
+			use7TVPaint: "yes"
 		};
 
 		window.addEventListener("load", function(event) {
@@ -582,6 +589,10 @@
 
 			$(":root").get(0).style.setProperty(`--pfpShape`, cssVal);
 			updateCmdData(16, "pfpShape", this.value);
+		});
+
+		$("#use7TVPaint").on("change", function(e) {
+			updateCmdData(17, "use7TVPaint", ($("#use7TVPaint").is(":checked") ? "yes" : "no"));
 		});
 
 		function updateCmdData(idx, key, value) {

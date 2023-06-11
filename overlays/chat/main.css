@@ -97,16 +97,12 @@ body {
 	margin: 18px;
 	margin-top: 20px;
 }
-.badges, .pronouns, .name, .message, .pfp, .flags, .bsrArt, .bsrMapInfo, .bsrExtraInfo, .loadingMsg, .fa-spinner, .fa-times {
-	filter: drop-shadow(1px 0px 0px rgba(0, 0, 0, 0.45))
-			drop-shadow(1px -1px 0px rgba(0, 0, 0, 0.45))
-			drop-shadow(1px 1px 0px rgba(0, 0, 0, 0.45))
-			drop-shadow(0px -1px 0px rgba(0, 0, 0, 0.45))
-			drop-shadow(0px 1px 0px rgba(0, 0, 0, 0.45))
-			drop-shadow(-1px 0px 0px rgba(0, 0, 0, 0.45))
-			drop-shadow(-1px -1px 0px rgba(0, 0, 0, 0.45))
-			drop-shadow(-1px 1px 0px rgba(0, 0, 0, 0.45))
-			drop-shadow(0px 1px 2px #000);
+.badges, .pronouns, .message, .pfp, .flags, .bsrArt, .bsrMapInfo, .bsrExtraInfo, .loadingMsg, .fa-spinner, .fa-times {
+	filter: var(--shadowStuff);
+}
+
+.name {
+	filter: var(--shadowStuff);
 }
 
 .userInfo {

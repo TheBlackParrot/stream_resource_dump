@@ -69,6 +69,14 @@ client.on('message', function(channel, tags, message, self) {
 		}
 	}
 
+	let moderator = false;
+	if('badges' in tags) {
+		let roles = Object.keys(tags.badges);
+		if(roles.indexOf("broadcaster") !== -1 || roles.indexOf("moderator") !== -1) {
+			moderator = true;
+		}
+	}
+
 	parseMessage({
 		message: message,
 		type: tags['message-type'],
@@ -83,7 +91,8 @@ client.on('message', function(channel, tags, message, self) {
 				list: tags['badges'],
 				info: tags['badge-info']
 			},
-			color: tags['color']
+			color: tags['color'],
+			moderator: moderator
 		}
 	});
 });
@@ -279,7 +288,7 @@ const chatFuncs = {
 	},
 
 	"chatsettings": function(data, args) {
-		if(args.length !== 17) {
+		if(args.length !== 18) {
 			console.log("args not correct length");
 			return;
 		}
@@ -301,6 +310,7 @@ const chatFuncs = {
 		chatFuncs["showpfp"](data, [args[14]]);
 		chatFuncs["useusername"](data, [args[15]]);
 		chatFuncs["pfpshape"](data, [args[16]]);
+		chatFuncs["use7tvpaint"](data, [args[17]]);
 	},
 
 	"flags": function(data, args) {
@@ -326,6 +336,9 @@ const chatFuncs = {
 	"flag": function(data, args) { chatFuncs["flags"](data, args); },
 
 	"bsr": function(data, args, msgElement) {
+		if(channelData.game_id !== "503116") {
+			return;
+		}
 		// todo: add a setting to disable this
 		// very much future todo: make this an external script or something. make a plugin system. idk.
 		if(!args.length) {
@@ -469,12 +482,33 @@ const chatFuncs = {
 			localStorage.setItem(`pfp_${data.user.id}`, rawUserResponse.data[0].profile_image_url);
 			localStorage.setItem(`pfp_${data.user.id}_expiry`, Date.now() + (settings.cache.expireDelay * 1000));
 		});
+	},
+
+	refreshemotes: function(data, args) {
+		//getExternalChannelEmotes(broadcasterData);
+		if(!data.user.moderator) {
+			return;
+		}
+
+		console.log("refreshing external emotes...");
+
+		chatEmotes = {};
+		getGlobalChannelEmotes(broadcasterData);
+	},
+
+	use7tvpaint: function(data, args) {
+		if(!args.length) { return; }
+		let which = (args[0] === "yes" ? "yes" : "no");
+
+		console.log(`7tv paint for ${data.user.username} is now ${which} (only if available)`);
+		localStorage.setItem(`use7tvpaint_${data.user.id}`, which);
 	}
 }
 
 var lastUser;
 var lastMessageIdx;
 var messageCount = 0;
+var testNameBlock;
 function parseMessage(data) {
 	if(!allowedToProceed) {
 		console.log("No Client ID or Secret is set.");
@@ -658,6 +692,7 @@ function parseMessage(data) {
 	if(!localStorage.getItem(`color2_${data.user.id}`)) { localStorage.setItem(`color2_${data.user.id}`, "#ffffff"); }
 	if(!localStorage.getItem(`nameangle_${data.user.id}`)) { localStorage.setItem(`nameangle_${data.user.id}`, "170deg"); }
 	if(!localStorage.getItem(`usename_${data.user.id}`)) { localStorage.setItem(`usename_${data.user.id}`, "name"); }
+	if(!localStorage.getItem(`use7tvpaint_${data.user.id}`)) { localStorage.setItem(`use7tvpaint_${data.user.id}`, "yes"); }
 
 	$(":root").get(0).style.setProperty(`--nameColor${data.user.id}`, localStorage.getItem(`color_${data.user.id}`));
 	$(":root").get(0).style.setProperty(`--nameFont${data.user.id}`, localStorage.getItem(`namefont_${data.user.id}`));
@@ -698,6 +733,16 @@ function parseMessage(data) {
 	messageBlock.css("font-size", `var(--msgSize${data.user.id})`);
 	messageBlock.css("letter-spacing", `var(--msgSpacing${data.user.id})`);
 	messageBlock.css("font-weight", `var(--msgWeight${data.user.id})`);
+
+	if(localStorage.getItem(`use7tvpaint_${data.user.id}`) === "yes") {
+		for(let i in sevenTVPaints) {
+			let paint = sevenTVPaints[i];
+			if(paint.users.indexOf(data.user.id) !== -1) {
+				set7TVPaint(nameBlock, i);
+				break;
+			}
+		}
+	}
 
 	//console.log(` 1: ${data.message}`);
 
@@ -775,7 +820,8 @@ function parseMessage(data) {
 
 	//console.log(` 8: ${words}`);
 
-	messageBlock.html(words.join(" "));
+	// what i'm doing here to fix in-line seamless emotes is stupid but it works yay
+	messageBlock.html(words.join(" ").replaceAll("</span> <span", "</span><span"));
 
 	if(data.type === "action") {
 		messageBlock.addClass("actionMessage");
@@ -785,7 +831,7 @@ function parseMessage(data) {
 	messageBlock = $(twemoji.parse(messageBlock[0]));
 
 	if(eprww.join("") === "") {
-		messageBlock.css("font-size", "0pt").css("line-height", "1em").css("letter-spacing", "0px");
+		messageBlock.css("font-size", "0pt").css("line-height", "1em").css("letter-spacing", "0px").css("padding-bottom", "8px");
 		messageBlock.children(".emote").css("font-size", "48pt").css("padding", "0px");
 
 		let count = 0;
@@ -799,9 +845,20 @@ function parseMessage(data) {
 
 	rootElement.append(messageBlock);
 
+	// hard cap at 100 messages, realistically this will never be hit. only here for the perma-message no-opacity needers
+	if($(".chatBlock").length > 100) {
+		$(".chatBlock")[0].remove();
+	}
+
 	$(".chatBlock").each(function() {
-		let e = $(this);
 		let opacity = 1 - ((messageCount - parseInt($(this).attr("data-msgIdx"))) * settings.chat.opacityDecreaseStep);
+		if(opacity < 0) {
+			opacity = 0;
+		}
+
+		if(!opacity) {
+			$(this).remove();
+		}
 
 		$(this).children(".userInfo,.bsrInfo").css("transition", ".5s").css("filter", `opacity(${opacity})`);
 		$(this).children(".message").css("transition", ".5s").css("filter", `var(--shadowStuff) opacity(${opacity})`);
@@ -827,6 +884,52 @@ function parseMessage(data) {
 	}
 
 	checkForExternalBadges(data, badgeBlock);
+
+	testNameBlock = nameBlock;
+}
+
+function set7TVPaint(nameBlock, which) {
+	let paint = sevenTVPaints[which];
+	let css = "";
+	let bgColor = parse7TVColor(paint.color);
+
+	if(paint.function === "url") {
+		css = `url(${paint.image_url})`;
+	} else {
+		let stops = [];
+		for(let i in paint.stops) {
+			let stop = paint.stops[i];
+			stops.push(`${parse7TVColor(stop.color)} ${stop.at*100}%`);
+		}
+		
+		let func = paint.function;
+		if(paint.repeat) {
+			func = `repeating-${paint.function}`;
+		}
+
+		let angle = `${paint.angle}deg`
+		if(paint.function === "radial-gradient") {
+			angle = `${paint.shape} at ${paint.angle}%`;
+		}
+
+		css = `${func}(${angle}, ${stops.join(",")})`;
+	}
+
+	let shadows = "";
+	if("drop_shadows" in paint) {
+		let shadowsArr = [];
+		if(paint.drop_shadows.length) {
+			for(let i in paint.drop_shadows) {
+				let s = paint.drop_shadows[i];
+				// names are a biiit bigger here on the overlay
+				shadowsArr.push(`drop-shadow(${s.x_offset*1.5}px ${s.y_offset*1.5}px ${s.radius*1.5}px ${parse7TVColor(s.color)})`);
+			}
+			shadows = shadowsArr.join(" ");
+		}
+	}
+	//console.log(css);
+	nameBlock.css("background-color", bgColor).css("background-image", css).css("background-size", "contain");
+	nameBlock.css("filter", `${shadows === "" ? "var(--shadowStuff)" : shadows}`);
 }
 
 var externalBadgeCache = {};
@@ -888,7 +991,7 @@ get7TVBadges();
 
 function parse7TVColor(color) {
 	if(!color) {
-		return "transparent";
+		return "#000";
 	}
 
 	let red = (color >> 24) & 0xFF;
@@ -896,7 +999,7 @@ function parse7TVColor(color) {
 	let blue = (color >> 8) & 0xFF;
 	let alpha = (color & 0xFF);
 
-	return `${red}, ${green}, ${blue}, ${alpha/255}`;
+	return `rgba(${red}, ${green}, ${blue}, ${alpha/255})`;
 }
 
 function checkForExternalBadges(data, badgeBlock) {
@@ -1009,6 +1112,91 @@ function checkIfExternalBadgesDone(data, badgeBlock) {
 	}
 }
 
+function bttvBadge(data) {
+	if(!("data" in data)) {
+		console.log("no data");
+		return;
+	}
+	data = data.data; // sigh
+
+	console.log(`getting bttv badge data for ${data.name}...`);
+
+	if(!("badge" in data)) {
+		console.log("no badge object");
+		return;
+	}
+	if(!Object.keys(data.badge).length) {
+		console.log("badge object empty");
+		return;
+	}
+
+	let id = data.providerId;
+
+	if(!(id in externalBadgeCache)) {
+		externalBadgeCache[id] = {
+			ffz: {
+				expires: null,
+				badges: []
+			},
+			bttv: {
+				expires: null,
+				badges: []
+			},
+			seventv: {
+				expires: null,
+				badges: []
+			}
+		};
+	}
+
+	externalBadgeCache[id].bttv.badges = [{
+		img: data.badge.url
+	}];	
+}
+
+function updateBTTVEmote(data) {
+	let newEmote = data.emote;
+	let id = newEmote.id;
+
+	for(let name in chatEmotes) {
+		let oldEmote = chatEmotes[name];
+
+		if(oldEmote.service === "bttv" && oldEmote.id === id) {
+			console.log(`renamed ${name} to ${newEmote.code}`);
+
+			chatEmotes[newEmote.code] = oldEmote;
+			delete chatEmotes[name];
+			break;
+		}
+	}
+}
+
+function deleteBTTVEmote(data) {
+	let id = data.emoteId;
+
+	for(let name in chatEmotes) {
+		let oldEmote = chatEmotes[name];
+
+		if(oldEmote.service === "bttv" && oldEmote.id === id) {
+			console.log(`deleted ${name}`);
+			delete chatEmotes[name];
+			break;
+		}
+	}	
+}
+
+function addBTTVEmote(data) {
+	let emote = data.emote;
+	
+	chatEmotes[emote.code] = {
+		service: "bttv",
+		url: `https://cdn.betterttv.net/emote/${emote.id}/3x.${emote.imageType}`,
+		id: emote.id
+	}
+
+	console.log(`added emote ${emote.code}`);
+}
+
 var bttvWS;
 function startBTTVWebsocket() {
 	console.log("Starting connection to BTTV...");
@@ -1018,47 +1206,29 @@ function startBTTVWebsocket() {
 	bttvWS.addEventListener("message", function(msg) {
 		let data = JSON.parse(msg.data);
 		console.log(data);
-		if(!("data" in data)) {
-			console.log("no data");
-			return;
-		}
-		data = data.data; // sigh
 
-		if(!("badge" in data)) {
-			console.log("no badge object");
-			return;
-		}
-		if(!Object.keys(data.badge).length) {
-			console.log("badge object empty");
-			return;
-		}
+		switch(data.name) {
+			case "lookup_user":
+				bttvBadge(data);
+				break;
 
-		let id = data.providerId;
+			case "emote_update":
+				updateBTTVEmote(data.data);
+				break;
 
-		if(!(id in externalBadgeCache)) {
-			externalBadgeCache[id] = {
-				ffz: {
-					expires: null,
-					badges: []
-				},
-				bttv: {
-					expires: null,
-					badges: []
-				},
-				seventv: {
-					expires: null,
-					badges: []
-				}
-			};
+			case "emote_delete":
+				deleteBTTVEmote(data.data);
+				break;
+
+			case "emote_create":
+				addBTTVEmote(data.data);
+				break;
 		}
-
-		externalBadgeCache[id].bttv.badges = [{
-			img: data.badge.url
-		}];
 	});
 
 	bttvWS.addEventListener("open", function() {
 		console.log("Successfully connected to BTTV");
+
 		let waitForBroadcasterData = function() {
 			if(!("id" in broadcasterData)) {
 				console.log("no broadcaster data yet...");
