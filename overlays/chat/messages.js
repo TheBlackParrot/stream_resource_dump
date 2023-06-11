@@ -833,6 +833,7 @@ function parseMessage(data) {
 	if(eprww.join("") === "") {
 		messageBlock.css("font-size", "0pt").css("line-height", "1em").css("letter-spacing", "0px").css("padding-bottom", "8px");
 		messageBlock.children(".emote").css("font-size", "48pt").css("padding", "0px");
+		messageBlock.children(".emoji").css("font-size", "48pt");
 
 		let count = 0;
 		messageBlock.children(".emote,.emoji").each(function() {
