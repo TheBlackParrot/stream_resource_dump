@@ -71,9 +71,11 @@ client.on('message', function(channel, tags, message, self) {
 
 	let moderator = false;
 	if('badges' in tags) {
-		let roles = Object.keys(tags.badges);
-		if(roles.indexOf("broadcaster") !== -1 || roles.indexOf("moderator") !== -1) {
-			moderator = true;
+		if(tags.badges) {
+			let roles = Object.keys(tags.badges);
+			if(roles.indexOf("broadcaster") !== -1 || roles.indexOf("moderator") !== -1) {
+				moderator = true;
+			}
 		}
 	}
 
