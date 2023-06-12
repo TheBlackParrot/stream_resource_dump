@@ -1088,6 +1088,7 @@ function renderExternalBadges(data, badgeBlock) {
 				badgeElem.css("background-color", badge.color);
 			}
 
+			badgeBlock.show();
 			badgeBlock.append(badgeElem);
 		}
 	}	
