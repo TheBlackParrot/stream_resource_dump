@@ -1,3 +1,9 @@
+// WHY DO YOU ALL USE SOCKET.IO IF YOU'RE JUST GONNA TRANSPORT OVER WEBSOCKETS ANYWAYS. ASAGASHDASFDKJSADFHKALDSNVD
+
+// OBS allows autoplay in everything under it's CEF browser sources, as a heads up.
+// you can just be bad and have autoplaying everything
+
+// there are some that probably aren't here, just yell at me
 const currencySymbols = {
 	USD: "$",
 	CAD: "CA$",
@@ -46,7 +52,7 @@ if(!localStorage.getItem(`twitch_clientSecret`) || localStorage.getItem(`twitch_
 	localStorage.setItem(`twitch_clientSecret`, query.get("clientSecret"));
 }
 
-const twitchClientId = localStorage.getItem(`twitch_clientID`)
+const twitchClientId = localStorage.getItem(`twitch_clientID`);
 const twitchClientSecret = localStorage.getItem(`twitch_clientSecret`);
 const streamlabsSocketToken = localStorage.getItem(`sl_socketToken`);
 const streamelementsJWTToken = localStorage.getItem(`se_jwtToken`);
@@ -223,12 +229,6 @@ const client = new tmi.Client({
 	},
 	channels: [broadcasterName]
 });
-if(allowedToProceed) {
-	client.connect().catch(console.error);
-	startSLWebsocket();
-	startSEWebsocket();
-	startTiltifyWebsocket();
-}
 
 var twitchAccessToken;
 function setTwitchAccessToken() {
@@ -253,6 +253,13 @@ function setTwitchAccessToken() {
 			if("access_token" in parentData) {
 				console.log("got access token...");
 				twitchAccessToken = parentData.access_token;
+
+				if(allowedToProceed) {
+					client.connect().catch(console.error);
+					startSLWebsocket();
+					startSEWebsocket();
+					startTiltifyWebsocket();
+				}
 			} else {
 				console.log(data);
 			}
@@ -289,6 +296,11 @@ function sendEvent(nameData, eventData) {
 	if(!("color" in nameData)) { nameData.color = "#FFF"; }
 	if(!("color" in eventData)) { eventData.color = "#FFF"; }
 
+	// temporary
+	if(!("id" in eventData)) { eventData.id = -1; }
+	if(!("type" in eventData)) { eventData.type = "standard"; }
+	if(!("cumulative" in eventData)) { eventData.cumulative = false; }
+
 	console.log(nameData);
 	console.log(eventData);
 
@@ -297,7 +309,7 @@ function sendEvent(nameData, eventData) {
 		icon = `<div class="icon" style="background-image: url('icons/${eventData.icon}');"><img src="icons/${eventData.icon}"/></div>`;
 	}
 
-	let eventElem = $(`<div class="eventRow" style="display: none;"></div>`);
+	let eventElem = $(`<div class="eventRow" style="display: none;" data-id="${eventData.id}" data-type="${eventData.type}" data-cumulative="${eventData.cumulative}"></div>`);
 	let nameElem = $(`<span class="name" style="background-image: linear-gradient(170deg, #FFF 20%, var(--colorLight) 100%)">${nameData.name}</span>`);
 	let msgElem = $(`${icon}<span class="msg" style="background-color: ${eventData.color};">${eventData.text}</span>`);
 
@@ -456,6 +468,8 @@ function doAlert() {
 	});
 }
 
+var eventID = 0;
+
 client.on("cheer", function(channel, tags, msg) {
 	let name = tags.username;
 	if("display-name" in tags) {
@@ -464,8 +478,12 @@ client.on("cheer", function(channel, tags, msg) {
 
 	let bits = parseInt(tags.bits);
 	let outObject = {
-		text: bits.toLocaleString(),
-	}
+		id: eventID,
+		type: "cheer",
+		cumulative: true,
+		amount: bits,
+		text: bits.toLocaleString()
+	};
 
 	switch(true) {
 		case bits < 100: outObject.icon = "bits1.png"; outObject.color = "#a1a1a1"; break;
@@ -487,11 +505,18 @@ client.on("resub", function(channel, username, streak, message, tags, methods) {
 		name = tags['display-name'];
 	}
 
+	let outObject = {
+		id: eventID,
+		type: "resub",
+		cumulative: false,
+		text: `RESUB <span style="font-size: 14px;">x</span>${months}`
+	};
+
 	let months = ~~tags["msg-param-cumulative-months"];
 	let plan = subTiers[methods.plan];
 	let alertHtml = `resubscribed ${plan === "Prime" ? "with" : "at"} <span class="alertBold alertThing">${plan}</span> for <span class="alertBold alertThing">${months} months</span>!`;
 
-	sendEvent({name: name}, {text: `RESUB <span style="font-size: 14px;">x</span>${months}`});
+	sendEvent({name: name}, outObject);
 	addAlert({username: username, name: tags['display-name'], showPFP: true, doTTS: true, html: alertHtml, audio: "new-message-2.ogg"});
 });
 
@@ -501,10 +526,17 @@ client.on("subscription", (channel, username, methods, message, tags) => {
 		name = tags['display-name'];
 	}
 
+	let outObject = {
+		id: eventID,
+		type: "sub",
+		cumulative: false,
+		text: "NEW SUB"
+	};
+
 	let plan = subTiers[methods.plan];
 	let alertHtml = `subscribed ${plan === "Prime" ? "with" : "at"} <span class="alertBold alertThing">${plan}</span>!`;
 
-	sendEvent({name: name}, {text: "NEW SUB"});
+	sendEvent({name: name}, outObject);
 	addAlert({username: username, name: tags['display-name'], showPFP: true, doTTS: true, html: alertHtml, audio: "new-message-2.ogg"});
 });
 
@@ -537,7 +569,14 @@ client.on("subgift", (channel, username, streakMonths, recipient, methods, tags)
 
 	let alertHtml = `gifted ${amountStr}a <span class="alertBold alertThing">${plan} subscription</span> to <span class="alertBold alertThing">${recep}</span>!`;
 
-	sendEvent({name: name}, {text: "GIFTED SUB"});
+	let outObject = {
+		id: eventID,
+		type: "giftsub_single",
+		cumulative: false,
+		text: "GIFTED SUB"
+	};
+
+	sendEvent({name: name}, outObject);
 	addAlert({username: username, name: tags['display-name'], showPFP: true, doTTS: true, html: alertHtml, audio: "new-message-5.ogg"});
 });
 
@@ -558,7 +597,15 @@ client.on("submysterygift", (channel, username, numbOfSubs, methods, tags) => {
 
 	keepSkippingUntilZero = numbOfSubs;
 
-	sendEvent({name: name}, {text: amountStr});
+	let outObject = {
+		id: eventID,
+		type: "giftsub",
+		cumulative: true,
+		amount: numbOfSubs,
+		text: amountStr
+	};
+
+	sendEvent({name: name}, outObject);
 	addAlert({username: username, name: tags['display-name'], showPFP: true, doTTS: true, html: alertHtml, audio: "new-message-5.ogg"});
 });
 
@@ -570,7 +617,14 @@ client.on("raided", (channel, username, viewers, tags) => {
 
 	let alertHtml = `raided the channel with <span class="alertBold alertThing">${viewers.toLocaleString()} viewers</span>!`;
 
-	sendEvent({name: name}, {text: `RAID <span style="font-size: 14px;">x</span>${viewers.toLocaleString()}`});
+	let outObject = {
+		id: eventID,
+		type: "raid",
+		cumulative: false,
+		text: `RAID <span style="font-size: 14px;">x</span>${viewers.toLocaleString()}`
+	};
+
+	sendEvent({name: name}, outObject);
 	addAlert({username: username, name: tags['display-name'], showPFP: true, doTTS: true, html: alertHtml, audio: "bonus-2.ogg"});
 });
 
@@ -666,6 +720,7 @@ $(":root").get(0).style.setProperty("--colorLight", localStorage.getItem("art_li
 $(":root").get(0).style.setProperty("--colorDark", localStorage.getItem("art_darkColor"));
 
 // these are sample IRC messages for testing
+
 /*
 setTimeout(function() {
 	let msgs = [
@@ -681,6 +736,10 @@ setTimeout(function() {
 		`@badge-info=;badges=staff/1,premium/1;color=#0000FF;display-name=TWW2;emotes=;id=e9176cd8-5e22-4684-ad40-ce53c2561c5e;login=tww2;mod=0;msg-id=subgift;msg-param-months=1;msg-param-recipient-display-name=Mr_Woodchuck;msg-param-recipient-id=55554444;msg-param-recipient-name=mr_woodchuck;msg-param-sub-plan-name=House\sof\sNyoro~n;msg-param-sub-plan=1000;room-id=19571752;subscriber=0;system-msg=TWW2\sgifted\sa\sTier\s1\ssub\sto\sMr_Woodchuck!;tmi-sent-ts=1521159445153;turbo=0;user-id=87654321;user-type=staff :tmi.twitch.tv USERNOTICE #forstycup`,
 
 		`@badge-info=;badges=turbo/1;color=#9ACD32;display-name=TestChannel;emotes=;id=3d830f12-795c-447d-af3c-ea05e40fbddb;login=testchannel;mod=0;msg-id=raid;msg-param-displayName=TestChannel;msg-param-login=testchannel;msg-param-viewerCount=15;room-id=33332222;subscriber=0;system-msg=15\sraiders\sfrom\sTestChannel\shave\sjoined\n!;tmi-sent-ts=1507246572675;turbo=1;user-id=123456;user-type= :tmi.twitch.tv USERNOTICE #othertestchannel`
+	];
+	let msgs = [
+		`@badge-info=;badges=staff/1,bits/1000;bits=${Math.ceil(Math.random() * 99)};color=;display-name=ronni;emotes=;id=b34ccfc7-4977-403a-8a94-33c6bac34fb8;mod=0;room-id=12345678;subscriber=0;tmi-sent-ts=1507246572675;turbo=1;user-id=12345678;user-type=staff :ronni!ronni@ronni.tmi.twitch.tv PRIVMSG #ronni :cheer100`,
+		`@badge-info=;badges=staff/1,bits/1000;bits=${100 + Math.ceil(Math.random() * 899)};color=;display-name=ronni;emotes=;id=b34ccfc7-4977-403a-8a94-33c6bac34fb8;mod=0;room-id=12345678;subscriber=0;tmi-sent-ts=1507246572675;turbo=1;user-id=12345678;user-type=staff :ronni!ronni@ronni.tmi.twitch.tv PRIVMSG #ronni :cheer100`
 	];
 
 	for(let i = 0; i < msgs.length; i++) {
