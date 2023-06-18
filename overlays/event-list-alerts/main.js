@@ -90,7 +90,7 @@ function startSLWebsocket() {
 	socket.on('event', (eventData) => {
 		if(!eventData.for) { return; }
 
-		console.log(eventData);
+		//console.log(eventData);
 		let data = eventData.message[0];
 
 		if(eventData.for === "streamlabs" && eventData.type === "donation") {
@@ -112,7 +112,7 @@ function startSLWebsocket() {
 }
 
 function SEEvent(eventData) {
-	console.log(eventData);
+	//console.log(eventData);
 	let data = eventData.data;
 
 	if(eventData.type === "tip") {
@@ -292,53 +292,96 @@ function callTwitch(data, callback) {
 	})	
 }
 
+function getBitAttrs(bits) {
+	let outObject = {
+		icon: "bits1.png",
+		color: "#a1a1a1"
+	};
+
+	switch(true) {
+		case bits >= 100 && bits < 1000: outObject.icon = "bits100.png"; outObject.color = "#d3a3ff"; break;
+		case bits >= 1000 && bits < 5000: outObject.icon = "bits1000.png"; outObject.color = "#01f8d9"; break;
+		case bits >= 5000 && bits < 10000: outObject.icon = "bits5000.png"; outObject.color = "#5fb2ff"; break;
+		case bits >= 10000: outObject.icon = "bits10000.png"; outObject.color = "#ff4e5b"; break;
+	}
+
+	return outObject;
+}
+
+let previousEventData = {};
+let previousMsgIconElem;
+let previousMsgTextElem;
 function sendEvent(nameData, eventData) {
 	if(!("color" in nameData)) { nameData.color = "#FFF"; }
-	if(!("color" in eventData)) { eventData.color = "#FFF"; }
 
-	// temporary
-	if(!("id" in eventData)) { eventData.id = -1; }
+	if(!("color" in eventData)) { eventData.color = "#FFF"; }
 	if(!("type" in eventData)) { eventData.type = "standard"; }
 	if(!("cumulative" in eventData)) { eventData.cumulative = false; }
 
-	console.log(nameData);
-	console.log(eventData);
+	eventData.name = nameData.name;
 
-	let icon = "";
-	if("icon" in eventData) {
-		icon = `<div class="icon" style="background-image: url('icons/${eventData.icon}');"><img src="icons/${eventData.icon}"/></div>`;
-	}
+	//console.log(nameData);
+	//console.log(eventData);
 
-	let eventElem = $(`<div class="eventRow" style="display: none;" data-id="${eventData.id}" data-type="${eventData.type}" data-cumulative="${eventData.cumulative}"></div>`);
+	let icon = ("icon" in eventData ? `<div class="icon" style="background-image: url('icons/${eventData.icon}');"><img src="icons/${eventData.icon}"/></div>` : "");
+
+	let eventElem = $(`<div class="eventRow" style="display: none;" data-type="${eventData.type}" data-cumulative="${eventData.cumulative}"></div>`);
 	let nameElem = $(`<span class="name" style="background-image: linear-gradient(170deg, #FFF 20%, var(--colorLight) 100%)">${nameData.name}</span>`);
-	let msgElem = $(`${icon}<span class="msg" style="background-color: ${eventData.color};">${eventData.text}</span>`);
 
-	eventElem.append(nameElem).append(msgElem);
+	let msgTextElem = $(`<span class="msg" style="background-color: ${eventData.color};">${eventData.text}</span>`);
+	let msgIconElem = $(`${icon}`);
 
-	let eventCount = $(".eventRow").length;
-	$(".eventRow").each(function() {
+	eventElem.append(nameElem).append(msgIconElem).append(msgTextElem);
+
+	let events = $(".eventRow");
+	let eventCount = events.length;
+	let isCumulative = (eventData.cumulative === previousEventData.cumulative && previousEventData.type === eventData.type && nameData.name === previousEventData.name);
+
+	events.each(function() {
 		let e = $(this);
-		let opacity = 1 - (eventCount * 0.15);
-
-		$(this).css("transition", ".5s").css("opacity", opacity);
-		if(opacity <= 0) {
-			setTimeout(function() {
-				e.remove();
-			}, 500);
-		}
 
 		eventCount--;
+
+		if(isCumulative) {
+			if(!eventCount) {
+				//console.log("EVENT COUNT NOW 0");
+				previousEventData.amount += eventData.amount;
+				previousMsgTextElem.text(previousEventData.amount.toLocaleString());
+
+				if(eventData.type === "cheer") {
+					let newBitAttrs = getBitAttrs(previousEventData.amount);
+					previousMsgTextElem.css("background-color", newBitAttrs.color);
+					previousMsgIconElem.css("background-image", `url('icons/${newBitAttrs.icon}`);
+					previousMsgIconElem.children("img").attr("src", `icons/${newBitAttrs.icon}`);
+				}
+			}
+		} else {
+			let opacity = 1 - ((eventCount + 1) * 0.15);
+
+			$(this).css("transition", ".5s").css("opacity", opacity);
+			if(opacity <= 0) {
+				setTimeout(function() {
+					e.remove();
+				}, 500);
+			}
+		}
 	});
 
-	$("#wrapper").append(eventElem);
-	eventElem.fadeIn(500);
+	if(!isCumulative) {
+		$("#wrapper").append(eventElem);
+		eventElem.fadeIn(500);
+	}
+
+	previousEventData = eventData;
+	previousMsgTextElem = msgTextElem;
+	previousMsgIconElem = msgIconElem;
 }
 
 var alertQueue = [];
 var processAlertsTO = null;
 
 function addAlert(alertData) {
-	console.log(alertData);
+	//console.log(alertData);
 
 	if(alertData.showPFP) {
 		callTwitch({
@@ -347,7 +390,7 @@ function addAlert(alertData) {
 				"login": alertData.username
 			}
 		}, function(rawUserResponse) {
-			console.log(rawUserResponse);
+			//console.log(rawUserResponse);
 			alertData.pfp = rawUserResponse.data[0].profile_image_url;
 		});		
 	}
@@ -393,13 +436,13 @@ function processAlerts() {
 
 function doAlert() {
 	let alertData = alertQueue.splice(0, 1)[0];
-	console.log(alertData);
+	//console.log(alertData);
 
 	$(".alert").remove();
 	processAlertsTO = -1;
 
 	$("#alert_wrapper").fadeIn(250, function() {
-		console.log("faded in");
+		//console.log("faded in");
 		let alertParentElem = $('<div class="alert alertComeIn"></div>');
 		let alertElem = $('<div class="alertChild alertHover"></div>');
 		alertParentElem.append(alertElem);
@@ -446,7 +489,7 @@ function doAlert() {
 			}));
 
 			let resp = JSON.parse(req.responseText);
-			console.log(resp);
+			//console.log(resp);
 
 			if(resp.data === null) {
 				processAlertsTO = setTimeout(processAlerts, 7000);
@@ -458,7 +501,7 @@ function doAlert() {
 					processAlertsTO = -1;
 				}
 				ttsAudioElem[0].onended = function(event) {
-					console.log("ENDED");
+					//console.log("ENDED");
 					processAlertsTO = setTimeout(processAlerts, 2500);
 				}
 			}
@@ -468,30 +511,22 @@ function doAlert() {
 	});
 }
 
-var eventID = 0;
-
 client.on("cheer", function(channel, tags, msg) {
 	let name = tags.username;
 	if("display-name" in tags) {
 		name = tags['display-name'];
 	}
 
-	let bits = parseInt(tags.bits);
+	let bits = ~~tags.bits;
+	let bitAttrs = getBitAttrs(bits);
 	let outObject = {
-		id: eventID,
 		type: "cheer",
 		cumulative: true,
 		amount: bits,
-		text: bits.toLocaleString()
+		text: bits.toLocaleString(),
+		icon: bitAttrs.icon,
+		color: bitAttrs.color
 	};
-
-	switch(true) {
-		case bits < 100: outObject.icon = "bits1.png"; outObject.color = "#a1a1a1"; break;
-		case bits >= 100 && bits < 1000: outObject.icon = "bits100.png"; outObject.color = "#d3a3ff"; break;
-		case bits >= 1000 && bits < 5000: outObject.icon = "bits1000.png"; outObject.color = "#01f8d9"; break;
-		case bits >= 5000 && bits < 10000: outObject.icon = "bits5000.png"; outObject.color = "#5fb2ff"; break;
-		case bits >= 10000: outObject.icon = "bits10000.png"; outObject.color = "#ff4e5b"; break;
-	}
 
 	let alertHtml = `cheered with <div class="icon" style="background-image: url('icons/${outObject.icon.replace("png", "gif")}');"><img src="icons/${outObject.icon.replace("png", "gif")}"/></div> <span class="alertBold" style="background-color: ${outObject.color};">${outObject.text}</span> bits!`;
 
@@ -506,7 +541,6 @@ client.on("resub", function(channel, username, streak, message, tags, methods) {
 	}
 
 	let outObject = {
-		id: eventID,
 		type: "resub",
 		cumulative: false,
 		text: `RESUB <span style="font-size: 14px;">x</span>${months}`
@@ -527,7 +561,6 @@ client.on("subscription", (channel, username, methods, message, tags) => {
 	}
 
 	let outObject = {
-		id: eventID,
 		type: "sub",
 		cumulative: false,
 		text: "NEW SUB"
@@ -563,14 +596,13 @@ client.on("subgift", (channel, username, streakMonths, recipient, methods, tags)
 
 	let amount = 1;
 	if("msg-param-gift-months" in tags) {
-		amount = parseInt(tags["msg-param-gift-months"]);
+		amount = ~~tags["msg-param-gift-months"];
 	}
 	let amountStr = (amount > 1 ? `<span class="alertBold alertThing">${amount} months</span> of ` : "");
 
 	let alertHtml = `gifted ${amountStr}a <span class="alertBold alertThing">${plan} subscription</span> to <span class="alertBold alertThing">${recep}</span>!`;
 
 	let outObject = {
-		id: eventID,
 		type: "giftsub_single",
 		cumulative: false,
 		text: "GIFTED SUB"
@@ -598,7 +630,6 @@ client.on("submysterygift", (channel, username, numbOfSubs, methods, tags) => {
 	keepSkippingUntilZero = numbOfSubs;
 
 	let outObject = {
-		id: eventID,
 		type: "giftsub",
 		cumulative: true,
 		amount: numbOfSubs,
@@ -618,7 +649,6 @@ client.on("raided", (channel, username, viewers, tags) => {
 	let alertHtml = `raided the channel with <span class="alertBold alertThing">${viewers.toLocaleString()} viewers</span>!`;
 
 	let outObject = {
-		id: eventID,
 		type: "raid",
 		cumulative: false,
 		text: `RAID <span style="font-size: 14px;">x</span>${viewers.toLocaleString()}`
@@ -693,7 +723,7 @@ client.on('message', function(channel, tags, message, self) {
 			}
 		}
 	}
-	console.log(showPFP);
+	//console.log(showPFP);
 
 	let alertHtml = `${greetingMessages[Math.floor(Math.random() * greetingMessages.length)]}, `;
 
@@ -720,26 +750,29 @@ $(":root").get(0).style.setProperty("--colorLight", localStorage.getItem("art_li
 $(":root").get(0).style.setProperty("--colorDark", localStorage.getItem("art_darkColor"));
 
 // these are sample IRC messages for testing
-
 /*
+let msgs = [
+	`@badge-info=;badges=staff/1,bits/1000;bits=${Math.ceil(Math.random() * 99)};color=;display-name=ronni;emotes=;id=b34ccfc7-4977-403a-8a94-33c6bac34fb8;mod=0;room-id=12345678;subscriber=0;tmi-sent-ts=1507246572675;turbo=1;user-id=12345678;user-type=staff :ronni!ronni@ronni.tmi.twitch.tv PRIVMSG #ronni :cheer100`,
+	`@badge-info=;badges=staff/1,bits/1000;bits=${100 + Math.ceil(Math.random() * 899)};color=;display-name=ronni;emotes=;id=b34ccfc7-4977-403a-8a94-33c6bac34fb8;mod=0;room-id=12345678;subscriber=0;tmi-sent-ts=1507246572675;turbo=1;user-id=12345678;user-type=staff :ronni!ronni@ronni.tmi.twitch.tv PRIVMSG #ronni :cheer100`,
+	`@badge-info=;badges=staff/1,bits/1000;bits=${Math.ceil(Math.random() * 99)};color=;display-name=ronni2;emotes=;id=b34ccfc7-4977-403a-8a94-33c6bac34fb8;mod=0;room-id=12345678;subscriber=0;tmi-sent-ts=1507246572675;turbo=1;user-id=12345678;user-type=staff :ronni2!ronni2@ronni2.tmi.twitch.tv PRIVMSG #ronni2 :cheer100`,
+	`@badge-info=;badges=staff/1,bits/1000;bits=${100 + Math.ceil(Math.random() * 899)};color=;display-name=ronni2;emotes=;id=b34ccfc7-4977-403a-8a94-33c6bac34fb8;mod=0;room-id=12345678;subscriber=0;tmi-sent-ts=1507246572675;turbo=1;user-id=12345678;user-type=staff :ronni2!ronni@ronni2.tmi.twitch.tv PRIVMSG #ronni2 :cheer100`,
+	`@badge-info=;badges=staff/1,bits/1000;bits=${1000 + Math.ceil(Math.random() * 3999)};color=;display-name=ronni;emotes=;id=b34ccfc7-4977-403a-8a94-33c6bac34fb8;mod=0;room-id=12345678;subscriber=0;tmi-sent-ts=1507246572675;turbo=1;user-id=12345678;user-type=staff :ronni!ronni@ronni.tmi.twitch.tv PRIVMSG #ronni :cheer100`,
+	`@badge-info=;badges=staff/1,bits/1000;bits=${5000 + Math.ceil(Math.random() * 4999)};color=;display-name=ronni;emotes=;id=b34ccfc7-4977-403a-8a94-33c6bac34fb8;mod=0;room-id=12345678;subscriber=0;tmi-sent-ts=1507246572675;turbo=1;user-id=12345678;user-type=staff :ronni!ronni@ronni.tmi.twitch.tv PRIVMSG #ronni :cheer100`,
+	`@badge-info=;badges=staff/1,bits/1000;bits=${10000 + Math.ceil(Math.random() * 89999)};color=;display-name=ronni;emotes=;id=b34ccfc7-4977-403a-8a94-33c6bac34fb8;mod=0;room-id=12345678;subscriber=0;tmi-sent-ts=1507246572675;turbo=1;user-id=12345678;user-type=staff :ronni!ronni@ronni.tmi.twitch.tv PRIVMSG #ronni :cheer100`,
+
+	`@badge-info=;badges=staff/1,broadcaster/1,turbo/1;color=#008000;display-name=ronni;emotes=;id=db25007f-7a18-43eb-9379-80131e44d633;login=ronni;mod=0;msg-id=resub;msg-param-cumulative-months=${Math.ceil(Math.random() * 100)};msg-param-streak-months=2;msg-param-should-share-streak=1;msg-param-sub-plan=Prime;msg-param-sub-plan-name=Prime;room-id=12345678;subscriber=1;system-msg=ronni\shas\ssubscribed\sfor\s6\smonths!;tmi-sent-ts=1507246572675;turbo=1;user-id=87654321;user-type=staff :tmi.twitch.tv USERNOTICE #dallas :Great stream -- keep it up!`,
+	`@badge-info=;badges=staff/1,broadcaster/1,turbo/1;color=#008000;display-name=ronni;emotes=;id=db25007f-7a18-43eb-9379-80131e44d633;login=ronni;mod=0;msg-id=sub;msg-param-sub-plan=Prime;msg-param-sub-plan-name=Prime;room-id=12345678;subscriber=1;system-msg=ronni\shas\ssubscribed!;tmi-sent-ts=1507246572675;turbo=1;user-id=87654321;user-type=staff :tmi.twitch.tv USERNOTICE #dallas :Great stream -- keep it up!`,
+
+	`@badge-info=;badges=staff/1,premium/1;color=#0000FF;display-name=TWW2;emotes=;id=e9176cd8-5e22-4684-ad40-ce53c2561c5e;login=tww2;mod=0;msg-id=subgift;msg-param-months=1;msg-param-recipient-display-name=Mr_Woodchuck;msg-param-recipient-id=55554444;msg-param-recipient-name=mr_woodchuck;msg-param-sub-plan-name=House\sof\sNyoro~n;msg-param-sub-plan=1000;room-id=19571752;subscriber=0;system-msg=TWW2\sgifted\sa\sTier\s1\ssub\sto\sMr_Woodchuck!;tmi-sent-ts=1521159445153;turbo=0;user-id=87654321;user-type=staff :tmi.twitch.tv USERNOTICE #forstycup`,
+
+	`@badge-info=;badges=turbo/1;color=#9ACD32;display-name=TestChannel;emotes=;id=3d830f12-795c-447d-af3c-ea05e40fbddb;login=testchannel;mod=0;msg-id=raid;msg-param-displayName=TestChannel;msg-param-login=testchannel;msg-param-viewerCount=15;room-id=33332222;subscriber=0;system-msg=15\sraiders\sfrom\sTestChannel\shave\sjoined\n!;tmi-sent-ts=1507246572675;turbo=1;user-id=123456;user-type= :tmi.twitch.tv USERNOTICE #othertestchannel`
+];
+*/
+
 setTimeout(function() {
 	let msgs = [
 		`@badge-info=;badges=staff/1,bits/1000;bits=${Math.ceil(Math.random() * 99)};color=;display-name=ronni;emotes=;id=b34ccfc7-4977-403a-8a94-33c6bac34fb8;mod=0;room-id=12345678;subscriber=0;tmi-sent-ts=1507246572675;turbo=1;user-id=12345678;user-type=staff :ronni!ronni@ronni.tmi.twitch.tv PRIVMSG #ronni :cheer100`,
 		`@badge-info=;badges=staff/1,bits/1000;bits=${100 + Math.ceil(Math.random() * 899)};color=;display-name=ronni;emotes=;id=b34ccfc7-4977-403a-8a94-33c6bac34fb8;mod=0;room-id=12345678;subscriber=0;tmi-sent-ts=1507246572675;turbo=1;user-id=12345678;user-type=staff :ronni!ronni@ronni.tmi.twitch.tv PRIVMSG #ronni :cheer100`,
-		`@badge-info=;badges=staff/1,bits/1000;bits=${1000 + Math.ceil(Math.random() * 3999)};color=;display-name=ronni;emotes=;id=b34ccfc7-4977-403a-8a94-33c6bac34fb8;mod=0;room-id=12345678;subscriber=0;tmi-sent-ts=1507246572675;turbo=1;user-id=12345678;user-type=staff :ronni!ronni@ronni.tmi.twitch.tv PRIVMSG #ronni :cheer100`,
-		`@badge-info=;badges=staff/1,bits/1000;bits=${5000 + Math.ceil(Math.random() * 4999)};color=;display-name=ronni;emotes=;id=b34ccfc7-4977-403a-8a94-33c6bac34fb8;mod=0;room-id=12345678;subscriber=0;tmi-sent-ts=1507246572675;turbo=1;user-id=12345678;user-type=staff :ronni!ronni@ronni.tmi.twitch.tv PRIVMSG #ronni :cheer100`,
-		`@badge-info=;badges=staff/1,bits/1000;bits=${10000 + Math.ceil(Math.random() * 89999)};color=;display-name=ronni;emotes=;id=b34ccfc7-4977-403a-8a94-33c6bac34fb8;mod=0;room-id=12345678;subscriber=0;tmi-sent-ts=1507246572675;turbo=1;user-id=12345678;user-type=staff :ronni!ronni@ronni.tmi.twitch.tv PRIVMSG #ronni :cheer100`,
-
-		`@badge-info=;badges=staff/1,broadcaster/1,turbo/1;color=#008000;display-name=ronni;emotes=;id=db25007f-7a18-43eb-9379-80131e44d633;login=ronni;mod=0;msg-id=resub;msg-param-cumulative-months=${Math.ceil(Math.random() * 100)};msg-param-streak-months=2;msg-param-should-share-streak=1;msg-param-sub-plan=Prime;msg-param-sub-plan-name=Prime;room-id=12345678;subscriber=1;system-msg=ronni\shas\ssubscribed\sfor\s6\smonths!;tmi-sent-ts=1507246572675;turbo=1;user-id=87654321;user-type=staff :tmi.twitch.tv USERNOTICE #dallas :Great stream -- keep it up!`,
-		`@badge-info=;badges=staff/1,broadcaster/1,turbo/1;color=#008000;display-name=ronni;emotes=;id=db25007f-7a18-43eb-9379-80131e44d633;login=ronni;mod=0;msg-id=sub;msg-param-sub-plan=Prime;msg-param-sub-plan-name=Prime;room-id=12345678;subscriber=1;system-msg=ronni\shas\ssubscribed!;tmi-sent-ts=1507246572675;turbo=1;user-id=87654321;user-type=staff :tmi.twitch.tv USERNOTICE #dallas :Great stream -- keep it up!`,
-
-		`@badge-info=;badges=staff/1,premium/1;color=#0000FF;display-name=TWW2;emotes=;id=e9176cd8-5e22-4684-ad40-ce53c2561c5e;login=tww2;mod=0;msg-id=subgift;msg-param-months=1;msg-param-recipient-display-name=Mr_Woodchuck;msg-param-recipient-id=55554444;msg-param-recipient-name=mr_woodchuck;msg-param-sub-plan-name=House\sof\sNyoro~n;msg-param-sub-plan=1000;room-id=19571752;subscriber=0;system-msg=TWW2\sgifted\sa\sTier\s1\ssub\sto\sMr_Woodchuck!;tmi-sent-ts=1521159445153;turbo=0;user-id=87654321;user-type=staff :tmi.twitch.tv USERNOTICE #forstycup`,
-
-		`@badge-info=;badges=turbo/1;color=#9ACD32;display-name=TestChannel;emotes=;id=3d830f12-795c-447d-af3c-ea05e40fbddb;login=testchannel;mod=0;msg-id=raid;msg-param-displayName=TestChannel;msg-param-login=testchannel;msg-param-viewerCount=15;room-id=33332222;subscriber=0;system-msg=15\sraiders\sfrom\sTestChannel\shave\sjoined\n!;tmi-sent-ts=1507246572675;turbo=1;user-id=123456;user-type= :tmi.twitch.tv USERNOTICE #othertestchannel`
-	];
-	let msgs = [
-		`@badge-info=;badges=staff/1,bits/1000;bits=${Math.ceil(Math.random() * 99)};color=;display-name=ronni;emotes=;id=b34ccfc7-4977-403a-8a94-33c6bac34fb8;mod=0;room-id=12345678;subscriber=0;tmi-sent-ts=1507246572675;turbo=1;user-id=12345678;user-type=staff :ronni!ronni@ronni.tmi.twitch.tv PRIVMSG #ronni :cheer100`,
-		`@badge-info=;badges=staff/1,bits/1000;bits=${100 + Math.ceil(Math.random() * 899)};color=;display-name=ronni;emotes=;id=b34ccfc7-4977-403a-8a94-33c6bac34fb8;mod=0;room-id=12345678;subscriber=0;tmi-sent-ts=1507246572675;turbo=1;user-id=12345678;user-type=staff :ronni!ronni@ronni.tmi.twitch.tv PRIVMSG #ronni :cheer100`
 	];
 
 	for(let i = 0; i < msgs.length; i++) {
@@ -752,4 +785,3 @@ setTimeout(function() {
 		}, 1000 + (i*5000));
 	}
 }, 1000);
-*/
