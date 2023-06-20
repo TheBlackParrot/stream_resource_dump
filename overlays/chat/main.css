@@ -101,10 +101,6 @@ body {
 	filter: var(--shadowStuff);
 }
 
-.name {
-	filter: var(--shadowStuff);
-}
-
 .userInfo {
 	margin-bottom: 4px;
 }

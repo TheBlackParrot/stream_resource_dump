@@ -1,4 +1,4 @@
-<html style="--nameColor:#BBB; --nameFont:Manrope; --nameWeight:900; --nameSize:16pt; --nameStyle:normal; --nameSpacing:1px; --msgFont:Manrope; --msgSize:16pt; --msgSpacing:0px; --msgWeight:700; --nameTransform:uppercase; --nameVariant:normal; --nameColorSecondary:#FFF; --nameAngle:170deg; --showPfp:inline-block; --pfpShape:10px;">
+<html style="--nameColor:#BBB; --nameFont:Manrope; --nameWeight:900; --nameSize:16pt; --nameStyle:normal; --nameSpacing:1px; --msgFont:Manrope; --msgSize:16pt; --msgSpacing:0px; --msgWeight:700; --nameTransform:uppercase; --nameVariant:normal; --nameColorSecondary:#FFF; --nameAngle:170deg; --showPfp:inline-block; --pfpShape:10px; --nameShadow:var(--shadowStuff);">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -140,7 +140,7 @@
 				<div class="pronouns">
 					It / Its
 				</div>
-				<img class="pfp" src="obamna.jpg" style="display: var(--showPfp); border-radius: var(--pfpShape);"><div class="name" style="background-image: linear-gradient(var(--nameAngle), var(--nameColorSecondary) 0%, var(--nameColor) 75%); font-family: var(--nameFont); font-weight: var(--nameWeight); font-size: var(--nameSize); font-style: var(--nameStyle); letter-spacing: var(--nameSpacing); text-transform: var(--nameTransform); font-variant: var(--nameVariant);">
+				<img class="pfp" src="obamna.jpg" style="display: var(--showPfp); border-radius: var(--pfpShape);"><div class="name" style="background-image: linear-gradient(var(--nameAngle), var(--nameColorSecondary) 0%, var(--nameColor) 75%); font-family: var(--nameFont); font-weight: var(--nameWeight); font-size: var(--nameSize); font-style: var(--nameStyle); letter-spacing: var(--nameSpacing); text-transform: var(--nameTransform); font-variant: var(--nameVariant); filter: var(--nameShadow);">
 					SampleUser69420
 				</div>
 			</div>
@@ -157,7 +157,7 @@
 				<div class="pronouns">
 					He / Him
 				</div>
-				<img class="pfp" src="obamna.jpg" style="display: var(--showPfp); border-radius: var(--pfpShape);"><div class="name" style="background-image: linear-gradient(var(--nameAngle), var(--nameColorSecondary) 0%, var(--nameColor) 75%); font-family: var(--nameFont); font-weight: var(--nameWeight); font-size: var(--nameSize); font-style: var(--nameStyle); letter-spacing: var(--nameSpacing); text-transform: var(--nameTransform); font-variant: var(--nameVariant);">
+				<img class="pfp" src="obamna.jpg" style="display: var(--showPfp); border-radius: var(--pfpShape);"><div class="name" style="background-image: linear-gradient(var(--nameAngle), var(--nameColorSecondary) 0%, var(--nameColor) 75%); font-family: var(--nameFont); font-weight: var(--nameWeight); font-size: var(--nameSize); font-style: var(--nameStyle); letter-spacing: var(--nameSpacing); text-transform: var(--nameTransform); font-variant: var(--nameVariant); filter: var(--nameShadow);">
 					SampleUser69420
 				</div>
 			</div>
@@ -169,7 +169,7 @@
 		<div class="chatBlock" data-msgidx="2">
 			<div class="userInfo">
 				<div class="flags" style=""><span class="flaghomo flag" style="background-image: url('../flags/gay.svg'); display: inline-block;"></span><span class="flagtrans flag" style="background-image: url('../flags/transgender.svg'); display: inline-block;"></span></div>
-				<img class="pfp evil" src="obamna.jpg" style="filter: inherit invert(100%); display: var(--showPfp); border-radius: var(--pfpShape);"><div class="name" style="background-image: linear-gradient(var(--nameAngle), var(--nameColorSecondary) 0%, var(--nameColor) 75%); font-family: var(--nameFont); font-weight: var(--nameWeight); font-size: var(--nameSize); font-style: var(--nameStyle); letter-spacing: var(--nameSpacing); text-transform: var(--nameTransform); font-variant: var(--nameVariant);">
+				<img class="pfp evil" src="obamna.jpg" style="filter: inherit invert(100%); display: var(--showPfp); border-radius: var(--pfpShape);"><div class="name" style="background-image: linear-gradient(var(--nameAngle), var(--nameColorSecondary) 0%, var(--nameColor) 75%); font-family: var(--nameFont); font-weight: var(--nameWeight); font-size: var(--nameSize); font-style: var(--nameStyle); letter-spacing: var(--nameSpacing); text-transform: var(--nameTransform); font-variant: var(--nameVariant); filter: var(--nameShadow);">
 					SampleUser69420
 				</div>
 			</div>
@@ -277,6 +277,11 @@
 					<input type="checkbox" id="use7TVPaint"/>
 					<span class="inputName">Use 7TV Paint (if available)</span>
 				</div>
+
+				<div class="input">
+					<input type="checkbox" id="nameShadow"/>
+					<span class="inputName">Draw shadow underneath name</span>
+				</div>
 			</div>
 			<div class="section">
 				<div class="head">Message Settings</div>
@@ -350,7 +355,7 @@
 			"yes",
 			"no",
 			"squircle",
-			"no"
+			"yes"
 		];
 
 		let userSettings = {
@@ -372,7 +377,8 @@
 			testName: "SampleUser69420",
 			nameWeight: 900,
 			msgWeight: 700,
-			use7TVPaint: "yes"
+			use7TVPaint: "yes",
+			nameShadow: "yes"
 		};
 
 		window.addEventListener("load", function(event) {
@@ -593,6 +599,16 @@
 
 		$("#use7TVPaint").on("change", function(e) {
 			updateCmdData(17, "use7TVPaint", ($("#use7TVPaint").is(":checked") ? "yes" : "no"));
+		});
+
+		$("#nameShadow").on("change", function(e) {
+			let cssVal = "";
+			if($("#nameShadow").is(":checked")) {
+				cssVal = "var(--shadowStuff)";
+			}
+
+			$(":root").get(0).style.setProperty(`--nameShadow`, cssVal);
+			updateCmdData(18, "nameShadow", ($("#nameShadow").is(":checked") ? "yes" : "no"));
 		});
 
 		function updateCmdData(idx, key, value) {

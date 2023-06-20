@@ -290,7 +290,7 @@ const chatFuncs = {
 	},
 
 	"chatsettings": function(data, args) {
-		if(args.length !== 18) {
+		if(args.length !== 19) {
 			console.log("args not correct length");
 			return;
 		}
@@ -313,6 +313,7 @@ const chatFuncs = {
 		chatFuncs["useusername"](data, [args[15]]);
 		chatFuncs["pfpshape"](data, [args[16]]);
 		chatFuncs["use7tvpaint"](data, [args[17]]);
+		chatFuncs["nameshadow"](data, [args[18]]);
 	},
 
 	"flags": function(data, args) {
@@ -504,7 +505,16 @@ const chatFuncs = {
 
 		console.log(`7tv paint for ${data.user.username} is now ${which} (only if available)`);
 		localStorage.setItem(`use7tvpaint_${data.user.id}`, which);
-	}
+	},
+
+	nameshadow: function(data, args) {
+		if(!args.length) { return; }
+		let show = (args[0] === "yes" ? "yes" : "no");
+
+		console.log(`name shadow for ${data.user.username} is now ${show}`);
+		localStorage.setItem(`nameshadow_${data.user.id}`, show);
+		$(":root").get(0).style.setProperty(`--nameShadow${data.user.id}`, (show === "yes" ? "var(--shadowStuff)" : ""));
+	},
 }
 
 var lastUser;
@@ -695,6 +705,7 @@ function parseMessage(data) {
 	if(!localStorage.getItem(`nameangle_${data.user.id}`)) { localStorage.setItem(`nameangle_${data.user.id}`, "170deg"); }
 	if(!localStorage.getItem(`usename_${data.user.id}`)) { localStorage.setItem(`usename_${data.user.id}`, "name"); }
 	if(!localStorage.getItem(`use7tvpaint_${data.user.id}`)) { localStorage.setItem(`use7tvpaint_${data.user.id}`, "yes"); }
+	if(!localStorage.getItem(`nameshadow_${data.user.id}`)) { localStorage.setItem(`nameshadow_${data.user.id}`, "yes"); }
 
 	$(":root").get(0).style.setProperty(`--nameColor${data.user.id}`, localStorage.getItem(`color_${data.user.id}`));
 	$(":root").get(0).style.setProperty(`--nameFont${data.user.id}`, localStorage.getItem(`namefont_${data.user.id}`));
@@ -706,6 +717,7 @@ function parseMessage(data) {
 	$(":root").get(0).style.setProperty(`--nameVariant${data.user.id}`, localStorage.getItem(`namevariant_${data.user.id}`));
 	$(":root").get(0).style.setProperty(`--nameColorSecondary${data.user.id}`, localStorage.getItem(`color2_${data.user.id}`));
 	$(":root").get(0).style.setProperty(`--nameAngle${data.user.id}`, localStorage.getItem(`nameangle_${data.user.id}`));
+	$(":root").get(0).style.setProperty(`--nameShadow${data.user.id}`, (localStorage.getItem(`nameshadow_${data.user.id}`) === "yes" ? "var(--shadowStuff)" : ""));
 
 	let nameBlock = $(`<div class="name" data-userid="${data.user.id}">${data.user[localStorage.getItem(`usename_${data.user.id}`)]}</div>`);
 	nameBlock.css("background-image", `linear-gradient(var(--nameAngle${data.user.id}), var(--nameColorSecondary${data.user.id}) 0%, var(--nameColor${data.user.id}) 75%)`);
@@ -716,6 +728,7 @@ function parseMessage(data) {
 	nameBlock.css("letter-spacing", `var(--nameSpacing${data.user.id})`);
 	nameBlock.css("text-transform", `var(--nameTransform${data.user.id})`);
 	nameBlock.css("font-variant", `var(--nameVariant${data.user.id})`);
+	nameBlock.css("filter", `var(--nameShadow${data.user.id})`);
 
 	userBlock.append(nameBlock);
 	rootElement.append(userBlock);
@@ -740,7 +753,7 @@ function parseMessage(data) {
 		for(let i in sevenTVPaints) {
 			let paint = sevenTVPaints[i];
 			if(paint.users.indexOf(data.user.id) !== -1) {
-				set7TVPaint(nameBlock, i);
+				set7TVPaint(nameBlock, i, data.user.id);
 				break;
 			}
 		}
@@ -891,7 +904,7 @@ function parseMessage(data) {
 	testNameBlock = nameBlock;
 }
 
-function set7TVPaint(nameBlock, which) {
+function set7TVPaint(nameBlock, which, userID) {
 	let paint = sevenTVPaints[which];
 	let css = "";
 	let bgColor = parse7TVColor(paint.color);
@@ -932,7 +945,7 @@ function set7TVPaint(nameBlock, which) {
 	}
 	//console.log(css);
 	nameBlock.css("background-color", bgColor).css("background-image", css).css("background-size", "contain");
-	nameBlock.css("filter", `${shadows === "" ? "var(--shadowStuff)" : shadows}`);
+	nameBlock.css("filter", `${shadows}var(--nameShadow${userID})`);
 }
 
 var externalBadgeCache = {};
