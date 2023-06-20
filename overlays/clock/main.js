@@ -1,3 +1,23 @@
+function setTZ() {
+	// undefined will automatically grab the system's locale. which is what we want to happen
+	let tz = new Date().toLocaleTimeString(undefined, { timeZoneName: "short" }).split(" ");
+
+	let offset = new Date().getTimezoneOffset() * -1;
+	let offsetMins = offset % 60;
+	let offsetHrs = Math.floor(offset / 60);
+
+	let formattedOffset = `UTC${offsetHrs >= 0 ? "+" : ""}${offsetHrs}${offsetMins ? `:${offsetMins.toString().padStart(2, "0")}` : ""}`;
+
+	let tzOut = [];
+	if(tz.length === 3) {
+		tzOut.push(tz[2]);
+	}
+	tzOut.push(formattedOffset);
+
+	$("#timezone").text(tzOut.join(" / "));
+}
+setTZ();
+
 function doClock() {
 	let d = new Date();
 	let h = d.getHours().toString().padStart(2, "0");
