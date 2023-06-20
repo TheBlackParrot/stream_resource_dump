@@ -707,9 +707,36 @@ var customGreetingSounds = {
 };
 var greetingSoundAmount = 11;
 
+var msgFuncs = {
+	skipalert: function() {
+		clearTimeout(processAlertsTO);
+		processAlerts();
+	}
+}
+
 client.on('message', function(channel, tags, message, self) {
 	if(self) {
 		return;
+	}
+
+	let moderator = false;
+	if("badges" in tags) {
+		let badges = tags.badges;
+		if(badges !== null) {
+			if("moderator" in badges || "broadcaster" in badges) {
+				moderator = true;
+			}
+		}
+	}
+
+	if(moderator) {
+		let parts = message.split(" ");
+		let cmd = parts[0].substr(1);
+
+		if(cmd in msgFuncs) {
+			msgFuncs[cmd]();
+			return;
+		}
 	}
 
 	if(hideAccounts.indexOf(tags.username) !== -1 || seenAccounts.indexOf(tags.username) !== -1) {
@@ -731,7 +758,6 @@ client.on('message', function(channel, tags, message, self) {
 			}
 		}
 	}
-	//console.log(showPFP);
 
 	let alertHtml = `${greetingMessages[Math.floor(Math.random() * greetingMessages.length)]}, `;
 
