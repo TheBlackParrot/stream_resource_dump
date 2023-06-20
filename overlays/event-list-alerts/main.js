@@ -335,7 +335,7 @@ function sendEvent(nameData, eventData) {
 
 	let events = $(".eventRow");
 	let eventCount = events.length;
-	let isCumulative = (eventData.cumulative === previousEventData.cumulative && previousEventData.type === eventData.type && nameData.name === previousEventData.name);
+	let isCumulative = (eventData.cumulative && eventData.cumulative === previousEventData.cumulative && previousEventData.type === eventData.type && nameData.name === previousEventData.name);
 
 	events.each(function() {
 		let e = $(this);
@@ -383,6 +383,18 @@ var processAlertsTO = null;
 function addAlert(alertData) {
 	//console.log(alertData);
 
+	let nextStep = function() {
+		if(!("reverse" in alertData)) { alertData.reverse = false; }
+		if(!("doTTS" in alertData)) { alertData.doTTS = true; }
+
+		alertQueue.push(alertData);
+
+		if(processAlertsTO === null) {
+			console.log("processing alerts...");
+			processAlerts();
+		}
+	}
+
 	if(alertData.showPFP) {
 		callTwitch({
 			"endpoint": "users",
@@ -392,17 +404,10 @@ function addAlert(alertData) {
 		}, function(rawUserResponse) {
 			//console.log(rawUserResponse);
 			alertData.pfp = rawUserResponse.data[0].profile_image_url;
+			nextStep();
 		});		
-	}
-
-	if(!("reverse" in alertData)) { alertData.reverse = false; }
-	if(!("doTTS" in alertData)) { alertData.doTTS = true; }
-
-	alertQueue.push(alertData);
-
-	if(processAlertsTO === null) {
-		console.log("processing alerts...");
-		processAlerts();
+	} else {
+		nextStep();
 	}
 }
 
@@ -540,15 +545,16 @@ client.on("resub", function(channel, username, streak, message, tags, methods) {
 		name = tags['display-name'];
 	}
 
-	let outObject = {
-		type: "resub",
-		cumulative: false,
-		text: `RESUB <span style="font-size: 14px;">x</span>${months}`
-	};
-
 	let months = ~~tags["msg-param-cumulative-months"];
 	let plan = subTiers[methods.plan];
 	let alertHtml = `resubscribed ${plan === "Prime" ? "with" : "at"} <span class="alertBold alertThing">${plan}</span> for <span class="alertBold alertThing">${months} months</span>!`;
+
+	let outObject = {
+		type: "resub",
+		cumulative: false,
+		text: `RESUB <span style="font-size: 14px;">x</span>${months}`,
+		amount: months
+	};
 
 	sendEvent({name: name}, outObject);
 	addAlert({username: username, name: tags['display-name'], showPFP: true, doTTS: true, html: alertHtml, audio: "new-message-2.ogg"});
@@ -560,14 +566,14 @@ client.on("subscription", (channel, username, methods, message, tags) => {
 		name = tags['display-name'];
 	}
 
+	let plan = subTiers[methods.plan];
+	let alertHtml = `subscribed ${plan === "Prime" ? "with" : "at"} <span class="alertBold alertThing">${plan}</span>!`;
+
 	let outObject = {
 		type: "sub",
 		cumulative: false,
 		text: "NEW SUB"
 	};
-
-	let plan = subTiers[methods.plan];
-	let alertHtml = `subscribed ${plan === "Prime" ? "with" : "at"} <span class="alertBold alertThing">${plan}</span>!`;
 
 	sendEvent({name: name}, outObject);
 	addAlert({username: username, name: tags['display-name'], showPFP: true, doTTS: true, html: alertHtml, audio: "new-message-2.ogg"});
@@ -605,7 +611,8 @@ client.on("subgift", (channel, username, streakMonths, recipient, methods, tags)
 	let outObject = {
 		type: "giftsub_single",
 		cumulative: false,
-		text: "GIFTED SUB"
+		text: "GIFTED SUB",
+		amount: amount
 	};
 
 	sendEvent({name: name}, outObject);
@@ -646,11 +653,12 @@ client.on("raided", (channel, username, viewers, tags) => {
 		name = tags['display-name'];
 	}
 
-	let alertHtml = `raided the channel with <span class="alertBold alertThing">${viewers.toLocaleString()} viewers</span>!`;
+	let alertHtml = `raided the channel with <span class="alertBold alertThing">${viewers.toLocaleString()} viewer${viewers > 1 ? "s" : ""}</span>!`;
 
 	let outObject = {
 		type: "raid",
 		cumulative: false,
+		amount: viewers,
 		text: `RAID <span style="font-size: 14px;">x</span>${viewers.toLocaleString()}`
 	};
 
@@ -688,7 +696,7 @@ var greetingMessages = [
 var customGreetingSounds = {
 	"ash_darkfire": "hello_gordon.wav",
 	"electricjourney": "adora.wav",
-	"swooshycueb": "trans_rights.ogg",
+	"swooshycueb": "landback2.ogg",
 	"naevisabers": "necoarc.ogg",
 	"rx_twit": "xp.ogg",
 	"spinvvy": "06_-_Colour_Ringtone.ogg",
@@ -735,6 +743,12 @@ client.on('message', function(channel, tags, message, self) {
 	addAlert({username: tags.username, name: name, showPFP: showPFP, html: alertHtml, doTTS: false, reverse: true, audio: greetingSound});
 });
 
+client.on("raw_message", (messageCloned, message) => {
+	let d = new Date();
+	let time = `${d.getHours().toString().padStart(2, "0")}:${d.getMinutes().toString().padStart(2, "0")}`;
+	console.log(`[RAW] [${time}] ${message.raw}`);
+});
+
 window.addEventListener("storage", function(event) {
 	switch(event.key) {
 		case "art_darkColor":
@@ -765,14 +779,20 @@ let msgs = [
 
 	`@badge-info=;badges=staff/1,premium/1;color=#0000FF;display-name=TWW2;emotes=;id=e9176cd8-5e22-4684-ad40-ce53c2561c5e;login=tww2;mod=0;msg-id=subgift;msg-param-months=1;msg-param-recipient-display-name=Mr_Woodchuck;msg-param-recipient-id=55554444;msg-param-recipient-name=mr_woodchuck;msg-param-sub-plan-name=House\sof\sNyoro~n;msg-param-sub-plan=1000;room-id=19571752;subscriber=0;system-msg=TWW2\sgifted\sa\sTier\s1\ssub\sto\sMr_Woodchuck!;tmi-sent-ts=1521159445153;turbo=0;user-id=87654321;user-type=staff :tmi.twitch.tv USERNOTICE #forstycup`,
 
-	`@badge-info=;badges=turbo/1;color=#9ACD32;display-name=TestChannel;emotes=;id=3d830f12-795c-447d-af3c-ea05e40fbddb;login=testchannel;mod=0;msg-id=raid;msg-param-displayName=TestChannel;msg-param-login=testchannel;msg-param-viewerCount=15;room-id=33332222;subscriber=0;system-msg=15\sraiders\sfrom\sTestChannel\shave\sjoined\n!;tmi-sent-ts=1507246572675;turbo=1;user-id=123456;user-type= :tmi.twitch.tv USERNOTICE #othertestchannel`
+	`@badge-info=;badges=turbo/1;color=#9ACD32;display-name=TestChannel;emotes=;id=3d830f12-795c-447d-af3c-ea05e40fbddb;login=testchannel;mod=0;msg-id=raid;msg-param-displayName=TestChannel;msg-param-login=testchannel;msg-param-viewerCount=15;room-id=33332222;subscriber=0;system-msg=15\sraiders\sfrom\sTestChannel\shave\sjoined\n!;tmi-sent-ts=1507246572675;turbo=1;user-id=123456;user-type= :tmi.twitch.tv USERNOTICE #othertestchannel`,
+
+	"@badge-info=;badges=moderator/1;color=#FF69B4;display-name=NotTheBlackParrot;emotes=;flags=;id=7017cc92-5bdb-4290-ac54-2bad4f702837;login=nottheblackparrot;mod=1;msg-id=raid;msg-param-displayName=NotTheBlackParrot;msg-param-login=nottheblackparrot;msg-param-profileImageURL=https://static-cdn.jtvnw.net/user-default-pictures-uv/cdd517fe-def4-11e9-948e-784f43822e80-profile_image-%s.png;msg-param-viewerCount=1;room-id=43464015;subscriber=0;system-msg=1\sraiders\sfrom\sNotTheBlackParrot\shave\sjoined!;tmi-sent-ts=1687242824156;user-id=738319562;user-type=mod :tmi.twitch.tv USERNOTICE #theblackparrot"
 ];
 */
 
+/*
 setTimeout(function() {
 	let msgs = [
 		`@badge-info=;badges=staff/1,bits/1000;bits=${Math.ceil(Math.random() * 99)};color=;display-name=ronni;emotes=;id=b34ccfc7-4977-403a-8a94-33c6bac34fb8;mod=0;room-id=12345678;subscriber=0;tmi-sent-ts=1507246572675;turbo=1;user-id=12345678;user-type=staff :ronni!ronni@ronni.tmi.twitch.tv PRIVMSG #ronni :cheer100`,
 		`@badge-info=;badges=staff/1,bits/1000;bits=${100 + Math.ceil(Math.random() * 899)};color=;display-name=ronni;emotes=;id=b34ccfc7-4977-403a-8a94-33c6bac34fb8;mod=0;room-id=12345678;subscriber=0;tmi-sent-ts=1507246572675;turbo=1;user-id=12345678;user-type=staff :ronni!ronni@ronni.tmi.twitch.tv PRIVMSG #ronni :cheer100`,
+		`@badge-info=;badges=staff/1,bits/1000;bits=${Math.ceil(Math.random() * 99)};color=;display-name=ronni2;emotes=;id=b34ccfc7-4977-403a-8a94-33c6bac34fb8;mod=0;room-id=12345678;subscriber=0;tmi-sent-ts=1507246572675;turbo=1;user-id=12345678;user-type=staff :ronni2!ronni2@ronni2.tmi.twitch.tv PRIVMSG #ronni2 :cheer100`,
+		`@badge-info=;badges=staff/1,bits/1000;bits=${100 + Math.ceil(Math.random() * 899)};color=;display-name=ronni2;emotes=;id=b34ccfc7-4977-403a-8a94-33c6bac34fb8;mod=0;room-id=12345678;subscriber=0;tmi-sent-ts=1507246572675;turbo=1;user-id=12345678;user-type=staff :ronni2!ronni@ronni2.tmi.twitch.tv PRIVMSG #ronni2 :cheer100`,
+		`@badge-info=;badges=turbo/1;color=#9ACD32;display-name=TestChannel;emotes=;id=3d830f12-795c-447d-af3c-ea05e40fbddb;login=testchannel;mod=0;msg-id=raid;msg-param-displayName=TestChannel;msg-param-login=testchannel;msg-param-viewerCount=15;room-id=33332222;subscriber=0;system-msg=15\sraiders\sfrom\sTestChannel\shave\sjoined\n!;tmi-sent-ts=1507246572675;turbo=1;user-id=123456;user-type= :tmi.twitch.tv USERNOTICE #othertestchannel`
 	];
 
 	for(let i = 0; i < msgs.length; i++) {
@@ -785,3 +805,4 @@ setTimeout(function() {
 		}, 1000 + (i*5000));
 	}
 }, 1000);
+*/
