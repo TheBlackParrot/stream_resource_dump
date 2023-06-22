@@ -29,7 +29,7 @@ with open("symbols.json", "r") as symFile:
     symReplace = json.load(symFile)
 
 device = torch.device('cpu')
-#torch.set_num_threads(settings["tts"]["cpu_threads"])
+torch.set_num_threads(settings["tts"]["cpu_threads"])
 
 if not os.path.isfile(settings["tts"]["model_saveAs"]):
     torch.hub.download_url_to_file(settings["tts"]["model"], settings["tts"]["model_saveAs"])
