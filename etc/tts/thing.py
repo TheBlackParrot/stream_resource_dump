@@ -9,6 +9,7 @@ import json
 import math
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import urllib.parse
+import hashlib
 
 settings = None
 with open("settings.json", "r") as settingsFile:
@@ -28,13 +29,15 @@ with open("symbols.json", "r") as symFile:
     symReplace = json.load(symFile)
 
 device = torch.device('cpu')
-torch.set_num_threads(settings["tts"]["cpu_threads"])
+#torch.set_num_threads(settings["tts"]["cpu_threads"])
 
 if not os.path.isfile(settings["tts"]["model_saveAs"]):
     torch.hub.download_url_to_file(settings["tts"]["model"], settings["tts"]["model_saveAs"])
 
 model = torch.package.PackageImporter(settings["tts"]["model_saveAs"]).load_pickle("tts_models", "model")
 model.to(device)
+
+cache = {}
 
 class MyServer(BaseHTTPRequestHandler):
     def do_GET(self):
@@ -44,8 +47,6 @@ class MyServer(BaseHTTPRequestHandler):
 
         path_parts = self.path[1:].split("/")[:-1]
 
-        #_type = query_parts['type'][0].lower()
-        #_data = query_parts['data'][0].lower()
         _type = path_parts[0].lower()
         _name = path_parts[1].lower()
         _data = " ".join([urllib.parse.unquote(str(item)) for item in path_parts[2:]]).lower()
@@ -56,10 +57,23 @@ class MyServer(BaseHTTPRequestHandler):
             "pitch": None
         }
 
+        md5hash = hashlib.md5(_data.encode("utf-8")).hexdigest()
+        if md5hash in cache:
+            print("sending cached data out")
+            audio_out = cache[md5hash]
+            self.send_response(200)
+            self.send_header("Content-Type", "audio/wav")
+            self.send_header("Content-Length", len(audio_out))
+            self.end_headers()
+            self.wfile.write(audio_out)
+            cache.pop(md5hash, None)
+            return
+
         if _type == "name":
             if _data in ttsStuff:
                 currentTTSData["say"] = ttsStuff[_data]["pronunciation"]
             else:
+                number_amount = 0
                 name_fixed = ""
                 name_parts = []
                 for character in _data:
@@ -70,7 +84,9 @@ class MyServer(BaseHTTPRequestHandler):
                     else:
                         if len(name_fixed) > 0:
                             name_parts.append(name_fixed)
-                        name_parts.append(num2words(int(character)))
+                        if number_amount < 4:
+                            name_parts.append(num2words(int(character)))
+                            number_amount += 1
                         name_fixed = ""
                 name_parts.append(name_fixed)
 
@@ -115,6 +131,7 @@ class MyServer(BaseHTTPRequestHandler):
                 for dash_part in word.split('-'):
                     for sym in symReplace:
                         dash_part = dash_part.replace(sym, "")
+                    unmod = dash_part[0:]
                     for sym in settings["silenceSymbols"]:
                         dash_part = dash_part.replace(sym, "")
 
@@ -122,6 +139,13 @@ class MyServer(BaseHTTPRequestHandler):
                         all_wordsB.append(dictReplace[dash_part])
                     else:
                         all_wordsB.append(dash_part)
+
+                    for sym in settings["smallPauseSymbols"]:
+                        if sym in unmod:
+                            all_wordsB.append('<break strength="medium"/>')
+                    for sym in settings["pauseSymbols"]:
+                        if sym in unmod:
+                            all_wordsB.append('<break strength="strong"/>')
 
             currentTTSData['say'] = " ".join([str(item) for item in all_wordsB])
 
@@ -143,6 +167,7 @@ class MyServer(BaseHTTPRequestHandler):
             audio = model.apply_tts(ssml_text='<speak><prosody pitch="' + currentTTSData['pitch'] + '">' + currentTTSData['say'] + '</prosody></speak>', speaker=speaker, sample_rate=settings["tts"]["sample_rate"])
 
         audio_out = bytes(Audio(audio, rate=settings["tts"]["sample_rate"]).data)
+        cache[md5hash] = audio_out
         self.send_response(200)
         self.send_header("Content-Type", "audio/wav")
         self.send_header("Content-Length", len(audio_out))
