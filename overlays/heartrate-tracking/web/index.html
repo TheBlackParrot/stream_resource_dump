@@ -11,6 +11,7 @@
 			--beatInterval: 1s;
 			--colorDark: #000000;
 			--colorLight: #A695FF;
+			--fadeOutOpacity: 0.33;
 		}
 		@keyframes beatKF {
 			0% {
@@ -29,6 +30,7 @@
 			font-weight: 900;
 			font-variant: tabular-nums;
 			color: #fff;
+			opacity: var(--fadeOutOpacity);
 		}
 
 		#cur {
@@ -156,14 +158,31 @@
 		}
 		startBSWebsocket();
 
+		const eventFuncs = {
+			disconnected: function(data) {
+				$("body").css("opacity", "var(--fadeOutOpacity)");
+			},
+
+			connected: function(data) {
+				$("body").css("opacity", 1);
+			}
+		};
+
 		function startHRWebsocket() {
 			console.log("Starting connection to the heart rate monitor server...");
-			let url = 'ws://10.161.8.200:8001';
+			//let url = 'ws://10.161.8.200:8001';
+			let url = 'ws://127.0.0.1:8001';
 			ws = new WebSocket(url);
 
 			ws.addEventListener("message", function(msg) {
 				let data = JSON.parse(msg.data);
 				console.log(data);
+
+				if("event" in data) {
+					if(data.event in eventFuncs) {
+						return eventFuncs[data.event](data);
+					}
+				}
 
 				finalHR = data.heartrate;
 

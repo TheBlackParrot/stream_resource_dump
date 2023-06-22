@@ -31,10 +31,23 @@ function sendData(data) {
 	}
 }
 
+function broadcastData(data) {
+	for(let wsIdx in wsClients) {
+		let client = wsClients[wsIdx];
+		client.send(JSON.stringify(data));
+	}	
+}
+
+var disconnected = true;
 function startReconnectStuff(stream) {
 	clearTimeout(reconnectTimeout);
 	reconnectTimeout = setTimeout(function() {
 		console.log("assuming connection has been lost, trying again...");
+		if(!disconnected) {
+			broadcastData({event: "disconnected"});
+			disconnected = true;
+		}
+
 		if(typeof stream !== "undefined") {
 			// ha ha i do a no-no ha ha. calling internal functions ha ha hee hee hoo hoo
 			stream._source.initDevice();
@@ -56,6 +69,11 @@ function startConnection() {
 	stream.on("batteryLevel", function(level) {
 		console.log(`device has ${level}% battery remaining\r\n`);
 		currentBattery = level;
+
+		if(disconnected) {
+			broadcastData({event: "connected"});
+			disconnected = false;
+		}
 	});
 
 	startReconnectStuff(stream);
@@ -90,6 +108,10 @@ wss.on("connection", function(client, req) {
 		ts: Date.now(),
 		battery: currentBattery,
 		inital: true
+	}));
+
+	client.send(JSON.stringify({
+		event: (disconnected ? "disconnected" : "connected")
 	}));
  
 	client.on("close", function() {
