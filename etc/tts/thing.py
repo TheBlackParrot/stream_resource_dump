@@ -10,6 +10,7 @@ import math
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import urllib.parse
 import hashlib
+from time import time
 
 settings = None
 with open("settings.json", "r") as settingsFile:
@@ -39,7 +40,23 @@ model.to(device)
 
 cache = {}
 
+def cleanCache():
+    ts = time()
+    hashes = [*cache]
+
+    for i in hashes:
+        _hash = hashes[i]
+        if cache[_hash].timestamp > ts + 300:
+            cache.pop(_hash, None)
+
 class MyServer(BaseHTTPRequestHandler):
+    def writeAudio(self, audio):
+        self.send_response(200)
+        self.send_header("Content-Type", "audio/wav")
+        self.send_header("Content-Length", len(audio))
+        self.end_headers()
+        self.wfile.write(audio)
+
     def do_GET(self):
         main_url = "http://" + settings["http"]["ip"] + ":" + str(settings["http"]["port"]) + self.path
         url_parts = urllib.parse.urlparse(main_url)
@@ -53,20 +70,16 @@ class MyServer(BaseHTTPRequestHandler):
 
         currentTTSData = {
             "say": _data,
-            "voice": settings["tts"]["name_voice"] if _type == "name" else settings["tts"]["message_voice"],
+            "voice": settings["tts"]["name_voice"] if _type == "name" else settings["tts"]["message_voices"][int.from_bytes(bytes(_name.encode("utf-8")), byteorder='big') % len(settings["tts"]["message_voices"])],
             "pitch": None
         }
 
         md5hash = hashlib.md5(_data.encode("utf-8")).hexdigest()
         if md5hash in cache:
             print("sending cached data out")
-            audio_out = cache[md5hash]
-            self.send_response(200)
-            self.send_header("Content-Type", "audio/wav")
-            self.send_header("Content-Length", len(audio_out))
-            self.end_headers()
-            self.wfile.write(audio_out)
+            self.writeAudio(cache[md5hash]["audio"])
             cache.pop(md5hash, None)
+            cleanCache()
             return
 
         if _type == "name":
@@ -105,12 +118,13 @@ class MyServer(BaseHTTPRequestHandler):
             all_wordsB = []
 
             for word in all_words:
+                clean = word.replace(",", "").replace("!", "").replace("?", "").replace("...", "").replace("..", "")
                 try:
-                    float(word.replace(",", ""))
+                    float(clean)
                 except ValueError:
                     all_wordsA.append(word)
                 else:
-                    parts = word.replace(",", "").split(".")
+                    parts = clean.split(".")
                     whole = int(parts[0])
                     print("word is number: %f" % whole)
                     if whole < 0:
@@ -121,11 +135,22 @@ class MyServer(BaseHTTPRequestHandler):
 
                     if len(parts) == 2:
                         if parts[1] != "0":
-                            fractional = int(str(parts[1]).strip("0"))
-                            all_wordsA.append("point")
-                            print(fractional)
+                            try:
+                                fractional = int(str(parts[1]).strip("0"))
+                            except ValueError:
+                                print("word is not a fractional more than likely")
+                            else:
+                                all_wordsA.append("point")
+                                print(fractional)
 
-                            all_wordsA.append(num2words(fractional))
+                                all_wordsA.append(num2words(fractional))
+
+                    for sym in settings["smallPauseSymbols"]:
+                        if word[len(word)-1] == sym:
+                            all_wordsA[len(all_wordsA)-1] = all_wordsA[len(all_wordsA)-1] + sym
+                    for sym in settings["pauseSymbols"]:
+                        if word[len(word)-1] == sym:
+                            all_wordsA[len(all_wordsA)-1] = all_wordsA[len(all_wordsA)-1] + sym
 
             for word in all_wordsA:
                 for dash_part in word.split('-'):
@@ -161,18 +186,19 @@ class MyServer(BaseHTTPRequestHandler):
             print("... nothing to say? wtf")
             return
 
-        if currentTTSData['pitch'] == None:
-            audio = model.apply_tts(text=currentTTSData['say'], speaker=speaker, sample_rate=settings["tts"]["sample_rate"])
-        else:
-            audio = model.apply_tts(ssml_text='<speak><prosody pitch="' + currentTTSData['pitch'] + '">' + currentTTSData['say'] + '</prosody></speak>', speaker=speaker, sample_rate=settings["tts"]["sample_rate"])
+        pitch = "medium"
+        if currentTTSData['pitch'] != None:
+            pitch = currentTTSData['pitch']
+
+        audio = model.apply_tts(ssml_text='<speak><prosody pitch="' + pitch + '">' + currentTTSData['say'] + '</prosody></speak>', speaker=speaker, sample_rate=settings["tts"]["sample_rate"])
 
         audio_out = bytes(Audio(audio, rate=settings["tts"]["sample_rate"]).data)
-        cache[md5hash] = audio_out
-        self.send_response(200)
-        self.send_header("Content-Type", "audio/wav")
-        self.send_header("Content-Length", len(audio_out))
-        self.end_headers()
-        self.wfile.write(audio_out)
+        cleanCache()
+        cache[md5hash] = {
+            "audio": audio_out,
+            "timestamp": time()
+        }
+        self.writeAudio(audio_out)
 
 if __name__ == "__main__":        
     webServer = HTTPServer((settings["http"]["ip"], settings["http"]["port"]), MyServer)

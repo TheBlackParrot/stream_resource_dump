@@ -9,7 +9,7 @@
 		"model": "https://models.silero.ai/models/tts/en/v3_en.pt",
 		"model_saveAs": "model.pt",
 		"sample_rate": 48000,
-		"message_voice": 111,
+		"message_voices": [111, 5, 10, 13, 15, 18, 21, 25, 26, 29, 31, 33, 37, 41, 44, 48, 113, 112, 104, 102],
 		"name_voice": 20
 	},
 
