@@ -13,9 +13,15 @@
 <body>
 	<div id="wrapper">
 		<div id="sidebar">
-			<div class="row active" data-tab="appearance"><i class="fas fa-palette"></i>Appearance</div>
+			<div class="row" data-tab="auth"><i class="fas fa-user-shield"></i>Authentication</div>
+			<div class="row" data-tab="appearance"><i class="fas fa-palette"></i>Appearance</div>
 			<div class="row" data-tab="effects"><i class="fas fa-wind"></i>Effects</div>
+			<div class="row" data-tab="layout"><i class="fas fa-ruler-combined"></i>Layout</div>
 			<div class="row" data-tab="function"><i class="fas fa-cogs"></i>Function</div>
+			<div class="row" data-tab="badges"><i class="fas fa-square"></i>Badges</div>
+			<div class="row" data-tab="avatars"><i class="fas fa-smile"></i>Avatars</div>
+			<div class="row" data-tab="pronouns"><i class="fas fa-user"></i>Pronouns</div>
+			<div class="row" data-tab="flags"><i class="fas fa-flag"></i>Flags</div>
 			<div class="row" data-tab="7tv"><i class="icon sevtv"></i>7TV</div>
 			<div class="row" data-tab="bttv"><i class="icon bttv"></i>BetterTTV</div>
 			<div class="row" data-tab="ffz"><i class="icon ffz"></i>FrankerFaceZ</div>
@@ -30,6 +36,14 @@
 						</div>
 						<div class="settingHalfWidthRight">
 							<input id="chatBackgroundColor" type="color" value="#000000"/><input type="number" id="chatBackgroundColorAlpha" min="0" max="1" step="0.01" value="0"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Message highlight color</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="chatHighlightBackgroundColor" type="color" value="#FFFFFF"/><input type="number" id="chatHighlightBackgroundColorAlpha" min="0" max="1" step="0.01" value="0.25"/>
 						</div>
 					</div>
 					<div class="setting">
@@ -103,30 +117,10 @@
 				</div>
 
 				<div class="part">
-					<h1>Layout</h1>
-					<div class="setting">
-						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Padding</span>
-						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatBlockPadding" min="0" max="64" step="0.25" value="18"/> px
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Border radius</span>
-						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatBlockBorderRadius" min="0" max="64" step="0.25" value="0"/> px
-						</div>
-					</div>
-				</div>
-
-				<div class="part">
 					<h1>Outlines</h1>
 					<div class="setting">
 						<div class="settingFullWidth">
-							<input id="chatOutlines" type="checkbox" name="chatOutlines" data-dependent="outlines"/> <span class="settingInfo">Enable outlines around messages</span>
+							<input id="chatOutlines" type="checkbox" data-dependent="outlines"/> <span class="settingInfo">Enable outlines around messages</span>
 						</div>
 					</div>
 					<div class="setting disabled" data-dependent="outlines">
@@ -142,7 +136,7 @@
 							<span class="settingInfo">Outline size</span>
 						</div>
 						<div class="settingHalfWidthRight">
-							<input type="number" id="chatOutlinesSize" min="0" max="5" step="0.25" value="1"/> px
+							<input type="number" id="chatOutlinesSize" min="0" max="8" step="1" value="1"/> px
 						</div>
 					</div>
 					<div class="setting disabled" data-dependent="outlines">
@@ -162,24 +156,374 @@
 							</select>
 						</div>
 					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Border radius</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatBlockBorderRadius" min="0" max="64" step="0.25" value="0"/> px
+						</div>
+					</div>
 				</div>
 			</div>
 			<div class="section" data-content="effects">
-				Effects
+				<div class="part">
+					<h1>Animations</h1>
+					<div class="setting">
+						<div class="settingFullWidth">
+							<input checked id="chatAnimations" type="checkbox" data-dependent="animations"/> <span class="settingInfo">Enable appearing/disappearing animations</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="animations">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Animation duration</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatAnimationsDuration" min="0.01" max="5" step="0.01" value="0.5"/> seconds
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingFullWidth">
+							<input checked id="chatFadeHistory" type="checkbox" data-dependent="fadeHistory"/> <span class="settingInfo">Fade out chat history</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="fadeHistory">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Fade out per message</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatFadeHistoryStep" min="0" max="100" step="0.25" value="7"/> %
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Filters</h1>
+					<div class="setting">
+						<div class="settingFullWidth">
+							<input checked id="chatShadows" type="checkbox"/> <span class="settingInfo">Draw shadows underneath overlay</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingFullWidth">
+							<input checked id="chatOutlinesFilter" type="checkbox"/> <span class="settingInfo">Draw outlines underneath overlay</span>
+						</div>
+					</div>
+				</div>
 			</div>
 			<div class="section" data-content="function">
-				Function
+				<div class="part">
+					<h1>Cleanliness</h1>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Remove messages after</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatRemoveMessageDelay" min="0" max="900" step="0.5" value="45"/> seconds
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Hide accounts<br/><span style="font-size: var(--font-size-smol); opacity: 0.67;">(One account per line)</span></span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<textarea id="chatHideAccounts"></textarea>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingFullWidth">
+							<input checked id="chatHideCommands" type="checkbox" data-dependent="hideCommands"/> <span class="settingInfo">Hide messages associated with custom chat commands</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="hideCommands">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Command character</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="chatCommandCharacter" type="text" value="!"/>
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Messages</h1>
+					<div class="setting">
+						<div class="settingFullWidth">
+							<input checked id="chatShowBigEmotes" type="checkbox" data-dependent="bigEmotes"/> <span class="settingInfo">Enlarge messages that contain only emotes</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="bigEmotes">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Max emotes to show</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatMaxBigEmotes" min="0" max="100" step="1" value="10"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="bigEmotes">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Enlarged emote size</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatBigEmoteSize" min="8" max="128" step="1" value="48"/> pt
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingFullWidth">
+							<input checked id="chatParseMarkdown" type="checkbox"/> <span class="settingInfo">Allow inline Markdown formatting</span>
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Debug</h1>
+					<div class="setting">
+						<div class="settingFullWidth">
+							<input id="debugRawMessages" type="checkbox"/> <span class="settingInfo">Log raw Twitch IRC messages to the DevTools console</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section" data-content="layout">
+				<div class="part">
+					<h1>Spacing</h1>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Wrapper padding</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatBlockPadding" min="0" max="64" step="0.25" value="18"/> px
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Individual padding</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatBlockIndividualPadding" min="0" max="64" step="0.25" value="0"/> px
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Message line height</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatMessageLineHeight" min="16" max="64" step="0.5" value="28"/> px
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Alignment</h1>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Corner alignment</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<select id="chatCornerAlignment">
+								<option value="top,left">Top-left</option>
+								<option value="top,right">Top-right</option>
+								<option selected value="bottom,left">Bottom-left</option>
+								<option value="bottom,right">Bottom-right</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section" data-content="flags">
+				Flags (soon!)
+			</div>
+			<div class="section" data-content="badges">
+				Badges (soon!)
+			</div>
+			<div class="section" data-content="avatars">
+				<div class="part">
+					<div class="setting">
+						<div class="settingFullWidth">
+							<input checked id="enableAvatars" type="checkbox" data-dependent="avatars"/> <span class="settingInfo">Display avatars</span>
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Permissions</h1>
+					<div class="setting" data-dependent="avatars">
+						<div class="settingFullWidth">
+							<input checked id="avatarAllowedModerators" type="checkbox"/> <span class="settingInfo">Allow avatar display for moderators</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="avatars">
+						<div class="settingFullWidth">
+							<input checked id="avatarAllowedVIPs" type="checkbox"/> <span class="settingInfo">Allow avatar display for VIPs</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="avatars">
+						<div class="settingFullWidth">
+							<input checked id="avatarAllowedSubscribers" type="checkbox"/> <span class="settingInfo">Allow avatar display for subscribers</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="avatars">
+						<div class="settingFullWidth">
+							<input id="avatarAllowedEveryone" type="checkbox"/> <span class="settingInfo">Allow avatar display for everyone</span>
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Appearance</h1>
+					<div class="setting" data-dependent="avatars">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Avatar size</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="avatarSize" min="16" max="80" step="0.5" value="34"/> px
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section" data-content="pronouns">
+				<div class="part">
+					<div class="setting">
+						<div class="settingFullWidth">
+							<input checked id="enablePronouns" type="checkbox" data-dependent="pronouns"/> <span class="settingInfo">Display pronouns</span>
+						</div>
+					</div>
+				</div>
 			</div>
 			<div class="section" data-content="7tv">
-				7TV
+				<div class="part">
+					<div class="setting">
+						<div class="settingFullWidth">
+							<input checked id="enable7TV" type="checkbox" data-dependent="7tv"/> <span class="settingInfo">Enable 7TV integration</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="7tv">
+						<div class="settingFullWidth">
+							<input checked id="enable7TVBadges" type="checkbox"/> <span class="settingInfo">Enable Subscriber badges</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="7tv">
+						<div class="settingFullWidth">
+							<input checked id="enable7TVGlobalEmotes" type="checkbox"/> <span class="settingInfo">Enable global emotes</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="7tv">
+						<div class="settingFullWidth">
+							<input checked id="enable7TVChannelEmotes" type="checkbox"/> <span class="settingInfo">Enable channel emotes</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="7tv">
+						<div class="settingFullWidth">
+							<input checked id="enable7TVUserPaints" type="checkbox"/> <span class="settingInfo">Enable username paints</span>
+						</div>
+					</div>
+				</div>
 			</div>
 			<div class="section" data-content="bttv">
-				BetterTTV
+				<div class="part">
+					<div class="setting">
+						<div class="settingFullWidth">
+							<input checked id="enableBTTV" type="checkbox" data-dependent="bttv"/> <span class="settingInfo">Enable BetterTTV integration</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="bttv">
+						<div class="settingFullWidth">
+							<input checked id="enableBTTVBadges" type="checkbox"/> <span class="settingInfo">Enable Pro badges</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="bttv">
+						<div class="settingFullWidth">
+							<input checked id="enableBTTVGlobalEmotes" type="checkbox"/> <span class="settingInfo">Enable global emotes</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="bttv">
+						<div class="settingFullWidth">
+							<input checked id="enableBTTVChannelEmotes" type="checkbox"/> <span class="settingInfo">Enable channel emotes</span>
+						</div>
+					</div>
+				</div>
 			</div>
 			<div class="section" data-content="ffz">
-				FFZ
+				<div class="part">
+					<div class="setting">
+						<div class="settingFullWidth">
+							<input checked id="enableFFZ" type="checkbox" data-dependent="ffz"/> <span class="settingInfo">Enable FrankerFaceZ integration</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="ffz">
+						<div class="settingFullWidth">
+							<input checked id="enableFFZBadges" type="checkbox"/> <span class="settingInfo">Enable Subwoofer/Supporter badges</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="ffz">
+						<div class="settingFullWidth">
+							<input checked id="enableFFZGlobalEmotes" type="checkbox"/> <span class="settingInfo">Enable global emotes</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="ffz">
+						<div class="settingFullWidth">
+							<input checked id="enableFFZChannelEmotes" type="checkbox"/> <span class="settingInfo">Enable channel emotes</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section" data-content="auth" data-sensitive="true">
+				<div class="part">
+					<h1>Connection</h1>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Twitch channel to use</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="twitchChannel" type="text" value=""/>
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Tokens</h1>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">App client ID</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="twitchClientID" type="text" value=""/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">App client secret</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="twitchClientSecret" type="text" value=""/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingFullWidth smol">
+							These tokens are available in your <a href="https://dev.twitch.tv/console/apps">Twitch Developer Console</a>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
+		<div id="sensitive">
+			<div class="section">
+				<div class="part">
+					<div>
+						<i class="fas fa-exclamation-triangle"></i>
+					</div>
+					<div>
+						The data shown in this section is considered to be sensitive information; it is not advised to show this information to the public.<br/><br/>Click the button below to reveal this section's settings.
+					</div>
+					<div class="button" id="hideSensitiveWarning">
+						Reveal Settings
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="sideButtons">
+			<div class="button" id="sendTestButton">Test Message</div>
+			<div class="button" id="reloadOverlayButton">Reload Overlay</div>
+			<div class="button" id="resetOverlayButton">Reset to Defaults</div>
+		</div>
+		<!--
+		<div id="reloadButton">
+			<div class="button" id="reloadOverlayButton">Reload Overlay</div>
+		</div>
+	-->
 	</div>
 
 	<script type="text/javascript" src="main.js"></script>

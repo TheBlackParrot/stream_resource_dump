@@ -1,7 +1,7 @@
 var loadingInit = false;
 
 function loadSettings() {
-	let settings = $.find("input, select");
+	let settings = $.find("input, select, textarea");
 
 	for(let i in settings) {
 		let element = $(settings[i]);

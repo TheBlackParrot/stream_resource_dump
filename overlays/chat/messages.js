@@ -58,7 +58,7 @@ client.on('message', function(channel, tags, message, self) {
 
 	console.log(tags);
 
-	if(settings.chat.hideAccounts.indexOf(tags['username']) !== -1) {
+	if(hideAccounts.indexOf(tags['username']) !== -1) {
 		return;
 	}
 
@@ -515,6 +515,37 @@ const chatFuncs = {
 		localStorage.setItem(`nameshadow_${data.user.id}`, show);
 		$(":root").get(0).style.setProperty(`--nameShadow${data.user.id}`, (show === "yes" ? "var(--shadowStuff)" : ""));
 	},
+
+	resetchat: function(data, args) {
+		localStorage.removeItem(`namesize_${data.user.id}`);
+		localStorage.removeItem(`nametransform_${data.user.id}`);
+		localStorage.removeItem(`namestyle_${data.user.id}`);
+		localStorage.removeItem(`namespacing_${data.user.id}`);
+		localStorage.removeItem(`namevariant_${data.user.id}`);
+		localStorage.removeItem(`nameangle_${data.user.id}`);
+		localStorage.removeItem(`nameweight_${data.user.id}`);
+		localStorage.removeItem(`namefont_${data.user.id}`);
+		localStorage.removeItem(`nameshadow_${data.user.id}`);
+		localStorage.removeItem(`nameoutline_${data.user.id}`);
+
+		localStorage.removeItem(`msgsize_${data.user.id}`);
+		localStorage.removeItem(`msgweight_${data.user.id}`);
+		localStorage.removeItem(`msgspacing_${data.user.id}`);
+		localStorage.removeItem(`msgfont_${data.user.id}`);
+
+		localStorage.removeItem(`color_${data.user.id}`);
+		localStorage.removeItem(`color2_${data.user.id}`);
+
+		localStorage.removeItem(`pfpShape_${data.user.id}`);
+		localStorage.setItem(`pfp_${data.user.id}_expiry`, "0");
+		localStorage.removeItem(`showpfp_${data.user.id}`);
+
+		localStorage.removeItem(`flags_${data.user.id}`);
+
+		localStorage.setItem(`pn_${data.user.id}_expiry`, "0");
+		localStorage.removeItem(`usename_${data.user.id}`);
+		localStorage.removeItem(`use7tvpaint_${data.user.id}`);
+	}
 }
 
 var lastUser;
@@ -531,7 +562,7 @@ function parseMessage(data) {
 
 	let wantedCommand;
 	let wantedArgs;
-	if(data.message[0] === settings.chat.commandCharacter) {
+	if(data.message[0] === localStorage.getItem("setting_chatCommandCharacter")) {
 		let parts = data.message.substr(1).split(" ");
 		
 		let cmd = parts[0].toLowerCase();
@@ -546,19 +577,28 @@ function parseMessage(data) {
 			continueOn = wantedCommand(data, wantedArgs);
 		}
 
-		if(!continueOn) {
+		if(!continueOn && localStorage.getItem("setting_chatHideCommands") === "true") {
 			return;
 		}
 	}
 
-	let rootElement = $(`<div class="chatBlock slideIn" data-msgIdx="${messageCount}" data-msgUUID="${data.uuid}" data-userID="${data.user.id}"></div>`);
+	let rootElement = $(`<div class="chatBlock" data-msgIdx="${messageCount}" data-msgUUID="${data.uuid}" data-userID="${data.user.id}"></div>`);
+	if(localStorage.getItem("setting_chatAnimations") === "true") {
+		rootElement.addClass("slideIn");
+	}
 
 	let userBlock = $('<div class="userInfo userInfoIn" style="display: none;"></div>');
+	if(localStorage.getItem("setting_chatAnimations") === "true") {
+		userBlock.addClass("userInfoIn");
+	}
+
 	if(lastUser !== data.user.id) {
 		userBlock.show();
 	} else {
 		userBlock.css("margin-top", "0px");
-		userBlock.removeClass("userInfoIn").addClass("justFadeIn");
+		if(localStorage.getItem("setting_chatAnimations") === "true") {
+			userBlock.removeClass("userInfoIn").addClass("justFadeIn");
+		}
 		rootElement.css("margin-top", "0px");
 		$(`.chatBlock[data-msgIdx=${lastMessageIdx}]`).css("margin-bottom", "3px");
 	}
@@ -599,77 +639,106 @@ function parseMessage(data) {
 		userBlock.append(flagBlock);
 	}
 
-	let pronounsBlock = $('<div class="pronouns" style="display: none;"></div>');
-	let pronouns = localStorage.getItem(`pn_${data.user.id}`);
-	let pronounsExpiry = parseInt(localStorage.getItem(`pn_${data.user.id}_expiry`));
-	let recachePronouns = false;
+	if(localStorage.getItem("setting_enablePronouns") === "true") {
+		let pronounsBlock = $('<div class="pronouns" style="display: none;"></div>');
+		let pronouns = localStorage.getItem(`pn_${data.user.id}`);
+		let pronounsExpiry = parseInt(localStorage.getItem(`pn_${data.user.id}_expiry`));
+		let recachePronouns = false;
 
-	if(pronouns) {
-		console.log(`pronouns are cached for ${data.user.username}`);
+		if(pronouns) {
+			console.log(`pronouns are cached for ${data.user.username}`);
 
-		if(Date.now() > pronounsExpiry || isNaN(pronounsExpiry)) {
-			recachePronouns = true;
-			console.log("...however, they are out of date");
-		}
-	} else {
-		recachePronouns = true;
-	}
-
-	if(recachePronouns) {
-		console.log(`refreshing pronoun cache for ${data.user.username}`);
-		chatFuncs["refreshpronouns"](data, function(fetched) {
-			if(fetched.pronoun_id !== "NONE") {
-				pronounsBlock.text(pn[fetched.pronoun_id]);
-				pronounsBlock.show();
-			}			
-		});
-	} else {
-		if(pn[pronouns]) {
-			pronounsBlock.text(pn[pronouns]);
-			pronounsBlock.show();
-		}
-	}
-
-	userBlock.append(pronounsBlock);
-
-	let pfpBlock = $('<img class="pfp" src="" style="display: none;"/>');
-	let pfpURL = localStorage.getItem(`pfp_${data.user.id}`);
-	let pfpExpiry = parseInt(localStorage.getItem(`pfp_${data.user.id}_expiry`));
-	let recachePfp = false;
-
-	if(pfpURL) {
-		console.log(`pfp cached for ${data.user.username}`);
-
-		if(Date.now() > pfpExpiry || isNaN(pfpExpiry)) {
-			recachePfp = true;
-			console.log("...however, it is out of date");
-		}
-	} else {
-		recachePfp = true;
-	}
-
-	if(recachePfp) {
-		console.log(`refreshing pfp cache for ${data.user.username}`);
-		callTwitch({
-			"endpoint": "users",
-			"args": {
-				"login": data.user.username
+			if(Date.now() > pronounsExpiry || isNaN(pronounsExpiry)) {
+				recachePronouns = true;
+				console.log("...however, they are out of date");
 			}
-		}, function(rawUserResponse) {
-			console.log(rawUserResponse);
-			localStorage.setItem(`pfp_${data.user.id}`, rawUserResponse.data[0].profile_image_url);
-			localStorage.setItem(`pfp_${data.user.id}_expiry`, Date.now() + (settings.cache.expireDelay * 1000));
-			pfpBlock.attr("src", rawUserResponse.data[0].profile_image_url);
-		});
-	} else {
-		console.log(`pfp is cached for ${data.user.username}`);
-		pfpBlock.attr("src", pfpURL);
+		} else {
+			recachePronouns = true;
+		}
+
+		if(recachePronouns) {
+			console.log(`refreshing pronoun cache for ${data.user.username}`);
+			chatFuncs["refreshpronouns"](data, function(fetched) {
+				if(fetched.pronoun_id !== "NONE") {
+					pronounsBlock.text(pn[fetched.pronoun_id]);
+					pronounsBlock.show();
+				}			
+			});
+		} else {
+			if(pn[pronouns]) {
+				pronounsBlock.text(pn[pronouns]);
+				pronounsBlock.show();
+			}
+		}
+
+		userBlock.append(pronounsBlock);
 	}
 
-	if(!localStorage.getItem(`pfpShape_${data.user.id}`)) { localStorage.setItem(`pfpShape_${data.user.id}`, "10px"); }
-	$(":root").get(0).style.setProperty(`--pfpShape${data.user.id}`, localStorage.getItem(`pfpShape_${data.user.id}`));
-	pfpBlock.css("border-radius", `var(--pfpShape${data.user.id})`);
+	if(localStorage.getItem("setting_enableAvatars") === "true") {
+		let pfpBlock = $('<img class="pfp" src="" style="display: none;"/>');
+		let pfpURL = localStorage.getItem(`pfp_${data.user.id}`);
+		let pfpExpiry = parseInt(localStorage.getItem(`pfp_${data.user.id}_expiry`));
+		let recachePfp = false;
 
+		if(pfpURL) {
+			console.log(`pfp cached for ${data.user.username}`);
+
+			if(Date.now() > pfpExpiry || isNaN(pfpExpiry)) {
+				recachePfp = true;
+				console.log("...however, it is out of date");
+			}
+		} else {
+			recachePfp = true;
+		}
+
+		if(recachePfp) {
+			console.log(`refreshing pfp cache for ${data.user.username}`);
+			callTwitch({
+				"endpoint": "users",
+				"args": {
+					"login": data.user.username
+				}
+			}, function(rawUserResponse) {
+				console.log(rawUserResponse);
+				localStorage.setItem(`pfp_${data.user.id}`, rawUserResponse.data[0].profile_image_url);
+				localStorage.setItem(`pfp_${data.user.id}_expiry`, Date.now() + (settings.cache.expireDelay * 1000));
+				pfpBlock.attr("src", rawUserResponse.data[0].profile_image_url);
+			});
+		} else {
+			console.log(`pfp is cached for ${data.user.username}`);
+			pfpBlock.attr("src", pfpURL);
+		}
+
+		if(!localStorage.getItem(`pfpShape_${data.user.id}`)) { localStorage.setItem(`pfpShape_${data.user.id}`, "10px"); }
+		$(":root").get(0).style.setProperty(`--pfpShape${data.user.id}`, localStorage.getItem(`pfpShape_${data.user.id}`));
+		pfpBlock.css("border-radius", `var(--pfpShape${data.user.id})`);
+
+		if(!localStorage.getItem(`showpfp_${data.user.id}`)) { localStorage.setItem(`showpfp_${data.user.id}`, "yes"); }
+
+		let showPFP = false;
+		if(localStorage.getItem(`showpfp_${data.user.id}`) === "yes") {
+			if(localStorage.getItem("setting_avatarAllowedEveryone") === "true") {
+				showPFP = true;
+			} else {
+				if(data.user.badges.list) {
+					if(localStorage.getItem("setting_avatarAllowedModerators") === "true" && ("broadcaster" in data.user.badges.list || "moderator" in data.user.badges.list)) {
+						showPFP = true;
+					} else if(localStorage.getItem("setting_avatarAllowedVIPs") === "true" && "vip" in data.user.badges.list) {
+						showPFP = true;
+					} else if(localStorage.getItem("setting_avatarAllowedSubscribers") === "true" && "subscriber" in data.user.badges.list) {
+						showPFP = true;
+					}
+				}
+			}
+		}
+
+		if(showPFP) {
+			userBlock.append(pfpBlock);
+			pfpBlock.show();		
+		}
+	}
+
+	/*
 	if(!settings.chat.alwaysShowPFP) {
 		if(data.user.badges.list) {
 			if("vip" in data.user.badges.list || "moderator" in data.user.badges.list || "subscriber" in data.user.badges.list || "broadcaster" in data.user.badges.list) {
@@ -687,25 +756,35 @@ function parseMessage(data) {
 			pfpBlock.show();
 		}
 	}
+	*/
 
 	if(!localStorage.getItem(`color_${data.user.id}`)) {
 		let col = data.user.color;
-		if(!col) { col = "#AAAAAA"; }
+		if(!col) { col = "var(--defaultNameColor)"; }
 
 		localStorage.setItem(`color_${data.user.id}`, col);
 	}
-	if(!localStorage.getItem(`namefont_${data.user.id}`)) { localStorage.setItem(`namefont_${data.user.id}`, "Manrope"); }
-	if(!localStorage.getItem(`nameweight_${data.user.id}`)) { localStorage.setItem(`nameweight_${data.user.id}`, 700); }
-	if(!localStorage.getItem(`namesize_${data.user.id}`)) { localStorage.setItem(`namesize_${data.user.id}`, "16pt"); }
-	if(!localStorage.getItem(`namestyle_${data.user.id}`)) { localStorage.setItem(`namestyle_${data.user.id}`, "normal"); }
-	if(!localStorage.getItem(`namespacing_${data.user.id}`)) { localStorage.setItem(`namespacing_${data.user.id}`, "1px"); }
-	if(!localStorage.getItem(`nametransform_${data.user.id}`)) { localStorage.setItem(`nametransform_${data.user.id}`, "uppercase"); }
-	if(!localStorage.getItem(`namevariant_${data.user.id}`)) { localStorage.setItem(`namevariant_${data.user.id}`, "normal"); }
-	if(!localStorage.getItem(`color2_${data.user.id}`)) { localStorage.setItem(`color2_${data.user.id}`, "#ffffff"); }
-	if(!localStorage.getItem(`nameangle_${data.user.id}`)) { localStorage.setItem(`nameangle_${data.user.id}`, "170deg"); }
+	if(!localStorage.getItem(`namefont_${data.user.id}`)) { localStorage.setItem(`namefont_${data.user.id}`, "var(--nameFont)"); }
+	if(!localStorage.getItem(`nameweight_${data.user.id}`)) { localStorage.setItem(`nameweight_${data.user.id}`, "var(--nameFontWeight)"); }
+	if(!localStorage.getItem(`namesize_${data.user.id}`)) { localStorage.setItem(`namesize_${data.user.id}`, "var(--nameFontSize)"); }
+	if(!localStorage.getItem(`namestyle_${data.user.id}`)) { localStorage.setItem(`namestyle_${data.user.id}`, "var(--nameFontStyle)"); }
+	if(!localStorage.getItem(`namespacing_${data.user.id}`)) { localStorage.setItem(`namespacing_${data.user.id}`, "var(--nameLetterSpacing)"); }
+	if(!localStorage.getItem(`nametransform_${data.user.id}`)) { localStorage.setItem(`nametransform_${data.user.id}`, "var(--nameTransform)"); }
+	if(!localStorage.getItem(`namevariant_${data.user.id}`)) { localStorage.setItem(`namevariant_${data.user.id}`, "var(--nameVariant)"); }
+	if(!localStorage.getItem(`color2_${data.user.id}`)) { localStorage.setItem(`color2_${data.user.id}`, "var(--defaultNameColorSecondary)"); }
+	if(!localStorage.getItem(`nameangle_${data.user.id}`)) { localStorage.setItem(`nameangle_${data.user.id}`, "var(--nameGradientAngle)"); }
 	if(!localStorage.getItem(`usename_${data.user.id}`)) { localStorage.setItem(`usename_${data.user.id}`, "name"); }
 	if(!localStorage.getItem(`use7tvpaint_${data.user.id}`)) { localStorage.setItem(`use7tvpaint_${data.user.id}`, "yes"); }
 	if(!localStorage.getItem(`nameshadow_${data.user.id}`)) { localStorage.setItem(`nameshadow_${data.user.id}`, "yes"); }
+	if(!localStorage.getItem(`nameoutline_${data.user.id}`)) { localStorage.setItem(`nameoutline_${data.user.id}`, "yes"); }
+
+	if(localStorage.getItem(`color2_${data.user.id}`) === "var(--defaultNameColorSecondary)") {
+		// (user hasn't set custom colors, double check twitch colors are up to date)
+		let col = data.user.color;
+		if(col) {
+			localStorage.setItem(`color_${data.user.id}`, col);
+		}
+	}
 
 	$(":root").get(0).style.setProperty(`--nameColor${data.user.id}`, localStorage.getItem(`color_${data.user.id}`));
 	$(":root").get(0).style.setProperty(`--nameFont${data.user.id}`, localStorage.getItem(`namefont_${data.user.id}`));
@@ -717,7 +796,7 @@ function parseMessage(data) {
 	$(":root").get(0).style.setProperty(`--nameVariant${data.user.id}`, localStorage.getItem(`namevariant_${data.user.id}`));
 	$(":root").get(0).style.setProperty(`--nameColorSecondary${data.user.id}`, localStorage.getItem(`color2_${data.user.id}`));
 	$(":root").get(0).style.setProperty(`--nameAngle${data.user.id}`, localStorage.getItem(`nameangle_${data.user.id}`));
-	$(":root").get(0).style.setProperty(`--nameShadow${data.user.id}`, (localStorage.getItem(`nameshadow_${data.user.id}`) === "yes" ? "var(--shadowStuff)" : ""));
+	$(":root").get(0).style.setProperty(`--nameEffects${data.user.id}`, `${(localStorage.getItem(`nameoutline_${data.user.id}`) === "yes" ? "var(--outlineStuff)" : "")}${(localStorage.getItem(`nameshadow_${data.user.id}`) === "yes" ? "var(--shadowStuff)" : "")}`);
 
 	let nameBlock = $(`<div class="name" data-userid="${data.user.id}">${data.user[localStorage.getItem(`usename_${data.user.id}`)]}</div>`);
 	nameBlock.css("background-image", `linear-gradient(var(--nameAngle${data.user.id}), var(--nameColorSecondary${data.user.id}) 0%, var(--nameColor${data.user.id}) 75%)`);
@@ -728,15 +807,15 @@ function parseMessage(data) {
 	nameBlock.css("letter-spacing", `var(--nameSpacing${data.user.id})`);
 	nameBlock.css("text-transform", `var(--nameTransform${data.user.id})`);
 	nameBlock.css("font-variant", `var(--nameVariant${data.user.id})`);
-	nameBlock.css("filter", `var(--nameShadow${data.user.id})`);
+	nameBlock.css("filter", `var(--nameEffects${data.user.id})`);
 
 	userBlock.append(nameBlock);
 	rootElement.append(userBlock);
 
-	if(!localStorage.getItem(`msgfont_${data.user.id}`)) { localStorage.setItem(`msgfont_${data.user.id}`, "Manrope"); }
-	if(!localStorage.getItem(`msgsize_${data.user.id}`)) { localStorage.setItem(`msgsize_${data.user.id}`, "16pt"); }
-	if(!localStorage.getItem(`msgspacing_${data.user.id}`)) { localStorage.setItem(`msgspacing_${data.user.id}`, "0px"); }
-	if(!localStorage.getItem(`msgweight_${data.user.id}`)) { localStorage.setItem(`msgweight_${data.user.id}`, 700); }
+	if(!localStorage.getItem(`msgfont_${data.user.id}`)) { localStorage.setItem(`msgfont_${data.user.id}`, "var(--messageFont)"); }
+	if(!localStorage.getItem(`msgsize_${data.user.id}`)) { localStorage.setItem(`msgsize_${data.user.id}`, "var(--messageFontSize)"); }
+	if(!localStorage.getItem(`msgspacing_${data.user.id}`)) { localStorage.setItem(`msgspacing_${data.user.id}`, "var(--messageLetterSpacing)"); }
+	if(!localStorage.getItem(`msgweight_${data.user.id}`)) { localStorage.setItem(`msgweight_${data.user.id}`, "var(--messageFontWeight)"); }
 
 	$(":root").get(0).style.setProperty(`--msgFont${data.user.id}`, localStorage.getItem(`msgfont_${data.user.id}`));
 	$(":root").get(0).style.setProperty(`--msgSize${data.user.id}`, localStorage.getItem(`msgsize_${data.user.id}`));
@@ -822,7 +901,12 @@ function parseMessage(data) {
 	}
 	//console.log(` 6: ${parsedMessage}`);
 
-	let stuff = md.renderInline(parsedMessage.join(""));
+	let stuff;
+	if(localStorage.getItem("setting_chatParseMarkdown") === "true") {
+		stuff = md.renderInline(parsedMessage.join(""));
+	} else {
+		stuff = parsedMessage.join("");
+	}
 	//console.log(` 7: ${stuff}`);
 
 	let words = stuff.split(" ");
@@ -845,14 +929,15 @@ function parseMessage(data) {
 
 	messageBlock = $(twemoji.parse(messageBlock[0]));
 
-	if(eprww.join("") === "") {
+	if(eprww.join("") === "" && localStorage.getItem("setting_chatShowBigEmotes") === "true") {
 		messageBlock.css("font-size", "0pt").css("line-height", "1em").css("letter-spacing", "0px").css("padding-bottom", "8px");
-		messageBlock.children(".emote").css("font-size", "48pt").css("padding", "0px");
-		messageBlock.children(".emoji").css("font-size", "48pt");
+		messageBlock.children(".emote").css("font-size", "var(--bigEmoteSize)").css("padding", "0px");
+		messageBlock.children(".emoji").css("font-size", "var(--bigEmoteSize)");
 
 		let count = 0;
+		let maxCount = parseInt(localStorage.getItem("setting_chatMaxBigEmotes"));
 		messageBlock.children(".emote,.emoji").each(function() {
-			if(count >= settings.limits.bigEmoji.max) {
+			if(count >= maxCount) {
 				$(this).remove();
 			}
 			count++;
@@ -861,24 +946,14 @@ function parseMessage(data) {
 
 	rootElement.append(messageBlock);
 
-	// hard cap at 100 messages, realistically this will never be hit. only here for the perma-message no-opacity needers
-	if($(".chatBlock").length > 100) {
+	// hard cap at 200 messages, realistically this will never be hit. only here for the perma-message no-opacity needers
+	if($(".chatBlock").length > 200) {
 		$(".chatBlock")[0].remove();
 	}
 
-	$(".chatBlock").each(function() {
-		let opacity = 1 - ((messageCount - parseInt($(this).attr("data-msgIdx"))) * settings.chat.opacityDecreaseStep);
-		if(opacity < 0) {
-			opacity = 0;
-		}
-
-		if(!opacity) {
-			$(this).remove();
-		}
-
-		$(this).children(".userInfo,.bsrInfo").css("transition", ".5s").css("filter", `opacity(${opacity})`);
-		$(this).children(".message").css("transition", ".5s").css("filter", `var(--shadowStuff) opacity(${opacity})`);
-	});
+	if(localStorage.getItem("setting_chatFadeHistory") === "true") {
+		setHistoryOpacity();
+	}
 
 	if(data.highlighted) {
 		rootElement.addClass("highlighted");
@@ -890,13 +965,18 @@ function parseMessage(data) {
 		wantedCommand(data, wantedArgs, rootElement);
 	}
 
-	if(settings.chat.secondsVisible) {
+	let secsVisible = parseFloat(localStorage.getItem("setting_chatRemoveMessageDelay"));
+	if(secsVisible) {
 		setTimeout(function() {
-			rootElement.removeClass("slideIn").addClass("slideOut");
-			rootElement.one("animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd", function() {
+			if(localStorage.getItem("setting_chatAnimations") === "true") {
+				rootElement.removeClass("slideIn").addClass("slideOut");
+				rootElement.one("animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd", function() {
+					$(this).remove();
+				});
+			} else {
 				$(this).remove();
-			});
-		}, settings.chat.secondsVisible * 1000);
+			}
+		}, secsVisible * 1000);
 	}
 
 	checkForExternalBadges(data, badgeBlock);
@@ -953,6 +1033,18 @@ var externalBadgeCache = {};
 function getFFZBadges(data, callback) {
 	let id = data.user.id;
 	console.log(`getting FFZ badges for ${data.user.username}...`);
+	if(localStorage.getItem("setting_enableFFZ") === "false" || localStorage.getItem("setting_enableFFZBadges") === "false") {
+		console.log("FFZ is disabled");
+		if(typeof callback === "function") {
+			return callback(data, {});
+		}
+		return;
+	}
+
+	externalBadgeCache[id].ffz = {
+		expires: Date.now() + 3600000,
+		badges: []
+	};
 
 	$.ajax({
 		type: "GET",
@@ -960,11 +1052,6 @@ function getFFZBadges(data, callback) {
 
 		success: function(response) {
 			console.log(response);
-
-			externalBadgeCache[id].ffz = {
-				expires: Date.now() + 3600000,
-				badges: []
-			};
 
 			if(!("status" in response)) {
 				let badges = response.badges;
@@ -992,14 +1079,23 @@ var sevenTVBadges = [];
 var sevenTVPaints = [];
 function get7TVBadges() {
 	console.log("getting 7TV badges...");
+	if(localStorage.getItem("setting_enable7TV") === "false") {
+		console.log("7TV is disabled");
+		return;
+	}
+
 	$.ajax({
 		type: "GET",
 		url: `https://7tv.io/v2/cosmetics?user_identifier=twitch_id`,
 
 		success: function(response) {
 			sevenTVCosmetics = response;
-			sevenTVBadges = response.badges;
-			sevenTVPaints = response.paints;
+			if(localStorage.getItem("setting_enable7TVBadges") === "true") {
+				sevenTVBadges = response.badges;
+			}
+			if(localStorage.getItem("setting_enable7TVPaints") === "true") {
+				sevenTVPaints = response.paints;
+			}
 		}
 	})	
 }
@@ -1217,6 +1313,15 @@ function addBTTVEmote(data) {
 var bttvWS;
 function startBTTVWebsocket() {
 	console.log("Starting connection to BTTV...");
+	if(localStorage.getItem("setting_enableBTTV") === "false") {
+		try {
+			bttvWS.close();
+		} catch {
+			// do nothing
+		}
+		console.log("BTTV is disabled");
+		return;
+	}
 
 	bttvWS = new WebSocket("wss://sockets.betterttv.net/ws");
 
@@ -1226,19 +1331,27 @@ function startBTTVWebsocket() {
 
 		switch(data.name) {
 			case "lookup_user":
-				bttvBadge(data);
+				if(localStorage.getItem("setting_enableBTTVBadges") === "true") {
+					bttvBadge(data);
+				}
 				break;
 
 			case "emote_update":
-				updateBTTVEmote(data.data);
+				if(localStorage.getItem("setting_enableBTTVChannelEmotes") === "true") {
+					updateBTTVEmote(data.data);
+				}
 				break;
 
 			case "emote_delete":
-				deleteBTTVEmote(data.data);
+				if(localStorage.getItem("setting_enableBTTVChannelEmotes") === "true") {
+					deleteBTTVEmote(data.data);
+				}
 				break;
 
 			case "emote_create":
-				addBTTVEmote(data.data);
+				if(localStorage.getItem("setting_enableBTTVChannelEmotes") === "true") {
+					addBTTVEmote(data.data);
+				}
 				break;
 		}
 	});
@@ -1273,3 +1386,13 @@ function startBTTVWebsocket() {
 	});
 }
 startBTTVWebsocket();
+
+client.on("raw_message", (messageCloned, message) => {
+	if(localStorage.getItem("setting_debugRawMessages") === "false") {
+		return;
+	}
+
+	let d = new Date();
+	let time = `${d.getHours().toString().padStart(2, "0")}:${d.getMinutes().toString().padStart(2, "0")}`;
+	console.log(`[RAW] [${time}] ${message.raw}`);
+});

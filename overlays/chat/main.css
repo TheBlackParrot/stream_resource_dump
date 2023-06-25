@@ -1,15 +1,3 @@
-:root {
-	--shadowStuff: drop-shadow(1px 0px 0px rgba(0, 0, 0, 0.45))
-			drop-shadow(1px -1px 0px rgba(0, 0, 0, 0.45))
-			drop-shadow(1px 1px 0px rgba(0, 0, 0, 0.45))
-			drop-shadow(0px -1px 0px rgba(0, 0, 0, 0.45))
-			drop-shadow(0px 1px 0px rgba(0, 0, 0, 0.45))
-			drop-shadow(-1px 0px 0px rgba(0, 0, 0, 0.45))
-			drop-shadow(-1px -1px 0px rgba(0, 0, 0, 0.45))
-			drop-shadow(-1px 1px 0px rgba(0, 0, 0, 0.45))
-			drop-shadow(0px 1px 2px #000);
-}
-
 @keyframes slideInKF {
 	0% {
 		opacity: 0;
@@ -50,28 +38,28 @@
 }
 .slideIn {
 	animation-name: slideInKF;
-	animation-duration: .5s;
+	animation-duration: var(--animationsDuration);
 	animation-fill-mode: forwards;
 	animation-iteration-count: 1;
 	animation-timing-function: ease;
 }
 .slideOut {
 	animation-name: slideOutKF;
-	animation-duration: .5s;
+	animation-duration: var(--animationsDuration);
 	animation-fill-mode: forwards;
 	animation-iteration-count: 1;
 	animation-timing-function: ease-in;
 }
 .userInfoIn {
 	animation-name: userInfoInKF;
-	animation-duration: .5s;
+	animation-duration: var(--animationsDuration);
 	animation-fill-mode: forwards;
 	animation-iteration-count: 1;
 	animation-timing-function: ease;
 }
 .justFadeIn {
 	animation-name: justFadeInKF;
-	animation-duration: .5s;
+	animation-duration: var(--animationsDuration);
 	animation-fill-mode: forwards;
 	animation-iteration-count: 1;
 	animation-timing-function: ease;
@@ -88,17 +76,22 @@ body {
 
 #wrapper {
 	position: fixed;
-	bottom: 0px;
-	left: 0px;
 	min-width: 500px;
 }
 
 .chatBlock {
-	margin: 18px;
+	margin: var(--chatBlockPadding);
+	border-radius: var(--chatBlockBorderRadius);
 	margin-top: 20px;
+	background-color: var(--backgroundColor);
+	border: var(--chatBlockOutline);
+	padding-left: var(--chatBlockIndividualPadding);
+	padding-right: var(--chatBlockIndividualPadding);
+	padding-top: calc(var(--chatBlockIndividualPadding) / 2);
+	padding-bottom: calc(var(--chatBlockIndividualPadding) / 2);
 }
 .badges, .pronouns, .message, .pfp, .flags, .bsrArt, .bsrMapInfo, .bsrExtraInfo, .loadingMsg, .fa-spinner, .fa-times {
-	filter: var(--shadowStuff);
+	filter: var(--effectFilters);
 }
 
 .userInfo {
@@ -140,7 +133,9 @@ body {
 }
 
 .name {
-	font-weight: 900;
+	font-family: var(--nameFont);
+	font-weight: var(--nameFontWeight);
+	font-size: var(--nameFontSize);
 	-webkit-text-stroke: 1.25px transparent;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
@@ -177,8 +172,11 @@ body {
 
 .message {
 	word-wrap: break-word;
-	line-height: 28px;
-	font-weight: 700;
+	line-height: var(--messageLineHeight);
+	color: var(--messageColor);
+	font-family: var(--messageFont);
+	font-weight: var(--messageFontWeight);
+	font-size: var(--messageFontSize);
 }
 
 .actionMessage {
@@ -208,16 +206,16 @@ tt, code, pre {
 }
 
 .pfp {
-	width: 34px;
+	width: var(--avatarSize);
     margin-right: 10px;
     vertical-align: middle;
     border-radius: 10px;
 }
 
 .highlighted {
-	background: rgba(255, 255, 255, 0.25);
+	background: var(--highlightBackgroundColor);
 	padding: 14px;
-	border-left: 8px solid #fff;
+	border-left: 8px solid var(--highlightBorderColor);
 	border-radius: 8px;
 	box-shadow: 0px 6px 4px -4px #000;
 }

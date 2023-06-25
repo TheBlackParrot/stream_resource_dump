@@ -1,0 +1,53 @@
+:root {
+	--shadowStuff: drop-shadow(0px 1px 2px #000);
+	--originalOutlineStuff: drop-shadow(1px 0px 0px rgba(0, 0, 0, 0.45))
+			drop-shadow(1px -1px 0px rgba(0, 0, 0, 0.45))
+			drop-shadow(1px 1px 0px rgba(0, 0, 0, 0.45))
+			drop-shadow(0px -1px 0px rgba(0, 0, 0, 0.45))
+			drop-shadow(0px 1px 0px rgba(0, 0, 0, 0.45))
+			drop-shadow(-1px 0px 0px rgba(0, 0, 0, 0.45))
+			drop-shadow(-1px -1px 0px rgba(0, 0, 0, 0.45))
+			drop-shadow(-1px 1px 0px rgba(0, 0, 0, 0.45));
+	--outlineStuff: var(--originalOutlineStuff);
+	--effectFilters: var(--outlineStuff) var(--shadowStuff);
+
+	--backgroundColor: transparent;
+	--highlightBackgroundColor: rgba(255, 255, 255, 0.25);
+	--highlightBorderColor: rgba(255, 255, 255, 1);
+
+	--defaultNameColor: rgba(170, 170, 170, 1);
+	--defaultNameColorSecondary: rgba(255, 255, 255, 1);
+	--nameFont: "Manrope";
+	--nameFontSize: 16pt;
+	--nameFontWeight: 900;
+	--nameFontStyle: normal;
+	--nameLetterSpacing: 1px;
+	--nameTransform: uppercase;
+	--nameVariant: normal;
+	--nameGradientAngle: 170deg;
+
+	--messageColor: rgba(255, 255, 255, 1);
+	--messageFont: "Manrope";
+	--messageFontSize: 16pt;
+	--messageFontWeight: 700;
+	--messageLetterSpacing: 0px;
+	--messageLineHeight: 28px;
+
+	--chatBlockPadding: 18px;
+	--chatBlockIndividualPadding: 0px;
+	--chatBlockBorderRadius: 0px;
+
+	--chatBlockOutlineColor: rgba(255, 255, 255, 1);
+	--chatBlockOutlineSize: 1px;
+	--chatBlockOutlineStyle: solid;
+	/*--chatBlockOutline: var(--chatBlockOutlineSize) var(--chatBlockOutlineStyle) var(--chatBlockOutlineColor);*/
+	--chatBlockOutline: none;
+
+	--bigEmoteSize: 48pt;
+
+	--animationsDuration: 0.5s;
+
+	--bsrInfoDirection: ltr;
+
+	--avatarSize: 34px;
+}

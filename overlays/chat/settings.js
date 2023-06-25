@@ -3,22 +3,7 @@ const settings = {
 		secondsVisible: 45,
 		alwaysShowPFP: false,
 		opacityDecreaseStep: 0.07,
-		commandCharacter: "!",
-		hideAccounts: [
-			"streamlabs",
-			"streamelements",
-			"kofistreambot",
-			"nightbot",
-			"nottheblackparrot",
-			"moobot",
-			"soundalerts",
-			"sery_bot",
-			"commanderroot",
-			"wizebot",
-			"fossabot",
-			"blerp",
-			"revolverlanceobot"
-		],
+		commandCharacter: "!"
 	},
 
 	cache: {
@@ -29,7 +14,7 @@ const settings = {
 		bigEmoji: {
 			max: 10
 		},
-		
+
 		flags: {
 			max: 6
 		},
@@ -190,3 +175,225 @@ const enums = {
 		heavy: 900
 	}
 }
+
+var hideAccounts = [];
+var refreshExternalStuffTimeout;
+
+function refreshExternalStuff() {
+	clearTimeout(refreshExternalStuffTimeout);
+	refreshExternalStuffTimeout = setTimeout(function() {
+		chatEmotes = {};
+		getGlobalChannelEmotes(broadcasterData);
+	}, 10000);
+}
+
+function normalizeSettingColors(setting) {
+	setting = `setting_${setting}`;
+	let rgb = localStorage.getItem(setting);
+	let alpha = Math.floor(parseFloat(localStorage.getItem(`${setting}Alpha`)) * 255).toString(16).padStart(2, "0");
+
+	if(alpha === "00") {
+		return "transparent";
+	}
+	return `${rgb}${alpha}`;
+}
+
+function setHistoryOpacity() {
+	$(".chatBlock").each(function() {
+		let opacity = 1;
+		if(localStorage.getItem("setting_chatFadeHistory") === "true") {
+			opacity = 1 - ((messageCount - parseInt($(this).attr("data-msgIdx"))) * (parseFloat(localStorage.getItem("setting_chatFadeHistoryStep")) / 100));
+			if(opacity < 0) {
+				opacity = 0;
+			}
+		}
+
+		if(!opacity) {
+			$(this).remove();
+		}
+
+		$(this).css("opacity", "");
+		$(this).attr("style", function(i, s) { return (s || '') + `opacity: ${opacity} !important;` });
+	});
+}
+
+const settingUpdaters = {
+	chatHideAccounts: function(value) {
+		hideAccounts = value.split("\n");
+	},
+
+	enable7TVGlobalEmotes: refreshExternalStuff,
+	enable7TVChannelEmotes: refreshExternalStuff,
+	enableBTTVGlobalEmotes: refreshExternalStuff,
+	enableBTTVChannelEmotes: refreshExternalStuff,
+	enableFFZGlobalEmotes: refreshExternalStuff,
+	enableFFZChannelEmotes: refreshExternalStuff,
+
+	enable7TV: function(value) {
+		sevenTVCosmetics = {};
+		sevenTVBadges = [];
+		sevenTVPaints = [];
+
+		get7TVBadges();
+		refreshExternalStuff();
+	},
+	enableBTTV: function(value) {
+		startBTTVWebsocket();
+		refreshExternalStuff();
+	},
+	enableFFZ: function(value) {
+		refreshExternalStuff();	
+	},
+	windowReload: function(value) {
+		location.reload();
+	},
+
+	chatBackgroundColorAlpha: function(value) {
+		$(":root").get(0).style.setProperty("--backgroundColor", normalizeSettingColors("chatBackgroundColor"));
+	},
+	chatHighlightBackgroundColorAlpha: function(value) {
+		$(":root").get(0).style.setProperty("--highlightBackgroundColor", normalizeSettingColors("chatHighlightBackgroundColor"));
+		$(":root").get(0).style.setProperty("--highlightBorderColor", localStorage.getItem("setting_chatHighlightBackgroundColor"));
+	},
+	chatDefaultNameColorAlpha: function(value) {
+		$(":root").get(0).style.setProperty("--defaultNameColor", normalizeSettingColors("chatDefaultNameColor"));
+	},
+	chatMessageColorAlpha: function(value) {
+		$(":root").get(0).style.setProperty("--messageColor", normalizeSettingColors("chatMessageColor"));
+	},
+
+	chatNameFont: function(value) {
+		$(":root").get(0).style.setProperty("--nameFont", value);
+	},
+	chatMessageFont: function(value) {
+		$(":root").get(0).style.setProperty("--messageFont", value);
+	},
+	chatNameFontSize: function(value) {
+		$(":root").get(0).style.setProperty("--nameFontSize", `${value}pt`);
+	},
+	chatMessageFontSize: function(value) {
+		$(":root").get(0).style.setProperty("--messageFontSize", `${value}pt`);
+	},
+	chatNameFontWeight: function(value) {
+		$(":root").get(0).style.setProperty("--nameFontWeight", value);
+	},
+	chatMessageFontWeight: function(value) {
+		$(":root").get(0).style.setProperty("--messageFontWeight", value);
+	},
+
+	chatBlockPadding: function(value) {
+		$(":root").get(0).style.setProperty("--chatBlockPadding", `${value}px`);
+	},
+	chatBlockIndividualPadding: function(value) {
+		$(":root").get(0).style.setProperty("--chatBlockIndividualPadding", `${value}px`);
+	},
+	chatBlockBorderRadius: function(value) {
+		$(":root").get(0).style.setProperty("--chatBlockBorderRadius", `${value}px`);
+	},
+
+	chatOutlines: function(value) {
+		if(value === "true") {
+			$(":root").get(0).style.setProperty("--chatBlockOutline", "var(--chatBlockOutlineSize) var(--chatBlockOutlineStyle) var(--chatBlockOutlineColor)");
+		} else {
+			$(":root").get(0).style.setProperty("--chatBlockOutline", "none");
+		}
+	},
+	chatOutlinesColorAlpha: function(value) {
+		$(":root").get(0).style.setProperty("--chatBlockOutlineColor", normalizeSettingColors("chatOutlinesColor"));
+	},
+	chatOutlinesSize: function(value) {
+		$(":root").get(0).style.setProperty("--chatBlockOutlineSize", `${value}px`);
+	},
+	chatOutlineStyle: function(value) {
+		$(":root").get(0).style.setProperty("--chatBlockOutlineStyle", value);
+	},
+
+	chatShadows: function(value) {
+		if(value === "true") {
+			$(":root").get(0).style.setProperty("--shadowStuff", "drop-shadow(0px 1px 2px #000)");
+		} else {
+			$(":root").get(0).style.setProperty("--shadowStuff", "drop-shadow(0px 0px 0px transparent)");
+		}
+	},
+	chatOutlinesFilter: function(value) {
+		if(value === "true") {
+			$(":root").get(0).style.setProperty("--outlineStuff", "var(--originalOutlineStuff)");
+		} else {
+			$(":root").get(0).style.setProperty("--outlineStuff", "drop-shadow(0px 0px 0px transparent)");
+		}
+	},
+
+	chatFadeHistory: setHistoryOpacity,
+	chatFadeHistoryStep: setHistoryOpacity,
+
+	chatAnimationsDuration: function(value) {
+		$(":root").get(0).style.setProperty("--animationsDuration", `${value}s`);
+	},
+
+	chatBigEmoteSize: function(value) {
+		$(":root").get(0).style.setProperty("--bigEmoteSize", `${value}pt`);
+	},
+
+	testMessage: function(value) {
+		let exMsg = "Hello there! This is a fake message so that you can see what your chat settings look like! Have fun! AaBbCcDd EeFfGgHh IiJjKkLl MmNnOoPp QqRrSsTt UuVvWwXx YyZz 0123456789";
+		let msg = `@badge-info=;badges=broadcaster/1;client-nonce=balls;display-name=${broadcasterData.display_name};emotes=;first-msg=0;flags=;id=1234-abcd;mod=0;returning-chatter=0;room-id=${broadcasterData.id};subscriber=0;tmi-sent-ts=${Date.now()};turbo=0;user-id=${broadcasterData.id};user-type= :${broadcasterData.login}!${broadcasterData.login}@${broadcasterData.login}.tmi.twitch.tv PRIVMSG #${broadcasterData.login} :${exMsg}`;
+		client._onMessage({
+			data: msg
+		});
+	},
+
+	chatCornerAlignment: function(value) {
+		$("#wrapper").css("top", "");
+		$("#wrapper").css("bottom", "");
+		$("#wrapper").css("left", "");
+		$("#wrapper").css("right", "");
+
+		let pos = value.split(",");
+		if(pos[0] === "top") {
+			$("#wrapper").css("top", "0px");
+		} else {
+			$("#wrapper").css("bottom", "0px");
+		}
+
+		if(pos[1] === "left") {
+			$("#wrapper").css("left", "0px");
+			$("#wrapper").css("text-align", "left");
+			$(":root").get(0).style.setProperty("--bsrInfoDirection", "ltr");
+		} else {
+			$("#wrapper").css("right", "0px");
+			$("#wrapper").css("text-align", "right");
+			$(":root").get(0).style.setProperty("--bsrInfoDirection", "rtl");
+		}
+	},
+
+	chatMessageLineHeight: function(value) {
+		$(":root").get(0).style.setProperty("--messageLineHeight", `${value}px`);
+	},
+
+	avatarSize: function(value) {
+		$(":root").get(0).style.setProperty("--avatarSize", `${value}px`);
+	}
+};
+settingUpdaters.chatBackgroundColor = settingUpdaters.chatBackgroundColorAlpha;
+settingUpdaters.chatHighlightBackgroundColor = settingUpdaters.chatHighlightBackgroundColorAlpha;
+settingUpdaters.chatDefaultNameColor = settingUpdaters.chatDefaultNameColorAlpha;
+settingUpdaters.chatMessageColor = settingUpdaters.chatMessageColorAlpha;
+settingUpdaters.chatOutlinesColor = settingUpdaters.chatOutlinesColorAlpha;
+
+settingUpdaters["chatHideAccounts"](localStorage.getItem("setting_chatHideAccounts"));
+
+function updateSetting(which, value) {
+	if(which.indexOf("setting_") === -1) {
+		return;
+	}
+
+	let setting = which.substr(8);
+
+	if(setting in settingUpdaters) {
+		console.log(`setting ${setting} updated`);
+		settingUpdaters[setting](value);
+	}
+}
+window.addEventListener("storage", function(event) {
+	updateSetting(event.key, event.newValue);
+});

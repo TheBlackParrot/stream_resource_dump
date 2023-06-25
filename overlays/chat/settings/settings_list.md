@@ -30,32 +30,31 @@
 - toggle for big emotes on emote-only messages
 - max amount of big emotes
 - size of big emotes?
-## Flags
+- toggle for markdown parsing
+
+# Flags
 - toggle for flags
 - padding
 - flag shape
 - flag size
-## Markdown
-- toggle for markdown parsing
-## Badges
+# Badges
 - toggle for badges
 - badge size
 - badge shape
 - padding
-## Avatars
+# Avatars
 - toggle for pfp's
 - pfp size
 - pfp shape
 - padding
-## Pronouns
+# Pronouns
 - toggle for pronouns
 - color
 - padding
 - size
 - font
 - font weight
-## !bsr Command
-- toggle
+- mapping
 
 # 7TV
 - toggle for 7TV badges

@@ -1,6 +1,7 @@
 :root {
 	--corner-radius: 16px;
 	--font-size: 12pt;
+	--font-size-smol: 9pt;
 	--font-weight: 700;
 	--font-weight-bold: calc(var(--font-weight) + 200);
 	--font-color: #fff;
@@ -9,14 +10,14 @@
 	--border-color: rgba(255, 255, 255, 0.15);
 	--border-color-bright: var(--sidebar-row-text-color);
 
-	--sidebar-row-height: 45px;
+	--sidebar-row-height: 40px;
 	--sidebar-padding: 12px;
 	--sidebar-row-text-color: #cbadff;
 	--sidebar-width: 200px;
 	--sidebar-bg-color: #222;
 	--sidebar-icon-margin: 8px;
 	--sidebar-icon-width: 1.2em;
-	--sidebar-hover-bg-color: #2a2a2a;
+	--sidebar-hover-bg-color: #272727;
 
 	--sidebar-active-row-text-color: #000;
 	--sidebar-active-row-bg-color: var(--sidebar-row-text-color);
@@ -34,6 +35,8 @@
 	--input-bg-color: var(--sidebar-bg-color);
 	--input-color: var(--font-color);
 	--input-border-radius: 6px;
+
+	--button-padding: 16px;
 }
 ::-webkit-scrollbar, ::-webkit-scrollbar-track, ::-webkit-scrollbar-thumb {
 	border-top-right-radius: var(--corner-radius);
@@ -42,6 +45,52 @@
 ::-webkit-scrollbar { width: 0.67em; }
 ::-webkit-scrollbar-track { background-color: var(--sidebar-bg-color); }
 ::-webkit-scrollbar-thumb { background-color: var(--sidebar-active-row-bg-color); }
+
+@font-face {
+	font-family: "Manrope";
+	font-weight: 100;
+	src: url("fonts/Manrope.ttf");
+}
+@font-face {
+	font-family: "Manrope";
+	font-weight: 200;
+	src: url("fonts/Manrope.ttf");
+}
+@font-face {
+	font-family: "Manrope";
+	font-weight: 300;
+	src: url("fonts/Manrope.ttf");
+}
+@font-face {
+	font-family: "Manrope";
+	font-weight: 400;
+	src: url("fonts/Manrope.ttf");
+}
+@font-face {
+	font-family: "Manrope";
+	font-weight: 500;
+	src: url("fonts/Manrope.ttf");
+}
+@font-face {
+	font-family: "Manrope";
+	font-weight: 600;
+	src: url("fonts/Manrope.ttf");
+}
+@font-face {
+	font-family: "Manrope";
+	font-weight: 700;
+	src: url("fonts/Manrope.ttf");
+}
+@font-face {
+	font-family: "Manrope";
+	font-weight: 800;
+	src: url("fonts/Manrope.ttf");
+}
+@font-face {
+	font-family: "Manrope";
+	font-weight: 900;
+	src: url("fonts/Manrope.ttf");
+}
 
 body {
 	font-family: var(--font-family);
@@ -101,9 +150,11 @@ body {
 .bttv { -webkit-mask-image: url("icons/bttv-icon.png"); }
 .ffz { -webkit-mask-image: url("icons/ffz-icon.png"); }
 
-#sidebar .row:hover {
+#sidebar .row:hover { 
 	background-color: var(--sidebar-hover-bg-color);
+	filter: brightness(150%);
 }
+#sidebar .active:hover { filter: none; }
 
 #sidebar .row:first-child { border-top-left-radius: var(--corner-radius); }
 #sidebar .row:last-child { border-bottom-left-radius: var(--corner-radius); }
@@ -121,7 +172,7 @@ body {
 	background-color: var(--sidebar-active-row-text-color) !important;
 }
 
-#settings {
+#settings, #sensitive {
 	border-top-right-radius: var(--corner-radius);
 	border-bottom-right-radius: var(--corner-radius);
 	border-bottom-left-radius: var(--corner-radius);
@@ -195,7 +246,7 @@ body {
 	line-height: 1em;
 }
 
-input, select {
+input, select, textarea {
 	height: var(--input-height);
 	margin: 0px;
 	padding: 0px;
@@ -268,4 +319,85 @@ input[type="color"], input[type="color"]::-webkit-color-swatch, input[type="colo
 input[type="color"]::-webkit-color-swatch {
 	border-radius: var(--input-border-radius);
 	border: 1px solid var(--border-color);
+}
+
+textarea {
+	height: calc(var(--input-height) * 5);
+	width: calc(100% - (var(--settings-padding) * 2))
+}
+
+#sensitive {
+	display: flex;
+	background-color: #000;
+	line-height: 1.5em;
+	font-size: 16pt;
+}
+
+#sensitive .section {
+	display: flex;
+	flex-grow: 1;
+	align-items: center;
+}
+
+#sensitive .part {
+	margin-bottom: 0px;
+	border-bottom: none;
+	text-align: center;
+}
+
+.button {
+	display: inline-block;
+	padding-left: var(--button-padding);
+	padding-right: var(--button-padding);
+	text-align: center;
+	padding-top: calc(var(--button-padding) / 2);
+	padding-bottom: calc(var(--button-padding) / 2);
+	background-color: #222;
+	border-radius: var(--input-border-radius);
+	font-weight: var(--font-weight-bold);
+	border: 1px solid var(--border-color);
+}
+
+#hideSensitiveWarning {
+	margin-top: var(--settings-part-spacing);
+	background-color: #209060;
+}
+
+.fa-exclamation-triangle {
+	color: #fd0;
+}
+#sensitive .fa-exclamation-triangle {
+	font-size: 72pt;
+	margin-bottom: var(--settings-part-spacing);
+}
+
+.smol {
+	font-size: var(--font-size-smol);
+	text-align: center;
+}
+
+a {
+	color: var(--sidebar-active-row-bg-color);
+	font-style: normal;
+	text-decoration: none;	
+}
+
+#sideButtons {
+	width: var(--sidebar-width);
+	position: fixed;
+	left: 12px;
+	text-align: center;
+}
+#sideButtons .button {
+	margin-bottom: var(--sidebar-padding);
+}
+#reloadOverlayButton {
+	background-color: #209060;
+}
+#resetOverlayButton {
+	background-color: #902040;
+}
+
+.button:hover {
+	filter: brightness(115%);
 }
