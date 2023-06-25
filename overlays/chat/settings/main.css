@@ -1,0 +1,271 @@
+:root {
+	--corner-radius: 16px;
+	--font-size: 12pt;
+	--font-weight: 700;
+	--font-weight-bold: calc(var(--font-weight) + 200);
+	--font-color: #fff;
+	--font-family: "Manrope";
+
+	--border-color: rgba(255, 255, 255, 0.15);
+	--border-color-bright: var(--sidebar-row-text-color);
+
+	--sidebar-row-height: 45px;
+	--sidebar-padding: 12px;
+	--sidebar-row-text-color: #cbadff;
+	--sidebar-width: 200px;
+	--sidebar-bg-color: #222;
+	--sidebar-icon-margin: 8px;
+	--sidebar-icon-width: 1.2em;
+	--sidebar-hover-bg-color: #2a2a2a;
+
+	--sidebar-active-row-text-color: #000;
+	--sidebar-active-row-bg-color: var(--sidebar-row-text-color);
+
+	--settings-width: 512px;
+	--settings-bg-color: #333;
+	--settings-height: 700px;
+	--settings-padding: 16px;
+
+	--settings-part-spacing: 48px;
+	--settings-part-head-font-size: calc(var(--font-size) * 1.33);
+
+	--input-height: 1.5em;
+	--input-padding: 8px;
+	--input-bg-color: var(--sidebar-bg-color);
+	--input-color: var(--font-color);
+	--input-border-radius: 6px;
+}
+::-webkit-scrollbar, ::-webkit-scrollbar-track, ::-webkit-scrollbar-thumb {
+	border-top-right-radius: var(--corner-radius);
+	border-bottom-right-radius: var(--corner-radius);	
+}
+::-webkit-scrollbar { width: 0.67em; }
+::-webkit-scrollbar-track { background-color: var(--sidebar-bg-color); }
+::-webkit-scrollbar-thumb { background-color: var(--sidebar-active-row-bg-color); }
+
+body {
+	font-family: var(--font-family);
+	font-size: var(--font-size);
+	color: var(--font-color);
+	background-color: #191919;
+	font-weight: var(--font-weight);
+}
+
+#wrapper {
+	filter: drop-shadow(0px 0px 3px #000);
+}
+
+#sidebar {
+	border-top-left-radius: var(--corner-radius);
+	border-bottom-left-radius: var(--corner-radius);
+	background-color: var(--sidebar-bg-color);
+	width: var(--sidebar-width);
+	position: fixed;
+	left: 12px;
+	top: 12px;
+}
+
+#sidebar .row {
+	color: var(--sidebar-row-text-color);
+	font-weight: var(--font-weight);
+	line-height: var(--sidebar-row-height);
+	height: var(--sidebar-row-height);
+	padding-left: var(--sidebar-padding);
+}
+
+#sidebar .fas {
+	margin-right: var(--sidebar-icon-margin);
+	width: var(--sidebar-icon-width);
+	text-align: center;
+}
+
+.icon {
+	height: var(--sidebar-icon-width);
+	width: var(--sidebar-icon-width);
+	margin-right: var(--sidebar-icon-margin);
+	vertical-align: middle;
+	position: relative;
+	top: -2px;
+	display: inline-block;
+}
+
+#sidebar .icon {
+	background-color: var(--sidebar-row-text-color);
+	mask-type: luminance;
+	-webkit-mask-size: contain;
+	-webkit-mask-position: center;
+	-webkit-mask-repeat: no-repeat;
+}
+
+.sevtv { -webkit-mask-image: url("icons/7tv-icon.png"); }
+.bttv { -webkit-mask-image: url("icons/bttv-icon.png"); }
+.ffz { -webkit-mask-image: url("icons/ffz-icon.png"); }
+
+#sidebar .row:hover {
+	background-color: var(--sidebar-hover-bg-color);
+}
+
+#sidebar .row:first-child { border-top-left-radius: var(--corner-radius); }
+#sidebar .row:last-child { border-bottom-left-radius: var(--corner-radius); }
+
+.active {
+	color: var(--sidebar-active-row-text-color) !important;
+	background-color: var(--sidebar-active-row-bg-color) !important;
+}
+
+.section {
+	display: none;
+}
+
+.active .icon {
+	background-color: var(--sidebar-active-row-text-color) !important;
+}
+
+#settings {
+	border-top-right-radius: var(--corner-radius);
+	border-bottom-right-radius: var(--corner-radius);
+	border-bottom-left-radius: var(--corner-radius);
+	background-color: var(--settings-bg-color);
+	width: var(--settings-width);
+	height: var(--settings-height);
+	max-height: var(--settings-height);
+	position: fixed;
+	left: calc(var(--sidebar-width) + 12px);
+	top: 12px;
+	overflow-x: clip;
+	overflow-y: auto;
+}
+
+.section {
+	margin: var(--settings-padding);
+}
+
+.part {
+	margin-bottom: var(--settings-part-spacing);
+	border-bottom: 1px solid var(--border-color);
+}
+
+.part h1 {
+	font-size: var(--settings-part-head-font-size);
+	border-bottom: 1px solid var(--border-color-bright);
+	margin-bottom: var(--settings-padding);
+	padding-bottom: var(--settings-padding);
+	font-weight: var(--font-weight-bold);
+}
+
+.setting {
+	display: block;
+	margin-bottom: var(--settings-padding);
+	white-space: nowrap;
+}
+
+.disabled {
+	/*
+	opacity: 0.25;
+	filter: grayscale(80%);
+	*/
+	display: none;
+}
+
+.settingFullWidth, .settingHalfWidthRight, .settingHalfWidthLeft {
+	line-height: 1em;
+	vertical-align: middle;
+}
+
+.settingFullWidth {
+	width: 100%;
+}
+
+.settingHalfWidthLeft, .settingHalfWidthRight {
+	display: inline-block;
+}
+.settingHalfWidthLeft {
+	text-align: right;
+	margin-right: calc(var(--settings-padding) / 2);
+	width: 40%;
+}
+.settingHalfWidthRight {
+	text-align: left;
+	margin-left: calc(var(--settings-padding) / 2);
+	width: 60%;
+}
+
+.settingInfo {
+	vertical-align: middle;
+	line-height: 1em;
+}
+
+input, select {
+	height: var(--input-height);
+	margin: 0px;
+	padding: 0px;
+	padding-top: calc(var(--input-padding) / 2);
+	padding-bottom: calc(var(--input-padding) / 2);
+	padding-left: var(--input-padding);
+	padding-right: var(--input-padding);
+	background-color: var(--input-bg-color);
+	color: var(--font-color);
+	font-family: var(--font-family);
+	font-size: var(--font-size);
+	font-weight: var(--font-weight);
+	border-radius: var(--input-border-radius);
+	border: 1px solid var(--border-color);
+	vertical-align: middle;
+}
+
+select {
+	height: calc(var(--input-height) * 1.3);
+	padding-right: calc(var(--input-padding) * 1.3);
+}
+
+input[type="checkbox"] {
+	width: var(--input-height);
+	height: var(--input-height);
+	vertical-align: middle;
+	margin-right: calc(var(--settings-padding) / 2);
+	padding: 0px;
+	font-family: "Font Awesome 5 Free";
+	color: var(--sidebar-active-row-text-color);
+	text-align: center;
+	line-height: var(--input-height);
+	appearance: none;
+	border: none;
+}
+
+input[type="checkbox"]:before, input[type="checkbox"]:checked:before {
+	display: block;
+	position: relative;
+	width: 100%;
+	height: 100%;
+	border-radius: var(--input-border-radius);
+	border: 1px solid var(--border-color);
+}
+
+input[type="checkbox"]:before {
+	content: "";
+	background: var(--input-bg-color);
+}
+
+input[type="checkbox"]:checked:before {
+	content: "\f00c";
+	background: var(--sidebar-active-row-bg-color);
+}
+
+input[type="color"] {
+	width: 100px;
+	margin-right: var(--settings-padding) !important;
+}
+
+input[type="color"], input[type="color"]::-webkit-color-swatch, input[type="color"]::-webkit-color-swatch-wrapper {
+	height: var(--input-height);
+	border: none;
+	outline: none;
+	-webkit-appearance: none;
+	padding: 0px;
+	margin: 0px;
+}
+
+input[type="color"]::-webkit-color-swatch {
+	border-radius: var(--input-border-radius);
+	border: 1px solid var(--border-color);
+}

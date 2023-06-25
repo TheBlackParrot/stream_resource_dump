@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" type="text/css" href="reset.css">
+	<link rel="stylesheet" type="text/css" href="fontawesome-free-5.15.4-web/css/all.min.css">
+	<link rel="stylesheet" type="text/css" href="main.css">
+
+	<script type="text/javascript" src="jquery-3.6.0.min.js"></script>
+</head>
+<body>
+	<div id="wrapper">
+		<div id="sidebar">
+			<div class="row active" data-tab="appearance"><i class="fas fa-palette"></i>Appearance</div>
+			<div class="row" data-tab="effects"><i class="fas fa-wind"></i>Effects</div>
+			<div class="row" data-tab="function"><i class="fas fa-cogs"></i>Function</div>
+			<div class="row" data-tab="7tv"><i class="icon sevtv"></i>7TV</div>
+			<div class="row" data-tab="bttv"><i class="icon bttv"></i>BetterTTV</div>
+			<div class="row" data-tab="ffz"><i class="icon ffz"></i>FrankerFaceZ</div>
+		</div>
+		<div id="settings">
+			<div class="section" data-content="appearance">
+				<div class="part">
+					<h1>Color</h1>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Background color</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="chatBackgroundColor" type="color" value="#000000"/><input type="number" id="chatBackgroundColorAlpha" min="0" max="1" step="0.01" value="0"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Default name color</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="chatDefaultNameColor" type="color" value="#AAAAAA"/><input type="number" id="chatDefaultNameColorAlpha" min="0" max="1" step="0.01" value="1"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Message text color</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="chatMessageColor" type="color" value="#FFFFFF"/><input type="number" id="chatMessageColorAlpha" min="0" max="1" step="0.01" value="1"/>
+						</div>
+					</div>
+				</div>
+				
+				<div class="part">
+					<h1>Font</h1>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Name font</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="chatNameFont" type="text" value="Manrope"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Name font size</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatNameFontSize" min="4" max="64" step="0.25" value="16"/> pt
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Name font weight</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatNameFontWeight" min="100" max="900" step="25" value="900"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Message font</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="chatMessageFont" type="text" value="Manrope"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Message font size</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatMessageFontSize" min="4" max="64" step="0.25" value="16"/> pt
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Message font weight</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatMessageFontWeight" min="100" max="900" step="25" value="700"/>
+						</div>
+					</div>
+				</div>
+
+				<div class="part">
+					<h1>Layout</h1>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Padding</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatBlockPadding" min="0" max="64" step="0.25" value="18"/> px
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Border radius</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatBlockBorderRadius" min="0" max="64" step="0.25" value="0"/> px
+						</div>
+					</div>
+				</div>
+
+				<div class="part">
+					<h1>Outlines</h1>
+					<div class="setting">
+						<div class="settingFullWidth">
+							<input id="chatOutlines" type="checkbox" name="chatOutlines" data-dependent="outlines"/> <span class="settingInfo">Enable outlines around messages</span>
+						</div>
+					</div>
+					<div class="setting disabled" data-dependent="outlines">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Outline color</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="chatOutlinesColor" type="color" value="#FFFFFF"/><input type="number" id="chatOutlinesColorAlpha" min="0" max="1" step="0.01" value="1"/>
+						</div>
+					</div>
+					<div class="setting disabled" data-dependent="outlines">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Outline size</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatOutlinesSize" min="0" max="5" step="0.25" value="1"/> px
+						</div>
+					</div>
+					<div class="setting disabled" data-dependent="outlines">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Outline style</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<select id="chatOutlineStyle">
+								<option value="dashed">Dashed</option>
+								<option value="dotted">Dotted</option>
+								<option value="double">Double</option>
+								<option value="groove">Groove</option>
+								<option value="inset">Inset</option>
+								<option value="outset">Outset</option>
+								<option value="ridge">Ridge</option>
+								<option selected value="solid">Solid</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section" data-content="effects">
+				Effects
+			</div>
+			<div class="section" data-content="function">
+				Function
+			</div>
+			<div class="section" data-content="7tv">
+				7TV
+			</div>
+			<div class="section" data-content="bttv">
+				BetterTTV
+			</div>
+			<div class="section" data-content="ffz">
+				FFZ
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="main.js"></script>
+	<script type="text/javascript" src="settings.js"></script>
+</body>
+</html>
