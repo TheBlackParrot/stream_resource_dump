@@ -22,10 +22,20 @@ function resetEverything() {
 		localStorage.setItem("setting_twitchChannel", tempChannel);	
 	}
 }
-if(localStorage.getItem("twitch_clientID")) {
-	// user probably has keys, move them over
-	resetEverything();
+
+function settingsCheck() {
+	const version = parseInt(localStorage.getItem("setting_version"));
+
+	if(isNaN(version)) {
+		if(localStorage.getItem("twitch_clientID")) {
+			// user probably has keys, move them over
+			resetEverything();
+		}
+	}
+
+	localStorage.setItem("setting_version", "1");
 }
+settingsCheck();
 
 var activeRow;
 function setRow(which, bypassSensitiveCheck) {

@@ -551,6 +551,7 @@ const chatFuncs = {
 var lastUser;
 var lastMessageIdx;
 var messageCount = 0;
+var combinedCount = 0;
 var testNameBlock;
 function parseMessage(data) {
 	if(!allowedToProceed) {
@@ -582,7 +583,7 @@ function parseMessage(data) {
 		}
 	}
 
-	let rootElement = $(`<div class="chatBlock" data-msgIdx="${messageCount}" data-msgUUID="${data.uuid}" data-userID="${data.user.id}"></div>`);
+	let rootElement = $(`<div class="chatBlock" data-msgIdx="${messageCount}" data-combinedIdx="${combinedCount}" data-msgUUID="${data.uuid}" data-userID="${data.user.id}"></div>`);
 	if(localStorage.getItem("setting_chatAnimations") === "true") {
 		rootElement.addClass("slideIn");
 	}
@@ -594,6 +595,7 @@ function parseMessage(data) {
 
 	if(lastUser !== data.user.id) {
 		userBlock.show();
+		combinedCount++;
 	} else {
 		userBlock.css("margin-top", "0px");
 		if(localStorage.getItem("setting_chatAnimations") === "true") {
@@ -709,7 +711,7 @@ function parseMessage(data) {
 			pfpBlock.attr("src", pfpURL);
 		}
 
-		if(!localStorage.getItem(`pfpShape_${data.user.id}`)) { localStorage.setItem(`pfpShape_${data.user.id}`, "10px"); }
+		if(!localStorage.getItem(`pfpShape_${data.user.id}`)) { localStorage.setItem(`pfpShape_${data.user.id}`, "var(--avatarBorderRadius)"); }
 		$(":root").get(0).style.setProperty(`--pfpShape${data.user.id}`, localStorage.getItem(`pfpShape_${data.user.id}`));
 		pfpBlock.css("border-radius", `var(--pfpShape${data.user.id})`);
 
@@ -727,6 +729,16 @@ function parseMessage(data) {
 						showPFP = true;
 					} else if(localStorage.getItem("setting_avatarAllowedSubscribers") === "true" && "subscriber" in data.user.badges.list) {
 						showPFP = true;
+					} else if(localStorage.getItem("setting_avatarAllowedTurbo") === "true" && "turbo" in data.user.badges.list) {
+						showPFP = true;
+					} else if(localStorage.getItem("setting_avatarAllowedPrime") === "true" && "premium" in data.user.badges.list) {
+						showPFP = true;
+					} else if(localStorage.getItem("setting_avatarAllowedArtist") === "true" && "artist-badge" in data.user.badges.list) {
+						showPFP = true;
+					} else if(localStorage.getItem("setting_avatarAllowedPartner") === "true" && ("ambassador" in data.user.badges.list || "partner" in data.user.badges.list)) {
+						showPFP = true;
+					} else if(localStorage.getItem("setting_avatarAllowedStaff") === "true" && ("staff" in data.user.badges.list || "admin" in data.user.badges.list || "global_mod" in data.user.badges.list)) {
+						showPFP = true;
 					}
 				}
 			}
@@ -737,26 +749,6 @@ function parseMessage(data) {
 			pfpBlock.show();		
 		}
 	}
-
-	/*
-	if(!settings.chat.alwaysShowPFP) {
-		if(data.user.badges.list) {
-			if("vip" in data.user.badges.list || "moderator" in data.user.badges.list || "subscriber" in data.user.badges.list || "broadcaster" in data.user.badges.list) {
-				if(!localStorage.getItem(`showpfp_${data.user.id}`)) { localStorage.setItem(`showpfp_${data.user.id}`, "yes"); }
-
-				if(localStorage.getItem(`showpfp_${data.user.id}`) === "yes") {
-					userBlock.append(pfpBlock);
-					pfpBlock.show();
-				}
-			}
-		}
-	} else {
-		if(localStorage.getItem(`showpfp_${data.user.id}`) !== "no") {
-			userBlock.append(pfpBlock);
-			pfpBlock.show();
-		}
-	}
-	*/
 
 	if(!localStorage.getItem(`color_${data.user.id}`)) {
 		let col = data.user.color;
@@ -799,7 +791,12 @@ function parseMessage(data) {
 	$(":root").get(0).style.setProperty(`--nameEffects${data.user.id}`, `${(localStorage.getItem(`nameoutline_${data.user.id}`) === "yes" ? "var(--outlineStuff)" : "")}${(localStorage.getItem(`nameshadow_${data.user.id}`) === "yes" ? "var(--shadowStuff)" : "")}`);
 
 	let nameBlock = $(`<div class="name" data-userid="${data.user.id}">${data.user[localStorage.getItem(`usename_${data.user.id}`)]}</div>`);
-	nameBlock.css("background-image", `linear-gradient(var(--nameAngle${data.user.id}), var(--nameColorSecondary${data.user.id}) 0%, var(--nameColor${data.user.id}) 75%)`);
+
+	if(localStorage.getItem("setting_chatDefaultNameColorForced") === "true") {
+		nameBlock.css("background-image", `linear-gradient(var(--nameGradientAngle), var(--defaultNameColorSecondary) 0%, var(--defaultNameColor) 75%)`);
+	} else {
+		nameBlock.css("background-image", `linear-gradient(var(--nameAngle${data.user.id}), var(--nameColorSecondary${data.user.id}) 0%, var(--nameColor${data.user.id}) 75%)`);
+	}
 	nameBlock.css("font-family", `var(--nameFont${data.user.id})`);
 	nameBlock.css("font-weight", `var(--nameWeight${data.user.id})`);
 	nameBlock.css("font-size", `var(--nameSize${data.user.id})`);
@@ -947,7 +944,7 @@ function parseMessage(data) {
 	rootElement.append(messageBlock);
 
 	// hard cap at 200 messages, realistically this will never be hit. only here for the perma-message no-opacity needers
-	if($(".chatBlock").length > 200) {
+	while($(".chatBlock").length > 200) {
 		$(".chatBlock")[0].remove();
 	}
 

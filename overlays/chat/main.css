@@ -1,70 +1,3 @@
-@keyframes slideInKF {
-	0% {
-		opacity: 0;
-		transform: scale(0.9) translateY(50px);
-		filter: brightness(2.0) contrast(115%) blur(5px);
-	}
-
-	100% {
-		opacity: 1;
-		transform: scale(1.0) translateY(0px);
-		filter: brightness(1.0) contrast(100%) blur(0px);
-	}
-}
-@keyframes slideOutKF {
-	0% {
-		opacity: 1;
-		transform: scale(1.0) translateY(0px);
-		filter: blur(0px);
-	}
-	100% {
-		opacity: 0;
-		transform: scale(0.9) translateY(-100px);
-		filter: blur(5px);
-	}
-}
-@keyframes userInfoInKF {
-	0% {
-		transform: translateY(20px);
-	}
-
-	100% {
-		transform: translateY(0px);
-	}
-}
-@keyframes justFadeInKF {
-	from { opacity: 0; }
-	to { opacity: 1; }
-}
-.slideIn {
-	animation-name: slideInKF;
-	animation-duration: var(--animationsDuration);
-	animation-fill-mode: forwards;
-	animation-iteration-count: 1;
-	animation-timing-function: ease;
-}
-.slideOut {
-	animation-name: slideOutKF;
-	animation-duration: var(--animationsDuration);
-	animation-fill-mode: forwards;
-	animation-iteration-count: 1;
-	animation-timing-function: ease-in;
-}
-.userInfoIn {
-	animation-name: userInfoInKF;
-	animation-duration: var(--animationsDuration);
-	animation-fill-mode: forwards;
-	animation-iteration-count: 1;
-	animation-timing-function: ease;
-}
-.justFadeIn {
-	animation-name: justFadeInKF;
-	animation-duration: var(--animationsDuration);
-	animation-fill-mode: forwards;
-	animation-iteration-count: 1;
-	animation-timing-function: ease;
-}
-
 body {
 	font-family: "Manrope";
 	font-weight: 900;
@@ -99,7 +32,7 @@ body {
 }
 .userInfo div {
 	display: inline-block;
-	margin-right: 14px;
+	margin-right: var(--messageUserInfoElementSpacing);
 }
 .userInfo div:last-child {
 	margin-right: 0px;
@@ -209,7 +142,7 @@ tt, code, pre {
 	width: var(--avatarSize);
     margin-right: 10px;
     vertical-align: middle;
-    border-radius: 10px;
+    border-radius: var(--avatarBorderRadius);
 }
 
 .highlighted {

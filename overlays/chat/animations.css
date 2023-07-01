@@ -1,0 +1,175 @@
+@keyframes slideInBottom_BlurKF {
+	0% {
+		opacity: 0;
+		transform: scale(0.5) translateY(50px);
+		filter: brightness(2.0) contrast(115%) blur(5px);
+	}
+
+	100% {
+		opacity: 1;
+		transform: scale(1.0) translateY(0px);
+		filter: brightness(1.0) contrast(100%) blur(0px);
+	}
+}
+@keyframes slideOutBottom_BlurKF {
+	0% {
+		opacity: 1;
+		transform: scale(1.0) translateY(0px);
+		filter: blur(0px);
+	}
+	100% {
+		opacity: 0;
+		transform: scale(0.5) translateY(-100px);
+		filter: blur(5px);
+	}
+}
+
+@keyframes slideInBottomKF {
+	0% {
+		opacity: 0;
+		transform: scale(0.5) translateY(50px);
+	}
+
+	100% {
+		opacity: 1;
+		transform: scale(1.0) translateY(0px);
+	}
+}
+@keyframes slideOutBottomKF {
+	0% {
+		opacity: 1;
+		transform: scale(1.0) translateY(0px);
+	}
+	100% {
+		opacity: 0;
+		transform: scale(0.5) translateY(-100px);
+	}
+}
+
+@keyframes fadeInKF {
+	from { opacity: 0; }
+	to { opacity: 1; }	
+}
+
+@keyframes fadeOutKF {
+	from { opacity: 1; }
+	to { opacity: 0; }	
+}
+
+@keyframes slideInLeftKF {
+	0% {
+		opacity: 0;
+		transform: translateX(-100vw);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateX(0vw);
+	}
+}
+
+@keyframes slideOutLeftKF {
+	0% {
+		opacity: 1;
+		transform: translateX(0vw);
+	}
+
+	100% {
+		opacity: 0;
+		transform: translateX(-100vw);
+	}
+}
+
+@keyframes slideInRightKF {
+	0% {
+		opacity: 0;
+		transform: translateX(100vw);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateX(0vw);
+	}
+}
+
+@keyframes slideOutRightKF {
+	0% {
+		opacity: 1;
+		transform: translateX(0vw);
+	}
+
+	100% {
+		opacity: 0;
+		transform: translateX(100vw);
+	}
+}
+
+@keyframes zoomInKF {
+	0% {
+		opacity: 0;
+		transform: scale(0.0);
+	}
+	50% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 1;
+		transform: scale(1.0);
+	}
+}
+
+@keyframes zoomOutKF {
+	0% {
+		opacity: 1;
+		transform: scale(1.0);
+	}
+	50% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+		transform: scale(0.0);
+	}
+}
+
+@keyframes userInfoInKF {
+	0% {
+		transform: translateY(20px);
+	}
+
+	100% {
+		transform: translateY(0px);
+	}
+}
+@keyframes justFadeInKF {
+	from { opacity: 0; }
+	to { opacity: 1; }
+}
+.slideIn {
+	animation-name: var(--animationsInName);
+	animation-duration: var(--animationsInDuration);
+	animation-fill-mode: forwards;
+	animation-iteration-count: 1;
+	animation-timing-function: ease;
+}
+.slideOut {
+	animation-name: var(--animationsOutName);
+	animation-duration: var(--animationsOutDuration);
+	animation-fill-mode: forwards;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+}
+.userInfoIn {
+	animation-name: userInfoInKF;
+	animation-duration: var(--animationsInDuration);
+	animation-fill-mode: forwards;
+	animation-iteration-count: 1;
+	animation-timing-function: ease;
+}
+.justFadeIn {
+	animation-name: justFadeInKF;
+	animation-duration: var(--animationsInDuration);
+	animation-fill-mode: forwards;
+	animation-iteration-count: 1;
+	animation-timing-function: ease;
+}

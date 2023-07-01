@@ -202,7 +202,7 @@ function setHistoryOpacity() {
 	$(".chatBlock").each(function() {
 		let opacity = 1;
 		if(localStorage.getItem("setting_chatFadeHistory") === "true") {
-			opacity = 1 - ((messageCount - parseInt($(this).attr("data-msgIdx"))) * (parseFloat(localStorage.getItem("setting_chatFadeHistoryStep")) / 100));
+			opacity = 1 - ((combinedCount - parseInt($(this).attr("data-combinedIdx"))) * (parseFloat(localStorage.getItem("setting_chatFadeHistoryStep")) / 100));
 			if(opacity < 0) {
 				opacity = 0;
 			}
@@ -310,7 +310,7 @@ const settingUpdaters = {
 
 	chatShadows: function(value) {
 		if(value === "true") {
-			$(":root").get(0).style.setProperty("--shadowStuff", "drop-shadow(0px 1px 2px #000)");
+			$(":root").get(0).style.setProperty("--shadowStuff", "var(--originalShadowStuff)");
 		} else {
 			$(":root").get(0).style.setProperty("--shadowStuff", "drop-shadow(0px 0px 0px transparent)");
 		}
@@ -326,8 +326,12 @@ const settingUpdaters = {
 	chatFadeHistory: setHistoryOpacity,
 	chatFadeHistoryStep: setHistoryOpacity,
 
-	chatAnimationsDuration: function(value) {
-		$(":root").get(0).style.setProperty("--animationsDuration", `${value}s`);
+	chatAnimationsInDuration: function(value) {
+		$(":root").get(0).style.setProperty("--animationsInDuration", `${value}s`);
+	},
+
+	chatAnimationsOutDuration: function(value) {
+		$(":root").get(0).style.setProperty("--animationsOutDuration", `${value}s`);
 	},
 
 	chatBigEmoteSize: function(value) {
@@ -372,13 +376,53 @@ const settingUpdaters = {
 
 	avatarSize: function(value) {
 		$(":root").get(0).style.setProperty("--avatarSize", `${value}px`);
-	}
+	},
+
+	chatMessageUserInfoElementSpacing: function(value) {
+		$(":root").get(0).style.setProperty("--messageUserInfoElementSpacing", `${value}px`);
+	},
+
+	chatAnimationInName: function(value) {
+		$(":root").get(0).style.setProperty("--animationsInName", value);
+	},
+	chatAnimationOutName: function(value) {
+		$(":root").get(0).style.setProperty("--animationsOutName", value);
+	},
+
+	avatarShape: function(value) {
+		switch(value) {
+			case "circle": $(":root").get(0).style.setProperty("--avatarBorderRadius", "100%"); break;
+			case "squircle": $(":root").get(0).style.setProperty("--avatarBorderRadius", "10px"); break;
+			case "square": $(":root").get(0).style.setProperty("--avatarBorderRadius", "0px"); break;
+		}
+	},
+
+	overlayShadowColorAlpha: function(value) {
+		$(":root").get(0).style.setProperty("--overlayShadowColor", normalizeSettingColors("overlayShadowColor"));
+	},
+	overlayShadowXOffset: function(value) {
+		$(":root").get(0).style.setProperty("--overlayShadowXOffset", `${value}px`);
+	},
+	overlayShadowYOffset: function(value) {
+		$(":root").get(0).style.setProperty("--overlayShadowYOffset", `${value}px`);
+	},
+	overlayShadowBlurRadius: function(value) {
+		$(":root").get(0).style.setProperty("--overlayShadowBlurRadius", `${value}px`);
+	},
+	overlayOutlineColorAlpha: function(value) {
+		$(":root").get(0).style.setProperty("--overlayOutlineColor", normalizeSettingColors("overlayOutlineColor"));
+	},
+	overlayOutlineSize: function(value) {
+		$(":root").get(0).style.setProperty("--overlayOutlineSize", `${value}px`);
+	},
 };
 settingUpdaters.chatBackgroundColor = settingUpdaters.chatBackgroundColorAlpha;
 settingUpdaters.chatHighlightBackgroundColor = settingUpdaters.chatHighlightBackgroundColorAlpha;
 settingUpdaters.chatDefaultNameColor = settingUpdaters.chatDefaultNameColorAlpha;
 settingUpdaters.chatMessageColor = settingUpdaters.chatMessageColorAlpha;
 settingUpdaters.chatOutlinesColor = settingUpdaters.chatOutlinesColorAlpha;
+settingUpdaters.overlayShadowColor = settingUpdaters.overlayShadowColorAlpha;
+settingUpdaters.overlayOutlineColor = settingUpdaters.overlayOutlineColorAlpha;
 
 settingUpdaters["chatHideAccounts"](localStorage.getItem("setting_chatHideAccounts"));
 

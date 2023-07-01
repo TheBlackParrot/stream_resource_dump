@@ -47,6 +47,11 @@
 						</div>
 					</div>
 					<div class="setting">
+						<div class="settingFullWidth">
+							<input id="chatDefaultNameColorForced" type="checkbox"/> <span class="settingInfo">Force names to use the default name color</span>
+						</div>
+					</div>
+					<div class="setting">
 						<div class="settingHalfWidthLeft">
 							<span class="settingInfo">Default name color</span>
 						</div>
@@ -174,12 +179,50 @@
 							<input checked id="chatAnimations" type="checkbox" data-dependent="animations"/> <span class="settingInfo">Enable appearing/disappearing animations</span>
 						</div>
 					</div>
-					<div class="setting" data-dependent="animations">
+					<div class="setting">
 						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Animation duration</span>
+							<span class="settingInfo">Message "in" animation</span>
 						</div>
 						<div class="settingHalfWidthRight">
-							<input type="number" id="chatAnimationsDuration" min="0.01" max="5" step="0.01" value="0.5"/> seconds
+							<select id="chatAnimationInName">
+								<option value="fadeInKF">Fade In</option>
+								<option selected value="slideInBottom_BlurKF">Scale In (Bottom) (Blur)</option>
+								<option value="slideInBottomKF">Scale In (Bottom)</option>
+								<option value="slideInLeftKF">Slide In (Left)</option>
+								<option value="slideInRightKF">Slide In (Right)</option>
+								<option value="zoomInKF">Zoom In</option>
+							</select>
+						</div>
+					</div>
+					<div class="setting" data-dependent="animations">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Duration</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatAnimationsInDuration" min="0.01" max="5" step="0.01" value="0.5"/> seconds
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Message "out" animation</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<select id="chatAnimationOutName">
+								<option value="fadeOutKF">Fade Out</option>
+								<option selected value="slideOutBottom_BlurKF">Scale Out (Top) (Blur)</option>
+								<option value="slideOutBottomKF">Scale Out (Top)</option>
+								<option value="slideOutLeftKF">Slide Out (Left)</option>
+								<option value="slideOutRightKF">Slide Out (Right)</option>
+								<option value="zoomOutKF">Zoom Out</option>
+							</select>
+						</div>
+					</div>
+					<div class="setting" data-dependent="animations">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Duration</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatAnimationsOutDuration" min="0.01" max="5" step="0.01" value="0.5"/> seconds
 						</div>
 					</div>
 					<div class="setting">
@@ -200,12 +243,60 @@
 					<h1>Filters</h1>
 					<div class="setting">
 						<div class="settingFullWidth">
-							<input checked id="chatShadows" type="checkbox"/> <span class="settingInfo">Draw shadows underneath overlay</span>
+							<input checked id="chatShadows" type="checkbox" data-dependent="overlayShadows"/> <span class="settingInfo">Draw shadows underneath overlay content</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="overlayShadows">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Shadow color</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="overlayShadowColor" type="color" value="#000000"/><input type="number" id="overlayShadowColorAlpha" min="0" max="1" step="0.01" value="1"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="overlayShadows">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Shadow X offset</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="overlayShadowXOffset" min="-32" max="32" step="0.25" value="0"/> px
+						</div>
+					</div>
+					<div class="setting" data-dependent="overlayShadows">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Shadow Y offset</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="overlayShadowYOffset" min="-32" max="32" step="0.25" value="1"/> px
+						</div>
+					</div>
+					<div class="setting" data-dependent="overlayShadows">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Shadow blur radius</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="overlayShadowBlurRadius" min="0" max="32" step="0.25" value="2"/> px
 						</div>
 					</div>
 					<div class="setting">
 						<div class="settingFullWidth">
-							<input checked id="chatOutlinesFilter" type="checkbox"/> <span class="settingInfo">Draw outlines underneath overlay</span>
+							<input checked id="chatOutlinesFilter" type="checkbox" data-dependent="overlayOutlines"/> <span class="settingInfo">Draw outlines underneath overlay content</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="overlayOutlines">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Outline color</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="overlayOutlineColor" type="color" value="#000000"/><input type="number" id="overlayOutlineColorAlpha" min="0" max="1" step="0.01" value="0.45"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="overlayOutlines">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Outline size</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="overlayOutlineSize" min="0" max="3" step="1" value="1"/> px
 						</div>
 					</div>
 				</div>
@@ -286,7 +377,7 @@
 					<h1>Spacing</h1>
 					<div class="setting">
 						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Wrapper padding</span>
+							<span class="settingInfo">Overlay padding</span>
 						</div>
 						<div class="settingHalfWidthRight">
 							<input type="number" id="chatBlockPadding" min="0" max="64" step="0.25" value="18"/> px
@@ -294,15 +385,29 @@
 					</div>
 					<div class="setting">
 						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Individual padding</span>
+							<span class="settingInfo">Chat message padding</span>
 						</div>
 						<div class="settingHalfWidthRight">
 							<input type="number" id="chatBlockIndividualPadding" min="0" max="64" step="0.25" value="0"/> px
 						</div>
 					</div>
+				</div>
+				<div class="part">
+					<h1>User Information</h1>
 					<div class="setting">
 						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Message line height</span>
+							<span class="settingInfo">Element spacing</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatMessageUserInfoElementSpacing" min="0" max="32" step="0.5" value="4"/> px
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Messages</h1>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Line height</span>
 						</div>
 						<div class="settingHalfWidthRight">
 							<input type="number" id="chatMessageLineHeight" min="16" max="64" step="0.5" value="28"/> px
@@ -354,7 +459,32 @@
 					</div>
 					<div class="setting" data-dependent="avatars">
 						<div class="settingFullWidth">
-							<input checked id="avatarAllowedSubscribers" type="checkbox"/> <span class="settingInfo">Allow avatar display for subscribers</span>
+							<input checked id="avatarAllowedSubscribers" type="checkbox"/> <span class="settingInfo">Allow avatar display for channel subscribers</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="avatars">
+						<div class="settingFullWidth">
+							<input checked id="avatarAllowedTurbo" type="checkbox"/> <span class="settingInfo">Allow avatar display for Twitch Turbo subscribers</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="avatars">
+						<div class="settingFullWidth">
+							<input id="avatarAllowedPrime" type="checkbox"/> <span class="settingInfo">Allow avatar display for Prime Gaming subscribers</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="avatars">
+						<div class="settingFullWidth">
+							<input checked id="avatarAllowedArtist" type="checkbox"/> <span class="settingInfo">Allow avatar display for channel artists</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="avatars">
+						<div class="settingFullWidth">
+							<input id="avatarAllowedPartner" type="checkbox"/> <span class="settingInfo">Allow avatar display for Twitch partners</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="avatars">
+						<div class="settingFullWidth">
+							<input id="avatarAllowedStaff" type="checkbox"/> <span class="settingInfo">Allow avatar display for Twitch staff</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="avatars">
@@ -371,6 +501,18 @@
 						</div>
 						<div class="settingHalfWidthRight">
 							<input type="number" id="avatarSize" min="16" max="80" step="0.5" value="34"/> px
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Avatar shape</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<select id="avatarShape">
+								<option value="circle">Circle</option>
+								<option selected value="squircle">Squircle</option>
+								<option value="square">Square</option>
+							</select>
 						</div>
 					</div>
 				</div>
