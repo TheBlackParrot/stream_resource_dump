@@ -1002,6 +1002,9 @@ function parseMessage(data) {
 		if(word in chatEmotes) {
 			words[wordIdx] = `<span class="emote" style="background-image: url('${chatEmotes[word].url}');"><img src="${chatEmotes[word].url}"/></span>`;
 		}
+		if(word[0] === "@") {
+			words[wordIdx] = `<strong>${word}</strong>`;
+		}
 	}
 
 	//console.log(` 8: ${words}`);

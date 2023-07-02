@@ -136,8 +136,8 @@ em {
 	padding-right: 4px;
 }
 strong {
-	background-color: #fff;
-	-webkit-text-stroke: 1.2px transparent;
+	background-color: var(--messageColor);
+	-webkit-text-stroke: 1px transparent;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 }
