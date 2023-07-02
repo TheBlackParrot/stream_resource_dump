@@ -186,8 +186,9 @@
 						<div class="settingHalfWidthRight">
 							<select id="chatAnimationInName">
 								<option value="fadeInKF">Fade In</option>
-								<option selected value="slideInBottom_BlurKF">Scale In (Bottom) (Blur)</option>
-								<option value="slideInBottomKF">Scale In (Bottom)</option>
+								<option value="rotateInKF">Rotate In</option>
+								<option value="slideInBottom_BlurKF">Scale In (Bottom) (Blur)</option>
+								<option selected value="slideInBottomKF">Scale In (Bottom)</option>
 								<option value="slideInLeftKF">Slide In (Left)</option>
 								<option value="slideInRightKF">Slide In (Right)</option>
 								<option value="zoomInKF">Zoom In</option>
@@ -204,14 +205,72 @@
 					</div>
 					<div class="setting">
 						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Origin point</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<select id="chatAnimationInOriginPoint">
+								<option value="left top">Top-left</option>
+								<option value="center top">Top-middle</option>
+								<option value="right top">Top-right</option>
+								<option value="left center">Center-left</option>
+								<option selected value="center center">Center-middle</option>
+								<option value="right center">Center-right</option>
+								<option value="left bottom">Bottom-left</option>
+								<option value="center bottom">Bottom-middle</option>
+								<option value="right bottom">Bottom-right</option>
+							</select>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Timing function</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<select id="chatAnimationInTimingFunction">
+								<option value="Linear">Linear</option>
+								<option value="Ease">Ease</option>
+								<option value="EaseIn">EaseIn</option>
+								<option value="EaseInSine">EaseInSine</option>
+								<option value="EaseInQuad">EaseInQuad</option>
+								<option value="EaseInCubic">EaseInCubic</option>
+								<option value="EaseInQuart">EaseInQuart</option>
+								<option value="EaseInQuint">EaseInQuint</option>
+								<option value="EaseInExpo">EaseInExpo</option>
+								<option value="EaseInCirc">EaseInCirc</option>
+								<option value="EaseInBack">EaseInBack</option>
+								<option value="EaseOut">EaseOut</option>
+								<option value="EaseOutSine">EaseOutSine</option>
+								<option value="EaseOutQuad">EaseOutQuad</option>
+								<option value="EaseOutCubic">EaseOutCubic</option>
+								<option value="EaseOutQuart">EaseOutQuart</option>
+								<option value="EaseOutQuint">EaseOutQuint</option>
+								<option value="EaseOutExpo">EaseOutExpo</option>
+								<option value="EaseOutCirc">EaseOutCirc</option>
+								<option value="EaseOutBack">EaseOutBack</option>
+								<option value="EaseInOut">EaseInOut</option>
+								<option value="EaseInOutSine">EaseInOutSine</option>
+								<option value="EaseInOutQuad">EaseInOutQuad</option>
+								<option selected value="EaseInOutCubic">EaseInOutCubic</option>
+								<option value="EaseInOutQuart">EaseInOutQuart</option>
+								<option value="EaseInOutQuint">EaseInOutQuint</option>
+								<option value="EaseInOutExpo">EaseInOutExpo</option>
+								<option value="EaseInOutCirc">EaseInOutCirc</option>
+								<option value="EaseInOutBack">EaseInOutBack</option>
+							</select>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
 							<span class="settingInfo">Message "out" animation</span>
 						</div>
 						<div class="settingHalfWidthRight">
 							<select id="chatAnimationOutName">
 								<option value="fadeOutKF">Fade Out</option>
-								<option selected value="slideOutBottom_BlurKF">Scale Out (Top) (Blur)</option>
+								<option value="floatOutKF">Float Out</option>
+								<option value="rotateOutKF">Rotate Out</option>
+								<option value="slideOutBottom_BlurKF">Scale Out (Top) (Blur)</option>
 								<option value="slideOutBottomKF">Scale Out (Top)</option>
-								<option value="slideOutLeftKF">Slide Out (Left)</option>
+								<option selected value="slideOutLeftKF">Slide Out (Left)</option>
 								<option value="slideOutRightKF">Slide Out (Right)</option>
 								<option value="zoomOutKF">Zoom Out</option>
 							</select>
@@ -222,7 +281,63 @@
 							<span class="settingInfo">Duration</span>
 						</div>
 						<div class="settingHalfWidthRight">
-							<input type="number" id="chatAnimationsOutDuration" min="0.01" max="5" step="0.01" value="0.5"/> seconds
+							<input type="number" id="chatAnimationsOutDuration" min="0.01" max="5" step="0.01" value="0.75"/> seconds
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Origin point</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<select id="chatAnimationOutOriginPoint">
+								<option value="left top">Top-left</option>
+								<option value="center top">Top-middle</option>
+								<option value="right top">Top-right</option>
+								<option selected value="left center">Center-left</option>
+								<option value="center center">Center-middle</option>
+								<option value="right center">Center-right</option>
+								<option value="left bottom">Bottom-left</option>
+								<option value="center bottom">Bottom-middle</option>
+								<option value="right bottom">Bottom-right</option>
+							</select>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Timing function</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<select id="chatAnimationOutTimingFunction">
+								<option value="Linear">Linear</option>
+								<option value="Ease">Ease</option>
+								<option value="EaseIn">EaseIn</option>
+								<option value="EaseInSine">EaseInSine</option>
+								<option value="EaseInQuad">EaseInQuad</option>
+								<option value="EaseInCubic">EaseInCubic</option>
+								<option value="EaseInQuart">EaseInQuart</option>
+								<option value="EaseInQuint">EaseInQuint</option>
+								<option value="EaseInExpo">EaseInExpo</option>
+								<option value="EaseInCirc">EaseInCirc</option>
+								<option selected value="EaseInBack">EaseInBack</option>
+								<option value="EaseOut">EaseOut</option>
+								<option value="EaseOutSine">EaseOutSine</option>
+								<option value="EaseOutQuad">EaseOutQuad</option>
+								<option value="EaseOutCubic">EaseOutCubic</option>
+								<option value="EaseOutQuart">EaseOutQuart</option>
+								<option value="EaseOutQuint">EaseOutQuint</option>
+								<option value="EaseOutExpo">EaseOutExpo</option>
+								<option value="EaseOutCirc">EaseOutCirc</option>
+								<option value="EaseOutBack">EaseOutBack</option>
+								<option value="EaseInOut">EaseInOut</option>
+								<option value="EaseInOutSine">EaseInOutSine</option>
+								<option value="EaseInOutQuad">EaseInOutQuad</option>
+								<option value="EaseInOutCubic">EaseInOutCubic</option>
+								<option value="EaseInOutQuart">EaseInOutQuart</option>
+								<option value="EaseInOutQuint">EaseInOutQuint</option>
+								<option value="EaseInOutExpo">EaseInOutExpo</option>
+								<option value="EaseInOutCirc">EaseInOutCirc</option>
+								<option value="EaseInOutBack">EaseInOutBack</option>
+							</select>
 						</div>
 					</div>
 					<div class="setting">
@@ -522,6 +637,138 @@
 					<div class="setting">
 						<div class="settingFullWidth">
 							<input checked id="enablePronouns" type="checkbox" data-dependent="pronouns"/> <span class="settingInfo">Display pronouns</span>
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Mapping</h1>
+					<p>Display fetched pronouns as:</p>
+					<div class="setting" data-dependent="pronouns">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">aeaer</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="pronounsAeAer" type="text" value="Ae / Aer"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="pronouns">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">any</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="pronounsAny" type="text" value="Any"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="pronouns">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">eem</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="pronounsEEm" type="text" value="E / Em"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="pronouns">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">faefaer</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="pronounsFaeFaer" type="text" value="Fae / Faer"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="pronouns">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">hehim</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="pronounsHeHim" type="text" value="He / Him"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="pronouns">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">heshe</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="pronounsHeShe" type="text" value="He / She"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="pronouns">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">hethem</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="pronounsHeThem" type="text" value="He / They"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="pronouns">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">itits</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="pronounsItIts" type="text" value="It / Its"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="pronouns">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">other</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="pronounsOther" type="text" value="Other"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="pronouns">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">perper</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="pronounsPerPer" type="text" value="Per / Per"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="pronouns">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">sheher</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="pronounsSheHer" type="text" value="She / Her"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="pronouns">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">shethem</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="pronounsSheThem" type="text" value="She / They"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="pronouns">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">theythem</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="pronounsTheyThem" type="text" value="They / Them"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="pronouns">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">vever</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="pronounsVeVer" type="text" value="Ve / Ver"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="pronouns">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">xexem</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="pronounsXeXem" type="text" value="Xe / Xem"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="pronouns">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">ziehir</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="pronounsZieHir" type="text" value="Zie / Hir"/>
 						</div>
 					</div>
 				</div>

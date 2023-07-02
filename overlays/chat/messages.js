@@ -14,26 +14,6 @@ const entityMap = {
 	'=': '&#x3D;'
 };
 
-const pn = {
-	"aeaer": "Ae / Aer",
-	"any": "Any",
-	"eem": "E / Em",
-	"faefaer": "Fae / Faer",
-	"hehim": "He / Him",
-	"heshe": "He / She",
-	"hethem": "He / They",
-	"itits": "It / Its",
-	"other": "Other",
-	"perper": "Per / Per",
-	"sheher": "She / Her",
-	"shethem": "She / They",
-	"theythem": "They / Them",
-	"vever": "Ve / Ver",
-	"xexem": "Xe / Xem",
-	"ziehir": "Zie / Hir",
-	"NONE": null
-};
-
 function formatTime(val) {
 	let secs = val % 60;
 	let mins = Math.floor(val / 60);
@@ -583,6 +563,10 @@ function parseMessage(data) {
 		}
 	}
 
+	if(lastUser !== data.user.id) {
+		combinedCount++; // fricking-
+	}
+
 	let rootElement = $(`<div class="chatBlock" data-msgIdx="${messageCount}" data-combinedIdx="${combinedCount}" data-msgUUID="${data.uuid}" data-userID="${data.user.id}"></div>`);
 	if(localStorage.getItem("setting_chatAnimations") === "true") {
 		rootElement.addClass("slideIn");
@@ -595,7 +579,6 @@ function parseMessage(data) {
 
 	if(lastUser !== data.user.id) {
 		userBlock.show();
-		combinedCount++;
 	} else {
 		userBlock.css("margin-top", "0px");
 		if(localStorage.getItem("setting_chatAnimations") === "true") {
@@ -662,13 +645,13 @@ function parseMessage(data) {
 			console.log(`refreshing pronoun cache for ${data.user.username}`);
 			chatFuncs["refreshpronouns"](data, function(fetched) {
 				if(fetched.pronoun_id !== "NONE") {
-					pronounsBlock.text(pn[fetched.pronoun_id]);
+					pronounsBlock.addClass(`pronouns_${fetched.pronoun_id}`);
 					pronounsBlock.show();
 				}			
 			});
 		} else {
-			if(pn[pronouns]) {
-				pronounsBlock.text(pn[pronouns]);
+			if(pronouns !== "NONE") {
+				pronounsBlock.addClass(`pronouns_${pronouns}`);
 				pronounsBlock.show();
 			}
 		}

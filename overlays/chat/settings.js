@@ -212,8 +212,9 @@ function setHistoryOpacity() {
 			$(this).remove();
 		}
 
-		$(this).css("opacity", "");
-		$(this).attr("style", function(i, s) { return (s || '') + `opacity: ${opacity} !important;` });
+		//$(this).css("opacity", "");
+		//$(this).attr("style", function(i, s) { return (s || '') + `opacity: ${opacity};` });
+		$(this).css("filter", `opacity(${opacity})`);
 	});
 }
 
@@ -415,6 +416,36 @@ const settingUpdaters = {
 	overlayOutlineSize: function(value) {
 		$(":root").get(0).style.setProperty("--overlayOutlineSize", `${value}px`);
 	},
+
+	pronounsAeAer: function(value) { $(":root").get(0).style.setProperty("--pronouns_aeaer", `"${value}"`); },
+	pronounsAny: function(value) { $(":root").get(0).style.setProperty("--pronouns_any", `"${value}"`); },
+	pronounsEEm: function(value) { $(":root").get(0).style.setProperty("--pronouns_eem", `"${value}"`); },
+	pronounsFaeFaer: function(value) { $(":root").get(0).style.setProperty("--pronouns_faefaer", `"${value}"`); },
+	pronounsHeHim: function(value) { $(":root").get(0).style.setProperty("--pronouns_hehim", `"${value}"`); },
+	pronounsHeShe: function(value) { $(":root").get(0).style.setProperty("--pronouns_heshe", `"${value}"`); },
+	pronounsHeThem: function(value) { $(":root").get(0).style.setProperty("--pronouns_hethem", `"${value}"`); },
+	pronounsItIts: function(value) { $(":root").get(0).style.setProperty("--pronouns_itits", `"${value}"`); },
+	pronounsOther: function(value) { $(":root").get(0).style.setProperty("--pronouns_other", `"${value}"`); },
+	pronounsPerPer: function(value) { $(":root").get(0).style.setProperty("--pronouns_perper", `"${value}"`); },
+	pronounsSheHer: function(value) { $(":root").get(0).style.setProperty("--pronouns_sheher", `"${value}"`); },
+	pronounsSheThem: function(value) { $(":root").get(0).style.setProperty("--pronouns_shethem", `"${value}"`); },
+	pronounsTheyThem: function(value) { $(":root").get(0).style.setProperty("--pronouns_theythem", `"${value}"`); },
+	pronounsVeVer: function(value) { $(":root").get(0).style.setProperty("--pronouns_vever", `"${value}"`); },
+	pronounsXeXem: function(value) { $(":root").get(0).style.setProperty("--pronouns_xexem", `"${value}"`); },
+	pronounsZieHir: function(value) { $(":root").get(0).style.setProperty("--pronouns_ziehir", `"${value}"`); },
+
+	chatAnimationInOriginPoint: function(value) {
+		$(":root").get(0).style.setProperty("--animationsInOriginPoint", value);
+	},
+	chatAnimationOutOriginPoint: function(value) {
+		$(":root").get(0).style.setProperty("--animationsOutOriginPoint", value);
+	},
+	chatAnimationInTimingFunction: function(value) {
+		$(":root").get(0).style.setProperty("--animationsInTimingFunc", `var(--timingFunc${value})`);
+	},
+	chatAnimationOutTimingFunction: function(value) {
+		$(":root").get(0).style.setProperty("--animationsOutTimingFunc", `var(--timingFunc${value})`);
+	}
 };
 settingUpdaters.chatBackgroundColor = settingUpdaters.chatBackgroundColorAlpha;
 settingUpdaters.chatHighlightBackgroundColor = settingUpdaters.chatHighlightBackgroundColorAlpha;

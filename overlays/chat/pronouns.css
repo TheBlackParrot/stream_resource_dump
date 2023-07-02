@@ -1,0 +1,34 @@
+:root {
+	--pronouns_aeaer: "Ae / Aer";
+	--pronouns_any: "Any";
+	--pronouns_eem: "E / Em";
+	--pronouns_faefaer: "Fae / Faer";
+	--pronouns_hehim: "He / Him";
+	--pronouns_heshe: "He / She";
+	--pronouns_hethem: "He / They";
+	--pronouns_itits: "It / Its";
+	--pronouns_other: "Other";
+	--pronouns_perper: "Per / Per";
+	--pronouns_sheher: "She / Her";
+	--pronouns_shethem: "She / They";
+	--pronouns_theythem: "They / Them";
+	--pronouns_vever: "Ve / Ver";
+	--pronouns_xexem: "Xe / Xem";
+	--pronouns_ziehir: "Zie / Hir";
+}
+.pronouns_aeaer:before { content: var(--pronouns_aeaer); }
+.pronouns_any:before { content: var(--pronouns_any); }
+.pronouns_eem:before { content: var(--pronouns_eem); }
+.pronouns_faefaer:before { content: var(--pronouns_faefaer); }
+.pronouns_hehim:before { content: var(--pronouns_hehim); }
+.pronouns_heshe:before { content: var(--pronouns_heshe); }
+.pronouns_hethem:before { content: var(--pronouns_hethem); }
+.pronouns_itits:before { content: var(--pronouns_itits); }
+.pronouns_other:before { content: var(--pronouns_other); }
+.pronouns_perper:before { content: var(--pronouns_perper); }
+.pronouns_sheher:before { content: var(--pronouns_sheher); }
+.pronouns_shethem:before { content: var(--pronouns_shethem); }
+.pronouns_theythem:before { content: var(--pronouns_theythem); }
+.pronouns_vever:before { content: var(--pronouns_vever); }
+.pronouns_xexem:before { content: var(--pronouns_xexem); }
+.pronouns_ziehir:before { content: var(--pronouns_ziehir); }

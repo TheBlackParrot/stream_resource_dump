@@ -1,7 +1,21 @@
+@keyframes userInfoInKF {
+	0% {
+		transform: translateY(20px);
+	}
+
+	100% {
+		transform: translateY(0px);
+	}
+}
+@keyframes justFadeInKF {
+	from { opacity: 0; }
+	to { opacity: 1; }
+}
+
 @keyframes slideInBottom_BlurKF {
 	0% {
 		opacity: 0;
-		transform: scale(0.5) translateY(50px);
+		transform: scale(0.9) translateY(50px);
 		filter: brightness(2.0) contrast(115%) blur(5px);
 	}
 
@@ -19,7 +33,7 @@
 	}
 	100% {
 		opacity: 0;
-		transform: scale(0.5) translateY(-100px);
+		transform: scale(0.9) translateY(-100px);
 		filter: blur(5px);
 	}
 }
@@ -27,7 +41,7 @@
 @keyframes slideInBottomKF {
 	0% {
 		opacity: 0;
-		transform: scale(0.5) translateY(50px);
+		transform: scale(0.9) translateY(50px);
 	}
 
 	100% {
@@ -42,7 +56,7 @@
 	}
 	100% {
 		opacity: 0;
-		transform: scale(0.5) translateY(-100px);
+		transform: scale(0.9) translateY(-100px);
 	}
 }
 
@@ -132,32 +146,56 @@
 	}
 }
 
-@keyframes userInfoInKF {
+@keyframes rotateInKF {
 	0% {
-		transform: translateY(20px);
+		opacity: 0;
+		transform: rotate(45deg);
 	}
-
 	100% {
-		transform: translateY(0px);
+		opacity: 1;
+		transform: rotate(0deg);
 	}
 }
-@keyframes justFadeInKF {
-	from { opacity: 0; }
-	to { opacity: 1; }
+
+@keyframes rotateOutKF {
+	0% {
+		opacity: 1;
+		transform: rotate(0deg);
+	}
+	100% {
+		opacity: 0;
+		transform: rotate(-45deg);
+	}
 }
+
+@keyframes floatOutKF {
+	0% {
+		opacity: 1;
+		transform: scale(1.0) translateY(0px) translateX(0vw) rotate(0deg);
+		filter: grayscale(0%) brightness(100%) blur(0px);
+	}
+	100% {
+		opacity: 0;
+		transform: scale(0.5) translateY(-50vw) translateX(10vw) rotate(30deg);
+		filter: grayscale(100%) brightness(80%) blur(16px);
+	}
+}
+
 .slideIn {
 	animation-name: var(--animationsInName);
 	animation-duration: var(--animationsInDuration);
 	animation-fill-mode: forwards;
 	animation-iteration-count: 1;
-	animation-timing-function: ease;
+	animation-timing-function: var(--animationsInTimingFunc);
+	transform-origin: var(--animationsInOriginPoint);
 }
 .slideOut {
 	animation-name: var(--animationsOutName);
 	animation-duration: var(--animationsOutDuration);
 	animation-fill-mode: forwards;
 	animation-iteration-count: 1;
-	animation-timing-function: ease-in;
+	animation-timing-function: var(--animationsOutTimingFunc);
+	transform-origin: var(--animationsOutOriginPoint);
 }
 .userInfoIn {
 	animation-name: userInfoInKF;

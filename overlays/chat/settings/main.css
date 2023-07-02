@@ -401,3 +401,7 @@ a {
 .button:hover {
 	filter: brightness(115%);
 }
+
+p {
+	margin-bottom: var(--settings-padding);
+}
