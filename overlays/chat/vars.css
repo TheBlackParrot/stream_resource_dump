@@ -36,6 +36,7 @@
 	--nameTransform: uppercase;
 	--nameVariant: normal;
 	--nameGradientAngle: 170deg;
+	--nameFontWeightExtra: 1.2px;
 
 	--messageColor: rgba(255, 255, 255, 1);
 	--messageFont: "Manrope";
@@ -101,4 +102,7 @@
 
 	--avatarSize: 34px;
 	--avatarBorderRadius: 10px;
+
+	--badgeBorderRadius: 4px;
+	--badgeSize: 28px;
 }

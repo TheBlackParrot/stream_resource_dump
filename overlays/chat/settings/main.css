@@ -405,3 +405,9 @@ a {
 p {
 	margin-bottom: var(--settings-padding);
 }
+
+hr {
+	border: none;
+	margin-bottom: var(--settings-padding);
+	border-bottom: 1px solid var(--border-color);
+}

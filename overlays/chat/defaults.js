@@ -99,7 +99,29 @@ const defaultConfig = {
 	"chatAnimationInOriginPoint": "center center",
 	"chatAnimationOutOriginPoint": "left center",
 	"chatAnimationInTimingFunction": "EaseInOutCubic",
-	"chatAnimationOutTimingFunction": "EaseInBack"
+	"chatAnimationOutTimingFunction": "EaseInBack",
+	"enableTwitchBadges": "true",
+	"enableTwitchRoleBadges": "true",
+	"enableTwitchGameBadges": "true",
+	"enableTwitchPartnerBadges": "true",
+	"enableTwitchBitsBadges": "true",
+	"enableTwitchSubGiftsBadges": "true",
+	"enableTwitchLeaderboardBadges": "true",
+	"enableTwitchFounderBadges": "true",
+	"enableTwitchStaffBadges": "true",
+	"enableTwitchMomentsBadges": "false",
+	"enableTwitchStatusBadges": "false",
+	"enableTwitchPredictionsBadges": "true",
+	"enableTwitchPrimeGamingBadges": "true",
+	"enableTwitchTurboBadges": "true",
+	"enableTwitchSubscriberBadges": "true",
+	"enableTwitchConBadges": "true",
+	"enableTwitchCharityBadges": "true",
+	"enableTwitchHypeTrainBadges": "true",
+	"badgeBorderRadius": "4",
+	"badgeSpacing": "2",
+	"badgeSize": "28",
+	"chatNameFontWeightExtra": "1.2"
 };
 
 for(let setting in defaultConfig) {

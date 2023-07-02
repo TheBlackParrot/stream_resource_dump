@@ -14,6 +14,75 @@ const entityMap = {
 	'=': '&#x3D;'
 };
 
+const twitchBadgeTypes = {
+	role: {
+		badges: ["artist-badge", "broadcaster", "extension", "moderator", "vip"],
+		setting: "enableTwitchRoleBadges"
+	},
+	staff: {
+		badges: ["admin", "global_mod", "staff", "twitchbot", "user-anniversary"],
+		setting: "enableTwitchStaffBadges"
+	},
+	partner: {
+		badges: ["ambassador", "partner"],
+		setting: "enableTwitchPartnerBadges"
+	},
+	bits: {
+		badges: ["anonymous-cheerer", "bits", "bits-charity"],
+		setting: "enableTwitchBitsBadges"
+	},
+	leaderboard: {
+		badges: ["bits-leader", "clip-champ", "sub-gift-leader"],
+		setting: "enableTwitchLeaderboardBadges"
+	},
+	founder: {
+		badges: ["founder"],
+		setting: "enableTwitchFounderBadges"
+	},
+	charity: {
+		badges: ["glhf-pledge"],
+		setting: "enableTwitchCharityBadges"
+	},
+	convention: {
+		badges: ["glitchcon2020", "twitchcon2017", "twitchcon2018", "twitchconAmsterdam2020", "twitchconEU2019", 
+				 "twitchconEU2022", "twitchconEU2023", "twitchconNA2019", "twitchconNA2020", "twitchconNA2022",
+				 "superultracombo-2023"],
+		setting: "enableTwitchConBadges"
+	},
+	hypetrain: {
+		badges: ["hype-train"],
+		setting: "enableTwitchHypeTrainBadges"
+	},
+	moments: {
+		badges: ["moments"],
+		setting: "enableTwitchMomentsBadges"
+	},
+	status: {
+		badges: ["no_audio", "no_video"],
+		setting: "enableTwitchStatusBadges"
+	},
+	predictions: {
+		badges: ["predictions"],
+		setting: "enableTwitchPredictionsBadges"
+	},
+	prime: {
+		badges: ["premium"],
+		setting: "enableTwitchPrimeGamingBadges",
+	},
+	gifter: {
+		badges: ["sub-gifter"],
+		setting: "enableTwitchSubGiftsBadges"
+	},
+	subscriber: {
+		badges: ["subscriber"],
+		setting: "enableTwitchSubscriberBadges"
+	},
+	turbo: {
+		badges: ["turbo"],
+		setting: "enableTwitchTurboBadges"
+	}
+};
+
 function formatTime(val) {
 	let secs = val % 60;
 	let mins = Math.floor(val / 60);
@@ -592,16 +661,44 @@ function parseMessage(data) {
 	messageCount++;
 
 	let badgeBlock = $('<div class="badges" style="display: none;"></div>');
-	for(let badgeType in data.user.badges.list) {
-		let badgeData = getBadgeData(badgeType, data.user.badges.list[badgeType]);
-		let url = badgeData.image_url_4x;
-		if(typeof url === "undefined") {
-			url = badgeData.image_url_1x;
-		}
+	if(localStorage.getItem("setting_enableTwitchBadges") === "true") {
+		for(let badgeType in data.user.badges.list) {
+			let showBadge = true;
+			let foundBadge = false;
 
-		let badgeElem = $(`<img src="${url}"/>`);
-		badgeBlock.append(badgeElem);
-		badgeBlock.show();
+			for(let checkAgainst in twitchBadgeTypes) {
+				let badgeTypeData = twitchBadgeTypes[checkAgainst];
+				if(badgeTypeData.badges.indexOf(badgeType) !== -1) {
+					foundBadge = true;
+
+					if(localStorage.getItem(`setting_${badgeTypeData.setting}`) === "false") {
+						showBadge = false;
+						break;
+					}
+				}
+			}
+
+			if(!foundBadge) {
+				// assume it's a game-related badge
+				if(localStorage.getItem("setting_enableTwitchGameBadges") === "false") {
+					showBadge = false;
+				}
+			}
+
+			if(!showBadge) {
+				continue;
+			}
+
+			let badgeData = getBadgeData(badgeType, data.user.badges.list[badgeType]);
+			let url = badgeData.image_url_4x;
+			if(typeof url === "undefined") {
+				url = badgeData.image_url_1x;
+			}
+
+			let badgeElem = $(`<img src="${url}"/>`);
+			badgeBlock.append(badgeElem);
+			badgeBlock.show();
+		}
 	}
 	userBlock.append(badgeBlock);
 
@@ -1172,7 +1269,7 @@ function renderExternalBadges(data, badgeBlock) {
 		for(let i in cacheData.badges) {
 			let badge = cacheData.badges[i];
 
-			let badgeElem = $(`<img src="${badge.img}"/>`).css("border-radius", "3px");
+			let badgeElem = $(`<img src="${badge.img}"/>`);
 			if("color" in badge) {
 				badgeElem.css("background-color", badge.color);
 			}

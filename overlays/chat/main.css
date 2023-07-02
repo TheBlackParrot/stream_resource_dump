@@ -46,10 +46,10 @@ body {
 	vertical-align: middle;
 }
 .badges img {
-	width: 28px;
-	height: 28px;
-	margin-right: 2px;
-	vertical-align: sub; /* wtf */
+	width: var(--badgeSize);
+	height: var(--badgeSize);
+	margin-right: var(--badgeSpacing);
+	border-radius: var(--badgeBorderRadius);
 }
 
 .badges img:last-child, .flags img:last-child {
@@ -69,7 +69,7 @@ body {
 	font-family: var(--nameFont);
 	font-weight: var(--nameFontWeight);
 	font-size: var(--nameFontSize);
-	-webkit-text-stroke: 1.25px transparent;
+	-webkit-text-stroke: var(--nameFontWeightExtra) transparent;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 	text-transform: uppercase;

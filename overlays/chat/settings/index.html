@@ -29,7 +29,7 @@
 		<div id="settings">
 			<div class="section" data-content="appearance">
 				<div class="part">
-					<h1>Color</h1>
+					<h1>Background</h1>
 					<div class="setting">
 						<div class="settingHalfWidthLeft">
 							<span class="settingInfo">Background color</span>
@@ -46,6 +46,9 @@
 							<input id="chatHighlightBackgroundColor" type="color" value="#FFFFFF"/><input type="number" id="chatHighlightBackgroundColorAlpha" min="0" max="1" step="0.01" value="0.25"/>
 						</div>
 					</div>
+				</div>
+				<div class="part">
+					<h1>Names</h1>
 					<div class="setting">
 						<div class="settingFullWidth">
 							<input id="chatDefaultNameColorForced" type="checkbox"/> <span class="settingInfo">Force names to use the default name color</span>
@@ -59,18 +62,6 @@
 							<input id="chatDefaultNameColor" type="color" value="#AAAAAA"/><input type="number" id="chatDefaultNameColorAlpha" min="0" max="1" step="0.01" value="1"/>
 						</div>
 					</div>
-					<div class="setting">
-						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Message text color</span>
-						</div>
-						<div class="settingHalfWidthRight">
-							<input id="chatMessageColor" type="color" value="#FFFFFF"/><input type="number" id="chatMessageColorAlpha" min="0" max="1" step="0.01" value="1"/>
-						</div>
-					</div>
-				</div>
-				
-				<div class="part">
-					<h1>Font</h1>
 					<div class="setting">
 						<div class="settingHalfWidthLeft">
 							<span class="settingInfo">Name font</span>
@@ -93,6 +84,25 @@
 						</div>
 						<div class="settingHalfWidthRight">
 							<input type="number" id="chatNameFontWeight" min="100" max="900" step="25" value="900"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Additional name weight</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatNameFontWeightExtra" min="0" max="8" step="0.1" value="1.2"/> px
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Messages</h1>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Message text color</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="chatMessageColor" type="color" value="#FFFFFF"/><input type="number" id="chatMessageColorAlpha" min="0" max="1" step="0.01" value="1"/>
 						</div>
 					</div>
 					<div class="setting">
@@ -120,7 +130,6 @@
 						</div>
 					</div>
 				</div>
-
 				<div class="part">
 					<h1>Outlines</h1>
 					<div class="setting">
@@ -259,6 +268,7 @@
 							</select>
 						</div>
 					</div>
+					<hr/>
 					<div class="setting">
 						<div class="settingHalfWidthLeft">
 							<span class="settingInfo">Message "out" animation</span>
@@ -341,6 +351,14 @@
 						</div>
 					</div>
 					<div class="setting">
+						<div class="settingFullWidth smol">
+							Timing functions (Bézier curve only) are from <a href="https://easings.net">Easing Functions Cheat Sheet</a>
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>History</h1>
+					<div class="setting">
 						<div class="settingFullWidth">
 							<input checked id="chatFadeHistory" type="checkbox" data-dependent="fadeHistory"/> <span class="settingInfo">Fade out chat history</span>
 						</div>
@@ -393,6 +411,7 @@
 							<input type="number" id="overlayShadowBlurRadius" min="0" max="32" step="0.25" value="2"/> px
 						</div>
 					</div>
+					<hr/>
 					<div class="setting">
 						<div class="settingFullWidth">
 							<input checked id="chatOutlinesFilter" type="checkbox" data-dependent="overlayOutlines"/> <span class="settingInfo">Draw outlines underneath overlay content</span>
@@ -435,6 +454,7 @@
 							<textarea id="chatHideAccounts"></textarea>
 						</div>
 					</div>
+					<hr/>
 					<div class="setting">
 						<div class="settingFullWidth">
 							<input checked id="chatHideCommands" type="checkbox" data-dependent="hideCommands"/> <span class="settingInfo">Hide messages associated with custom chat commands</span>
@@ -472,6 +492,7 @@
 							<input type="number" id="chatBigEmoteSize" min="8" max="128" step="1" value="48"/> pt
 						</div>
 					</div>
+					<hr/>
 					<div class="setting">
 						<div class="settingFullWidth">
 							<input checked id="chatParseMarkdown" type="checkbox"/> <span class="settingInfo">Allow inline Markdown formatting</span>
@@ -508,6 +529,22 @@
 					</div>
 				</div>
 				<div class="part">
+					<h1>Alignment</h1>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Corner alignment</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<select id="chatCornerAlignment">
+								<option value="top,left">Top-left</option>
+								<option value="top,right">Top-right</option>
+								<option selected value="bottom,left">Bottom-left</option>
+								<option value="bottom,right">Bottom-right</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="part">
 					<h1>User Information</h1>
 					<div class="setting">
 						<div class="settingHalfWidthLeft">
@@ -529,34 +566,165 @@
 						</div>
 					</div>
 				</div>
-				<div class="part">
-					<h1>Alignment</h1>
-					<div class="setting">
-						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Corner alignment</span>
-						</div>
-						<div class="settingHalfWidthRight">
-							<select id="chatCornerAlignment">
-								<option value="top,left">Top-left</option>
-								<option value="top,right">Top-right</option>
-								<option selected value="bottom,left">Bottom-left</option>
-								<option value="bottom,right">Bottom-right</option>
-							</select>
-						</div>
-					</div>
-				</div>
 			</div>
 			<div class="section" data-content="flags">
 				Flags (soon!)
 			</div>
 			<div class="section" data-content="badges">
-				Badges (soon!)
+				<div class="part">
+					<div class="setting">
+						<div class="settingFullWidth">
+							<input checked id="enableTwitchBadges" type="checkbox" data-dependent="twitchBadges"/> <span class="settingInfo">Enable Twitch badges</span>
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Appearance</h1>
+					<div class="setting" data-dependent="twitchBadges">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Border radius</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="badgeBorderRadius" min="0" max="64" step="0.25" value="4"/> px
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Layout</h1>
+					<div class="setting" data-dependent="twitchBadges">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Size</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="badgeSize" min="0" max="64" step="1" value="28"/> px
+						</div>
+					</div>
+					<div class="setting" data-dependent="twitchBadges">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Extra spacing</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="badgeSpacing" min="-32" max="32" step="1" value="2"/> px
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Display</h1>
+					<div class="setting" data-dependent="twitchBadges">
+						<div class="settingFullWidth">
+							<input checked id="enableTwitchRoleBadges" type="checkbox"/> <span class="settingInfo">Role badges</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="twitchBadges">
+						<div class="settingFullWidth">
+							<input checked id="enableTwitchGameBadges" type="checkbox"/> <span class="settingInfo">Game-related badges</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="twitchBadges">
+						<div class="settingFullWidth">
+							<input checked id="enableTwitchPartnerBadges" type="checkbox"/> <span class="settingInfo">Partner/Ambassador badges</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="twitchBadges">
+						<div class="settingFullWidth">
+							<input checked id="enableTwitchBitsBadges" type="checkbox"/> <span class="settingInfo">Cheering/bits badges</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="twitchBadges">
+						<div class="settingFullWidth">
+							<input checked id="enableTwitchSubGiftsBadges" type="checkbox"/> <span class="settingInfo">Sub gifter badges</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="twitchBadges">
+						<div class="settingFullWidth">
+							<input checked id="enableTwitchLeaderboardBadges" type="checkbox"/> <span class="settingInfo">Leaderboard-related badges</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="twitchBadges">
+						<div class="settingFullWidth">
+							<input checked id="enableTwitchFounderBadges" type="checkbox"/> <span class="settingInfo">Channel Founder badges</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="twitchBadges">
+						<div class="settingFullWidth">
+							<input checked id="enableTwitchStaffBadges" type="checkbox"/> <span class="settingInfo">Staff badges</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="twitchBadges">
+						<div class="settingFullWidth">
+							<input id="enableTwitchMomentsBadges" type="checkbox"/> <span class="settingInfo">Moments badges</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="twitchBadges">
+						<div class="settingFullWidth">
+							<input id="enableTwitchStatusBadges" type="checkbox"/> <span class="settingInfo">Status (no video/no audio) badges</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="twitchBadges">
+						<div class="settingFullWidth">
+							<input checked id="enableTwitchPredictionsBadges" type="checkbox"/> <span class="settingInfo">Predictions-related badges</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="twitchBadges">
+						<div class="settingFullWidth">
+							<input checked id="enableTwitchPrimeGamingBadges" type="checkbox"/> <span class="settingInfo">Prime Gaming badge</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="twitchBadges">
+						<div class="settingFullWidth">
+							<input checked id="enableTwitchTurboBadges" type="checkbox"/> <span class="settingInfo">Twitch Turbo badge</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="twitchBadges">
+						<div class="settingFullWidth">
+							<input checked id="enableTwitchSubscriberBadges" type="checkbox"/> <span class="settingInfo">Channel Subscriber badges</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="twitchBadges">
+						<div class="settingFullWidth">
+							<input checked id="enableTwitchConBadges" type="checkbox"/> <span class="settingInfo">TwitchCon badges</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="twitchBadges">
+						<div class="settingFullWidth">
+							<input checked id="enableTwitchCharityBadges" type="checkbox"/> <span class="settingInfo">Charity badges</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="twitchBadges">
+						<div class="settingFullWidth">
+							<input checked id="enableTwitchHypeTrainBadges" type="checkbox"/> <span class="settingInfo">Hype Train badges</span>
+						</div>
+					</div>
+				</div>
 			</div>
 			<div class="section" data-content="avatars">
 				<div class="part">
 					<div class="setting">
 						<div class="settingFullWidth">
 							<input checked id="enableAvatars" type="checkbox" data-dependent="avatars"/> <span class="settingInfo">Display avatars</span>
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Appearance</h1>
+					<div class="setting" data-dependent="avatars">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Avatar size</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="avatarSize" min="16" max="80" step="0.5" value="34"/> px
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Avatar shape</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<select id="avatarShape">
+								<option value="circle">Circle</option>
+								<option selected value="squircle">Squircle</option>
+								<option value="square">Square</option>
+							</select>
 						</div>
 					</div>
 				</div>
@@ -605,29 +773,6 @@
 					<div class="setting" data-dependent="avatars">
 						<div class="settingFullWidth">
 							<input id="avatarAllowedEveryone" type="checkbox"/> <span class="settingInfo">Allow avatar display for everyone</span>
-						</div>
-					</div>
-				</div>
-				<div class="part">
-					<h1>Appearance</h1>
-					<div class="setting" data-dependent="avatars">
-						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Avatar size</span>
-						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="avatarSize" min="16" max="80" step="0.5" value="34"/> px
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Avatar shape</span>
-						</div>
-						<div class="settingHalfWidthRight">
-							<select id="avatarShape">
-								<option value="circle">Circle</option>
-								<option selected value="squircle">Squircle</option>
-								<option value="square">Square</option>
-							</select>
 						</div>
 					</div>
 				</div>
@@ -780,6 +925,7 @@
 							<input checked id="enable7TV" type="checkbox" data-dependent="7tv"/> <span class="settingInfo">Enable 7TV integration</span>
 						</div>
 					</div>
+					<hr/>
 					<div class="setting" data-dependent="7tv">
 						<div class="settingFullWidth">
 							<input checked id="enable7TVBadges" type="checkbox"/> <span class="settingInfo">Enable Subscriber badges</span>
@@ -809,6 +955,7 @@
 							<input checked id="enableBTTV" type="checkbox" data-dependent="bttv"/> <span class="settingInfo">Enable BetterTTV integration</span>
 						</div>
 					</div>
+					<hr/>
 					<div class="setting" data-dependent="bttv">
 						<div class="settingFullWidth">
 							<input checked id="enableBTTVBadges" type="checkbox"/> <span class="settingInfo">Enable Pro badges</span>
@@ -833,6 +980,7 @@
 							<input checked id="enableFFZ" type="checkbox" data-dependent="ffz"/> <span class="settingInfo">Enable FrankerFaceZ integration</span>
 						</div>
 					</div>
+					<hr/>
 					<div class="setting" data-dependent="ffz">
 						<div class="settingFullWidth">
 							<input checked id="enableFFZBadges" type="checkbox"/> <span class="settingInfo">Enable Subwoofer/Supporter badges</span>

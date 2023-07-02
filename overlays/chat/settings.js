@@ -445,6 +445,19 @@ const settingUpdaters = {
 	},
 	chatAnimationOutTimingFunction: function(value) {
 		$(":root").get(0).style.setProperty("--animationsOutTimingFunc", `var(--timingFunc${value})`);
+	},
+
+	badgeBorderRadius: function(value) {
+		$(":root").get(0).style.setProperty("--badgeBorderRadius", `${value}px`);
+	},
+	badgeSpacing: function(value) {
+		$(":root").get(0).style.setProperty("--badgeSpacing", `${value}px`);
+	},
+	badgeSize: function(value) {
+		$(":root").get(0).style.setProperty("--badgeSize", `${value}px`);
+	},
+	chatNameFontWeightExtra: function(value) {
+		$(":root").get(0).style.setProperty("--nameFontWeightExtra", `${value}px`);
 	}
 };
 settingUpdaters.chatBackgroundColor = settingUpdaters.chatBackgroundColorAlpha;
