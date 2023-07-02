@@ -56,15 +56,38 @@
 					</div>
 					<div class="setting">
 						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Default name color</span>
+							<span class="settingInfo">Default color</span>
 						</div>
 						<div class="settingHalfWidthRight">
 							<input id="chatDefaultNameColor" type="color" value="#AAAAAA"/><input type="number" id="chatDefaultNameColorAlpha" min="0" max="1" step="0.01" value="1"/>
 						</div>
 					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingFullWidth">
+							<input checked id="chatNameUsesGradient" type="checkbox" data-dependent="gradientNames"/> <span class="settingInfo">Apply a gradient to names</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="gradientNames">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Gradient color</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="chatDefaultNameColorSecondary" type="color" value="#FFFFFF"/><input type="number" id="chatDefaultNameColorSecondaryAlpha" min="0" max="1" step="0.01" value="1"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="gradientNames">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Gradient angle</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatNameGradientAngle" min="0" max="360" step="1" value="170"/> deg
+						</div>
+					</div>
+					<hr/>
 					<div class="setting">
 						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Name font</span>
+							<span class="settingInfo">Font</span>
 						</div>
 						<div class="settingHalfWidthRight">
 							<input id="chatNameFont" type="text" value="Manrope"/>
@@ -72,7 +95,7 @@
 					</div>
 					<div class="setting">
 						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Name font size</span>
+							<span class="settingInfo">Size</span>
 						</div>
 						<div class="settingHalfWidthRight">
 							<input type="number" id="chatNameFontSize" min="4" max="64" step="0.25" value="16"/> pt
@@ -80,7 +103,7 @@
 					</div>
 					<div class="setting">
 						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Name font weight</span>
+							<span class="settingInfo">Weight</span>
 						</div>
 						<div class="settingHalfWidthRight">
 							<input type="number" id="chatNameFontWeight" min="100" max="900" step="25" value="900"/>
@@ -88,10 +111,31 @@
 					</div>
 					<div class="setting">
 						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Additional name weight</span>
+							<span class="settingInfo">Additional weight</span>
 						</div>
 						<div class="settingHalfWidthRight">
 							<input type="number" id="chatNameFontWeightExtra" min="0" max="8" step="0.1" value="1.2"/> px
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Letter spacing</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatNameLetterSpacing" min="-12" max="12" step="0.2" value="1"/> px
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Transform</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<select id="chatNameTransform">
+								<option value="capitalize">Capitalize</option>
+								<option value="lowercase">Lowercase</option>
+								<option selected value="uppercase">Uppercase</option>
+								<option value="none">Do not transform</option>
+							</select>
 						</div>
 					</div>
 				</div>
@@ -99,7 +143,7 @@
 					<h1>Messages</h1>
 					<div class="setting">
 						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Message text color</span>
+							<span class="settingInfo">Text color</span>
 						</div>
 						<div class="settingHalfWidthRight">
 							<input id="chatMessageColor" type="color" value="#FFFFFF"/><input type="number" id="chatMessageColorAlpha" min="0" max="1" step="0.01" value="1"/>
@@ -107,7 +151,7 @@
 					</div>
 					<div class="setting">
 						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Message font</span>
+							<span class="settingInfo">Font</span>
 						</div>
 						<div class="settingHalfWidthRight">
 							<input id="chatMessageFont" type="text" value="Manrope"/>
@@ -115,7 +159,7 @@
 					</div>
 					<div class="setting">
 						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Message font size</span>
+							<span class="settingInfo">Size</span>
 						</div>
 						<div class="settingHalfWidthRight">
 							<input type="number" id="chatMessageFontSize" min="4" max="64" step="0.25" value="16"/> pt
@@ -123,10 +167,31 @@
 					</div>
 					<div class="setting">
 						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Message font weight</span>
+							<span class="settingInfo">Weight</span>
 						</div>
 						<div class="settingHalfWidthRight">
 							<input type="number" id="chatMessageFontWeight" min="100" max="900" step="25" value="700"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Letter spacing</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="messageLetterSpacing" min="-12" max="12" step="0.2" value="0"/> px
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Transform</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<select id="messageTransform">
+								<option value="capitalize">Capitalize</option>
+								<option value="lowercase">Lowercase</option>
+								<option value="uppercase">Uppercase</option>
+								<option selected value="none">Do not transform</option>
+							</select>
 						</div>
 					</div>
 				</div>
@@ -139,7 +204,7 @@
 					</div>
 					<div class="setting disabled" data-dependent="outlines">
 						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Outline color</span>
+							<span class="settingInfo">Color</span>
 						</div>
 						<div class="settingHalfWidthRight">
 							<input id="chatOutlinesColor" type="color" value="#FFFFFF"/><input type="number" id="chatOutlinesColorAlpha" min="0" max="1" step="0.01" value="1"/>
@@ -147,7 +212,7 @@
 					</div>
 					<div class="setting disabled" data-dependent="outlines">
 						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Outline size</span>
+							<span class="settingInfo">Size</span>
 						</div>
 						<div class="settingHalfWidthRight">
 							<input type="number" id="chatOutlinesSize" min="0" max="8" step="1" value="1"/> px
@@ -155,7 +220,7 @@
 					</div>
 					<div class="setting disabled" data-dependent="outlines">
 						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Outline style</span>
+							<span class="settingInfo">Style</span>
 						</div>
 						<div class="settingHalfWidthRight">
 							<select id="chatOutlineStyle">
@@ -194,6 +259,7 @@
 						</div>
 						<div class="settingHalfWidthRight">
 							<select id="chatAnimationInName">
+								<option value="blurInKF">Blur In</option>
 								<option value="fadeInKF">Fade In</option>
 								<option value="rotateInKF">Rotate In</option>
 								<option value="slideInBottom_BlurKF">Scale In (Bottom) (Blur)</option>
@@ -275,6 +341,7 @@
 						</div>
 						<div class="settingHalfWidthRight">
 							<select id="chatAnimationOutName">
+								<option value="blurOutKF">Blur Out</option>
 								<option value="fadeOutKF">Fade Out</option>
 								<option value="floatOutKF">Float Out</option>
 								<option value="rotateOutKF">Rotate Out</option>
@@ -350,6 +417,7 @@
 							</select>
 						</div>
 					</div>
+					<hr/>
 					<div class="setting">
 						<div class="settingFullWidth smol">
 							Timing functions (Bézier curve only) are from <a href="https://easings.net">Easing Functions Cheat Sheet</a>
@@ -381,7 +449,7 @@
 					</div>
 					<div class="setting" data-dependent="overlayShadows">
 						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Shadow color</span>
+							<span class="settingInfo">Color</span>
 						</div>
 						<div class="settingHalfWidthRight">
 							<input id="overlayShadowColor" type="color" value="#000000"/><input type="number" id="overlayShadowColorAlpha" min="0" max="1" step="0.01" value="1"/>
@@ -389,7 +457,7 @@
 					</div>
 					<div class="setting" data-dependent="overlayShadows">
 						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Shadow X offset</span>
+							<span class="settingInfo">X offset</span>
 						</div>
 						<div class="settingHalfWidthRight">
 							<input type="number" id="overlayShadowXOffset" min="-32" max="32" step="0.25" value="0"/> px
@@ -397,7 +465,7 @@
 					</div>
 					<div class="setting" data-dependent="overlayShadows">
 						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Shadow Y offset</span>
+							<span class="settingInfo">Y offset</span>
 						</div>
 						<div class="settingHalfWidthRight">
 							<input type="number" id="overlayShadowYOffset" min="-32" max="32" step="0.25" value="1"/> px
@@ -405,7 +473,7 @@
 					</div>
 					<div class="setting" data-dependent="overlayShadows">
 						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Shadow blur radius</span>
+							<span class="settingInfo">Blur amount</span>
 						</div>
 						<div class="settingHalfWidthRight">
 							<input type="number" id="overlayShadowBlurRadius" min="0" max="32" step="0.25" value="2"/> px
@@ -419,7 +487,7 @@
 					</div>
 					<div class="setting" data-dependent="overlayOutlines">
 						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Outline color</span>
+							<span class="settingInfo">Color</span>
 						</div>
 						<div class="settingHalfWidthRight">
 							<input id="overlayOutlineColor" type="color" value="#000000"/><input type="number" id="overlayOutlineColorAlpha" min="0" max="1" step="0.01" value="0.45"/>
@@ -427,7 +495,7 @@
 					</div>
 					<div class="setting" data-dependent="overlayOutlines">
 						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Outline size</span>
+							<span class="settingInfo">Size</span>
 						</div>
 						<div class="settingHalfWidthRight">
 							<input type="number" id="overlayOutlineSize" min="0" max="3" step="1" value="1"/> px
@@ -527,6 +595,14 @@
 							<input type="number" id="chatBlockIndividualPadding" min="0" max="64" step="0.25" value="0"/> px
 						</div>
 					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Block spacing</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatBlockSpacing" min="0" max="128" step="1" value="20"/> px
+						</div>
+					</div>
 				</div>
 				<div class="part">
 					<h1>Alignment</h1>
@@ -551,7 +627,7 @@
 							<span class="settingInfo">Element spacing</span>
 						</div>
 						<div class="settingHalfWidthRight">
-							<input type="number" id="chatMessageUserInfoElementSpacing" min="0" max="32" step="0.5" value="4"/> px
+							<input type="number" id="chatMessageUserInfoElementSpacing" min="0" max="64" step="0.5" value="14"/> px
 						</div>
 					</div>
 				</div>
@@ -568,7 +644,43 @@
 				</div>
 			</div>
 			<div class="section" data-content="flags">
-				Flags (soon!)
+				<div class="part">
+					<div class="setting">
+						<div class="settingFullWidth">
+							<input checked id="enableFlags" type="checkbox" data-dependent="flags"/> <span class="settingInfo">Enable identity flags</span>
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Appearance</h1>
+					<div class="setting" data-dependent="flags">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Border radius</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="flagsBorderRadius" min="0" max="64" step="0.25" value="4"/> px
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Layout</h1>
+					<div class="setting" data-dependent="flags">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Size</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="flagsSize" min="0" max="64" step="1" value="22"/> px
+						</div>
+					</div>
+					<div class="setting" data-dependent="flags">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Extra spacing</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="flagsSpacing" min="-32" max="32" step="1" value="2"/> px
+						</div>
+					</div>
+				</div>
 			</div>
 			<div class="section" data-content="badges">
 				<div class="part">
@@ -709,7 +821,7 @@
 					<h1>Appearance</h1>
 					<div class="setting" data-dependent="avatars">
 						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Avatar size</span>
+							<span class="settingInfo">Size</span>
 						</div>
 						<div class="settingHalfWidthRight">
 							<input type="number" id="avatarSize" min="16" max="80" step="0.5" value="34"/> px
@@ -717,7 +829,7 @@
 					</div>
 					<div class="setting">
 						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Avatar shape</span>
+							<span class="settingInfo">Shape</span>
 						</div>
 						<div class="settingHalfWidthRight">
 							<select id="avatarShape">
@@ -730,49 +842,50 @@
 				</div>
 				<div class="part">
 					<h1>Permissions</h1>
+					<p>Allow avatar display for:</p>
 					<div class="setting" data-dependent="avatars">
 						<div class="settingFullWidth">
-							<input checked id="avatarAllowedModerators" type="checkbox"/> <span class="settingInfo">Allow avatar display for moderators</span>
+							<input checked id="avatarAllowedModerators" type="checkbox"/> <span class="settingInfo">Moderators</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="avatars">
 						<div class="settingFullWidth">
-							<input checked id="avatarAllowedVIPs" type="checkbox"/> <span class="settingInfo">Allow avatar display for VIPs</span>
+							<input checked id="avatarAllowedVIPs" type="checkbox"/> <span class="settingInfo">VIPs</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="avatars">
 						<div class="settingFullWidth">
-							<input checked id="avatarAllowedSubscribers" type="checkbox"/> <span class="settingInfo">Allow avatar display for channel subscribers</span>
+							<input checked id="avatarAllowedSubscribers" type="checkbox"/> <span class="settingInfo">Channel subscribers</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="avatars">
 						<div class="settingFullWidth">
-							<input checked id="avatarAllowedTurbo" type="checkbox"/> <span class="settingInfo">Allow avatar display for Twitch Turbo subscribers</span>
+							<input checked id="avatarAllowedTurbo" type="checkbox"/> <span class="settingInfo">Twitch Turbo subscribers</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="avatars">
 						<div class="settingFullWidth">
-							<input id="avatarAllowedPrime" type="checkbox"/> <span class="settingInfo">Allow avatar display for Prime Gaming subscribers</span>
+							<input id="avatarAllowedPrime" type="checkbox"/> <span class="settingInfo">Prime Gaming subscribers</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="avatars">
 						<div class="settingFullWidth">
-							<input checked id="avatarAllowedArtist" type="checkbox"/> <span class="settingInfo">Allow avatar display for channel artists</span>
+							<input checked id="avatarAllowedArtist" type="checkbox"/> <span class="settingInfo">Channel artists</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="avatars">
 						<div class="settingFullWidth">
-							<input id="avatarAllowedPartner" type="checkbox"/> <span class="settingInfo">Allow avatar display for Twitch partners</span>
+							<input id="avatarAllowedPartner" type="checkbox"/> <span class="settingInfo">Twitch partners</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="avatars">
 						<div class="settingFullWidth">
-							<input id="avatarAllowedStaff" type="checkbox"/> <span class="settingInfo">Allow avatar display for Twitch staff</span>
+							<input id="avatarAllowedStaff" type="checkbox"/> <span class="settingInfo">Twitch staff</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="avatars">
 						<div class="settingFullWidth">
-							<input id="avatarAllowedEveryone" type="checkbox"/> <span class="settingInfo">Allow avatar display for everyone</span>
+							<input id="avatarAllowedEveryone" type="checkbox"/> <span class="settingInfo">Everyone</span>
 						</div>
 					</div>
 				</div>
@@ -782,6 +895,93 @@
 					<div class="setting">
 						<div class="settingFullWidth">
 							<input checked id="enablePronouns" type="checkbox" data-dependent="pronouns"/> <span class="settingInfo">Display pronouns</span>
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Appearance</h1>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Color</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="pronounsColor" type="color" value="#808080"/><input type="number" id="pronounsColorAlpha" min="0" max="1" step="0.01" value="1"/>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingFullWidth">
+							<input checked id="pronounsUsesGradient" type="checkbox" data-dependent="gradientPronouns"/> <span class="settingInfo">Apply a gradient to pronouns</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="gradientPronouns">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Gradient color</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="pronounsColorSecondary" type="color" value="#FFFFFF"/><input type="number" id="pronounsColorSecondaryAlpha" min="0" max="1" step="0.01" value="1"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="gradientPronouns">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Gradient angle</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="pronounsGradientAngle" min="0" max="360" step="1" value="170"/> deg
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Font</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="pronounsFont" type="text" value="Manrope"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Size</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="pronounsFontSize" min="4" max="64" step="0.25" value="12"/> pt
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Weight</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="pronounsFontWeight" min="100" max="900" step="25" value="900"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Additional weight</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="pronounsFontWeightExtra" min="0" max="8" step="0.1" value="0.5"/> px
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Letter spacing</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="pronounsLetterSpacing" min="-12" max="12" step="0.2" value="0"/> px
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Transform</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<select id="pronounsTransform">
+								<option value="capitalize">Capitalize</option>
+								<option value="lowercase">Lowercase</option>
+								<option selected value="uppercase">Uppercase</option>
+								<option value="none">Do not transform</option>
+							</select>
 						</div>
 					</div>
 				</div>
@@ -1028,6 +1228,7 @@
 							<input id="twitchClientSecret" type="text" value=""/>
 						</div>
 					</div>
+					<hr/>
 					<div class="setting">
 						<div class="settingFullWidth smol">
 							These tokens are available in your <a href="https://dev.twitch.tv/console/apps">Twitch Developer Console</a>

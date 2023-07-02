@@ -458,6 +458,75 @@ const settingUpdaters = {
 	},
 	chatNameFontWeightExtra: function(value) {
 		$(":root").get(0).style.setProperty("--nameFontWeightExtra", `${value}px`);
+	},
+
+	chatDefaultNameColorSecondaryAlpha: function(value) {
+		$(":root").get(0).style.setProperty("--defaultNameColorSecondary", normalizeSettingColors("chatDefaultNameColorSecondary"));
+	},
+	chatNameGradientAngle: function(value) {
+		$(":root").get(0).style.setProperty("--nameGradientAngle", `${value}deg`);
+	},
+	chatNameLetterSpacing: function(value) {
+		$(":root").get(0).style.setProperty("--nameLetterSpacing", `${value}px`);
+	},
+	messageLetterSpacing: function(value) {
+		$(":root").get(0).style.setProperty("--messageLetterSpacing", `${value}px`);
+	},
+
+	pronounsColorAlpha: function(value) {
+		$(":root").get(0).style.setProperty("--pronounsColor", normalizeSettingColors("pronounsColor"));
+	},
+	pronounsUsesGradient: function(value) {
+		if(value === "true") {
+			$(":root").get(0).style.setProperty("--pronounsGradient", "linear-gradient(var(--pronounsGradientAngle), var(--pronounsColorSecondary) -20%, transparent 100%)");
+		} else {
+			$(":root").get(0).style.setProperty("--pronounsGradient", "none");
+		}
+	},
+	pronounsColorSecondaryAlpha: function(value) {
+		$(":root").get(0).style.setProperty("--pronounsColorSecondary", normalizeSettingColors("pronounsColorSecondary"));
+	},
+	pronounsGradientAngle: function(value) {
+		$(":root").get(0).style.setProperty("--pronounsGradientAngle", `${value}deg`);
+	},
+	pronounsFont: function(value) {
+		$(":root").get(0).style.setProperty("--pronounsFont", value);
+	},
+	pronounsFontSize: function(value) {
+		$(":root").get(0).style.setProperty("--pronounsFontSize", `${value}pt`);
+	},
+	pronounsFontWeight: function(value) {
+		$(":root").get(0).style.setProperty("--pronounsFontWeight", value);
+	},
+	pronounsFontWeightExtra: function(value) {
+		$(":root").get(0).style.setProperty("--pronounsFontWeightExtra", `${value}px`);
+	},
+	pronounsLetterSpacing: function(value) {
+		$(":root").get(0).style.setProperty("--pronounsLetterSpacing", `${value}px`);
+	},
+
+	chatNameTransform: function(value) {
+		$(":root").get(0).style.setProperty("--nameTransform", value);
+	},
+	messageTransform: function(value) {
+		$(":root").get(0).style.setProperty("--messageTransform", value);
+	},
+	pronounsTransform: function(value) {
+		$(":root").get(0).style.setProperty("--pronounsTransform", value);
+	},
+
+	flagsBorderRadius: function(value) {
+		$(":root").get(0).style.setProperty("--flagsBorderRadius", `${value}px`);
+	},
+	flagsSize: function(value) {
+		$(":root").get(0).style.setProperty("--flagsSize", `${value}px`);
+	},
+	flagsSpacing: function(value) {
+		$(":root").get(0).style.setProperty("--flagsSpacing", `${value}px`);
+	},
+
+	chatBlockSpacing: function(value) {
+		$(":root").get(0).style.setProperty("--chatBlockSpacing", `${value}px`);
 	}
 };
 settingUpdaters.chatBackgroundColor = settingUpdaters.chatBackgroundColorAlpha;
@@ -467,6 +536,9 @@ settingUpdaters.chatMessageColor = settingUpdaters.chatMessageColorAlpha;
 settingUpdaters.chatOutlinesColor = settingUpdaters.chatOutlinesColorAlpha;
 settingUpdaters.overlayShadowColor = settingUpdaters.overlayShadowColorAlpha;
 settingUpdaters.overlayOutlineColor = settingUpdaters.overlayOutlineColorAlpha;
+settingUpdaters.chatDefaultNameColorSecondary = settingUpdaters.chatDefaultNameColorSecondaryAlpha;
+settingUpdaters.pronounsColor = settingUpdaters.pronounsColorAlpha;
+settingUpdaters.pronounsColorSecondary = settingUpdaters.pronounsColorSecondaryAlpha;
 
 settingUpdaters["chatHideAccounts"](localStorage.getItem("setting_chatHideAccounts"));
 

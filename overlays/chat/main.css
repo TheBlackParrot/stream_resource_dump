@@ -13,15 +13,20 @@ body {
 }
 
 .chatBlock {
-	margin: var(--chatBlockPadding);
+	margin-top: var(--chatBlockSpacing);
+	margin-left: var(--chatBlockPadding);
+	margin-right: var(--chatBlockPadding);
+	margin-bottom: 0px;
 	border-radius: var(--chatBlockBorderRadius);
-	margin-top: 20px;
 	background-color: var(--backgroundColor);
 	border: var(--chatBlockOutline);
 	padding-left: var(--chatBlockIndividualPadding);
 	padding-right: var(--chatBlockIndividualPadding);
 	padding-top: calc(var(--chatBlockIndividualPadding) / 2);
 	padding-bottom: calc(var(--chatBlockIndividualPadding) / 2);
+}
+.chatBlock:last-child {
+	margin-bottom: var(--chatBlockPadding);
 }
 .badges, .pronouns, .message, .pfp, .flags, .bsrArt, .bsrMapInfo, .bsrExtraInfo, .loadingMsg, .fa-spinner, .fa-times {
 	filter: var(--effectFilters);
@@ -52,17 +57,20 @@ body {
 	border-radius: var(--badgeBorderRadius);
 }
 
-.badges img:last-child, .flags img:last-child {
+.badges img:last-child {
 	margin-right: 0px;
 }
 
 .flag {
-	width: 22px;
-	height: 22px;
+	width: var(--flagsSize);
+	height: var(--flagsSize);
 	background-size: cover;
     background-position: center;
-    border-radius: 5px;
-    margin-right: 2px;
+    border-radius: var(--flagsBorderRadius);
+    margin-right: var(--flagsSpacing);
+}
+.flag:last-child {
+	margin-right: 0px;
 }
 
 .name {
@@ -73,7 +81,7 @@ body {
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 	text-transform: uppercase;
-	letter-spacing: 1px;
+	letter-spacing: var(--nameLetterSpacing);
 	vertical-align: middle;
 	padding-right: 4px;
 	height: 34px;
@@ -81,14 +89,17 @@ body {
 }
 
 .pronouns {
-	font-weight: 900;
-	text-transform: uppercase;
-	-webkit-text-stroke: 0.5px transparent;
+	font-family: var(--pronounsFont);
+	font-size: var(--pronounsFontSize);
+	font-weight: var(--pronounsFontWeight);
+	letter-spacing: var(--pronounsLetterSpacing);
+	text-transform: var(--pronounsTransform);
+	-webkit-text-stroke: var(--pronounsFontWeightExtra) transparent;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
-	font-size: 12pt;
 	vertical-align: middle;
-	background-image: linear-gradient(170deg, rgb(255, 255, 255) -20%, rgb(128,128,128) 100%);
+	background-color: var(--pronounsColor);
+	background-image: var(--pronounsGradient);
 }
 
 .emote {
@@ -110,6 +121,8 @@ body {
 	font-family: var(--messageFont);
 	font-weight: var(--messageFontWeight);
 	font-size: var(--messageFontSize);
+	letter-spacing: var(--messageLetterSpacing);
+	text-transform: var(--messageTransform);
 }
 
 .actionMessage {

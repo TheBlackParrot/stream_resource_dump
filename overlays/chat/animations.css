@@ -22,14 +22,12 @@
 	100% {
 		opacity: 1;
 		transform: scale(1.0) translateY(0px);
-		filter: brightness(1.0) contrast(100%) blur(0px);
 	}
 }
 @keyframes slideOutBottom_BlurKF {
 	0% {
 		opacity: 1;
 		transform: scale(1.0) translateY(0px);
-		filter: blur(0px);
 	}
 	100% {
 		opacity: 0;
@@ -178,6 +176,26 @@
 		opacity: 0;
 		transform: scale(0.5) translateY(-50vw) translateX(10vw) rotate(30deg);
 		filter: grayscale(100%) brightness(80%) blur(16px);
+	}
+}
+
+@keyframes blurInKF {
+	0% {
+		opacity: 0;
+		filter: blur(16px);
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes blurOutKF {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+		filter: blur(16px);
 	}
 }
 

@@ -121,7 +121,32 @@ const defaultConfig = {
 	"badgeBorderRadius": "4",
 	"badgeSpacing": "2",
 	"badgeSize": "28",
-	"chatNameFontWeightExtra": "1.2"
+	"chatNameFontWeightExtra": "1.2",
+	"chatNameUsesGradient": "true",
+	"chatDefaultNameColorSecondary": "#FFFFFF",
+	"chatDefaultNameColorSecondaryAlpha": "1",
+	"chatNameGradientAngle": "170",
+	"chatNameLetterSpacing": "1",
+	"messageLetterSpacing": "0",
+	"pronounsColor": "#808080",
+	"pronounsColorAlpha": "1",
+	"pronounsUsesGradient": "true",
+	"pronounsColorSecondary": "#FFFFFF",
+	"pronounsColorSecondaryAlpha": "1",
+	"pronounsGradientAngle": "170",
+	"pronounsFont": "Manrope",
+	"pronounsFontSize": "12",
+	"pronounsFontWeight": "900",
+	"pronounsFontWeightExtra": "0.5",
+	"pronounsLetterSpacing": "0",
+	"chatNameTransform": "uppercase",
+	"messageTransform": "none",
+	"pronounsTransform": "uppercase",
+	"enableFlags": "true",
+	"flagsBorderRadius": "4",
+	"flagsSize": "22",
+	"flagsSpacing": "2",
+	"chatBlockSpacing": "20"
 };
 
 for(let setting in defaultConfig) {

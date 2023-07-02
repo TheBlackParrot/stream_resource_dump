@@ -703,22 +703,24 @@ function parseMessage(data) {
 	userBlock.append(badgeBlock);
 
 	if(!localStorage.getItem(`flags_${data.user.id}`)) { localStorage.setItem(`flags_${data.user.id}`, ""); }
-	let flags = localStorage.getItem(`flags_${data.user.id}`).split(",");
+	if(localStorage.getItem("setting_enableFlags") === "true") {
+		let flags = localStorage.getItem(`flags_${data.user.id}`).split(",");
 
-	if(flags.length) {
-		let flagBlock = $('<div class="flags" style="display: none;"></div>');
-		for(let flagIdx in flags) {
-			let flag = flags[flagIdx];
-			if(!flag) {
-				continue;
+		if(flags.length) {
+			let flagBlock = $('<div class="flags" style="display: none;"></div>');
+			for(let flagIdx in flags) {
+				let flag = flags[flagIdx];
+				if(!flag) {
+					continue;
+				}
+
+				let filename = settings.flags[flag];
+
+				flagBlock.append($(`<span class="flag${flag} flag" style="background-image: url('flags/${filename}'); display: inline-block;"></div>`));
+				flagBlock.show();
 			}
-
-			let filename = settings.flags[flag];
-
-			flagBlock.append($(`<span class="flag${flag} flag" style="background-image: url('flags/${filename}'); display: inline-block;"></div>`));
-			flagBlock.show();
+			userBlock.append(flagBlock);
 		}
-		userBlock.append(flagBlock);
 	}
 
 	if(localStorage.getItem("setting_enablePronouns") === "true") {
@@ -873,9 +875,17 @@ function parseMessage(data) {
 	let nameBlock = $(`<div class="name" data-userid="${data.user.id}">${data.user[localStorage.getItem(`usename_${data.user.id}`)]}</div>`);
 
 	if(localStorage.getItem("setting_chatDefaultNameColorForced") === "true") {
-		nameBlock.css("background-image", `linear-gradient(var(--nameGradientAngle), var(--defaultNameColorSecondary) 0%, var(--defaultNameColor) 75%)`);
+		nameBlock.css("background-color", "var(--nameBackgroundNoGradientDefault)");
+
+		if(localStorage.getItem("setting_chatNameUsesGradient") === "true") {
+			nameBlock.css("background-image", `var(--nameBackgroundDefault)`);
+		}
 	} else {
-		nameBlock.css("background-image", `linear-gradient(var(--nameAngle${data.user.id}), var(--nameColorSecondary${data.user.id}) 0%, var(--nameColor${data.user.id}) 75%)`);
+		nameBlock.css("background-color", `var(--nameColor${data.user.id})`);
+
+		if(localStorage.getItem("setting_chatNameUsesGradient") === "true") {
+			nameBlock.css("background-image", `linear-gradient(var(--nameAngle${data.user.id}), var(--nameColorSecondary${data.user.id}) 0%, transparent 75%)`);
+		}
 	}
 	nameBlock.css("font-family", `var(--nameFont${data.user.id})`);
 	nameBlock.css("font-weight", `var(--nameWeight${data.user.id})`);
@@ -1400,7 +1410,15 @@ function startBTTVWebsocket() {
 		return;
 	}
 
-	bttvWS = new WebSocket("wss://sockets.betterttv.net/ws");
+	if(typeof bttvWS === "undefined") {
+		bttvWS = new WebSocket("wss://sockets.betterttv.net/ws");
+	} else {
+		try {
+			bttvWS.close();
+		} catch {
+			// do nothing
+		}		
+	}
 
 	bttvWS.addEventListener("message", function(msg) {
 		let data = JSON.parse(msg.data);

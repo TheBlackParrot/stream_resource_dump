@@ -37,6 +37,8 @@
 	--nameVariant: normal;
 	--nameGradientAngle: 170deg;
 	--nameFontWeightExtra: 1.2px;
+	--nameBackgroundDefault: linear-gradient(var(--nameGradientAngle), var(--defaultNameColorSecondary) 0%, transparent 75%);
+	--nameBackgroundNoGradientDefault: var(--defaultNameColor);
 
 	--messageColor: rgba(255, 255, 255, 1);
 	--messageFont: "Manrope";
@@ -45,8 +47,10 @@
 	--messageLetterSpacing: 0px;
 	--messageLineHeight: 28px;
 	--messageUserInfoElementSpacing: 14px;
+	--messageTransform: none;
 
 	--chatBlockPadding: 18px;
+	--chatBlockSpacing: 20px;
 	--chatBlockIndividualPadding: 0px;
 	--chatBlockBorderRadius: 0px;
 
@@ -105,4 +109,19 @@
 
 	--badgeBorderRadius: 4px;
 	--badgeSize: 28px;
+
+	--pronounsColor: rgba(128, 128, 128, 1);
+	--pronounsColorSecondary: rgba(255, 255, 255, 1);
+	--pronounsGradientAngle: 170deg;
+	--pronounsGradient: linear-gradient(var(--pronounsGradientAngle), var(--pronounsColorSecondary) -20%, transparent 100%);
+	--pronounsFont: "Manrope";
+	--pronounsFontSize: 12pt;
+	--pronounsFontWeight: 900;
+	--pronounsFontWeightExtra: 0.5px;
+	--pronounsLetterSpacing: 0px;
+	--pronounsTransform: uppercase;
+
+	--flagsBorderRadius: 4px;
+	--flagsSize: 22px;
+	--flagsSpacing: 2px;
 }
