@@ -1,15 +1,21 @@
-<html style="--nameColor:#BBB; --nameFont:Manrope; --nameWeight:900; --nameSize:16pt; --nameStyle:normal; --nameSpacing:1px; --msgFont:Manrope; --msgSize:16pt; --msgSpacing:0px; --msgWeight:700; --nameTransform:uppercase; --nameVariant:normal; --nameColorSecondary:#FFF; --nameAngle:170deg; --showPfp:inline-block; --pfpShape:10px; --nameShadow:var(--shadowStuff);">
+<html style="--nameColor:#BBB; --nameFont:Manrope; --nameWeight:900; --nameSize:16pt; --nameStyle:normal; --nameSpacing:1px; --msgFont:Manrope; --msgSize:16pt; --msgSpacing:0px; --msgWeight:700; --nameTransform:uppercase; --nameVariant:normal; --nameColorSecondary:#FFF; --nameAngle:170deg; --showPfp:inline-block; --pfpShape:10px; --nameShadow:var(--outlineStuff) var(--shadowStuff);">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
 	<link rel="stylesheet" type="text/css" href="../reset.css">
 	<link rel="stylesheet" type="text/css" href="../main.css">
+	<link rel="stylesheet" type="text/css" href="../vars.css">
 	<link rel="stylesheet" type="text/css" href="../fonts.css">
 
 	<style>
+		body {
+			overflow: auto;
+		}
+
 		#wrapper {
 			top: 0px;
+			position: unset;
 		}
 
 		.sectionWrap {
@@ -124,6 +130,10 @@
 			margin-left: 2px;
 			margin-right: 2px;
 			background-color: rgba(0, 0, 0, 0.2);
+		}
+
+		:root {
+			--overlayOutlineSize: 1px;
 		}
 	</style>
 
@@ -604,7 +614,7 @@
 		$("#nameShadow").on("change", function(e) {
 			let cssVal = "";
 			if($("#nameShadow").is(":checked")) {
-				cssVal = "var(--shadowStuff)";
+				cssVal = "var(--outlineStuff) var(--shadowStuff)";
 			}
 
 			$(":root").get(0).style.setProperty(`--nameShadow`, cssVal);
