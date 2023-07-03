@@ -5,6 +5,21 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<link rel="stylesheet" type="text/css" href="reset.css">
+
+	<link rel="stylesheet" type="text/css" href="coloris.min.css"/>
+	<script src="coloris.min.js"></script>
+	<script>
+		// i'll turn alpha back on in a future update
+		Coloris({
+			theme: "polaroid",
+			themeMode: "dark",
+			alpha: false
+		});
+	</script>
+
+	<link rel="stylesheet" type="text/css" href="fancyselect.min.css"/>
+	<script src="fancyselect.min.js"></script>
+
 	<link rel="stylesheet" type="text/css" href="fontawesome-free-5.15.4-web/css/all.min.css">
 	<link rel="stylesheet" type="text/css" href="main.css">
 
@@ -35,7 +50,7 @@
 							<span class="settingInfo">Background color</span>
 						</div>
 						<div class="settingHalfWidthRight">
-							<input id="chatBackgroundColor" type="color" value="#000000"/><input type="number" id="chatBackgroundColorAlpha" min="0" max="1" step="0.01" value="0"/>
+							<input id="chatBackgroundColor" type="text" data-coloris value="#000000"/><input type="number" id="chatBackgroundColorAlpha" min="0" max="1" step="0.01" value="0"/>
 						</div>
 					</div>
 					<div class="setting">
@@ -43,7 +58,7 @@
 							<span class="settingInfo">Message highlight color</span>
 						</div>
 						<div class="settingHalfWidthRight">
-							<input id="chatHighlightBackgroundColor" type="color" value="#FFFFFF"/><input type="number" id="chatHighlightBackgroundColorAlpha" min="0" max="1" step="0.01" value="0.25"/>
+							<input id="chatHighlightBackgroundColor" type="text" data-coloris value="#FFFFFF"/><input type="number" id="chatHighlightBackgroundColorAlpha" min="0" max="1" step="0.01" value="0.25"/>
 						</div>
 					</div>
 				</div>
@@ -59,7 +74,7 @@
 							<span class="settingInfo">Default color</span>
 						</div>
 						<div class="settingHalfWidthRight">
-							<input id="chatDefaultNameColor" type="color" value="#AAAAAA"/><input type="number" id="chatDefaultNameColorAlpha" min="0" max="1" step="0.01" value="1"/>
+							<input id="chatDefaultNameColor" type="text" data-coloris value="#AAAAAA"/><input type="number" id="chatDefaultNameColorAlpha" min="0" max="1" step="0.01" value="1"/>
 						</div>
 					</div>
 					<hr/>
@@ -73,7 +88,7 @@
 							<span class="settingInfo">Gradient color</span>
 						</div>
 						<div class="settingHalfWidthRight">
-							<input id="chatDefaultNameColorSecondary" type="color" value="#FFFFFF"/><input type="number" id="chatDefaultNameColorSecondaryAlpha" min="0" max="1" step="0.01" value="1"/>
+							<input id="chatDefaultNameColorSecondary" type="text" data-coloris value="#FFFFFF"/><input type="number" id="chatDefaultNameColorSecondaryAlpha" min="0" max="1" step="0.01" value="1"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="gradientNames">
@@ -146,7 +161,7 @@
 							<span class="settingInfo">Text color</span>
 						</div>
 						<div class="settingHalfWidthRight">
-							<input id="chatMessageColor" type="color" value="#FFFFFF"/><input type="number" id="chatMessageColorAlpha" min="0" max="1" step="0.01" value="1"/>
+							<input id="chatMessageColor" type="text" data-coloris value="#FFFFFF"/><input type="number" id="chatMessageColorAlpha" min="0" max="1" step="0.01" value="1"/>
 						</div>
 					</div>
 					<div class="setting">
@@ -207,7 +222,7 @@
 							<span class="settingInfo">Color</span>
 						</div>
 						<div class="settingHalfWidthRight">
-							<input id="chatOutlinesColor" type="color" value="#FFFFFF"/><input type="number" id="chatOutlinesColorAlpha" min="0" max="1" step="0.01" value="1"/>
+							<input id="chatOutlinesColor" type="text" data-coloris value="#FFFFFF"/><input type="number" id="chatOutlinesColorAlpha" min="0" max="1" step="0.01" value="1"/>
 						</div>
 					</div>
 					<div class="setting disabled" data-dependent="outlines">
@@ -452,7 +467,7 @@
 							<span class="settingInfo">Color</span>
 						</div>
 						<div class="settingHalfWidthRight">
-							<input id="overlayShadowColor" type="color" value="#000000"/><input type="number" id="overlayShadowColorAlpha" min="0" max="1" step="0.01" value="1"/>
+							<input id="overlayShadowColor" type="text" data-coloris value="#000000"/><input type="number" id="overlayShadowColorAlpha" min="0" max="1" step="0.01" value="1"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="overlayShadows">
@@ -490,7 +505,7 @@
 							<span class="settingInfo">Color</span>
 						</div>
 						<div class="settingHalfWidthRight">
-							<input id="overlayOutlineColor" type="color" value="#000000"/><input type="number" id="overlayOutlineColorAlpha" min="0" max="1" step="0.01" value="0.45"/>
+							<input id="overlayOutlineColor" type="text" data-coloris value="#000000"/><input type="number" id="overlayOutlineColorAlpha" min="0" max="1" step="0.01" value="0.45"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="overlayOutlines">
@@ -905,7 +920,7 @@
 							<span class="settingInfo">Color</span>
 						</div>
 						<div class="settingHalfWidthRight">
-							<input id="pronounsColor" type="color" value="#808080"/><input type="number" id="pronounsColorAlpha" min="0" max="1" step="0.01" value="1"/>
+							<input id="pronounsColor" type="text" data-coloris value="#808080"/><input type="number" id="pronounsColorAlpha" min="0" max="1" step="0.01" value="1"/>
 						</div>
 					</div>
 					<hr/>
@@ -919,7 +934,7 @@
 							<span class="settingInfo">Gradient color</span>
 						</div>
 						<div class="settingHalfWidthRight">
-							<input id="pronounsColorSecondary" type="color" value="#FFFFFF"/><input type="number" id="pronounsColorSecondaryAlpha" min="0" max="1" step="0.01" value="1"/>
+							<input id="pronounsColorSecondary" type="text" data-coloris value="#FFFFFF"/><input type="number" id="pronounsColorSecondaryAlpha" min="0" max="1" step="0.01" value="1"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="gradientPronouns">

@@ -59,7 +59,7 @@ function setRow(which, bypassSensitiveCheck) {
 		section.show();
 	}
 }
-setRow("layout");
+setRow("appearance");
 
 $(".row").on("click", function(e) {
 	e.preventDefault();
