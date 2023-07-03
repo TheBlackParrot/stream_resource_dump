@@ -565,6 +565,15 @@ const chatFuncs = {
 		$(":root").get(0).style.setProperty(`--nameShadow${data.user.id}`, (show === "yes" ? "var(--shadowStuff)" : ""));
 	},
 
+	nameoutline: function(data, args) {
+		if(!args.length) { return; }
+		let show = (args[0] === "yes" ? "yes" : "no");
+
+		console.log(`name outline for ${data.user.username} is now ${show}`);
+		localStorage.setItem(`nameoutline_${data.user.id}`, show);
+		$(":root").get(0).style.setProperty(`--nameOutline${data.user.id}`, (show === "yes" ? "var(--outlineStuff)" : ""));		
+	},
+
 	resetchat: function(data, args) {
 		localStorage.removeItem(`namesize_${data.user.id}`);
 		localStorage.removeItem(`nametransform_${data.user.id}`);
@@ -870,7 +879,9 @@ function parseMessage(data) {
 	$(":root").get(0).style.setProperty(`--nameVariant${data.user.id}`, localStorage.getItem(`namevariant_${data.user.id}`));
 	$(":root").get(0).style.setProperty(`--nameColorSecondary${data.user.id}`, localStorage.getItem(`color2_${data.user.id}`));
 	$(":root").get(0).style.setProperty(`--nameAngle${data.user.id}`, localStorage.getItem(`nameangle_${data.user.id}`));
-	$(":root").get(0).style.setProperty(`--nameEffects${data.user.id}`, `${(localStorage.getItem(`nameoutline_${data.user.id}`) === "yes" ? "var(--outlineStuff)" : "")}${(localStorage.getItem(`nameshadow_${data.user.id}`) === "yes" ? "var(--shadowStuff)" : "")}`);
+	$(":root").get(0).style.setProperty(`--nameShadow${data.user.id}`, localStorage.getItem(`nameshadow_${data.user.id}`) === "yes" ? `var(--shadowStuff)` : "");
+	$(":root").get(0).style.setProperty(`--nameOutline${data.user.id}`, localStorage.getItem(`nameoutline_${data.user.id}`) === "yes" ? `var(--outlineStuff)` : "");
+	$(":root").get(0).style.setProperty(`--nameEffects${data.user.id}`, `var(--nameOutline${data.user.id})var(--nameShadow${data.user.id})`);
 
 	let nameBlock = $(`<div class="name" data-userid="${data.user.id}">${data.user[localStorage.getItem(`usename_${data.user.id}`)]}</div>`);
 
@@ -1013,8 +1024,12 @@ function parseMessage(data) {
 	messageBlock.html(words.join(" ").replaceAll("</span> <span", "</span><span"));
 
 	if(data.type === "action") {
+		let col = data.user.color;
+		if(!col) {
+			col = "var(--defaultNameColor)";
+		}
 		messageBlock.addClass("actionMessage");
-		messageBlock.css("background-image", `linear-gradient(170deg, #fff -50%, ${data.user.color} 150%)`);
+		messageBlock.css("background-image", `linear-gradient(170deg, #fff -50%, ${col} 150%)`);
 	}
 
 	messageBlock = $(twemoji.parse(messageBlock[0]));
@@ -1107,15 +1122,14 @@ function set7TVPaint(nameBlock, which, userID) {
 		if(paint.drop_shadows.length) {
 			for(let i in paint.drop_shadows) {
 				let s = paint.drop_shadows[i];
-				// names are a biiit bigger here on the overlay
-				shadowsArr.push(`drop-shadow(${s.x_offset*1.5}px ${s.y_offset*1.5}px ${s.radius*1.5}px ${parse7TVColor(s.color)})`);
+				shadowsArr.push(`drop-shadow(${s.x_offset}px ${s.y_offset}px ${s.radius}px ${parse7TVColor(s.color)})`);
 			}
 			shadows = shadowsArr.join(" ");
 		}
 	}
 	//console.log(css);
 	nameBlock.css("background-color", bgColor).css("background-image", css).css("background-size", "contain");
-	nameBlock.css("filter", `${shadows}var(--nameShadow${userID})`);
+	nameBlock.css("filter", `var(--nameEffects${userID})${shadows}`);
 }
 
 var externalBadgeCache = {};
@@ -1183,7 +1197,7 @@ function get7TVBadges() {
 			if(localStorage.getItem("setting_enable7TVBadges") === "true") {
 				sevenTVBadges = response.badges;
 			}
-			if(localStorage.getItem("setting_enable7TVPaints") === "true") {
+			if(localStorage.getItem("setting_enable7TVUserPaints") === "true") {
 				sevenTVPaints = response.paints;
 			}
 		}
