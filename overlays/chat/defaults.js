@@ -29,7 +29,7 @@ const defaultConfig = {
 	"twitchClientSecret": "",
 	"chatParseMarkdown": "true",
 	"chatDefaultNameColorAlpha": "1",
-	"chatHideAccounts": "",
+	"chatHideAccounts": "nightbot\nstreamlabs\nstreamelements\nkofistreambot\nblerp\nsery_bot\ncommanderroot",
 	"twitchChannel": "",
 	"chatOutlinesColor": "#ffffff",
 	"chatMessageFontSize": "16",
@@ -146,7 +146,9 @@ const defaultConfig = {
 	"flagsBorderRadius": "4",
 	"flagsSize": "22",
 	"flagsSpacing": "2",
-	"chatBlockSpacing": "20"
+	"chatBlockSpacing": "20",
+	"messageBoldAmount": "1.25",
+	"chatShowCommonEmotes": "true"
 };
 
 for(let setting in defaultConfig) {

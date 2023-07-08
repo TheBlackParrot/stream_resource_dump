@@ -48,6 +48,7 @@
 	--messageLineHeight: 28px;
 	--messageUserInfoElementSpacing: 14px;
 	--messageTransform: none;
+	--messageBoldAmount: 1.25px;
 
 	--chatBlockPadding: 18px;
 	--chatBlockSpacing: 20px;

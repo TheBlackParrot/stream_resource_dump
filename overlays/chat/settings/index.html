@@ -28,15 +28,20 @@
 <body>
 	<div id="wrapper">
 		<div id="sidebar">
+			<div class="row" data-tab="about"><i class="fas fa-heart"></i>About</div>
+			<hr/>
 			<div class="row" data-tab="auth"><i class="fas fa-user-shield"></i>Authentication</div>
-			<div class="row" data-tab="appearance"><i class="fas fa-palette"></i>Appearance</div>
-			<div class="row" data-tab="effects"><i class="fas fa-wind"></i>Effects</div>
-			<div class="row" data-tab="layout"><i class="fas fa-ruler-combined"></i>Layout</div>
 			<div class="row" data-tab="function"><i class="fas fa-cogs"></i>Function</div>
-			<div class="row" data-tab="badges"><i class="fas fa-square"></i>Badges</div>
+			<hr/>
+			<div class="row" data-tab="appearance"><i class="fas fa-palette"></i>Appearance</div>
+			<div class="row" data-tab="effects"><i class="fas fa-magic"></i>Effects</div>
+			<div class="row" data-tab="layout"><i class="fas fa-ruler-combined"></i>Layout</div>
+			<hr/>
 			<div class="row" data-tab="avatars"><i class="fas fa-smile"></i>Avatars</div>
-			<div class="row" data-tab="pronouns"><i class="fas fa-user"></i>Pronouns</div>
+			<div class="row" data-tab="badges"><i class="fas fa-square"></i>Badges</div>
 			<div class="row" data-tab="flags"><i class="fas fa-flag"></i>Flags</div>
+			<div class="row" data-tab="pronouns"><i class="fas fa-user"></i>Pronouns</div>
+			<hr/>
 			<div class="row" data-tab="7tv"><i class="icon sevtv"></i>7TV</div>
 			<div class="row" data-tab="bttv"><i class="icon bttv"></i>BetterTTV</div>
 			<div class="row" data-tab="ffz"><i class="icon ffz"></i>FrankerFaceZ</div>
@@ -209,6 +214,14 @@
 							</select>
 						</div>
 					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Emboldening amount</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="messageBoldAmount" min="0" max="4" step="0.05" value="1.25"/> px
+						</div>
+					</div>
 				</div>
 				<div class="part">
 					<h1>Outlines</h1>
@@ -275,12 +288,16 @@
 						<div class="settingHalfWidthRight">
 							<select id="chatAnimationInName">
 								<option value="blurInKF">Blur In</option>
+								<option value="bounceInKF">Bounce In</option>
 								<option value="fadeInKF">Fade In</option>
+								<option value="magnifyInKF">Magnify In</option>
 								<option value="rotateInKF">Rotate In</option>
 								<option value="slideInBottom_BlurKF">Scale In (Bottom) (Blur)</option>
 								<option selected value="slideInBottomKF">Scale In (Bottom)</option>
+								<option value="shearInKF">Shear In (Left)</option>
 								<option value="slideInLeftKF">Slide In (Left)</option>
 								<option value="slideInRightKF">Slide In (Right)</option>
+								<option value="squishInKF">Squish In</option>
 								<option value="zoomInKF">Zoom In</option>
 							</select>
 						</div>
@@ -359,11 +376,14 @@
 								<option value="blurOutKF">Blur Out</option>
 								<option value="fadeOutKF">Fade Out</option>
 								<option value="floatOutKF">Float Out</option>
+								<option value="magnifyOutKF">Magnify Out</option>
 								<option value="rotateOutKF">Rotate Out</option>
 								<option value="slideOutBottom_BlurKF">Scale Out (Top) (Blur)</option>
 								<option value="slideOutBottomKF">Scale Out (Top)</option>
+								<option value="shearOutKF">Shear Out (Left)</option>
 								<option selected value="slideOutLeftKF">Slide Out (Left)</option>
 								<option value="slideOutRightKF">Slide Out (Right)</option>
+								<option value="squishOutKF">Squish Out</option>
 								<option value="zoomOutKF">Zoom Out</option>
 							</select>
 						</div>
@@ -554,6 +574,12 @@
 				</div>
 				<div class="part">
 					<h1>Messages</h1>
+					<div class="setting">
+						<div class="settingFullWidth">
+							<input checked id="chatShowCommonEmotes" type="checkbox"/> <span class="settingInfo">Enable common third-party emotes</span>
+						</div>
+					</div>
+					<hr/>
 					<div class="setting">
 						<div class="settingFullWidth">
 							<input checked id="chatShowBigEmotes" type="checkbox" data-dependent="bigEmotes"/> <span class="settingInfo">Enlarge messages that contain only emotes</span>
@@ -842,7 +868,7 @@
 							<input type="number" id="avatarSize" min="16" max="80" step="0.5" value="34"/> px
 						</div>
 					</div>
-					<div class="setting">
+					<div class="setting" data-dependent="avatars">
 						<div class="settingHalfWidthLeft">
 							<span class="settingInfo">Shape</span>
 						</div>
@@ -1251,6 +1277,65 @@
 					</div>
 				</div>
 			</div>
+			<div class="section" data-content="about">
+				<div class="part">
+					<h1>TheBlackParrot's Chat Overlay</h1>
+					<div class="setting">
+						<div class="settingFullWidth" style="text-align: center;">
+							<tt>r<span id="revision"></span> -- <span id="revisionDate"></span></tt>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting settingOnlyText">
+						<p>This is the configurator for my overlays, make sure this and any other part of the overlay suite is loaded in OBS!</p>
+						<p>If anything seems wrong or is malfunctioning, make sure you refresh the cache on all overlay sources (it's in the properties for each source).</p>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Where to find me</h1>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<strong>Twitch</strong>
+						</div>
+						<div class="settingHalfWidthRight">
+							<tt>theblackparrot</tt>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<strong>Telegram</strong>
+						</div>
+						<div class="settingHalfWidthRight">
+							<tt>@theblackparrot</tt>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<strong>Discord</strong>
+						</div>
+						<div class="settingHalfWidthRight" style="line-height: var(--settings-text-line-height);">
+							<tt>@theblackparrot</tt><br/>
+							<tt>discord.gg/PS95E9sYhJ</tt>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<strong>Github</strong>
+						</div>
+						<div class="settingHalfWidthRight">
+							<tt>TheBlackParrot</tt>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<strong>Ko-fi</strong>
+						</div>
+						<div class="settingHalfWidthRight">
+							<tt>septilateral</tt>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div id="sensitive">
 			<div class="section">
@@ -1269,8 +1354,8 @@
 		</div>
 		<div id="sideButtons">
 			<div class="button" id="sendTestButton">Test Message</div>
-			<div class="button" id="reloadOverlayButton">Reload Overlay</div>
-			<div class="button" id="resetOverlayButton">Reset to Defaults</div>
+			<div class="button" id="reloadOverlayButton">Reload Overlays</div>
+			<div class="button" id="resetOverlayButton">Reset Everything</div>
 		</div>
 		<!--
 		<div id="reloadButton">

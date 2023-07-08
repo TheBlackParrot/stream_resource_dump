@@ -1,57 +1,6 @@
 const settings = {
-	chat: {
-		secondsVisible: 45,
-		alwaysShowPFP: false,
-		opacityDecreaseStep: 0.07,
-		commandCharacter: "!"
-	},
-
 	cache: {
 		expireDelay: 604800
-	},
-
-	limits: {
-		bigEmoji: {
-			max: 10
-		},
-
-		flags: {
-			max: 6
-		},
-
-		names: {
-			size: {
-				min: 14,
-				max: 18,
-				default: 16
-			},
-
-			spacing: {
-				min: -4,
-				max: 5,
-				default: 1
-			},
-
-			gradAngle: {
-				min: 0,
-				max: 360,
-				default: 170
-			}
-		},
-
-		messages: {
-			size: {
-				min: 14,
-				max: 18,
-				default: 16
-			},
-
-			spacing: {
-				min: -2,
-				max: 2,
-				default: 1
-			}			
-		}
 	},
 
 	flags: {
@@ -152,37 +101,13 @@ const settings = {
 	}
 };
 
-const enums = {
-	weight: {
-		thin: 100,
-		exlight: 200,
-		extralight: 200,
-		ultlight: 200,
-		ultralight: 200,
-		light: 300,
-		regular: 400,
-		normal: 400,
-		default: 400,
-		medium: 500,
-		semibold: 600,
-		demibold: 600,
-		bold: 700,
-		exbold: 800,
-		extrabold: 800,
-		ultbold: 800,
-		ultrabold: 800,
-		black: 900,
-		heavy: 900
-	}
-}
-
 var hideAccounts = [];
 var refreshExternalStuffTimeout;
 
 function refreshExternalStuff() {
 	clearTimeout(refreshExternalStuffTimeout);
 	refreshExternalStuffTimeout = setTimeout(function() {
-		chatEmotes = {};
+		chatEmotes = (localStorage.getItem("setting_chatShowCommonEmotes") === "true" ? Object.create(commonEmotes) : {});
 		getGlobalChannelEmotes(broadcasterData);
 	}, 10000);
 }
@@ -341,7 +266,7 @@ const settingUpdaters = {
 
 	testMessage: function(value) {
 		let exMsg = "Hello there! This is a fake message so that you can see what your chat settings look like! Have fun! AaBbCcDd EeFfGgHh IiJjKkLl MmNnOoPp QqRrSsTt UuVvWwXx YyZz 0123456789";
-		let msg = `@badge-info=;badges=broadcaster/1;client-nonce=balls;display-name=${broadcasterData.display_name};emotes=;first-msg=0;flags=;id=1234-abcd;mod=0;returning-chatter=0;room-id=${broadcasterData.id};subscriber=0;tmi-sent-ts=${Date.now()};turbo=0;user-id=${broadcasterData.id};user-type= :${broadcasterData.login}!${broadcasterData.login}@${broadcasterData.login}.tmi.twitch.tv PRIVMSG #${broadcasterData.login} :${exMsg}`;
+		let msg = `@badge-info=;badges=broadcaster/1;client-nonce=balls;display-name=${broadcasterData.display_name};emotes=;first-msg=0;flags=;id=1234-abcd;mod=0;returning-chatter=0;room-id=${broadcasterData.id};subscriber=0;tmi-sent-ts=${Date.now()};turbo=0;user-id=2;user-type= :${broadcasterData.login}!${broadcasterData.login}@${broadcasterData.login}.tmi.twitch.tv PRIVMSG #${broadcasterData.login} :${exMsg}`;
 		client._onMessage({
 			data: msg
 		});
@@ -527,6 +452,10 @@ const settingUpdaters = {
 
 	chatBlockSpacing: function(value) {
 		$(":root").get(0).style.setProperty("--chatBlockSpacing", `${value}px`);
+	},
+
+	messageBoldAmount: function(value) {
+		$(":root").get(0).style.setProperty("--messageBoldAmount", `${value}px`);
 	}
 };
 settingUpdaters.chatBackgroundColor = settingUpdaters.chatBackgroundColorAlpha;

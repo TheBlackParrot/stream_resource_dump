@@ -137,7 +137,7 @@ em {
 }
 strong {
 	background-color: var(--messageColor);
-	-webkit-text-stroke: 1px transparent;
+	-webkit-text-stroke: var(--messageBoldAmount) transparent;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 }

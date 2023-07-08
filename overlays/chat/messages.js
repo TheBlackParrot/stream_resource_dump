@@ -4,97 +4,6 @@ var md = window.markdownit({html: true})
 			  'list', 'reference', 'heading', 'lheading', 'paragraph',
 			  'newline', 'escape', 'autolink'])
 
-const entityMap = {
-	'&': '&amp;',
-	'<': '&lt;',
-	'>': '&gt;',
-	'"': '&quot;',
-	"'": '&#39;',
-	'`': '&#x60;',
-	'=': '&#x3D;'
-};
-
-const twitchBadgeTypes = {
-	role: {
-		badges: ["artist-badge", "broadcaster", "extension", "moderator", "vip"],
-		setting: "enableTwitchRoleBadges"
-	},
-	staff: {
-		badges: ["admin", "global_mod", "staff", "twitchbot", "user-anniversary"],
-		setting: "enableTwitchStaffBadges"
-	},
-	partner: {
-		badges: ["ambassador", "partner"],
-		setting: "enableTwitchPartnerBadges"
-	},
-	bits: {
-		badges: ["anonymous-cheerer", "bits", "bits-charity"],
-		setting: "enableTwitchBitsBadges"
-	},
-	leaderboard: {
-		badges: ["bits-leader", "clip-champ", "sub-gift-leader"],
-		setting: "enableTwitchLeaderboardBadges"
-	},
-	founder: {
-		badges: ["founder"],
-		setting: "enableTwitchFounderBadges"
-	},
-	charity: {
-		badges: ["glhf-pledge"],
-		setting: "enableTwitchCharityBadges"
-	},
-	convention: {
-		badges: ["glitchcon2020", "twitchcon2017", "twitchcon2018", "twitchconAmsterdam2020", "twitchconEU2019", 
-				 "twitchconEU2022", "twitchconEU2023", "twitchconNA2019", "twitchconNA2020", "twitchconNA2022",
-				 "superultracombo-2023"],
-		setting: "enableTwitchConBadges"
-	},
-	hypetrain: {
-		badges: ["hype-train"],
-		setting: "enableTwitchHypeTrainBadges"
-	},
-	moments: {
-		badges: ["moments"],
-		setting: "enableTwitchMomentsBadges"
-	},
-	status: {
-		badges: ["no_audio", "no_video"],
-		setting: "enableTwitchStatusBadges"
-	},
-	predictions: {
-		badges: ["predictions"],
-		setting: "enableTwitchPredictionsBadges"
-	},
-	prime: {
-		badges: ["premium"],
-		setting: "enableTwitchPrimeGamingBadges",
-	},
-	gifter: {
-		badges: ["sub-gifter"],
-		setting: "enableTwitchSubGiftsBadges"
-	},
-	subscriber: {
-		badges: ["subscriber"],
-		setting: "enableTwitchSubscriberBadges"
-	},
-	turbo: {
-		badges: ["turbo"],
-		setting: "enableTwitchTurboBadges"
-	}
-};
-
-function formatTime(val) {
-	let secs = val % 60;
-	let mins = Math.floor(val / 60);
-
-	return `${mins}:${secs.toString().padStart(2, '0')}`;
-}
-
-var fonts;
-$.get("fonts.json", function(data) {
-	fonts = data;
-});
-
 client.on('message', function(channel, tags, message, self) {
 	if(self) {
 		return;
@@ -1071,6 +980,12 @@ function parseMessage(data) {
 	}
 
 	let secsVisible = parseFloat(localStorage.getItem("setting_chatRemoveMessageDelay"));
+	if(parseInt(data.user.id) === -1) {
+		secsVisible = 10;
+	} else {
+		checkForExternalBadges(data, badgeBlock);
+	}
+
 	if(secsVisible) {
 		setTimeout(function() {
 			if(localStorage.getItem("setting_chatAnimations") === "true") {
@@ -1084,52 +999,7 @@ function parseMessage(data) {
 		}, secsVisible * 1000);
 	}
 
-	checkForExternalBadges(data, badgeBlock);
-
 	testNameBlock = nameBlock;
-}
-
-function set7TVPaint(nameBlock, which, userID) {
-	let paint = sevenTVPaints[which];
-	let css = "";
-	let bgColor = parse7TVColor(paint.color);
-
-	if(paint.function === "url") {
-		css = `url(${paint.image_url})`;
-	} else {
-		let stops = [];
-		for(let i in paint.stops) {
-			let stop = paint.stops[i];
-			stops.push(`${parse7TVColor(stop.color)} ${stop.at*100}%`);
-		}
-		
-		let func = paint.function;
-		if(paint.repeat) {
-			func = `repeating-${paint.function}`;
-		}
-
-		let angle = `${paint.angle}deg`
-		if(paint.function === "radial-gradient") {
-			angle = `${paint.shape} at ${paint.angle}%`;
-		}
-
-		css = `${func}(${angle}, ${stops.join(",")})`;
-	}
-
-	let shadows = "";
-	if("drop_shadows" in paint) {
-		let shadowsArr = [];
-		if(paint.drop_shadows.length) {
-			for(let i in paint.drop_shadows) {
-				let s = paint.drop_shadows[i];
-				shadowsArr.push(`drop-shadow(${s.x_offset}px ${s.y_offset}px ${s.radius}px ${parse7TVColor(s.color)})`);
-			}
-			shadows = shadowsArr.join(" ");
-		}
-	}
-	//console.log(css);
-	nameBlock.css("background-color", bgColor).css("background-image", css).css("background-size", "contain");
-	nameBlock.css("filter", `var(--nameEffects${userID})${shadows}`);
 }
 
 var externalBadgeCache = {};
@@ -1204,19 +1074,6 @@ function get7TVBadges() {
 	})	
 }
 get7TVBadges();
-
-function parse7TVColor(color) {
-	if(!color) {
-		return "#000";
-	}
-
-	let red = (color >> 24) & 0xFF;
-	let green = (color >> 16) & 0xFF;
-	let blue = (color >> 8) & 0xFF;
-	let alpha = (color & 0xFF);
-
-	return `rgba(${red}, ${green}, ${blue}, ${alpha/255})`;
-}
 
 function checkForExternalBadges(data, badgeBlock) {
 	console.log(data);

@@ -10,7 +10,7 @@
 	--border-color: rgba(255, 255, 255, 0.15);
 	--border-color-bright: var(--sidebar-row-text-color);
 
-	--sidebar-row-height: 40px;
+	--sidebar-row-height: 34px;
 	--sidebar-padding: 12px;
 	--sidebar-row-text-color: #cbadff;
 	--sidebar-width: 200px;
@@ -18,17 +18,19 @@
 	--sidebar-icon-margin: 8px;
 	--sidebar-icon-width: 1.2em;
 	--sidebar-hover-bg-color: #272727;
+	--sidebar-hr-margin: 6px;
 
 	--sidebar-active-row-text-color: #000;
 	--sidebar-active-row-bg-color: var(--sidebar-row-text-color);
 
 	--settings-width: 512px;
 	--settings-bg-color: #333;
-	--settings-height: 700px;
+	--settings-height: 750px;
 	--settings-padding: 16px;
+	--settings-text-line-height: 22px;
 
 	--settings-part-spacing: 48px;
-	--settings-part-head-font-size: calc(var(--font-size) * 1.33);
+	--settings-part-head-font-size: calc(var(--font-size) * 1.4);
 
 	--input-height: 1.5em;
 	--input-padding: 8px;
@@ -37,6 +39,7 @@
 	--input-border-radius: 6px;
 
 	--button-padding: 16px;
+	--button-gradient: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), transparent);
 
 	--fsb-border: 1px solid var(--border-color);
 	--fsb-radius: var(--input-border-radius);
@@ -63,7 +66,7 @@
 }
 ::-webkit-scrollbar { width: 0.67em; }
 ::-webkit-scrollbar-track { background-color: var(--sidebar-bg-color); }
-::-webkit-scrollbar-thumb { background-color: var(--sidebar-active-row-bg-color); }
+::-webkit-scrollbar-thumb { background-color: var(--sidebar-active-row-bg-color); background-image: var(--button-gradient); }
 
 @font-face {
 	font-family: "Manrope";
@@ -120,7 +123,7 @@ body {
 }
 
 #wrapper {
-	filter: drop-shadow(0px 0px 3px #000);
+	filter: drop-shadow(0px 2px 5px #000);
 }
 
 #sidebar {
@@ -230,11 +233,10 @@ body {
 }
 
 .disabled {
+	opacity: 0.2;
 	/*
-	opacity: 0.25;
-	filter: grayscale(80%);
-	*/
 	display: none;
+	*/
 }
 
 .settingFullWidth, .settingHalfWidthRight, .settingHalfWidthLeft {
@@ -356,6 +358,7 @@ textarea {
 	border-radius: var(--input-border-radius);
 	font-weight: var(--font-weight-bold);
 	border: 1px solid var(--border-color);
+	background-image: var(--button-gradient);
 }
 
 #hideSensitiveWarning {
@@ -364,7 +367,9 @@ textarea {
 }
 
 .fa-exclamation-triangle {
-	color: #fd0;
+	background-image: linear-gradient(to bottom, #fe8, #c90);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 #sensitive .fa-exclamation-triangle {
 	font-size: 72pt;
@@ -406,10 +411,16 @@ p {
 	margin-bottom: var(--settings-padding);
 }
 
-hr {
+#settings hr {
 	border: none;
 	margin-bottom: var(--settings-padding);
 	border-bottom: 1px solid var(--border-color);
+}
+#sidebar hr {
+	border: none;
+	margin-top: var(--sidebar-hr-margin);
+	margin-bottom: var(--sidebar-hr-margin);
+	border-bottom: 1px solid var(--border-color);	
 }
 
 .clr-field {
@@ -423,4 +434,21 @@ hr {
 .fsb-select button {
 	height: 2em !important;
 	font-weight: var(--font-weight);
+}
+
+tt {
+	font-family: monospace;
+	font-weight: 500;
+}
+
+.settingOnlyText {
+	line-height: var(--settings-text-line-height);
+	white-space: normal;
+}
+
+strong {
+	background-color: var(--font-color);
+	-webkit-text-stroke: 0.67px transparent;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }

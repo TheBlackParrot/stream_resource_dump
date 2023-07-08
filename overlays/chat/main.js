@@ -38,11 +38,16 @@ if(allowedToProceed) {
 	client.connect().catch(console.error);
 }
 
+var fonts;
+$.get("fonts.json", function(data) {
+	fonts = data;
+});
+
 var twitchAccessToken;
 var broadcasterData = {};
 var channelData = {};
 var twitchBadges = [];
-var chatEmotes = {};
+var chatEmotes = (localStorage.getItem("setting_chatShowCommonEmotes") === "true" ? Object.create(commonEmotes) : {});
 
 function setTwitchAccessToken() {
 	if(!allowedToProceed) {
@@ -138,6 +143,7 @@ function setTwitchAccessToken() {
 					}, function(channelResponse) {
 						console.log("got channel information");
 						channelData = channelResponse.data[0];
+						systemMessage(`Connected! Showing chat for **#${broadcasterData.login}**${broadcasterData.login === broadcasterName.display_name ? "" : ` *(a.k.a. ${broadcasterData.display_name})*`}`);
 					})
 				})
 			} else {
@@ -170,6 +176,7 @@ function getGlobalChannelEmotes(broadcasterData) {
 
 			success: function(data) {
 				console.log("got 7tv global emotes");
+				systemMessage("*Fetched global 7TV emotes*");
 				console.log(data);
 
 				for(let i in data.emotes) {
@@ -185,7 +192,8 @@ function getGlobalChannelEmotes(broadcasterData) {
 			},
 
 			error: function(err) {
-				console.log("could not fetch 7tv global emotes");
+				systemMessage("*Unable to fetch global 7TV emotes*");
+				console.log("Unable to fetch global 7TV emotes!");
 				checkIfDone();
 			}
 		});
@@ -202,6 +210,7 @@ function getGlobalChannelEmotes(broadcasterData) {
 
 			success: function(data) {
 				console.log("got bttv emotes");
+				systemMessage("*Fetched global BetterTTV emotes*");
 				console.log(data);
 
 				for(let idx in data) {
@@ -217,7 +226,8 @@ function getGlobalChannelEmotes(broadcasterData) {
 			},
 
 			error: function(err) {
-				console.log("could not fetch bttv channel emotes");
+				console.log("could not fetch global BTTV emotes");
+				systemMessage("*Unable to fetch global BetterTTV emotes*");
 				checkIfDone();
 			}
 		});
@@ -234,6 +244,8 @@ function getGlobalChannelEmotes(broadcasterData) {
 
 			success: function(data) {
 				console.log("got ffz emotes");
+				systemMessage("*Fetched global FrankerFaceZ emotes*");
+
 				for(let setIdx in data.sets) {
 					let emotes = data.sets[setIdx].emoticons;
 
@@ -253,6 +265,7 @@ function getGlobalChannelEmotes(broadcasterData) {
 
 			error: function(err) {
 				console.log("could not fetch ffz global emotes");
+				systemMessage("*Unable to fetch global FrankerFaceZ emotes*");
 				checkIfDone();
 			}
 		});
@@ -272,10 +285,11 @@ function getExternalChannelEmotes(broadcasterData) {
 		console.log("getting 7tv channel emotes...");
 		$.ajax({
 			type: "GET",
-			url: `https://7tv.io/v3/users/twitch/${broadcasterData.id}`,
+			url: `https://7tv.io/v3/users/twitch/${broadcasterData.id}?sigh=${Date.now()}`,
 
 			success: function(data) {
 				console.log("got 7tv emotes");
+				systemMessage("*Fetched channel's 7TV emotes*");
 				console.log(data);
 
 				for(let i in data.emote_set.emotes) {
@@ -290,6 +304,7 @@ function getExternalChannelEmotes(broadcasterData) {
 
 			error: function(err) {
 				console.log("could not fetch 7tv channel emotes");
+				systemMessage("*Unable to fetch channel's 7TV emotes*");
 			}
 		});
 	} else {
@@ -300,10 +315,11 @@ function getExternalChannelEmotes(broadcasterData) {
 		console.log("getting bttv channel emotes...");
 		$.ajax({
 			type: "GET",
-			url: `https://api.betterttv.net/3/cached/users/twitch/${broadcasterData.id}`,
+			url: `https://api.betterttv.net/3/cached/users/twitch/${broadcasterData.id}?sigh=${Date.now()}`,
 
 			success: function(data) {
 				console.log("got bttv emotes");
+				systemMessage("*Fetched channel's BetterTTV emotes*");
 
 				for(let idx in data.sharedEmotes) {
 					let emote = data.sharedEmotes[idx];
@@ -317,6 +333,7 @@ function getExternalChannelEmotes(broadcasterData) {
 
 			error: function(err) {
 				console.log("could not fetch bttv channel emotes");
+				systemMessage("*Unable to fetch channel's BetterTTV emotes*");
 			}
 		});
 	} else {
@@ -327,10 +344,12 @@ function getExternalChannelEmotes(broadcasterData) {
 		console.log("getting ffz channel emotes...");
 		$.ajax({
 			type: "GET",
-			url: `https://api.frankerfacez.com/v1/room/id/${broadcasterData.id}`,
+			url: `https://api.frankerfacez.com/v1/room/id/${broadcasterData.id}?sigh=${Date.now()}`,
 
 			success: function(data) {
 				console.log("got ffz emotes");
+				systemMessage("*Fetched channel's FrankerFaceZ emotes*");
+
 				for(let setIdx in data.sets) {
 					let emotes = data.sets[setIdx].emoticons;
 
@@ -348,35 +367,12 @@ function getExternalChannelEmotes(broadcasterData) {
 
 			error: function(err) {
 				console.log("could not fetch ffz channel emotes");
+				systemMessage("*Unable to fetch channel's FrankerFaceZ emotes*");
 			}
 		});
 	} else {
 		console.log("skipping ffz channel emotes, not enabled");
 	}
-}
-
-function callTwitch(data, callback) {
-	if(!allowedToProceed) {
-		console.log("No Client ID or Secret is set.");
-		return;
-	}
-
-	$.ajax({
-		type: "GET",
-		url: `https://api.twitch.tv/helix/${data.endpoint}`,
-		headers: {
-			"Authorization": `Bearer ${twitchAccessToken}`,
-			"Client-Id": twitchClientId
-		},
-
-		data: data.args,
-
-		success: function(data) {
-			if(typeof callback === "function") {
-				callback(data);
-			}
-		}
-	})	
 }
 
 function getBadgeData(badgeType, badgeID) {

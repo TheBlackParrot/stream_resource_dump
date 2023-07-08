@@ -1,6 +1,11 @@
 $("#sensitive .section").show();
 $("#sideButtons").css("top", parseInt($("#sidebar").css("height")) + 40);
 
+const overlayRevision = 1;
+const lastUpdate = new Date(1688776567287).toISOString();
+$("#revision").text(overlayRevision);
+$("#revisionDate").text(lastUpdate);
+
 function resetEverything() {
 	// old v1
 	let tempID = localStorage.getItem("twitch_clientID");
@@ -59,7 +64,7 @@ function setRow(which, bypassSensitiveCheck) {
 		section.show();
 	}
 }
-setRow("appearance");
+setRow("about");
 
 $(".row").on("click", function(e) {
 	e.preventDefault();
@@ -90,9 +95,9 @@ $("input, select, textarea").on("change", function(e) {
 
 					if(element.attr("data-dependent") === dependent) {
 						if(value) {
-							element.show();
+							element.removeClass("disabled");
 						} else {
-							element.hide();
+							element.addClass("disabled");
 						}
 					}
 				}
