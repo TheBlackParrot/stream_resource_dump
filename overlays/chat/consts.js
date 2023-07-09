@@ -1,4 +1,4 @@
-const overlayRevision = 2;
+const overlayRevision = 3;
 
 const enums = {
 	weight: {
@@ -114,3 +114,5 @@ const commonEmotes = {
 	"SourPls": {service: "default", url: "emotes/SourPls/3x.gif"},
 	"WAYTOODANK": {service: "default", url: "emotes/WAYTOODANK/3x.webp"}
 };
+
+twemoji.base = "twemoji/";

@@ -123,23 +123,49 @@ function normalizeSettingColors(setting) {
 	return `${rgb}${alpha}`;
 }
 
-function setHistoryOpacity() {
-	$(".chatBlock").each(function() {
+/*
 		let opacity = 1;
+		let count = combinedCount - parseInt($(this).attr("data-combinedIdx")) - parseInt(localStorage.getItem("setting_chatHistoryStartAfter"));
+
 		if(localStorage.getItem("setting_chatFadeHistory") === "true") {
-			opacity = 1 - ((combinedCount - parseInt($(this).attr("data-combinedIdx"))) * (parseFloat(localStorage.getItem("setting_chatFadeHistoryStep")) / 100));
+			opacity = (1 - count) * (parseFloat(localStorage.getItem("setting_chatFadeHistoryStep")) / 100);
 			if(opacity < 0) {
 				opacity = 0;
 			}
+		}
+
+		let blur = 0;
+		if(localStorage.getItem("setting_chatBlurHistory") === "true") {
+			blur = count * parseFloat(localStorage.getItem("setting_chatBlurHistoryStep"));
 		}
 
 		if(!opacity) {
 			$(this).remove();
 		}
 
-		//$(this).css("opacity", "");
-		//$(this).attr("style", function(i, s) { return (s || '') + `opacity: ${opacity};` });
-		$(this).css("filter", `opacity(${opacity})`);
+		$(this).css("filter", `opacity(${opacity})${blur === 0 ? "" : `blur(${blur}px)`}`);
+*/
+
+function setHistoryOpacity() {
+	$(".chatBlock").each(function() {
+		let opacity = 1;
+		if(localStorage.getItem("setting_chatFadeHistory") === "true") {
+			opacity = 1 - ((combinedCount - parseInt($(this).attr("data-combinedIdx")) - parseInt(localStorage.getItem("setting_chatHistoryStartAfter")) + 1) * (parseFloat(localStorage.getItem("setting_chatFadeHistoryStep")) / 100));
+			if(opacity < 0) {
+				opacity = 0;
+			}
+		}
+
+		let blur = 0;
+		if(localStorage.getItem("setting_chatBlurHistory") === "true") {
+			blur = (combinedCount - parseInt($(this).attr("data-combinedIdx")) - parseInt(localStorage.getItem("setting_chatHistoryStartAfter")) + 1) * parseFloat(localStorage.getItem("setting_chatBlurHistoryStep"));
+		}
+
+		if(!opacity) {
+			$(this).remove();
+		}
+
+		$(this).css("filter", `opacity(${opacity})${blur === 0 ? "" : `blur(${blur}px)`}`);
 	});
 }
 
@@ -251,6 +277,9 @@ const settingUpdaters = {
 
 	chatFadeHistory: setHistoryOpacity,
 	chatFadeHistoryStep: setHistoryOpacity,
+	chatBlurHistory: setHistoryOpacity,
+	chatBlurHistoryStep: setHistoryOpacity,
+	chatHistoryStartAfter: setHistoryOpacity,
 
 	chatAnimationsInDuration: function(value) {
 		$(":root").get(0).style.setProperty("--animationsInDuration", `${value}s`);
@@ -456,6 +485,41 @@ const settingUpdaters = {
 
 	messageBoldAmount: function(value) {
 		$(":root").get(0).style.setProperty("--messageBoldAmount", `${value}px`);
+	},
+
+	timestampColorAlpha: function(value) {
+		$(":root").get(0).style.setProperty("--timestampColor", normalizeSettingColors("timestampColor"));
+	},
+	timestampUsesGradient: function(value) {
+		if(value === "true") {
+			$(":root").get(0).style.setProperty("--timestampGradient", "linear-gradient(var(--timestampGradientAngle), var(--timestampColorSecondary) -20%, transparent 100%)");
+		} else {
+			$(":root").get(0).style.setProperty("--timestampGradient", "none");
+		}
+	},
+	timestampColorSecondaryAlpha: function(value) {
+		$(":root").get(0).style.setProperty("--timestampColorSecondary", normalizeSettingColors("timestampColorSecondary"));
+	},
+	timestampGradientAngle: function(value) {
+		$(":root").get(0).style.setProperty("--timestampGradientAngle", `${value}deg`);
+	},
+	timestampFont: function(value) {
+		$(":root").get(0).style.setProperty("--timestampFont", value);
+	},
+	timestampFontSize: function(value) {
+		$(":root").get(0).style.setProperty("--timestampFontSize", `${value}pt`);
+	},
+	timestampFontWeight: function(value) {
+		$(":root").get(0).style.setProperty("--timestampFontWeight", value);
+	},
+	timestampFontWeightExtra: function(value) {
+		$(":root").get(0).style.setProperty("--timestampFontWeightExtra", `${value}px`);
+	},
+	timestampLetterSpacing: function(value) {
+		$(":root").get(0).style.setProperty("--timestampLetterSpacing", `${value}px`);
+	},
+	timestampPadding: function(value) {
+		$(":root").get(0).style.setProperty("--timestampPadding", `${value}px`);
 	}
 };
 settingUpdaters.chatBackgroundColor = settingUpdaters.chatBackgroundColorAlpha;
@@ -468,6 +532,8 @@ settingUpdaters.overlayOutlineColor = settingUpdaters.overlayOutlineColorAlpha;
 settingUpdaters.chatDefaultNameColorSecondary = settingUpdaters.chatDefaultNameColorSecondaryAlpha;
 settingUpdaters.pronounsColor = settingUpdaters.pronounsColorAlpha;
 settingUpdaters.pronounsColorSecondary = settingUpdaters.pronounsColorSecondaryAlpha;
+settingUpdaters.timestampColor = settingUpdaters.timestampColorAlpha;
+settingUpdaters.timestampColorSecondary = settingUpdaters.timestampColorSecondaryAlpha;
 
 settingUpdaters["chatHideAccounts"](localStorage.getItem("setting_chatHideAccounts"));
 

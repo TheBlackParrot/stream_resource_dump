@@ -149,7 +149,26 @@ const defaultConfig = {
 	"chatBlockSpacing": "20",
 	"messageBoldAmount": "1.25",
 	"chatShowCommonEmotes": "true",
-	"maxFlagCount": "6"
+	"maxFlagCount": "6",
+	"enableMessageTimestamps": "false",
+	"timestampUsesGradient": "true",
+	"timestampColor": "#808080",
+	"timestampColorAlpha": "1",
+	"timestampColorSecondary": "#FFFFFF",
+	"timestampColorSecondaryAlpha": "1",
+	"timestampGradientAngle": "170",
+	"timestampFont": "Manrope",
+	"timestampFontSize": "12",
+	"timestampFontWeight": "900",
+	"timestampFontWeightExtra": "0.5",
+	"timestampLetterSpacing": "0",
+	"timestampPadding": "10",
+	"timestampFormat": "H:mm:ss",
+	"timestampTracksUptime": "false",
+	"chatBlurHistory": "false",
+	"chatBlurHistoryStep": "0.2",
+	"chatHistoryStartAfter": "3"
+
 };
 
 for(let setting in defaultConfig) {

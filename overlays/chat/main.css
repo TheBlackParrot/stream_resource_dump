@@ -356,3 +356,19 @@ img.emoji {
 	overflow: hidden;
 	width: calc(100vw - calc(var(--chatBlockPadding) * 2) - 90px);
 }
+
+.timestamp {
+	display: inline-block;
+	font-family: var(--timestampFont);
+	font-size: var(--timestampFontSize);
+	font-weight: var(--timestampFontWeight);
+	letter-spacing: var(--timestampLetterSpacing);
+	-webkit-text-stroke: var(--timestampFontWeightExtra) transparent;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-color: var(--timestampColor);
+	background-image: var(--timestampGradient);
+	margin-right: var(--timestampPadding);
+	line-height: var(--messageLineHeight);
+	font-variant: tabular-nums;
+}

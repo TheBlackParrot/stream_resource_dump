@@ -600,6 +600,18 @@ function parseMessage(data) {
 
 	let badgeBlock = $('<div class="badges" style="display: none;"></div>');
 	if(localStorage.getItem("setting_enableTwitchBadges") === "true") {
+		if(localStorage.getItem("setting_enableTwitchSubscriberBadges") === "true" && localStorage.getItem(`setting_enableTwitchFounderBadges`) === "false" && data.user.badges.list) {
+			if("founder" in data.user.badges.list) {
+				let monthPoss = [1, 1, 2, 3, 3, 3, 6, 6, 6, 9, 9, 9];
+				let founderInt = parseInt(data.user.badges.info.founder);
+				if(founderInt > monthPoss.length) {
+					founderInt -= founderInt % 6;
+				}
+
+				data.user.badges.list["subscriber"] = founderInt.toString();			
+			}
+		}
+
 		for(let badgeType in data.user.badges.list) {
 			let showBadge = true;
 			let foundBadge = false;
@@ -608,7 +620,6 @@ function parseMessage(data) {
 				let badgeTypeData = twitchBadgeTypes[checkAgainst];
 				if(badgeTypeData.badges.indexOf(badgeType) !== -1) {
 					foundBadge = true;
-
 					if(localStorage.getItem(`setting_${badgeTypeData.setting}`) === "false") {
 						showBadge = false;
 						break;
@@ -628,9 +639,24 @@ function parseMessage(data) {
 			}
 
 			let badgeData = getBadgeData(badgeType, data.user.badges.list[badgeType]);
-			let url = badgeData.image_url_4x;
-			if(typeof url === "undefined") {
-				url = badgeData.image_url_1x;
+			let url;
+			if(typeof badgeData === "undefined") {
+				// this should only trigger on channels that have founders badges off, and do not have custom sub badges set
+				// twitch ID's these differently compared to custom sub badges
+				for(let i in twitchBadges) {
+					let bdg = twitchBadges[i];
+					if(bdg.set_id === "subscriber") {
+						url = bdg.versions[0].image_url_4x;
+						if(typeof url === "undefined") {
+							url = bdg.versions[0].image_url_1x;
+						}
+					}
+				}
+			} else {
+				url = badgeData.image_url_4x;
+				if(typeof url === "undefined") {
+					url = badgeData.image_url_1x;
+				}
 			}
 
 			let badgeElem = $(`<img src="${url}"/>`);
@@ -989,7 +1015,10 @@ function parseMessage(data) {
 		messageBlock.css("background-image", `linear-gradient(170deg, #fff -50%, ${col} 150%)`);
 	}
 
-	messageBlock = $(twemoji.parse(messageBlock[0]));
+	messageBlock = $(twemoji.parse(messageBlock[0], {
+		folder: 'svg',
+		ext: '.svg'
+	}));
 
 	if(eprww.join("") === "" && localStorage.getItem("setting_chatShowBigEmotes") === "true") {
 		messageBlock.css("font-size", "0pt").css("line-height", "1em").css("letter-spacing", "0px").css("padding-bottom", "8px");
@@ -1023,6 +1052,17 @@ function parseMessage(data) {
 
 	if(typeof wantedCommand === "function") {
 		wantedCommand(data, wantedArgs, rootElement);
+	} else {
+		if(localStorage.getItem("setting_enableMessageTimestamps") === "true") {
+			let timeObj = undefined;
+			if(localStorage.getItem("setting_timestampTracksUptime") === "true") {
+				timeObj = luxon.DateTime.now().diff(luxon.DateTime.fromISO(streamData.started_at));
+			} else {
+				timeObj = luxon.DateTime.now();
+			}
+			let timestampBlock = $(`<div class="timestamp">${timeObj.toFormat(localStorage.getItem("setting_timestampFormat"))}</div>`);
+			messageBlock.prepend(timestampBlock);
+		}
 	}
 
 	let secsVisible = parseFloat(localStorage.getItem("setting_chatRemoveMessageDelay"));
@@ -1049,7 +1089,7 @@ function parseMessage(data) {
 			userBlock.hide();
 		}
 
-		console.log(expectedWidth, maxWidth);
+		//console.log(expectedWidth, maxWidth);
 		return expectedWidth > maxWidth;
 	}
 

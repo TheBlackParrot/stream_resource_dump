@@ -46,6 +46,7 @@ $.get("fonts.json", function(data) {
 var twitchAccessToken;
 var broadcasterData = {};
 var channelData = {};
+var streamData = {"started_at": new Date().toISOString()};
 var twitchBadges = [];
 var chatEmotes = (localStorage.getItem("setting_chatShowCommonEmotes") === "true" ? Object.create(commonEmotes) : {});
 
@@ -144,8 +145,10 @@ function setTwitchAccessToken() {
 						console.log("got channel information");
 						channelData = channelResponse.data[0];
 						systemMessage(`Connected! Showing chat for **#${broadcasterData.login}**${broadcasterData.login === broadcasterName.display_name ? "" : ` *(a.k.a. ${broadcasterData.display_name})*`}`);
-					})
-				})
+
+						getTwitchStreamData();
+					});
+				});
 			} else {
 				console.log(data);
 			}
@@ -153,6 +156,27 @@ function setTwitchAccessToken() {
 	});
 }
 setTwitchAccessToken();
+
+var streamDataTimeout;
+function getTwitchStreamData() {
+	clearTimeout(streamDataTimeout);
+
+	callTwitch({
+		"endpoint": "streams",
+		"args": {
+			"user_id": broadcasterData.id
+		}
+	}, function(streamResponse) {
+		console.log("got stream information");
+		console.log(streamResponse);
+		if(streamResponse.data.length) {
+			streamData = streamResponse.data[0];
+		} else {
+			console.log("stream is not live, checking again in 30 seconds");
+			streamDataTimeout = setTimeout(getTwitchStreamData, 30000);
+		}
+	});
+}
 
 function getGlobalChannelEmotes(broadcasterData) {
 	if(!allowedToProceed) {

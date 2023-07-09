@@ -1,7 +1,7 @@
 $("#sensitive .section").show();
 $("#sideButtons").css("top", parseInt($("#sidebar").css("height")) + 40);
 
-const overlayRevision = 2;
+const overlayRevision = 3;
 const lastUpdate = new Date(1688776567287).toISOString();
 $("#revision").text(overlayRevision);
 $("#revisionDate").text(lastUpdate);

@@ -125,4 +125,15 @@
 	--flagsBorderRadius: 4px;
 	--flagsSize: 22px;
 	--flagsSpacing: 2px;
+
+	--timestampColor: rgba(128, 128, 128, 1);
+	--timestampColorSecondary: rgba(255, 255, 255, 1);
+	--timestampGradientAngle: 170deg;
+	--timestampGradient: linear-gradient(var(--timestampGradientAngle), var(--timestampColorSecondary) -20%, transparent 100%);
+	--timestampFont: "Manrope";
+	--timestampFontSize: 12pt;
+	--timestampFontWeight: 900;
+	--timestampFontWeightExtra: 0.5px;
+	--timestampLetterSpacing: 0px;
+	--timestampPadding: 10px;
 }
