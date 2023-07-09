@@ -148,7 +148,8 @@ const defaultConfig = {
 	"flagsSpacing": "2",
 	"chatBlockSpacing": "20",
 	"messageBoldAmount": "1.25",
-	"chatShowCommonEmotes": "true"
+	"chatShowCommonEmotes": "true",
+	"maxFlagCount": "6"
 };
 
 for(let setting in defaultConfig) {

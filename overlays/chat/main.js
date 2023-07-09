@@ -394,3 +394,12 @@ function getBadgeData(badgeType, badgeID) {
 		}
 	}
 }
+
+$.get(`version.json?sigh=${Date.now()}`, function(data) {
+	let v_msg = `*(**local:** r${overlayRevision}, **remote:** r${data.revision})*`;
+	if(overlayRevision !== data.revision) {
+		systemMessage(`⚠️ Overlay may be out of date! Please refresh your browser source's cache. ${v_msg}`);
+	} else {
+		systemMessage(`✅ Overlay is up to date. ${v_msg}`);
+	}
+});

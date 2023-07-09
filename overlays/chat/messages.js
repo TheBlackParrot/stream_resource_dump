@@ -122,9 +122,14 @@ const chatFuncs = {
 	},
 
 	namesize: function(data, args) {
-		let size = settings.limits.names.size.default;
+		let hardcodedDefaults = {
+			min: 14,
+			max: 18
+		};
+		let size = 16;
+
 		if(!isNaN(parseFloat(args[0]))) {
-			size = Math.max(Math.min(parseFloat(args[0]), settings.limits.names.size.max), settings.limits.names.size.min);
+			size = Math.max(Math.min(parseFloat(args[0]), hardcodedDefaults.max), hardcodedDefaults.min);
 		}
 
 		console.log(`set name size for ${data.user.username} to ${size}pt`)
@@ -141,9 +146,14 @@ const chatFuncs = {
 	},
 
 	namespacing: function(data, args) {
-		let val = settings.limits.names.spacing.default;
+		let hardcodedDefaults = {
+			min: -4,
+			max: 5
+		};
+		let val = 1;
+
 		if(!isNaN(parseFloat(args[0]))) {
-			val = Math.max(Math.min(parseFloat(args[0]), settings.limits.names.spacing.max), settings.limits.names.spacing.min);
+			val = Math.max(Math.min(parseFloat(args[0]), hardcodedDefaults.max), hardcodedDefaults.min);
 		}
 
 		console.log(`set name character spacing for ${data.user.username} to ${val}px`)
@@ -163,9 +173,14 @@ const chatFuncs = {
 	},
 
 	msgsize: function(data, args) {
-		let size = settings.limits.messages.size.default;
+		let hardcodedDefaults = {
+			min: 14,
+			max: 18
+		};
+		let size = 16;
+
 		if(!isNaN(parseFloat(args[0]))) {
-			size = Math.max(Math.min(parseFloat(args[0]), settings.limits.messages.size.max), settings.limits.messages.size.min);
+			size = Math.max(Math.min(parseFloat(args[0]), hardcodedDefaults.max), hardcodedDefaults.min);
 		}
 
 		console.log(`set message size for ${data.user.username} to ${size}pt`)
@@ -174,9 +189,14 @@ const chatFuncs = {
 	},
 
 	msgspacing: function(data, args) {
-		let val = settings.limits.messages.spacing.default;
+		let hardcodedDefaults = {
+			min: -2,
+			max: 2
+		};
+		let val = 0;
+
 		if(!isNaN(parseFloat(args[0]))) {
-			val = Math.max(Math.min(parseFloat(args[0]), settings.limits.messages.spacing.max), settings.limits.messages.spacing.min);
+			val = Math.max(Math.min(parseFloat(args[0]), hardcodedDefaults.max), hardcodedDefaults.min);
 		}
 
 		console.log(`set message character spacing for ${data.user.username} to ${val}px`)
@@ -237,9 +257,9 @@ const chatFuncs = {
 	},
 
 	nameangle: function(data, args) {
-		let angle = settings.limits.names.gradAngle.default;
+		let angle = 170;
 		if(!isNaN(parseFloat(args[0]))) {
-			angle = Math.max(Math.min(parseFloat(args[0]), settings.limits.names.gradAngle.max), settings.limits.names.gradAngle.min);
+			angle = Math.max(Math.min(parseFloat(args[0]), 360), 0);
 		}
 
 		console.log(`set name angle for ${data.user.username} to ${angle}deg`)
@@ -277,7 +297,7 @@ const chatFuncs = {
 	"flags": function(data, args) {
 		let flags = [];
 		for(let idx = 0; idx < args.length; idx++) {
-			if(flags.length >= settings.limits.flags.max) {
+			if(flags.length >= parseInt(localStorage.getItem("setting_maxFlagCount"))) {
 				break;
 			}
 
@@ -620,12 +640,12 @@ function parseMessage(data) {
 	}
 	userBlock.append(badgeBlock);
 
+	let flagBlock = $('<div class="flags" style="display: none;"></div>');
 	if(!localStorage.getItem(`flags_${data.user.id}`)) { localStorage.setItem(`flags_${data.user.id}`, ""); }
 	if(localStorage.getItem("setting_enableFlags") === "true") {
 		let flags = localStorage.getItem(`flags_${data.user.id}`).split(",");
 
 		if(flags.length) {
-			let flagBlock = $('<div class="flags" style="display: none;"></div>');
 			for(let flagIdx in flags) {
 				let flag = flags[flagIdx];
 				if(!flag) {
@@ -641,8 +661,8 @@ function parseMessage(data) {
 		}
 	}
 
+	let pronounsBlock = $('<div class="pronouns" style="display: none;"></div>');
 	if(localStorage.getItem("setting_enablePronouns") === "true") {
-		let pronounsBlock = $('<div class="pronouns" style="display: none;"></div>');
 		let pronouns = localStorage.getItem(`pn_${data.user.id}`);
 		let pronounsExpiry = parseInt(localStorage.getItem(`pn_${data.user.id}_expiry`));
 		let recachePronouns = false;
@@ -676,8 +696,8 @@ function parseMessage(data) {
 		userBlock.append(pronounsBlock);
 	}
 
+	let pfpBlock = $('<img class="pfp" src="" style="display: none;"/>');
 	if(localStorage.getItem("setting_enableAvatars") === "true") {
-		let pfpBlock = $('<img class="pfp" src="" style="display: none;"/>');
 		let pfpURL = localStorage.getItem(`pfp_${data.user.id}`);
 		let pfpExpiry = parseInt(localStorage.getItem(`pfp_${data.user.id}_expiry`));
 		let recachePfp = false;
@@ -778,12 +798,26 @@ function parseMessage(data) {
 		}
 	}
 
+	$(":root").get(0).style.setProperty(`--nameSize${data.user.id}`, localStorage.getItem(`namesize_${data.user.id}`));
+	if(localStorage.getItem("setting_chatNameFontSize") !== "16") {
+		let scale = parseFloat(localStorage.getItem("setting_chatNameFontSize")) / 16;
+		if(localStorage.getItem(`namesize_${data.user.id}`) !== "var(--nameFontSize)") {
+			$(":root").get(0).style.setProperty(`--nameSize${data.user.id}`, `calc(${localStorage.getItem(`namesize_${data.user.id}`)} * ${scale})`);
+		}
+	}
+
+	$(":root").get(0).style.setProperty(`--nameSpacing${data.user.id}`, localStorage.getItem(`namespacing_${data.user.id}`));
+	if(localStorage.getItem("setting_chatNameLetterSpacing") !== "1") {
+		let scale = parseFloat(localStorage.getItem("setting_chatNameLetterSpacing"));
+		if(localStorage.getItem(`namespacing_${data.user.id}`) !== "var(--nameLetterSpacing)") {
+			$(":root").get(0).style.setProperty(`--nameSpacing${data.user.id}`, `calc(${localStorage.getItem(`namespacing_${data.user.id}`)} * ${scale})`);
+		}
+	}
+
 	$(":root").get(0).style.setProperty(`--nameColor${data.user.id}`, localStorage.getItem(`color_${data.user.id}`));
 	$(":root").get(0).style.setProperty(`--nameFont${data.user.id}`, localStorage.getItem(`namefont_${data.user.id}`));
 	$(":root").get(0).style.setProperty(`--nameWeight${data.user.id}`, localStorage.getItem(`nameweight_${data.user.id}`));
-	$(":root").get(0).style.setProperty(`--nameSize${data.user.id}`, localStorage.getItem(`namesize_${data.user.id}`));
 	$(":root").get(0).style.setProperty(`--nameStyle${data.user.id}`, localStorage.getItem(`namestyle_${data.user.id}`));
-	$(":root").get(0).style.setProperty(`--nameSpacing${data.user.id}`, localStorage.getItem(`namespacing_${data.user.id}`));
 	$(":root").get(0).style.setProperty(`--nameTransform${data.user.id}`, localStorage.getItem(`nametransform_${data.user.id}`));
 	$(":root").get(0).style.setProperty(`--nameVariant${data.user.id}`, localStorage.getItem(`namevariant_${data.user.id}`));
 	$(":root").get(0).style.setProperty(`--nameColorSecondary${data.user.id}`, localStorage.getItem(`color2_${data.user.id}`));
@@ -825,9 +859,23 @@ function parseMessage(data) {
 	if(!localStorage.getItem(`msgweight_${data.user.id}`)) { localStorage.setItem(`msgweight_${data.user.id}`, "var(--messageFontWeight)"); }
 
 	$(":root").get(0).style.setProperty(`--msgFont${data.user.id}`, localStorage.getItem(`msgfont_${data.user.id}`));
-	$(":root").get(0).style.setProperty(`--msgSize${data.user.id}`, localStorage.getItem(`msgsize_${data.user.id}`));
-	$(":root").get(0).style.setProperty(`--msgSpacing${data.user.id}`, localStorage.getItem(`msgspacing_${data.user.id}`));
 	$(":root").get(0).style.setProperty(`--msgWeight${data.user.id}`, localStorage.getItem(`msgweight_${data.user.id}`));
+
+	$(":root").get(0).style.setProperty(`--msgSize${data.user.id}`, localStorage.getItem(`msgsize_${data.user.id}`));
+	if(localStorage.getItem("setting_chatMessageFontSize") !== "16") {
+		let scale = parseFloat(localStorage.getItem("setting_chatMessageFontSize")) / 16;
+		if(localStorage.getItem(`msgsize_${data.user.id}`) !== "var(--messageFontSize)") {
+			$(":root").get(0).style.setProperty(`--msgSize${data.user.id}`, `calc(${localStorage.getItem(`msgsize_${data.user.id}`)} * ${scale})`);
+		}
+	}
+
+	$(":root").get(0).style.setProperty(`--msgSpacing${data.user.id}`, localStorage.getItem(`msgspacing_${data.user.id}`));
+	if(localStorage.getItem("setting_messageLetterSpacing") !== "0") {
+		let scale = parseFloat(localStorage.getItem("setting_messageLetterSpacing"));
+		if(localStorage.getItem(`msgspacing_${data.user.id}`) !== "var(--messageLetterSpacing)") {
+			$(":root").get(0).style.setProperty(`--msgSpacing${data.user.id}`, `calc(${localStorage.getItem(`msgspacing_${data.user.id}`)} * ${scale})`);
+		}
+	}
 
 	let messageBlock = $('<div class="message"></div>');
 	messageBlock.css("font-family", `var(--msgFont${data.user.id})`);
@@ -973,8 +1021,6 @@ function parseMessage(data) {
 		rootElement.addClass("highlighted");
 	}
 
-	$("#wrapper").append(rootElement);
-
 	if(typeof wantedCommand === "function") {
 		wantedCommand(data, wantedArgs, rootElement);
 	}
@@ -985,6 +1031,35 @@ function parseMessage(data) {
 	} else {
 		checkForExternalBadges(data, badgeBlock);
 	}
+
+	// checking to see if things end up overflowing
+	let widthTest = function() {
+		$("#testWrapper").append(rootElement);
+
+		let isHidden = userBlock.is(":hidden");
+		if(isHidden) {
+			userBlock.show();
+		}
+
+		let expectedWidth = userBlock.width();
+		let maxWidth = $("#wrapper").width() - (parseInt($(":root").get(0).style.getPropertyValue("--chatBlockPadding")) * 2);
+		$("#testWrapper").empty();
+
+		if(isHidden) {
+			userBlock.hide();
+		}
+
+		console.log(expectedWidth, maxWidth);
+		return expectedWidth > maxWidth;
+	}
+
+	if(widthTest()) { flagBlock.hide(); }
+	if(widthTest()) { badgeBlock.hide(); }
+	if(widthTest()) { pfpBlock.hide(); }
+	if(widthTest()) { pronounsBlock.hide(); }
+	if(widthTest()) { nameBlock.addClass("clip"); }
+
+	$("#wrapper").append(rootElement);
 
 	if(secsVisible) {
 		setTimeout(function() {

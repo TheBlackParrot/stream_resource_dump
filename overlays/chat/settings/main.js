@@ -1,7 +1,7 @@
 $("#sensitive .section").show();
 $("#sideButtons").css("top", parseInt($("#sidebar").css("height")) + 40);
 
-const overlayRevision = 1;
+const overlayRevision = 2;
 const lastUpdate = new Date(1688776567287).toISOString();
 $("#revision").text(overlayRevision);
 $("#revisionDate").text(lastUpdate);
@@ -145,3 +145,11 @@ $("#resetOverlayButton").on("mouseup", function(e) {
 		elem.text("Reset to Defaults");
 	}, 5000);
 })
+
+$.get(`version.json?sigh=${Date.now()}`, function(data) {
+	if(overlayRevision !== data.revision) {
+		$("#updateString").text(`Overlay may be out of date! Please refresh your browser source's cache.`);
+	} else {
+		$("#updateString").text(`Overlay is up to date.`);
+	}
+});

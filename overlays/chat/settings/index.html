@@ -691,6 +691,14 @@
 							<input checked id="enableFlags" type="checkbox" data-dependent="flags"/> <span class="settingInfo">Enable identity flags</span>
 						</div>
 					</div>
+					<div class="setting" data-dependent="flags">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Maximum flags to show</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="maxFlagCount" min="1" max="16" step="1" value="6"/>
+						</div>
+					</div>
 				</div>
 				<div class="part">
 					<h1>Appearance</h1>
@@ -1280,9 +1288,11 @@
 			<div class="section" data-content="about">
 				<div class="part">
 					<h1>TheBlackParrot's Chat Overlay</h1>
-					<div class="setting">
-						<div class="settingFullWidth" style="text-align: center;">
+					<div class="setting settingOnlyText">
+						<div class="settingFullWidth" style="text-align: center; margin-bottom: 4px;">
 							<tt>r<span id="revision"></span> -- <span id="revisionDate"></span></tt>
+						</div>
+						<div class="settingFullWidth" style="text-align: center; margin-top: 4px;" id="updateString">
 						</div>
 					</div>
 					<hr/>

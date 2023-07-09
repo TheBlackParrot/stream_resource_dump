@@ -9,7 +9,7 @@ body {
 
 #wrapper {
 	position: fixed;
-	min-width: 500px;
+	width: 100%;
 }
 
 .chatBlock {
@@ -28,7 +28,7 @@ body {
 .chatBlock:last-child {
 	margin-bottom: var(--chatBlockPadding);
 }
-.badges, .pronouns, .message, .pfp, .flags, .bsrArt, .bsrMapInfo, .bsrExtraInfo, .loadingMsg, .fa-spinner, .fa-times {
+.badges, .pronouns, .message, .pfp, .flags {
 	filter: var(--effectFilters);
 }
 
@@ -44,7 +44,7 @@ body {
 }
 
 .chatBlock:first-child .userInfo {
-	display: block !important;
+	display: inline-block !important;
 }
 
 .badges, .flags {
@@ -52,7 +52,11 @@ body {
 }
 .badges img {
 	width: var(--badgeSize);
+	min-width: var(--badgeSize);
+	max-width: var(--badgeSize);
 	height: var(--badgeSize);
+	min-height: var(--badgeSize);
+	max-height: var(--badgeSize);
 	margin-right: var(--badgeSpacing);
 	border-radius: var(--badgeBorderRadius);
 }
@@ -63,7 +67,11 @@ body {
 
 .flag {
 	width: var(--flagsSize);
+	min-width: var(--flagsSize);
+	max-width: var(--flagsSize);
 	height: var(--flagsSize);
+	min-height: var(--flagsSize);
+	max-height: var(--flagsSize);
 	background-size: cover;
     background-position: center;
     border-radius: var(--flagsBorderRadius);
@@ -153,6 +161,11 @@ tt, code, pre {
 
 .pfp {
 	width: var(--avatarSize);
+	min-width: var(--avatarSize);
+	max-width: var(--avatarSize);
+	height: var(--avatarSize);
+	min-height: var(--avatarSize);
+	max-height: var(--avatarSize);
     margin-right: 10px;
     vertical-align: middle;
     border-radius: var(--avatarBorderRadius);
@@ -172,6 +185,8 @@ tt, code, pre {
 	margin-top: 12px;
 	white-space: nowrap;
 	margin-bottom: 12px;
+	filter: var(--effectFilters);
+	overflow: hidden;
 }
 
 .loading {
@@ -319,4 +334,25 @@ img.emoji {
    width: 1em;
    font-size: 1em;
    vertical-align: -0.15em;
+}
+
+#testWrapper {
+	overflow: hidden;
+	white-space: nowrap;
+	position: fixed;
+	top: 200vw;
+}
+
+.clip {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	width: calc(100vw - calc(var(--chatBlockPadding) * 2));
+}
+
+.bsrMapInfo div {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	width: calc(100vw - calc(var(--chatBlockPadding) * 2) - 90px);
 }
