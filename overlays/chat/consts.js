@@ -1,4 +1,4 @@
-const overlayRevision = 3;
+const overlayRevision = 4;
 
 const enums = {
 	weight: {

@@ -1020,7 +1020,8 @@ function parseMessage(data) {
 		ext: '.svg'
 	}));
 
-	if(eprww.join("") === "" && localStorage.getItem("setting_chatShowBigEmotes") === "true") {
+	let hasBigEmotes = (eprww.join("") === "" && localStorage.getItem("setting_chatShowBigEmotes") === "true");
+	if(hasBigEmotes) {
 		messageBlock.css("font-size", "0pt").css("line-height", "1em").css("letter-spacing", "0px").css("padding-bottom", "8px");
 		messageBlock.children(".emote").css("font-size", "var(--bigEmoteSize)").css("padding", "0px");
 		messageBlock.children(".emoji").css("font-size", "var(--bigEmoteSize)");
@@ -1053,7 +1054,19 @@ function parseMessage(data) {
 	if(typeof wantedCommand === "function") {
 		wantedCommand(data, wantedArgs, rootElement);
 	} else {
+		let addTimestamp = false;
+
 		if(localStorage.getItem("setting_enableMessageTimestamps") === "true") {
+			if(hasBigEmotes) {
+				if(localStorage.getItem("setting_hideTimestampsOnBigEmotes") === "false") {
+					addTimestamp = true;
+				}
+			} else {
+				addTimestamp = true;
+			}
+		}
+
+		if(addTimestamp) {
 			let timeObj = undefined;
 			if(localStorage.getItem("setting_timestampTracksUptime") === "true") {
 				timeObj = luxon.DateTime.now().diff(luxon.DateTime.fromISO(streamData.started_at));

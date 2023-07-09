@@ -167,7 +167,8 @@ const defaultConfig = {
 	"timestampTracksUptime": "false",
 	"chatBlurHistory": "false",
 	"chatBlurHistoryStep": "0.2",
-	"chatHistoryStartAfter": "3"
+	"chatHistoryStartAfter": "3",
+	"hideTimestampsOnBigEmotes": "true"
 
 };
 
