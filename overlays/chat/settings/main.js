@@ -1,8 +1,8 @@
 $("#sensitive .section").show();
 $("#sideButtons").css("top", parseInt($("#sidebar").css("height")) + 40);
 
-const overlayRevision = 4;
-const lastUpdate = new Date(1688898389238).toISOString();
+const overlayRevision = 5;
+const lastUpdate = new Date(1689415047814).toISOString();
 $("#revision").text(overlayRevision);
 $("#revisionDate").text(lastUpdate);
 
@@ -36,9 +36,29 @@ function settingsCheck() {
 			// user probably has keys, move them over
 			resetEverything();
 		}
+	} else {
+		if(version === 1) {
+			console.log("merging old alpha settings into color settings...");
+			let sets = Object.keys(localStorage);
+
+			for(let i in sets) {
+				let setting = sets[i];
+				console.log(`checking ${setting}...`);
+
+				if(setting.indexOf("setting_") !== -1 && setting.indexOf("Alpha") !== -1) {
+					console.log(`${setting} is an alpha setting`);
+					let val = Math.round(parseFloat(localStorage.getItem(setting)) * 255).toString(16).padStart(2, "0");
+					let nonAlphaSetting = setting.replace("Alpha", "");
+					let old = localStorage.getItem(nonAlphaSetting);
+
+					localStorage.setItem(nonAlphaSetting, `${old}${val}`);
+					localStorage.removeItem(setting);
+				}
+			}
+		}
 	}
 
-	localStorage.setItem("setting_version", "1");
+	localStorage.setItem("setting_version", "2");
 }
 settingsCheck();
 
@@ -135,8 +155,11 @@ $("#resetOverlayButton").on("mouseup", function(e) {
 	e.preventDefault();
 	if($(this).text() === "Are you sure?") {
 		resetEverything();
-		localStorage.setItem("setting_windowReload", Date.now());
-		location.reload();
+		
+		setTimeout(function() {
+			localStorage.setItem("setting_windowReload", Date.now());
+			location.reload();
+		}, 100);
 	}
 
 	$(this).text("Are you sure?");

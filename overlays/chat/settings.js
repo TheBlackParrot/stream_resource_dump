@@ -171,7 +171,10 @@ function setHistoryOpacity() {
 
 const settingUpdaters = {
 	chatHideAccounts: function(value) {
-		hideAccounts = value.split("\n");
+		hideAccounts = [];
+		if(value) {
+			hideAccounts = value.split("\n");
+		}
 	},
 
 	enable7TVGlobalEmotes: refreshExternalStuff,
@@ -197,21 +200,23 @@ const settingUpdaters = {
 		refreshExternalStuff();	
 	},
 	windowReload: function(value) {
-		location.reload();
+		setTimeout(function() {
+			location.reload();
+		}, 100);
 	},
 
-	chatBackgroundColorAlpha: function(value) {
-		$(":root").get(0).style.setProperty("--backgroundColor", normalizeSettingColors("chatBackgroundColor"));
+	chatBackgroundColor: function(value) {
+		$(":root").get(0).style.setProperty("--backgroundColor", value);
 	},
-	chatHighlightBackgroundColorAlpha: function(value) {
-		$(":root").get(0).style.setProperty("--highlightBackgroundColor", normalizeSettingColors("chatHighlightBackgroundColor"));
-		$(":root").get(0).style.setProperty("--highlightBorderColor", localStorage.getItem("setting_chatHighlightBackgroundColor"));
+	chatHighlightBackgroundColor: function(value) {
+		$(":root").get(0).style.setProperty("--highlightBackgroundColor", value);
+		$(":root").get(0).style.setProperty("--highlightBorderColor", localStorage.getItem("setting_chatHighlightBackgroundColor").substring(0, 7));
 	},
-	chatDefaultNameColorAlpha: function(value) {
-		$(":root").get(0).style.setProperty("--defaultNameColor", normalizeSettingColors("chatDefaultNameColor"));
+	chatDefaultNameColor: function(value) {
+		$(":root").get(0).style.setProperty("--defaultNameColor", value);
 	},
-	chatMessageColorAlpha: function(value) {
-		$(":root").get(0).style.setProperty("--messageColor", normalizeSettingColors("chatMessageColor"));
+	chatMessageColor: function(value) {
+		$(":root").get(0).style.setProperty("--messageColor", value);
 	},
 
 	chatNameFont: function(value) {
@@ -250,8 +255,8 @@ const settingUpdaters = {
 			$(":root").get(0).style.setProperty("--chatBlockOutline", "none");
 		}
 	},
-	chatOutlinesColorAlpha: function(value) {
-		$(":root").get(0).style.setProperty("--chatBlockOutlineColor", normalizeSettingColors("chatOutlinesColor"));
+	chatOutlinesColor: function(value) {
+		$(":root").get(0).style.setProperty("--chatBlockOutlineColor", value);
 	},
 	chatOutlinesSize: function(value) {
 		$(":root").get(0).style.setProperty("--chatBlockOutlineSize", `${value}px`);
@@ -294,8 +299,15 @@ const settingUpdaters = {
 	},
 
 	testMessage: function(value) {
-		let exMsg = "Hello there! This is a fake message so that you can see what your chat settings look like! Have fun! AaBbCcDd EeFfGgHh IiJjKkLl MmNnOoPp QqRrSsTt UuVvWwXx YyZz 0123456789";
-		let msg = `@badge-info=;badges=broadcaster/1;client-nonce=balls;display-name=${broadcasterData.display_name};emotes=;first-msg=0;flags=;id=1234-abcd;mod=0;returning-chatter=0;room-id=${broadcasterData.id};subscriber=0;tmi-sent-ts=${Date.now()};turbo=0;user-id=2;user-type= :${broadcasterData.login}!${broadcasterData.login}@${broadcasterData.login}.tmi.twitch.tv PRIVMSG #${broadcasterData.login} :${exMsg}`;
+		let col = Math.floor(Math.random() * 16777216);
+		let r = ((col >> 16) & 0xFF).toString(16).padStart(2, "0");
+		let g = ((col >> 8) & 0xFF).toString(16).padStart(2, "0");
+		let b = (col & 0xFF).toString(16).padStart(2, "0");
+
+		//info=subscriber/25;badges=broadcaster/1,subscriber/3024;client-nonce=d101a84203af3f39502904e6a317672c;color=#8A2BE2;display-name=TheBlackParrot;emotes=305954156:11-18/25:5-9;first-msg=0;flags=;id=7f097686-fb53-4a0a-97d6-ee90ff0d3a05;mod=0;returning-chatter=0;room-id=43464015;subscriber=1;tmi-sent-ts=1689412906804;turbo=0;user-id=43464015;user-type= :theblackparrot!theblackparrot@theblackparrot.tmi.twitch.tv PRIVMSG #theblackparrot :test Kappa PogChamp
+
+		let exMsg = "Hello there! This is a fake message so that you can see what your chat settings look like! Have fun! AaBbCcDd EeFfGgHh IiJjKkLl MmNnOoPp QqRrSsTt UuVvWwXx YyZz 0123456789 Also, look! Emotes! Kappa PogChamp catJAM";
+		let msg = `@badge-info=;badges=broadcaster/1;client-nonce=balls;display-name=${broadcasterData.display_name};emotes=305954156:197-204/25:191-195;first-msg=0;flags=;id=1234-abcd;mod=0;returning-chatter=0;room-id=${broadcasterData.id};subscriber=0;tmi-sent-ts=${Date.now()};turbo=0;user-id=-1;user-type=;color=#${r}${g}${b} :${broadcasterData.login}!${broadcasterData.login}@${broadcasterData.login}.tmi.twitch.tv PRIVMSG #${broadcasterData.login} :${exMsg}`;
 		client._onMessage({
 			data: msg
 		});
@@ -315,12 +327,10 @@ const settingUpdaters = {
 		}
 
 		if(pos[1] === "left") {
-			$("#wrapper").css("left", "0px");
-			$("#wrapper").css("text-align", "left");
+			$("#wrapper").removeClass("right").addClass("left");
 			$(":root").get(0).style.setProperty("--bsrInfoDirection", "ltr");
 		} else {
-			$("#wrapper").css("right", "0px");
-			$("#wrapper").css("text-align", "right");
+			$("#wrapper").removeClass("left").addClass("right");
 			$(":root").get(0).style.setProperty("--bsrInfoDirection", "rtl");
 		}
 	},
@@ -352,8 +362,8 @@ const settingUpdaters = {
 		}
 	},
 
-	overlayShadowColorAlpha: function(value) {
-		$(":root").get(0).style.setProperty("--overlayShadowColor", normalizeSettingColors("overlayShadowColor"));
+	overlayShadowColor: function(value) {
+		$(":root").get(0).style.setProperty("--overlayShadowColor", value);
 	},
 	overlayShadowXOffset: function(value) {
 		$(":root").get(0).style.setProperty("--overlayShadowXOffset", `${value}px`);
@@ -364,8 +374,8 @@ const settingUpdaters = {
 	overlayShadowBlurRadius: function(value) {
 		$(":root").get(0).style.setProperty("--overlayShadowBlurRadius", `${value}px`);
 	},
-	overlayOutlineColorAlpha: function(value) {
-		$(":root").get(0).style.setProperty("--overlayOutlineColor", normalizeSettingColors("overlayOutlineColor"));
+	overlayOutlineColor: function(value) {
+		$(":root").get(0).style.setProperty("--overlayOutlineColor", value);
 	},
 	overlayOutlineSize: function(value) {
 		$(":root").get(0).style.setProperty("--overlayOutlineSize", `${value}px`);
@@ -414,8 +424,8 @@ const settingUpdaters = {
 		$(":root").get(0).style.setProperty("--nameFontWeightExtra", `${value}px`);
 	},
 
-	chatDefaultNameColorSecondaryAlpha: function(value) {
-		$(":root").get(0).style.setProperty("--defaultNameColorSecondary", normalizeSettingColors("chatDefaultNameColorSecondary"));
+	chatDefaultNameColorSecondary: function(value) {
+		$(":root").get(0).style.setProperty("--defaultNameColorSecondary", value);
 	},
 	chatNameGradientAngle: function(value) {
 		$(":root").get(0).style.setProperty("--nameGradientAngle", `${value}deg`);
@@ -427,8 +437,8 @@ const settingUpdaters = {
 		$(":root").get(0).style.setProperty("--messageLetterSpacing", `${value}px`);
 	},
 
-	pronounsColorAlpha: function(value) {
-		$(":root").get(0).style.setProperty("--pronounsColor", normalizeSettingColors("pronounsColor"));
+	pronounsColor: function(value) {
+		$(":root").get(0).style.setProperty("--pronounsColor", value);
 	},
 	pronounsUsesGradient: function(value) {
 		if(value === "true") {
@@ -437,8 +447,8 @@ const settingUpdaters = {
 			$(":root").get(0).style.setProperty("--pronounsGradient", "none");
 		}
 	},
-	pronounsColorSecondaryAlpha: function(value) {
-		$(":root").get(0).style.setProperty("--pronounsColorSecondary", normalizeSettingColors("pronounsColorSecondary"));
+	pronounsColorSecondary: function(value) {
+		$(":root").get(0).style.setProperty("--pronounsColorSecondary", value);
 	},
 	pronounsGradientAngle: function(value) {
 		$(":root").get(0).style.setProperty("--pronounsGradientAngle", `${value}deg`);
@@ -487,8 +497,8 @@ const settingUpdaters = {
 		$(":root").get(0).style.setProperty("--messageBoldAmount", `${value}px`);
 	},
 
-	timestampColorAlpha: function(value) {
-		$(":root").get(0).style.setProperty("--timestampColor", normalizeSettingColors("timestampColor"));
+	timestampColor: function(value) {
+		$(":root").get(0).style.setProperty("--timestampColor", value);
 	},
 	timestampUsesGradient: function(value) {
 		if(value === "true") {
@@ -497,8 +507,8 @@ const settingUpdaters = {
 			$(":root").get(0).style.setProperty("--timestampGradient", "none");
 		}
 	},
-	timestampColorSecondaryAlpha: function(value) {
-		$(":root").get(0).style.setProperty("--timestampColorSecondary", normalizeSettingColors("timestampColorSecondary"));
+	timestampColorSecondary: function(value) {
+		$(":root").get(0).style.setProperty("--timestampColorSecondary", value);
 	},
 	timestampGradientAngle: function(value) {
 		$(":root").get(0).style.setProperty("--timestampGradientAngle", `${value}deg`);
@@ -520,20 +530,29 @@ const settingUpdaters = {
 	},
 	timestampPadding: function(value) {
 		$(":root").get(0).style.setProperty("--timestampPadding", `${value}px`);
+	},
+
+	chatMessageUserInfoBackgroundColor: function(value) {
+		$(":root").get(0).style.setProperty("--userInfoBackgroundColor", value);
+	},
+
+	chatMessageUserInfoElementPadding: function(value) {
+		$(":root").get(0).style.setProperty("--userInfoPadding", `${value}px`);
+	},
+	chatMessageUserInfoElementBorderRadius: function(value) {
+		$(":root").get(0).style.setProperty("--userInfoBorderRadius", `${value}px`);
+	},
+	chatBlockWidth: function(value) {
+		$(":root").get(0).style.setProperty("--chatBlockWidth", value);
+	},
+	applyBorderRadiusToSubBadges: function(value) {
+		if(value === "true") {
+			$(":root").get(0).style.setProperty("--subBadgeBorderRadius", "var(--badgeBorderRadius)");
+		} else {
+			$(":root").get(0).style.setProperty("--subBadgeBorderRadius", "0px");
+		}
 	}
 };
-settingUpdaters.chatBackgroundColor = settingUpdaters.chatBackgroundColorAlpha;
-settingUpdaters.chatHighlightBackgroundColor = settingUpdaters.chatHighlightBackgroundColorAlpha;
-settingUpdaters.chatDefaultNameColor = settingUpdaters.chatDefaultNameColorAlpha;
-settingUpdaters.chatMessageColor = settingUpdaters.chatMessageColorAlpha;
-settingUpdaters.chatOutlinesColor = settingUpdaters.chatOutlinesColorAlpha;
-settingUpdaters.overlayShadowColor = settingUpdaters.overlayShadowColorAlpha;
-settingUpdaters.overlayOutlineColor = settingUpdaters.overlayOutlineColorAlpha;
-settingUpdaters.chatDefaultNameColorSecondary = settingUpdaters.chatDefaultNameColorSecondaryAlpha;
-settingUpdaters.pronounsColor = settingUpdaters.pronounsColorAlpha;
-settingUpdaters.pronounsColorSecondary = settingUpdaters.pronounsColorSecondaryAlpha;
-settingUpdaters.timestampColor = settingUpdaters.timestampColorAlpha;
-settingUpdaters.timestampColorSecondary = settingUpdaters.timestampColorSecondaryAlpha;
 
 settingUpdaters["chatHideAccounts"](localStorage.getItem("setting_chatHideAccounts"));
 

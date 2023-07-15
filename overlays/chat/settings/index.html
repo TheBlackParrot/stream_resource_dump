@@ -9,11 +9,10 @@
 	<link rel="stylesheet" type="text/css" href="coloris.min.css"/>
 	<script src="coloris.min.js"></script>
 	<script>
-		// i'll turn alpha back on in a future update
 		Coloris({
 			theme: "polaroid",
 			themeMode: "dark",
-			alpha: false
+			alpha: true
 		});
 	</script>
 
@@ -35,7 +34,6 @@
 			<hr/>
 			<div class="row" data-tab="appearance"><i class="fas fa-palette"></i>Appearance</div>
 			<div class="row" data-tab="effects"><i class="fas fa-magic"></i>Effects</div>
-			<div class="row" data-tab="layout"><i class="fas fa-ruler-combined"></i>Layout</div>
 			<hr/>
 			<div class="row" data-tab="avatars"><i class="fas fa-smile"></i>Avatars</div>
 			<div class="row" data-tab="badges"><i class="fas fa-square"></i>Badges</div>
@@ -49,13 +47,20 @@
 		<div id="settings">
 			<div class="section" data-content="appearance">
 				<div class="part">
+					<div class="setting">
+						<div class="settingFullWidth">
+							<input checked id="allowUserCustomizations" type="checkbox"/> <span class="settingInfo">Allow chatters to customize personal settings</span>
+						</div>
+					</div>
+				</div>
+				<div class="part">
 					<h1>Background</h1>
 					<div class="setting">
 						<div class="settingHalfWidthLeft">
 							<span class="settingInfo">Background color</span>
 						</div>
 						<div class="settingHalfWidthRight">
-							<input id="chatBackgroundColor" type="text" data-coloris value="#000000"/><input type="number" id="chatBackgroundColorAlpha" min="0" max="1" step="0.01" value="0"/>
+							<input id="chatBackgroundColor" type="text" data-coloris value="#00000000"/>
 						</div>
 					</div>
 					<div class="setting">
@@ -63,7 +68,15 @@
 							<span class="settingInfo">Message highlight color</span>
 						</div>
 						<div class="settingHalfWidthRight">
-							<input id="chatHighlightBackgroundColor" type="text" data-coloris value="#FFFFFF"/><input type="number" id="chatHighlightBackgroundColorAlpha" min="0" max="1" step="0.01" value="0.25"/>
+							<input id="chatHighlightBackgroundColor" type="text" data-coloris value="#FFFFFF40"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Border radius</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatBlockBorderRadius" min="0" max="64" step="0.25" value="0"/> px
 						</div>
 					</div>
 				</div>
@@ -79,7 +92,7 @@
 							<span class="settingInfo">Default color</span>
 						</div>
 						<div class="settingHalfWidthRight">
-							<input id="chatDefaultNameColor" type="text" data-coloris value="#AAAAAA"/><input type="number" id="chatDefaultNameColorAlpha" min="0" max="1" step="0.01" value="1"/>
+							<input id="chatDefaultNameColor" type="text" data-coloris value="#AAAAAA"/>
 						</div>
 					</div>
 					<hr/>
@@ -93,7 +106,7 @@
 							<span class="settingInfo">Gradient color</span>
 						</div>
 						<div class="settingHalfWidthRight">
-							<input id="chatDefaultNameColorSecondary" type="text" data-coloris value="#FFFFFF"/><input type="number" id="chatDefaultNameColorSecondaryAlpha" min="0" max="1" step="0.01" value="1"/>
+							<input id="chatDefaultNameColorSecondary" type="text" data-coloris value="#FFFFFF"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="gradientNames">
@@ -160,13 +173,49 @@
 					</div>
 				</div>
 				<div class="part">
+					<h1>Chatter Information</h1>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Background color</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="chatMessageUserInfoBackgroundColor" type="text" data-coloris value="#00000000"/>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Padding</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatMessageUserInfoElementPadding" min="0" max="64" step="0.5" value="0"/> px
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Border radius</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatMessageUserInfoElementBorderRadius" min="0" max="64" step="1" value="0"/> px
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Element spacing</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatMessageUserInfoElementSpacing" min="0" max="64" step="0.5" value="14"/> px
+						</div>
+					</div>
+				</div>
+				<div class="part">
 					<h1>Messages</h1>
 					<div class="setting">
 						<div class="settingHalfWidthLeft">
 							<span class="settingInfo">Text color</span>
 						</div>
 						<div class="settingHalfWidthRight">
-							<input id="chatMessageColor" type="text" data-coloris value="#FFFFFF"/><input type="number" id="chatMessageColorAlpha" min="0" max="1" step="0.01" value="1"/>
+							<input id="chatMessageColor" type="text" data-coloris value="#FFFFFF"/>
 						</div>
 					</div>
 					<div class="setting">
@@ -222,6 +271,14 @@
 							<input type="number" id="messageBoldAmount" min="0" max="4" step="0.05" value="1.25"/> px
 						</div>
 					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Line height</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatMessageLineHeight" min="16" max="64" step="0.5" value="30"/> px
+						</div>
+					</div>
 				</div>
 				<div class="part">
 					<h1>Outlines</h1>
@@ -235,7 +292,7 @@
 							<span class="settingInfo">Color</span>
 						</div>
 						<div class="settingHalfWidthRight">
-							<input id="chatOutlinesColor" type="text" data-coloris value="#FFFFFF"/><input type="number" id="chatOutlinesColorAlpha" min="0" max="1" step="0.01" value="1"/>
+							<input id="chatOutlinesColor" type="text" data-coloris value="#FFFFFF"/>
 						</div>
 					</div>
 					<div class="setting disabled" data-dependent="outlines">
@@ -263,12 +320,56 @@
 							</select>
 						</div>
 					</div>
+				</div>
+				<div class="part">
+					<h1>Positioning</h1>
 					<div class="setting">
 						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Border radius</span>
+							<span class="settingInfo">Corner alignment</span>
 						</div>
 						<div class="settingHalfWidthRight">
-							<input type="number" id="chatBlockBorderRadius" min="0" max="64" step="0.25" value="0"/> px
+							<select id="chatCornerAlignment">
+								<option value="top,left">Top-left</option>
+								<option value="top,right">Top-right</option>
+								<option selected value="bottom,left">Bottom-left</option>
+								<option value="bottom,right">Bottom-right</option>
+							</select>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Width</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<select id="chatBlockWidth">
+								<option selected value="-webkit-fill-available">Fill</option>
+								<option value="fit-content">Fit visible content</option>
+							</select>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Overlay padding</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatBlockPadding" min="0" max="64" step="0.25" value="18"/> px
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Chat message padding</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatBlockIndividualPadding" min="0" max="64" step="0.25" value="0"/> px
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Block spacing</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatBlockSpacing" min="0" max="128" step="1" value="20"/> px
 						</div>
 					</div>
 				</div>
@@ -510,7 +611,7 @@
 							<span class="settingInfo">Color</span>
 						</div>
 						<div class="settingHalfWidthRight">
-							<input id="overlayShadowColor" type="text" data-coloris value="#000000"/><input type="number" id="overlayShadowColorAlpha" min="0" max="1" step="0.01" value="1"/>
+							<input id="overlayShadowColor" type="text" data-coloris value="#000000"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="overlayShadows">
@@ -548,7 +649,7 @@
 							<span class="settingInfo">Color</span>
 						</div>
 						<div class="settingHalfWidthRight">
-							<input id="overlayOutlineColor" type="text" data-coloris value="#000000"/><input type="number" id="overlayOutlineColorAlpha" min="0" max="1" step="0.01" value="0.45"/>
+							<input id="overlayOutlineColor" type="text" data-coloris value="#00000073"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="overlayOutlines">
@@ -668,7 +769,7 @@
 							<span class="settingInfo">Color</span>
 						</div>
 						<div class="settingHalfWidthRight">
-							<input id="timestampColor" type="text" data-coloris value="#808080"/><input type="number" id="timestampColorAlpha" min="0" max="1" step="0.01" value="1"/>
+							<input id="timestampColor" type="text" data-coloris value="#808080"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="timestamps">
@@ -681,7 +782,7 @@
 							<span class="settingInfo">Gradient color</span>
 						</div>
 						<div class="settingHalfWidthRight">
-							<input id="timestampColorSecondary" type="text" data-coloris value="#FFFFFF"/><input type="number" id="timestampColorSecondaryAlpha" min="0" max="1" step="0.01" value="1"/>
+							<input id="timestampColorSecondary" type="text" data-coloris value="#FFFFFF"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="timestamps">
@@ -752,73 +853,6 @@
 					</div>
 				</div>
 			</div>
-			<div class="section" data-content="layout">
-				<div class="part">
-					<h1>Spacing</h1>
-					<div class="setting">
-						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Overlay padding</span>
-						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatBlockPadding" min="0" max="64" step="0.25" value="18"/> px
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Chat message padding</span>
-						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatBlockIndividualPadding" min="0" max="64" step="0.25" value="0"/> px
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Block spacing</span>
-						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatBlockSpacing" min="0" max="128" step="1" value="20"/> px
-						</div>
-					</div>
-				</div>
-				<div class="part">
-					<h1>Alignment</h1>
-					<div class="setting">
-						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Corner alignment</span>
-						</div>
-						<div class="settingHalfWidthRight">
-							<select id="chatCornerAlignment">
-								<option value="top,left">Top-left</option>
-								<option value="top,right">Top-right</option>
-								<option selected value="bottom,left">Bottom-left</option>
-								<option value="bottom,right">Bottom-right</option>
-							</select>
-						</div>
-					</div>
-				</div>
-				<div class="part">
-					<h1>User Information</h1>
-					<div class="setting">
-						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Element spacing</span>
-						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatMessageUserInfoElementSpacing" min="0" max="64" step="0.5" value="14"/> px
-						</div>
-					</div>
-				</div>
-				<div class="part">
-					<h1>Messages</h1>
-					<div class="setting">
-						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Line height</span>
-						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatMessageLineHeight" min="16" max="64" step="0.5" value="28"/> px
-						</div>
-					</div>
-				</div>
-			</div>
 			<div class="section" data-content="flags">
 				<div class="part">
 					<div class="setting">
@@ -882,6 +916,11 @@
 						</div>
 						<div class="settingHalfWidthRight">
 							<input type="number" id="badgeBorderRadius" min="0" max="64" step="0.25" value="4"/> px
+						</div>
+					</div>
+					<div class="setting" data-dependent="twitchBadges">
+						<div class="settingFullWidth">
+							<input id="applyBorderRadiusToSubBadges" type="checkbox"/> <span class="settingInfo">Apply border radius setting to subscriber badges</span>
 						</div>
 					</div>
 				</div>
@@ -1064,6 +1103,11 @@
 					</div>
 					<div class="setting" data-dependent="avatars">
 						<div class="settingFullWidth">
+							<input id="avatarAllowedAffiliates" type="checkbox"/> <span class="settingInfo">Twitch affiliates</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="avatars">
+						<div class="settingFullWidth">
 							<input id="avatarAllowedStaff" type="checkbox"/> <span class="settingInfo">Twitch staff</span>
 						</div>
 					</div>
@@ -1089,7 +1133,7 @@
 							<span class="settingInfo">Color</span>
 						</div>
 						<div class="settingHalfWidthRight">
-							<input id="pronounsColor" type="text" data-coloris value="#808080"/><input type="number" id="pronounsColorAlpha" min="0" max="1" step="0.01" value="1"/>
+							<input id="pronounsColor" type="text" data-coloris value="#808080"/>
 						</div>
 					</div>
 					<hr/>
@@ -1103,7 +1147,7 @@
 							<span class="settingInfo">Gradient color</span>
 						</div>
 						<div class="settingHalfWidthRight">
-							<input id="pronounsColorSecondary" type="text" data-coloris value="#FFFFFF"/><input type="number" id="pronounsColorSecondaryAlpha" min="0" max="1" step="0.01" value="1"/>
+							<input id="pronounsColorSecondary" type="text" data-coloris value="#FFFFFF"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="gradientPronouns">

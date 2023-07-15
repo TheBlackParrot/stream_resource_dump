@@ -37,23 +37,25 @@ client.on('message', function(channel, tags, message, self) {
 		}
 	}
 
-	parseMessage({
-		message: message,
-		type: tags['message-type'],
-		highlighted: highlighted,
-		emotes: tags['emotes'],
-		uuid: tags['id'],
-		user: {
-			id: tags['user-id'],
-			name: tags['display-name'],
-			username: tags['username'],
-			badges: {
-				list: tags['badges'],
-				info: tags['badge-info']
-			},
-			color: tags['color'],
-			moderator: moderator
-		}
+	getTwitchUserInfo(tags['user-id'], function(userData) {
+		parseMessage({
+			message: message,
+			type: tags['message-type'],
+			highlighted: highlighted,
+			emotes: tags['emotes'],
+			uuid: tags['id'],
+			user: {
+				id: tags['user-id'],
+				name: tags['display-name'],
+				username: tags['username'],
+				badges: {
+					list: tags['badges'],
+					info: tags['badge-info']
+				},
+				color: tags['color'],
+				moderator: moderator
+			}
+		});
 	});
 });
 
@@ -402,22 +404,8 @@ const chatFuncs = {
 	},
 
 	refreshpronouns: function(data, callback) {
-		$.get(`https://pronouns.alejo.io/api/users/${data.user.username}`, function(pnData) {
-			let fetched = { pronoun_id: "NONE" };
-			if(pnData.length) {
-				fetched = pnData[0];
-			}
-
-			let expiresAt = Date.now() + (settings.cache.expireDelay * 1000);
-
-			localStorage.setItem(`pn_${data.user.id}`, fetched.pronoun_id);
-			localStorage.setItem(`pn_${data.user.id}_expiry`, expiresAt);
-			console.log(`cached pronouns for ${data.user.username}, expires at ${new Date(expiresAt)}`);
-
-			if(typeof callback === "function") {
-				callback(fetched);
-			}
-		});
+		sessionStorage.removeItem(`cache_pronouns${data.user.username}`);
+		getUserPronouns(data.user.username);
 	},
 
 	showpfp: function(data, args) {
@@ -452,17 +440,8 @@ const chatFuncs = {
 	},
 
 	refreshpfp: function(data, args) {
-		console.log(`refreshing pfp cache for ${data.user.username}`);
-		callTwitch({
-			"endpoint": "users",
-			"args": {
-				"login": data.user.username
-			}
-		}, function(rawUserResponse) {
-			console.log(rawUserResponse);
-			localStorage.setItem(`pfp_${data.user.id}`, rawUserResponse.data[0].profile_image_url);
-			localStorage.setItem(`pfp_${data.user.id}_expiry`, Date.now() + (settings.cache.expireDelay * 1000));
-		});
+		sessionStorage.removeItem(`cache_twitch${data.user.id}`);
+		getTwitchUserInfo(data.user.id);
 	},
 
 	refreshemotes: function(data, args) {
@@ -579,20 +558,32 @@ function parseMessage(data) {
 		rootElement.addClass("slideIn");
 	}
 
-	let userBlock = $('<div class="userInfo userInfoIn" style="display: none;"></div>');
+	let userBlock = $('<div class="userInfo userInfoIn" style="display: none;""></div>');
 	if(localStorage.getItem("setting_chatAnimations") === "true") {
 		userBlock.addClass("userInfoIn");
 	}
 
 	if(lastUser !== data.user.id) {
 		userBlock.show();
+		rootElement.addClass("first_message");
 	} else {
+		let lastElem = $(`.chatBlock[data-msgidx="${lastMessageIdx}"]`);
+		if(lastElem.hasClass("first_message")) {
+			lastElem.css("padding-bottom", "0px");
+			lastElem.css("margin-bottom", "0px");
+			lastElem.css("border-bottom-left-radius", "0px");
+			lastElem.css("border-bottom-right-radius", "0px");
+			lastElem.css("border-bottom", "0px");
+		} else {
+			lastElem.removeClass("last_message").addClass("middle_message");
+		}
+
+		rootElement.addClass("last_message");
 		userBlock.css("margin-top", "0px");
 		if(localStorage.getItem("setting_chatAnimations") === "true") {
 			userBlock.removeClass("userInfoIn").addClass("justFadeIn");
 		}
 		rootElement.css("margin-top", "0px");
-		$(`.chatBlock[data-msgIdx=${lastMessageIdx}]`).css("margin-bottom", "3px");
 	}
 	lastUser = data.user.id;
 	lastMessageIdx = messageCount;
@@ -660,6 +651,12 @@ function parseMessage(data) {
 			}
 
 			let badgeElem = $(`<img src="${url}"/>`);
+			if(badgeType === "subscriber") {
+				badgeElem.addClass("sub_badge");
+			} else {
+				badgeElem.addClass("normal_badge");
+			}
+
 			badgeBlock.append(badgeElem);
 			badgeBlock.show();
 		}
@@ -689,112 +686,78 @@ function parseMessage(data) {
 
 	let pronounsBlock = $('<div class="pronouns" style="display: none;"></div>');
 	if(localStorage.getItem("setting_enablePronouns") === "true") {
-		let pronouns = localStorage.getItem(`pn_${data.user.id}`);
-		let pronounsExpiry = parseInt(localStorage.getItem(`pn_${data.user.id}_expiry`));
-		let recachePronouns = false;
-
-		if(pronouns) {
-			console.log(`pronouns are cached for ${data.user.username}`);
-
-			if(Date.now() > pronounsExpiry || isNaN(pronounsExpiry)) {
-				recachePronouns = true;
-				console.log("...however, they are out of date");
-			}
-		} else {
-			recachePronouns = true;
-		}
-
-		if(recachePronouns) {
-			console.log(`refreshing pronoun cache for ${data.user.username}`);
-			chatFuncs["refreshpronouns"](data, function(fetched) {
-				if(fetched.pronoun_id !== "NONE") {
-					pronounsBlock.addClass(`pronouns_${fetched.pronoun_id}`);
-					pronounsBlock.show();
-				}			
-			});
-		} else {
-			if(pronouns !== "NONE") {
-				pronounsBlock.addClass(`pronouns_${pronouns}`);
+		getUserPronouns(data.user.username, function(fetched) {
+			if(fetched.pronoun_id !== "NONE") {
+				pronounsBlock.addClass(`pronouns_${fetched.pronoun_id}`);
 				pronounsBlock.show();
 			}
-		}
-
+		});
 		userBlock.append(pronounsBlock);
 	}
 
-	let pfpBlock = $('<img class="pfp" src="" style="display: none;"/>');
+	let pfpBlock = $('<img class="pfp" src=""/>');
 	if(localStorage.getItem("setting_enableAvatars") === "true") {
-		let pfpURL = localStorage.getItem(`pfp_${data.user.id}`);
-		let pfpExpiry = parseInt(localStorage.getItem(`pfp_${data.user.id}_expiry`));
-		let recachePfp = false;
+		let pfpURL = "";
 
-		if(pfpURL) {
-			console.log(`pfp cached for ${data.user.username}`);
-
-			if(Date.now() > pfpExpiry || isNaN(pfpExpiry)) {
-				recachePfp = true;
-				console.log("...however, it is out of date");
-			}
-		} else {
-			recachePfp = true;
+		let uID = data.user.id;
+		if(data.user.id < 0) {
+			uID = broadcasterData.id;
 		}
 
-		if(recachePfp) {
-			console.log(`refreshing pfp cache for ${data.user.username}`);
-			callTwitch({
-				"endpoint": "users",
-				"args": {
-					"login": data.user.username
-				}
-			}, function(rawUserResponse) {
-				console.log(rawUserResponse);
-				localStorage.setItem(`pfp_${data.user.id}`, rawUserResponse.data[0].profile_image_url);
-				localStorage.setItem(`pfp_${data.user.id}_expiry`, Date.now() + (settings.cache.expireDelay * 1000));
-				pfpBlock.attr("src", rawUserResponse.data[0].profile_image_url);
-			});
-		} else {
-			console.log(`pfp is cached for ${data.user.username}`);
-			pfpBlock.attr("src", pfpURL);
-		}
+		getTwitchUserInfo(data.user.id, function(userData) {
+			pfpBlock.attr("src", userData.profile_image_url);
 
-		if(!localStorage.getItem(`pfpShape_${data.user.id}`)) { localStorage.setItem(`pfpShape_${data.user.id}`, "var(--avatarBorderRadius)"); }
-		$(":root").get(0).style.setProperty(`--pfpShape${data.user.id}`, localStorage.getItem(`pfpShape_${data.user.id}`));
-		pfpBlock.css("border-radius", `var(--pfpShape${data.user.id})`);
+			if(!localStorage.getItem(`pfpShape_${data.user.id}`)) { localStorage.setItem(`pfpShape_${data.user.id}`, "var(--avatarBorderRadius)"); }
+			$(":root").get(0).style.setProperty(`--pfpShape${data.user.id}`, localStorage.getItem(`pfpShape_${data.user.id}`));
+			pfpBlock.css("border-radius", `var(--pfpShape${data.user.id})`);
 
-		if(!localStorage.getItem(`showpfp_${data.user.id}`)) { localStorage.setItem(`showpfp_${data.user.id}`, "yes"); }
+			if(!localStorage.getItem(`showpfp_${data.user.id}`)) { localStorage.setItem(`showpfp_${data.user.id}`, "yes"); }
 
-		let showPFP = false;
-		if(localStorage.getItem(`showpfp_${data.user.id}`) === "yes") {
-			if(localStorage.getItem("setting_avatarAllowedEveryone") === "true") {
-				showPFP = true;
-			} else {
-				if(data.user.badges.list) {
-					if(localStorage.getItem("setting_avatarAllowedModerators") === "true" && ("broadcaster" in data.user.badges.list || "moderator" in data.user.badges.list)) {
-						showPFP = true;
-					} else if(localStorage.getItem("setting_avatarAllowedVIPs") === "true" && "vip" in data.user.badges.list) {
-						showPFP = true;
-					} else if(localStorage.getItem("setting_avatarAllowedSubscribers") === "true" && "subscriber" in data.user.badges.list) {
-						showPFP = true;
-					} else if(localStorage.getItem("setting_avatarAllowedTurbo") === "true" && "turbo" in data.user.badges.list) {
-						showPFP = true;
-					} else if(localStorage.getItem("setting_avatarAllowedPrime") === "true" && "premium" in data.user.badges.list) {
-						showPFP = true;
-					} else if(localStorage.getItem("setting_avatarAllowedArtist") === "true" && "artist-badge" in data.user.badges.list) {
-						showPFP = true;
-					} else if(localStorage.getItem("setting_avatarAllowedPartner") === "true" && ("ambassador" in data.user.badges.list || "partner" in data.user.badges.list)) {
-						showPFP = true;
-					} else if(localStorage.getItem("setting_avatarAllowedStaff") === "true" && ("staff" in data.user.badges.list || "admin" in data.user.badges.list || "global_mod" in data.user.badges.list)) {
-						showPFP = true;
+			let showPFP = false;
+			if(localStorage.getItem(`showpfp_${data.user.id}`) === "yes") {
+				if(localStorage.getItem("setting_avatarAllowedEveryone") === "true") {
+					showPFP = true;
+				} else {
+					if(data.user.badges.list) {
+						if(localStorage.getItem("setting_avatarAllowedModerators") === "true" && ("broadcaster" in data.user.badges.list || "moderator" in data.user.badges.list)) {
+							showPFP = true;
+						} else if(localStorage.getItem("setting_avatarAllowedVIPs") === "true" && "vip" in data.user.badges.list) {
+							showPFP = true;
+						} else if(localStorage.getItem("setting_avatarAllowedSubscribers") === "true" && "subscriber" in data.user.badges.list) {
+							showPFP = true;
+						} else if(localStorage.getItem("setting_avatarAllowedTurbo") === "true" && "turbo" in data.user.badges.list) {
+							showPFP = true;
+						} else if(localStorage.getItem("setting_avatarAllowedPrime") === "true" && "premium" in data.user.badges.list) {
+							showPFP = true;
+						} else if(localStorage.getItem("setting_avatarAllowedArtist") === "true" && "artist-badge" in data.user.badges.list) {
+							showPFP = true;
+						} else if(localStorage.getItem("setting_avatarAllowedPartner") === "true" && "broadcaster_type" in userData) {
+							if(userData.broadcaster_type === "partner" || userData.broadcaster_type === "ambassador") {
+								// i have no idea if ambassadors are a valid field for this but im including it just in case
+								showPFP = true;
+							}
+							showPFP = true;
+						} else if(localStorage.getItem("setting_avatarAllowedStaff") === "true" && ("staff" in data.user.badges.list || "admin" in data.user.badges.list || "global_mod" in data.user.badges.list)) {
+							showPFP = true;
+						} else if(localStorage.getItem("setting_avatarAllowedAffiliates") === "true" && "broadcaster_type" in userData) {
+							if(userData.broadcaster_type === "affiliate") {
+								showPFP = true;
+							}
+						}
 					}
 				}
 			}
-		}
 
-		if(showPFP) {
-			userBlock.append(pfpBlock);
-			pfpBlock.show();		
-		}
+			if(showPFP) {
+				userBlock.append(pfpBlock);
+				pfpBlock.show();
+			} else {
+				pfpBlock.hide();
+			}
+		});
 	}
+
+	let customizationOK = (localStorage.getItem("setting_allowUserCustomizations") === "true");
 
 	if(!localStorage.getItem(`color_${data.user.id}`)) {
 		let col = data.user.color;
@@ -802,21 +765,29 @@ function parseMessage(data) {
 
 		localStorage.setItem(`color_${data.user.id}`, col);
 	}
-	if(!localStorage.getItem(`namefont_${data.user.id}`)) { localStorage.setItem(`namefont_${data.user.id}`, "var(--nameFont)"); }
-	if(!localStorage.getItem(`nameweight_${data.user.id}`)) { localStorage.setItem(`nameweight_${data.user.id}`, "var(--nameFontWeight)"); }
-	if(!localStorage.getItem(`namesize_${data.user.id}`)) { localStorage.setItem(`namesize_${data.user.id}`, "var(--nameFontSize)"); }
-	if(!localStorage.getItem(`namestyle_${data.user.id}`)) { localStorage.setItem(`namestyle_${data.user.id}`, "var(--nameFontStyle)"); }
-	if(!localStorage.getItem(`namespacing_${data.user.id}`)) { localStorage.setItem(`namespacing_${data.user.id}`, "var(--nameLetterSpacing)"); }
-	if(!localStorage.getItem(`nametransform_${data.user.id}`)) { localStorage.setItem(`nametransform_${data.user.id}`, "var(--nameTransform)"); }
-	if(!localStorage.getItem(`namevariant_${data.user.id}`)) { localStorage.setItem(`namevariant_${data.user.id}`, "var(--nameVariant)"); }
+	if(!localStorage.getItem(`color_${data.user.id}`)) { localStorage.setItem(`color_${data.user.id}`, "var(--defaultNameColor)"); }
 	if(!localStorage.getItem(`color2_${data.user.id}`)) { localStorage.setItem(`color2_${data.user.id}`, "var(--defaultNameColorSecondary)"); }
 	if(!localStorage.getItem(`nameangle_${data.user.id}`)) { localStorage.setItem(`nameangle_${data.user.id}`, "var(--nameGradientAngle)"); }
 	if(!localStorage.getItem(`usename_${data.user.id}`)) { localStorage.setItem(`usename_${data.user.id}`, "name"); }
-	if(!localStorage.getItem(`use7tvpaint_${data.user.id}`)) { localStorage.setItem(`use7tvpaint_${data.user.id}`, "yes"); }
-	if(!localStorage.getItem(`nameshadow_${data.user.id}`)) { localStorage.setItem(`nameshadow_${data.user.id}`, "yes"); }
-	if(!localStorage.getItem(`nameoutline_${data.user.id}`)) { localStorage.setItem(`nameoutline_${data.user.id}`, "yes"); }
+	if(customizationOK) {
+		if(!localStorage.getItem(`namefont_${data.user.id}`)) { localStorage.setItem(`namefont_${data.user.id}`, "var(--nameFont)"); }
+		if(!localStorage.getItem(`nameweight_${data.user.id}`)) { localStorage.setItem(`nameweight_${data.user.id}`, "var(--nameFontWeight)"); }
+		if(!localStorage.getItem(`namesize_${data.user.id}`)) { localStorage.setItem(`namesize_${data.user.id}`, "var(--nameFontSize)"); }
+		if(!localStorage.getItem(`namestyle_${data.user.id}`)) { localStorage.setItem(`namestyle_${data.user.id}`, "var(--nameFontStyle)"); }
+		if(!localStorage.getItem(`namespacing_${data.user.id}`)) { localStorage.setItem(`namespacing_${data.user.id}`, "var(--nameLetterSpacing)"); }
+		if(!localStorage.getItem(`nametransform_${data.user.id}`)) { localStorage.setItem(`nametransform_${data.user.id}`, "var(--nameTransform)"); }
+		if(!localStorage.getItem(`namevariant_${data.user.id}`)) { localStorage.setItem(`namevariant_${data.user.id}`, "var(--nameVariant)"); }
+		if(!localStorage.getItem(`use7tvpaint_${data.user.id}`)) { localStorage.setItem(`use7tvpaint_${data.user.id}`, "yes"); }
+		if(!localStorage.getItem(`nameshadow_${data.user.id}`)) { localStorage.setItem(`nameshadow_${data.user.id}`, "yes"); }
+		if(!localStorage.getItem(`nameoutline_${data.user.id}`)) { localStorage.setItem(`nameoutline_${data.user.id}`, "yes"); }
 
-	if(localStorage.getItem(`color2_${data.user.id}`) === "var(--defaultNameColorSecondary)") {
+		if(!localStorage.getItem(`msgfont_${data.user.id}`)) { localStorage.setItem(`msgfont_${data.user.id}`, "var(--messageFont)"); }
+		if(!localStorage.getItem(`msgsize_${data.user.id}`)) { localStorage.setItem(`msgsize_${data.user.id}`, "var(--messageFontSize)"); }
+		if(!localStorage.getItem(`msgspacing_${data.user.id}`)) { localStorage.setItem(`msgspacing_${data.user.id}`, "var(--messageLetterSpacing)"); }
+		if(!localStorage.getItem(`msgweight_${data.user.id}`)) { localStorage.setItem(`msgweight_${data.user.id}`, "var(--messageFontWeight)"); }
+	}
+
+	if(localStorage.getItem(`color2_${data.user.id}`) === "var(--defaultNameColorSecondary)" || !customizationOK) {
 		// (user hasn't set custom colors, double check twitch colors are up to date)
 		let col = data.user.color;
 		if(col) {
@@ -824,35 +795,16 @@ function parseMessage(data) {
 		}
 	}
 
-	$(":root").get(0).style.setProperty(`--nameSize${data.user.id}`, localStorage.getItem(`namesize_${data.user.id}`));
-	if(localStorage.getItem("setting_chatNameFontSize") !== "16") {
-		let scale = parseFloat(localStorage.getItem("setting_chatNameFontSize")) / 16;
-		if(localStorage.getItem(`namesize_${data.user.id}`) !== "var(--nameFontSize)") {
-			$(":root").get(0).style.setProperty(`--nameSize${data.user.id}`, `calc(${localStorage.getItem(`namesize_${data.user.id}`)} * ${scale})`);
-		}
-	}
-
-	$(":root").get(0).style.setProperty(`--nameSpacing${data.user.id}`, localStorage.getItem(`namespacing_${data.user.id}`));
-	if(localStorage.getItem("setting_chatNameLetterSpacing") !== "1") {
-		let scale = parseFloat(localStorage.getItem("setting_chatNameLetterSpacing"));
-		if(localStorage.getItem(`namespacing_${data.user.id}`) !== "var(--nameLetterSpacing)") {
-			$(":root").get(0).style.setProperty(`--nameSpacing${data.user.id}`, `calc(${localStorage.getItem(`namespacing_${data.user.id}`)} * ${scale})`);
-		}
-	}
-
 	$(":root").get(0).style.setProperty(`--nameColor${data.user.id}`, localStorage.getItem(`color_${data.user.id}`));
-	$(":root").get(0).style.setProperty(`--nameFont${data.user.id}`, localStorage.getItem(`namefont_${data.user.id}`));
-	$(":root").get(0).style.setProperty(`--nameWeight${data.user.id}`, localStorage.getItem(`nameweight_${data.user.id}`));
-	$(":root").get(0).style.setProperty(`--nameStyle${data.user.id}`, localStorage.getItem(`namestyle_${data.user.id}`));
-	$(":root").get(0).style.setProperty(`--nameTransform${data.user.id}`, localStorage.getItem(`nametransform_${data.user.id}`));
-	$(":root").get(0).style.setProperty(`--nameVariant${data.user.id}`, localStorage.getItem(`namevariant_${data.user.id}`));
 	$(":root").get(0).style.setProperty(`--nameColorSecondary${data.user.id}`, localStorage.getItem(`color2_${data.user.id}`));
-	$(":root").get(0).style.setProperty(`--nameAngle${data.user.id}`, localStorage.getItem(`nameangle_${data.user.id}`));
-	$(":root").get(0).style.setProperty(`--nameShadow${data.user.id}`, localStorage.getItem(`nameshadow_${data.user.id}`) === "yes" ? `var(--shadowStuff)` : "");
-	$(":root").get(0).style.setProperty(`--nameOutline${data.user.id}`, localStorage.getItem(`nameoutline_${data.user.id}`) === "yes" ? `var(--outlineStuff)` : "");
-	$(":root").get(0).style.setProperty(`--nameEffects${data.user.id}`, `var(--nameOutline${data.user.id})var(--nameShadow${data.user.id})`);
+	if(customizationOK) {
+		$(":root").get(0).style.setProperty(`--nameAngle${data.user.id}`, localStorage.getItem(`nameangle_${data.user.id}`));
+	} else {
+		$(":root").get(0).style.setProperty(`--nameAngle${data.user.id}`, "var(--nameGradientAngle)");
+	}
 
 	let nameBlock = $(`<div class="name" data-userid="${data.user.id}">${data.user[localStorage.getItem(`usename_${data.user.id}`)]}</div>`);
+	let messageBlock = $('<div class="message"></div>');
 
 	if(localStorage.getItem("setting_chatDefaultNameColorForced") === "true") {
 		nameBlock.css("background-color", "var(--nameBackgroundNoGradientDefault)");
@@ -867,47 +819,69 @@ function parseMessage(data) {
 			nameBlock.css("background-image", `linear-gradient(var(--nameAngle${data.user.id}), var(--nameColorSecondary${data.user.id}) 0%, transparent 75%)`);
 		}
 	}
-	nameBlock.css("font-family", `var(--nameFont${data.user.id})`);
-	nameBlock.css("font-weight", `var(--nameWeight${data.user.id})`);
-	nameBlock.css("font-size", `var(--nameSize${data.user.id})`);
-	nameBlock.css("font-style", `var(--nameStyle${data.user.id})`);
-	nameBlock.css("letter-spacing", `var(--nameSpacing${data.user.id})`);
-	nameBlock.css("text-transform", `var(--nameTransform${data.user.id})`);
-	nameBlock.css("font-variant", `var(--nameVariant${data.user.id})`);
-	nameBlock.css("filter", `var(--nameEffects${data.user.id})`);
+
+	if(customizationOK) {
+		$(":root").get(0).style.setProperty(`--nameSize${data.user.id}`, localStorage.getItem(`namesize_${data.user.id}`));
+		if(localStorage.getItem("setting_chatNameFontSize") !== "16") {
+			let scale = parseFloat(localStorage.getItem("setting_chatNameFontSize")) / 16;
+			if(localStorage.getItem(`namesize_${data.user.id}`) !== "var(--nameFontSize)") {
+				$(":root").get(0).style.setProperty(`--nameSize${data.user.id}`, `calc(${localStorage.getItem(`namesize_${data.user.id}`)} * ${scale})`);
+			}
+		}
+
+		$(":root").get(0).style.setProperty(`--nameSpacing${data.user.id}`, localStorage.getItem(`namespacing_${data.user.id}`));
+		if(localStorage.getItem("setting_chatNameLetterSpacing") !== "1") {
+			let scale = parseFloat(localStorage.getItem("setting_chatNameLetterSpacing"));
+			if(localStorage.getItem(`namespacing_${data.user.id}`) !== "var(--nameLetterSpacing)") {
+				$(":root").get(0).style.setProperty(`--nameSpacing${data.user.id}`, `calc(${localStorage.getItem(`namespacing_${data.user.id}`)} * ${scale})`);
+			}
+		}
+
+		$(":root").get(0).style.setProperty(`--nameFont${data.user.id}`, localStorage.getItem(`namefont_${data.user.id}`));
+		$(":root").get(0).style.setProperty(`--nameWeight${data.user.id}`, localStorage.getItem(`nameweight_${data.user.id}`));
+		$(":root").get(0).style.setProperty(`--nameStyle${data.user.id}`, localStorage.getItem(`namestyle_${data.user.id}`));
+		$(":root").get(0).style.setProperty(`--nameTransform${data.user.id}`, localStorage.getItem(`nametransform_${data.user.id}`));
+		$(":root").get(0).style.setProperty(`--nameVariant${data.user.id}`, localStorage.getItem(`namevariant_${data.user.id}`));
+		$(":root").get(0).style.setProperty(`--nameShadow${data.user.id}`, localStorage.getItem(`nameshadow_${data.user.id}`) === "yes" ? `var(--shadowStuff)` : "");
+		$(":root").get(0).style.setProperty(`--nameOutline${data.user.id}`, localStorage.getItem(`nameoutline_${data.user.id}`) === "yes" ? `var(--outlineStuff)` : "");
+		$(":root").get(0).style.setProperty(`--nameEffects${data.user.id}`, `var(--nameOutline${data.user.id})var(--nameShadow${data.user.id})`);
+
+		nameBlock.css("font-family", `var(--nameFont${data.user.id})`);
+		nameBlock.css("font-weight", `var(--nameWeight${data.user.id})`);
+		nameBlock.css("font-size", `var(--nameSize${data.user.id})`);
+		nameBlock.css("font-style", `var(--nameStyle${data.user.id})`);
+		nameBlock.css("letter-spacing", `var(--nameSpacing${data.user.id})`);
+		nameBlock.css("text-transform", `var(--nameTransform${data.user.id})`);
+		nameBlock.css("font-variant", `var(--nameVariant${data.user.id})`);
+		nameBlock.css("filter", `var(--nameEffects${data.user.id})`);
+
+		$(":root").get(0).style.setProperty(`--msgFont${data.user.id}`, localStorage.getItem(`msgfont_${data.user.id}`));
+		$(":root").get(0).style.setProperty(`--msgWeight${data.user.id}`, localStorage.getItem(`msgweight_${data.user.id}`));
+
+		$(":root").get(0).style.setProperty(`--msgSize${data.user.id}`, localStorage.getItem(`msgsize_${data.user.id}`));
+		if(localStorage.getItem("setting_chatMessageFontSize") !== "16") {
+			let scale = parseFloat(localStorage.getItem("setting_chatMessageFontSize")) / 16;
+			if(localStorage.getItem(`msgsize_${data.user.id}`) !== "var(--messageFontSize)") {
+				$(":root").get(0).style.setProperty(`--msgSize${data.user.id}`, `calc(${localStorage.getItem(`msgsize_${data.user.id}`)} * ${scale})`);
+			}
+		}
+
+		$(":root").get(0).style.setProperty(`--msgSpacing${data.user.id}`, localStorage.getItem(`msgspacing_${data.user.id}`));
+		if(localStorage.getItem("setting_messageLetterSpacing") !== "0") {
+			let scale = parseFloat(localStorage.getItem("setting_messageLetterSpacing"));
+			if(localStorage.getItem(`msgspacing_${data.user.id}`) !== "var(--messageLetterSpacing)") {
+				$(":root").get(0).style.setProperty(`--msgSpacing${data.user.id}`, `calc(${localStorage.getItem(`msgspacing_${data.user.id}`)} * ${scale})`);
+			}
+		}
+
+		messageBlock.css("font-family", `var(--msgFont${data.user.id})`);
+		messageBlock.css("font-size", `var(--msgSize${data.user.id})`);
+		messageBlock.css("letter-spacing", `var(--msgSpacing${data.user.id})`);
+		messageBlock.css("font-weight", `var(--msgWeight${data.user.id})`);
+	}
 
 	userBlock.append(nameBlock);
 	rootElement.append(userBlock);
-
-	if(!localStorage.getItem(`msgfont_${data.user.id}`)) { localStorage.setItem(`msgfont_${data.user.id}`, "var(--messageFont)"); }
-	if(!localStorage.getItem(`msgsize_${data.user.id}`)) { localStorage.setItem(`msgsize_${data.user.id}`, "var(--messageFontSize)"); }
-	if(!localStorage.getItem(`msgspacing_${data.user.id}`)) { localStorage.setItem(`msgspacing_${data.user.id}`, "var(--messageLetterSpacing)"); }
-	if(!localStorage.getItem(`msgweight_${data.user.id}`)) { localStorage.setItem(`msgweight_${data.user.id}`, "var(--messageFontWeight)"); }
-
-	$(":root").get(0).style.setProperty(`--msgFont${data.user.id}`, localStorage.getItem(`msgfont_${data.user.id}`));
-	$(":root").get(0).style.setProperty(`--msgWeight${data.user.id}`, localStorage.getItem(`msgweight_${data.user.id}`));
-
-	$(":root").get(0).style.setProperty(`--msgSize${data.user.id}`, localStorage.getItem(`msgsize_${data.user.id}`));
-	if(localStorage.getItem("setting_chatMessageFontSize") !== "16") {
-		let scale = parseFloat(localStorage.getItem("setting_chatMessageFontSize")) / 16;
-		if(localStorage.getItem(`msgsize_${data.user.id}`) !== "var(--messageFontSize)") {
-			$(":root").get(0).style.setProperty(`--msgSize${data.user.id}`, `calc(${localStorage.getItem(`msgsize_${data.user.id}`)} * ${scale})`);
-		}
-	}
-
-	$(":root").get(0).style.setProperty(`--msgSpacing${data.user.id}`, localStorage.getItem(`msgspacing_${data.user.id}`));
-	if(localStorage.getItem("setting_messageLetterSpacing") !== "0") {
-		let scale = parseFloat(localStorage.getItem("setting_messageLetterSpacing"));
-		if(localStorage.getItem(`msgspacing_${data.user.id}`) !== "var(--messageLetterSpacing)") {
-			$(":root").get(0).style.setProperty(`--msgSpacing${data.user.id}`, `calc(${localStorage.getItem(`msgspacing_${data.user.id}`)} * ${scale})`);
-		}
-	}
-
-	let messageBlock = $('<div class="message"></div>');
-	messageBlock.css("font-family", `var(--msgFont${data.user.id})`);
-	messageBlock.css("font-size", `var(--msgSize${data.user.id})`);
-	messageBlock.css("letter-spacing", `var(--msgSpacing${data.user.id})`);
-	messageBlock.css("font-weight", `var(--msgWeight${data.user.id})`);
 
 	if(localStorage.getItem(`use7tvpaint_${data.user.id}`) === "yes") {
 		for(let i in sevenTVPaints) {
@@ -1079,7 +1053,7 @@ function parseMessage(data) {
 	}
 
 	let secsVisible = parseFloat(localStorage.getItem("setting_chatRemoveMessageDelay"));
-	if(parseInt(data.user.id) === -1) {
+	if(parseInt(data.user.id) < 0) {
 		secsVisible = 10;
 	} else {
 		checkForExternalBadges(data, badgeBlock);
@@ -1281,7 +1255,7 @@ function renderExternalBadges(data, badgeBlock) {
 		for(let i in cacheData.badges) {
 			let badge = cacheData.badges[i];
 
-			let badgeElem = $(`<img src="${badge.img}"/>`);
+			let badgeElem = $(`<img class="normal_badge" src="${badge.img}"/>`);
 			if("color" in badge) {
 				badgeElem.css("background-color", badge.color);
 			}

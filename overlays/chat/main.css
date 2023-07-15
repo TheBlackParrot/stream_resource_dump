@@ -10,8 +10,31 @@ body {
 #wrapper {
 	position: fixed;
 	width: 100%;
+	display: flex;
+	flex-direction: column;
 }
 
+#testWrapper {
+	overflow: hidden;
+	white-space: nowrap;
+	position: fixed;
+	top: 200vh;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+#wrapper .chatBlock {
+	width: var(--chatBlockWidth);
+}
+
+#testWrapper .chatBlock {
+	display: block;
+}
+#wrapper .chatBlock {
+	display: flex;
+	flex-direction: column;
+}
 .chatBlock {
 	margin-top: var(--chatBlockSpacing);
 	margin-left: var(--chatBlockPadding);
@@ -22,7 +45,7 @@ body {
 	border: var(--chatBlockOutline);
 	padding-left: var(--chatBlockIndividualPadding);
 	padding-right: var(--chatBlockIndividualPadding);
-	padding-top: calc(var(--chatBlockIndividualPadding) / 2);
+	padding-top: var(--chatBlockIndividualPadding);
 	padding-bottom: calc(var(--chatBlockIndividualPadding) / 2);
 }
 .chatBlock:last-child {
@@ -32,24 +55,38 @@ body {
 	filter: var(--effectFilters);
 }
 
+#wrapper .userInfo {
+	flex: 1;
+	min-width: 0;	
+}
+
 .userInfo {
 	margin-bottom: 4px;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	background-color: var(--userInfoBackgroundColor);
+	padding-top: calc(var(--userInfoPadding) / 2);
+	padding-bottom: calc(var(--userInfoPadding) / 2);
+	padding-left: var(--userInfoPadding);
+	padding-right: var(--userInfoPadding);
+	border-radius: var(--userInfoBorderRadius);
 }
 .userInfo div {
-	display: inline-block;
 	margin-right: var(--messageUserInfoElementSpacing);
+	display: flex;
 }
 .userInfo div:last-child {
 	margin-right: 0px;
 }
 
-.chatBlock:first-child .userInfo {
-	display: inline-block !important;
+#wrapper .chatBlock:first-child .userInfo {
+	display: flex !important;
+}
+#testWrapper .chatBlock .userInfo {
+	display: inline-flex !important;
 }
 
-.badges, .flags {
-	vertical-align: middle;
-}
 .badges img {
 	width: var(--badgeSize);
 	min-width: var(--badgeSize);
@@ -58,8 +95,10 @@ body {
 	min-height: var(--badgeSize);
 	max-height: var(--badgeSize);
 	margin-right: var(--badgeSpacing);
-	border-radius: var(--badgeBorderRadius);
 }
+
+.sub_badge { border-radius: var(--subBadgeBorderRadius); }
+.normal_badge { border-radius: var(--badgeBorderRadius); }
 
 .badges img:last-child {
 	margin-right: 0px;
@@ -90,10 +129,12 @@ body {
 	-webkit-text-fill-color: transparent;
 	text-transform: uppercase;
 	letter-spacing: var(--nameLetterSpacing);
-	vertical-align: middle;
-	padding-right: 4px;
 	height: 34px;
 	line-height: 34px;
+	background-color: var(--defaultNameColor);
+	background-image: var(--nameBackgroundDefault);
+	filter: var(--effectFilters);
+	display: inline-block !important;
 }
 
 .pronouns {
@@ -105,7 +146,6 @@ body {
 	-webkit-text-stroke: var(--pronounsFontWeightExtra) transparent;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
-	vertical-align: middle;
 	background-color: var(--pronounsColor);
 	background-image: var(--pronounsGradient);
 }
@@ -167,7 +207,6 @@ tt, code, pre {
 	min-height: var(--avatarSize);
 	max-height: var(--avatarSize);
     margin-right: 10px;
-    vertical-align: middle;
     border-radius: var(--avatarBorderRadius);
 }
 
@@ -330,24 +369,17 @@ tt, code, pre {
 }
 
 img.emoji {
-   height: 1em;
-   width: 1em;
-   font-size: 1em;
+   height: 1.1em;
+   width: 1.1em;
+   font-size: 1.1em;
    vertical-align: -0.15em;
-}
-
-#testWrapper {
-	overflow: hidden;
-	white-space: nowrap;
-	position: fixed;
-	top: 200vw;
 }
 
 .clip {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	width: calc(100vw - calc(var(--chatBlockPadding) * 2));
+	/*width: calc(100vw - calc(var(--chatBlockPadding) * 2));*/
 }
 
 .bsrMapInfo div {
@@ -371,4 +403,39 @@ img.emoji {
 	margin-right: var(--timestampPadding);
 	line-height: var(--messageLineHeight);
 	font-variant: tabular-nums;
+}
+
+.left {
+	left: 0px;
+	text-align: left;
+}
+
+.left .userInfo {
+	justify-content: flex-start;
+}
+.right .userInfo {
+	justify-content: flex-end;
+}
+
+.right {
+	right: 0px;
+	text-align: right;
+}
+
+.middle_message {
+	padding-top: 0px;
+	padding-bottom: 0px;
+	border-radius: 0px;
+	border-top: 0px;
+	border-bottom: 0px;
+}
+
+.last_message {
+	margin-top: 0px;
+	padding-top: 0px;
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+	border-bottom-left-radius: var(--chatBlockBorderRadius);
+	border-bottom-right-radius: var(--chatBlockBorderRadius);
+	border-top: 0px;
 }

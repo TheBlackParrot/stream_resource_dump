@@ -40,12 +40,16 @@
 	--nameBackgroundDefault: linear-gradient(var(--nameGradientAngle), var(--defaultNameColorSecondary) 0%, transparent 75%);
 	--nameBackgroundNoGradientDefault: var(--defaultNameColor);
 
+	--userInfoBackgroundColor: transparent;
+	--userInfoPadding: 0px;
+	--userInfoBorderRadius: 0px;
+
 	--messageColor: rgba(255, 255, 255, 1);
 	--messageFont: "Manrope";
 	--messageFontSize: 16pt;
 	--messageFontWeight: 700;
 	--messageLetterSpacing: 0px;
-	--messageLineHeight: 28px;
+	--messageLineHeight: 30px;
 	--messageUserInfoElementSpacing: 14px;
 	--messageTransform: none;
 	--messageBoldAmount: 1.25px;
@@ -54,6 +58,7 @@
 	--chatBlockSpacing: 20px;
 	--chatBlockIndividualPadding: 0px;
 	--chatBlockBorderRadius: 0px;
+	--chatBlockWidth: -webkit-fill-available;
 
 	--chatBlockOutlineColor: rgba(255, 255, 255, 1);
 	--chatBlockOutlineSize: 1px;
@@ -109,6 +114,7 @@
 	--avatarBorderRadius: 10px;
 
 	--badgeBorderRadius: 4px;
+	--subBadgeBorderRadius: var(--badgeBorderRadius);
 	--badgeSize: 28px;
 
 	--pronounsColor: rgba(128, 128, 128, 1);

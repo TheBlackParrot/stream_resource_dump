@@ -37,6 +37,8 @@
 	--input-bg-color: var(--sidebar-bg-color);
 	--input-color: var(--font-color);
 	--input-border-radius: 6px;
+	--input-font: monospace;
+	--input-weight: 700;
 
 	--button-padding: 16px;
 	--button-gradient: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), transparent);
@@ -277,9 +279,9 @@ input, select, textarea {
 	padding-right: var(--input-padding);
 	background-color: var(--input-bg-color);
 	color: var(--font-color);
-	font-family: var(--font-family);
+	font-family: var(--input-font);
 	font-size: var(--font-size);
-	font-weight: var(--font-weight);
+	font-weight: var(--input-weight);
 	border-radius: var(--input-border-radius);
 	border: 1px solid var(--border-color);
 	vertical-align: middle;
@@ -319,7 +321,7 @@ input[type="checkbox"]:checked:before {
 }
 
 input[data-coloris] {
-	width: 100px;
+	width: 120px;
 	margin-right: var(--settings-padding) !important;
 }
 
@@ -433,7 +435,7 @@ p {
 
 .fsb-select button {
 	height: 2em !important;
-	font-weight: var(--font-weight);
+	font-weight: var(--input-weight);
 }
 
 tt {

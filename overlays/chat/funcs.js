@@ -24,7 +24,7 @@ function callTwitch(data, callback) {
 
 function systemMessage(msg) {
 	client._onMessage({
-		data: `@badge-info=;badges=;color=#FFFFFF;display-name=Overlay (r${overlayRevision});id=-1;mod=0;room-id=${broadcasterData.id};subscriber=0;tmi-sent-ts=${Date.now()};turbo=0;user-id=-1 :overlay!overlay@overlay.tmi.twitch.tv PRIVMSG #${broadcasterData.username} :${msg}`
+		data: `@badge-info=;badges=;color=#ffffff;display-name=Overlay (r${overlayRevision});id=-1;mod=0;room-id=${broadcasterData.id};subscriber=0;tmi-sent-ts=${Date.now()};turbo=0;user-id=-1 :<overlay>!<overlay>@<overlay>.tmi.twitch.tv PRIVMSG #${broadcasterData.username} :${msg}`
 	});
 }
 
@@ -89,4 +89,69 @@ function set7TVPaint(nameBlock, which, userID) {
 	//console.log(css);
 	nameBlock.css("background-color", bgColor).css("background-image", css).css("background-size", "contain");
 	nameBlock.css("filter", `var(--nameEffects${userID})${shadows}`);
+}
+
+function getTwitchUserInfo(id, callback) {
+	if(id === "-1") {
+		id = broadcasterData.id;
+	}
+
+	if(!sessionStorage.getItem(`cache_twitch${id}`)) {
+		console.log(`info for ${id} not cached`);
+
+		callTwitch({
+			"endpoint": "users",
+			"args": {
+				"id": id
+			}
+		}, function(rawUserResponse) {
+			if("data" in rawUserResponse) {
+				if(rawUserResponse.data.length) {
+					sessionStorage.setItem(`cache_twitch${id}`, JSON.stringify(rawUserResponse.data[0]));
+
+					if(typeof callback === "function") {
+						return callback(rawUserResponse.data[0]);
+					}
+				}
+
+				if(typeof callback === "function") {
+					return callback(null);
+				}
+			}
+
+			if(typeof callback === "function") {
+				return callback(null);
+			}
+		});
+	} else {
+		if(typeof callback === "function") {
+			return callback(JSON.parse(sessionStorage.getItem(`cache_twitch${id}`)));
+		}
+	}
+}
+
+function getUserPronouns(username, callback) {
+	if(username === "<overlay>") {
+		username = broadcasterData.login;
+	}
+
+	if(!sessionStorage.getItem(`cache_pronouns${username}`)) {
+		console.log(`pronouns for ${username} not cached`);
+
+		let resp = $.get(`https://pronouns.alejo.io/api/users/${username}`, function(pnData) {
+			let fetched = { pronoun_id: "NONE" };
+			if(pnData.length) {
+				fetched = pnData[0];
+			}
+
+			sessionStorage.setItem(`cache_pronouns${username}`, JSON.stringify(fetched));
+			if(typeof callback === "function") {
+				return callback(fetched);
+			}
+		});
+	} else {
+		if(typeof callback === "function") {
+			return callback(JSON.parse(sessionStorage.getItem(`cache_pronouns${username}`)));
+		}
+	}
 }
