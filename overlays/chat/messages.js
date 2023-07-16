@@ -1010,7 +1010,8 @@ function parseMessage(data) {
 		}
 	}
 	//console.log(` 4: ${externalPostRemoval}`);
-	externalPostRemoval = externalPostRemoval.join("").replace(/\p{RGI_Emoji}+/vg, '');
+	//externalPostRemoval = externalPostRemoval.join("").replace(/\p{RGI_Emoji}+/vg, '');
+	externalPostRemoval = externalPostRemoval.join("").replace(/\p{Extended_Pictographic}/ug, '');
 	let eprw = externalPostRemoval.split(" ");
 	let eprww = [];
 	for(let wordIdx in eprw) {

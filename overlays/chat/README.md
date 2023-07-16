@@ -2,7 +2,7 @@
 To use my chat overlay in your own stream layout:
 1. In OBS, add a new Browser Source.
 2. In the URL/address field: enter `http://theblackparrot.me/overlays/chat` and press OK.
-3. Add another Browser Source.
+3. Add another Browser Source, *OR* add a Browser Dock through the *Tools* menu in OBS's top menu bar.
 4. In the URL/address field: enter `http://theblackparrot.me/overlays/chat/settings` and press OK. Interacting with this browser source will allow you to configure the chat overlay to your liking.
 5. In a web browser, navigate to [your Twitch Developer Console](https://dev.twitch.tv/console)
 6. Press the **"Register Your Application"** button, give it a name, set the OAuth Redirect URL to `http://localhost` (this doesn't use it), and set the category to *"Chat Bot"*. Click the **"Create"** button.
