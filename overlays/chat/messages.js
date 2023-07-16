@@ -511,6 +511,17 @@ const chatFuncs = {
 		localStorage.setItem(`pn_${data.user.id}_expiry`, "0");
 		localStorage.removeItem(`usename_${data.user.id}`);
 		localStorage.removeItem(`use7tvpaint_${data.user.id}`);
+	},
+
+	overlayversion: function(data, args) {
+		if(!data.user.moderator) {
+			if(parseInt(data.user.id) !== 43464015) {
+				return;
+			}
+		}
+
+		systemMessage(`Streamer is using overlay r${overlayRevision}`);
+		checkForUpdate();
 	}
 }
 
@@ -695,7 +706,8 @@ function parseMessage(data) {
 		userBlock.append(pronounsBlock);
 	}
 
-	let pfpBlock = $('<img class="pfp" src=""/>');
+	let pfpBlock = $('<img class="pfp" src="" style="display: none;"/>');
+	userBlock.append(pfpBlock);
 	if(localStorage.getItem("setting_enableAvatars") === "true") {
 		let pfpURL = "";
 
@@ -718,30 +730,31 @@ function parseMessage(data) {
 				if(localStorage.getItem("setting_avatarAllowedEveryone") === "true") {
 					showPFP = true;
 				} else {
-					if(data.user.badges.list) {
-						if(localStorage.getItem("setting_avatarAllowedModerators") === "true" && ("broadcaster" in data.user.badges.list || "moderator" in data.user.badges.list)) {
-							showPFP = true;
-						} else if(localStorage.getItem("setting_avatarAllowedVIPs") === "true" && "vip" in data.user.badges.list) {
-							showPFP = true;
-						} else if(localStorage.getItem("setting_avatarAllowedSubscribers") === "true" && "subscriber" in data.user.badges.list) {
-							showPFP = true;
-						} else if(localStorage.getItem("setting_avatarAllowedTurbo") === "true" && "turbo" in data.user.badges.list) {
-							showPFP = true;
-						} else if(localStorage.getItem("setting_avatarAllowedPrime") === "true" && "premium" in data.user.badges.list) {
-							showPFP = true;
-						} else if(localStorage.getItem("setting_avatarAllowedArtist") === "true" && "artist-badge" in data.user.badges.list) {
-							showPFP = true;
-						} else if(localStorage.getItem("setting_avatarAllowedPartner") === "true" && "broadcaster_type" in userData) {
-							if(userData.broadcaster_type === "partner" || userData.broadcaster_type === "ambassador") {
-								// i have no idea if ambassadors are a valid field for this but im including it just in case
+					if("list" in data.user.badges) {
+						if(typeof data.user.badges.list === "object" && data.user.badges.list !== null) {
+							if(localStorage.getItem("setting_avatarAllowedModerators") === "true" && ("broadcaster" in data.user.badges.list || "moderator" in data.user.badges.list)) {
 								showPFP = true;
-							}
-							showPFP = true;
-						} else if(localStorage.getItem("setting_avatarAllowedStaff") === "true" && ("staff" in data.user.badges.list || "admin" in data.user.badges.list || "global_mod" in data.user.badges.list)) {
-							showPFP = true;
-						} else if(localStorage.getItem("setting_avatarAllowedAffiliates") === "true" && "broadcaster_type" in userData) {
-							if(userData.broadcaster_type === "affiliate") {
+							} else if(localStorage.getItem("setting_avatarAllowedVIPs") === "true" && "vip" in data.user.badges.list) {
 								showPFP = true;
+							} else if(localStorage.getItem("setting_avatarAllowedSubscribers") === "true" && "subscriber" in data.user.badges.list) {
+								showPFP = true;
+							} else if(localStorage.getItem("setting_avatarAllowedTurbo") === "true" && "turbo" in data.user.badges.list) {
+								showPFP = true;
+							} else if(localStorage.getItem("setting_avatarAllowedPrime") === "true" && "premium" in data.user.badges.list) {
+								showPFP = true;
+							} else if(localStorage.getItem("setting_avatarAllowedArtist") === "true" && "artist-badge" in data.user.badges.list) {
+								showPFP = true;
+							} else if(localStorage.getItem("setting_avatarAllowedPartner") === "true" && "broadcaster_type" in userData) {
+								if(userData.broadcaster_type === "partner" || userData.broadcaster_type === "ambassador") {
+									// i have no idea if ambassadors are a valid field for this but im including it just in case
+									showPFP = true;
+								}
+							} else if(localStorage.getItem("setting_avatarAllowedStaff") === "true" && ("staff" in data.user.badges.list || "admin" in data.user.badges.list || "global_mod" in data.user.badges.list)) {
+								showPFP = true;
+							} else if(localStorage.getItem("setting_avatarAllowedAffiliates") === "true" && "broadcaster_type" in userData) {
+								if(userData.broadcaster_type === "affiliate") {
+									showPFP = true;
+								}
 							}
 						}
 					}
@@ -749,7 +762,6 @@ function parseMessage(data) {
 			}
 
 			if(showPFP) {
-				userBlock.append(pfpBlock);
 				pfpBlock.show();
 			} else {
 				pfpBlock.hide();
@@ -930,7 +942,7 @@ function parseMessage(data) {
 		}
 	}
 	//console.log(` 4: ${externalPostRemoval}`);
-	externalPostRemoval = externalPostRemoval.join("").replace(/\p{Extended_Pictographic}/ug, '');
+	externalPostRemoval = externalPostRemoval.join("").replace(/\p{RGI_Emoji}+/vg, '');
 	let eprw = externalPostRemoval.split(" ");
 	let eprww = [];
 	for(let wordIdx in eprw) {
@@ -939,7 +951,7 @@ function parseMessage(data) {
 			eprww.push(eprw[wordIdx]);
 		}
 	}
-	//console.log(` 5: ${eprww}`);
+	//console.log(` 5: ${eprww} (${eprww.length})`);
 
 	let parsedMessage = [];
 
