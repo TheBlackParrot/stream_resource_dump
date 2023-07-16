@@ -41,8 +41,15 @@
 	--nameBackgroundNoGradientDefault: var(--defaultNameColor);
 
 	--userInfoBackgroundColor: transparent;
-	--userInfoPadding: 0px;
+	--userInfoPaddingVertical: 0px;
+	--userInfoPaddingHorizontal: 0px;
 	--userInfoBorderRadius: 0px;
+	--userInfoOutlineColor: rgba(255, 255, 255, 1);
+	--userInfoOutlineSize: 0px;
+	--userInfoOutlineSizeActual: 1px;
+	--userInfoOutlineStyle: solid;
+	--userInfoOutline: none;
+	--userInfoBottomMargin: 4px;
 
 	--messageColor: rgba(255, 255, 255, 1);
 	--messageFont: "Manrope";
@@ -54,16 +61,18 @@
 	--messageTransform: none;
 	--messageBoldAmount: 1.25px;
 
-	--chatBlockPadding: 18px;
+	--chatBlockPaddingVertical: 18px;
+	--chatBlockPaddingHorizontal: 18px;
 	--chatBlockSpacing: 20px;
-	--chatBlockIndividualPadding: 0px;
+	--chatBlockIndividualPaddingVertical: 0px;
+	--chatBlockIndividualPaddingHorizontal: 0px;
 	--chatBlockBorderRadius: 0px;
 	--chatBlockWidth: -webkit-fill-available;
 
 	--chatBlockOutlineColor: rgba(255, 255, 255, 1);
-	--chatBlockOutlineSize: 1px;
+	--chatBlockOutlineSize: 0px;
+	--chatBlockOutlineSizeActual: 1px;
 	--chatBlockOutlineStyle: solid;
-	/*--chatBlockOutline: var(--chatBlockOutlineSize) var(--chatBlockOutlineStyle) var(--chatBlockOutlineColor);*/
 	--chatBlockOutline: none;
 
 	--bigEmoteSize: 48pt;

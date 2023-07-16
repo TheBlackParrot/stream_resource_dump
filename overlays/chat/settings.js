@@ -238,11 +238,17 @@ const settingUpdaters = {
 		$(":root").get(0).style.setProperty("--messageFontWeight", value);
 	},
 
-	chatBlockPadding: function(value) {
-		$(":root").get(0).style.setProperty("--chatBlockPadding", `${value}px`);
+	chatBlockPaddingVertical: function(value) {
+		$(":root").get(0).style.setProperty("--chatBlockPaddingVertical", `${value}px`);
 	},
-	chatBlockIndividualPadding: function(value) {
-		$(":root").get(0).style.setProperty("--chatBlockIndividualPadding", `${value}px`);
+	chatBlockPaddingHorizontal: function(value) {
+		$(":root").get(0).style.setProperty("--chatBlockPaddingHorizontal", `${value}px`);
+	},
+	chatBlockIndividualPaddingVertical: function(value) {
+		$(":root").get(0).style.setProperty("--chatBlockIndividualPaddingVertical", `${value}px`);
+	},
+	chatBlockIndividualPaddingHorizontal: function(value) {
+		$(":root").get(0).style.setProperty("--chatBlockIndividualPaddingHorizontal", `${value}px`);
 	},
 	chatBlockBorderRadius: function(value) {
 		$(":root").get(0).style.setProperty("--chatBlockBorderRadius", `${value}px`);
@@ -250,16 +256,16 @@ const settingUpdaters = {
 
 	chatOutlines: function(value) {
 		if(value === "true") {
-			$(":root").get(0).style.setProperty("--chatBlockOutline", "var(--chatBlockOutlineSize) var(--chatBlockOutlineStyle) var(--chatBlockOutlineColor)");
+			$(":root").get(0).style.setProperty("--chatBlockOutlineSize", "var(--chatBlockOutlineSizeActual)");
 		} else {
-			$(":root").get(0).style.setProperty("--chatBlockOutline", "none");
+			$(":root").get(0).style.setProperty("--chatBlockOutlineSize", "0px");
 		}
 	},
 	chatOutlinesColor: function(value) {
 		$(":root").get(0).style.setProperty("--chatBlockOutlineColor", value);
 	},
 	chatOutlinesSize: function(value) {
-		$(":root").get(0).style.setProperty("--chatBlockOutlineSize", `${value}px`);
+		$(":root").get(0).style.setProperty("--chatBlockOutlineSizeActual", `${value}px`);
 	},
 	chatOutlineStyle: function(value) {
 		$(":root").get(0).style.setProperty("--chatBlockOutlineStyle", value);
@@ -299,6 +305,7 @@ const settingUpdaters = {
 	},
 
 	testMessage: function(value) {
+		lastUser = -69; // nice
 		let col = Math.floor(Math.random() * 16777216);
 		let r = ((col >> 16) & 0xFF).toString(16).padStart(2, "0");
 		let g = ((col >> 8) & 0xFF).toString(16).padStart(2, "0");
@@ -306,7 +313,7 @@ const settingUpdaters = {
 
 		//info=subscriber/25;badges=broadcaster/1,subscriber/3024;client-nonce=d101a84203af3f39502904e6a317672c;color=#8A2BE2;display-name=TheBlackParrot;emotes=305954156:11-18/25:5-9;first-msg=0;flags=;id=7f097686-fb53-4a0a-97d6-ee90ff0d3a05;mod=0;returning-chatter=0;room-id=43464015;subscriber=1;tmi-sent-ts=1689412906804;turbo=0;user-id=43464015;user-type= :theblackparrot!theblackparrot@theblackparrot.tmi.twitch.tv PRIVMSG #theblackparrot :test Kappa PogChamp
 
-		let exMsg = "Hello there! This is a fake message so that you can see what your chat settings look like! Have fun! AaBbCcDd EeFfGgHh IiJjKkLl MmNnOoPp QqRrSsTt UuVvWwXx YyZz 0123456789 Also, look! Emotes! Kappa PogChamp catJAM";
+		let exMsg = "Hello there! This is a *fake message* so that you can see what your *chat settings* look like! **Have fun!** AaBbCcDd EeFfGgHh IiJjKkLl MmNnOoPp QqRrSsTt UuVvWwXx YyZz 0123456789 Also, look! Emotes! Kappa PogChamp catJAM ~~sarcastic text~~";
 		let msg = `@badge-info=;badges=broadcaster/1;client-nonce=balls;display-name=${broadcasterData.display_name};emotes=305954156:197-204/25:191-195;first-msg=0;flags=;id=1234-abcd;mod=0;returning-chatter=0;room-id=${broadcasterData.id};subscriber=0;tmi-sent-ts=${Date.now()};turbo=0;user-id=-1;user-type=;color=#${r}${g}${b} :${broadcasterData.login}!${broadcasterData.login}@${broadcasterData.login}.tmi.twitch.tv PRIVMSG #${broadcasterData.login} :${exMsg}`;
 		client._onMessage({
 			data: msg
@@ -536,8 +543,11 @@ const settingUpdaters = {
 		$(":root").get(0).style.setProperty("--userInfoBackgroundColor", value);
 	},
 
-	chatMessageUserInfoElementPadding: function(value) {
-		$(":root").get(0).style.setProperty("--userInfoPadding", `${value}px`);
+	chatMessageUserInfoElementPaddingVertical: function(value) {
+		$(":root").get(0).style.setProperty("--userInfoPaddingVertical", `${value}px`);
+	},
+	chatMessageUserInfoElementPaddingHorizontal: function(value) {
+		$(":root").get(0).style.setProperty("--userInfoPaddingHorizontal", `${value}px`);
 	},
 	chatMessageUserInfoElementBorderRadius: function(value) {
 		$(":root").get(0).style.setProperty("--userInfoBorderRadius", `${value}px`);
@@ -551,7 +561,28 @@ const settingUpdaters = {
 		} else {
 			$(":root").get(0).style.setProperty("--subBadgeBorderRadius", "0px");
 		}
-	}
+	},
+
+	chatMessageUserInfoOutlines: function(value) {
+		if(value === "true") {
+			$(":root").get(0).style.setProperty("--userInfoOutlineSize", "var(--userInfoOutlineSizeActual)");
+		} else {
+			$(":root").get(0).style.setProperty("--userInfoOutlineSize", "0px");
+		}
+	},
+	chatMessageUserInfoOutlinesColor: function(value) {
+		$(":root").get(0).style.setProperty("--userInfoOutlineColor", value);
+	},
+	chatMessageUserInfoOutlinesSize: function(value) {
+		$(":root").get(0).style.setProperty("--userInfoOutlineSizeActual", `${value}px`);
+	},
+	chatMessageUserInfoOutlineStyle: function(value) {
+		$(":root").get(0).style.setProperty("--userInfoOutlineStyle", value);
+	},
+
+	chatMessageUserInfoBottomMargin: function(value) {
+		$(":root").get(0).style.setProperty("--userInfoBottomMargin", `${value}px`);
+	},
 };
 
 settingUpdaters["chatHideAccounts"](localStorage.getItem("setting_chatHideAccounts"));

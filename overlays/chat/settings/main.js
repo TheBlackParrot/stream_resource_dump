@@ -1,8 +1,8 @@
 $("#sensitive .section").show();
 $("#sideButtons").css("top", parseInt($("#sidebar").css("height")) + 40);
 
-const overlayRevision = 5;
-const lastUpdate = new Date(1689415047814).toISOString();
+const overlayRevision = 6;
+const lastUpdate = new Date(1689496791875).toISOString();
 $("#revision").text(overlayRevision);
 $("#revisionDate").text(lastUpdate);
 
@@ -37,7 +37,7 @@ function settingsCheck() {
 			resetEverything();
 		}
 	} else {
-		if(version === 1) {
+		if(version < 2) {
 			console.log("merging old alpha settings into color settings...");
 			let sets = Object.keys(localStorage);
 
@@ -56,9 +56,25 @@ function settingsCheck() {
 				}
 			}
 		}
+
+		if(version < 3) {
+			console.log("splitting old combined padding settings");
+
+			localStorage.setItem("setting_chatMessageUserInfoElementPaddingVertical", localStorage.getItem("setting_chatMessageUserInfoElementPadding"));
+			localStorage.setItem("setting_chatMessageUserInfoElementPaddingHorizontal", localStorage.getItem("setting_chatMessageUserInfoElementPadding"));
+			localStorage.removeItem("setting_chatMessageUserInfoElementPadding");
+
+			localStorage.setItem("setting_chatBlockIndividualPaddingVertical", localStorage.getItem("setting_chatBlockIndividualPadding"));
+			localStorage.setItem("setting_chatBlockIndividualPaddingHorizontal", localStorage.getItem("setting_chatBlockIndividualPadding"));
+			localStorage.removeItem("setting_chatBlockIndividualPadding");
+
+			localStorage.setItem("setting_chatBlockPaddingVertical", localStorage.getItem("setting_chatBlockPadding"));
+			localStorage.setItem("setting_chatBlockPaddingHorizontal", localStorage.getItem("setting_chatBlockPadding"));
+			localStorage.removeItem("setting_chatBlockPadding");
+		}
 	}
 
-	localStorage.setItem("setting_version", "2");
+	localStorage.setItem("setting_version", "3");
 }
 settingsCheck();
 
@@ -155,7 +171,7 @@ $("#resetOverlayButton").on("mouseup", function(e) {
 	e.preventDefault();
 	if($(this).text() === "Are you sure?") {
 		resetEverything();
-		
+
 		setTimeout(function() {
 			localStorage.setItem("setting_windowReload", Date.now());
 			location.reload();

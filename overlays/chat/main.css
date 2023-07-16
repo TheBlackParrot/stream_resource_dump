@@ -37,19 +37,21 @@ body {
 }
 .chatBlock {
 	margin-top: var(--chatBlockSpacing);
-	margin-left: var(--chatBlockPadding);
-	margin-right: var(--chatBlockPadding);
+	margin-left: var(--chatBlockPaddingHorizontal);
+	margin-right: var(--chatBlockPaddingHorizontal);
 	margin-bottom: 0px;
 	border-radius: var(--chatBlockBorderRadius);
 	background-color: var(--backgroundColor);
-	border: var(--chatBlockOutline);
-	padding-left: var(--chatBlockIndividualPadding);
-	padding-right: var(--chatBlockIndividualPadding);
-	padding-top: var(--chatBlockIndividualPadding);
-	padding-bottom: calc(var(--chatBlockIndividualPadding) / 2);
+	border-color: var(--chatBlockOutlineColor);
+	border-width: var(--chatBlockOutlineSize);
+	border-style: var(--chatBlockOutlineStyle);
+	padding-left: var(--chatBlockIndividualPaddingHorizontal);
+	padding-right: var(--chatBlockIndividualPaddingHorizontal);
+	padding-top: var(--chatBlockIndividualPaddingVertical);
+	padding-bottom: var(--chatBlockIndividualPaddingVertical);
 }
 .chatBlock:last-child {
-	margin-bottom: var(--chatBlockPadding);
+	margin-bottom: var(--chatBlockPaddingVertical);
 }
 .badges, .pronouns, .message, .pfp, .flags {
 	filter: var(--effectFilters);
@@ -61,16 +63,19 @@ body {
 }
 
 .userInfo {
-	margin-bottom: 4px;
+	margin-bottom: var(--userInfoBottomMargin);
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
 	background-color: var(--userInfoBackgroundColor);
-	padding-top: calc(var(--userInfoPadding) / 2);
-	padding-bottom: calc(var(--userInfoPadding) / 2);
-	padding-left: var(--userInfoPadding);
-	padding-right: var(--userInfoPadding);
+	padding-top: var(--userInfoPaddingVertical);
+	padding-bottom: var(--userInfoPaddingVertical);
+	padding-left: var(--userInfoPaddingHorizontal);
+	padding-right: var(--userInfoPaddingHorizontal);
 	border-radius: var(--userInfoBorderRadius);
+	border-color: var(--userInfoOutlineColor);
+	border-width: var(--userInfoOutlineSize);
+	border-style: var(--userInfoOutlineStyle);
 }
 .userInfo div {
 	margin-right: var(--messageUserInfoElementSpacing);
@@ -386,7 +391,7 @@ img.emoji {
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;
-	width: calc(100vw - calc(var(--chatBlockPadding) * 2) - 90px);
+	width: calc(100vw - calc(var(--chatBlockPaddingHorizontal) * 2) - 90px);
 }
 
 .timestamp {

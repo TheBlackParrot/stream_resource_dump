@@ -81,6 +81,10 @@ const chatFuncs = {
 			return;
 		}
 
+		if(localStorage.getItem("setting_ensureNameColorsAreBrightEnough") === "true") {
+			color = ensureSafeColor(`#${color}`);
+		}
+
 		console.log(`set color for ${data.user.username} to #${color}`)
 		localStorage.setItem(`color_${data.user.id}`, `#${color}`);
 		$(":root").get(0).style.setProperty(`--nameColor${data.user.id}`, `#${color}`);
@@ -90,6 +94,10 @@ const chatFuncs = {
 		let color = args[0].replace("#", "");
 		if(!(/^([0-9a-f]{3}){1,2}$/i).test(color)) {
 			return;
+		}
+
+		if(localStorage.getItem("setting_ensureNameColorsAreBrightEnough") === "true") {
+			color = ensureSafeColor(`#${color}`);
 		}
 
 		console.log(`set 2nd color for ${data.user.username} to #${color}`)
@@ -777,7 +785,6 @@ function parseMessage(data) {
 
 		localStorage.setItem(`color_${data.user.id}`, col);
 	}
-	if(!localStorage.getItem(`color_${data.user.id}`)) { localStorage.setItem(`color_${data.user.id}`, "var(--defaultNameColor)"); }
 	if(!localStorage.getItem(`color2_${data.user.id}`)) { localStorage.setItem(`color2_${data.user.id}`, "var(--defaultNameColorSecondary)"); }
 	if(!localStorage.getItem(`nameangle_${data.user.id}`)) { localStorage.setItem(`nameangle_${data.user.id}`, "var(--nameGradientAngle)"); }
 	if(!localStorage.getItem(`usename_${data.user.id}`)) { localStorage.setItem(`usename_${data.user.id}`, "name"); }
@@ -803,7 +810,11 @@ function parseMessage(data) {
 		// (user hasn't set custom colors, double check twitch colors are up to date)
 		let col = data.user.color;
 		if(col) {
-			localStorage.setItem(`color_${data.user.id}`, col);
+			if(localStorage.getItem("setting_ensureNameColorsAreBrightEnough") === "true") {
+				localStorage.setItem(`color_${data.user.id}`, ensureSafeColor(col));
+			} else {
+				localStorage.setItem(`color_${data.user.id}`, col);
+			}
 		}
 	}
 
@@ -818,18 +829,75 @@ function parseMessage(data) {
 	let nameBlock = $(`<div class="name" data-userid="${data.user.id}">${data.user[localStorage.getItem(`usename_${data.user.id}`)]}</div>`);
 	let messageBlock = $('<div class="message"></div>');
 
+	let colorToUse = `color_${data.user.id}`;
 	if(localStorage.getItem("setting_chatDefaultNameColorForced") === "true") {
 		nameBlock.css("background-color", "var(--nameBackgroundNoGradientDefault)");
 
 		if(localStorage.getItem("setting_chatNameUsesGradient") === "true") {
 			nameBlock.css("background-image", `var(--nameBackgroundDefault)`);
 		}
+		colorToUse = `setting_chatDefaultNameColor`;
 	} else {
 		nameBlock.css("background-color", `var(--nameColor${data.user.id})`);
 
 		if(localStorage.getItem("setting_chatNameUsesGradient") === "true") {
 			nameBlock.css("background-image", `linear-gradient(var(--nameAngle${data.user.id}), var(--nameColorSecondary${data.user.id}) 0%, transparent 75%)`);
 		}
+	}
+
+	let userColorUsed = localStorage.getItem(colorToUse);
+	if(!userColorUsed || userColorUsed === "var(--defaultNameColor)") {
+		userColorUsed = localStorage.getItem("setting_chatDefaultNameColor");
+	}
+
+	// i should really make these a lambda function or something fml
+	if(localStorage.getItem("setting_chatOutlinesReflectUserColor") === "true") {
+		$(":root").get(0).style.setProperty(`--borderColor${data.user.id}`, interpolateColor(
+			localStorage.getItem("setting_chatOutlinesColor"),
+			userColorUsed,
+			parseFloat(localStorage.getItem(`setting_chatOutlinesUserColorAmount`)
+		)));
+		rootElement.css("border-color", `var(--borderColor${data.user.id})`);
+	}
+	if(localStorage.getItem("setting_chatBackgroundReflectUserColor") === "true") {
+		$(":root").get(0).style.setProperty(`--bgColor${data.user.id}`, interpolateColor(
+			localStorage.getItem("setting_chatBackgroundColor"),
+			userColorUsed,
+			parseFloat(localStorage.getItem(`setting_chatBackgroundUserColorAmount`)
+		)));
+		rootElement.css("background-color", `var(--bgColor${data.user.id})`);
+	}
+	if(localStorage.getItem("setting_chatMessageUserInfoBackgroundReflectUserColor") === "true") {
+		$(":root").get(0).style.setProperty(`--userInfoBGColor${data.user.id}`, interpolateColor(
+			localStorage.getItem("setting_chatMessageUserInfoBackgroundColor"),
+			userColorUsed,
+			parseFloat(localStorage.getItem(`setting_chatMessageUserInfoBackgroundUserColorAmount`)
+		)));
+		userBlock.css("background-color", `var(--userInfoBGColor${data.user.id})`);
+	}
+	if(localStorage.getItem("setting_chatMessageUserInfoOutlinesReflectUserColor") === "true") {
+		$(":root").get(0).style.setProperty(`--userOutlineColor${data.user.id}`, interpolateColor(
+			localStorage.getItem("setting_chatMessageUserInfoOutlinesColor"),
+			userColorUsed,
+			parseFloat(localStorage.getItem(`setting_chatMessageUserInfoOutlinesUserColorAmount`)
+		)));
+		userBlock.css("border-color", `var(--userOutlineColor${data.user.id})`);
+	}
+	if(localStorage.getItem("setting_pronounsReflectUserColor") === "true") {
+		$(":root").get(0).style.setProperty(`--pronounsColor${data.user.id}`, interpolateColor(
+			localStorage.getItem("setting_pronounsColor"),
+			userColorUsed,
+			parseFloat(localStorage.getItem(`setting_pronounsUserColorAmount`)
+		)));
+		pronounsBlock.css("background-color", `var(--pronounsColor${data.user.id})`);
+	}
+	if(localStorage.getItem("setting_chatMessageReflectUserColor") === "true") {
+		$(":root").get(0).style.setProperty(`--chatMessageColor${data.user.id}`, interpolateColor(
+			localStorage.getItem("setting_chatMessageColor"),
+			userColorUsed,
+			parseFloat(localStorage.getItem(`setting_chatMessageUserColorAmount`)
+		)));
+		messageBlock.css("color", `var(--chatMessageColor${data.user.id})`);
 	}
 
 	if(customizationOK) {

@@ -64,6 +64,20 @@
 						</div>
 					</div>
 					<div class="setting">
+						<div class="settingFullWidth">
+							<input id="chatBackgroundReflectUserColor" type="checkbox"/> <span class="settingInfo">Color fades into the chatter's own color</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Fading amount</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatBackgroundUserColorAmount" min="0" max="100" step="0.5" value="50"/> %
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
 						<div class="settingHalfWidthLeft">
 							<span class="settingInfo">Message highlight color</span>
 						</div>
@@ -81,7 +95,84 @@
 					</div>
 				</div>
 				<div class="part">
+					<h1>Outlines</h1>
+					<div class="setting">
+						<div class="settingFullWidth">
+							<input id="chatOutlines" type="checkbox" data-dependent="outlines"/> <span class="settingInfo">Enable outlines around messages</span>
+						</div>
+					</div>
+					<div class="setting disabled" data-dependent="outlines">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Color</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="chatOutlinesColor" type="text" data-coloris value="#FFFFFF"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="outlines">
+						<div class="settingFullWidth">
+							<input id="chatOutlinesReflectUserColor" type="checkbox"/> <span class="settingInfo">Color fades into the chatter's own color</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="outlines">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Fading amount</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatOutlinesUserColorAmount" min="0" max="100" step="0.5" value="50"/> %
+						</div>
+					</div>
+					<hr/>
+					<div class="setting disabled" data-dependent="outlines">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Size</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatOutlinesSize" min="0" max="8" step="1" value="1"/> px
+						</div>
+					</div>
+					<div class="setting disabled" data-dependent="outlines">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Style</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<select id="chatOutlineStyle">
+								<option value="dashed">Dashed</option>
+								<option value="dotted">Dotted</option>
+								<option value="double">Double</option>
+								<option value="groove">Groove</option>
+								<option value="inset">Inset</option>
+								<option value="outset">Outset</option>
+								<option value="ridge">Ridge</option>
+								<option selected value="solid">Solid</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="part">
 					<h1>Names</h1>
+					<div class="setting">
+						<div class="settingFullWidth">
+							<input checked id="ensureNameColorsAreBrightEnough" type="checkbox" data-dependent="brightNames"/> <span class="settingInfo">Ensure name colors are between a set brightness level</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="brightNames">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Minimum</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="nameColorMinBrightness" min="0" max="100" step="1" value="30"/> %
+						</div>
+					</div>
+					<div class="setting" data-dependent="brightNames">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Maximum</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="nameColorMaxBrightness" min="0" max="100" step="1" value="100"/> %
+						</div>
+					</div>
+					<hr/>
 					<div class="setting">
 						<div class="settingFullWidth">
 							<input id="chatDefaultNameColorForced" type="checkbox"/> <span class="settingInfo">Force names to use the default name color</span>
@@ -182,13 +273,42 @@
 							<input id="chatMessageUserInfoBackgroundColor" type="text" data-coloris value="#00000000"/>
 						</div>
 					</div>
+					<div class="setting">
+						<div class="settingFullWidth">
+							<input id="chatMessageUserInfoBackgroundReflectUserColor" type="checkbox"/> <span class="settingInfo">Color fades into the chatter's own color</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Fading amount</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatMessageUserInfoBackgroundUserColorAmount" min="0" max="100" step="0.5" value="50"/> %
+						</div>
+					</div>
 					<hr/>
 					<div class="setting">
 						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Padding</span>
+							<span class="settingInfo">Vertical padding</span>
 						</div>
 						<div class="settingHalfWidthRight">
-							<input type="number" id="chatMessageUserInfoElementPadding" min="0" max="64" step="0.5" value="0"/> px
+							<input type="number" id="chatMessageUserInfoElementPaddingVertical" min="0" max="64" step="0.5" value="0"/> px
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Horizontal padding</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatMessageUserInfoElementPaddingHorizontal" min="0" max="64" step="0.5" value="0"/> px
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Bottom margin</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatMessageUserInfoBottomMargin" min="0" max="64" step="1" value="4"/> px
 						</div>
 					</div>
 					<div class="setting">
@@ -207,6 +327,59 @@
 							<input type="number" id="chatMessageUserInfoElementSpacing" min="0" max="64" step="0.5" value="14"/> px
 						</div>
 					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingFullWidth">
+							<input id="chatMessageUserInfoOutlines" type="checkbox" data-dependent="userInfoOutlines"/> <span class="settingInfo">Enable outlines around chatter information</span>
+						</div>
+					</div>
+					<div class="setting disabled" data-dependent="userInfoOutlines">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Outline color</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="chatMessageUserInfoOutlinesColor" type="text" data-coloris value="#FFFFFF"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="userInfoOutlines">
+						<div class="settingFullWidth">
+							<input id="chatMessageUserInfoOutlinesReflectUserColor" type="checkbox"/> <span class="settingInfo">Color fades into the chatter's own color</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="userInfoOutlines">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Fading amount</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatMessageUserInfoOutlinesUserColorAmount" min="0" max="100" step="0.5" value="100"/> %
+						</div>
+					</div>
+					<hr/>
+					<div class="setting disabled" data-dependent="userInfoOutlines">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Size</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatMessageUserInfoOutlinesSize" min="0" max="8" step="1" value="1"/> px
+						</div>
+					</div>
+					<div class="setting disabled" data-dependent="userInfoOutlines">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Style</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<select id="chatMessageUserInfoOutlineStyle">
+								<option value="dashed">Dashed</option>
+								<option value="dotted">Dotted</option>
+								<option value="double">Double</option>
+								<option value="groove">Groove</option>
+								<option value="inset">Inset</option>
+								<option value="outset">Outset</option>
+								<option value="ridge">Ridge</option>
+								<option selected value="solid">Solid</option>
+							</select>
+						</div>
+					</div>
 				</div>
 				<div class="part">
 					<h1>Messages</h1>
@@ -218,6 +391,20 @@
 							<input id="chatMessageColor" type="text" data-coloris value="#FFFFFF"/>
 						</div>
 					</div>
+					<div class="setting">
+						<div class="settingFullWidth">
+							<input id="chatMessageReflectUserColor" type="checkbox"/> <span class="settingInfo">Color fades into the chatter's own color</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Fading amount</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatMessageUserColorAmount" min="0" max="100" step="0.5" value="10"/> %
+						</div>
+					</div>
+					<hr/>
 					<div class="setting">
 						<div class="settingHalfWidthLeft">
 							<span class="settingInfo">Font</span>
@@ -281,47 +468,6 @@
 					</div>
 				</div>
 				<div class="part">
-					<h1>Outlines</h1>
-					<div class="setting">
-						<div class="settingFullWidth">
-							<input id="chatOutlines" type="checkbox" data-dependent="outlines"/> <span class="settingInfo">Enable outlines around messages</span>
-						</div>
-					</div>
-					<div class="setting disabled" data-dependent="outlines">
-						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Color</span>
-						</div>
-						<div class="settingHalfWidthRight">
-							<input id="chatOutlinesColor" type="text" data-coloris value="#FFFFFF"/>
-						</div>
-					</div>
-					<div class="setting disabled" data-dependent="outlines">
-						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Size</span>
-						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatOutlinesSize" min="0" max="8" step="1" value="1"/> px
-						</div>
-					</div>
-					<div class="setting disabled" data-dependent="outlines">
-						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Style</span>
-						</div>
-						<div class="settingHalfWidthRight">
-							<select id="chatOutlineStyle">
-								<option value="dashed">Dashed</option>
-								<option value="dotted">Dotted</option>
-								<option value="double">Double</option>
-								<option value="groove">Groove</option>
-								<option value="inset">Inset</option>
-								<option value="outset">Outset</option>
-								<option value="ridge">Ridge</option>
-								<option selected value="solid">Solid</option>
-							</select>
-						</div>
-					</div>
-				</div>
-				<div class="part">
 					<h1>Positioning</h1>
 					<div class="setting">
 						<div class="settingHalfWidthLeft">
@@ -350,18 +496,35 @@
 					<hr/>
 					<div class="setting">
 						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Overlay padding</span>
+							<span class="settingInfo">Vertical margin</span>
 						</div>
 						<div class="settingHalfWidthRight">
-							<input type="number" id="chatBlockPadding" min="0" max="64" step="0.25" value="18"/> px
+							<input type="number" id="chatBlockPaddingVertical" min="0" max="64" step="0.25" value="18"/> px
 						</div>
 					</div>
 					<div class="setting">
 						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Chat message padding</span>
+							<span class="settingInfo">Horizontal margin</span>
 						</div>
 						<div class="settingHalfWidthRight">
-							<input type="number" id="chatBlockIndividualPadding" min="0" max="64" step="0.25" value="0"/> px
+							<input type="number" id="chatBlockPaddingHorizontal" min="0" max="64" step="0.25" value="18"/> px
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Vert. block padding</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatBlockIndividualPaddingVertical" min="0" max="64" step="0.25" value="0"/> px
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Horiz. block padding</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatBlockIndividualPaddingHorizontal" min="0" max="64" step="0.25" value="0"/> px
 						</div>
 					</div>
 					<div class="setting">
@@ -837,7 +1000,7 @@
 					<hr/>
 					<div class="setting" data-dependent="timestamps">
 						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Margin</span>
+							<span class="settingInfo">Horizontal margin</span>
 						</div>
 						<div class="settingHalfWidthRight">
 							<input type="number" id="timestampPadding" min="-50" max="50" step="0.5" value="10"/> px
@@ -1134,6 +1297,19 @@
 						</div>
 						<div class="settingHalfWidthRight">
 							<input id="pronounsColor" type="text" data-coloris value="#808080"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingFullWidth">
+							<input id="pronounsReflectUserColor" type="checkbox"/> <span class="settingInfo">Color fades into the chatter's own color</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Fading amount</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="pronounsUserColorAmount" min="0" max="100" step="0.5" value="50"/> %
 						</div>
 					</div>
 					<hr/>
