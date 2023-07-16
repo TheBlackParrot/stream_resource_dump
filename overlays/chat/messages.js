@@ -82,7 +82,7 @@ const chatFuncs = {
 		}
 
 		if(localStorage.getItem("setting_ensureNameColorsAreBrightEnough") === "true") {
-			color = ensureSafeColor(`#${color}`);
+			color = ensureSafeColor(`#${color}`).replace("#", "");
 		}
 
 		console.log(`set color for ${data.user.username} to #${color}`)
@@ -97,7 +97,7 @@ const chatFuncs = {
 		}
 
 		if(localStorage.getItem("setting_ensureNameColorsAreBrightEnough") === "true") {
-			color = ensureSafeColor(`#${color}`);
+			color = ensureSafeColor(`#${color}`).replace("#", "");
 		}
 
 		console.log(`set 2nd color for ${data.user.username} to #${color}`)
