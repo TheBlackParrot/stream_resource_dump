@@ -444,3 +444,25 @@ img.emoji {
 	border-bottom-right-radius: var(--chatBlockBorderRadius);
 	border-top: 0px;
 }
+
+.bigEmote {
+	font-size: var(--bigEmoteSize);
+	padding: 0px;
+	display: inline-block;
+	vertical-align: unset !important;
+	border-radius: var(--emoteBorderRadius);
+}
+
+.bigEmoji {
+	height: 1em !important;
+	width: 1em !important;
+	font-size: var(--bigEmoteSize) !important;
+	border-radius: var(--emoteBorderRadius);
+}
+
+.left .bigEmote {
+	margin-right: var(--bigEmoteMargin);
+}
+.right .bigEmote {
+	margin-left: var(--bigEmoteMargin);
+}

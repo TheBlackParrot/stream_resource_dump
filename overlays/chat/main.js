@@ -1,3 +1,6 @@
+// todo: make this a setting
+$.ajaxSetup({ timeout: 7000 });
+
 const query = new URLSearchParams(location.search);
 var allowedToProceed = true;
 

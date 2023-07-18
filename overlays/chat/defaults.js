@@ -186,7 +186,13 @@ const defaultConfig = {
 	"pronounsUserColorAmount": "50",
 	"chatMessageReflectUserColor": "false",
 	"chatMessageUserColorAmount": "10",
-	"chatMessageUserInfoBottomMargin": "4"
+	"chatMessageUserInfoBottomMargin": "4",
+	"chatMessagesHardCap": "200",
+	"debugFreezeChat": "false",
+	"enableEmotes": "true",
+	"emotesParseToImage": "true",
+	"emotesBorderRadius": "0",
+	"chatBigEmoteMargin": "0"
 };
 
 for(let setting in defaultConfig) {

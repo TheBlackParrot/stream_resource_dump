@@ -76,6 +76,8 @@
 	--chatBlockOutline: none;
 
 	--bigEmoteSize: 48pt;
+	--bigEmoteMargin: 0px;
+	--emoteBorderRadius: 0px;
 
 	--timingFuncLinear: cubic-bezier(0.0, 0.0, 1.0, 1.0);
 	--timingFuncEase: cubic-bezier(0.25, 0.1, 0.25, 1.0);

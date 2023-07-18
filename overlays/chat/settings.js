@@ -314,7 +314,7 @@ const settingUpdaters = {
 		//info=subscriber/25;badges=broadcaster/1,subscriber/3024;client-nonce=d101a84203af3f39502904e6a317672c;color=#8A2BE2;display-name=TheBlackParrot;emotes=305954156:11-18/25:5-9;first-msg=0;flags=;id=7f097686-fb53-4a0a-97d6-ee90ff0d3a05;mod=0;returning-chatter=0;room-id=43464015;subscriber=1;tmi-sent-ts=1689412906804;turbo=0;user-id=43464015;user-type= :theblackparrot!theblackparrot@theblackparrot.tmi.twitch.tv PRIVMSG #theblackparrot :test Kappa PogChamp
 
 		let exMsg = "Hello there! This is a *fake message* so that you can see what your *chat settings* look like! **Have fun!** AaBbCcDd EeFfGgHh IiJjKkLl MmNnOoPp QqRrSsTt UuVvWwXx YyZz 0123456789 Also, look! Emotes! Kappa PogChamp catJAM ~~sarcastic text~~";
-		let msg = `@badge-info=;badges=broadcaster/1;client-nonce=balls;display-name=${broadcasterData.display_name};emotes=305954156:197-204/25:191-195;first-msg=0;flags=;id=1234-abcd;mod=0;returning-chatter=0;room-id=${broadcasterData.id};subscriber=0;tmi-sent-ts=${Date.now()};turbo=0;user-id=-1;user-type=;color=#${r}${g}${b} :${broadcasterData.login}!${broadcasterData.login}@${broadcasterData.login}.tmi.twitch.tv PRIVMSG #${broadcasterData.login} :${exMsg}`;
+		let msg = `@badge-info=;badges=broadcaster/1;client-nonce=balls;display-name=${broadcasterData.display_name};emotes=305954156:205-212/25:199-203;first-msg=0;flags=;id=1234-abcd;mod=0;returning-chatter=0;room-id=${broadcasterData.id};subscriber=0;tmi-sent-ts=${Date.now()};turbo=0;user-id=-1;user-type=;color=#${r}${g}${b} :${broadcasterData.login}!${broadcasterData.login}@${broadcasterData.login}.tmi.twitch.tv PRIVMSG #${broadcasterData.login} :${exMsg}`;
 		client._onMessage({
 			data: msg
 		});
@@ -583,6 +583,13 @@ const settingUpdaters = {
 	chatMessageUserInfoBottomMargin: function(value) {
 		$(":root").get(0).style.setProperty("--userInfoBottomMargin", `${value}px`);
 	},
+
+	emotesBorderRadius: function(value) {
+		$(":root").get(0).style.setProperty("--emoteBorderRadius", `${value}px`);
+	},
+	chatBigEmoteMargin: function(value) {
+		$(":root").get(0).style.setProperty("--bigEmoteMargin", `${value}px`);
+	}
 };
 
 settingUpdaters["chatHideAccounts"](localStorage.getItem("setting_chatHideAccounts"));

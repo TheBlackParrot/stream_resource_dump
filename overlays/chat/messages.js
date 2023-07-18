@@ -546,6 +546,10 @@ function parseMessage(data) {
 
 	console.log(data);
 
+	if(localStorage.getItem("setting_debugFreezeChat") === "true") {
+		return;
+	}
+
 	let wantedCommand;
 	let wantedArgs;
 	if(data.message[0] === localStorage.getItem("setting_chatCommandCharacter")) {
@@ -973,128 +977,159 @@ function parseMessage(data) {
 		}
 	}
 
-	//console.log(` 1: ${data.message}`);
-
-	// don't mind the bad grammar, this helped here LOL
-	// https://dev.to/acanimal/how-to-slice-or-get-symbols-from-a-unicode-string-with-emojis-in-javascript-lets-learn-how-javascript-represent-strings-h3a
 	let originalMessage = Array.from(data.message.normalize());
-	let checkExternalEmotes = Array.from(data.message.normalize());
 
-	//console.log(` 2: ${originalMessage}`);
+	let hasBigEmotes = false;
+	if(localStorage.getItem("setting_enableEmotes") === "true") {
+		let checkExternalEmotes = Array.from(data.message.normalize());
 
-	if(data.emotes) {
-		for(let emoteID in data.emotes) {
-			for(let i in data.emotes[emoteID]) {
-				let spots = data.emotes[emoteID][i].split("-");
-				let startAt = parseInt(spots[0]);
-				let stopAt = parseInt(spots[1]);
+		if(data.emotes) {
+			for(let emoteID in data.emotes) {
+				for(let i in data.emotes[emoteID]) {
+					let spots = data.emotes[emoteID][i].split("-");
+					let startAt = parseInt(spots[0]);
+					let stopAt = parseInt(spots[1]);
 
-				for(let charIdx = startAt; charIdx <= stopAt; charIdx++) {
-					originalMessage[charIdx] = "";
-					checkExternalEmotes[charIdx] = "";
+					for(let charIdx = startAt; charIdx <= stopAt; charIdx++) {
+						originalMessage[charIdx] = "";
+						checkExternalEmotes[charIdx] = "";
+					}
+
+					let emoteURL = `https://static-cdn.jtvnw.net/emoticons/v2/${emoteID}/default/dark/3.0`;
+					originalMessage[startAt] = `<span class="emote" style="background-image: url('${emoteURL}');"><img src="${emoteURL}"/></span>`;
 				}
-
-				let emoteURL = `https://static-cdn.jtvnw.net/emoticons/v2/${emoteID}/default/dark/3.0`;
-				originalMessage[startAt] = `<span class="emote" style="background-image: url('${emoteURL}');"><img src="${emoteURL}"/></span>`;
 			}
 		}
-	}
 
-	//console.log(` 3: ${originalMessage}`);
+		//console.log(` 3: ${originalMessage}`);
 
-	let externalPostRemoval = [];
-	for(let charIdx in checkExternalEmotes) {
-		let char = checkExternalEmotes[charIdx];
-		if(char !== "") {
-			externalPostRemoval.push(char);
+		let externalPostRemoval = [];
+		for(let charIdx in checkExternalEmotes) {
+			let char = checkExternalEmotes[charIdx];
+			if(char !== "") {
+				externalPostRemoval.push(char);
+			}
 		}
-	}
-	//console.log(` 4: ${externalPostRemoval}`);
-	//externalPostRemoval = externalPostRemoval.join("").replace(/\p{RGI_Emoji}+/vg, '');
-	externalPostRemoval = externalPostRemoval.join("").replace(/\p{Extended_Pictographic}/ug, '');
-	let eprw = externalPostRemoval.split(" ");
-	let eprww = [];
-	for(let wordIdx in eprw) {
-		let word = eprw[wordIdx];
-		if(!(word in chatEmotes)) {
-			eprww.push(eprw[wordIdx]);
+		//console.log(` 4: ${externalPostRemoval}`);
+		//externalPostRemoval = externalPostRemoval.join("").replace(/\p{RGI_Emoji}+/vg, '');
+		externalPostRemoval = externalPostRemoval.join("").replace(/\p{Extended_Pictographic}/ug, '');
+		let eprw = externalPostRemoval.split(" ");
+		let eprww = [];
+		for(let wordIdx in eprw) {
+			let word = eprw[wordIdx];
+			if(!(word in chatEmotes)) {
+				eprww.push(eprw[wordIdx]);
+			}
 		}
-	}
-	//console.log(` 5: ${eprww} (${eprww.length})`);
+		//console.log(` 5: ${eprww} (${eprww.length})`);
 
-	let parsedMessage = [];
+		let parsedMessage = [];
 
-	for(let charIdx in originalMessage) {
-		if(!originalMessage[charIdx]) {
-			continue;
+		for(let charIdx in originalMessage) {
+			if(!originalMessage[charIdx]) {
+				continue;
+			}
+
+			if(originalMessage[charIdx] in entityMap) {
+				parsedMessage.push(entityMap[originalMessage[charIdx]]);
+			} else {
+				parsedMessage.push(originalMessage[charIdx]);
+			}
 		}
+		//console.log(` 6: ${parsedMessage}`);
 
-		if(originalMessage[charIdx] in entityMap) {
-			parsedMessage.push(entityMap[originalMessage[charIdx]]);
+		let stuff;
+		if(localStorage.getItem("setting_chatParseMarkdown") === "true") {
+			stuff = md.renderInline(parsedMessage.join(""));
 		} else {
-			parsedMessage.push(originalMessage[charIdx]);
+			stuff = parsedMessage.join("");
 		}
-	}
-	//console.log(` 6: ${parsedMessage}`);
+		//console.log(` 7: ${stuff}`);
 
-	let stuff;
-	if(localStorage.getItem("setting_chatParseMarkdown") === "true") {
-		stuff = md.renderInline(parsedMessage.join(""));
-	} else {
-		stuff = parsedMessage.join("");
-	}
-	//console.log(` 7: ${stuff}`);
-
-	let words = stuff.split(" ");
-	for(let wordIdx in words) {
-		let word = words[wordIdx];
-		if(word in chatEmotes) {
-			words[wordIdx] = `<span class="emote" style="background-image: url('${chatEmotes[word].url}');"><img src="${chatEmotes[word].url}"/></span>`;
-		}
-		if(word[0] === "@") {
-			words[wordIdx] = `<strong>${word}</strong>`;
-		}
-	}
-
-	//console.log(` 8: ${words}`);
-
-	// what i'm doing here to fix in-line seamless emotes is stupid but it works yay
-	messageBlock.html(words.join(" ").replaceAll("</span> <span", "</span><span"));
-
-	if(data.type === "action") {
-		let col = data.user.color;
-		if(!col) {
-			col = "var(--defaultNameColor)";
-		}
-		messageBlock.addClass("actionMessage");
-		messageBlock.css("background-image", `linear-gradient(170deg, #fff -50%, ${col} 150%)`);
-	}
-
-	messageBlock = $(twemoji.parse(messageBlock[0], {
-		folder: 'svg',
-		ext: '.svg'
-	}));
-
-	let hasBigEmotes = (eprww.join("") === "" && localStorage.getItem("setting_chatShowBigEmotes") === "true");
-	if(hasBigEmotes) {
-		messageBlock.css("font-size", "0pt").css("line-height", "1em").css("letter-spacing", "0px").css("padding-bottom", "8px");
-		messageBlock.children(".emote").css("font-size", "var(--bigEmoteSize)").css("padding", "0px");
-		messageBlock.children(".emoji").css("font-size", "var(--bigEmoteSize)");
-
-		let count = 0;
-		let maxCount = parseInt(localStorage.getItem("setting_chatMaxBigEmotes"));
-		messageBlock.children(".emote,.emoji").each(function() {
-			if(count >= maxCount) {
-				$(this).remove();
+		let words = stuff.split(" ");
+		for(let wordIdx in words) {
+			let word = words[wordIdx];
+			if(word in chatEmotes) {
+				words[wordIdx] = `<span class="emote" style="background-image: url('${chatEmotes[word].url}');"><img src="${chatEmotes[word].url}"/></span>`;
 			}
-			count++;
-		});
+			if(word[0] === "@") {
+				words[wordIdx] = `<strong style="background-color: var(--chatMessageColor${data.user.id});">${word}</strong>`;
+			}
+		}
+
+		//console.log(` 8: ${words}`);
+
+		// what i'm doing here to fix in-line seamless emotes is stupid but it works yay
+		messageBlock.html(words.join(" ").replaceAll("</span> <span", "</span><span"));
+
+		if(data.type === "action") {
+			let col = data.user.color;
+			if(!col) {
+				col = "var(--defaultNameColor)";
+			}
+			messageBlock.addClass("actionMessage");
+			messageBlock.css("background-image", `linear-gradient(170deg, #fff -50%, ${col} 150%)`);
+		}
+
+		if(localStorage.getItem("setting_emotesParseToImage") === "true") {
+			messageBlock = $(twemoji.parse(messageBlock[0], {
+				folder: 'svg',
+				ext: '.svg'
+			}));
+		}
+
+		hasBigEmotes = (eprww.join("") === "" && localStorage.getItem("setting_chatShowBigEmotes") === "true");
+		if(hasBigEmotes) {
+			messageBlock.css("font-size", "0pt").css("letter-spacing", "0px").css("line-height", "unset");
+			messageBlock.children(".emote").addClass("bigEmote");
+			messageBlock.children(".emoji").addClass("bigEmoji");
+
+			let count = 0;
+			let maxCount = parseInt(localStorage.getItem("setting_chatMaxBigEmotes"));
+			messageBlock.children(".emote,.emoji").each(function() {
+				if(count >= maxCount) {
+					$(this).remove();
+				}
+				count++;
+			});
+		}
+	} else {
+		let parsedMessage = [];
+
+		for(let charIdx in originalMessage) {
+			if(!originalMessage[charIdx]) {
+				continue;
+			}
+
+			if(originalMessage[charIdx] in entityMap) {
+				parsedMessage.push(entityMap[originalMessage[charIdx]]);
+			} else {
+				parsedMessage.push(originalMessage[charIdx]);
+			}
+		}
+
+		let stuff;
+		if(localStorage.getItem("setting_chatParseMarkdown") === "true") {
+			stuff = md.renderInline(parsedMessage.join(""));
+		} else {
+			stuff = parsedMessage.join("");
+		}
+
+		let words = stuff.split(" ");
+		for(let wordIdx in words) {
+			let word = words[wordIdx];
+			if(word[0] === "@") {
+				words[wordIdx] = `<strong style="background-color: var(--chatMessageColor${data.user.id});">${word}</strong>`;
+			}
+		}
+
+		messageBlock.html(words.join(" "));
 	}
 
 	rootElement.append(messageBlock);
 
-	// hard cap at 200 messages, realistically this will never be hit. only here for the perma-message no-opacity needers
-	while($(".chatBlock").length > 200) {
+	let messageCap = parseInt(localStorage.getItem("setting_chatMessagesHardCap"));
+	while($(".chatBlock").length > messageCap) {
 		$(".chatBlock")[0].remove();
 	}
 
