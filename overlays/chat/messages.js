@@ -37,9 +37,17 @@ client.on('message', function(channel, tags, message, self) {
 		}
 	}
 
+	let isOverlayMessage = false;
+	if('is-overlay-message' in tags) {
+		if(tags['is-overlay-message'] === "true") {
+			isOverlayMessage = true;
+		}
+	}
+
 	getTwitchUserInfo(tags['user-id'], function(userData) {
 		parseMessage({
 			message: message,
+			isOverlayMessage: isOverlayMessage,
 			type: tags['message-type'],
 			highlighted: highlighted,
 			emotes: tags['emotes'],
@@ -302,6 +310,9 @@ const chatFuncs = {
 		chatFuncs["pfpshape"](data, [args[16]]);
 		chatFuncs["use7tvpaint"](data, [args[17]]);
 		chatFuncs["nameshadow"](data, [args[18]]);
+
+		data.message = "New chat settings have applied!"
+		parseMessage(data);
 	},
 
 	"flags": function(data, args) {
@@ -613,7 +624,7 @@ function parseMessage(data) {
 	messageCount++;
 
 	let badgeBlock = $('<div class="badges" style="display: none;"></div>');
-	if(localStorage.getItem("setting_enableTwitchBadges") === "true") {
+	if(localStorage.getItem("setting_enableTwitchBadges") === "true" && !data.isOverlayMessage) {
 		if(localStorage.getItem("setting_enableTwitchSubscriberBadges") === "true" && localStorage.getItem(`setting_enableTwitchFounderBadges`) === "false" && data.user.badges.list) {
 			if("founder" in data.user.badges.list) {
 				let monthPoss = [1, 1, 2, 3, 3, 3, 6, 6, 6, 9, 9, 9];
@@ -688,7 +699,7 @@ function parseMessage(data) {
 
 	let flagBlock = $('<div class="flags" style="display: none;"></div>');
 	if(!localStorage.getItem(`flags_${data.user.id}`)) { localStorage.setItem(`flags_${data.user.id}`, ""); }
-	if(localStorage.getItem("setting_enableFlags") === "true") {
+	if(localStorage.getItem("setting_enableFlags") === "true" && !data.isOverlayMessage) {
 		let flags = localStorage.getItem(`flags_${data.user.id}`).split(",");
 
 		if(flags.length) {
@@ -708,7 +719,7 @@ function parseMessage(data) {
 	}
 
 	let pronounsBlock = $('<div class="pronouns" style="display: none;"></div>');
-	if(localStorage.getItem("setting_enablePronouns") === "true") {
+	if(localStorage.getItem("setting_enablePronouns") === "true" && !data.isOverlayMessage) {
 		getUserPronouns(data.user.username, function(fetched) {
 			if(fetched.pronoun_id !== "NONE") {
 				pronounsBlock.addClass(`pronouns_${fetched.pronoun_id}`);
@@ -720,7 +731,7 @@ function parseMessage(data) {
 
 	let pfpBlock = $('<img class="pfp" src="" style="display: none;"/>');
 	userBlock.append(pfpBlock);
-	if(localStorage.getItem("setting_enableAvatars") === "true") {
+	if(localStorage.getItem("setting_enableAvatars") === "true" && !data.isOverlayMessage) {
 		let pfpURL = "";
 
 		let uID = data.user.id;
@@ -904,7 +915,7 @@ function parseMessage(data) {
 		messageBlock.css("color", `var(--chatMessageColor${data.user.id})`);
 	}
 
-	if(customizationOK) {
+	if(customizationOK && !data.isOverlayMessage) {
 		$(":root").get(0).style.setProperty(`--nameSize${data.user.id}`, localStorage.getItem(`namesize_${data.user.id}`));
 		if(localStorage.getItem("setting_chatNameFontSize") !== "16") {
 			let scale = parseFloat(localStorage.getItem("setting_chatNameFontSize")) / 16;
@@ -967,7 +978,7 @@ function parseMessage(data) {
 	userBlock.append(nameBlock);
 	rootElement.append(userBlock);
 
-	if(localStorage.getItem(`use7tvpaint_${data.user.id}`) === "yes") {
+	if(localStorage.getItem(`use7tvpaint_${data.user.id}`) === "yes" && !data.isOverlayMessage) {
 		for(let i in sevenTVPaints) {
 			let paint = sevenTVPaints[i];
 			if(paint.users.indexOf(data.user.id) !== -1) {
@@ -977,11 +988,11 @@ function parseMessage(data) {
 		}
 	}
 
-	let originalMessage = Array.from(data.message.normalize());
+	let originalMessage = Array.from(data.message.trim().normalize());
 
 	let hasBigEmotes = false;
 	if(localStorage.getItem("setting_enableEmotes") === "true") {
-		let checkExternalEmotes = Array.from(data.message.normalize());
+		let checkExternalEmotes = Array.from(data.message.trim().normalize());
 
 		if(data.emotes) {
 			for(let emoteID in data.emotes) {
@@ -1080,7 +1091,7 @@ function parseMessage(data) {
 
 		hasBigEmotes = (eprww.join("") === "" && localStorage.getItem("setting_chatShowBigEmotes") === "true");
 		if(hasBigEmotes) {
-			messageBlock.css("font-size", "0pt").css("letter-spacing", "0px").css("line-height", "unset");
+			messageBlock.addClass("isBigEmoteMode");
 			messageBlock.children(".emote").addClass("bigEmote");
 			messageBlock.children(".emoji").addClass("bigEmoji");
 
@@ -1119,7 +1130,7 @@ function parseMessage(data) {
 		for(let wordIdx in words) {
 			let word = words[wordIdx];
 			if(word[0] === "@") {
-				words[wordIdx] = `<strong style="background-color: var(--chatMessageColor${data.user.id});">${word}</strong>`;
+				words[wordIdx] = `<strong>${word}</strong>`;
 			}
 		}
 
@@ -1140,6 +1151,8 @@ function parseMessage(data) {
 	if(data.highlighted) {
 		rootElement.addClass("highlighted");
 	}
+
+	messageBlock.find("strong").css("background-color", `var(--chatMessageColor${data.user.id})`);
 
 	if(typeof wantedCommand === "function") {
 		wantedCommand(data, wantedArgs, rootElement);

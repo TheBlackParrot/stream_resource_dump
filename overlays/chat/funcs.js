@@ -24,7 +24,7 @@ function callTwitch(data, callback) {
 
 function systemMessage(msg) {
 	client._onMessage({
-		data: `@badge-info=;badges=;color=#ffffff;display-name=Overlay (r${overlayRevision});id=-1;mod=0;room-id=${broadcasterData.id};subscriber=0;tmi-sent-ts=${Date.now()};turbo=0;user-id=-1 :<overlay>!<overlay>@<overlay>.tmi.twitch.tv PRIVMSG #${broadcasterData.username} :${msg}`
+		data: `@badge-info=;badges=;color=#ffffff;display-name=Overlay (r${overlayRevision});id=-1;mod=0;room-id=${broadcasterData.id};subscriber=0;tmi-sent-ts=${Date.now()};turbo=0;user-id=-1;is-overlay-message=true :<overlay>!<overlay>@<overlay>.tmi.twitch.tv PRIVMSG #${broadcasterData.username} :${msg}`
 	});
 }
 

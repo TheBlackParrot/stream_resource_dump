@@ -192,7 +192,8 @@ const defaultConfig = {
 	"enableEmotes": "true",
 	"emotesParseToImage": "true",
 	"emotesBorderRadius": "0",
-	"chatBigEmoteMargin": "0"
+	"chatBigEmoteMargin": "0",
+	"chatBigEmoteMarginVertical": "4"
 };
 
 for(let setting in defaultConfig) {

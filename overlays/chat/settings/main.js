@@ -1,8 +1,8 @@
 $("#sensitive .section").show();
 $("#sideButtons").css("top", parseInt($("#sidebar").css("height")) + 40);
 
-const overlayRevision = 7;
-const lastUpdate = new Date(1689670458455).toISOString();
+const overlayRevision = 8;
+const lastUpdate = new Date(1689760166141).toISOString();
 $("#revision").text(overlayRevision);
 $("#revisionDate").text(lastUpdate);
 
@@ -187,8 +187,8 @@ $("#resetOverlayButton").on("mouseup", function(e) {
 
 $.get(`version.json?sigh=${Date.now()}`, function(data) {
 	if(overlayRevision !== data.revision) {
-		$("#updateString").text(`Overlay may be out of date! Please refresh your browser source's cache.`);
+		$("#updateString").text(`Settings panel may be out of date! Please refresh your browser source's cache.`);
 	} else {
-		$("#updateString").text(`Overlay is up to date.`);
+		$("#updateString").text(`Settings panel is up to date.`);
 	}
 });

@@ -140,6 +140,7 @@ body {
 	background-image: var(--nameBackgroundDefault);
 	filter: var(--effectFilters);
 	display: inline-block !important;
+	padding-right: 5px;
 }
 
 .pronouns {
@@ -231,6 +232,8 @@ tt, code, pre {
 	margin-bottom: 12px;
 	filter: var(--effectFilters);
 	overflow: hidden;
+	display: flex;
+	flex-wrap: wrap;
 }
 
 .loading {
@@ -247,10 +250,6 @@ tt, code, pre {
 	height: 80px;
 }
 
-.bsrArt, .bsrCode {
-	margin-right: 10px;
-}
-
 .bsrArt img {
 	border-radius: 12px;
 }
@@ -260,6 +259,7 @@ tt, code, pre {
 	vertical-align: top;
 	font-style: normal;
 	height: 86px;
+	flex-grow: 1;
 }
 
 .songTitle {
@@ -294,18 +294,16 @@ tt, code, pre {
 	font-weight: 900;
 	margin-top: 4px;
 	line-height: 20px;
+	display: flex;
+}
+.bsrStats {
+	display: flex;
 }
 
 .bsrCode {
     background-image: linear-gradient(170deg, #333, #000);
     border-radius: 4px;
 	text-align: center;
-}
-.bsrStats {
-	display: inline-block;
-}
-.bsrStats span {
-	margin-right: 24px;
 }
 .fa-thumbs-down {
 	margin-left: 10px;
@@ -390,8 +388,8 @@ img.emoji {
 .bsrMapInfo div {
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	overflow: hidden;
-	width: calc(100vw - calc(var(--chatBlockPaddingHorizontal) * 2) - 90px);
+	overflow-x: clip;
+	width: calc(100vw - calc(var(--chatBlockPaddingHorizontal) * 2) - 96px);
 }
 
 .timestamp {
@@ -448,7 +446,7 @@ img.emoji {
 .bigEmote {
 	font-size: var(--bigEmoteSize);
 	padding: 0px;
-	display: inline-block;
+	display: inline-flex;
 	vertical-align: unset !important;
 	border-radius: var(--emoteBorderRadius);
 }
@@ -465,4 +463,47 @@ img.emoji {
 }
 .right .bigEmote {
 	margin-left: var(--bigEmoteMargin);
+}
+
+.right .userInfo {
+	position: relative;
+	left: 5px;
+}
+
+.isBigEmoteMode {
+	font-size: 0pt !important;
+	letter-spacing: 0px !important;
+	line-height: 1em !important;
+	margin-top: var(--bigEmoteMarginVertical);
+	margin-bottom: var(--bigEmoteMarginVertical);
+}
+
+.left .bsrInfo, .left .bsrStats {
+	flex-direction: row;
+}
+
+.right .bsrInfo, .right .bsrStats {
+	flex-direction: row-reverse;
+}
+
+.left .bsrStats span {
+	margin-right: 24px;
+}
+
+.right .bsrStats span {
+	margin-left: 24px;
+}
+
+.left .bsrArt, .left .bsrCode {
+	margin-right: 13px;
+}
+.right .bsrArt, .right .bsrCode {
+	margin-left: 13px;
+}
+
+.left .bsrExtraInfo {
+	flex-direction: row;
+}
+.right .bsrExtraInfo {
+	flex-direction: row-reverse;
 }

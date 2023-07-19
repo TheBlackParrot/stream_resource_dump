@@ -589,6 +589,9 @@ const settingUpdaters = {
 	},
 	chatBigEmoteMargin: function(value) {
 		$(":root").get(0).style.setProperty("--bigEmoteMargin", `${value}px`);
+	},
+	chatBigEmoteMarginVertical: function(value) {
+		$(":root").get(0).style.setProperty("--bigEmoteMarginVertical", `${value}px`);
 	}
 };
 
