@@ -592,8 +592,49 @@ const settingUpdaters = {
 	},
 	chatBigEmoteMarginVertical: function(value) {
 		$(":root").get(0).style.setProperty("--bigEmoteMarginVertical", `${value}px`);
+	},
+
+	overlayForceWidth: function(value) {
+		if(value === "true") {
+			$(":root").get(0).style.setProperty("--overlayWidth", "var(--overlayWidthActual)");
+		} else {
+			$(":root").get(0).style.setProperty("--overlayWidth", "100vw");
+		}
+	},
+	overlayWidth: function(value) {
+		$(":root").get(0).style.setProperty("--overlayWidthActual", `${value}px`);
+	},
+
+	chatMessageEnableSeparators: function(value) {
+		if(value === "true") {
+			$(":root").get(0).style.setProperty("--messageSeparatorWidth", "var(--messageSeparatorWidthActual)");
+			$(":root").get(0).style.setProperty("--messageSeparatorSpacing", "var(--messageSeparatorSpacingActual)");
+		} else {
+			$(":root").get(0).style.setProperty("--messageSeparatorWidth", "0px");
+			$(":root").get(0).style.setProperty("--messageSeparatorSpacing", "0px");
+		}		
+	},
+	chatMessageSeparatorColor: function(value) {
+		$(":root").get(0).style.setProperty("--messageSeparatorColor", value);
+	},
+	chatMessageSeparatorWidth: function(value) {
+		$(":root").get(0).style.setProperty("--messageSeparatorWidthActual", `${value}px`);
+	},
+	chatMessageSeparatorSpacing: function(value) {
+		$(":root").get(0).style.setProperty("--messageSeparatorSpacingActual", `${value}px`);
+	},
+	chatMessageSeparatorStyle: function(value) {
+		$(":root").get(0).style.setProperty("--messageSeparatorStyle", value);
 	}
 };
+
+/*
+	--messageSeparatorColor: #ffffff20;
+	--messageSeparatorWidthActual: 1px;
+	--messageSeparatorWidth: 0px;
+	--messageSeparatorSpacing: 0px;
+	--messageSeparatorStyle: solid;
+*/
 
 settingUpdaters["chatHideAccounts"](localStorage.getItem("setting_chatHideAccounts"));
 

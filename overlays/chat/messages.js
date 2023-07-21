@@ -95,7 +95,7 @@ const chatFuncs = {
 
 		console.log(`set color for ${data.user.username} to #${color}`)
 		localStorage.setItem(`color_${data.user.id}`, `#${color}`);
-		$(":root").get(0).style.setProperty(`--nameColor${data.user.id}`, `#${color}`);
+		rootCSS().setProperty(`--nameColor${data.user.id}`, `#${color}`);
 	},
 
 	namesecondarycolor: function(data, args) {
@@ -110,7 +110,7 @@ const chatFuncs = {
 
 		console.log(`set 2nd color for ${data.user.username} to #${color}`)
 		localStorage.setItem(`color2_${data.user.id}`, `#${color}`);
-		$(":root").get(0).style.setProperty(`--nameColorSecondary${data.user.id}`, `#${color}`);
+		rootCSS().setProperty(`--nameColorSecondary${data.user.id}`, `#${color}`);
 	},
 
 	namefont: function(data, args) {
@@ -120,7 +120,7 @@ const chatFuncs = {
 
 		console.log(`set name font for ${data.user.username} to ${fontName}`)
 		localStorage.setItem(`namefont_${data.user.id}`, fontName);
-		$(":root").get(0).style.setProperty(`--nameFont${data.user.id}`, fontName);
+		rootCSS().setProperty(`--nameFont${data.user.id}`, fontName);
 	},
 
 	nameweight: function(data, args) {
@@ -136,7 +136,7 @@ const chatFuncs = {
 
 		console.log(`set name weight for ${data.user.username} to ${weight}`)
 		localStorage.setItem(`nameweight_${data.user.id}`, weight);
-		$(":root").get(0).style.setProperty(`--nameWeight${data.user.id}`, weight);
+		rootCSS().setProperty(`--nameWeight${data.user.id}`, weight);
 	},
 
 	namesize: function(data, args) {
@@ -152,7 +152,7 @@ const chatFuncs = {
 
 		console.log(`set name size for ${data.user.username} to ${size}pt`)
 		localStorage.setItem(`namesize_${data.user.id}`, `${size}pt`);
-		$(":root").get(0).style.setProperty(`--nameSize${data.user.id}`, `${size}pt`);
+		rootCSS().setProperty(`--nameSize${data.user.id}`, `${size}pt`);
 	},
 
 	nameitalic: function(data, args) {
@@ -160,7 +160,7 @@ const chatFuncs = {
 
 		console.log(`set name italics for ${data.user.username} to ${which}`);
 		localStorage.setItem(`namestyle_${data.user.id}`, which);
-		$(":root").get(0).style.setProperty(`--nameStyle${data.user.id}`, which);
+		rootCSS().setProperty(`--nameStyle${data.user.id}`, which);
 	},
 
 	namespacing: function(data, args) {
@@ -176,7 +176,7 @@ const chatFuncs = {
 
 		console.log(`set name character spacing for ${data.user.username} to ${val}px`)
 		localStorage.setItem(`namespacing_${data.user.id}`, `${val}px`);
-		$(":root").get(0).style.setProperty(`--nameSpacing${data.user.id}`, `${val}px`);
+		rootCSS().setProperty(`--nameSpacing${data.user.id}`, `${val}px`);
 	},
 
 	msgfont: function(data, args) {
@@ -187,7 +187,7 @@ const chatFuncs = {
 
 		console.log(`set message font for ${data.user.username} to ${fontName}`)
 		localStorage.setItem(`msgfont_${data.user.id}`, fontName);
-		$(":root").get(0).style.setProperty(`--msgFont${data.user.id}`, fontName);
+		rootCSS().setProperty(`--msgFont${data.user.id}`, fontName);
 	},
 
 	msgsize: function(data, args) {
@@ -203,7 +203,7 @@ const chatFuncs = {
 
 		console.log(`set message size for ${data.user.username} to ${size}pt`)
 		localStorage.setItem(`msgsize_${data.user.id}`, `${size}pt`);
-		$(":root").get(0).style.setProperty(`--msgSize${data.user.id}`, `${size}pt`);
+		rootCSS().setProperty(`--msgSize${data.user.id}`, `${size}pt`);
 	},
 
 	msgspacing: function(data, args) {
@@ -219,7 +219,7 @@ const chatFuncs = {
 
 		console.log(`set message character spacing for ${data.user.username} to ${val}px`)
 		localStorage.setItem(`msgspacing_${data.user.id}`, `${val}px`);
-		$(":root").get(0).style.setProperty(`--msgSpacing${data.user.id}`, `${val}px`);
+		rootCSS().setProperty(`--msgSpacing${data.user.id}`, `${val}px`);
 	},
 
 	msgweight: function(data, args) {
@@ -235,7 +235,7 @@ const chatFuncs = {
 
 		console.log(`set message weight for ${data.user.username} to ${weight}`)
 		localStorage.setItem(`msgweight_${data.user.id}`, weight);
-		$(":root").get(0).style.setProperty(`--msgWeight${data.user.id}`, weight);
+		rootCSS().setProperty(`--msgWeight${data.user.id}`, weight);
 	},
 
 	"nametransform": function(data, args) {
@@ -253,7 +253,7 @@ const chatFuncs = {
 
 		console.log(`set name transform for ${data.user.username} to ${chosen}`)
 		localStorage.setItem(`nametransform_${data.user.id}`, chosen);
-		$(":root").get(0).style.setProperty(`--nameTransform${data.user.id}`, chosen);
+		rootCSS().setProperty(`--nameTransform${data.user.id}`, chosen);
 	},
 
 	"namevariant": function(data, args) {
@@ -271,7 +271,7 @@ const chatFuncs = {
 
 		console.log(`set name variant for ${data.user.username} to ${chosen}`)
 		localStorage.setItem(`namevariant_${data.user.id}`, chosen);
-		$(":root").get(0).style.setProperty(`--nameVariant${data.user.id}`, chosen);
+		rootCSS().setProperty(`--nameVariant${data.user.id}`, chosen);
 	},
 
 	nameangle: function(data, args) {
@@ -282,7 +282,7 @@ const chatFuncs = {
 
 		console.log(`set name angle for ${data.user.username} to ${angle}deg`)
 		localStorage.setItem(`nameangle_${data.user.id}`, `${angle}deg`);
-		$(":root").get(0).style.setProperty(`--nameAngle${data.user.id}`, `${angle}deg`);
+		rootCSS().setProperty(`--nameAngle${data.user.id}`, `${angle}deg`);
 	},
 
 	"chatsettings": function(data, args) {
@@ -390,7 +390,7 @@ const chatFuncs = {
 				}
 
 				if(!canShowInfo) {
-					infoElement.html(`<i class="fas fa-times"></i> <span style="opacity: 0.67; margin-left: 6px;" class="loadingMsg">could not show information for ${mapData.id}, BeatSaver account is too new</span>`);
+					infoElement.html(`<i class="fas fa-times"></i> <span class="loadingMsg">could not show information for ${mapData.id}, BeatSaver account is too new</span>`);
 					return;
 				}
 
@@ -455,7 +455,7 @@ const chatFuncs = {
 
 		console.log(`pfp shape for ${data.user.username} is now ${val}`);
 		localStorage.setItem(`pfpShape_${data.user.id}`, val);
-		$(":root").get(0).style.setProperty(`--pfpShape${data.user.id}`, val);
+		rootCSS().setProperty(`--pfpShape${data.user.id}`, val);
 	},
 
 	refreshpfp: function(data, args) {
@@ -489,7 +489,7 @@ const chatFuncs = {
 
 		console.log(`name shadow for ${data.user.username} is now ${show}`);
 		localStorage.setItem(`nameshadow_${data.user.id}`, show);
-		$(":root").get(0).style.setProperty(`--nameShadow${data.user.id}`, (show === "yes" ? "var(--shadowStuff)" : ""));
+		rootCSS().setProperty(`--nameShadow${data.user.id}`, (show === "yes" ? "var(--shadowStuff)" : ""));
 	},
 
 	nameoutline: function(data, args) {
@@ -498,7 +498,7 @@ const chatFuncs = {
 
 		console.log(`name outline for ${data.user.username} is now ${show}`);
 		localStorage.setItem(`nameoutline_${data.user.id}`, show);
-		$(":root").get(0).style.setProperty(`--nameOutline${data.user.id}`, (show === "yes" ? "var(--outlineStuff)" : ""));		
+		rootCSS().setProperty(`--nameOutline${data.user.id}`, (show === "yes" ? "var(--outlineStuff)" : ""));		
 	},
 
 	resetchat: function(data, args) {
@@ -743,7 +743,7 @@ function parseMessage(data) {
 			pfpBlock.attr("src", userData.profile_image_url);
 
 			if(!localStorage.getItem(`pfpShape_${data.user.id}`)) { localStorage.setItem(`pfpShape_${data.user.id}`, "var(--avatarBorderRadius)"); }
-			$(":root").get(0).style.setProperty(`--pfpShape${data.user.id}`, localStorage.getItem(`pfpShape_${data.user.id}`));
+			rootCSS().setProperty(`--pfpShape${data.user.id}`, localStorage.getItem(`pfpShape_${data.user.id}`));
 			pfpBlock.css("border-radius", `var(--pfpShape${data.user.id})`);
 
 			if(!localStorage.getItem(`showpfp_${data.user.id}`)) { localStorage.setItem(`showpfp_${data.user.id}`, "yes"); }
@@ -833,12 +833,12 @@ function parseMessage(data) {
 		}
 	}
 
-	$(":root").get(0).style.setProperty(`--nameColor${data.user.id}`, localStorage.getItem(`color_${data.user.id}`));
-	$(":root").get(0).style.setProperty(`--nameColorSecondary${data.user.id}`, localStorage.getItem(`color2_${data.user.id}`));
+	rootCSS().setProperty(`--nameColor${data.user.id}`, localStorage.getItem(`color_${data.user.id}`));
+	rootCSS().setProperty(`--nameColorSecondary${data.user.id}`, localStorage.getItem(`color2_${data.user.id}`));
 	if(customizationOK) {
-		$(":root").get(0).style.setProperty(`--nameAngle${data.user.id}`, localStorage.getItem(`nameangle_${data.user.id}`));
+		rootCSS().setProperty(`--nameAngle${data.user.id}`, localStorage.getItem(`nameangle_${data.user.id}`));
 	} else {
-		$(":root").get(0).style.setProperty(`--nameAngle${data.user.id}`, "var(--nameGradientAngle)");
+		rootCSS().setProperty(`--nameAngle${data.user.id}`, "var(--nameGradientAngle)");
 	}
 
 	let nameBlock = $(`<div class="name" data-userid="${data.user.id}">${data.user[localStorage.getItem(`usename_${data.user.id}`)]}</div>`);
@@ -867,7 +867,7 @@ function parseMessage(data) {
 
 	// i should really make these a lambda function or something fml
 	if(localStorage.getItem("setting_chatOutlinesReflectUserColor") === "true") {
-		$(":root").get(0).style.setProperty(`--borderColor${data.user.id}`, interpolateColor(
+		rootCSS().setProperty(`--borderColor${data.user.id}`, interpolateColor(
 			localStorage.getItem("setting_chatOutlinesColor"),
 			userColorUsed,
 			parseFloat(localStorage.getItem(`setting_chatOutlinesUserColorAmount`)
@@ -875,7 +875,7 @@ function parseMessage(data) {
 		rootElement.css("border-color", `var(--borderColor${data.user.id})`);
 	}
 	if(localStorage.getItem("setting_chatBackgroundReflectUserColor") === "true") {
-		$(":root").get(0).style.setProperty(`--bgColor${data.user.id}`, interpolateColor(
+		rootCSS().setProperty(`--bgColor${data.user.id}`, interpolateColor(
 			localStorage.getItem("setting_chatBackgroundColor"),
 			userColorUsed,
 			parseFloat(localStorage.getItem(`setting_chatBackgroundUserColorAmount`)
@@ -883,7 +883,7 @@ function parseMessage(data) {
 		rootElement.css("background-color", `var(--bgColor${data.user.id})`);
 	}
 	if(localStorage.getItem("setting_chatMessageUserInfoBackgroundReflectUserColor") === "true") {
-		$(":root").get(0).style.setProperty(`--userInfoBGColor${data.user.id}`, interpolateColor(
+		rootCSS().setProperty(`--userInfoBGColor${data.user.id}`, interpolateColor(
 			localStorage.getItem("setting_chatMessageUserInfoBackgroundColor"),
 			userColorUsed,
 			parseFloat(localStorage.getItem(`setting_chatMessageUserInfoBackgroundUserColorAmount`)
@@ -891,7 +891,7 @@ function parseMessage(data) {
 		userBlock.css("background-color", `var(--userInfoBGColor${data.user.id})`);
 	}
 	if(localStorage.getItem("setting_chatMessageUserInfoOutlinesReflectUserColor") === "true") {
-		$(":root").get(0).style.setProperty(`--userOutlineColor${data.user.id}`, interpolateColor(
+		rootCSS().setProperty(`--userOutlineColor${data.user.id}`, interpolateColor(
 			localStorage.getItem("setting_chatMessageUserInfoOutlinesColor"),
 			userColorUsed,
 			parseFloat(localStorage.getItem(`setting_chatMessageUserInfoOutlinesUserColorAmount`)
@@ -899,7 +899,7 @@ function parseMessage(data) {
 		userBlock.css("border-color", `var(--userOutlineColor${data.user.id})`);
 	}
 	if(localStorage.getItem("setting_pronounsReflectUserColor") === "true") {
-		$(":root").get(0).style.setProperty(`--pronounsColor${data.user.id}`, interpolateColor(
+		rootCSS().setProperty(`--pronounsColor${data.user.id}`, interpolateColor(
 			localStorage.getItem("setting_pronounsColor"),
 			userColorUsed,
 			parseFloat(localStorage.getItem(`setting_pronounsUserColorAmount`)
@@ -907,7 +907,7 @@ function parseMessage(data) {
 		pronounsBlock.css("background-color", `var(--pronounsColor${data.user.id})`);
 	}
 	if(localStorage.getItem("setting_chatMessageReflectUserColor") === "true") {
-		$(":root").get(0).style.setProperty(`--chatMessageColor${data.user.id}`, interpolateColor(
+		rootCSS().setProperty(`--chatMessageColor${data.user.id}`, interpolateColor(
 			localStorage.getItem("setting_chatMessageColor"),
 			userColorUsed,
 			parseFloat(localStorage.getItem(`setting_chatMessageUserColorAmount`)
@@ -916,30 +916,30 @@ function parseMessage(data) {
 	}
 
 	if(customizationOK && !data.isOverlayMessage) {
-		$(":root").get(0).style.setProperty(`--nameSize${data.user.id}`, localStorage.getItem(`namesize_${data.user.id}`));
+		rootCSS().setProperty(`--nameSize${data.user.id}`, localStorage.getItem(`namesize_${data.user.id}`));
 		if(localStorage.getItem("setting_chatNameFontSize") !== "16") {
 			let scale = parseFloat(localStorage.getItem("setting_chatNameFontSize")) / 16;
 			if(localStorage.getItem(`namesize_${data.user.id}`) !== "var(--nameFontSize)") {
-				$(":root").get(0).style.setProperty(`--nameSize${data.user.id}`, `calc(${localStorage.getItem(`namesize_${data.user.id}`)} * ${scale})`);
+				rootCSS().setProperty(`--nameSize${data.user.id}`, `calc(${localStorage.getItem(`namesize_${data.user.id}`)} * ${scale})`);
 			}
 		}
 
-		$(":root").get(0).style.setProperty(`--nameSpacing${data.user.id}`, localStorage.getItem(`namespacing_${data.user.id}`));
+		rootCSS().setProperty(`--nameSpacing${data.user.id}`, localStorage.getItem(`namespacing_${data.user.id}`));
 		if(localStorage.getItem("setting_chatNameLetterSpacing") !== "1") {
 			let scale = parseFloat(localStorage.getItem("setting_chatNameLetterSpacing"));
 			if(localStorage.getItem(`namespacing_${data.user.id}`) !== "var(--nameLetterSpacing)") {
-				$(":root").get(0).style.setProperty(`--nameSpacing${data.user.id}`, `calc(${localStorage.getItem(`namespacing_${data.user.id}`)} * ${scale})`);
+				rootCSS().setProperty(`--nameSpacing${data.user.id}`, `calc(${localStorage.getItem(`namespacing_${data.user.id}`)} * ${scale})`);
 			}
 		}
 
-		$(":root").get(0).style.setProperty(`--nameFont${data.user.id}`, localStorage.getItem(`namefont_${data.user.id}`));
-		$(":root").get(0).style.setProperty(`--nameWeight${data.user.id}`, localStorage.getItem(`nameweight_${data.user.id}`));
-		$(":root").get(0).style.setProperty(`--nameStyle${data.user.id}`, localStorage.getItem(`namestyle_${data.user.id}`));
-		$(":root").get(0).style.setProperty(`--nameTransform${data.user.id}`, localStorage.getItem(`nametransform_${data.user.id}`));
-		$(":root").get(0).style.setProperty(`--nameVariant${data.user.id}`, localStorage.getItem(`namevariant_${data.user.id}`));
-		$(":root").get(0).style.setProperty(`--nameShadow${data.user.id}`, localStorage.getItem(`nameshadow_${data.user.id}`) === "yes" ? `var(--shadowStuff)` : "");
-		$(":root").get(0).style.setProperty(`--nameOutline${data.user.id}`, localStorage.getItem(`nameoutline_${data.user.id}`) === "yes" ? `var(--outlineStuff)` : "");
-		$(":root").get(0).style.setProperty(`--nameEffects${data.user.id}`, `var(--nameOutline${data.user.id})var(--nameShadow${data.user.id})`);
+		rootCSS().setProperty(`--nameFont${data.user.id}`, localStorage.getItem(`namefont_${data.user.id}`));
+		rootCSS().setProperty(`--nameWeight${data.user.id}`, localStorage.getItem(`nameweight_${data.user.id}`));
+		rootCSS().setProperty(`--nameStyle${data.user.id}`, localStorage.getItem(`namestyle_${data.user.id}`));
+		rootCSS().setProperty(`--nameTransform${data.user.id}`, localStorage.getItem(`nametransform_${data.user.id}`));
+		rootCSS().setProperty(`--nameVariant${data.user.id}`, localStorage.getItem(`namevariant_${data.user.id}`));
+		rootCSS().setProperty(`--nameShadow${data.user.id}`, localStorage.getItem(`nameshadow_${data.user.id}`) === "yes" ? `var(--shadowStuff)` : "");
+		rootCSS().setProperty(`--nameOutline${data.user.id}`, localStorage.getItem(`nameoutline_${data.user.id}`) === "yes" ? `var(--outlineStuff)` : "");
+		rootCSS().setProperty(`--nameEffects${data.user.id}`, `var(--nameOutline${data.user.id})var(--nameShadow${data.user.id})`);
 
 		nameBlock.css("font-family", `var(--nameFont${data.user.id})`);
 		nameBlock.css("font-weight", `var(--nameWeight${data.user.id})`);
@@ -950,22 +950,22 @@ function parseMessage(data) {
 		nameBlock.css("font-variant", `var(--nameVariant${data.user.id})`);
 		nameBlock.css("filter", `var(--nameEffects${data.user.id})`);
 
-		$(":root").get(0).style.setProperty(`--msgFont${data.user.id}`, localStorage.getItem(`msgfont_${data.user.id}`));
-		$(":root").get(0).style.setProperty(`--msgWeight${data.user.id}`, localStorage.getItem(`msgweight_${data.user.id}`));
+		rootCSS().setProperty(`--msgFont${data.user.id}`, localStorage.getItem(`msgfont_${data.user.id}`));
+		rootCSS().setProperty(`--msgWeight${data.user.id}`, localStorage.getItem(`msgweight_${data.user.id}`));
 
-		$(":root").get(0).style.setProperty(`--msgSize${data.user.id}`, localStorage.getItem(`msgsize_${data.user.id}`));
+		rootCSS().setProperty(`--msgSize${data.user.id}`, localStorage.getItem(`msgsize_${data.user.id}`));
 		if(localStorage.getItem("setting_chatMessageFontSize") !== "16") {
 			let scale = parseFloat(localStorage.getItem("setting_chatMessageFontSize")) / 16;
 			if(localStorage.getItem(`msgsize_${data.user.id}`) !== "var(--messageFontSize)") {
-				$(":root").get(0).style.setProperty(`--msgSize${data.user.id}`, `calc(${localStorage.getItem(`msgsize_${data.user.id}`)} * ${scale})`);
+				rootCSS().setProperty(`--msgSize${data.user.id}`, `calc(${localStorage.getItem(`msgsize_${data.user.id}`)} * ${scale})`);
 			}
 		}
 
-		$(":root").get(0).style.setProperty(`--msgSpacing${data.user.id}`, localStorage.getItem(`msgspacing_${data.user.id}`));
+		rootCSS().setProperty(`--msgSpacing${data.user.id}`, localStorage.getItem(`msgspacing_${data.user.id}`));
 		if(localStorage.getItem("setting_messageLetterSpacing") !== "0") {
 			let scale = parseFloat(localStorage.getItem("setting_messageLetterSpacing"));
 			if(localStorage.getItem(`msgspacing_${data.user.id}`) !== "var(--messageLetterSpacing)") {
-				$(":root").get(0).style.setProperty(`--msgSpacing${data.user.id}`, `calc(${localStorage.getItem(`msgspacing_${data.user.id}`)} * ${scale})`);
+				rootCSS().setProperty(`--msgSpacing${data.user.id}`, `calc(${localStorage.getItem(`msgspacing_${data.user.id}`)} * ${scale})`);
 			}
 		}
 
@@ -1027,8 +1027,8 @@ function parseMessage(data) {
 		let eprw = externalPostRemoval.split(" ");
 		let eprww = [];
 		for(let wordIdx in eprw) {
-			let word = eprw[wordIdx];
-			if(!(word in chatEmotes)) {
+			let word = eprw[wordIdx].trim();
+			if(word.length > 0 && !(word in chatEmotes)) {
 				eprww.push(eprw[wordIdx]);
 			}
 		}
@@ -1064,7 +1064,7 @@ function parseMessage(data) {
 				words[wordIdx] = `<span class="emote" style="background-image: url('${chatEmotes[word].url}');"><img src="${chatEmotes[word].url}"/></span>`;
 			}
 			if(word[0] === "@") {
-				words[wordIdx] = `<strong style="background-color: var(--chatMessageColor${data.user.id});">${word}</strong>`;
+				words[wordIdx] = `<strong>${word}</strong>`;
 			}
 		}
 
@@ -1152,7 +1152,9 @@ function parseMessage(data) {
 		rootElement.addClass("highlighted");
 	}
 
-	messageBlock.find("strong").css("background-color", `var(--chatMessageColor${data.user.id})`);
+	if(localStorage.getItem("setting_chatMessageReflectUserColor") === "true") {
+		messageBlock.find("strong").css("background-color", `var(--chatMessageColor${data.user.id})`);
+	}
 
 	if(typeof wantedCommand === "function") {
 		wantedCommand(data, wantedArgs, rootElement);
@@ -1198,14 +1200,15 @@ function parseMessage(data) {
 		}
 
 		let expectedWidth = userBlock.width();
-		let maxWidth = $("#wrapper").width() - (parseInt($(":root").get(0).style.getPropertyValue("--chatBlockPadding")) * 2);
+		let padding = (parseInt(rootCSS().getPropertyValue("--chatBlockPaddingHorizontal")) * 2) + (parseInt(rootCSS().getPropertyValue("--chatBlockIndividualPaddingHorizontal")) * 2);
+		let maxWidth = $("#wrapper").width() - padding;
 		$("#testWrapper").empty();
 
 		if(isHidden) {
 			userBlock.hide();
 		}
 
-		//console.log(expectedWidth, maxWidth);
+		console.log(expectedWidth, maxWidth);
 		return expectedWidth > maxWidth;
 	}
 

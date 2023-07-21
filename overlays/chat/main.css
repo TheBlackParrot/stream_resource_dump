@@ -9,7 +9,7 @@ body {
 
 #wrapper {
 	position: fixed;
-	width: 100%;
+	width: var(--overlayWidth);
 	display: flex;
 	flex-direction: column;
 }
@@ -227,9 +227,9 @@ tt, code, pre {
 .bsrInfo {
 	word-wrap: break-word;
 	line-height: 26px;
-	margin-top: 12px;
+	margin-top: 4px;
 	white-space: nowrap;
-	margin-bottom: 12px;
+	margin-bottom: 4px;
 	filter: var(--effectFilters);
 	overflow: hidden;
 	display: flex;
@@ -259,7 +259,6 @@ tt, code, pre {
 	vertical-align: top;
 	font-style: normal;
 	height: 86px;
-	flex-grow: 1;
 }
 
 .songTitle {
@@ -389,7 +388,7 @@ img.emoji {
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow-x: clip;
-	width: calc(100vw - calc(var(--chatBlockPaddingHorizontal) * 2) - 96px);
+	width: calc(var(--overlayWidth) - calc(var(--chatBlockPaddingHorizontal) * 2) - 96px);
 }
 
 .timestamp {
@@ -506,4 +505,37 @@ img.emoji {
 }
 .right .bsrExtraInfo {
 	flex-direction: row-reverse;
+}
+
+.chatBlock:after {
+	content: "";
+	border-bottom-color: var(--messageSeparatorColor);
+	border-bottom-width: var(--messageSeparatorWidth);
+	border-bottom-style: var(--messageSeparatorStyle);
+	padding-bottom: var(--messageSeparatorSpacing);
+	margin-bottom: var(--messageSeparatorSpacing);
+}
+.chatBlock:last-child:after {
+	border: 0;
+	padding: 0;
+	margin: 0;
+}
+
+.loading .fas {
+	line-height: unset !important;
+}
+
+.loadingMsg {
+	opacity: 0.67;
+}
+
+.left .loadingMsg {
+	margin-left: 6px;
+}
+.right .loadingMsg {
+	margin-right: 6px;
+}
+
+.loadingMsg strong {
+	padding-right: 5px;
 }

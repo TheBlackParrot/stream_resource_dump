@@ -241,3 +241,7 @@ function ensureSafeColor(color) {
 
 	return color;
 }
+
+function rootCSS() {
+	return document.querySelector("html").style;
+}

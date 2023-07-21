@@ -193,7 +193,14 @@ const defaultConfig = {
 	"emotesParseToImage": "true",
 	"emotesBorderRadius": "0",
 	"chatBigEmoteMargin": "0",
-	"chatBigEmoteMarginVertical": "4"
+	"chatBigEmoteMarginVertical": "4",
+	"overlayForceWidth": "false",
+	"overlayWidth": "700",
+	"chatMessageEnableSeparators": "false",
+	"chatMessageSeparatorColor": "#ffffff20",
+	"chatMessageSeparatorWidth": "1",
+	"chatMessageSeparatorSpacing": "0",
+	"chatMessageSeparatorStyle": "solid"
 };
 
 for(let setting in defaultConfig) {

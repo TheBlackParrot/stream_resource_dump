@@ -467,9 +467,70 @@
 							<input type="number" id="chatMessageLineHeight" min="16" max="64" step="0.5" value="30"/> px
 						</div>
 					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingFullWidth">
+							<input id="chatMessageEnableSeparators" type="checkbox" data-dependent="chatSeparators"/> <span class="settingInfo">Enable separators between messages</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="chatSeparators">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Color</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="chatMessageSeparatorColor" type="text" data-coloris value="#FFFFFF20"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="chatSeparators">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Width</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatMessageSeparatorWidth" min="1" max="16" step="1" value="1"/> px
+						</div>
+					</div>
+					<div class="setting" data-dependent="chatSeparators">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Spacing</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatMessageSeparatorSpacing" min="0" max="64" step="1" value="0"/> px
+						</div>
+					</div>
+					<div class="setting" data-dependent="chatSeparators">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Style</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<select id="chatMessageSeparatorStyle">
+								<option value="dashed">Dashed</option>
+								<option value="dotted">Dotted</option>
+								<option value="double">Double</option>
+								<option value="groove">Groove</option>
+								<option value="inset">Inset</option>
+								<option value="outset">Outset</option>
+								<option value="ridge">Ridge</option>
+								<option selected value="solid">Solid</option>
+							</select>
+						</div>
+					</div>
 				</div>
 				<div class="part">
 					<h1>Positioning</h1>
+					<div class="setting">
+						<div class="settingFullWidth">
+							<input id="overlayForceWidth" type="checkbox" data-dependent="forceWidth"/> <span class="settingInfo">Force the overlay to a set width</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="forceWidth">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Width</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="overlayWidth" min="100" max="3840" step="1" value="700"/> px
+						</div>
+					</div>
+					<hr/>
 					<div class="setting">
 						<div class="settingHalfWidthLeft">
 							<span class="settingInfo">Corner alignment</span>
@@ -485,7 +546,7 @@
 					</div>
 					<div class="setting">
 						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Width</span>
+							<span class="settingInfo">Content width</span>
 						</div>
 						<div class="settingHalfWidthRight">
 							<select id="chatBlockWidth">

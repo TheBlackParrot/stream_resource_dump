@@ -1,4 +1,7 @@
 :root {
+	--overlayWidthActual: 700px;
+	--overlayWidth: 100%;
+
 	--overlayShadowColor: rgba(0, 0, 0, 1);
 	--overlayShadowXOffset: 0px;
 	--overlayShadowYOffset: 1px;
@@ -60,6 +63,12 @@
 	--messageUserInfoElementSpacing: 14px;
 	--messageTransform: none;
 	--messageBoldAmount: 1.25px;
+	--messageSeparatorColor: #ffffff20;
+	--messageSeparatorWidthActual: 1px;
+	--messageSeparatorWidth: 0px;
+	--messageSeparatorSpacingActual: 0px;
+	--messageSeparatorSpacing: 0px;
+	--messageSeparatorStyle: solid;
 
 	--chatBlockPaddingVertical: 18px;
 	--chatBlockPaddingHorizontal: 18px;
