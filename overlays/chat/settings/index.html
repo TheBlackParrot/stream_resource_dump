@@ -1651,7 +1651,7 @@
 			</div>
 			<div class="section" data-content="auth" data-sensitive="true">
 				<div class="part">
-					<h1>Connection</h1>
+					<h1>Twitch Connection</h1>
 					<div class="setting">
 						<div class="settingHalfWidthLeft">
 							<span class="settingInfo">Twitch channel to use</span>
@@ -1662,7 +1662,7 @@
 					</div>
 				</div>
 				<div class="part">
-					<h1>Tokens</h1>
+					<h1>Twitch API Tokens</h1>
 					<div class="setting">
 						<div class="settingHalfWidthLeft">
 							<span class="settingInfo">App client ID</span>
@@ -1676,13 +1676,50 @@
 							<span class="settingInfo">App client secret</span>
 						</div>
 						<div class="settingHalfWidthRight">
-							<input id="twitchClientSecret" type="text" value=""/>
+							<input id="twitchClientSecret" type="password" value=""/>
 						</div>
 					</div>
 					<hr/>
 					<div class="setting">
 						<div class="settingFullWidth smol">
 							These tokens are available in your <a href="https://dev.twitch.tv/console/apps">Twitch Developer Console</a>
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>OBS Websocket Connection</h1>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">IP address</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="obs_ip" type="text" value="127.0.0.1"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Port</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="obs_port" min="1" max="65536" step="1" value="4455"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingFullWidth">
+							<input id="obs_usePassword" type="checkbox" data-dependent="obsPassword"/> <span class="settingInfo">Authenticate using a password</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="obsPassword">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Password</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="obs_password" type="password" value=""/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingFullWidth smol">
+							Some extra overlays require connection to OBS; this is not necessary for the chat overlay to function.
 						</div>
 					</div>
 				</div>
@@ -1814,6 +1851,80 @@
 					</div>
 				</div>
 			</div>
+			<div class="section" data-content="bsvodaudio">
+				<div class="part">
+					<h1>General</h1>
+					<div class="setting">
+						<div class="settingFullWidth">
+							<input checked id="bsvodaudio_muteOnUnknown" type="checkbox"/> <span class="settingInfo">Mute on unflagged map hashes</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingFullWidth">
+							<input checked id="bsvodaudio_muteOnMenu" type="checkbox"/> <span class="settingInfo">Mute when returning to the menu</span>
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>OBS Settings</h1>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Audio source to control</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="bsvodaudio_audioSource" type="text" value=""/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">VOD-only audio track</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="bsvodaudio_vodAudioTrack" min="1" max="6" step="1" value="2"/>
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>BeatSaberPlus Connection</h1>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">IP address</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="bsplus_ip" type="text" value="127.0.0.1"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Port</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="bsplus_port" min="1" max="65536" step="1" value="2947"/>
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Database</h1>
+					<div class="setting">
+						<div class="settingFullWidth">
+							<input checked id="bsvodaudio_syncRemoteDBs" type="checkbox" data-dependent="bsvodaudio_remoteSync"/> <span class="settingInfo">Use remote map hash databases</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="bsvodaudio_remoteSync">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Remote database URLs<br/><span style="font-size: var(--font-size-smol); opacity: 0.67;">(One URL per line)<br/>(Must point to a .json file)</span></span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<textarea id="bsvodaudio_remoteDBURLs"></textarea>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingFullWidth">
+							<input checked id="bsvodaudio_muteOnConflict" type="checkbox" data-dependent="bsvodaudio_remoteSync"/> <span class="settingInfo">Mute on conflicting safe/unsafe flags</span>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div id="sensitive">
 			<div class="section">
@@ -1832,7 +1943,8 @@
 		</div>
 		<div id="sideButtons">
 			<div class="button" id="sendTestButton">Test Message</div>
-			<div class="button" id="reloadOverlayButton">Reload Overlays</div>
+			<div class="button" id="reloadPanelButton">Refresh Settings</div>
+			<div class="button" id="reloadOverlayButton">Refresh Overlays</div>
 			<div class="button" id="resetOverlayButton">Reset Everything</div>
 		</div>
 		<!--

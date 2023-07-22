@@ -1,0 +1,189 @@
+:root {
+	--buttonsMargin: 16px;
+	--buttonPadding: 8px;
+	--overlayHeight: 128px;
+	--detailsMargin: 1em;
+
+	--noMapString: "(no map loaded)";
+
+	--currentArt: url('');
+	--currentTitle: var(--noMapString);
+	--currentArtist: var(--noMapString);
+	--currentMapper: var(--noMapString);
+	--currentHash: var(--noMapString);
+	--currentBSR: "N/A";
+}
+body {
+	font-family: "Open Sans";
+	color: #fff;
+	background-color: #777;
+}
+#wrapper {
+	z-index: 2;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	display: flex;
+}
+
+#buttons {
+	z-index: 2;
+	position: fixed;
+	top: var(--overlayHeight);
+	left: 0;
+	padding: var(--buttonsMargin);
+	width: calc(100vw - calc(var(--buttonsMargin) * 2));
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	background-color: rgba(0, 0, 0, 0.5);
+	background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), transparent);
+	backdrop-filter: blur(50px);
+}
+
+#buttons div {
+	margin-right: var(--buttonsMargin);
+}
+#buttons div:last-child {
+	margin-right: 0;
+}
+
+.button {
+	background-image: linear-gradient(to bottom, #7af, #09f);
+	font-weight: 700;
+	border-radius: 4px;
+	padding-top: var(--buttonPadding);
+	padding-bottom: var(--buttonPadding);
+	padding-left: calc(var(--buttonPadding) * 2);
+	padding-right: calc(var(--buttonPadding) * 2);
+	cursor: default;
+}
+.button:active {
+	background-image: linear-gradient(to top, #7af, #09f);
+	position: relative;
+	top: 2px;
+}
+
+#art {
+	display: block;
+	width: var(--overlayHeight);
+	height: var(--overlayHeight);
+	background-color: #000;
+	background-image: var(--currentArt);
+	background-size: contain;
+}
+
+#mapDetails {
+	padding-left: var(--detailsMargin);
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	height: var(--overlayHeight);
+	flex-grow: 1;
+	background-image: linear-gradient(to right, #000 -20px, transparent 12px);
+}
+
+#title {
+	font-size: 26pt;
+	font-weight: 700;
+}
+#artist {
+	font-size: 20pt;
+	font-weight: 500;
+}
+#mapper:before {
+	content: "mapped by";
+	font-weight: 500;
+	font-size: 11pt;
+	margin-right: 6px;
+}
+#mapper {
+	font-size: 12pt;
+	font-weight: 700;
+}
+
+#title:after { content: var(--currentTitle); }
+#artist:after { content: var(--currentArtist); }
+#mapper:after { content: var(--currentMapper); }
+
+#mapHash {
+	font-family: "Noto Sans Mono";
+	font-size: 11pt;
+	opacity: 0.5;
+	display: flex;
+	flex-direction: column;
+}
+
+#audioStatus {
+	font-size: 21pt;
+	font-weight: 800;
+	background-clip: text;
+	-webkit-background-clip: text;
+	-moz-background-clip: text;
+	-moz-text-fill-color: transparent;
+	-webkit-text-fill-color: transparent;
+}
+
+#audioSafeButton {
+	background-image: linear-gradient(to bottom, #4a6, #173);
+}
+#audioSafeButton:active {
+	background-image: linear-gradient(to top, #4a6, #173);
+}
+#audioUnsafeButton {
+	background-image: linear-gradient(to bottom, #a44, #721);
+}
+#audioUnsafeButton:active {
+	background-image: linear-gradient(to top, #a44, #721);
+}
+
+#mapDetails, #audioStatus, .button {
+	filter: drop-shadow(0px 1px 2px #000);
+}
+
+#bgArt {
+	position: fixed;
+	top: -30vh;
+	left: -20vw;
+	width: 140vw;
+	height: 140vh;
+	background-image: linear-gradient(to right, transparent 50%, rgba(0, 0, 0, 0.75) 85%), var(--currentArt);
+	background-size: cover;
+	background-position: center;
+	filter: brightness(50%) blur(15px);
+}
+
+#bsr:before {
+	content: "!bsr ";
+	font-size: 9pt;
+	opacity: 0.75;
+	font-weight: 500;
+}
+#bsr {
+	font-weight: 700;
+}
+
+.statusUnknown {
+	background-image: linear-gradient(to bottom, #ddd, #888);
+}
+.statusSafe {
+	background-image: linear-gradient(to bottom, #9fa 25%, #4a6 75%);
+}
+.statusUnsafe {
+	background-image: linear-gradient(to bottom, #fa9 25%, #a44 75%);
+}
+
+.statusUnknown:after { content: "NOT FLAGGED"; }
+.statusSafe:after { content: "FLAGGED SAFE"; }
+.statusUnsafe:after { content: "FLAGGED UNSAFE"; }
+
+#buttons .separator {
+	width: 1px;
+	height: 2em;
+	background-color: #fff;
+	opacity: 0.4;
+}
+
+#hash:after { content: var(--currentHash); }
+#bsr:after { content: var(--currentBSR); }

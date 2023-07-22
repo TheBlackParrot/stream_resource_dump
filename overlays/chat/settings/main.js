@@ -1,8 +1,11 @@
 $("#sensitive .section").show();
-$("#sideButtons").css("top", parseInt($("#sidebar").css("height")) + 40);
+function setButtonYPos() {
+	$("#sideButtons").css("top", parseInt($("#sidebar").css("height")) + 40);
+}
+setButtonYPos();
 
-const overlayRevision = 9;
-const lastUpdate = new Date(1689807930753).toISOString();
+const overlayRevision = 10;
+const lastUpdate = new Date(1690046262127).toISOString();
 $("#revision").text(overlayRevision);
 $("#revisionDate").text(lastUpdate);
 
@@ -102,7 +105,7 @@ function setRow(which, bypassSensitiveCheck) {
 }
 setRow("about");
 
-$(".row").on("click", function(e) {
+$("body").on("click", ".row", function(e) {
 	e.preventDefault();
 	setRow($(this).attr("data-tab"));
 
@@ -162,6 +165,10 @@ $("#reloadOverlayButton").on("mouseup", function(e) {
 	localStorage.setItem("setting_windowReload", Date.now());
 });
 
+$("#reloadPanelButton").on("mouseup", function(e) {
+	location.reload();
+})
+
 $("#sendTestButton").on("mouseup", function(e) {
 	localStorage.setItem("setting_testMessage", Date.now());
 });
@@ -192,3 +199,5 @@ $.get(`version.json?sigh=${Date.now()}`, function(data) {
 		$("#updateString").text(`Settings panel is up to date.`);
 	}
 });
+
+localStorage.setItem("_checkPresent_bsvodaudio", Date.now());

@@ -381,6 +381,8 @@ textarea {
 .smol {
 	font-size: var(--font-size-smol);
 	text-align: center;
+	text-wrap: wrap;
+	line-height: 1.1em;
 }
 
 a {
@@ -398,9 +400,9 @@ a {
 #sideButtons .button {
 	margin-bottom: var(--sidebar-padding);
 }
-#reloadOverlayButton {
+/*#reloadOverlayButton {
 	background-color: #209060;
-}
+}*/
 #resetOverlayButton {
 	background-color: #902040;
 }
