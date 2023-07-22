@@ -6,7 +6,7 @@ I wanted to give the VOD watchers of my Twitch stream some game audio when I cou
 ## How to use
 You will need BeatSaberPlus's Song Overlay module installed, as well as making sure the OBS websocket plugin is configured. OBS <= 28 users can download the 5.x version of the plugin from OBS's plugin repository. OBS >= 29 users should have it by default.  
 Add a Browser source with the URL field pointing to <https://theblackparrot.me/overlays/bs-vod-audio>, or add a browser dock with the same URL.  
-To configure it, you need the settings panel that controls all of my overlays: <https://theblackparrot.me/overlays/chat/settings>.
+To configure it, you need the settings panel that controls all of my overlays: <https://theblackparrot.me/overlays/chat/settings>. Add this as a browser source, or browser dock, as well.
 
 ## Interacting with the system
 Once you're in a map, you'll see both a "Flag SAFE" and a "Flag UNSAFE" button as well as if it's already been flagged or not. "SAFE" means VOD audio will be on, "UNSAFE" means it will be off/muted. You only have to press either button once and it will forever remember your choice. It's set up by default to mute on unknowns, but this can be configured to remain unmuted.
