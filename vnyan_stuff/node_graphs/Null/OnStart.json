@@ -10,7 +10,8 @@
             "inputSocketIds": [],
             "outputSocketIds": [
                 "5e155847-400b-4d54-8ecd-dbcf74118f1f638177473974169861"
-            ]
+            ],
+            "headerColor": 0
         },
         {
             "id": "e3df3ec2-ea14-40a1-803b-ae74132cd599",
@@ -26,7 +27,8 @@
             "inputSocketIds": [
                 "228fcb92-0aee-466f-80f8-11bcaee72e00638177474012568518"
             ],
-            "outputSocketIds": []
+            "outputSocketIds": [],
+            "headerColor": 0
         },
         {
             "id": "e926cf97-0635-4cb4-b93a-7f90589010ed",
@@ -37,7 +39,8 @@
             "inputSocketIds": [],
             "outputSocketIds": [
                 "3cfb48f8-194f-49d6-afdc-183fe1903167638177506346226990"
-            ]
+            ],
+            "headerColor": 0
         },
         {
             "id": "514e9cef-eaea-4eb7-b9eb-bc569442b033",
@@ -57,7 +60,8 @@
             "inputSocketIds": [
                 "99220dc7-3522-46c4-b30d-b78c3d4a82f8638180471326820775"
             ],
-            "outputSocketIds": []
+            "outputSocketIds": [],
+            "headerColor": 0
         },
         {
             "id": "cdd71435-2487-45f3-9514-8bd7e5cf8056",
@@ -74,7 +78,8 @@
                 "3bc335bc-5173-4920-a429-3d5767fe4a37638190301402804064",
                 "7b2f61e0-1b3a-440a-8697-7a4b432a1cfe638190301402804064",
                 "888f8b4e-9c20-49ab-b708-04b3e9023a8d638190301402804064"
-            ]
+            ],
+            "headerColor": 0
         },
         {
             "id": "852c0086-9c71-4fed-b642-7f1398404079",
@@ -94,7 +99,8 @@
             "inputSocketIds": [
                 "ddf4fa4c-712a-4b99-a0be-e8044d398cda638190306020746047"
             ],
-            "outputSocketIds": []
+            "outputSocketIds": [],
+            "headerColor": 0
         },
         {
             "id": "3dd60063-0620-49f3-873e-f11fdf8cdaf1",
@@ -114,7 +120,8 @@
             "inputSocketIds": [
                 "551593ff-59d0-4dad-babb-3c2efd532900638190389874554673"
             ],
-            "outputSocketIds": []
+            "outputSocketIds": [],
+            "headerColor": 0
         },
         {
             "id": "48b30e3e-8e03-44bb-a8c4-f1ed94cfecd9",
@@ -134,7 +141,8 @@
             "inputSocketIds": [
                 "05546559-ea58-41b4-8ff2-9ac880c06d85638190468705983114"
             ],
-            "outputSocketIds": []
+            "outputSocketIds": [],
+            "headerColor": 0
         },
         {
             "id": "cfe3542e-f23d-47c0-a6d1-d01b98823a5b",
@@ -158,6 +166,10 @@
                 {
                     "key": "emoteDespawn",
                     "value": ""
+                },
+                {
+                    "key": "gravity",
+                    "value": ""
                 }
             ],
             "posX": 524.6668701171875,
@@ -166,7 +178,25 @@
             "inputSocketIds": [
                 "66ccd0d9-92cf-4988-8e68-022082f47c74638206750502681404"
             ],
-            "outputSocketIds": []
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "7b964dee-efd7-4ddf-afd5-d39c6cc9fcf2",
+            "values": [
+                {
+                    "key": "triggerName",
+                    "value": ""
+                }
+            ],
+            "posX": 123.0,
+            "posY": -243.0,
+            "path": "Nodes/TriggerNode",
+            "inputSocketIds": [],
+            "outputSocketIds": [
+                "12c68767-5067-4a0e-8282-3d8e96873ba4638218128352943048"
+            ],
+            "headerColor": 0
         }
     ],
     "connections": [
@@ -198,6 +228,11 @@
         {
             "id": "3e6c9f0e-249e-4cf0-84d2-887356ff6db0",
             "outputSocketId": "3cfb48f8-194f-49d6-afdc-183fe1903167638177506346226990",
+            "inputSocketId": "551593ff-59d0-4dad-babb-3c2efd532900638190389874554673"
+        },
+        {
+            "id": "16cdd815-99be-4b05-87ac-6fb6aab2258d",
+            "outputSocketId": "12c68767-5067-4a0e-8282-3d8e96873ba4638218128352943048",
             "inputSocketId": "551593ff-59d0-4dad-babb-3c2efd532900638190389874554673"
         }
     ]

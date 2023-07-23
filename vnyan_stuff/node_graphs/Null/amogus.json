@@ -19,7 +19,8 @@
             "inputSocketIds": [
                 "24caddac-a02b-4991-a34a-d00d7ba850dc638177906862820146"
             ],
-            "outputSocketIds": []
+            "outputSocketIds": [],
+            "headerColor": 0
         },
         {
             "id": "72c00495-9d4b-4838-aeb1-bb8ea46c980d",
@@ -35,7 +36,8 @@
             "inputSocketIds": [],
             "outputSocketIds": [
                 "2e0a9f8e-4511-4d33-b809-8f4c6fa4c9b3638177906925860018"
-            ]
+            ],
+            "headerColor": 0
         },
         {
             "id": "d316bec1-9bc9-4ea1-a402-944570ea5aa6",
@@ -63,7 +65,8 @@
             "inputSocketIds": [
                 "25ce8614-b833-45f6-b26e-fcb3ddbec6d3638177907157431067"
             ],
-            "outputSocketIds": []
+            "outputSocketIds": [],
+            "headerColor": 0
         },
         {
             "id": "e1c97fd0-2248-4a0e-a3a5-9eb1925b321c",
@@ -79,7 +82,8 @@
             "inputSocketIds": [],
             "outputSocketIds": [
                 "51184fb5-584d-4198-a74c-161beb9b378b638177907313443275"
-            ]
+            ],
+            "headerColor": 0
         },
         {
             "id": "a0d6dd48-2244-4546-aec7-3e67238197ca",
@@ -99,7 +103,8 @@
             "inputSocketIds": [
                 "35427930-e112-47da-9e5f-24c1445ac392638177907381212077"
             ],
-            "outputSocketIds": []
+            "outputSocketIds": [],
+            "headerColor": 0
         },
         {
             "id": "b64ac0cd-1334-4f72-8ce8-b47a325379f0",
@@ -127,7 +132,8 @@
             "inputSocketIds": [
                 "68d6371f-9239-476b-8e24-4f7baf0d6600638177907652529826"
             ],
-            "outputSocketIds": []
+            "outputSocketIds": [],
+            "headerColor": 0
         },
         {
             "id": "c204837e-a5e1-4bcc-9bca-b993edb3f89c",
@@ -147,7 +153,8 @@
             "inputSocketIds": [
                 "8e131bdd-387c-406e-8f2f-f9ab3ee8851e638177907897178778"
             ],
-            "outputSocketIds": []
+            "outputSocketIds": [],
+            "headerColor": 0
         },
         {
             "id": "5bc5aef7-b166-4f52-8caf-4ec0f8e610c9",
@@ -175,7 +182,8 @@
             "inputSocketIds": [
                 "b4700a9e-83e9-4f9c-8210-5cf17f1e0031638177908504148298"
             ],
-            "outputSocketIds": []
+            "outputSocketIds": [],
+            "headerColor": 0
         },
         {
             "id": "8a91cf9d-ab1b-4778-b3bd-edf2f309761e",
@@ -191,7 +199,8 @@
             "inputSocketIds": [],
             "outputSocketIds": [
                 "c071f30f-6156-4cbe-84e7-a68a1f9b4cf0638177908710358932"
-            ]
+            ],
+            "headerColor": 0
         },
         {
             "id": "300a57c7-b1e9-4457-9d09-efde37492811",
@@ -211,7 +220,8 @@
             "inputSocketIds": [
                 "313ac399-7a46-447b-ad88-404faf419531638177908770366612"
             ],
-            "outputSocketIds": []
+            "outputSocketIds": [],
+            "headerColor": 0
         },
         {
             "id": "2c9b3aeb-2489-4538-bbf3-9bb62ac5c366",
@@ -239,7 +249,8 @@
             "inputSocketIds": [
                 "80bf27e7-2ae5-48da-adfc-d3e20bf6275d638177916396769839"
             ],
-            "outputSocketIds": []
+            "outputSocketIds": [],
+            "headerColor": 0
         },
         {
             "id": "4241936e-720f-43ec-bab6-d75dc0a70925",
@@ -255,7 +266,8 @@
             "inputSocketIds": [],
             "outputSocketIds": [
                 "7221a5a0-c748-4bfd-8240-c4e2895d7041638177931339472049"
-            ]
+            ],
+            "headerColor": 0
         },
         {
             "id": "423c050b-a9af-43aa-a1a8-0897fca6ba3f",
@@ -275,7 +287,8 @@
             "inputSocketIds": [
                 "df88d57d-dd57-40a1-bf23-f0e1722b3908638177931427911107"
             ],
-            "outputSocketIds": []
+            "outputSocketIds": [],
+            "headerColor": 0
         },
         {
             "id": "80e2c187-6aff-4707-806d-75a6bba7d6ea",
@@ -295,7 +308,8 @@
             "inputSocketIds": [
                 "b3d21df1-adad-4aac-961d-7e19ecf99e84638179225878917344"
             ],
-            "outputSocketIds": []
+            "outputSocketIds": [],
+            "headerColor": 0
         },
         {
             "id": "1b59d2ee-ce63-4c99-8ca9-7385415ccc8b",
@@ -311,7 +325,8 @@
             "inputSocketIds": [],
             "outputSocketIds": [
                 "bf7b8f33-9636-4bfb-b6ff-1634002a7e24638179226023515738"
-            ]
+            ],
+            "headerColor": 0
         }
     ],
     "connections": [
