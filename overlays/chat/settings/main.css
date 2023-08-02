@@ -23,7 +23,7 @@
 	--sidebar-active-row-text-color: #000;
 	--sidebar-active-row-bg-color: var(--sidebar-row-text-color);
 
-	--settings-width: 512px;
+	--settings-width: 570px;
 	--settings-bg-color: #333;
 	--settings-height: 750px;
 	--settings-padding: 16px;
@@ -256,7 +256,7 @@ body {
 .settingHalfWidthLeft {
 	text-align: right;
 	margin-right: calc(var(--settings-padding) / 2);
-	width: 40%;
+	width: 45%;
 }
 .settingHalfWidthRight {
 	text-align: left;
@@ -327,7 +327,6 @@ input[data-coloris] {
 
 textarea {
 	height: calc(var(--input-height) * 5);
-	width: calc(100% - (var(--settings-padding) * 2))
 }
 
 #sensitive {

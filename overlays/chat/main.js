@@ -52,6 +52,7 @@ var channelData = {};
 var streamData = {"started_at": new Date().toISOString()};
 var twitchBadges = [];
 var chatEmotes = (localStorage.getItem("setting_chatShowCommonEmotes") === "true" ? Object.create(commonEmotes) : {});
+var cheermotes = {};
 
 function setTwitchAccessToken() {
 	if(!allowedToProceed) {
@@ -134,6 +135,53 @@ function setTwitchAccessToken() {
 								}
 							}
 						});
+					});
+
+					console.log("getting cheermotes...");
+					callTwitch({
+						"endpoint": "bits/cheermotes",
+						"args": {
+							"broadcaster_id": broadcasterData.id
+						}
+					}, function(cheermoteResponse) {
+						console.log("got cheermotes");
+						for(let i in cheermoteResponse.data) {
+							let mote = cheermoteResponse.data[i];
+							cheermotes[mote.prefix] = {};
+
+							for(let j in mote.tiers) {
+								let tier = mote.tiers[j];
+
+								let animHighestRes = 0;
+								let animHighestResImage = null;
+								let staticHighestRes = 0;
+								let staticHighestResImage = null;
+
+								for(let k in tier.images.dark.animated) {
+									let image = tier.images.dark.animated[k];
+									if(k > animHighestRes) {
+										animHighestRes = k;
+										animHighestResImage = image;
+									}
+								}
+
+								for(let k in tier.images.dark.static) {
+									let image = tier.images.dark.static[k];
+									if(k > staticHighestRes) {
+										staticHighestRes = k;
+										staticHighestResImage = image;
+									}
+								}
+
+								cheermotes[mote.prefix][tier.min_bits] = {
+									color: tier.color,
+									images: {
+										animated: animHighestResImage,
+										static: staticHighestResImage,
+									}
+								};
+							}
+						}
 					});
 
 					getGlobalChannelEmotes(broadcasterData);

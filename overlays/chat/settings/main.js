@@ -4,8 +4,8 @@ function setButtonYPos() {
 }
 setButtonYPos();
 
-const overlayRevision = 10;
-const lastUpdate = new Date(1690046262127).toISOString();
+const overlayRevision = 11;
+const lastUpdate = new Date(1690586907980).toISOString();
 $("#revision").text(overlayRevision);
 $("#revisionDate").text(lastUpdate);
 

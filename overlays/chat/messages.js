@@ -2,10 +2,10 @@
 var md = window.markdownit({html: true})
 	.disable(['link', 'image', 'linkify', 'table', 'fence', 'blockquote', 'hr',
 			  'list', 'reference', 'heading', 'lheading', 'paragraph',
-			  'newline', 'escape', 'autolink'])
+			  'newline', 'escape', 'autolink']);
 
-client.on('message', function(channel, tags, message, self) {
-	if(self) {
+function prepareMessage(tags, message, self, forceHighlight) {
+	if(self || message === null) {
 		return;
 	}
 
@@ -20,7 +20,7 @@ client.on('message', function(channel, tags, message, self) {
 		return;
 	}
 
-	let highlighted = false;
+	let highlighted = (forceHighlight ? true : false);
 	if('msg-id' in tags) {
 		if(tags['msg-id'] === "highlighted-message") {
 			highlighted = true;
@@ -44,6 +44,7 @@ client.on('message', function(channel, tags, message, self) {
 		}
 	}
 
+
 	getTwitchUserInfo(tags['user-id'], function(userData) {
 		parseMessage({
 			message: message,
@@ -52,6 +53,7 @@ client.on('message', function(channel, tags, message, self) {
 			highlighted: highlighted,
 			emotes: tags['emotes'],
 			uuid: tags['id'],
+			parseCheermotes: ('bits' in tags),
 			user: {
 				id: tags['user-id'],
 				name: tags['display-name'],
@@ -64,8 +66,13 @@ client.on('message', function(channel, tags, message, self) {
 				moderator: moderator
 			}
 		});
-	});
-});
+	});	
+}
+
+client.on('message', function(channel, tags, message, self) { prepareMessage(tags, message, self, false); });
+client.on("cheer", function(channel, tags, message) { prepareMessage(tags, message, false, true); });
+client.on("resub", function(channel, username, months, message, tags, methods) { prepareMessage(tags, message, false, true); });
+client.on("subscription", function(channel, username, method, message, tags) { prepareMessage(tags, message, false, true); });
 
 client.on("ban", function(channel, username, reason, tags) {
 	let id = tags['target-user-id'];
@@ -394,6 +401,8 @@ const chatFuncs = {
 					return;
 				}
 
+				infoElement.removeClass("loading");
+
 				let artElement = $(`<div class="bsrArt"></div>`);
 				if(canShowArt) {
 					let e = $(`<img src="${mapData.versions[0].coverURL}"/>`);
@@ -557,7 +566,7 @@ function parseMessage(data) {
 
 	console.log(data);
 
-	if(localStorage.getItem("setting_debugFreezeChat") === "true") {
+	if(localStorage.getItem("setting_debugFreezeChat") === "true" || data.message === null) {
 		return;
 	}
 
@@ -602,22 +611,36 @@ function parseMessage(data) {
 		rootElement.addClass("first_message");
 	} else {
 		let lastElem = $(`.chatBlock[data-msgidx="${lastMessageIdx}"]`);
-		if(lastElem.hasClass("first_message")) {
-			lastElem.css("padding-bottom", "0px");
-			lastElem.css("margin-bottom", "0px");
-			lastElem.css("border-bottom-left-radius", "0px");
-			lastElem.css("border-bottom-right-radius", "0px");
-			lastElem.css("border-bottom", "0px");
+		if($("#wrapper").hasClass("bottom")) {
+			if(lastElem.hasClass("first_message")) {
+				lastElem.css("padding-bottom", "0px");
+				lastElem.css("margin-bottom", "0px");
+				lastElem.css("border-bottom-left-radius", "0px");
+				lastElem.css("border-bottom-right-radius", "0px");
+				lastElem.css("border-bottom", "0px");
+			} else {
+				lastElem.removeClass("last_message").addClass("middle_message");
+			}
+
+			userBlock.css("margin-top", "0px");
+			rootElement.css("margin-top", "0px");
 		} else {
-			lastElem.removeClass("last_message").addClass("middle_message");
+			if(lastElem.hasClass("first_message")) {
+				lastElem.children(".userInfo").hide();
+			}
 		}
 
 		rootElement.addClass("last_message");
-		userBlock.css("margin-top", "0px");
+		if($("#wrapper").hasClass("top")) {
+			rootElement.css("padding-bottom", "0px");
+			rootElement.css("margin-bottom", "0px");
+			rootElement.css("border-bottom-left-radius", "0px");
+			rootElement.css("border-bottom-right-radius", "0px");
+			rootElement.css("border-bottom", "0px");
+		}		
 		if(localStorage.getItem("setting_chatAnimations") === "true") {
 			userBlock.removeClass("userInfoIn").addClass("justFadeIn");
 		}
-		rootElement.css("margin-top", "0px");
 	}
 	lastUser = data.user.id;
 	lastMessageIdx = messageCount;
@@ -778,6 +801,24 @@ function parseMessage(data) {
 								if(userData.broadcaster_type === "affiliate") {
 									showPFP = true;
 								}
+							} else if(localStorage.getItem("setting_avatarAllowedIncludeBits") === "true" && ("bits" in data.user.badges.list || "bits-leader" in data.user.badges.list)) {
+								if("bits-leader" in data.user.badges.list) {
+									showPFP = true;
+								} else if("bits" in data.user.badges.list) {
+									let bitAmount = parseInt(data.user.badges.list.bits);
+									if(bitAmount >= parseInt(localStorage.getItem("setting_avatarAllowedBitsMinimum"))) {
+										showPFP = true;
+									}
+								}
+							} else if(localStorage.getItem("setting_avatarAllowedIncludeGifts") === "true" && ("sub-gifter" in data.user.badges.list || "sub-gift-leader" in data.user.badges.list)) {
+								if("sub-gift-leader" in data.user.badges.list) {
+									showPFP = true;
+								} else if("sub-gifter" in data.user.badges.list) {
+									let giftAmount = parseInt(data.user.badges.list['sub-gifter']);
+									if(giftAmount >= parseInt(localStorage.getItem("setting_avatarAllowedGiftsMinimum"))) {
+										showPFP = true;
+									}
+								}
 							}
 						}
 					}
@@ -785,7 +826,15 @@ function parseMessage(data) {
 			}
 
 			if(showPFP) {
-				pfpBlock.show();
+				if(localStorage.getItem("setting_hideDefaultAvatars") === "true") {
+					if(userData.profile_image_url.indexOf("user-default-pictures") !== -1) {
+						pfpBlock.hide();
+					} else {
+						pfpBlock.show();
+					}
+				} else {
+					pfpBlock.show();
+				}
 			} else {
 				pfpBlock.hide();
 			}
@@ -1058,13 +1107,45 @@ function parseMessage(data) {
 		//console.log(` 7: ${stuff}`);
 
 		let words = stuff.split(" ");
+
+		let cheermotePrefixes = Object.keys(cheermotes);
 		for(let wordIdx in words) {
 			let word = words[wordIdx];
+			
 			if(word in chatEmotes) {
 				words[wordIdx] = `<span class="emote" style="background-image: url('${chatEmotes[word].url}');"><img src="${chatEmotes[word].url}"/></span>`;
 			}
+
 			if(word[0] === "@") {
 				words[wordIdx] = `<strong>${word}</strong>`;
+			}
+
+			if(data.parseCheermotes && localStorage.getItem("setting_chatShowCheermotes") === "true") {
+				rootElement.addClass("highlighted");
+
+				for(let cheermoteIdx in cheermotePrefixes) {
+					let prefix = cheermotePrefixes[cheermoteIdx];
+					if(word.substring(0, prefix.length) === prefix) {
+						let amount = parseInt(word.substring(prefix.length));
+						let cheermote = cheermotes[prefix];
+
+						let tiers = Object.keys(cheermote).sort(function(a, b) { return a - b; }).reverse();
+						let reachedTier = 1;
+						for(let tierIdx in tiers) {
+							let tier = tiers[tierIdx];
+							if(amount > tier) {
+								reachedTier = tier;
+								break;
+							}
+						}
+
+						let mote = cheermote[reachedTier];
+						let type = (localStorage.getItem("setting_chatShowCheermotesAnimated") === "true" ? "animated" : "static");
+
+						let cheermoteColorString = (localStorage.getItem("setting_chatShowCheermotesColor") === "true" ? ` style="color: ${mote.color};"` : "");
+						words[wordIdx] = `<span class="emote cheermote" style="background-image: url('${mote.images[type]}');"><img src="${mote.images[type]}"/></span><span${cheermoteColorString}>${amount}</span>`;
+					}
+				}
 			}
 		}
 

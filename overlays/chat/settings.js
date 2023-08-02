@@ -123,29 +123,6 @@ function normalizeSettingColors(setting) {
 	return `${rgb}${alpha}`;
 }
 
-/*
-		let opacity = 1;
-		let count = combinedCount - parseInt($(this).attr("data-combinedIdx")) - parseInt(localStorage.getItem("setting_chatHistoryStartAfter"));
-
-		if(localStorage.getItem("setting_chatFadeHistory") === "true") {
-			opacity = (1 - count) * (parseFloat(localStorage.getItem("setting_chatFadeHistoryStep")) / 100);
-			if(opacity < 0) {
-				opacity = 0;
-			}
-		}
-
-		let blur = 0;
-		if(localStorage.getItem("setting_chatBlurHistory") === "true") {
-			blur = count * parseFloat(localStorage.getItem("setting_chatBlurHistoryStep"));
-		}
-
-		if(!opacity) {
-			$(this).remove();
-		}
-
-		$(this).css("filter", `opacity(${opacity})${blur === 0 ? "" : `blur(${blur}px)`}`);
-*/
-
 function setHistoryOpacity() {
 	$(".chatBlock").each(function() {
 		let opacity = 1;
@@ -165,7 +142,11 @@ function setHistoryOpacity() {
 			$(this).remove();
 		}
 
-		$(this).css("filter", `opacity(${opacity})${blur === 0 ? "" : `blur(${blur}px)`}`);
+		let filter = `opacity(${opacity})${blur === 0 ? "" : `blur(${blur}px)`}`;
+		if($(this).hasClass("highlighted")) {
+			filter = `var(--highlightedEffect) ${filter}`;
+		}
+		$(this).css("filter", filter);
 	});
 }
 
@@ -321,16 +302,16 @@ const settingUpdaters = {
 	},
 
 	chatCornerAlignment: function(value) {
-		$("#wrapper").css("top", "");
+		/*$("#wrapper").css("top", "");
 		$("#wrapper").css("bottom", "");
 		$("#wrapper").css("left", "");
-		$("#wrapper").css("right", "");
+		$("#wrapper").css("right", "");*/
 
 		let pos = value.split(",");
 		if(pos[0] === "top") {
-			$("#wrapper").css("top", "0px");
+			$("#wrapper").removeClass("bottom").addClass("top");
 		} else {
-			$("#wrapper").css("bottom", "0px");
+			$("#wrapper").removeClass("top").addClass("bottom");
 		}
 
 		if(pos[1] === "left") {
@@ -625,6 +606,9 @@ const settingUpdaters = {
 	},
 	chatMessageSeparatorStyle: function(value) {
 		$(":root").get(0).style.setProperty("--messageSeparatorStyle", value);
+	},
+	chatHighlightGlowRadius: function(value) {
+		$(":root").get(0).style.setProperty("--highlightGlowRadius", `${value}px`);
 	}
 };
 

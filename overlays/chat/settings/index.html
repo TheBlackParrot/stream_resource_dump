@@ -80,18 +80,18 @@
 					<hr/>
 					<div class="setting">
 						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Message highlight color</span>
+							<span class="settingInfo">Highlighted glow color</span>
 						</div>
 						<div class="settingHalfWidthRight">
-							<input id="chatHighlightBackgroundColor" type="text" data-coloris value="#FFFFFF40"/>
+							<input id="chatHighlightBackgroundColor" type="text" data-coloris value="#FFFFCCFF"/>
 						</div>
 					</div>
 					<div class="setting">
 						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Border radius</span>
+							<span class="settingInfo">Glow radius</span>
 						</div>
 						<div class="settingHalfWidthRight">
-							<input type="number" id="chatBlockBorderRadius" min="0" max="64" step="0.25" value="0"/> px
+							<input type="number" id="chatHighlightGlowRadius" min="1" max="16" step="1" value="3"/> px
 						</div>
 					</div>
 				</div>
@@ -597,6 +597,14 @@
 							<input type="number" id="chatBlockSpacing" min="0" max="128" step="1" value="20"/> px
 						</div>
 					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Border radius</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input type="number" id="chatBlockBorderRadius" min="0" max="64" step="0.25" value="0"/> px
+						</div>
+					</div>
 				</div>
 			</div>
 			<div class="section" data-content="effects">
@@ -962,6 +970,7 @@
 							<input id="timestampFormat" type="text" value="H:mm:ss"/>
 						</div>
 					</div>
+					<hr/>
 					<div class="setting">
 						<div class="settingFullWidth smol" style="line-height: 20px;">
 							Local time formatting available: <a href="https://moment.github.io/luxon/#/formatting?id=table-of-tokens">here</a><br/>
@@ -1249,6 +1258,12 @@
 							<input checked id="enableAvatars" type="checkbox" data-dependent="avatars"/> <span class="settingInfo">Display avatars</span>
 						</div>
 					</div>
+					<div class="setting">
+						<div class="settingFullWidth">
+							<input checked id="hideDefaultAvatars" type="checkbox" data-dependent="avatars"/> <span class="settingInfo">Hide default avatars regardless of permission settings</span>
+						</div>
+					</div>
+
 				</div>
 				<div class="part">
 					<h1>Appearance</h1>
@@ -1278,6 +1293,12 @@
 					<p>Allow avatar display for:</p>
 					<div class="setting" data-dependent="avatars">
 						<div class="settingFullWidth">
+							<input id="avatarAllowedEveryone" type="checkbox"/> <span class="settingInfo">Everyone</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting" data-dependent="avatars">
+						<div class="settingFullWidth">
 							<input checked id="avatarAllowedModerators" type="checkbox"/> <span class="settingInfo">Moderators</span>
 						</div>
 					</div>
@@ -1286,6 +1307,12 @@
 							<input checked id="avatarAllowedVIPs" type="checkbox"/> <span class="settingInfo">VIPs</span>
 						</div>
 					</div>
+					<div class="setting" data-dependent="avatars">
+						<div class="settingFullWidth">
+							<input checked id="avatarAllowedArtist" type="checkbox"/> <span class="settingInfo">Channel artists</span>
+						</div>
+					</div>
+					<hr/>
 					<div class="setting" data-dependent="avatars">
 						<div class="settingFullWidth">
 							<input checked id="avatarAllowedSubscribers" type="checkbox"/> <span class="settingInfo">Channel subscribers</span>
@@ -1301,9 +1328,10 @@
 							<input id="avatarAllowedPrime" type="checkbox"/> <span class="settingInfo">Prime Gaming subscribers</span>
 						</div>
 					</div>
+					<hr/>
 					<div class="setting" data-dependent="avatars">
 						<div class="settingFullWidth">
-							<input checked id="avatarAllowedArtist" type="checkbox"/> <span class="settingInfo">Channel artists</span>
+							<input id="avatarAllowedAffiliates" type="checkbox"/> <span class="settingInfo">Twitch affiliates</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="avatars">
@@ -1313,17 +1341,55 @@
 					</div>
 					<div class="setting" data-dependent="avatars">
 						<div class="settingFullWidth">
-							<input id="avatarAllowedAffiliates" type="checkbox"/> <span class="settingInfo">Twitch affiliates</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="avatars">
-						<div class="settingFullWidth">
 							<input id="avatarAllowedStaff" type="checkbox"/> <span class="settingInfo">Twitch staff</span>
 						</div>
 					</div>
+					<hr/>
 					<div class="setting" data-dependent="avatars">
 						<div class="settingFullWidth">
-							<input id="avatarAllowedEveryone" type="checkbox"/> <span class="settingInfo">Everyone</span>
+							<input checked id="avatarAllowedIncludeBits" type="checkbox"/> <span class="settingInfo">Bit cheerers</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Cheer threshold</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<select id="avatarAllowedBitsMinimum">
+								<option value="1">1 bit</option>
+								<option value="100">100 bits</option>
+								<option selected value="1000">1,000 bits</option>
+								<option value="5000">5,000 bits</option>
+								<option value="10000">10,000 bits</option>
+								<option value="25000">25,000 bits</option>
+								<option value="50000">50,000 bits</option>
+								<option value="75000">75,000 bits</option>
+								<option value="100000">100,000 bits</option>
+							</select>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting" data-dependent="avatars">
+						<div class="settingFullWidth">
+							<input checked id="avatarAllowedIncludeGifts" type="checkbox"/> <span class="settingInfo">Sub gifters</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Gift threshold</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<select id="avatarAllowedGiftsMinimum">
+								<option value="1">1 sub</option>
+								<option selected value="5">5 subs</option>
+								<option value="10">10 subs</option>
+								<option value="25">25 subs</option>
+								<option value="50">50 subs</option>
+								<option value="100">100 subs</option>
+								<option value="150">150 subs</option>
+								<option value="200">200 subs</option>
+								<option value="250">250 subs</option>
+							</select>
 						</div>
 					</div>
 				</div>
@@ -1687,6 +1753,25 @@
 					</div>
 				</div>
 				<div class="part">
+					<h1>External Service Tokens</h1>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">Streamlabs socket token</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="streamlabsSocketToken" type="password" value=""/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingHalfWidthLeft">
+							<span class="settingInfo">StreamElements JWT token</span>
+						</div>
+						<div class="settingHalfWidthRight">
+							<input id="streamelementsJWTToken" type="password" value=""/>
+						</div>
+					</div>
+				</div>
+				<div class="part">
 					<h1>OBS Websocket Connection</h1>
 					<div class="setting">
 						<div class="settingHalfWidthLeft">
@@ -1717,6 +1802,7 @@
 							<input id="obs_password" type="password" value=""/>
 						</div>
 					</div>
+					<hr/>
 					<div class="setting">
 						<div class="settingFullWidth smol">
 							Some extra overlays require connection to OBS; this is not necessary for the chat overlay to function.
@@ -1738,6 +1824,7 @@
 					<div class="setting settingOnlyText">
 						<p>This is the configurator for my overlays, make sure this and any other part of the overlay suite is loaded in OBS!</p>
 						<p>If anything seems wrong or is malfunctioning, make sure you refresh the cache on all overlay sources (it's in the properties for each source).</p>
+						<p>Links to all public overlays and for more information on them are available at <a href="https://theblackparrot.me/overlays">https://theblackparrot.me/overlays/</a></p>
 					</div>
 				</div>
 				<div class="part">
@@ -1847,6 +1934,24 @@
 						</div>
 						<div class="settingHalfWidthRight">
 							<input type="number" id="chatBigEmoteMarginVertical" min="0" max="64" step="1" value="4"/> px
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Cheermotes</h1>
+					<div class="setting">
+						<div class="settingFullWidth">
+							<input checked id="chatShowCheermotes" type="checkbox" data-dependent="cheermotes"/> <span class="settingInfo">Enable Cheermotes</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="cheermotes">
+						<div class="settingFullWidth">
+							<input checked id="chatShowCheermotesColor" type="checkbox"/> <span class="settingInfo">Color amount text associated with the Cheermote</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="cheermotes">
+						<div class="settingFullWidth">
+							<input checked id="chatShowCheermotesAnimated" type="checkbox"/> <span class="settingInfo">Use the animated versions of Cheermotes</span>
 						</div>
 					</div>
 				</div>

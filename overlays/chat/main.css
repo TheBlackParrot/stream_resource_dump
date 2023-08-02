@@ -11,7 +11,6 @@ body {
 	position: fixed;
 	width: var(--overlayWidth);
 	display: flex;
-	flex-direction: column;
 }
 
 #testWrapper {
@@ -35,11 +34,17 @@ body {
 	display: flex;
 	flex-direction: column;
 }
-.chatBlock {
+.bottom .chatBlock {
 	margin-top: var(--chatBlockSpacing);
+	margin-bottom: 0px;	
+}
+.top .chatBlock {
+	margin-bottom: var(--chatBlockSpacing);
+	margin-top: 0px;	
+}
+.chatBlock {
 	margin-left: var(--chatBlockPaddingHorizontal);
 	margin-right: var(--chatBlockPaddingHorizontal);
-	margin-bottom: 0px;
 	border-radius: var(--chatBlockBorderRadius);
 	background-color: var(--backgroundColor);
 	border-color: var(--chatBlockOutlineColor);
@@ -50,8 +55,11 @@ body {
 	padding-top: var(--chatBlockIndividualPaddingVertical);
 	padding-bottom: var(--chatBlockIndividualPaddingVertical);
 }
-.chatBlock:last-child {
+.bottom .chatBlock:last-child {
 	margin-bottom: var(--chatBlockPaddingVertical);
+}
+.top .chatBlock:last-child {
+	margin-top: var(--chatBlockPaddingVertical);
 }
 .badges, .pronouns, .message, .pfp, .flags {
 	filter: var(--effectFilters);
@@ -85,7 +93,10 @@ body {
 	margin-right: 0px;
 }
 
-#wrapper .chatBlock:first-child .userInfo {
+.bottom .chatBlock:first-child .userInfo {
+	display: flex !important;
+}
+.top .chatBlock:last-child .userInfo {
 	display: flex !important;
 }
 #testWrapper .chatBlock .userInfo {
@@ -161,6 +172,7 @@ body {
     background-position: center;
     background-size: contain;
     padding: 0.4em 0.3em;
+    backdrop-filter: opacity(1);
 }
 .emote img {
 	opacity: 0;
@@ -217,11 +229,7 @@ tt, code, pre {
 }
 
 .highlighted {
-	background: var(--highlightBackgroundColor);
-	padding: 14px;
-	border-left: 8px solid var(--highlightBorderColor);
-	border-radius: 8px;
-	box-shadow: 0px 6px 4px -4px #000;
+	filter: var(--highlightedEffect);
 }
 
 .bsrInfo {
@@ -240,6 +248,7 @@ tt, code, pre {
 	font-style: italic;
 	font-size: 14pt;
 	font-weight: 600;
+	flex-wrap: nowrap !important;
 }
 
 .bsrArt, .bsrArt img, .bsrCode {
@@ -424,12 +433,22 @@ img.emoji {
 	text-align: right;
 }
 
-.middle_message {
+.bottom .middle_message {
 	padding-top: 0px;
 	padding-bottom: 0px;
 	border-radius: 0px;
 	border-top: 0px;
 	border-bottom: 0px;
+}
+
+.top .middle_message {
+	padding-top: 0px;
+	padding-bottom: 0px;
+	margin-top: 0px !important;
+	margin-bottom: 0px !important;
+	border-radius: 0px;
+	border-top: 0px;
+	border-bottom: 0px;	
 }
 
 .last_message {
@@ -507,7 +526,7 @@ img.emoji {
 	flex-direction: row-reverse;
 }
 
-.chatBlock:after {
+.bottom .chatBlock:after, .top .chatBlock:before {
 	content: "";
 	border-bottom-color: var(--messageSeparatorColor);
 	border-bottom-width: var(--messageSeparatorWidth);
@@ -515,7 +534,7 @@ img.emoji {
 	padding-bottom: var(--messageSeparatorSpacing);
 	margin-bottom: var(--messageSeparatorSpacing);
 }
-.chatBlock:last-child:after {
+.bottom .chatBlock:last-child:after, .top .chatBlock:first-child:before {
 	border: 0;
 	padding: 0;
 	margin: 0;
@@ -531,6 +550,8 @@ img.emoji {
 
 .left .loadingMsg {
 	margin-left: 6px;
+	text-overflow: ellipsis;
+	overflow: hidden;
 }
 .right .loadingMsg {
 	margin-right: 6px;
@@ -538,4 +559,18 @@ img.emoji {
 
 .loadingMsg strong {
 	padding-right: 5px;
+}
+
+.cheermote {
+	margin-right: 4px;
+}
+
+.top {
+	flex-direction: column-reverse;
+	top: 0px;
+}
+
+.bottom {
+	flex-direction: column;
+	bottom: 0px;
 }

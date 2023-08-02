@@ -6,7 +6,7 @@ const defaultConfig = {
 	"chatShadows": "true",
 	"enable7TVBadges": "true",
 	"chatAnimations": "true",
-	"chatHighlightBackgroundColor": "#ffffff40",
+	"chatHighlightBackgroundColor": "#FFFFCCFF",
 	"chatFadeHistory": "true",
 	"chatAnimationsInDuration": "0.5",
 	"chatAnimationsOutDuration": "0.75",
@@ -62,6 +62,8 @@ const defaultConfig = {
 	"avatarAllowedPartner": "false",
 	"avatarAllowedStaff": "false",
 	"avatarAllowedEveryone": "false",
+	"avatarAllowedIncludeBits": "true",
+	"avatarAllowedBitsMinimum": "1000",
 	"enablePronouns": "true",
 	"avatarSize": "34",
 	"avatarShape": "squircle",
@@ -200,7 +202,14 @@ const defaultConfig = {
 	"chatMessageSeparatorColor": "#ffffff20",
 	"chatMessageSeparatorWidth": "1",
 	"chatMessageSeparatorSpacing": "0",
-	"chatMessageSeparatorStyle": "solid"
+	"chatMessageSeparatorStyle": "solid",
+	"hideDefaultAvatars": "true",
+	"avatarAllowedIncludeGifts": "true",
+	"avatarAllowedGiftsMinimum": "5",
+	"chatHighlightGlowRadius": "3",
+	"chatShowCheermotes": "true",
+	"chatShowCheermotesColor": "true",
+	"chatShowCheermotesAnimated": "true"
 };
 
 for(let setting in defaultConfig) {

@@ -26,8 +26,9 @@
 	--effectFilters: var(--outlineStuff) var(--shadowStuff);
 
 	--backgroundColor: transparent;
-	--highlightBackgroundColor: rgba(255, 255, 255, 0.25);
+	--highlightBackgroundColor: rgba(255, 255, 204, 1);
 	--highlightBorderColor: rgba(255, 255, 255, 1);
+	--highlightGlowRadius: 3px;
 
 	--defaultNameColor: rgba(170, 170, 170, 1);
 	--defaultNameColorSecondary: rgba(255, 255, 255, 1);
@@ -163,4 +164,6 @@
 	--timestampFontWeightExtra: 0.5px;
 	--timestampLetterSpacing: 0px;
 	--timestampPadding: 10px;
+
+	--highlightedEffect: drop-shadow(0px 0px var(--highlightGlowRadius) var(--highlightBackgroundColor));
 }
