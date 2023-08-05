@@ -1,13 +1,7 @@
 $("#sensitive .section").show();
-function setButtonYPos() {
-	$("#sideButtons").css("top", parseInt($("#sidebar").css("height")) + 40);
-}
-setButtonYPos();
 
-const overlayRevision = 11;
-const lastUpdate = new Date(1690586907980).toISOString();
-$("#revision").text(overlayRevision);
-$("#revisionDate").text(lastUpdate);
+const overlayRevision = 12;
+$("#revision").text(`revision ${overlayRevision}`);
 
 function resetEverything() {
 	// old v1
@@ -112,6 +106,14 @@ $("body").on("click", ".row", function(e) {
 	console.log("clicked row");
 });
 
+$('input[type="range"]').on("update", function(e) {
+	value = $(this).val();
+	max = parseInt($(this).attr("max"));
+
+	$(this).parent().children(".rangeValue").text(value);
+	$(this).css("background-size", `${(value / max) * 100}% 100%`);
+});
+
 $("input, select, textarea").on("change", function(e) {
 	let value = null;
 	let parent = $(this).parent().parent();
@@ -173,6 +175,10 @@ $("#sendTestButton").on("mouseup", function(e) {
 	localStorage.setItem("setting_testMessage", Date.now());
 });
 
+$("#clearMessagesButton").on("mouseup", function(e) {
+	localStorage.setItem("setting_clearMessages", Date.now());
+});
+
 var resetTimeout;
 $("#resetOverlayButton").on("mouseup", function(e) {
 	e.preventDefault();
@@ -194,9 +200,9 @@ $("#resetOverlayButton").on("mouseup", function(e) {
 
 $.get(`version.json?sigh=${Date.now()}`, function(data) {
 	if(overlayRevision !== data.revision) {
-		$("#updateString").text(`Settings panel may be out of date! Please refresh your browser source's cache.`);
+		$("#updateString").html('<i class="fas fa-times"></i> Out of date!');
 	} else {
-		$("#updateString").text(`Settings panel is up to date.`);
+		$("#updateString").html('<i class="fas fa-check"></i> Up to date');
 	}
 });
 

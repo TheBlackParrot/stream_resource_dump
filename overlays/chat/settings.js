@@ -124,29 +124,120 @@ function normalizeSettingColors(setting) {
 }
 
 function setHistoryOpacity() {
+	let filtersCheckFor = [
+		"chatFadeHistory",
+		"chatBlurHistory"
+	];
+
+	let transformsCheckFor = [
+		"chatScaleHistory"
+	];
+
+	let filtersAllFalse = true;
+	for(let i in filtersCheckFor) {
+		let which = filtersCheckFor[i];
+
+		if(localStorage.getItem(`setting_${which}`) === "true") {
+			filtersAllFalse = false;
+			break;
+		}
+	}
+	if(filtersAllFalse) {
+		$(".chatBlock").each(function() {
+			$(this).css("filter", "");
+		});
+	}
+
+	let transformsAllFalse = true;
+	for(let i in transformsCheckFor) {
+		let which = transformsCheckFor[i];
+
+		if(localStorage.getItem(`setting_${which}`) === "true") {
+			transformsAllFalse = false;
+			break;
+		}
+	}
+	if(transformsAllFalse) {
+		$(".chatBlock").each(function() {
+			$(this).css("transform", "");
+		});
+	}
+
+	if(filtersAllFalse && transformsAllFalse) {
+		return;
+	}
+
 	$(".chatBlock").each(function() {
+		let filterList = [];
+		let transformList = [];
+
+		let thisIdx = parseInt($(this).attr("data-combinedIdx"));
+		let startAfter = parseInt(localStorage.getItem("setting_chatHistoryStartAfter"));
+
 		let opacity = 1;
 		if(localStorage.getItem("setting_chatFadeHistory") === "true") {
-			opacity = 1 - ((combinedCount - parseInt($(this).attr("data-combinedIdx")) - parseInt(localStorage.getItem("setting_chatHistoryStartAfter")) + 1) * (parseFloat(localStorage.getItem("setting_chatFadeHistoryStep")) / 100));
-			if(opacity < 0) {
-				opacity = 0;
+			let step = parseFloat(localStorage.getItem("setting_chatFadeHistoryStep"));
+
+			opacity = 1 - ((combinedCount - thisIdx) - startAfter) * (step / 100);
+
+			if(combinedCount - thisIdx <= startAfter) {
+				opacity = 1;
+			}
+
+			if(opacity !== 1) {
+				filterList.push(`opacity(${opacity})`);
 			}
 		}
 
-		let blur = 0;
-		if(localStorage.getItem("setting_chatBlurHistory") === "true") {
-			blur = (combinedCount - parseInt($(this).attr("data-combinedIdx")) - parseInt(localStorage.getItem("setting_chatHistoryStartAfter")) + 1) * parseFloat(localStorage.getItem("setting_chatBlurHistoryStep"));
-		}
-
-		if(!opacity) {
+		if(opacity <= 0) {
+			console.log("opacity was 0, force removing");
 			$(this).remove();
+			return;
 		}
 
-		let filter = `opacity(${opacity})${blur === 0 ? "" : `blur(${blur}px)`}`;
-		if($(this).hasClass("highlighted")) {
-			filter = `var(--highlightedEffect) ${filter}`;
+		if(localStorage.getItem("setting_chatBlurHistory") === "true") {
+			let step = parseFloat(localStorage.getItem("setting_chatBlurHistoryStep"));
+			let blur = ((combinedCount - thisIdx) - startAfter) * step;
+			
+			if(combinedCount - thisIdx <= startAfter) {
+				blur = 0;
+			}
+
+			if(blur !== 0) {
+				filterList.push(`blur(${blur}px)`);
+			}
 		}
-		$(this).css("filter", filter);
+
+		scaling = 1;
+		if(localStorage.getItem("setting_chatScaleHistory") === "true") {
+			let step = parseFloat(localStorage.getItem("setting_chatScaleHistoryAmount"));
+			scaling = 1 + ((combinedCount - thisIdx) - startAfter) * (step / 100);
+
+			if(combinedCount - thisIdx <= startAfter) {
+				scaling = 1;
+			}
+
+			if(scaling !== 1) {
+				transformList.push(`scale(${scaling})`);
+			}
+		}
+
+		if(scaling <= 0) {
+			console.log("scaling was 0, force removing");
+			$(this).remove();
+			return;
+		}
+
+		if($(this).hasClass("highlighted")) {
+			filterList.unshift("var(--highlightedEffect)");
+		}
+
+		if(filterList.length) {
+			$(this).css("filter", filterList.join(" "));
+		}
+		if(transformList.length) {
+			$(this).css("transform", transformList.join(" "));
+		}
 	});
 }
 
@@ -187,83 +278,83 @@ const settingUpdaters = {
 	},
 
 	chatBackgroundColor: function(value) {
-		$(":root").get(0).style.setProperty("--backgroundColor", value);
+		rootCSS().setProperty("--backgroundColor", value);
 	},
 	chatHighlightBackgroundColor: function(value) {
-		$(":root").get(0).style.setProperty("--highlightBackgroundColor", value);
-		$(":root").get(0).style.setProperty("--highlightBorderColor", localStorage.getItem("setting_chatHighlightBackgroundColor").substring(0, 7));
+		rootCSS().setProperty("--highlightBackgroundColor", value);
+		rootCSS().setProperty("--highlightBorderColor", localStorage.getItem("setting_chatHighlightBackgroundColor").substring(0, 7));
 	},
 	chatDefaultNameColor: function(value) {
-		$(":root").get(0).style.setProperty("--defaultNameColor", value);
+		rootCSS().setProperty("--defaultNameColor", value);
 	},
 	chatMessageColor: function(value) {
-		$(":root").get(0).style.setProperty("--messageColor", value);
+		rootCSS().setProperty("--messageColor", value);
 	},
 
 	chatNameFont: function(value) {
-		$(":root").get(0).style.setProperty("--nameFont", value);
+		rootCSS().setProperty("--nameFont", value);
 	},
 	chatMessageFont: function(value) {
-		$(":root").get(0).style.setProperty("--messageFont", value);
+		rootCSS().setProperty("--messageFont", value);
 	},
 	chatNameFontSize: function(value) {
-		$(":root").get(0).style.setProperty("--nameFontSize", `${value}pt`);
+		rootCSS().setProperty("--nameFontSize", `${value}pt`);
 	},
 	chatMessageFontSize: function(value) {
-		$(":root").get(0).style.setProperty("--messageFontSize", `${value}pt`);
+		rootCSS().setProperty("--messageFontSize", `${value}pt`);
 	},
 	chatNameFontWeight: function(value) {
-		$(":root").get(0).style.setProperty("--nameFontWeight", value);
+		rootCSS().setProperty("--nameFontWeight", value);
 	},
 	chatMessageFontWeight: function(value) {
-		$(":root").get(0).style.setProperty("--messageFontWeight", value);
+		rootCSS().setProperty("--messageFontWeight", value);
 	},
 
 	chatBlockPaddingVertical: function(value) {
-		$(":root").get(0).style.setProperty("--chatBlockPaddingVertical", `${value}px`);
+		rootCSS().setProperty("--chatBlockPaddingVertical", `${value}px`);
 	},
 	chatBlockPaddingHorizontal: function(value) {
-		$(":root").get(0).style.setProperty("--chatBlockPaddingHorizontal", `${value}px`);
+		rootCSS().setProperty("--chatBlockPaddingHorizontal", `${value}px`);
 	},
 	chatBlockIndividualPaddingVertical: function(value) {
-		$(":root").get(0).style.setProperty("--chatBlockIndividualPaddingVertical", `${value}px`);
+		rootCSS().setProperty("--chatBlockIndividualPaddingVertical", `${value}px`);
 	},
 	chatBlockIndividualPaddingHorizontal: function(value) {
-		$(":root").get(0).style.setProperty("--chatBlockIndividualPaddingHorizontal", `${value}px`);
+		rootCSS().setProperty("--chatBlockIndividualPaddingHorizontal", `${value}px`);
 	},
 	chatBlockBorderRadius: function(value) {
-		$(":root").get(0).style.setProperty("--chatBlockBorderRadius", `${value}px`);
+		rootCSS().setProperty("--chatBlockBorderRadius", `${value}px`);
 	},
 
 	chatOutlines: function(value) {
 		if(value === "true") {
-			$(":root").get(0).style.setProperty("--chatBlockOutlineSize", "var(--chatBlockOutlineSizeActual)");
+			rootCSS().setProperty("--chatBlockOutlineSize", "var(--chatBlockOutlineSizeActual)");
 		} else {
-			$(":root").get(0).style.setProperty("--chatBlockOutlineSize", "0px");
+			rootCSS().setProperty("--chatBlockOutlineSize", "0px");
 		}
 	},
 	chatOutlinesColor: function(value) {
-		$(":root").get(0).style.setProperty("--chatBlockOutlineColor", value);
+		rootCSS().setProperty("--chatBlockOutlineColor", value);
 	},
 	chatOutlinesSize: function(value) {
-		$(":root").get(0).style.setProperty("--chatBlockOutlineSizeActual", `${value}px`);
+		rootCSS().setProperty("--chatBlockOutlineSizeActual", `${value}px`);
 	},
 	chatOutlineStyle: function(value) {
-		$(":root").get(0).style.setProperty("--chatBlockOutlineStyle", value);
+		rootCSS().setProperty("--chatBlockOutlineStyle", value);
 	},
 
 	chatShadows: function(value) {
 		if(value === "true") {
-			$(":root").get(0).style.setProperty("--shadowStuff", "var(--originalShadowStuff)");
+			rootCSS().setProperty("--shadowStuff", "var(--originalShadowStuff)");
 		} else {
-			$(":root").get(0).style.setProperty("--shadowStuff", "drop-shadow(0px 0px 0px transparent)");
+			rootCSS().setProperty("--shadowStuff", "drop-shadow(0px 0px 0px transparent)");
 		}
 	},
 	chatOutlinesFilter: function(value) {
 		if(value === "true") {
-			$(":root").get(0).style.setProperty("--outlineStuff", "var(--originalOutlineStuff)");
+			rootCSS().setProperty("--outlineStuff", "var(--originalOutlineStuff)");
 		} else {
-			$(":root").get(0).style.setProperty("--outlineStuff", "drop-shadow(0px 0px 0px transparent)");
+			rootCSS().setProperty("--outlineStuff", "drop-shadow(0px 0px 0px transparent)");
 		}
 	},
 
@@ -271,18 +362,12 @@ const settingUpdaters = {
 	chatFadeHistoryStep: setHistoryOpacity,
 	chatBlurHistory: setHistoryOpacity,
 	chatBlurHistoryStep: setHistoryOpacity,
+	chatScaleHistory: setHistoryOpacity,
+	chatScaleHistoryAmount: setHistoryOpacity,
 	chatHistoryStartAfter: setHistoryOpacity,
 
-	chatAnimationsInDuration: function(value) {
-		$(":root").get(0).style.setProperty("--animationsInDuration", `${value}s`);
-	},
-
-	chatAnimationsOutDuration: function(value) {
-		$(":root").get(0).style.setProperty("--animationsOutDuration", `${value}s`);
-	},
-
 	chatBigEmoteSize: function(value) {
-		$(":root").get(0).style.setProperty("--bigEmoteSize", `${value}pt`);
+		rootCSS().setProperty("--bigEmoteSize", `${value}pt`);
 	},
 
 	testMessage: function(value) {
@@ -316,309 +401,490 @@ const settingUpdaters = {
 
 		if(pos[1] === "left") {
 			$("#wrapper").removeClass("right").addClass("left");
-			$(":root").get(0).style.setProperty("--bsrInfoDirection", "ltr");
+			rootCSS().setProperty("--bsrInfoDirection", "ltr");
 		} else {
 			$("#wrapper").removeClass("left").addClass("right");
-			$(":root").get(0).style.setProperty("--bsrInfoDirection", "rtl");
+			rootCSS().setProperty("--bsrInfoDirection", "rtl");
 		}
 	},
 
 	chatMessageLineHeight: function(value) {
-		$(":root").get(0).style.setProperty("--messageLineHeight", `${value}px`);
+		rootCSS().setProperty("--messageLineHeight", `${value}px`);
 	},
 
 	avatarSize: function(value) {
-		$(":root").get(0).style.setProperty("--avatarSize", `${value}px`);
+		rootCSS().setProperty("--avatarSize", `${value}px`);
 	},
 
 	chatMessageUserInfoElementSpacing: function(value) {
-		$(":root").get(0).style.setProperty("--messageUserInfoElementSpacing", `${value}px`);
-	},
-
-	chatAnimationInName: function(value) {
-		$(":root").get(0).style.setProperty("--animationsInName", value);
-	},
-	chatAnimationOutName: function(value) {
-		$(":root").get(0).style.setProperty("--animationsOutName", value);
+		rootCSS().setProperty("--messageUserInfoElementSpacing", `${value}px`);
 	},
 
 	avatarShape: function(value) {
 		switch(value) {
-			case "circle": $(":root").get(0).style.setProperty("--avatarBorderRadius", "100%"); break;
-			case "squircle": $(":root").get(0).style.setProperty("--avatarBorderRadius", "10px"); break;
-			case "square": $(":root").get(0).style.setProperty("--avatarBorderRadius", "0px"); break;
+			case "circle": rootCSS().setProperty("--avatarBorderRadius", "100%"); break;
+			case "squircle": rootCSS().setProperty("--avatarBorderRadius", "10px"); break;
+			case "square": rootCSS().setProperty("--avatarBorderRadius", "0px"); break;
 		}
 	},
 
 	overlayShadowColor: function(value) {
-		$(":root").get(0).style.setProperty("--overlayShadowColor", value);
+		rootCSS().setProperty("--overlayShadowColor", value);
 	},
 	overlayShadowXOffset: function(value) {
-		$(":root").get(0).style.setProperty("--overlayShadowXOffset", `${value}px`);
+		rootCSS().setProperty("--overlayShadowXOffset", `${value}px`);
 	},
 	overlayShadowYOffset: function(value) {
-		$(":root").get(0).style.setProperty("--overlayShadowYOffset", `${value}px`);
+		rootCSS().setProperty("--overlayShadowYOffset", `${value}px`);
 	},
 	overlayShadowBlurRadius: function(value) {
-		$(":root").get(0).style.setProperty("--overlayShadowBlurRadius", `${value}px`);
+		rootCSS().setProperty("--overlayShadowBlurRadius", `${value}px`);
 	},
 	overlayOutlineColor: function(value) {
-		$(":root").get(0).style.setProperty("--overlayOutlineColor", value);
+		rootCSS().setProperty("--overlayOutlineColor", value);
 	},
 	overlayOutlineSize: function(value) {
-		$(":root").get(0).style.setProperty("--overlayOutlineSize", `${value}px`);
+		rootCSS().setProperty("--overlayOutlineSize", `${value}px`);
 	},
 
-	pronounsAeAer: function(value) { $(":root").get(0).style.setProperty("--pronouns_aeaer", `"${value}"`); },
-	pronounsAny: function(value) { $(":root").get(0).style.setProperty("--pronouns_any", `"${value}"`); },
-	pronounsEEm: function(value) { $(":root").get(0).style.setProperty("--pronouns_eem", `"${value}"`); },
-	pronounsFaeFaer: function(value) { $(":root").get(0).style.setProperty("--pronouns_faefaer", `"${value}"`); },
-	pronounsHeHim: function(value) { $(":root").get(0).style.setProperty("--pronouns_hehim", `"${value}"`); },
-	pronounsHeShe: function(value) { $(":root").get(0).style.setProperty("--pronouns_heshe", `"${value}"`); },
-	pronounsHeThem: function(value) { $(":root").get(0).style.setProperty("--pronouns_hethem", `"${value}"`); },
-	pronounsItIts: function(value) { $(":root").get(0).style.setProperty("--pronouns_itits", `"${value}"`); },
-	pronounsOther: function(value) { $(":root").get(0).style.setProperty("--pronouns_other", `"${value}"`); },
-	pronounsPerPer: function(value) { $(":root").get(0).style.setProperty("--pronouns_perper", `"${value}"`); },
-	pronounsSheHer: function(value) { $(":root").get(0).style.setProperty("--pronouns_sheher", `"${value}"`); },
-	pronounsSheThem: function(value) { $(":root").get(0).style.setProperty("--pronouns_shethem", `"${value}"`); },
-	pronounsTheyThem: function(value) { $(":root").get(0).style.setProperty("--pronouns_theythem", `"${value}"`); },
-	pronounsVeVer: function(value) { $(":root").get(0).style.setProperty("--pronouns_vever", `"${value}"`); },
-	pronounsXeXem: function(value) { $(":root").get(0).style.setProperty("--pronouns_xexem", `"${value}"`); },
-	pronounsZieHir: function(value) { $(":root").get(0).style.setProperty("--pronouns_ziehir", `"${value}"`); },
-
-	chatAnimationInOriginPoint: function(value) {
-		$(":root").get(0).style.setProperty("--animationsInOriginPoint", value);
-	},
-	chatAnimationOutOriginPoint: function(value) {
-		$(":root").get(0).style.setProperty("--animationsOutOriginPoint", value);
-	},
-	chatAnimationInTimingFunction: function(value) {
-		$(":root").get(0).style.setProperty("--animationsInTimingFunc", `var(--timingFunc${value})`);
-	},
-	chatAnimationOutTimingFunction: function(value) {
-		$(":root").get(0).style.setProperty("--animationsOutTimingFunc", `var(--timingFunc${value})`);
-	},
+	pronounsAeAer: function(value) { rootCSS().setProperty("--pronouns_aeaer", `"${value}"`); },
+	pronounsAny: function(value) { rootCSS().setProperty("--pronouns_any", `"${value}"`); },
+	pronounsEEm: function(value) { rootCSS().setProperty("--pronouns_eem", `"${value}"`); },
+	pronounsFaeFaer: function(value) { rootCSS().setProperty("--pronouns_faefaer", `"${value}"`); },
+	pronounsHeHim: function(value) { rootCSS().setProperty("--pronouns_hehim", `"${value}"`); },
+	pronounsHeShe: function(value) { rootCSS().setProperty("--pronouns_heshe", `"${value}"`); },
+	pronounsHeThem: function(value) { rootCSS().setProperty("--pronouns_hethem", `"${value}"`); },
+	pronounsItIts: function(value) { rootCSS().setProperty("--pronouns_itits", `"${value}"`); },
+	pronounsOther: function(value) { rootCSS().setProperty("--pronouns_other", `"${value}"`); },
+	pronounsPerPer: function(value) { rootCSS().setProperty("--pronouns_perper", `"${value}"`); },
+	pronounsSheHer: function(value) { rootCSS().setProperty("--pronouns_sheher", `"${value}"`); },
+	pronounsSheThem: function(value) { rootCSS().setProperty("--pronouns_shethem", `"${value}"`); },
+	pronounsTheyThem: function(value) { rootCSS().setProperty("--pronouns_theythem", `"${value}"`); },
+	pronounsVeVer: function(value) { rootCSS().setProperty("--pronouns_vever", `"${value}"`); },
+	pronounsXeXem: function(value) { rootCSS().setProperty("--pronouns_xexem", `"${value}"`); },
+	pronounsZieHir: function(value) { rootCSS().setProperty("--pronouns_ziehir", `"${value}"`); },
 
 	badgeBorderRadius: function(value) {
-		$(":root").get(0).style.setProperty("--badgeBorderRadius", `${value}px`);
+		rootCSS().setProperty("--badgeBorderRadius", `${value}px`);
 	},
 	badgeSpacing: function(value) {
-		$(":root").get(0).style.setProperty("--badgeSpacing", `${value}px`);
+		rootCSS().setProperty("--badgeSpacing", `${value}px`);
 	},
 	badgeSize: function(value) {
-		$(":root").get(0).style.setProperty("--badgeSize", `${value}px`);
+		rootCSS().setProperty("--badgeSize", `${value}px`);
 	},
 	chatNameFontWeightExtra: function(value) {
-		$(":root").get(0).style.setProperty("--nameFontWeightExtra", `${value}px`);
+		rootCSS().setProperty("--nameFontWeightExtra", `${value}px`);
 	},
 
 	chatDefaultNameColorSecondary: function(value) {
-		$(":root").get(0).style.setProperty("--defaultNameColorSecondary", value);
+		rootCSS().setProperty("--defaultNameColorSecondary", value);
 	},
 	chatNameGradientAngle: function(value) {
-		$(":root").get(0).style.setProperty("--nameGradientAngle", `${value}deg`);
+		rootCSS().setProperty("--nameGradientAngle", `${value}deg`);
 	},
 	chatNameLetterSpacing: function(value) {
-		$(":root").get(0).style.setProperty("--nameLetterSpacing", `${value}px`);
+		rootCSS().setProperty("--nameLetterSpacing", `${value}px`);
 	},
 	messageLetterSpacing: function(value) {
-		$(":root").get(0).style.setProperty("--messageLetterSpacing", `${value}px`);
+		rootCSS().setProperty("--messageLetterSpacing", `${value}px`);
 	},
 
 	pronounsColor: function(value) {
-		$(":root").get(0).style.setProperty("--pronounsColor", value);
+		rootCSS().setProperty("--pronounsColor", value);
 	},
 	pronounsUsesGradient: function(value) {
 		if(value === "true") {
-			$(":root").get(0).style.setProperty("--pronounsGradient", "linear-gradient(var(--pronounsGradientAngle), var(--pronounsColorSecondary) -20%, transparent 100%)");
+			rootCSS().setProperty("--pronounsGradient", "linear-gradient(var(--pronounsGradientAngle), var(--pronounsColorSecondary) -20%, transparent 100%)");
 		} else {
-			$(":root").get(0).style.setProperty("--pronounsGradient", "none");
+			rootCSS().setProperty("--pronounsGradient", "none");
 		}
 	},
 	pronounsColorSecondary: function(value) {
-		$(":root").get(0).style.setProperty("--pronounsColorSecondary", value);
+		rootCSS().setProperty("--pronounsColorSecondary", value);
 	},
 	pronounsGradientAngle: function(value) {
-		$(":root").get(0).style.setProperty("--pronounsGradientAngle", `${value}deg`);
+		rootCSS().setProperty("--pronounsGradientAngle", `${value}deg`);
 	},
 	pronounsFont: function(value) {
-		$(":root").get(0).style.setProperty("--pronounsFont", value);
+		rootCSS().setProperty("--pronounsFont", value);
 	},
 	pronounsFontSize: function(value) {
-		$(":root").get(0).style.setProperty("--pronounsFontSize", `${value}pt`);
+		rootCSS().setProperty("--pronounsFontSize", `${value}pt`);
 	},
 	pronounsFontWeight: function(value) {
-		$(":root").get(0).style.setProperty("--pronounsFontWeight", value);
+		rootCSS().setProperty("--pronounsFontWeight", value);
 	},
 	pronounsFontWeightExtra: function(value) {
-		$(":root").get(0).style.setProperty("--pronounsFontWeightExtra", `${value}px`);
+		rootCSS().setProperty("--pronounsFontWeightExtra", `${value}px`);
 	},
 	pronounsLetterSpacing: function(value) {
-		$(":root").get(0).style.setProperty("--pronounsLetterSpacing", `${value}px`);
+		rootCSS().setProperty("--pronounsLetterSpacing", `${value}px`);
 	},
 
 	chatNameTransform: function(value) {
-		$(":root").get(0).style.setProperty("--nameTransform", value);
+		rootCSS().setProperty("--nameTransform", value);
 	},
 	messageTransform: function(value) {
-		$(":root").get(0).style.setProperty("--messageTransform", value);
+		rootCSS().setProperty("--messageTransform", value);
 	},
 	pronounsTransform: function(value) {
-		$(":root").get(0).style.setProperty("--pronounsTransform", value);
+		rootCSS().setProperty("--pronounsTransform", value);
 	},
 
 	flagsBorderRadius: function(value) {
-		$(":root").get(0).style.setProperty("--flagsBorderRadius", `${value}px`);
+		rootCSS().setProperty("--flagsBorderRadius", `${value}px`);
 	},
 	flagsSize: function(value) {
-		$(":root").get(0).style.setProperty("--flagsSize", `${value}px`);
+		rootCSS().setProperty("--flagsSize", `${value}px`);
 	},
 	flagsSpacing: function(value) {
-		$(":root").get(0).style.setProperty("--flagsSpacing", `${value}px`);
+		rootCSS().setProperty("--flagsSpacing", `${value}px`);
 	},
 
 	chatBlockSpacing: function(value) {
-		$(":root").get(0).style.setProperty("--chatBlockSpacing", `${value}px`);
+		rootCSS().setProperty("--chatBlockSpacing", `${value}px`);
 	},
 
 	messageBoldAmount: function(value) {
-		$(":root").get(0).style.setProperty("--messageBoldAmount", `${value}px`);
+		rootCSS().setProperty("--messageBoldAmount", `${value}px`);
 	},
 
 	timestampColor: function(value) {
-		$(":root").get(0).style.setProperty("--timestampColor", value);
+		rootCSS().setProperty("--timestampColor", value);
 	},
 	timestampUsesGradient: function(value) {
 		if(value === "true") {
-			$(":root").get(0).style.setProperty("--timestampGradient", "linear-gradient(var(--timestampGradientAngle), var(--timestampColorSecondary) -20%, transparent 100%)");
+			rootCSS().setProperty("--timestampGradient", "linear-gradient(var(--timestampGradientAngle), var(--timestampColorSecondary) -20%, transparent 100%)");
 		} else {
-			$(":root").get(0).style.setProperty("--timestampGradient", "none");
+			rootCSS().setProperty("--timestampGradient", "none");
 		}
 	},
 	timestampColorSecondary: function(value) {
-		$(":root").get(0).style.setProperty("--timestampColorSecondary", value);
+		rootCSS().setProperty("--timestampColorSecondary", value);
 	},
 	timestampGradientAngle: function(value) {
-		$(":root").get(0).style.setProperty("--timestampGradientAngle", `${value}deg`);
+		rootCSS().setProperty("--timestampGradientAngle", `${value}deg`);
 	},
 	timestampFont: function(value) {
-		$(":root").get(0).style.setProperty("--timestampFont", value);
+		rootCSS().setProperty("--timestampFont", value);
 	},
 	timestampFontSize: function(value) {
-		$(":root").get(0).style.setProperty("--timestampFontSize", `${value}pt`);
+		rootCSS().setProperty("--timestampFontSize", `${value}pt`);
 	},
 	timestampFontWeight: function(value) {
-		$(":root").get(0).style.setProperty("--timestampFontWeight", value);
+		rootCSS().setProperty("--timestampFontWeight", value);
 	},
 	timestampFontWeightExtra: function(value) {
-		$(":root").get(0).style.setProperty("--timestampFontWeightExtra", `${value}px`);
+		rootCSS().setProperty("--timestampFontWeightExtra", `${value}px`);
 	},
 	timestampLetterSpacing: function(value) {
-		$(":root").get(0).style.setProperty("--timestampLetterSpacing", `${value}px`);
+		rootCSS().setProperty("--timestampLetterSpacing", `${value}px`);
 	},
 	timestampPadding: function(value) {
-		$(":root").get(0).style.setProperty("--timestampPadding", `${value}px`);
+		rootCSS().setProperty("--timestampPadding", `${value}px`);
 	},
 
 	chatMessageUserInfoBackgroundColor: function(value) {
-		$(":root").get(0).style.setProperty("--userInfoBackgroundColor", value);
+		rootCSS().setProperty("--userInfoBackgroundColor", value);
 	},
 
 	chatMessageUserInfoElementPaddingVertical: function(value) {
-		$(":root").get(0).style.setProperty("--userInfoPaddingVertical", `${value}px`);
+		rootCSS().setProperty("--userInfoPaddingVertical", `${value}px`);
 	},
 	chatMessageUserInfoElementPaddingHorizontal: function(value) {
-		$(":root").get(0).style.setProperty("--userInfoPaddingHorizontal", `${value}px`);
+		rootCSS().setProperty("--userInfoPaddingHorizontal", `${value}px`);
 	},
 	chatMessageUserInfoElementBorderRadius: function(value) {
-		$(":root").get(0).style.setProperty("--userInfoBorderRadius", `${value}px`);
+		rootCSS().setProperty("--userInfoBorderRadius", `${value}px`);
 	},
 	chatBlockWidth: function(value) {
-		$(":root").get(0).style.setProperty("--chatBlockWidth", value);
+		rootCSS().setProperty("--chatBlockWidth", value);
 	},
 	applyBorderRadiusToSubBadges: function(value) {
 		if(value === "true") {
-			$(":root").get(0).style.setProperty("--subBadgeBorderRadius", "var(--badgeBorderRadius)");
+			rootCSS().setProperty("--subBadgeBorderRadius", "var(--badgeBorderRadius)");
 		} else {
-			$(":root").get(0).style.setProperty("--subBadgeBorderRadius", "0px");
+			rootCSS().setProperty("--subBadgeBorderRadius", "0px");
 		}
 	},
 
 	chatMessageUserInfoOutlines: function(value) {
 		if(value === "true") {
-			$(":root").get(0).style.setProperty("--userInfoOutlineSize", "var(--userInfoOutlineSizeActual)");
+			rootCSS().setProperty("--userInfoOutlineSize", "var(--userInfoOutlineSizeActual)");
 		} else {
-			$(":root").get(0).style.setProperty("--userInfoOutlineSize", "0px");
+			rootCSS().setProperty("--userInfoOutlineSize", "0px");
 		}
 	},
 	chatMessageUserInfoOutlinesColor: function(value) {
-		$(":root").get(0).style.setProperty("--userInfoOutlineColor", value);
+		rootCSS().setProperty("--userInfoOutlineColor", value);
 	},
 	chatMessageUserInfoOutlinesSize: function(value) {
-		$(":root").get(0).style.setProperty("--userInfoOutlineSizeActual", `${value}px`);
+		rootCSS().setProperty("--userInfoOutlineSizeActual", `${value}px`);
 	},
 	chatMessageUserInfoOutlineStyle: function(value) {
-		$(":root").get(0).style.setProperty("--userInfoOutlineStyle", value);
+		rootCSS().setProperty("--userInfoOutlineStyle", value);
 	},
 
 	chatMessageUserInfoBottomMargin: function(value) {
-		$(":root").get(0).style.setProperty("--userInfoBottomMargin", `${value}px`);
+		rootCSS().setProperty("--userInfoBottomMargin", `${value}px`);
 	},
 
 	emotesBorderRadius: function(value) {
-		$(":root").get(0).style.setProperty("--emoteBorderRadius", `${value}px`);
+		rootCSS().setProperty("--emoteBorderRadius", `${value}px`);
 	},
 	chatBigEmoteMargin: function(value) {
-		$(":root").get(0).style.setProperty("--bigEmoteMargin", `${value}px`);
+		rootCSS().setProperty("--bigEmoteMargin", `${value}px`);
 	},
 	chatBigEmoteMarginVertical: function(value) {
-		$(":root").get(0).style.setProperty("--bigEmoteMarginVertical", `${value}px`);
+		rootCSS().setProperty("--bigEmoteMarginVertical", `${value}px`);
 	},
 
 	overlayForceWidth: function(value) {
 		if(value === "true") {
-			$(":root").get(0).style.setProperty("--overlayWidth", "var(--overlayWidthActual)");
+			rootCSS().setProperty("--overlayWidth", "var(--overlayWidthActual)");
 		} else {
-			$(":root").get(0).style.setProperty("--overlayWidth", "100vw");
+			rootCSS().setProperty("--overlayWidth", "100vw");
 		}
 	},
 	overlayWidth: function(value) {
-		$(":root").get(0).style.setProperty("--overlayWidthActual", `${value}px`);
+		rootCSS().setProperty("--overlayWidthActual", `${value}px`);
 	},
 
 	chatMessageEnableSeparators: function(value) {
 		if(value === "true") {
-			$(":root").get(0).style.setProperty("--messageSeparatorWidth", "var(--messageSeparatorWidthActual)");
-			$(":root").get(0).style.setProperty("--messageSeparatorSpacing", "var(--messageSeparatorSpacingActual)");
+			rootCSS().setProperty("--messageSeparatorWidth", "var(--messageSeparatorWidthActual)");
+			rootCSS().setProperty("--messageSeparatorSpacing", "var(--messageSeparatorSpacingActual)");
 		} else {
-			$(":root").get(0).style.setProperty("--messageSeparatorWidth", "0px");
-			$(":root").get(0).style.setProperty("--messageSeparatorSpacing", "0px");
+			rootCSS().setProperty("--messageSeparatorWidth", "0px");
+			rootCSS().setProperty("--messageSeparatorSpacing", "0px");
 		}		
 	},
 	chatMessageSeparatorColor: function(value) {
-		$(":root").get(0).style.setProperty("--messageSeparatorColor", value);
+		rootCSS().setProperty("--messageSeparatorColor", value);
 	},
 	chatMessageSeparatorWidth: function(value) {
-		$(":root").get(0).style.setProperty("--messageSeparatorWidthActual", `${value}px`);
+		rootCSS().setProperty("--messageSeparatorWidthActual", `${value}px`);
 	},
 	chatMessageSeparatorSpacing: function(value) {
-		$(":root").get(0).style.setProperty("--messageSeparatorSpacingActual", `${value}px`);
+		rootCSS().setProperty("--messageSeparatorSpacingActual", `${value}px`);
 	},
 	chatMessageSeparatorStyle: function(value) {
-		$(":root").get(0).style.setProperty("--messageSeparatorStyle", value);
+		rootCSS().setProperty("--messageSeparatorStyle", value);
 	},
 	chatHighlightGlowRadius: function(value) {
-		$(":root").get(0).style.setProperty("--highlightGlowRadius", `${value}px`);
+		rootCSS().setProperty("--highlightGlowRadius", `${value}px`);
+	},
+
+	animationsInDuration: function(value) {
+		rootCSS().setProperty("--animationsInDuration", `${value}s`);
+	},
+	animationsOutDuration: function(value) {
+		rootCSS().setProperty("--animationsOutDuration", `${value}s`);
+	},
+	animationsInOriginPoint: function(value) {
+		rootCSS().setProperty("--animationsInOriginPoint", value);
+	},
+	animationsOutOriginPoint: function(value) {
+		rootCSS().setProperty("--animationsOutOriginPoint", value);
+	},
+	animationsInTimingFunc: function(value) {
+		rootCSS().setProperty("--animationsInTimingFunc", `var(--timingFunc${value})`);
+	},
+	animationsOutTimingFunc: function(value) {
+		rootCSS().setProperty("--animationsOutTimingFunc", `var(--timingFunc${value})`);
+	},
+	messageInOpacityStart: function(value) {
+		rootCSS().setProperty("--messageInOpacityStart", `${value}%`);
+	},
+	messageInOpacityEnd: function(value) {
+		rootCSS().setProperty("--messageInOpacityEnd", `${value}%`);
+	},
+	messageInXTransformStart: function(value) {
+		rootCSS().setProperty("--messageInXTransformStart", `${value}vw`);
+	},
+	messageInXTransformEnd: function(value) {
+		rootCSS().setProperty("--messageInXTransformEnd", `${value}vw`);
+	},
+	messageInYTransformStart: function(value) {
+		rootCSS().setProperty("--messageInYTransformStart", `${value}vh`);
+	},
+	messageInYTransformEnd: function(value) {
+		rootCSS().setProperty("--messageInYTransformEnd", `${value}vh`);
+	},
+	messageInBlurStart: function(value) {
+		rootCSS().setProperty("--messageInBlurStart", `${value}px`);
+	},
+	messageInBlurEnd: function(value) {
+		rootCSS().setProperty("--messageInBlurEnd", `${value}px`);
+	},
+	messageInScaleXStart: function(value) {
+		rootCSS().setProperty("--messageInScaleXStart", `${value}%`);
+	},
+	messageInScaleXEnd: function(value) {
+		rootCSS().setProperty("--messageInScaleXEnd", `${value}%`);
+	},
+	messageInScaleYStart: function(value) {
+		rootCSS().setProperty("--messageInScaleYStart", `${value}%`);
+	},
+	messageInScaleYEnd: function(value) {
+		rootCSS().setProperty("--messageInScaleYEnd", `${value}%`);
+	},
+	messageInSkewXStart: function(value) {
+		rootCSS().setProperty("--messageInSkewXStart", `${value}deg`);
+	},
+	messageInSkewXEnd: function(value) {
+		rootCSS().setProperty("--messageInSkewXEnd", `${value}deg`);
+	},
+	messageInSkewYStart: function(value) {
+		rootCSS().setProperty("--messageInSkewYStart", `${value}deg`);
+	},
+	messageInSkewYEnd: function(value) {
+		rootCSS().setProperty("--messageInSkewYEnd", `${value}deg`);
+	},
+	messageInRotateStart: function(value) {
+		rootCSS().setProperty("--messageInRotateStart", `${value}deg`);
+	},
+	messageInRotateEnd: function(value) {
+		rootCSS().setProperty("--messageInRotateEnd", `${value}deg`);
+	},
+	messageInBrightnessStart: function(value) {
+		rootCSS().setProperty("--messageInBrightnessStart", `${value}%`);
+	},
+	messageInBrightnessEnd: function(value) {
+		rootCSS().setProperty("--messageInBrightnessEnd", `${value}%`);
+	},
+	messageInContrastStart: function(value) {
+		rootCSS().setProperty("--messageInContrastStart", `${value}%`);
+	},
+	messageInContrastEnd: function(value) {
+		rootCSS().setProperty("--messageInContrastEnd", `${value}%`);
+	},
+	messageInSaturateStart: function(value) {
+		rootCSS().setProperty("--messageInSaturateStart", `${value}%`);
+	},
+	messageInSaturateEnd: function(value) {
+		rootCSS().setProperty("--messageInSaturateEnd", `${value}%`);
+	},
+	messageInHueRotateStart: function(value) {
+		rootCSS().setProperty("--messageInHueRotateStart", `${value}deg`);
+	},
+	messageInHueRotateEnd: function(value) {
+		rootCSS().setProperty("--messageInHueRotateEnd", `${value}deg`);
+	},
+	messageOutOpacityStart: function(value) {
+		rootCSS().setProperty("--messageOutOpacityStart", `${value}%`);
+	},
+	messageOutOpacityEnd: function(value) {
+		rootCSS().setProperty("--messageOutOpacityEnd", `${value}%`);
+	},
+	messageOutXTransformStart: function(value) {
+		rootCSS().setProperty("--messageOutXTransformStart", `${value}vw`);
+	},
+	messageOutXTransformEnd: function(value) {
+		rootCSS().setProperty("--messageOutXTransformEnd", `${value}vw`);
+	},
+	messageOutYTransformStart: function(value) {
+		rootCSS().setProperty("--messageOutYTransformStart", `${value}vh`);
+	},
+	messageOutYTransformEnd: function(value) {
+		rootCSS().setProperty("--messageOutYTransformEnd", `${value}vh`);
+	},
+	messageOutBlurStart: function(value) {
+		rootCSS().setProperty("--messageOutBlurStart", `${value}px`);
+	},
+	messageOutBlurEnd: function(value) {
+		rootCSS().setProperty("--messageOutBlurEnd", `${value}px`);
+	},
+	messageOutScaleXStart: function(value) {
+		rootCSS().setProperty("--messageOutScaleXStart", `${value}%`);
+	},
+	messageOutScaleXEnd: function(value) {
+		rootCSS().setProperty("--messageOutScaleXEnd", `${value}%`);
+	},
+	messageOutScaleYStart: function(value) {
+		rootCSS().setProperty("--messageOutScaleYStart", `${value}%`);
+	},
+	messageOutScaleYEnd: function(value) {
+		rootCSS().setProperty("--messageOutScaleYEnd", `${value}%`);
+	},
+	messageOutSkewXStart: function(value) {
+		rootCSS().setProperty("--messageOutSkewXStart", `${value}deg`);
+	},
+	messageOutSkewXEnd: function(value) {
+		rootCSS().setProperty("--messageOutSkewXEnd", `${value}deg`);
+	},
+	messageOutSkewYStart: function(value) {
+		rootCSS().setProperty("--messageOutSkewYStart", `${value}deg`);
+	},
+	messageOutSkewYEnd: function(value) {
+		rootCSS().setProperty("--messageOutSkewYEnd", `${value}deg`);
+	},
+	messageOutRotateStart: function(value) {
+		rootCSS().setProperty("--messageOutRotateStart", `${value}deg`);
+	},
+	messageOutRotateEnd: function(value) {
+		rootCSS().setProperty("--messageOutRotateEnd", `${value}deg`);
+	},
+	messageOutBrightnessStart: function(value) {
+		rootCSS().setProperty("--messageOutBrightnessStart", `${value}%`);
+	},
+	messageOutBrightnessEnd: function(value) {
+		rootCSS().setProperty("--messageOutBrightnessEnd", `${value}%`);
+	},
+	messageOutContrastStart: function(value) {
+		rootCSS().setProperty("--messageOutContrastStart", `${value}%`);
+	},
+	messageOutContrastEnd: function(value) {
+		rootCSS().setProperty("--messageOutContrastEnd", `${value}%`);
+	},
+	messageOutSaturateStart: function(value) {
+		rootCSS().setProperty("--messageOutSaturateStart", `${value}%`);
+	},
+	messageOutSaturateEnd: function(value) {
+		rootCSS().setProperty("--messageOutSaturateEnd", `${value}%`);
+	},
+	messageOutHueRotateStart: function(value) {
+		rootCSS().setProperty("--messageOutHueRotateStart", `${value}deg`);
+	},
+	messageOutHueRotateEnd: function(value) {
+		rootCSS().setProperty("--messageOutHueRotateEnd", `${value}deg`);
+	},
+	chatHistoryOriginPoint: function(value) {
+		rootCSS().setProperty("--chatHistoryOriginPoint", value);
+	},
+	chatNameUsesGradient: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--nameBackground", "var(--nameBackgroundDefault)");
+		} else {
+			rootCSS().setProperty("--nameBackground", "var(--nameBackgroundNoGradientDefault)");
+		}		
+	},
+
+	sound_newMsg_Volume: function(value) {
+		setVolume("newMsg", value);
+	},
+	sound_newMsg_URL: function(value) {
+		if(sounds["newMsg"].value !== value) {
+			sounds["newMsg"].value = value;
+
+			sounds["newMsg"].urls = [];
+			if(value === "<jerma noises>") {
+				for(let i = 1; i <= 7; i++) {
+					sounds["newMsg"].urls.push(`sounds/jerma-teacher-noise-${i}.ogg`);
+				}
+			} else {
+				sounds["newMsg"].urls.push(value);
+			}
+
+			loadSound("newMsg");
+		}
+	},
+
+	clearMessages: function(value) {
+		$("#wrapper").empty();
 	}
 };
-
-/*
-	--messageSeparatorColor: #ffffff20;
-	--messageSeparatorWidthActual: 1px;
-	--messageSeparatorWidth: 0px;
-	--messageSeparatorSpacing: 0px;
-	--messageSeparatorStyle: solid;
-*/
 
 settingUpdaters["chatHideAccounts"](localStorage.getItem("setting_chatHideAccounts"));
 

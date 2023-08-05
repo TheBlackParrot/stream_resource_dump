@@ -12,7 +12,8 @@
 		Coloris({
 			theme: "polaroid",
 			themeMode: "dark",
-			alpha: true
+			alpha: true,
+			rtl: true
 		});
 	</script>
 
@@ -27,29 +28,46 @@
 <body>
 	<div id="wrapper">
 		<div id="sidebar">
-			<div class="row" data-tab="about"><i class="fas fa-heart"></i>About</div>
-			<hr/>
-			<div class="row" data-tab="auth"><i class="fas fa-user-shield"></i>Authentication</div>
-			<div class="row" data-tab="function"><i class="fas fa-cogs"></i>Function</div>
-			<hr/>
-			<div class="row" data-tab="appearance"><i class="fas fa-palette"></i>Appearance</div>
-			<div class="row" data-tab="effects"><i class="fas fa-magic"></i>Effects</div>
-			<hr/>
-			<div class="row" data-tab="avatars"><i class="fas fa-image"></i>Avatars</div>
-			<div class="row" data-tab="badges"><i class="fas fa-square"></i>Badges</div>
-			<div class="row" data-tab="emotes"><i class="fas fa-grin-squint-tears"></i>Emotes</div>
-			<div class="row" data-tab="flags"><i class="fas fa-flag"></i>Flags</div>
-			<div class="row" data-tab="pronouns"><i class="fas fa-user"></i>Pronouns</div>
-			<hr/>
-			<div class="row" data-tab="7tv"><i class="icon sevtv"></i>7TV</div>
-			<div class="row" data-tab="bttv"><i class="icon bttv"></i>BetterTTV</div>
-			<div class="row" data-tab="ffz"><i class="icon ffz"></i>FrankerFaceZ</div>
+			<div id="rows">
+				<div class="row" data-tab="about"><i class="fas fa-heart"></i>About</div>
+				<hr/>
+				<div class="row" data-tab="auth"><i class="fas fa-user-shield"></i>Authentication</div>
+				<div class="row" data-tab="function"><i class="fas fa-cogs"></i>Function</div>
+				<hr/>
+				<div class="row" data-tab="appearance"><i class="fas fa-palette"></i>Appearance</div>
+				<div class="row" data-tab="effects"><i class="fas fa-magic"></i>Effects</div>
+				<div class="row" data-tab="sounds"><i class="fas fa-volume-up"></i>Sounds</div>
+				<hr/>
+				<div class="row" data-tab="avatars"><i class="fas fa-image"></i>Avatars</div>
+				<div class="row" data-tab="badges"><i class="fas fa-square"></i>Badges</div>
+				<div class="row" data-tab="emotes"><i class="fas fa-grin-squint-tears"></i>Emotes</div>
+				<div class="row" data-tab="flags"><i class="fas fa-flag"></i>Flags</div>
+				<div class="row" data-tab="pronouns"><i class="fas fa-user"></i>Pronouns</div>
+				<hr/>
+				<div class="row" data-tab="7tv"><i class="icon sevtv"></i>7TV</div>
+				<div class="row" data-tab="bttv"><i class="icon bttv"></i>BetterTTV</div>
+				<div class="row" data-tab="ffz"><i class="icon ffz"></i>FrankerFaceZ</div>
+			</div>
+			<div id="sideButtons">
+				<div class="button" id="sendTestButton">Test Message</div>
+				<div class="button" id="clearMessagesButton">Clear Messages</div>
+				<hr/>
+				<div class="button" id="reloadPanelButton">Refresh Settings</div>
+				<div class="button" id="reloadOverlayButton">Refresh Overlays</div>
+				<hr/>
+				<div class="button" id="resetOverlayButton">Reset Everything</div>
+				<div id="versionStuff">
+					<span id="revision"></span> <span id="revisionDate"></span>
+					<br/>
+					<span id="updateString"></span>
+				</div>
+			</div>
 		</div>
 		<div id="settings">
 			<div class="section" data-content="appearance">
 				<div class="part">
 					<div class="setting">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="allowUserCustomizations" type="checkbox"/> <span class="settingInfo">Allow chatters to customize personal settings</span>
 						</div>
 					</div>
@@ -57,86 +75,86 @@
 				<div class="part">
 					<h1>Background</h1>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Background color</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="chatBackgroundColor" type="text" data-coloris value="#00000000"/>
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input id="chatBackgroundReflectUserColor" type="checkbox"/> <span class="settingInfo">Color fades into the chatter's own color</span>
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Fading amount</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatBackgroundUserColorAmount" min="0" max="100" step="0.5" value="50"/> %
+						<div class="settingCell">
+							<input type="number" id="chatBackgroundUserColorAmount" min="0" max="100" step="0.5" value="50"/>%
 						</div>
 					</div>
 					<hr/>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Highlighted glow color</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="chatHighlightBackgroundColor" type="text" data-coloris value="#FFFFCCFF"/>
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Glow radius</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatHighlightGlowRadius" min="1" max="16" step="1" value="3"/> px
+						<div class="settingCell">
+							<input type="number" id="chatHighlightGlowRadius" min="1" max="16" step="1" value="3"/>px
 						</div>
 					</div>
 				</div>
 				<div class="part">
 					<h1>Outlines</h1>
 					<div class="setting">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input id="chatOutlines" type="checkbox" data-dependent="outlines"/> <span class="settingInfo">Enable outlines around messages</span>
 						</div>
 					</div>
 					<div class="setting disabled" data-dependent="outlines">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Color</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="chatOutlinesColor" type="text" data-coloris value="#FFFFFF"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="outlines">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input id="chatOutlinesReflectUserColor" type="checkbox"/> <span class="settingInfo">Color fades into the chatter's own color</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="outlines">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Fading amount</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatOutlinesUserColorAmount" min="0" max="100" step="0.5" value="50"/> %
+						<div class="settingCell">
+							<input type="number" id="chatOutlinesUserColorAmount" min="0" max="100" step="0.5" value="50"/>%
 						</div>
 					</div>
 					<hr/>
 					<div class="setting disabled" data-dependent="outlines">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Size</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatOutlinesSize" min="0" max="8" step="1" value="1"/> px
+						<div class="settingCell">
+							<input type="number" id="chatOutlinesSize" min="0" max="8" step="1" value="1"/>px
 						</div>
 					</div>
 					<div class="setting disabled" data-dependent="outlines">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Style</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<select id="chatOutlineStyle">
 								<option value="dashed">Dashed</option>
 								<option value="dotted">Dotted</option>
@@ -153,108 +171,108 @@
 				<div class="part">
 					<h1>Names</h1>
 					<div class="setting">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="ensureNameColorsAreBrightEnough" type="checkbox" data-dependent="brightNames"/> <span class="settingInfo">Ensure name colors are between a set brightness level</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="brightNames">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Minimum</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="nameColorMinBrightness" min="0" max="100" step="1" value="30"/> %
+						<div class="settingCell">
+							<input type="number" id="nameColorMinBrightness" min="0" max="100" step="1" value="30"/>%
 						</div>
 					</div>
 					<div class="setting" data-dependent="brightNames">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Maximum</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="nameColorMaxBrightness" min="0" max="100" step="1" value="100"/> %
+						<div class="settingCell">
+							<input type="number" id="nameColorMaxBrightness" min="0" max="100" step="1" value="100"/>%
 						</div>
 					</div>
 					<hr/>
 					<div class="setting">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input id="chatDefaultNameColorForced" type="checkbox"/> <span class="settingInfo">Force names to use the default name color</span>
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Default color</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="chatDefaultNameColor" type="text" data-coloris value="#AAAAAA"/>
 						</div>
 					</div>
 					<hr/>
 					<div class="setting">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="chatNameUsesGradient" type="checkbox" data-dependent="gradientNames"/> <span class="settingInfo">Apply a gradient to names</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="gradientNames">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Gradient color</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="chatDefaultNameColorSecondary" type="text" data-coloris value="#FFFFFF"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="gradientNames">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Gradient angle</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatNameGradientAngle" min="0" max="360" step="1" value="170"/> deg
+						<div class="settingCell">
+							<input type="number" id="chatNameGradientAngle" min="0" max="360" step="1" value="170"/>deg
 						</div>
 					</div>
 					<hr/>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Font</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="chatNameFont" type="text" value="Manrope"/>
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Size</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatNameFontSize" min="4" max="64" step="0.25" value="16"/> pt
+						<div class="settingCell">
+							<input type="number" id="chatNameFontSize" min="4" max="64" step="0.25" value="16"/>pt
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Weight</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input type="number" id="chatNameFontWeight" min="100" max="900" step="25" value="900"/>
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Additional weight</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatNameFontWeightExtra" min="0" max="8" step="0.1" value="1.2"/> px
+						<div class="settingCell">
+							<input type="number" id="chatNameFontWeightExtra" min="0" max="8" step="0.1" value="1.2"/>px
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Letter spacing</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatNameLetterSpacing" min="-12" max="12" step="0.2" value="1"/> px
+						<div class="settingCell">
+							<input type="number" id="chatNameLetterSpacing" min="-12" max="12" step="0.2" value="1"/>px
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Transform</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<select id="chatNameTransform">
 								<option value="capitalize">Capitalize</option>
 								<option value="lowercase">Lowercase</option>
@@ -267,108 +285,108 @@
 				<div class="part">
 					<h1>Chatter Information</h1>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Background color</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="chatMessageUserInfoBackgroundColor" type="text" data-coloris value="#00000000"/>
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input id="chatMessageUserInfoBackgroundReflectUserColor" type="checkbox"/> <span class="settingInfo">Color fades into the chatter's own color</span>
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Fading amount</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatMessageUserInfoBackgroundUserColorAmount" min="0" max="100" step="0.5" value="50"/> %
+						<div class="settingCell">
+							<input type="number" id="chatMessageUserInfoBackgroundUserColorAmount" min="0" max="100" step="0.5" value="50"/>%
 						</div>
 					</div>
 					<hr/>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Vertical padding</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatMessageUserInfoElementPaddingVertical" min="0" max="64" step="0.5" value="0"/> px
+						<div class="settingCell">
+							<input type="number" id="chatMessageUserInfoElementPaddingVertical" min="0" max="64" step="0.5" value="0"/>px
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Horizontal padding</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatMessageUserInfoElementPaddingHorizontal" min="0" max="64" step="0.5" value="0"/> px
+						<div class="settingCell">
+							<input type="number" id="chatMessageUserInfoElementPaddingHorizontal" min="0" max="64" step="0.5" value="0"/>px
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Bottom margin</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatMessageUserInfoBottomMargin" min="0" max="64" step="1" value="4"/> px
+						<div class="settingCell">
+							<input type="number" id="chatMessageUserInfoBottomMargin" min="0" max="64" step="1" value="4"/>px
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Border radius</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatMessageUserInfoElementBorderRadius" min="0" max="64" step="1" value="0"/> px
+						<div class="settingCell">
+							<input type="number" id="chatMessageUserInfoElementBorderRadius" min="0" max="64" step="1" value="0"/>px
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Element spacing</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatMessageUserInfoElementSpacing" min="0" max="64" step="0.5" value="14"/> px
+						<div class="settingCell">
+							<input type="number" id="chatMessageUserInfoElementSpacing" min="0" max="64" step="0.5" value="14"/>px
 						</div>
 					</div>
 					<hr/>
 					<div class="setting">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input id="chatMessageUserInfoOutlines" type="checkbox" data-dependent="userInfoOutlines"/> <span class="settingInfo">Enable outlines around chatter information</span>
 						</div>
 					</div>
 					<div class="setting disabled" data-dependent="userInfoOutlines">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Outline color</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="chatMessageUserInfoOutlinesColor" type="text" data-coloris value="#FFFFFF"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="userInfoOutlines">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input id="chatMessageUserInfoOutlinesReflectUserColor" type="checkbox"/> <span class="settingInfo">Color fades into the chatter's own color</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="userInfoOutlines">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Fading amount</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatMessageUserInfoOutlinesUserColorAmount" min="0" max="100" step="0.5" value="100"/> %
+						<div class="settingCell">
+							<input type="number" id="chatMessageUserInfoOutlinesUserColorAmount" min="0" max="100" step="0.5" value="100"/>%
 						</div>
 					</div>
 					<hr/>
 					<div class="setting disabled" data-dependent="userInfoOutlines">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Size</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatMessageUserInfoOutlinesSize" min="0" max="8" step="1" value="1"/> px
+						<div class="settingCell">
+							<input type="number" id="chatMessageUserInfoOutlinesSize" min="0" max="8" step="1" value="1"/>px
 						</div>
 					</div>
 					<div class="setting disabled" data-dependent="userInfoOutlines">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Style</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<select id="chatMessageUserInfoOutlineStyle">
 								<option value="dashed">Dashed</option>
 								<option value="dotted">Dotted</option>
@@ -385,64 +403,64 @@
 				<div class="part">
 					<h1>Messages</h1>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Text color</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="chatMessageColor" type="text" data-coloris value="#FFFFFF"/>
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input id="chatMessageReflectUserColor" type="checkbox"/> <span class="settingInfo">Color fades into the chatter's own color</span>
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Fading amount</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatMessageUserColorAmount" min="0" max="100" step="0.5" value="10"/> %
+						<div class="settingCell">
+							<input type="number" id="chatMessageUserColorAmount" min="0" max="100" step="0.5" value="10"/>%
 						</div>
 					</div>
 					<hr/>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Font</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="chatMessageFont" type="text" value="Manrope"/>
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Size</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatMessageFontSize" min="4" max="64" step="0.25" value="16"/> pt
+						<div class="settingCell">
+							<input type="number" id="chatMessageFontSize" min="4" max="64" step="0.25" value="16"/>pt
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Weight</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input type="number" id="chatMessageFontWeight" min="100" max="900" step="25" value="700"/>
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Letter spacing</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="messageLetterSpacing" min="-12" max="12" step="0.2" value="0"/> px
+						<div class="settingCell">
+							<input type="number" id="messageLetterSpacing" min="-12" max="12" step="0.2" value="0"/>px
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Transform</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<select id="messageTransform">
 								<option value="capitalize">Capitalize</option>
 								<option value="lowercase">Lowercase</option>
@@ -452,56 +470,56 @@
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Emboldening amount</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="messageBoldAmount" min="0" max="4" step="0.05" value="1.25"/> px
+						<div class="settingCell">
+							<input type="number" id="messageBoldAmount" min="0" max="4" step="0.05" value="1.25"/>px
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Line height</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatMessageLineHeight" min="16" max="64" step="0.5" value="30"/> px
+						<div class="settingCell">
+							<input type="number" id="chatMessageLineHeight" min="16" max="64" step="0.5" value="30"/>px
 						</div>
 					</div>
 					<hr/>
 					<div class="setting">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input id="chatMessageEnableSeparators" type="checkbox" data-dependent="chatSeparators"/> <span class="settingInfo">Enable separators between messages</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="chatSeparators">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Color</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="chatMessageSeparatorColor" type="text" data-coloris value="#FFFFFF20"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="chatSeparators">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Width</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatMessageSeparatorWidth" min="1" max="16" step="1" value="1"/> px
+						<div class="settingCell">
+							<input type="number" id="chatMessageSeparatorWidth" min="1" max="16" step="1" value="1"/>px
 						</div>
 					</div>
 					<div class="setting" data-dependent="chatSeparators">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Spacing</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatMessageSeparatorSpacing" min="0" max="64" step="1" value="0"/> px
+						<div class="settingCell">
+							<input type="number" id="chatMessageSeparatorSpacing" min="0" max="64" step="1" value="0"/>px
 						</div>
 					</div>
 					<div class="setting" data-dependent="chatSeparators">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Style</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<select id="chatMessageSeparatorStyle">
 								<option value="dashed">Dashed</option>
 								<option value="dotted">Dotted</option>
@@ -518,24 +536,24 @@
 				<div class="part">
 					<h1>Positioning</h1>
 					<div class="setting">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input id="overlayForceWidth" type="checkbox" data-dependent="forceWidth"/> <span class="settingInfo">Force the overlay to a set width</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="forceWidth">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Width</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="overlayWidth" min="100" max="3840" step="1" value="700"/> px
+						<div class="settingCell">
+							<input type="number" id="overlayWidth" min="100" max="3840" step="1" value="700"/>px
 						</div>
 					</div>
 					<hr/>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Corner alignment</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<select id="chatCornerAlignment">
 								<option value="top,left">Top-left</option>
 								<option value="top,right">Top-right</option>
@@ -545,10 +563,10 @@
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Content width</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<select id="chatBlockWidth">
 								<option selected value="-webkit-fill-available">Fill</option>
 								<option value="fit-content">Fit visible content</option>
@@ -557,99 +575,79 @@
 					</div>
 					<hr/>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Vertical margin</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatBlockPaddingVertical" min="0" max="64" step="0.25" value="18"/> px
+						<div class="settingCell">
+							<input type="number" id="chatBlockPaddingVertical" min="0" max="64" step="0.25" value="18"/>px
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Horizontal margin</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatBlockPaddingHorizontal" min="0" max="64" step="0.25" value="18"/> px
+						<div class="settingCell">
+							<input type="number" id="chatBlockPaddingHorizontal" min="0" max="64" step="0.25" value="18"/>px
 						</div>
 					</div>
 					<hr/>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Vert. block padding</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatBlockIndividualPaddingVertical" min="0" max="64" step="0.25" value="0"/> px
+						<div class="settingCell">
+							<input type="number" id="chatBlockIndividualPaddingVertical" min="0" max="64" step="0.25" value="0"/>px
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Horiz. block padding</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatBlockIndividualPaddingHorizontal" min="0" max="64" step="0.25" value="0"/> px
+						<div class="settingCell">
+							<input type="number" id="chatBlockIndividualPaddingHorizontal" min="0" max="64" step="0.25" value="0"/>px
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Block spacing</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatBlockSpacing" min="0" max="128" step="1" value="20"/> px
+						<div class="settingCell">
+							<input type="number" id="chatBlockSpacing" min="0" max="128" step="1" value="20"/>px
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Border radius</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatBlockBorderRadius" min="0" max="64" step="0.25" value="0"/> px
+						<div class="settingCell">
+							<input type="number" id="chatBlockBorderRadius" min="0" max="64" step="0.25" value="0"/>px
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="section" data-content="effects">
 				<div class="part">
-					<h1>Animations</h1>
+					<h1>In Animations</h1>
 					<div class="setting">
-						<div class="settingFullWidth">
-							<input checked id="chatAnimations" type="checkbox" data-dependent="animations"/> <span class="settingInfo">Enable appearing/disappearing animations</span>
+						<div class="settingCell">
+							<input checked id="chatAnimationsIn" type="checkbox" data-dependent="animationsIn"/> <span class="settingInfo">Enable animations for messages coming in</span>
 						</div>
 					</div>
-					<div class="setting">
-						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Message "in" animation</span>
-						</div>
-						<div class="settingHalfWidthRight">
-							<select id="chatAnimationInName">
-								<option value="blurInKF">Blur In</option>
-								<option value="bounceInKF">Bounce In</option>
-								<option value="fadeInKF">Fade In</option>
-								<option value="magnifyInKF">Magnify In</option>
-								<option value="rotateInKF">Rotate In</option>
-								<option value="slideInBottom_BlurKF">Scale In (Bottom) (Blur)</option>
-								<option selected value="slideInBottomKF">Scale In (Bottom)</option>
-								<option value="shearInKF">Shear In (Left)</option>
-								<option value="slideInLeftKF">Slide In (Left)</option>
-								<option value="slideInRightKF">Slide In (Right)</option>
-								<option value="squishInKF">Squish In</option>
-								<option value="zoomInKF">Zoom In</option>
-							</select>
-						</div>
-					</div>
-					<div class="setting" data-dependent="animations">
-						<div class="settingHalfWidthLeft">
+					<hr/>
+					<div class="setting" data-dependent="animationsIn">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Duration</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatAnimationsInDuration" min="0.01" max="5" step="0.01" value="0.5"/> seconds
+						<div class="settingCell">
+							<input type="number" id="animationsInDuration" min="0.01" max="5" step="0.01" value="0.5"/>seconds
 						</div>
 					</div>
-					<div class="setting">
-						<div class="settingHalfWidthLeft">
+					<div class="setting" data-dependent="animationsIn">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Origin point</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<select id="chatAnimationInOriginPoint">
+						<div class="settingCell">
+							<select id="animationsInOriginPoint">
 								<option value="left top">Top-left</option>
 								<option value="center top">Top-middle</option>
 								<option value="right top">Top-right</option>
@@ -662,12 +660,12 @@
 							</select>
 						</div>
 					</div>
-					<div class="setting">
-						<div class="settingHalfWidthLeft">
+					<div class="setting" data-dependent="animationsIn">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Timing function</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<select id="chatAnimationInTimingFunction">
+						<div class="settingCell">
+							<select id="animationsInTimingFunc">
 								<option value="Linear">Linear</option>
 								<option value="Ease">Ease</option>
 								<option value="EaseIn">EaseIn</option>
@@ -701,41 +699,139 @@
 						</div>
 					</div>
 					<hr/>
-					<div class="setting">
-						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Message "out" animation</span>
-						</div>
-						<div class="settingHalfWidthRight">
-							<select id="chatAnimationOutName">
-								<option value="blurOutKF">Blur Out</option>
-								<option value="fadeOutKF">Fade Out</option>
-								<option value="floatOutKF">Float Out</option>
-								<option value="magnifyOutKF">Magnify Out</option>
-								<option value="rotateOutKF">Rotate Out</option>
-								<option value="slideOutBottom_BlurKF">Scale Out (Top) (Blur)</option>
-								<option value="slideOutBottomKF">Scale Out (Top)</option>
-								<option value="shearOutKF">Shear Out (Left)</option>
-								<option selected value="slideOutLeftKF">Slide Out (Left)</option>
-								<option value="slideOutRightKF">Slide Out (Right)</option>
-								<option value="squishOutKF">Squish Out</option>
-								<option value="zoomOutKF">Zoom Out</option>
-							</select>
+					<div class="setting" data-dependent="animationsIn">
+						<div class="settingCell smol">
+							Timing functions (Bézier curve only) are from <a href="https://easings.net">Easing Functions Cheat Sheet</a>
 						</div>
 					</div>
-					<div class="setting" data-dependent="animations">
-						<div class="settingHalfWidthLeft">
+					<hr/>
+					<div class="setting" data-dependent="animationsIn">
+						<div class="settingCell settingOnlyText">
+							<p>(The first field is the starting point of the animation, and the last field is the ending point. These will fill from the beginning point to the end point and remain at the end point until the "out" animation triggers.)</p>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting" data-dependent="animationsIn">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Opacity</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="messageInOpacityStart" min="0" max="100" step="1" value="0"/>%<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="messageInOpacityEnd" min="0" max="100" step="1" value="100"/>%
+						</div>
+					</div>
+					<div class="setting" data-dependent="animationsIn">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Blur amount</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="messageInBlurStart" min="0" max="50" step="1" value="4"/>px<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="messageInBlurEnd" min="0" max="50" step="1" value="0"/>px
+						</div>
+					</div>
+					<hr/>
+					<div class="setting" data-dependent="animationsIn">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Transform</span>
+						</div>
+						<div class="settingCell forceColumn">
+							<div>
+								X: <input type="number" id="messageInXTransformStart" min="-999" max="999" step="1" value="0"/>vw<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="messageInXTransformEnd" min="-999" max="999" step="1" value="0"/>vw
+							</div>
+							<div>
+								Y: <input type="number" id="messageInYTransformStart" min="-999" max="999" step="1" value="3"/>vh<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="messageInYTransformEnd" min="-999" max="999" step="1" value="0"/>vh
+							</div>
+						</div>
+					</div>
+					<div class="setting" data-dependent="animationsIn">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Scaling</span>
+						</div>
+						<div class="settingCell forceColumn">
+							<div>
+								X: <input type="number" id="messageInScaleXStart" min="0" max="500" step="1" value="90"/>%<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="messageInScaleXEnd" min="0" max="500" step="1" value="100"/>%
+							</div>
+							<div>
+								Y: <input type="number" id="messageInScaleYStart" min="0" max="500" step="1" value="90"/>%<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="messageInScaleYEnd" min="0" max="500" step="1" value="100"/>%
+							</div>
+						</div>
+					</div>
+					<div class="setting" data-dependent="animationsIn">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Skew</span>
+						</div>
+						<div class="settingCell forceColumn">
+							<div>
+								X: <input type="number" id="messageInSkewXStart" min="-360" max="360" step="1" value="0"/>deg<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="messageInSkewXEnd" min="-360" max="360" step="1" value="0"/>deg
+							</div>
+							<div>
+								Y: <input type="number" id="messageInSkewYStart" min="-360" max="360" step="1" value="0"/>deg<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="messageInSkewYEnd" min="-360" max="360" step="1" value="0"/>deg
+							</div>
+						</div>
+					</div>
+					<div class="setting" data-dependent="animationsIn">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Rotation</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="messageInRotateStart" min="-360" max="360" step="1" value="0"/>deg<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="messageInRotateEnd" min="-360" max="360" step="1" value="0"/>deg
+						</div>
+					</div>
+					<hr/>
+					<div class="setting" data-dependent="animationsIn">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Brightness</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="messageInBrightnessStart" min="-500" max="500" step="1" value="100"/>%<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="messageInBrightnessEnd" min="-500" max="500" step="1" value="100"/>%
+						</div>
+					</div>
+					<div class="setting" data-dependent="animationsIn">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Contrast</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="messageInContrastStart" min="-500" max="500" step="1" value="100"/>%<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="messageInContrastEnd" min="-500" max="500" step="1" value="100"/>%
+						</div>
+					</div>
+					<hr/>
+					<div class="setting" data-dependent="animationsIn">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Hue shift</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="messageInHueRotateStart" min="-360" max="360" step="1" value="0"/>deg<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="messageInHueRotateEnd" min="-360" max="360" step="1" value="0"/>deg
+						</div>
+					</div>
+					<div class="setting" data-dependent="animationsIn">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Saturation</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="messageInSaturateStart" min="0" max="500" step="1" value="100"/>%<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="messageInSaturateEnd" min="0" max="500" step="1" value="100"/>%
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Out Animations</h1>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="chatAnimationsOut" type="checkbox" data-dependent="animationsOut"/> <span class="settingInfo">Enable animations for decaying messages</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting" data-dependent="animationsOut">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Duration</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatAnimationsOutDuration" min="0.01" max="5" step="0.01" value="0.75"/> seconds
+						<div class="settingCell">
+							<input type="number" id="animationsOutDuration" min="0.01" max="5" step="0.01" value="0.75"/>seconds
 						</div>
 					</div>
-					<div class="setting">
-						<div class="settingHalfWidthLeft">
+					<div class="setting" data-dependent="animationsOut">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Origin point</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<select id="chatAnimationOutOriginPoint">
+						<div class="settingCell">
+							<select id="animationsOutOriginPoint">
 								<option value="left top">Top-left</option>
 								<option value="center top">Top-middle</option>
 								<option value="right top">Top-right</option>
@@ -748,12 +844,12 @@
 							</select>
 						</div>
 					</div>
-					<div class="setting">
-						<div class="settingHalfWidthLeft">
+					<div class="setting" data-dependent="animationsOut">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Timing function</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<select id="chatAnimationOutTimingFunction">
+						<div class="settingCell">
+							<select id="animationsOutTimingFunc">
 								<option value="Linear">Linear</option>
 								<option value="Ease">Ease</option>
 								<option value="EaseIn">EaseIn</option>
@@ -787,110 +883,247 @@
 						</div>
 					</div>
 					<hr/>
-					<div class="setting">
-						<div class="settingFullWidth smol">
+					<div class="setting" data-dependent="animationsOut">
+						<div class="settingCell smol">
 							Timing functions (Bézier curve only) are from <a href="https://easings.net">Easing Functions Cheat Sheet</a>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting" data-dependent="animationsOut">
+						<div class="settingCell settingOnlyText">
+							<p>(The first field is the starting point of the animation, and the last field is the ending point. These will fill from the beginning point to the end point, and the element will be removed once the end point is reached.)</p>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting" data-dependent="animationsOut">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Opacity</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="messageOutOpacityStart" min="0" max="100" step="1" value="100"/>%<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="messageOutOpacityEnd" min="0" max="100" step="1" value="0"/>%
+						</div>
+					</div>
+					<div class="setting" data-dependent="animationsOut">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Blur amount</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="messageOutBlurStart" min="0" max="50" step="1" value="0"/>px<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="messageOutBlurEnd" min="0" max="50" step="1" value="0"/>px
+						</div>
+					</div>
+					<hr/>
+					<div class="setting" data-dependent="animationsOut">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Transform</span>
+						</div>
+						<div class="settingCell forceColumn">
+							<div>
+								X: <input type="number" id="messageOutXTransformStart" min="-999" max="999" step="1" value="0"/>vw<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="messageOutXTransformEnd" min="-999" max="999" step="1" value="-100"/>vw
+							</div>
+							<div>
+								Y: <input type="number" id="messageOutYTransformStart" min="-999" max="999" step="1" value="0"/>vh<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="messageOutYTransformEnd" min="-999" max="999" step="1" value="0"/>vh
+							</div>
+						</div>
+					</div>
+					<div class="setting" data-dependent="animationsOut">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Scaling</span>
+						</div>
+						<div class="settingCell forceColumn">
+							<div>
+								X: <input type="number" id="messageOutScaleXStart" min="0" max="500" step="1" value="100"/>%<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="messageOutScaleXEnd" min="0" max="500" step="1" value="100"/>%
+							</div>
+							<div>
+								Y: <input type="number" id="messageOutScaleYStart" min="0" max="500" step="1" value="100"/>%<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="messageOutScaleYEnd" min="0" max="500" step="1" value="100"/>%
+							</div>
+						</div>
+					</div>
+					<div class="setting" data-dependent="animationsOut">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Skew</span>
+						</div>
+						<div class="settingCell forceColumn">
+							<div>
+								X: <input type="number" id="messageOutSkewXStart" min="-360" max="360" step="1" value="0"/>deg<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="messageOutSkewXEnd" min="-360" max="360" step="1" value="0"/>deg
+							</div>
+							<div>
+								Y: <input type="number" id="messageOutSkewYStart" min="-360" max="360" step="1" value="0"/>deg<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="messageOutSkewYEnd" min="-360" max="360" step="1" value="0"/>deg
+							</div>
+						</div>
+					</div>
+					<div class="setting" data-dependent="animationsOut">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Rotation</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="messageOutRotateStart" min="-360" max="360" step="1" value="0"/>deg<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="messageOutRotateEnd" min="-360" max="360" step="1" value="0"/>deg
+						</div>
+					</div>
+					<hr/>
+					<div class="setting" data-dependent="animationsOut">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Brightness</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="messageOutBrightnessStart" min="-500" max="500" step="1" value="100"/>%<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="messageOutBrightnessEnd" min="-500" max="500" step="1" value="100"/>%
+						</div>
+					</div>
+					<div class="setting" data-dependent="animationsOut">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Contrast</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="messageOutContrastStart" min="-500" max="500" step="1" value="100"/>%<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="messageOutContrastEnd" min="-500" max="500" step="1" value="100"/>%
+						</div>
+					</div>
+					<hr/>
+					<div class="setting" data-dependent="animationsOut">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Hue shift</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="messageOutHueRotateStart" min="-360" max="360" step="1" value="0"/>deg<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="messageOutHueRotateEnd" min="-360" max="360" step="1" value="0"/>deg
+						</div>
+					</div>
+					<div class="setting" data-dependent="animationsOut">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Saturation</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="messageOutSaturateStart" min="0" max="500" step="1" value="100"/>%<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="messageOutSaturateEnd" min="0" max="500" step="1" value="100"/>%
 						</div>
 					</div>
 				</div>
 				<div class="part">
 					<h1>History</h1>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Start effects after</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatHistoryStartAfter" min="0" max="100" step="1" value="3"/> message blocks
+						<div class="settingCell">
+							<input type="number" id="chatHistoryStartAfter" min="0" max="100" step="1" value="3"/>message blocks
 						</div>
 					</div>
 					<hr/>
 					<div class="setting">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="chatFadeHistory" type="checkbox" data-dependent="fadeHistory"/> <span class="settingInfo">Fade out chat history</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="fadeHistory">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Fade out per block</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatFadeHistoryStep" min="0" max="100" step="0.25" value="7"/> %
+						<div class="settingCell">
+							<input type="number" id="chatFadeHistoryStep" min="0" max="100" step="0.25" value="7"/>%
 						</div>
 					</div>
 					<hr/>
 					<div class="setting">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input id="chatBlurHistory" type="checkbox" data-dependent="blurHistory"/> <span class="settingInfo">Blur chat history</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="blurHistory">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Blur amount per block</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatBlurHistoryStep" min="0" max="10" step="0.1" value="0.2"/> px
+						<div class="settingCell">
+							<input type="number" id="chatBlurHistoryStep" min="0" max="10" step="0.1" value="0.2"/>px
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="chatScaleHistory" type="checkbox" data-dependent="scaleHistory"/> <span class="settingInfo">Scale chat history</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="scaleHistory">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Scaling amount per block</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatScaleHistoryAmount" min="-25" max="25" step="0.5" value="-3"/>%
+						</div>
+					</div>
+					<div class="setting" data-dependent="scaleHistory">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Origin point</span>
+						</div>
+						<div class="settingCell">
+							<select id="chatHistoryOriginPoint">
+								<option value="left top">Top-left</option>
+								<option value="center top">Top-middle</option>
+								<option value="right top">Top-right</option>
+								<option value="left center">Center-left</option>
+								<option selected value="center center">Center-middle</option>
+								<option value="right center">Center-right</option>
+								<option value="left bottom">Bottom-left</option>
+								<option value="center bottom">Bottom-middle</option>
+								<option value="right bottom">Bottom-right</option>
+							</select>
 						</div>
 					</div>
 				</div>
 				<div class="part">
 					<h1>Filters</h1>
 					<div class="setting">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="chatShadows" type="checkbox" data-dependent="overlayShadows"/> <span class="settingInfo">Draw shadows underneath overlay content</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="overlayShadows">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Color</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="overlayShadowColor" type="text" data-coloris value="#000000"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="overlayShadows">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">X offset</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="overlayShadowXOffset" min="-32" max="32" step="0.25" value="0"/> px
+						<div class="settingCell">
+							<input type="number" id="overlayShadowXOffset" min="-32" max="32" step="0.25" value="0"/>px
 						</div>
 					</div>
 					<div class="setting" data-dependent="overlayShadows">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Y offset</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="overlayShadowYOffset" min="-32" max="32" step="0.25" value="1"/> px
+						<div class="settingCell">
+							<input type="number" id="overlayShadowYOffset" min="-32" max="32" step="0.25" value="1"/>px
 						</div>
 					</div>
 					<div class="setting" data-dependent="overlayShadows">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Blur amount</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="overlayShadowBlurRadius" min="0" max="32" step="0.25" value="2"/> px
+						<div class="settingCell">
+							<input type="number" id="overlayShadowBlurRadius" min="0" max="32" step="0.25" value="2"/>px
 						</div>
 					</div>
 					<hr/>
 					<div class="setting">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="chatOutlinesFilter" type="checkbox" data-dependent="overlayOutlines"/> <span class="settingInfo">Draw outlines underneath overlay content</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="overlayOutlines">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Color</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="overlayOutlineColor" type="text" data-coloris value="#00000073"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="overlayOutlines">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Size</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="overlayOutlineSize" min="0" max="3" step="1" value="1"/> px
+						<div class="settingCell">
+							<input type="number" id="overlayOutlineSize" min="0" max="3" step="1" value="1"/>px
 						</div>
 					</div>
 				</div>
@@ -899,40 +1132,48 @@
 				<div class="part">
 					<h1>Cleanliness</h1>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
-							<span class="settingInfo">Remove messages after</span>
+						<div class="settingCellLabel">
+							<span class="settingInfo">Messages decay after</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatRemoveMessageDelay" min="0" max="900" step="0.5" value="45"/> seconds
+						<div class="settingCell">
+							<input type="number" id="chatRemoveMessageDelay" min="0" max="999" step="0.5" value="45"/>seconds
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
+							<span class="settingInfo">System messages decay after</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatRemoveSystemMessageDelay" min="0" max="999" step="0.5" value="10"/>seconds
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Limit rendered messages</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatMessagesHardCap" min="0" max="9999" step="1" value="200"/> messages
+						<div class="settingCell">
+							<input type="number" id="chatMessagesHardCap" min="0" max="9999" step="1" value="200"/>messages
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Hide accounts<br/><span style="font-size: var(--font-size-smol); opacity: 0.67;">(One account per line)</span></span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<textarea id="chatHideAccounts"></textarea>
 						</div>
 					</div>
 					<hr/>
 					<div class="setting">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="chatHideCommands" type="checkbox" data-dependent="hideCommands"/> <span class="settingInfo">Hide messages associated with custom chat commands</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="hideCommands">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Command character</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="chatCommandCharacter" type="text" value="!"/>
 						</div>
 					</div>
@@ -940,7 +1181,7 @@
 				<div class="part">
 					<h1>Messages</h1>
 					<div class="setting">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="chatParseMarkdown" type="checkbox"/> <span class="settingInfo">Allow inline Markdown formatting</span>
 						</div>
 					</div>
@@ -948,125 +1189,125 @@
 				<div class="part">
 					<h1>Timestamps</h1>
 					<div class="setting">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input id="enableMessageTimestamps" type="checkbox" data-dependent="timestamps"/> <span class="settingInfo">Add timestamps before message text</span>
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="hideTimestampsOnBigEmotes" type="checkbox"/> <span class="settingInfo">Hide timestamps if message only contains emotes</span>
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input id="timestampTracksUptime" type="checkbox"/> <span class="settingInfo">Track stream uptime rather than current local time</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="timestamps">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Format</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="timestampFormat" type="text" value="H:mm:ss"/>
 						</div>
 					</div>
 					<hr/>
 					<div class="setting">
-						<div class="settingFullWidth smol" style="line-height: 20px;">
+						<div class="settingCell smol" style="line-height: 20px;">
 							Local time formatting available: <a href="https://moment.github.io/luxon/#/formatting?id=table-of-tokens">here</a><br/>
 							Duration time formatting available: <a href="https://moment.github.io/luxon/api-docs/index.html#durationtoformat">here</a>
 						</div>
 					</div>
 					<hr/>
 					<div class="setting" data-dependent="timestamps">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Color</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="timestampColor" type="text" data-coloris value="#808080"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="timestamps">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="timestampUsesGradient" type="checkbox"/> <span class="settingInfo">Apply a gradient to timestamps</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="timestamps">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Gradient color</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="timestampColorSecondary" type="text" data-coloris value="#FFFFFF"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="timestamps">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Gradient angle</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="timestampGradientAngle" min="0" max="360" step="1" value="170"/> deg
+						<div class="settingCell">
+							<input type="number" id="timestampGradientAngle" min="0" max="360" step="1" value="170"/>deg
 						</div>
 					</div>
 					<hr/>
 					<div class="setting" data-dependent="timestamps">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Font</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="timestampFont" type="text" value="Manrope"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="timestamps">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Size</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="timestampFontSize" min="4" max="64" step="0.25" value="12"/> pt
+						<div class="settingCell">
+							<input type="number" id="timestampFontSize" min="4" max="64" step="0.25" value="12"/>pt
 						</div>
 					</div>
 					<div class="setting" data-dependent="timestamps">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Weight</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input type="number" id="timestampFontWeight" min="100" max="900" step="25" value="900"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="timestamps">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Additional weight</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="timestampFontWeightExtra" min="0" max="8" step="0.1" value="0.5"/> px
+						<div class="settingCell">
+							<input type="number" id="timestampFontWeightExtra" min="0" max="8" step="0.1" value="0.5"/>px
 						</div>
 					</div>
 					<div class="setting" data-dependent="timestamps">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Letter spacing</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="timestampLetterSpacing" min="-12" max="12" step="0.2" value="0"/> px
+						<div class="settingCell">
+							<input type="number" id="timestampLetterSpacing" min="-12" max="12" step="0.2" value="0"/>px
 						</div>
 					</div>
 					<hr/>
 					<div class="setting" data-dependent="timestamps">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Horizontal margin</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="timestampPadding" min="-50" max="50" step="0.5" value="10"/> px
+						<div class="settingCell">
+							<input type="number" id="timestampPadding" min="-50" max="50" step="0.5" value="10"/>px
 						</div>
 					</div>					
 				</div>
 				<div class="part">
 					<h1>Debug</h1>
 					<div class="setting">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input id="debugRawMessages" type="checkbox"/> <span class="settingInfo">Log raw Twitch IRC messages to the DevTools console</span>
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input id="debugFreezeChat" type="checkbox"/> <span class="settingInfo">Don't render new chat messages</span>
 						</div>
 					</div>
@@ -1075,15 +1316,15 @@
 			<div class="section" data-content="flags">
 				<div class="part">
 					<div class="setting">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="enableFlags" type="checkbox" data-dependent="flags"/> <span class="settingInfo">Enable identity flags</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="flags">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Maximum flags to show</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input type="number" id="maxFlagCount" min="1" max="16" step="1" value="6"/>
 						</div>
 					</div>
@@ -1091,30 +1332,30 @@
 				<div class="part">
 					<h1>Appearance</h1>
 					<div class="setting" data-dependent="flags">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Border radius</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="flagsBorderRadius" min="0" max="64" step="0.25" value="4"/> px
+						<div class="settingCell">
+							<input type="number" id="flagsBorderRadius" min="0" max="64" step="0.25" value="4"/>px
 						</div>
 					</div>
 				</div>
 				<div class="part">
 					<h1>Layout</h1>
 					<div class="setting" data-dependent="flags">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Size</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="flagsSize" min="0" max="64" step="1" value="22"/> px
+						<div class="settingCell">
+							<input type="number" id="flagsSize" min="0" max="64" step="1" value="22"/>px
 						</div>
 					</div>
 					<div class="setting" data-dependent="flags">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Extra spacing</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="flagsSpacing" min="-32" max="32" step="1" value="2"/> px
+						<div class="settingCell">
+							<input type="number" id="flagsSpacing" min="-32" max="32" step="1" value="2"/>px
 						</div>
 					</div>
 				</div>
@@ -1122,7 +1363,7 @@
 			<div class="section" data-content="badges">
 				<div class="part">
 					<div class="setting">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="enableTwitchBadges" type="checkbox" data-dependent="twitchBadges"/> <span class="settingInfo">Enable Twitch badges</span>
 						</div>
 					</div>
@@ -1130,15 +1371,15 @@
 				<div class="part">
 					<h1>Appearance</h1>
 					<div class="setting" data-dependent="twitchBadges">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Border radius</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="badgeBorderRadius" min="0" max="64" step="0.25" value="4"/> px
+						<div class="settingCell">
+							<input type="number" id="badgeBorderRadius" min="0" max="64" step="0.25" value="4"/>px
 						</div>
 					</div>
 					<div class="setting" data-dependent="twitchBadges">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input id="applyBorderRadiusToSubBadges" type="checkbox"/> <span class="settingInfo">Apply border radius setting to subscriber badges</span>
 						</div>
 					</div>
@@ -1146,106 +1387,106 @@
 				<div class="part">
 					<h1>Layout</h1>
 					<div class="setting" data-dependent="twitchBadges">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Size</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="badgeSize" min="0" max="64" step="1" value="28"/> px
+						<div class="settingCell">
+							<input type="number" id="badgeSize" min="0" max="64" step="1" value="28"/>px
 						</div>
 					</div>
 					<div class="setting" data-dependent="twitchBadges">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Extra spacing</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="badgeSpacing" min="-32" max="32" step="1" value="2"/> px
+						<div class="settingCell">
+							<input type="number" id="badgeSpacing" min="-32" max="32" step="1" value="2"/>px
 						</div>
 					</div>
 				</div>
 				<div class="part">
 					<h1>Display</h1>
 					<div class="setting" data-dependent="twitchBadges">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="enableTwitchRoleBadges" type="checkbox"/> <span class="settingInfo">Role badges</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="twitchBadges">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="enableTwitchGameBadges" type="checkbox"/> <span class="settingInfo">Game-related badges</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="twitchBadges">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="enableTwitchPartnerBadges" type="checkbox"/> <span class="settingInfo">Partner/Ambassador badges</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="twitchBadges">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="enableTwitchBitsBadges" type="checkbox"/> <span class="settingInfo">Cheering/bits badges</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="twitchBadges">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="enableTwitchSubGiftsBadges" type="checkbox"/> <span class="settingInfo">Sub gifter badges</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="twitchBadges">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="enableTwitchLeaderboardBadges" type="checkbox"/> <span class="settingInfo">Leaderboard-related badges</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="twitchBadges">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="enableTwitchFounderBadges" type="checkbox"/> <span class="settingInfo">Channel Founder badges</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="twitchBadges">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="enableTwitchStaffBadges" type="checkbox"/> <span class="settingInfo">Staff badges</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="twitchBadges">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input id="enableTwitchMomentsBadges" type="checkbox"/> <span class="settingInfo">Moments badges</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="twitchBadges">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input id="enableTwitchStatusBadges" type="checkbox"/> <span class="settingInfo">Status (no video/no audio) badges</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="twitchBadges">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="enableTwitchPredictionsBadges" type="checkbox"/> <span class="settingInfo">Predictions-related badges</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="twitchBadges">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="enableTwitchPrimeGamingBadges" type="checkbox"/> <span class="settingInfo">Prime Gaming badge</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="twitchBadges">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="enableTwitchTurboBadges" type="checkbox"/> <span class="settingInfo">Twitch Turbo badge</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="twitchBadges">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="enableTwitchSubscriberBadges" type="checkbox"/> <span class="settingInfo">Channel Subscriber badges</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="twitchBadges">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="enableTwitchConBadges" type="checkbox"/> <span class="settingInfo">TwitchCon badges</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="twitchBadges">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="enableTwitchCharityBadges" type="checkbox"/> <span class="settingInfo">Charity badges</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="twitchBadges">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="enableTwitchHypeTrainBadges" type="checkbox"/> <span class="settingInfo">Hype Train badges</span>
 						</div>
 					</div>
@@ -1254,12 +1495,12 @@
 			<div class="section" data-content="avatars">
 				<div class="part">
 					<div class="setting">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="enableAvatars" type="checkbox" data-dependent="avatars"/> <span class="settingInfo">Display avatars</span>
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="hideDefaultAvatars" type="checkbox" data-dependent="avatars"/> <span class="settingInfo">Hide default avatars regardless of permission settings</span>
 						</div>
 					</div>
@@ -1268,18 +1509,18 @@
 				<div class="part">
 					<h1>Appearance</h1>
 					<div class="setting" data-dependent="avatars">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Size</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="avatarSize" min="16" max="80" step="0.5" value="34"/> px
+						<div class="settingCell">
+							<input type="number" id="avatarSize" min="16" max="80" step="0.5" value="34"/>px
 						</div>
 					</div>
 					<div class="setting" data-dependent="avatars">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Shape</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<select id="avatarShape">
 								<option value="circle">Circle</option>
 								<option selected value="squircle">Squircle</option>
@@ -1292,69 +1533,69 @@
 					<h1>Permissions</h1>
 					<p>Allow avatar display for:</p>
 					<div class="setting" data-dependent="avatars">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input id="avatarAllowedEveryone" type="checkbox"/> <span class="settingInfo">Everyone</span>
 						</div>
 					</div>
 					<hr/>
 					<div class="setting" data-dependent="avatars">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="avatarAllowedModerators" type="checkbox"/> <span class="settingInfo">Moderators</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="avatars">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="avatarAllowedVIPs" type="checkbox"/> <span class="settingInfo">VIPs</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="avatars">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="avatarAllowedArtist" type="checkbox"/> <span class="settingInfo">Channel artists</span>
 						</div>
 					</div>
 					<hr/>
 					<div class="setting" data-dependent="avatars">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="avatarAllowedSubscribers" type="checkbox"/> <span class="settingInfo">Channel subscribers</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="avatars">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="avatarAllowedTurbo" type="checkbox"/> <span class="settingInfo">Twitch Turbo subscribers</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="avatars">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input id="avatarAllowedPrime" type="checkbox"/> <span class="settingInfo">Prime Gaming subscribers</span>
 						</div>
 					</div>
 					<hr/>
 					<div class="setting" data-dependent="avatars">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input id="avatarAllowedAffiliates" type="checkbox"/> <span class="settingInfo">Twitch affiliates</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="avatars">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input id="avatarAllowedPartner" type="checkbox"/> <span class="settingInfo">Twitch partners</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="avatars">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input id="avatarAllowedStaff" type="checkbox"/> <span class="settingInfo">Twitch staff</span>
 						</div>
 					</div>
 					<hr/>
 					<div class="setting" data-dependent="avatars">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="avatarAllowedIncludeBits" type="checkbox"/> <span class="settingInfo">Bit cheerers</span>
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Cheer threshold</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<select id="avatarAllowedBitsMinimum">
 								<option value="1">1 bit</option>
 								<option value="100">100 bits</option>
@@ -1370,15 +1611,15 @@
 					</div>
 					<hr/>
 					<div class="setting" data-dependent="avatars">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="avatarAllowedIncludeGifts" type="checkbox"/> <span class="settingInfo">Sub gifters</span>
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Gift threshold</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<select id="avatarAllowedGiftsMinimum">
 								<option value="1">1 sub</option>
 								<option selected value="5">5 subs</option>
@@ -1397,7 +1638,7 @@
 			<div class="section" data-content="pronouns">
 				<div class="part">
 					<div class="setting">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="enablePronouns" type="checkbox" data-dependent="pronouns"/> <span class="settingInfo">Display pronouns</span>
 						</div>
 					</div>
@@ -1405,94 +1646,94 @@
 				<div class="part">
 					<h1>Appearance</h1>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Color</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="pronounsColor" type="text" data-coloris value="#808080"/>
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input id="pronounsReflectUserColor" type="checkbox"/> <span class="settingInfo">Color fades into the chatter's own color</span>
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Fading amount</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="pronounsUserColorAmount" min="0" max="100" step="0.5" value="50"/> %
+						<div class="settingCell">
+							<input type="number" id="pronounsUserColorAmount" min="0" max="100" step="0.5" value="50"/>%
 						</div>
 					</div>
 					<hr/>
 					<div class="setting">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="pronounsUsesGradient" type="checkbox" data-dependent="gradientPronouns"/> <span class="settingInfo">Apply a gradient to pronouns</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="gradientPronouns">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Gradient color</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="pronounsColorSecondary" type="text" data-coloris value="#FFFFFF"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="gradientPronouns">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Gradient angle</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="pronounsGradientAngle" min="0" max="360" step="1" value="170"/> deg
+						<div class="settingCell">
+							<input type="number" id="pronounsGradientAngle" min="0" max="360" step="1" value="170"/>deg
 						</div>
 					</div>
 					<hr/>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Font</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="pronounsFont" type="text" value="Manrope"/>
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Size</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="pronounsFontSize" min="4" max="64" step="0.25" value="12"/> pt
+						<div class="settingCell">
+							<input type="number" id="pronounsFontSize" min="4" max="64" step="0.25" value="12"/>pt
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Weight</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input type="number" id="pronounsFontWeight" min="100" max="900" step="25" value="900"/>
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Additional weight</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="pronounsFontWeightExtra" min="0" max="8" step="0.1" value="0.5"/> px
+						<div class="settingCell">
+							<input type="number" id="pronounsFontWeightExtra" min="0" max="8" step="0.1" value="0.5"/>px
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Letter spacing</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="pronounsLetterSpacing" min="-12" max="12" step="0.2" value="0"/> px
+						<div class="settingCell">
+							<input type="number" id="pronounsLetterSpacing" min="-12" max="12" step="0.2" value="0"/>px
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Transform</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<select id="pronounsTransform">
 								<option value="capitalize">Capitalize</option>
 								<option value="lowercase">Lowercase</option>
@@ -1506,130 +1747,130 @@
 					<h1>Mapping</h1>
 					<p>Display fetched pronouns as:</p>
 					<div class="setting" data-dependent="pronouns">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">aeaer</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="pronounsAeAer" type="text" value="Ae / Aer"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="pronouns">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">any</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="pronounsAny" type="text" value="Any"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="pronouns">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">eem</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="pronounsEEm" type="text" value="E / Em"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="pronouns">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">faefaer</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="pronounsFaeFaer" type="text" value="Fae / Faer"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="pronouns">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">hehim</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="pronounsHeHim" type="text" value="He / Him"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="pronouns">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">heshe</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="pronounsHeShe" type="text" value="He / She"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="pronouns">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">hethem</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="pronounsHeThem" type="text" value="He / They"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="pronouns">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">itits</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="pronounsItIts" type="text" value="It / Its"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="pronouns">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">other</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="pronounsOther" type="text" value="Other"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="pronouns">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">perper</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="pronounsPerPer" type="text" value="Per / Per"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="pronouns">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">sheher</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="pronounsSheHer" type="text" value="She / Her"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="pronouns">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">shethem</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="pronounsSheThem" type="text" value="She / They"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="pronouns">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">theythem</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="pronounsTheyThem" type="text" value="They / Them"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="pronouns">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">vever</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="pronounsVeVer" type="text" value="Ve / Ver"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="pronouns">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">xexem</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="pronounsXeXem" type="text" value="Xe / Xem"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="pronouns">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">ziehir</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="pronounsZieHir" type="text" value="Zie / Hir"/>
 						</div>
 					</div>
@@ -1638,28 +1879,28 @@
 			<div class="section" data-content="7tv">
 				<div class="part">
 					<div class="setting">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="enable7TV" type="checkbox" data-dependent="7tv"/> <span class="settingInfo">Enable 7TV integration</span>
 						</div>
 					</div>
 					<hr/>
 					<div class="setting" data-dependent="7tv">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="enable7TVBadges" type="checkbox"/> <span class="settingInfo">Enable Subscriber badges</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="7tv">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="enable7TVGlobalEmotes" type="checkbox"/> <span class="settingInfo">Enable global emotes</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="7tv">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="enable7TVChannelEmotes" type="checkbox"/> <span class="settingInfo">Enable channel emotes</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="7tv">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="enable7TVUserPaints" type="checkbox"/> <span class="settingInfo">Enable username paints</span>
 						</div>
 					</div>
@@ -1668,23 +1909,23 @@
 			<div class="section" data-content="bttv">
 				<div class="part">
 					<div class="setting">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="enableBTTV" type="checkbox" data-dependent="bttv"/> <span class="settingInfo">Enable BetterTTV integration</span>
 						</div>
 					</div>
 					<hr/>
 					<div class="setting" data-dependent="bttv">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="enableBTTVBadges" type="checkbox"/> <span class="settingInfo">Enable Pro badges</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="bttv">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="enableBTTVGlobalEmotes" type="checkbox"/> <span class="settingInfo">Enable global emotes</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="bttv">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="enableBTTVChannelEmotes" type="checkbox"/> <span class="settingInfo">Enable channel emotes</span>
 						</div>
 					</div>
@@ -1693,23 +1934,23 @@
 			<div class="section" data-content="ffz">
 				<div class="part">
 					<div class="setting">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="enableFFZ" type="checkbox" data-dependent="ffz"/> <span class="settingInfo">Enable FrankerFaceZ integration</span>
 						</div>
 					</div>
 					<hr/>
 					<div class="setting" data-dependent="ffz">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="enableFFZBadges" type="checkbox"/> <span class="settingInfo">Enable Subwoofer/Supporter badges</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="ffz">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="enableFFZGlobalEmotes" type="checkbox"/> <span class="settingInfo">Enable global emotes</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="ffz">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="enableFFZChannelEmotes" type="checkbox"/> <span class="settingInfo">Enable channel emotes</span>
 						</div>
 					</div>
@@ -1719,10 +1960,10 @@
 				<div class="part">
 					<h1>Twitch Connection</h1>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Twitch channel to use</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="twitchChannel" type="text" value=""/>
 						</div>
 					</div>
@@ -1730,24 +1971,24 @@
 				<div class="part">
 					<h1>Twitch API Tokens</h1>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">App client ID</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="twitchClientID" type="text" value=""/>
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">App client secret</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="twitchClientSecret" type="password" value=""/>
 						</div>
 					</div>
 					<hr/>
 					<div class="setting">
-						<div class="settingFullWidth smol">
+						<div class="settingCell smol">
 							These tokens are available in your <a href="https://dev.twitch.tv/console/apps">Twitch Developer Console</a>
 						</div>
 					</div>
@@ -1755,18 +1996,18 @@
 				<div class="part">
 					<h1>External Service Tokens</h1>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Streamlabs socket token</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="streamlabsSocketToken" type="password" value=""/>
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">StreamElements JWT token</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="streamelementsJWTToken" type="password" value=""/>
 						</div>
 					</div>
@@ -1774,37 +2015,37 @@
 				<div class="part">
 					<h1>OBS Websocket Connection</h1>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">IP address</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="obs_ip" type="text" value="127.0.0.1"/>
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Port</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input type="number" id="obs_port" min="1" max="65536" step="1" value="4455"/>
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input id="obs_usePassword" type="checkbox" data-dependent="obsPassword"/> <span class="settingInfo">Authenticate using a password</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="obsPassword">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Password</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="obs_password" type="password" value=""/>
 						</div>
 					</div>
 					<hr/>
 					<div class="setting">
-						<div class="settingFullWidth smol">
+						<div class="settingCell smol">
 							Some extra overlays require connection to OBS; this is not necessary for the chat overlay to function.
 						</div>
 					</div>
@@ -1814,14 +2055,6 @@
 				<div class="part">
 					<h1>TheBlackParrot's Chat Overlay</h1>
 					<div class="setting settingOnlyText">
-						<div class="settingFullWidth" style="text-align: center; margin-bottom: 4px;">
-							<tt>r<span id="revision"></span> -- <span id="revisionDate"></span></tt>
-						</div>
-						<div class="settingFullWidth" style="text-align: center; margin-top: 4px;" id="updateString">
-						</div>
-					</div>
-					<hr/>
-					<div class="setting settingOnlyText">
 						<p>This is the configurator for my overlays, make sure this and any other part of the overlay suite is loaded in OBS!</p>
 						<p>If anything seems wrong or is malfunctioning, make sure you refresh the cache on all overlay sources (it's in the properties for each source).</p>
 						<p>Links to all public overlays and for more information on them are available at <a href="https://theblackparrot.me/overlays">https://theblackparrot.me/overlays/</a></p>
@@ -1830,43 +2063,43 @@
 				<div class="part">
 					<h1>Where to find me</h1>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<strong>Twitch</strong>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<tt>theblackparrot</tt>
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<strong>Telegram</strong>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<tt>@theblackparrot</tt>
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<strong>Discord</strong>
 						</div>
-						<div class="settingHalfWidthRight" style="line-height: var(--settings-text-line-height);">
+						<div class="settingCell" style="line-height: var(--settings-text-line-height); display: inline-block;">
 							<tt>@theblackparrot</tt><br/>
 							<tt>discord.gg/PS95E9sYhJ</tt>
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<strong>Github</strong>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<tt>TheBlackParrot</tt>
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<strong>Ko-fi</strong>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<tt>septilateral</tt>
 						</div>
 					</div>
@@ -1875,82 +2108,82 @@
 			<div class="section" data-content="emotes">
 				<div class="part">
 					<div class="setting">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="enableEmotes" type="checkbox"/> <span class="settingInfo">Enable chat emotes</span>
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="emotesParseToImage" type="checkbox"/> <span class="settingInfo">Convert unicode emoji into images</span>
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="chatShowCommonEmotes" type="checkbox"/> <span class="settingInfo">Enable common third-party emotes</span>
 						</div>
 					</div>
 					<hr/>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Border radius</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="emotesBorderRadius" min="0" max="64" step="1" value="0"/> px
+						<div class="settingCell">
+							<input type="number" id="emotesBorderRadius" min="0" max="64" step="1" value="0"/>px
 						</div>
 					</div>
 					<hr/>
 					<div class="setting">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="chatShowBigEmotes" type="checkbox" data-dependent="bigEmotes"/> <span class="settingInfo">Enlarge messages that contain only emotes</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="bigEmotes">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Max emotes to show</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input type="number" id="chatMaxBigEmotes" min="0" max="100" step="1" value="10"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="bigEmotes">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Enlarged emote size</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatBigEmoteSize" min="8" max="128" step="1" value="48"/> pt
+						<div class="settingCell">
+							<input type="number" id="chatBigEmoteSize" min="8" max="128" step="1" value="48"/>pt
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Horizontal spacing</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatBigEmoteMargin" min="0" max="64" step="1" value="0"/> px
+						<div class="settingCell">
+							<input type="number" id="chatBigEmoteMargin" min="0" max="64" step="1" value="0"/>px
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Vertical block margin</span>
 						</div>
-						<div class="settingHalfWidthRight">
-							<input type="number" id="chatBigEmoteMarginVertical" min="0" max="64" step="1" value="4"/> px
+						<div class="settingCell">
+							<input type="number" id="chatBigEmoteMarginVertical" min="0" max="64" step="1" value="4"/>px
 						</div>
 					</div>
 				</div>
 				<div class="part">
 					<h1>Cheermotes</h1>
 					<div class="setting">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="chatShowCheermotes" type="checkbox" data-dependent="cheermotes"/> <span class="settingInfo">Enable Cheermotes</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="cheermotes">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="chatShowCheermotesColor" type="checkbox"/> <span class="settingInfo">Color amount text associated with the Cheermote</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="cheermotes">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="chatShowCheermotesAnimated" type="checkbox"/> <span class="settingInfo">Use the animated versions of Cheermotes</span>
 						</div>
 					</div>
@@ -1960,12 +2193,12 @@
 				<div class="part">
 					<h1>General</h1>
 					<div class="setting">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="bsvodaudio_muteOnUnknown" type="checkbox"/> <span class="settingInfo">Mute on unflagged map hashes</span>
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="bsvodaudio_muteOnMenu" type="checkbox"/> <span class="settingInfo">Mute when returning to the menu</span>
 						</div>
 					</div>
@@ -1973,18 +2206,18 @@
 				<div class="part">
 					<h1>OBS Settings</h1>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Audio source to control</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="bsvodaudio_audioSource" type="text" value=""/>
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">VOD-only audio track</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input type="number" id="bsvodaudio_vodAudioTrack" min="1" max="6" step="1" value="2"/>
 						</div>
 					</div>
@@ -1992,18 +2225,18 @@
 				<div class="part">
 					<h1>BeatSaberPlus Connection</h1>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">IP address</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input id="bsplus_ip" type="text" value="127.0.0.1"/>
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Port</span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<input type="number" id="bsplus_port" min="1" max="65536" step="1" value="2947"/>
 						</div>
 					</div>
@@ -2011,21 +2244,105 @@
 				<div class="part">
 					<h1>Database</h1>
 					<div class="setting">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="bsvodaudio_syncRemoteDBs" type="checkbox" data-dependent="bsvodaudio_remoteSync"/> <span class="settingInfo">Use remote map hash databases</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="bsvodaudio_remoteSync">
-						<div class="settingHalfWidthLeft">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Remote database URLs<br/><span style="font-size: var(--font-size-smol); opacity: 0.67;">(One URL per line)<br/>(Must point to a .json file)</span></span>
 						</div>
-						<div class="settingHalfWidthRight">
+						<div class="settingCell">
 							<textarea id="bsvodaudio_remoteDBURLs"></textarea>
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingFullWidth">
+						<div class="settingCell">
 							<input checked id="bsvodaudio_muteOnConflict" type="checkbox" data-dependent="bsvodaudio_remoteSync"/> <span class="settingInfo">Mute on conflicting safe/unsafe flags</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section" data-content="sounds">
+				<div class="part">
+					<div class="setting">
+						<div class="settingCell">
+							<input id="sound_newMsg_Enabled" type="checkbox" data-dependent="newMsgSound"/> <span class="settingInfo">Play a sound on incoming chat messages</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="newMsgSound">
+						<div class="settingCell">
+							<input id="playSoundOnSystemMessages" type="checkbox"/> <span class="settingInfo">Include system/overlay messages</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="newMsgSound">
+						<div class="settingCell">
+							<input id="playSoundOnEmoteOnlyMessages" type="checkbox"/> <span class="settingInfo">Include emote-only messages</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting" data-dependent="newMsgSound">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Sound</span>
+						</div>
+						<div class="settingCell">
+							<select id="sound_newMsg_URL">
+								<option value="sounds/dodoo-1.ogg">Dodoo 1</option>
+								<option value="sounds/dodoo-2.ogg">Dodoo 2</option>
+								<option value="sounds/dodoo-3.ogg">Dodoo 3</option>
+								<option value="sounds/dodoo-4.ogg">Dodoo 4</option>
+								<option value="sounds/dodoo-noclick-1.ogg">Dodoo 1 (Soft)</option>
+								<option value="sounds/dodoo-noclick-2.ogg">Dodoo 2 (Soft)</option>
+								<option value="sounds/dodoo-noclick-3.ogg">Dodoo 3 (Soft)</option>
+								<option value="sounds/dodoo-noclick-4.ogg">Dodoo 4 (Soft)</option>
+								<option value="<jerma noises>">Jerma985 Teacher Noises</option>
+								<option value="sounds/notif-1.ogg">Notif 1</option>
+								<option value="sounds/notif-2.ogg">Notif 2</option>
+								<option value="sounds/woop-1.ogg">Woop 1</option>
+								<option value="sounds/woop-2.ogg">Woop 2</option>
+								<option value="sounds/woop-3.ogg">Woop 3</option>
+								<option selected value="sounds/woosh-1.ogg">Woosh 1</option>
+								<option value="sounds/woosh-2.ogg">Woosh 2</option>
+								<option value="sounds/woosh-3.ogg">Woosh 3</option>
+								<option value="sounds/woosh-4.ogg">Woosh 4</option>
+								<option value="sounds/woosh-5.ogg">Woosh 5</option>
+								<option value="sounds/woosh-6.ogg">Woosh 6</option>
+							</select>
+						</div>
+					</div>
+					<div class="setting" data-dependent="newMsgSound">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Volume</span>
+						</div>
+						<div class="settingCell">
+							<datalist id="newMsgSound_ticks_volume">
+								<option value="0"></option>
+								<option value="25"></option>
+								<option value="50"></option>
+								<option value="75"></option>
+								<option value="100"></option>
+								<option value="125"></option>
+								<option value="150"></option>
+							</datalist>
+							<input type="range" id="sound_newMsg_Volume" min="0" max="150" step="1" value="50" list="newMsgSound_ticks_volume"/>
+							<span class="rangeValue">50</span>%
+						</div>
+					</div>
+					<div class="setting" data-dependent="newMsgSound">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Pitch</span>
+						</div>
+						<div class="settingCell">
+							<!-- wtf -->
+							<input type="number" id="sound_newMsg_PitchRandMin" min="5" max="1000" step="1" value="85"/>%<span style="margin-right: 6px; margin-left: 6px;">to</span><input type="number" id="sound_newMsg_PitchRandMax" min="5" max="1000" step="1" value="125"/>%
+						</div>
+					</div>
+					<div class="setting" data-dependent="newMsgSound">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Delay</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="sound_newMsg_Delay" min="0" max="10" step="0.05" value="0.15"/>s
 						</div>
 					</div>
 				</div>
@@ -2046,17 +2363,6 @@
 				</div>
 			</div>
 		</div>
-		<div id="sideButtons">
-			<div class="button" id="sendTestButton">Test Message</div>
-			<div class="button" id="reloadPanelButton">Refresh Settings</div>
-			<div class="button" id="reloadOverlayButton">Refresh Overlays</div>
-			<div class="button" id="resetOverlayButton">Reset Everything</div>
-		</div>
-		<!--
-		<div id="reloadButton">
-			<div class="button" id="reloadOverlayButton">Reload Overlay</div>
-		</div>
-	-->
 	</div>
 
 	<script type="text/javascript" src="main.js"></script>

@@ -14,6 +14,18 @@ function loadSettings() {
 				val = element.is(":checked");
 				break;
 
+			case "range":
+				val = element.val();
+
+				element[0].addEventListener("input", function(event) {
+					element.parent().children(".rangeValue").text(event.target.value);
+
+					value = event.target.value;
+					max = parseInt(element.attr("max"));
+					element.css("background-size", `${(value / max) * 100}% 100%`);
+				});
+				break;
+
 			default:
 				val = element.val();
 		}
@@ -26,6 +38,10 @@ function loadSettings() {
 				switch(element.attr("type")) {
 					case "checkbox":
 						element.prop("checked", storedVal === "true").trigger("change");
+						break;
+
+					case "range":
+						element.val(storedVal).trigger("update");
 						break;
 
 					default:
@@ -48,10 +64,8 @@ window.addEventListener("storage", function(event) {
 		console.log("BS VOD Audio overlay is active");
 
 		if(!$(".extraHR").length) {
-			$("#sidebar").append($('<hr class="extraHR"/>'));
+			$("#rows").append($('<hr class="extraHR"/>'));
 		}
-		$("#sidebar").append('<div class="row extraRow" data-tab="bsvodaudio"><i class="fas fa-wrench"></i>BS VOD Audio</div>');
-
-		setButtonYPos();
+		$("#rows").append('<div class="row extraRow" data-tab="bsvodaudio"><i class="fas fa-wrench"></i>BS VOD Audio</div>');
 	}
 });

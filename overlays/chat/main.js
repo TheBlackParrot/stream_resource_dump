@@ -147,6 +147,8 @@ function setTwitchAccessToken() {
 						console.log("got cheermotes");
 						for(let i in cheermoteResponse.data) {
 							let mote = cheermoteResponse.data[i];
+							mote.prefix = mote.prefix.toLowerCase();
+							
 							cheermotes[mote.prefix] = {};
 
 							for(let j in mote.tiers) {

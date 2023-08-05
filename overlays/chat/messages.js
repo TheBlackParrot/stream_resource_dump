@@ -44,7 +44,6 @@ function prepareMessage(tags, message, self, forceHighlight) {
 		}
 	}
 
-
 	getTwitchUserInfo(tags['user-id'], function(userData) {
 		parseMessage({
 			message: message,
@@ -77,16 +76,24 @@ client.on("subscription", function(channel, username, method, message, tags) { p
 client.on("ban", function(channel, username, reason, tags) {
 	let id = tags['target-user-id'];
 	$(`.chatBlock[data-userid="${id}"]`).remove();
+	setHistoryOpacity();
 });
 
 client.on("messagedeleted", function(channel, username, deletedMessage, tags) {
 	let id = tags['target-msg-id'];
 	$(`.chatBlock[data-msguuid="${id}"]`).remove();
+	setHistoryOpacity();
 });
 
 client.on("timeout", function(channel, username, reason, duration, tags) {
 	let id = tags["target-user-id"];
 	$(`.chatBlock[data-userid="${id}"]`).remove();
+	setHistoryOpacity();
+});
+
+client.on("clearchat", function(channel) {
+	$("#wrapper").empty();
+	lastUser = "-1";
 });
 
 const chatFuncs = {
@@ -597,12 +604,15 @@ function parseMessage(data) {
 	}
 
 	let rootElement = $(`<div class="chatBlock" data-msgIdx="${messageCount}" data-combinedIdx="${combinedCount}" data-msgUUID="${data.uuid}" data-userID="${data.user.id}"></div>`);
-	if(localStorage.getItem("setting_chatAnimations") === "true") {
-		rootElement.addClass("slideIn");
+	let wrapperElement = $('<div class="effectWrapper"></div>');
+	rootElement.append(wrapperElement);
+
+	if(localStorage.getItem("setting_chatAnimationsIn") === "true") {
+		wrapperElement.addClass("slideIn");
 	}
 
-	let userBlock = $('<div class="userInfo userInfoIn" style="display: none;""></div>');
-	if(localStorage.getItem("setting_chatAnimations") === "true") {
+	let userBlock = $('<div class="userInfo" style="display: none;""></div>');
+	if(localStorage.getItem("setting_chatAnimationsIn") === "true") {
 		userBlock.addClass("userInfoIn");
 	}
 
@@ -638,7 +648,7 @@ function parseMessage(data) {
 			rootElement.css("border-bottom-right-radius", "0px");
 			rootElement.css("border-bottom", "0px");
 		}		
-		if(localStorage.getItem("setting_chatAnimations") === "true") {
+		if(localStorage.getItem("setting_chatAnimationsIn") === "true") {
 			userBlock.removeClass("userInfoIn").addClass("justFadeIn");
 		}
 	}
@@ -782,7 +792,7 @@ function parseMessage(data) {
 								showPFP = true;
 							} else if(localStorage.getItem("setting_avatarAllowedVIPs") === "true" && "vip" in data.user.badges.list) {
 								showPFP = true;
-							} else if(localStorage.getItem("setting_avatarAllowedSubscribers") === "true" && "subscriber" in data.user.badges.list) {
+							} else if(localStorage.getItem("setting_avatarAllowedSubscribers") === "true" && ("subscriber" in data.user.badges.list || "founder" in data.user.badges.list)) {
 								showPFP = true;
 							} else if(localStorage.getItem("setting_avatarAllowedTurbo") === "true" && "turbo" in data.user.badges.list) {
 								showPFP = true;
@@ -825,16 +835,14 @@ function parseMessage(data) {
 				}
 			}
 
-			if(showPFP) {
-				if(localStorage.getItem("setting_hideDefaultAvatars") === "true") {
-					if(userData.profile_image_url.indexOf("user-default-pictures") !== -1) {
-						pfpBlock.hide();
-					} else {
-						pfpBlock.show();
-					}
-				} else {
-					pfpBlock.show();
+			if(localStorage.getItem("setting_hideDefaultAvatars") === "true" && showPFP) {
+				if(userData.profile_image_url.indexOf("user-default-pictures") !== -1) {
+					showPFP = false;
 				}
+			}
+
+			if(showPFP) {
+				pfpBlock.show();
 			} else {
 				pfpBlock.hide();
 			}
@@ -870,6 +878,7 @@ function parseMessage(data) {
 		if(!localStorage.getItem(`msgweight_${data.user.id}`)) { localStorage.setItem(`msgweight_${data.user.id}`, "var(--messageFontWeight)"); }
 	}
 
+	let usesCustomColor = true;
 	if(localStorage.getItem(`color2_${data.user.id}`) === "var(--defaultNameColorSecondary)" || !customizationOK) {
 		// (user hasn't set custom colors, double check twitch colors are up to date)
 		let col = data.user.color;
@@ -880,6 +889,8 @@ function parseMessage(data) {
 				localStorage.setItem(`color_${data.user.id}`, col);
 			}
 		}
+
+		usesCustomColor = false;
 	}
 
 	rootCSS().setProperty(`--nameColor${data.user.id}`, localStorage.getItem(`color_${data.user.id}`));
@@ -896,15 +907,11 @@ function parseMessage(data) {
 	let colorToUse = `color_${data.user.id}`;
 	if(localStorage.getItem("setting_chatDefaultNameColorForced") === "true") {
 		nameBlock.css("background-color", "var(--nameBackgroundNoGradientDefault)");
-
-		if(localStorage.getItem("setting_chatNameUsesGradient") === "true") {
-			nameBlock.css("background-image", `var(--nameBackgroundDefault)`);
-		}
 		colorToUse = `setting_chatDefaultNameColor`;
 	} else {
 		nameBlock.css("background-color", `var(--nameColor${data.user.id})`);
 
-		if(localStorage.getItem("setting_chatNameUsesGradient") === "true") {
+		if(localStorage.getItem("setting_chatNameUsesGradient") === "true" && usesCustomColor) {
 			nameBlock.css("background-image", `linear-gradient(var(--nameAngle${data.user.id}), var(--nameColorSecondary${data.user.id}) 0%, transparent 75%)`);
 		}
 	}
@@ -1025,7 +1032,7 @@ function parseMessage(data) {
 	}
 
 	userBlock.append(nameBlock);
-	rootElement.append(userBlock);
+	wrapperElement.append(userBlock);
 
 	if(localStorage.getItem(`use7tvpaint_${data.user.id}`) === "yes" && !data.isOverlayMessage) {
 		for(let i in sevenTVPaints) {
@@ -1125,7 +1132,7 @@ function parseMessage(data) {
 
 				for(let cheermoteIdx in cheermotePrefixes) {
 					let prefix = cheermotePrefixes[cheermoteIdx];
-					if(word.substring(0, prefix.length) === prefix) {
+					if(word.toLowerCase().substring(0, prefix.length) === prefix) {
 						let amount = parseInt(word.substring(prefix.length));
 						let cheermote = cheermotes[prefix];
 
@@ -1218,27 +1225,25 @@ function parseMessage(data) {
 		messageBlock.html(words.join(" "));
 	}
 
-	rootElement.append(messageBlock);
+	wrapperElement.append(messageBlock);
 
 	let messageCap = parseInt(localStorage.getItem("setting_chatMessagesHardCap"));
 	while($(".chatBlock").length > messageCap) {
 		$(".chatBlock")[0].remove();
 	}
 
-	if(localStorage.getItem("setting_chatFadeHistory") === "true") {
-		setHistoryOpacity();
-	}
-
 	if(data.highlighted) {
 		rootElement.addClass("highlighted");
 	}
+
+	setHistoryOpacity();
 
 	if(localStorage.getItem("setting_chatMessageReflectUserColor") === "true") {
 		messageBlock.find("strong").css("background-color", `var(--chatMessageColor${data.user.id})`);
 	}
 
 	if(typeof wantedCommand === "function") {
-		wantedCommand(data, wantedArgs, rootElement);
+		wantedCommand(data, wantedArgs, wrapperElement);
 	} else {
 		let addTimestamp = false;
 
@@ -1266,7 +1271,7 @@ function parseMessage(data) {
 
 	let secsVisible = parseFloat(localStorage.getItem("setting_chatRemoveMessageDelay"));
 	if(parseInt(data.user.id) < 0) {
-		secsVisible = 10;
+		secsVisible = parseFloat(localStorage.getItem("setting_chatRemoveSystemMessageDelay"));
 	} else {
 		checkForExternalBadges(data, badgeBlock);
 	}
@@ -1289,7 +1294,6 @@ function parseMessage(data) {
 			userBlock.hide();
 		}
 
-		console.log(expectedWidth, maxWidth);
 		return expectedWidth > maxWidth;
 	}
 
@@ -1303,18 +1307,29 @@ function parseMessage(data) {
 
 	if(secsVisible) {
 		setTimeout(function() {
-			if(localStorage.getItem("setting_chatAnimations") === "true") {
-				rootElement.removeClass("slideIn").addClass("slideOut");
-				rootElement.one("animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd", function() {
-					$(this).remove();
+			if(localStorage.getItem("setting_chatAnimationsOut") === "true") {
+				wrapperElement.removeClass("slideIn").addClass("slideOut");
+				wrapperElement.one("animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd", function() {
+					$(rootElement).remove();
 				});
 			} else {
-				$(this).remove();
+				rootElement.remove();
 			}
 		}, secsVisible * 1000);
 	}
 
 	testNameBlock = nameBlock;
+
+	let doSound = true;
+	if(data.isOverlayMessage && localStorage.getItem("setting_playSoundOnSystemMessages") === "false") {
+		doSound = false;
+	}
+	if(hasBigEmotes && localStorage.getItem("setting_playSoundOnEmoteOnlyMessages") === "false") {
+		doSound = false;
+	}
+	if(doSound) {
+		playSound("newMsg");
+	}
 }
 
 var externalBadgeCache = {};

@@ -43,6 +43,7 @@
 	--nameFontWeightExtra: 1.2px;
 	--nameBackgroundDefault: linear-gradient(var(--nameGradientAngle), var(--defaultNameColorSecondary) 0%, transparent 75%);
 	--nameBackgroundNoGradientDefault: var(--defaultNameColor);
+	--nameBackground: var(--nameBackgroundDefault);
 
 	--userInfoBackgroundColor: transparent;
 	--userInfoPaddingVertical: 0px;
@@ -120,16 +121,6 @@
 	--timingFuncEaseInOutCirc: cubic-bezier(0.85, 0, 0.15, 1);
 	--timingFuncEaseInOutBack: cubic-bezier(0.68, -0.6, 0.32, 1.6);
 
-
-	--animationsInDuration: 0.5s;
-	--animationsOutDuration: 0.75s;
-	--animationsInName: slideInBottomKF;
-	--animationsOutName: slideOutLeftKF;
-	--animationsInOriginPoint: center center;
-	--animationsOutOriginPoint: left center;
-	--animationsInTimingFunc: var(--timingFuncEaseInOutCubic);
-	--animationsOutTimingFunc: var(--timingFuncEaseInBack);
-
 	--bsrInfoDirection: ltr;
 
 	--avatarSize: 34px;
@@ -166,4 +157,6 @@
 	--timestampPadding: 10px;
 
 	--highlightedEffect: drop-shadow(0px 0px var(--highlightGlowRadius) var(--highlightBackgroundColor));
+
+	--chatHistoryOriginPoint: center center;
 }

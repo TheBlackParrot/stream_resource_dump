@@ -87,7 +87,10 @@ function set7TVPaint(nameBlock, which, userID) {
 		}
 	}
 	//console.log(css);
-	nameBlock.css("background-color", bgColor).css("background-image", css).css("background-size", "contain");
+	if(paint.color !== null) {
+		nameBlock.css("background-color", bgColor);
+	}
+	nameBlock.css("background-image", css).css("background-size", "contain");
 	nameBlock.css("filter", `var(--nameEffects${userID})${shadows}`);
 }
 
@@ -244,4 +247,18 @@ function ensureSafeColor(color) {
 
 function rootCSS() {
 	return document.querySelector("html").style;
+}
+
+function randomFloat(min, max) {
+	if(typeof min === "undefined") { min = 0; }
+	if(typeof max === "undefined") { max = 1; }
+
+	if(min > max) { return NaN; }
+	else if(min === max) { return min; }
+
+	return min + (Math.random() * (max - min));
+}
+
+function randomInt(min, max) {
+	return Math.round(randomFloat(min, max));
 }
