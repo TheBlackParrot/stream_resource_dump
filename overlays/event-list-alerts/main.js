@@ -1,9 +1,3 @@
-// WHY DO YOU ALL USE SOCKET.IO IF YOU'RE JUST GONNA TRANSPORT OVER WEBSOCKETS ANYWAYS. ASAGASHDASFDKJSADFHKALDSNVD
-
-// OBS allows autoplay in everything under it's CEF browser sources, as a heads up.
-// you can just be bad and have autoplaying everything
-
-// there are some that probably aren't here, just yell at me
 const currencySymbols = {
 	USD: "$",
 	CAD: "CA$",
@@ -37,36 +31,30 @@ const subTiers = {
 const query = new URLSearchParams(location.search);
 var allowedToProceed = true;
 
-if(!localStorage.getItem(`sl_socketToken`) || localStorage.getItem(`sl_socketToken`) === "null" || query.get("streamlabsToken") !== null) {
-	localStorage.setItem(`sl_socketToken`, query.get("streamlabsToken"));
-}
-
-if(!localStorage.getItem(`se_jwtToken`) || localStorage.getItem(`se_jwtToken`) === "null" || query.get("streamelementsToken") !== null) {
-	localStorage.setItem(`se_jwtToken`, query.get("streamelementsToken"));
-}
-
-if(!localStorage.getItem(`twitch_clientID`) || localStorage.getItem(`twitch_clientID`) === "null" || query.get("clientID") !== null) {
-	localStorage.setItem(`twitch_clientID`, query.get("clientID"));
-}
-if(!localStorage.getItem(`twitch_clientSecret`) || localStorage.getItem(`twitch_clientSecret`) === "null" || query.get("clientSecret") !== null) {
-	localStorage.setItem(`twitch_clientSecret`, query.get("clientSecret"));
-}
-
-const twitchClientId = localStorage.getItem(`twitch_clientID`);
-const twitchClientSecret = localStorage.getItem(`twitch_clientSecret`);
-const streamlabsSocketToken = localStorage.getItem(`sl_socketToken`);
-const streamelementsJWTToken = localStorage.getItem(`se_jwtToken`);
-const broadcasterName = query.get("channel").toLowerCase();
+const twitchClientId = localStorage.getItem(`setting_twitchClientID`);
+const twitchClientSecret = localStorage.getItem(`setting_twitchClientSecret`);
+const streamlabsSocketToken = localStorage.getItem(`setting_streamlabsSocketToken`);
+const streamelementsJWTToken = localStorage.getItem(`setting_streamelementsJWTToken`);
+const broadcasterName = localStorage.getItem(`setting_twitchChannel`);
 
 if(!broadcasterName || broadcasterName === "null") {
 	allowedToProceed = false;
-	console.log("No channel is set, use ?channel=channel in your URL");
 }
 
 if(twitchClientId === "null" || twitchClientSecret === "null" || !twitchClientId || !twitchClientSecret) {
 	allowedToProceed = false;
 	console.log(`cached ID: ${twitchClientId}, cached secret: ${twitchClientSecret}`);
 }
+
+var seenEventIDs = {
+	streamlabs: [],
+	streamelements: []
+};
+
+var socketConnections = {
+	streamlabs: null,
+	streamelements: null
+};
 
 function startSLWebsocket() {
 	if(!streamlabsSocketToken || streamlabsSocketToken === "null") {
@@ -83,14 +71,24 @@ function startSLWebsocket() {
 	});
 
 	socket.on("disconnect", function() {
-		console.log("Disconnected from Streamlabs, trying again in 20 seconds...");
-		setTimeout(startSLWebsocket, 20000);
+		if(reason === "io server disconnect") {
+			console.log("Disconnected from Streamlabs, trying again in 20 seconds...");
+			setTimeout(startSLWebsocket, 20000);
+		} else {
+			console.log("Disconnected from Streamlabs");
+		}
 	});
 
 	socket.on('event', (eventData) => {
 		if(!eventData.for) { return; }
 
-		//console.log(eventData);
+		if(seenEventIDs.streamlabs.indexOf(eventData.event_id) !== -1) {
+			console.log("Event already triggered, ignoring");
+			return;
+		}
+		seenEventIDs.streamlabs.push(eventData.event_id);
+
+		console.log(eventData);
 		let data = eventData.message[0];
 
 		if(eventData.for === "streamlabs" && eventData.type === "donation") {
@@ -112,7 +110,13 @@ function startSLWebsocket() {
 }
 
 function SEEvent(eventData) {
-	//console.log(eventData);
+	if(seenEventIDs.streamelements.indexOf(eventData._id) !== -1) {
+		console.log("Event already triggered, ignoring");
+		return;
+	}
+	seenEventIDs.streamelements.push(eventData._id);
+
+	console.log(eventData);
 	let data = eventData.data;
 
 	if(eventData.type === "tip") {
@@ -157,11 +161,18 @@ function startSEWebsocket() {
 		console.log("Successfully connected to StreamElements");
 	});
 
-	socket.on('unauthorized', console.error);
+	socket.on('unauthorized', function(error) {
+		console.error(error);
+		socket.disconnect();
+	});
 
-	socket.on("disconnect", function() {
-		console.log("Disconnected from StreamElements, trying again in 20 seconds...");
-		setTimeout(startSEWebsocket, 20000);
+	socket.on("disconnect", function(reason) {
+		if(reason === "io server disconnect") {
+			console.log("Disconnected from StreamElements, trying again in 20 seconds...");
+			setTimeout(startSEWebsocket, 20000);
+		} else {
+			console.log("Disconnected from StreamElements");
+		}
 	});
 
 	socket.on('event', function(eventData) { SEEvent(eventData); });
@@ -703,7 +714,12 @@ var customGreetingSounds = {
 	"flaemmchenflame": "flaemmgreetings.ogg",
 	"lanargaze": "Hello_-_Adele_Sound_effect.ogg",
 	"kaifennec": "ayup.ogg",
-	"didacthebiggecko": "GeckoWelcome.ogg"
+	"didacthebiggecko": "GeckoWelcome.ogg",
+	"duckenomics": "here_comes_pacman.ogg",
+	"djdavid98": "among_us_impostor.ogg",
+	"entenschaf": "wonderhoy.ogg",
+	"karmageddon000": "is_anybody_at_home.ogg",
+	"pasketi": "ur_my_friend_now.ogg"
 };
 var greetingSoundAmount = 11;
 
