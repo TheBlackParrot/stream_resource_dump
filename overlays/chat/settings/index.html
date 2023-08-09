@@ -2265,6 +2265,47 @@
 			</div>
 			<div class="section" data-content="sounds">
 				<div class="part">
+					<h1>OBS Bug Workaround</h1>
+					<div class="setting">
+						<div class="settingCell settingOnlyText">
+							<p>OBS currently has a bug causing "crackling" once audio starts coming from browser sources. If a noise is constantly sent from a browser source, this will prevent the "crackling" or "snappiness" of new sounds.</p>
+							<p>You may need to refresh the chat overlay after turning this on or off.</p>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="enableConstantNoiseToFixCEFBeingWeird" type="checkbox" data-dependent="noiseSound"/> <span class="settingInfo">Play constant white noise to work around <a href="https://github.com/obsproject/obs-browser/issues/406">this bug</a> with OBS's CEF</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="noiseSound">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Volume</span>
+						</div>
+						<div class="settingCell">
+							<datalist id="noiseSound_ticks_volume">
+								<option value="1"></option>
+								<option value="25"></option>
+								<option value="50"></option>
+								<option value="75"></option>
+								<option value="100"></option>
+							</datalist>
+							<input type="range" id="noiseVolume" min="0" max="100" step="1" value="5" list="noiseSound_ticks_volume"/>
+							<span class="rangeValue">5</span>%
+						</div>
+					</div>
+					<div class="setting" data-dependent="noiseSound">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Lowpass filter frequency</span>
+						</div>
+						<div class="settingCell">
+							<input type="range" id="noiseLowpassHz" min="200" max="4000" step="100" value="400"/>
+							<span class="rangeValue">5</span>hz
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Chat Message Noises</h1>
 					<div class="setting">
 						<div class="settingCell">
 							<input id="sound_newMsg_Enabled" type="checkbox" data-dependent="newMsgSound"/> <span class="settingInfo">Play a sound on incoming chat messages</span>
@@ -2366,6 +2407,7 @@
 	</div>
 
 	<script type="text/javascript" src="main.js"></script>
+	<script type="text/javascript" src="broadcast.js"></script>
 	<script type="text/javascript" src="settings.js"></script>
 </body>
 </html>

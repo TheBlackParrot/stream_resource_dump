@@ -344,31 +344,31 @@ function sendEvent(nameData, eventData) {
 
 	eventElem.append(nameElem).append(msgIconElem).append(msgTextElem);
 
-	let events = $(".eventRow");
-	let eventCount = events.length;
-	let isCumulative = (eventData.cumulative && eventData.cumulative === previousEventData.cumulative && previousEventData.type === eventData.type && nameData.name === previousEventData.name);
+	let isCumulative = (eventData.cumulative && eventData.cumulative === previousEventData.cumulative && eventData.type === previousEventData.type && nameData.name === previousEventData.name);
+	if(isCumulative) {
+		previousEventData.amount += eventData.amount;
+		previousMsgTextElem.text(previousEventData.amount.toLocaleString());
 
-	events.each(function() {
+		if(eventData.type === "cheer") {
+			let newBitAttrs = getBitAttrs(previousEventData.amount);
+			previousMsgTextElem.css("background-color", newBitAttrs.color);
+			previousMsgIconElem.css("background-image", `url('icons/${newBitAttrs.icon}`);
+			previousMsgIconElem.children("img").attr("src", `icons/${newBitAttrs.icon}`);
+		}
+	}
+
+	if(!isCumulative) {
+		$("#wrapper").append(eventElem);
+		eventElem.fadeIn(500);
+	}
+
+	let eventCount = $(".eventRow").length - 1;
+	$(".eventRow").each(function() {
 		let e = $(this);
 
-		eventCount--;
+		let opacity = 1 - (eventCount * 0.15);
 
-		if(isCumulative) {
-			if(!eventCount) {
-				//console.log("EVENT COUNT NOW 0");
-				previousEventData.amount += eventData.amount;
-				previousMsgTextElem.text(previousEventData.amount.toLocaleString());
-
-				if(eventData.type === "cheer") {
-					let newBitAttrs = getBitAttrs(previousEventData.amount);
-					previousMsgTextElem.css("background-color", newBitAttrs.color);
-					previousMsgIconElem.css("background-image", `url('icons/${newBitAttrs.icon}`);
-					previousMsgIconElem.children("img").attr("src", `icons/${newBitAttrs.icon}`);
-				}
-			}
-		} else {
-			let opacity = 1 - ((eventCount + 1) * 0.15);
-
+		if(opacity !== 1) {
 			$(this).css("transition", ".5s").css("opacity", opacity);
 			if(opacity <= 0) {
 				setTimeout(function() {
@@ -376,12 +376,9 @@ function sendEvent(nameData, eventData) {
 				}, 500);
 			}
 		}
-	});
 
-	if(!isCumulative) {
-		$("#wrapper").append(eventElem);
-		eventElem.fadeIn(500);
-	}
+		eventCount--;
+	});
 
 	previousEventData = eventData;
 	previousMsgTextElem = msgTextElem;
@@ -719,7 +716,10 @@ var customGreetingSounds = {
 	"djdavid98": "among_us_impostor.ogg",
 	"entenschaf": "wonderhoy.ogg",
 	"karmageddon000": "is_anybody_at_home.ogg",
-	"pasketi": "ur_my_friend_now.ogg"
+	"pasketi": "ur_my_friend_now.ogg",
+	"saphirapendragon": "roadrunner_meep_meep.ogg",
+	"nebelmonsterchen": "Hello_-_Adele_Sound_effect.ogg",
+	"silvereagledev": "bird_up.ogg"
 };
 var greetingSoundAmount = 11;
 

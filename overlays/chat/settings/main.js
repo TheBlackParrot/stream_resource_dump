@@ -1,6 +1,6 @@
 $("#sensitive .section").show();
 
-const overlayRevision = 12;
+const overlayRevision = 13;
 $("#revision").text(`revision ${overlayRevision}`);
 
 function resetEverything() {
@@ -163,21 +163,9 @@ $("#hideSensitiveWarning").on("mouseup", function(e) {
 	setRow(activeRow, true);
 });
 
-$("#reloadOverlayButton").on("mouseup", function(e) {
-	localStorage.setItem("setting_windowReload", Date.now());
-});
-
 $("#reloadPanelButton").on("mouseup", function(e) {
 	location.reload();
 })
-
-$("#sendTestButton").on("mouseup", function(e) {
-	localStorage.setItem("setting_testMessage", Date.now());
-});
-
-$("#clearMessagesButton").on("mouseup", function(e) {
-	localStorage.setItem("setting_clearMessages", Date.now());
-});
 
 var resetTimeout;
 $("#resetOverlayButton").on("mouseup", function(e) {
@@ -186,7 +174,7 @@ $("#resetOverlayButton").on("mouseup", function(e) {
 		resetEverything();
 
 		setTimeout(function() {
-			localStorage.setItem("setting_windowReload", Date.now());
+			postToChannel("reload");
 			location.reload();
 		}, 100);
 	}

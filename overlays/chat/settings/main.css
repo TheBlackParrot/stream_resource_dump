@@ -490,6 +490,9 @@ tt {
 .part p {
 	margin-bottom: var(--settings-padding);
 }
+.part p:last-child {
+	margin-bottom: 0px;
+}
 
 strong {
 	background-color: var(--font-color);

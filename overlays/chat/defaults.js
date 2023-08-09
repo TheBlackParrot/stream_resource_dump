@@ -272,7 +272,10 @@ const defaultConfig = {
 	"sound_newMsg_PitchRandMax": "150",
 	"sound_newMsg_Enabled": "false",
 	"playSoundOnSystemMessages": "false",
-	"playSoundOnEmoteOnlyMessages": "false"
+	"playSoundOnEmoteOnlyMessages": "false",
+	"enableConstantNoiseToFixCEFBeingWeird": "false",
+	"noiseLowpassHz": "400",
+	"noiseVolume": "5"
 };
 
 for(let setting in defaultConfig) {

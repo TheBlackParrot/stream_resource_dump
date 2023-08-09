@@ -102,3 +102,29 @@ for(let idx in soundList) {
 function setVolume(which, volume) {
 	sounds[which].gainNode.gain.value = parseInt(volume) / 100;
 }
+
+const noiseBuffer = new AudioBuffer({
+	length: context.sampleRate,
+	sampleRate: context.sampleRate
+});
+
+const noiseData = noiseBuffer.getChannelData(0);
+for(let i = 0; i < context.sampleRate; i++) {
+	noiseData[i] = Math.random() / 20;
+}
+
+const noise = new AudioBufferSourceNode(context, {
+	buffer: noiseBuffer,
+	loop: true
+});
+
+const noiseLowPassFilter = new BiquadFilterNode(context, {
+	type: "lowpass",
+	frequency: parseInt(localStorage.getItem("setting_noiseLowpassHz")) || 400
+});
+
+const noiseGain = context.createGain();
+noiseGain.gain.value = (localStorage.getItem("setting_enableConstantNoiseToFixCEFBeingWeird") === "true" ? parseInt(localStorage.getItem("setting_noiseVolume")) / 100 : 0);
+
+noise.connect(noiseGain).connect(noiseLowPassFilter).connect(context.destination);
+noise.start();

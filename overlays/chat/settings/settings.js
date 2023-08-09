@@ -58,14 +58,3 @@ function loadSettings() {
 	loadingInit = true;
 }
 loadSettings();
-
-window.addEventListener("storage", function(event) {
-	if(event.key === "_isPresent_bsvodaudio") {
-		console.log("BS VOD Audio overlay is active");
-
-		if(!$(".extraHR").length) {
-			$("#rows").append($('<hr class="extraHR"/>'));
-		}
-		$("#rows").append('<div class="row extraRow" data-tab="bsvodaudio"><i class="fas fa-wrench"></i>BS VOD Audio</div>');
-	}
-});

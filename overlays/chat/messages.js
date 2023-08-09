@@ -46,7 +46,7 @@ function prepareMessage(tags, message, self, forceHighlight) {
 
 	getTwitchUserInfo(tags['user-id'], function(userData) {
 		parseMessage({
-			message: message,
+			message: message.trim(),
 			isOverlayMessage: isOverlayMessage,
 			type: tags['message-type'],
 			highlighted: highlighted,
@@ -1140,7 +1140,7 @@ function parseMessage(data) {
 						let reachedTier = 1;
 						for(let tierIdx in tiers) {
 							let tier = tiers[tierIdx];
-							if(amount > tier) {
+							if(amount >= tier) {
 								reachedTier = tier;
 								break;
 							}
