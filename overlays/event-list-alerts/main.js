@@ -33,7 +33,6 @@ var allowedToProceed = true;
 
 const twitchClientId = localStorage.getItem(`setting_twitchClientID`);
 const twitchClientSecret = localStorage.getItem(`setting_twitchClientSecret`);
-const streamlabsSocketToken = localStorage.getItem(`setting_streamlabsSocketToken`);
 const streamelementsJWTToken = localStorage.getItem(`setting_streamelementsJWTToken`);
 const broadcasterName = localStorage.getItem(`setting_twitchChannel`);
 
@@ -46,76 +45,40 @@ if(twitchClientId === "null" || twitchClientSecret === "null" || !twitchClientId
 	console.log(`cached ID: ${twitchClientId}, cached secret: ${twitchClientSecret}`);
 }
 
-var seenEventIDs = {
-	streamlabs: [],
-	streamelements: []
+const streamlabsEventChannel = new BroadcastChannel("streamlabs");
+streamlabsEventChannel.onmessage = function(message) {
+	console.log(message);
+	processStreamlabsEvent(message.data);
 };
 
-var socketConnections = {
-	streamlabs: null,
-	streamelements: null
-};
+function processStreamlabsEvent(eventData) {
+	console.log(eventData);
+	let data = eventData.message[0];
 
-function startSLWebsocket() {
-	if(!streamlabsSocketToken || streamlabsSocketToken === "null") {
-		console.log("No token set for Streamlabs, not connecting to it.");
-		return;
+	if(eventData.for === "streamlabs" && eventData.type === "donation") {
+		sendEvent({name: data.from}, {text: `${data.formatted_amount} ${data.currency}`});
+		addAlert({name: data.from, showPFP: false, html: `tipped <span class="alertBold alertThing">${data.formatted_amount} ${data.currency}</span> via Streamlabs!`, audio: "positive-game-sound-2.ogg"});
 	}
 
-	console.log("Starting connection to Streamlabs...");
+	if(eventData.for === "treatstream" && eventData.type === "treat") {
+		// TODO: move this to treatstream's actual API in case something happens on streamlabs's side, always good to reduce points of failure.
+		// (https://treatstream.com/api/details)
+		// streamlabs will do in the meantime
 
-	const socket = io(`https://sockets.streamlabs.com?token=${streamlabsSocketToken}`, {transports: ['websocket']});
-
-	socket.on("connect", function() {
-		console.log("Successfully connected to Streamlabs");
-	});
-
-	socket.on("disconnect", function() {
-		if(reason === "io server disconnect") {
-			console.log("Disconnected from Streamlabs, trying again in 20 seconds...");
-			setTimeout(startSLWebsocket, 20000);
-		} else {
-			console.log("Disconnected from Streamlabs");
-		}
-	});
-
-	socket.on('event', (eventData) => {
-		if(!eventData.for) { return; }
-
-		if(seenEventIDs.streamlabs.indexOf(eventData.event_id) !== -1) {
-			console.log("Event already triggered, ignoring");
-			return;
-		}
-		seenEventIDs.streamlabs.push(eventData.event_id);
-
-		console.log(eventData);
-		let data = eventData.message[0];
-
-		if(eventData.for === "streamlabs" && eventData.type === "donation") {
-			sendEvent({name: data.from}, {text: `${data.formatted_amount} ${data.currency}`});
-			addAlert({name: data.from, showPFP: false, html: `tipped <span class="alertBold alertThing">${data.formatted_amount} ${data.currency}</span> via Streamlabs!`, audio: "positive-game-sound-2.ogg"});
-		}
-
-		if(eventData.for === "treatstream" && eventData.type === "treat") {
-			// TODO: move this to treatstream's actual API in case something happens on streamlabs's side, always good to reduce points of failure.
-			// (https://treatstream.com/api/details)
-			// streamlabs will do in the meantime
-
-			// worried some treat names might be too long
-			// sendEvent({name: data.from}, {text: `SENT A ${data.title.toUpperCase()}`});
-			sendEvent({name: data.from}, {text: `SENT A TREAT`});
-			addAlert({name: data.from, showPFP: false, html: `sent a <span class="alertBold alertThing">${data.title}</span> via TreatStream!`, audio: "new-message-3.ogg"});
-		}
-	});
+		// worried some treat names might be too long
+		// sendEvent({name: data.from}, {text: `SENT A ${data.title.toUpperCase()}`});
+		sendEvent({name: data.from}, {text: `SENT A TREAT`});
+		addAlert({name: data.from, showPFP: false, html: `sent a <span class="alertBold alertThing">${data.title}</span> via TreatStream!`, audio: "new-message-3.ogg"});
+	}
 }
 
-function SEEvent(eventData) {
-	if(seenEventIDs.streamelements.indexOf(eventData._id) !== -1) {
-		console.log("Event already triggered, ignoring");
-		return;
-	}
-	seenEventIDs.streamelements.push(eventData._id);
+const streamelementsEventChannel = new BroadcastChannel("streamelements");
+streamelementsEventChannel.onmessage = function(message) {
+	console.log(message);
+	processStreamElementsEvent(message.data);
+};
 
+function processStreamElementsEvent(eventData) {
 	console.log(eventData);
 	let data = eventData.data;
 
@@ -141,42 +104,6 @@ function SEEvent(eventData) {
 		let alertHtml = `Thanks for the follow! <div class="icon" style="background-image: url('icons/rareChar.webp');"><img src="icons/rareChar.webp"/></div>`;
 		addAlert({showPFP: false, doTTS: false, html: alertHtml});
 	}
-}
-
-function startSEWebsocket() {
-	if(!streamelementsJWTToken || streamelementsJWTToken === "null") {
-		console.log("No JWT token set for StreamElements, not connecting to it.");
-		return;
-	}
-
-	console.log("Starting connection to StreamElements...");
-
-	const socket = io('https://realtime.streamelements.com', {transports: ['websocket']});
-
-	socket.on("connect", function() {
-		socket.emit('authenticate', {method: 'jwt', token: streamelementsJWTToken});
-	});
-
-	socket.on("authenticated", function() {
-		console.log("Successfully connected to StreamElements");
-	});
-
-	socket.on('unauthorized', function(error) {
-		console.error(error);
-		socket.disconnect();
-	});
-
-	socket.on("disconnect", function(reason) {
-		if(reason === "io server disconnect") {
-			console.log("Disconnected from StreamElements, trying again in 20 seconds...");
-			setTimeout(startSEWebsocket, 20000);
-		} else {
-			console.log("Disconnected from StreamElements");
-		}
-	});
-
-	socket.on('event', function(eventData) { SEEvent(eventData); });
-	socket.on('event:test', function(eventData) { SEEvent(eventData); });
 }
 
 const tiltifyFunctions = {
@@ -234,13 +161,6 @@ function startTiltifyWebsocket() {
 	});
 }
 
-const client = new tmi.Client({
-	options: {
-		debug: true
-	},
-	channels: [broadcasterName]
-});
-
 var twitchAccessToken;
 function setTwitchAccessToken() {
 	if(!allowedToProceed) {
@@ -265,15 +185,18 @@ function setTwitchAccessToken() {
 				console.log("got access token...");
 				twitchAccessToken = parentData.access_token;
 
+				setTwitchHelixReachable(true);
+
 				if(allowedToProceed) {
-					client.connect().catch(console.error);
-					startSLWebsocket();
-					startSEWebsocket();
 					startTiltifyWebsocket();
 				}
 			} else {
 				console.log(data);
 			}
+		},
+
+		error: function(data) {
+			setTwitchHelixReachable(false);
 		}
 	});
 }
@@ -299,6 +222,12 @@ function callTwitch(data, callback) {
 			if(typeof callback === "function") {
 				callback(data);
 			}
+
+			setTwitchHelixReachable(true);
+		},
+
+		error: function(data) {
+			setTwitchHelixReachable(false);
 		}
 	})	
 }
@@ -524,155 +453,273 @@ function doAlert() {
 	});
 }
 
-client.on("cheer", function(channel, tags, msg) {
-	let name = tags.username;
-	if("display-name" in tags) {
-		name = tags['display-name'];
-	}
-
-	let bits = ~~tags.bits;
-	let bitAttrs = getBitAttrs(bits);
-	let outObject = {
-		type: "cheer",
-		cumulative: true,
-		amount: bits,
-		text: bits.toLocaleString(),
-		icon: bitAttrs.icon,
-		color: bitAttrs.color
-	};
-
-	let alertHtml = `cheered with <div class="icon" style="background-image: url('icons/${outObject.icon.replace("png", "gif")}');"><img src="icons/${outObject.icon.replace("png", "gif")}"/></div> <span class="alertBold" style="background-color: ${outObject.color};">${outObject.text}</span> bits!`;
-
-	sendEvent({name: name}, outObject);
-	addAlert({username: tags.username, name: tags['display-name'], showPFP: true, doTTS: true, html: alertHtml, audio: "bits.ogg"});
-});
-
-client.on("resub", function(channel, username, streak, message, tags, methods) {
-	let name = username;
-	if("display-name" in tags) {
-		name = tags['display-name'];
-	}
-
-	let months = ~~tags["msg-param-cumulative-months"];
-	let plan = subTiers[methods.plan];
-	let alertHtml = `resubscribed ${plan === "Prime" ? "with" : "at"} <span class="alertBold alertThing">${plan}</span> for <span class="alertBold alertThing">${months} months</span>!`;
-
-	let outObject = {
-		type: "resub",
-		cumulative: false,
-		text: `RESUB <span style="font-size: 14px;">x</span>${months}`,
-		amount: months
-	};
-
-	sendEvent({name: name}, outObject);
-	addAlert({username: username, name: tags['display-name'], showPFP: true, doTTS: true, html: alertHtml, audio: "new-message-2.ogg"});
-});
-
-client.on("subscription", (channel, username, methods, message, tags) => {
-	let name = username;
-	if("display-name" in tags) {
-		name = tags['display-name'];
-	}
-
-	let plan = subTiers[methods.plan];
-	let alertHtml = `subscribed ${plan === "Prime" ? "with" : "at"} <span class="alertBold alertThing">${plan}</span>!`;
-
-	let outObject = {
-		type: "sub",
-		cumulative: false,
-		text: "NEW SUB"
-	};
-
-	sendEvent({name: name}, outObject);
-	addAlert({username: username, name: tags['display-name'], showPFP: true, doTTS: true, html: alertHtml, audio: "new-message-2.ogg"});
-});
-
 // absolutely frick you, twitch
 var keepSkippingUntilZero = 0;
 
-client.on("subgift", (channel, username, streakMonths, recipient, methods, tags) => {
-	if(keepSkippingUntilZero) {
-		keepSkippingUntilZero--;
-		return;
+const twitchEventFuncs = {
+	cheer: function(data) {
+		let channel = data.channel;
+		let tags = data.tags;
+		let msg = data.msg;
+
+		let name = tags.username;
+		if("display-name" in tags) {
+			name = tags['display-name'];
+		}
+
+		let bits = ~~tags.bits;
+		let bitAttrs = getBitAttrs(bits);
+		let outObject = {
+			type: "cheer",
+			cumulative: true,
+			amount: bits,
+			text: bits.toLocaleString(),
+			icon: bitAttrs.icon,
+			color: bitAttrs.color
+		};
+
+		let alertHtml = `cheered with <div class="icon" style="background-image: url('icons/${outObject.icon.replace("png", "gif")}');"><img src="icons/${outObject.icon.replace("png", "gif")}"/></div> <span class="alertBold" style="background-color: ${outObject.color};">${outObject.text}</span> bits!`;
+
+		sendEvent({name: name}, outObject);
+		addAlert({username: tags.username, name: tags['display-name'], showPFP: true, doTTS: true, html: alertHtml, audio: "bits.ogg"});
+	},
+
+	resub: function(data) {
+		let channel = data.channel;
+		let username = data.username;
+		let streak = data.streak;
+		let message = data.message;
+		let tags = data.tags;
+		let methods = data.methods;
+
+		let name = username;
+		if("display-name" in tags) {
+			name = tags['display-name'];
+		}
+
+		let months = ~~tags["msg-param-cumulative-months"];
+		let plan = subTiers[methods.plan];
+		let alertHtml = `resubscribed ${plan === "Prime" ? "with" : "at"} <span class="alertBold alertThing">${plan}</span> for <span class="alertBold alertThing">${months} months</span>!`;
+
+		let outObject = {
+			type: "resub",
+			cumulative: false,
+			text: `RESUB <span style="font-size: 14px;">x</span>${months}`,
+			amount: months
+		};
+
+		sendEvent({name: name}, outObject);
+		addAlert({username: username, name: tags['display-name'], showPFP: true, doTTS: true, html: alertHtml, audio: "new-message-2.ogg"});
+	},
+
+	subscription: function(data) {
+		let channel = data.channel;
+		let username = data.username;
+		let message = data.message;
+		let tags = data.tags;
+		let methods = data.methods;
+
+		let name = username;
+		if("display-name" in tags) {
+			name = tags['display-name'];
+		}
+
+		let plan = subTiers[methods.plan];
+		let alertHtml = `subscribed ${plan === "Prime" ? "with" : "at"} <span class="alertBold alertThing">${plan}</span>!`;
+
+		let outObject = {
+			type: "sub",
+			cumulative: false,
+			text: "NEW SUB"
+		};
+
+		sendEvent({name: name}, outObject);
+		addAlert({username: username, name: tags['display-name'], showPFP: true, doTTS: true, html: alertHtml, audio: "new-message-2.ogg"});
+	},
+
+	subgift: function(data) {
+		if(keepSkippingUntilZero) {
+			keepSkippingUntilZero--;
+			return;
+		}
+
+		let channel = data.channel;
+		let username = data.username;
+		let streakMonths = data.streakMonths;
+		let recipient = data.recipient;
+		let methods = data.methods;
+		let tags = data.tags;
+
+		let name = username;
+		if("display-name" in tags) {
+			name = tags['display-name'];
+		}
+
+		let plan = subTiers[methods.plan];
+
+		let recep = recipient;
+		if("msg-param-recipient-display-name" in tags) {
+			recep = tags["msg-param-recipient-display-name"];
+		}
+
+		let amount = 1;
+		if("msg-param-gift-months" in tags) {
+			amount = ~~tags["msg-param-gift-months"];
+		}
+		let amountStr = (amount > 1 ? `<span class="alertBold alertThing">${amount} months</span> of ` : "");
+
+		let alertHtml = `gifted ${amountStr}a <span class="alertBold alertThing">${plan} subscription</span> to <span class="alertBold alertThing">${recep}</span>!`;
+
+		let outObject = {
+			type: "giftsub_single",
+			cumulative: false,
+			text: "GIFTED SUB",
+			amount: amount
+		};
+
+		sendEvent({name: name}, outObject);
+		addAlert({username: username, name: tags['display-name'], showPFP: true, doTTS: true, html: alertHtml, audio: "new-message-5.ogg"});
+	},
+
+	submysterygift: function(data) {
+		let channel = data.channel;
+		let username = data.username;
+		let numbOfSubs = data.numbOfSubs;
+		let methods = data.methods;
+		let tags = data.tags;
+
+		let name = username;
+		if("display-name" in tags) {
+			name = tags['display-name'];
+		}
+
+		let plan = subTiers[methods.plan];
+
+		let amountStr = "GIFTED SUB";
+		let alertHtml = `gifted a <span class="alertBold alertThing">${plan} subscription</span> to a viewer!`;
+		if(numbOfSubs > 1) {
+			amountStr = `GIFTED SUB <span style="font-size: 14px;">x</span>${numbOfSubs.toLocaleString()}`;
+			alertHtml = `gifted <span class="alertBold alertThing">${numbOfSubs} ${plan} subscriptions</span> to viewers!`;
+		}
+
+		keepSkippingUntilZero = numbOfSubs;
+
+		let outObject = {
+			type: "giftsub",
+			cumulative: true,
+			amount: numbOfSubs,
+			text: amountStr
+		};
+
+		sendEvent({name: name}, outObject);
+		addAlert({username: username, name: tags['display-name'], showPFP: true, doTTS: true, html: alertHtml, audio: "new-message-5.ogg"});
+	},
+
+	raided: function(data) {
+		let channel = data.channel;
+		let username = data.username;
+		let viewers = data.viewers;
+		let tags = data.tags;
+
+		let name = username;
+		if("display-name" in tags) {
+			name = tags['display-name'];
+		}
+
+		let alertHtml = `raided the channel with <span class="alertBold alertThing">${viewers.toLocaleString()} viewer${viewers > 1 ? "s" : ""}</span>!`;
+
+		let outObject = {
+			type: "raid",
+			cumulative: false,
+			amount: viewers,
+			text: `RAID <span style="font-size: 14px;">x</span>${viewers.toLocaleString()}`
+		};
+
+		sendEvent({name: name}, outObject);
+		addAlert({username: username, name: tags['display-name'], showPFP: true, doTTS: true, html: alertHtml, audio: "bonus-2.ogg"});
+	},
+
+	message: function(data) {
+		let channel = data.channel;
+		let message = data.message;
+		let self = data.self;
+		let tags = data.tags;
+
+		if(self) {
+			return;
+		}
+
+		let moderator = false;
+		if("badges" in tags) {
+			let badges = tags.badges;
+			if(badges !== null) {
+				if("moderator" in badges || "broadcaster" in badges) {
+					moderator = true;
+				}
+			}
+		}
+
+		if(moderator) {
+			let parts = message.split(" ");
+			let cmd = parts[0].substr(1);
+
+			if(cmd in msgFuncs) {
+				msgFuncs[cmd]();
+				return;
+			}
+		}
+
+		if(hideAccounts.indexOf(tags.username) !== -1 || seenAccounts.indexOf(tags.username) !== -1) {
+			return;
+		}
+		seenAccounts.push(tags.username);
+
+		let name = tags.username;
+		if("display-name" in tags) {
+			name = tags['display-name'];
+		}
+
+		let showPFP = false;
+		if("badges" in tags) {
+			let badges = tags.badges;
+			if(badges !== null) {
+				if("vip" in badges || "moderator" in badges || "subscriber" in badges || "broadcaster" in badges) {
+					showPFP = true;
+				}
+			}
+		}
+
+		let alertHtml = `${greetingMessages[Math.floor(Math.random() * greetingMessages.length)]}, `;
+
+		let greetingSound = `greetings/greeting${Math.ceil(Math.random() * greetingSoundAmount)}.mp3`;
+		if(tags.username.toLowerCase() in customGreetingSounds) {
+			greetingSound = `greetings/customs/${customGreetingSounds[tags.username.toLowerCase()]}`;
+		}
+
+		addAlert({username: tags.username, name: name, showPFP: showPFP, html: alertHtml, doTTS: false, reverse: true, audio: greetingSound});
 	}
+};
 
-	let name = username;
-	if("display-name" in tags) {
-		name = tags['display-name'];
+const twitchEventChannel = new BroadcastChannel("twitch_chat");
+
+var twitchHelixReachable = false;
+function setTwitchHelixReachable(state) {
+	twitchHelixReachable = state;
+	postToSettingsChannel("TwitchHelixStatus", state);
+}
+
+twitchEventChannel.onmessage = function(message) {
+	console.log(message);
+	message = message.data;
+
+	if(message.event in twitchEventFuncs) {
+		if("data" in message) {
+			twitchEventFuncs[message.event](message.data);
+		} else {
+			twitchEventFuncs[message.event]();
+		}
 	}
-
-	let plan = subTiers[methods.plan];
-
-	let recep = recipient;
-	if("msg-param-recipient-display-name" in tags) {
-		recep = tags["msg-param-recipient-display-name"];
-	}
-
-	let amount = 1;
-	if("msg-param-gift-months" in tags) {
-		amount = ~~tags["msg-param-gift-months"];
-	}
-	let amountStr = (amount > 1 ? `<span class="alertBold alertThing">${amount} months</span> of ` : "");
-
-	let alertHtml = `gifted ${amountStr}a <span class="alertBold alertThing">${plan} subscription</span> to <span class="alertBold alertThing">${recep}</span>!`;
-
-	let outObject = {
-		type: "giftsub_single",
-		cumulative: false,
-		text: "GIFTED SUB",
-		amount: amount
-	};
-
-	sendEvent({name: name}, outObject);
-	addAlert({username: username, name: tags['display-name'], showPFP: true, doTTS: true, html: alertHtml, audio: "new-message-5.ogg"});
-});
-
-client.on("submysterygift", (channel, username, numbOfSubs, methods, tags) => {
-	let name = username;
-	if("display-name" in tags) {
-		name = tags['display-name'];
-	}
-
-	let plan = subTiers[methods.plan];
-
-	let amountStr = "GIFTED SUB";
-	let alertHtml = `gifted a <span class="alertBold alertThing">${plan} subscription</span> to a viewer!`;
-	if(numbOfSubs > 1) {
-		amountStr = `GIFTED SUB <span style="font-size: 14px;">x</span>${numbOfSubs.toLocaleString()}`;
-		alertHtml = `gifted <span class="alertBold alertThing">${numbOfSubs} ${plan} subscriptions</span> to viewers!`;
-	}
-
-	keepSkippingUntilZero = numbOfSubs;
-
-	let outObject = {
-		type: "giftsub",
-		cumulative: true,
-		amount: numbOfSubs,
-		text: amountStr
-	};
-
-	sendEvent({name: name}, outObject);
-	addAlert({username: username, name: tags['display-name'], showPFP: true, doTTS: true, html: alertHtml, audio: "new-message-5.ogg"});
-});
-
-client.on("raided", (channel, username, viewers, tags) => {
-	let name = username;
-	if("display-name" in tags) {
-		name = tags['display-name'];
-	}
-
-	let alertHtml = `raided the channel with <span class="alertBold alertThing">${viewers.toLocaleString()} viewer${viewers > 1 ? "s" : ""}</span>!`;
-
-	let outObject = {
-		type: "raid",
-		cumulative: false,
-		amount: viewers,
-		text: `RAID <span style="font-size: 14px;">x</span>${viewers.toLocaleString()}`
-	};
-
-	sendEvent({name: name}, outObject);
-	addAlert({username: username, name: tags['display-name'], showPFP: true, doTTS: true, html: alertHtml, audio: "bonus-2.ogg"});
-});
+};
 
 const hideAccounts = [
 	"streamlabs",
@@ -729,67 +776,6 @@ var msgFuncs = {
 		processAlerts();
 	}
 }
-
-client.on('message', function(channel, tags, message, self) {
-	if(self) {
-		return;
-	}
-
-	let moderator = false;
-	if("badges" in tags) {
-		let badges = tags.badges;
-		if(badges !== null) {
-			if("moderator" in badges || "broadcaster" in badges) {
-				moderator = true;
-			}
-		}
-	}
-
-	if(moderator) {
-		let parts = message.split(" ");
-		let cmd = parts[0].substr(1);
-
-		if(cmd in msgFuncs) {
-			msgFuncs[cmd]();
-			return;
-		}
-	}
-
-	if(hideAccounts.indexOf(tags.username) !== -1 || seenAccounts.indexOf(tags.username) !== -1) {
-		return;
-	}
-	seenAccounts.push(tags.username);
-
-	let name = tags.username;
-	if("display-name" in tags) {
-		name = tags['display-name'];
-	}
-
-	let showPFP = false;
-	if("badges" in tags) {
-		let badges = tags.badges;
-		if(badges !== null) {
-			if("vip" in badges || "moderator" in badges || "subscriber" in badges || "broadcaster" in badges) {
-				showPFP = true;
-			}
-		}
-	}
-
-	let alertHtml = `${greetingMessages[Math.floor(Math.random() * greetingMessages.length)]}, `;
-
-	let greetingSound = `greetings/greeting${Math.ceil(Math.random() * greetingSoundAmount)}.mp3`;
-	if(tags.username.toLowerCase() in customGreetingSounds) {
-		greetingSound = `greetings/customs/${customGreetingSounds[tags.username.toLowerCase()]}`;
-	}
-
-	addAlert({username: tags.username, name: name, showPFP: showPFP, html: alertHtml, doTTS: false, reverse: true, audio: greetingSound});
-});
-
-client.on("raw_message", (messageCloned, message) => {
-	let d = new Date();
-	let time = `${d.getHours().toString().padStart(2, "0")}:${d.getMinutes().toString().padStart(2, "0")}`;
-	console.log(`[RAW] [${time}] ${message.raw}`);
-});
 
 window.addEventListener("storage", function(event) {
 	switch(event.key) {

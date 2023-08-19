@@ -1,38 +1,4 @@
 $.ajaxSetup({ timeout: 7000 });
-const obs = new OBSWebSocket();
-
-async function connectOBS() {
-	var obsWebSocketVersion;
-	var negotiatedRpcVersion;
-
-	try {
-		if(localStorage.getItem("setting_obs_usePassword") === "true") {
-			details = await obs.connect(`ws://${localStorage.getItem("setting_obs_ip")}:${localStorage.getItem("setting_obs_port")}`, localStorage.getItem("setting_obs_password"), {
-				rpcVersion: 1
-			});
-		} else {
-			details = await obs.connect(`ws://${localStorage.getItem("setting_obs_ip")}:${localStorage.getItem("setting_obs_port")}`, {
-				rpcVersion: 1
-			});
-		}
-		console.log(`Connected to OBS Websocket Server v${details.obsWebSocketVersion} (using RPC v${details.negotiatedRpcVersion})`);
-
-		//await toggleVODAudio(0);
-	} catch (error) {
-		console.error('Failed to connect to OBS, retrying in 15 seconds...', error.code, error.message);
-		setTimeout(function() {
-			connectOBS();
-		}, 15000);
-	}
-}
-connectOBS();
-
-function checkIfDoneSyncing() {
-	if(localStorage.getItem("setting_bsvodaudio_remoteDBURLs").split("\n").length === Object.keys(remoteDB).length) {
-		console.log("done sync'ing remote databases, starting BS+ connection...");
-		startWebsocket();
-	}
-}
 
 var remoteDB = {};
 var db = {
@@ -82,8 +48,6 @@ function syncRemoteDatabases() {
 
 				remoteDB[dbURL] = response;
 				console.log(`synced ${count.toLocaleString()} hashes with ${dbURL}`);
-
-				checkIfDoneSyncing();
 			},
 
 			error: function(response) {
@@ -94,62 +58,26 @@ function syncRemoteDatabases() {
 }
 syncRemoteDatabases();
 
-async function toggleVODAudio(val) {
-	// expects a boolean specifically
-	val = (val ? true : false);
+const bsplusEventChannel = new BroadcastChannel("bsplus");
 
-	let inp = {
-		'1': true,
-		'2': false,
-		'3': false,
-		'4': false,
-		'5': false,
-		'6': false
+function postToBSPlusEventChannel(event, data) {
+	let message = {
+		event: event
 	};
-	inp[localStorage.getItem("setting_bsvodaudio_vodAudioTrack")] = val;
+	if(data) {
+		message.data = data;
+	}
 
-	return await obs.call('SetInputAudioTracks', {
-		inputName: localStorage.getItem("setting_bsvodaudio_audioSource"),
-		inputAudioTracks: inp
-	});
+	console.log(message);
+	bsplusEventChannel.postMessage(message);
 }
 
-/*async function getAudioTracks() {
-	return await obs.call('GetInputAudioTracks', {inputName: settings.obs.sourceName});
-}*/
+bsplusEventChannel.onmessage = function(message) {
+	console.log(message);
+	data = message.data;
 
-var ws;
-function startWebsocket() {
-	console.log("Starting connection to BS+...");
-
-	let url = `ws://${localStorage.getItem("setting_bsplus_ip")}:${localStorage.getItem("setting_bsplus_port")}/socket`;
-	ws = new WebSocket(url);
-	ws._init = false;
-
-	ws.addEventListener("message", function(msg) {
-		var data = JSON.parse(msg.data);
-
-		if(!ws._init) {
-			ws._init = true;
-			console.log(`Connected to Beat Saber v${data.gameVersion}`);
-		}
-
-		//console.log(data);
-
-		if(data._type === "event") {
-			processMessage(data);
-		}
-	});
-
-	ws.addEventListener("open", function() {
-		console.log(`Connected to BS+ websocket at ${url}`);
-	});
-
-	ws.addEventListener("close", function() {
-		console.log(`Connection to BS+ websocket ${url} failed, retrying in 10 seconds...`);
-		setTimeout(startWebsocket, 10000);
-	});
-}
+	processMessage(data);
+};
 
 var gameState = "Menu";
 var mapInfo;
@@ -160,10 +88,10 @@ var eventFuncs = {
 		if(data.gameStateChanged === "Menu") {
 			if(localStorage.getItem("setting_bsvodaudio_muteOnMenu") === "true") {
 				console.log("Muting VOD audio, in menu");
-				await toggleVODAudio(0);
+				postToBSPlusEventChannel("toggleVODAudio", false);
 			} else {
 				console.log("Unmuting VOD audio, in menu");
-				await toggleVODAudio(1);				
+				postToBSPlusEventChannel("toggleVODAudio", true);
 			}
 		}
 	},
@@ -262,7 +190,7 @@ var eventFuncs = {
 		$(":root").get(0).style.setProperty("--currentBSR", `"${map.BSRKey}"`); // this is currently blank as of BS+ v6.0.8
 		$(":root").get(0).style.setProperty("--currentArt", `url(data:image/jpeg;base64,${map.coverRaw.trim()})`);
 
-		await toggleVODAudio(allow);
+		postToBSPlusEventChannel("toggleVODAudio", allow);
 	}
 }
 

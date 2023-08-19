@@ -72,32 +72,67 @@ function playSound(which) {
 	}, parseFloat(localStorage.getItem(`setting_sound_${which}_Delay`)) * 1000);
 }
 
-for(let idx in soundList) {
-	let name = soundList[idx];
-	console.log(`creating sound ${name}`);
-	let url = localStorage.getItem(`setting_sound_${name}_URL`);
+function initSoundMetadata() {
+	for(let idx in soundList) {
+		let name = soundList[idx];
+		console.log(`creating sound ${name}`);
+		let url = localStorage.getItem(`setting_sound_${name}_URL`);
 
-	sounds[name] = {
-		value: name,
-		urls: [
-			url
-		],
-		buffers: [],
-		gainNode: context.createGain()
-	}
-
-	if(url === "<jerma noises>") {
-		sounds[name].urls = [];
-		for(let i = 1; i <= 7; i++) {
-			sounds[name].urls.push(`sounds/jerma-teacher-noise-${i}.ogg`);
+		sounds[name] = {
+			value: name,
+			urls: [
+				url
+			],
+			buffers: [],
+			gainNode: context.createGain()
 		}
+
+		let isGroup = false;
+		if(url.charAt(0) === "<") {
+			isGroup = true;
+		}
+
+		if(isGroup) {
+			sounds[name].urls = [];
+			let maxSoundIdx = 1;
+			let filename = "";
+
+			switch(url) {
+				case "<jerma noises>":
+					filename = "jerma-teacher-noise";
+					maxSoundIdx = 7;
+					break;
+
+				case "<keyboard noises>":
+					filename = "keyboard-typing";
+					maxSoundIdx = 15;
+					break;
+
+				case "<boop noises>":
+					filename = "boop";
+					maxSoundIdx = 5;
+					break;
+			}
+
+			if(filename !== "") {
+				for(let i = 1; i <= maxSoundIdx; i++) {
+					sounds[name].urls.push(`sounds/${filename}-${i}.ogg`);
+				}
+			} else {
+				let customSoundList = localStorage.getItem("setting_sound_newMsg_CustomURLs").split("\n");
+				for(let i in customSoundList) {
+					sounds[name].urls.push(customSoundList[i].trim());
+				}				
+			}
+		}
+
+		sounds[name].gainNode.connect(context.destination);
+		sounds[name].gainNode.gain.value = parseInt(localStorage.getItem(`setting_sound_${name}_Volume`)) / 100;
+
+		loadSound(name);
 	}
-
-	sounds[name].gainNode.connect(context.destination);
-	sounds[name].gainNode.gain.value = parseInt(localStorage.getItem(`setting_sound_${name}_Volume`)) / 100;
-
-	loadSound(name);
 }
+initSoundMetadata();
 
 function setVolume(which, volume) {
 	sounds[which].gainNode.gain.value = parseInt(volume) / 100;
@@ -124,7 +159,10 @@ const noiseLowPassFilter = new BiquadFilterNode(context, {
 });
 
 const noiseGain = context.createGain();
-noiseGain.gain.value = (localStorage.getItem("setting_enableConstantNoiseToFixCEFBeingWeird") === "true" ? parseInt(localStorage.getItem("setting_noiseVolume")) / 100 : 0);
 
 noise.connect(noiseGain).connect(noiseLowPassFilter).connect(context.destination);
 noise.start();
+
+$(document).ready(function() {
+	noiseGain.gain.value = (localStorage.getItem("setting_enableConstantNoiseToFixCEFBeingWeird") === "true" ? parseInt(localStorage.getItem("setting_noiseVolume")) / 100 : 0);
+});

@@ -275,16 +275,16 @@ const defaultConfig = {
 	"playSoundOnEmoteOnlyMessages": "false",
 	"enableConstantNoiseToFixCEFBeingWeird": "false",
 	"noiseLowpassHz": "400",
-	"noiseVolume": "5"
+	"noiseVolume": "5",
+	"ajaxTimeout": "7",
+	"sound_newMsg_CustomURLs": "",
+	"avatarAllowedIncludeTotalMessages": "false",
+	"avatarAllowedMessageThreshold": "200",
 };
 
 for(let setting in defaultConfig) {
 	if(!localStorage.getItem(`setting_${setting}`)) {
 		console.log(`saving default value for setting ${setting}`);
 		localStorage.setItem(`setting_${setting}`, defaultConfig[setting]);
-	} else {
-		if(setting.indexOf("FFZ") === -1 && setting.indexOf("7TV") === -1 && setting.indexOf("BTTV") === -1) {
-			updateSetting(`setting_${setting}`, localStorage.getItem(`setting_${setting}`));
-		}
 	}
 }

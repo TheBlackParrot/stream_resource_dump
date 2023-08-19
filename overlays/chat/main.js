@@ -1,21 +1,6 @@
-// todo: make this a setting
-$.ajaxSetup({ timeout: 7000 });
+$.ajaxSetup({ timeout: parseInt(localStorage.getItem("setting_ajaxTimeout")) * 1000 || 7000 });
 
-const query = new URLSearchParams(location.search);
 var allowedToProceed = true;
-
-// MIGRATION FROM SETTINGS V1 -> V2
-if(localStorage.getItem("twitch_clientID")) {
-	// user probably has keys, move them over
-	let tempID = localStorage.getItem("twitch_clientID");
-	let tempSecret = localStorage.getItem("twitch_clientSecret");
-
-	localStorage.clear();
-
-	localStorage.setItem("setting_twitchClientID", tempID);
-	localStorage.setItem("setting_twitchClientSecret", tempSecret);
-	localStorage.setItem("setting_twitchChannel", query.get("channel"));
-}
 
 const twitchClientId = localStorage.getItem(`setting_twitchClientID`)
 const twitchClientSecret = localStorage.getItem(`setting_twitchClientSecret`);
@@ -23,22 +8,12 @@ const broadcasterName = localStorage.getItem(`setting_twitchChannel`);
 
 if(!broadcasterName || broadcasterName === "null") {
 	allowedToProceed = false;
-	console.log("No channel is set, hm");
+	console.log("No channel is set");
 }
 
 if(twitchClientId === "null" || twitchClientSecret === "null" || !twitchClientId || !twitchClientSecret) {
 	allowedToProceed = false;
 	console.log(`cached ID: ${twitchClientId}, cached secret: ${twitchClientSecret}`);
-}
-
-const client = new tmi.Client({
-	options: {
-		debug: true
-	},
-	channels: [broadcasterName]
-});
-if(allowedToProceed) {
-	client.connect().catch(console.error);
 }
 
 var fonts;
@@ -53,6 +28,12 @@ var streamData = {"started_at": new Date().toISOString()};
 var twitchBadges = [];
 var chatEmotes = (localStorage.getItem("setting_chatShowCommonEmotes") === "true" ? Object.create(commonEmotes) : {});
 var cheermotes = {};
+var twitchHelixReachable = false;
+
+function setTwitchHelixReachable(state) {
+	twitchHelixReachable = state;
+	postToSettingsChannel("TwitchHelixStatus", state);
+}
 
 function setTwitchAccessToken() {
 	if(!allowedToProceed) {
@@ -76,6 +57,8 @@ function setTwitchAccessToken() {
 			if("access_token" in parentData) {
 				console.log("got access token...");
 				twitchAccessToken = parentData.access_token;
+
+				setTwitchHelixReachable(true);
 
 				console.log(`getting broadcaster information for ${broadcasterName}...`);
 
@@ -186,7 +169,7 @@ function setTwitchAccessToken() {
 						}
 					});
 
-					getGlobalChannelEmotes(broadcasterData);
+					//getGlobalChannelEmotes(broadcasterData);
 
 					console.log("getting channel information...");
 					callTwitch({
@@ -197,13 +180,14 @@ function setTwitchAccessToken() {
 					}, function(channelResponse) {
 						console.log("got channel information");
 						channelData = channelResponse.data[0];
-						systemMessage(`Connected! Showing chat for **#${broadcasterData.login}**${broadcasterData.login === broadcasterName.display_name ? "" : ` *(a.k.a. ${broadcasterData.display_name})*`}`);
+						systemMessage(`Showing chat for **#${broadcasterData.login}**${broadcasterData.login === broadcasterName.display_name ? "" : ` *(a.k.a. ${broadcasterData.display_name})*`}`);
 
 						getTwitchStreamData();
 					});
 				});
 			} else {
 				console.log(data);
+				setTwitchHelixReachable(false);
 			}
 		}
 	});
@@ -482,3 +466,59 @@ function checkForUpdate() {
 		}
 	});
 }
+
+const twitchEventChannel = new BroadcastChannel("twitch_chat");
+
+const twitchEventFuncs = {
+	message: function(data) {
+		prepareMessage(data.tags, data.message, data.self, false);
+	},
+
+	cheer: function(data) {
+		prepareMessage(data.tags, data.message, false, true);
+	},
+
+	subscription: function(data) {
+		prepareMessage(data.tags, data.message, false, true);
+	},
+
+	resub: function(data) {
+		prepareMessage(data.tags, data.message, false, true);
+	},
+
+	ban: function(data) {
+		let id = data.tags['target-user-id'];
+		$(`.chatBlock[data-userid="${id}"]`).remove();
+		setHistoryOpacity();
+	},
+
+	messagedeleted: function(data) {
+		let id = data.tags['target-msg-id'];
+		$(`.chatBlock[data-msguuid="${id}"]`).remove();
+		setHistoryOpacity();
+	},
+
+	timeout: function(data) {
+		let id = data.tags["target-user-id"];
+		$(`.chatBlock[data-userid="${id}"]`).remove();
+		setHistoryOpacity();
+	},
+
+	clearchat: function(data) {
+		$("#wrapper").empty();
+		lastUser = "-1";
+	}
+}
+
+twitchEventChannel.onmessage = function(message) {
+	console.log(message);
+	message = message.data;
+
+	if(message.event in twitchEventFuncs) {
+		if("data" in message) {
+			twitchEventFuncs[message.event](message.data);
+		} else {
+			twitchEventFuncs[message.event]();
+		}
+	}
+};

@@ -39,9 +39,7 @@ function prepareMessage(tags, message, self, forceHighlight) {
 
 	let isOverlayMessage = false;
 	if('is-overlay-message' in tags) {
-		if(tags['is-overlay-message'] === "true") {
-			isOverlayMessage = true;
-		}
+		isOverlayMessage = tags['is-overlay-message'];
 	}
 
 	getTwitchUserInfo(tags['user-id'], function(userData) {
@@ -67,34 +65,6 @@ function prepareMessage(tags, message, self, forceHighlight) {
 		});
 	});	
 }
-
-client.on('message', function(channel, tags, message, self) { prepareMessage(tags, message, self, false); });
-client.on("cheer", function(channel, tags, message) { prepareMessage(tags, message, false, true); });
-client.on("resub", function(channel, username, months, message, tags, methods) { prepareMessage(tags, message, false, true); });
-client.on("subscription", function(channel, username, method, message, tags) { prepareMessage(tags, message, false, true); });
-
-client.on("ban", function(channel, username, reason, tags) {
-	let id = tags['target-user-id'];
-	$(`.chatBlock[data-userid="${id}"]`).remove();
-	setHistoryOpacity();
-});
-
-client.on("messagedeleted", function(channel, username, deletedMessage, tags) {
-	let id = tags['target-msg-id'];
-	$(`.chatBlock[data-msguuid="${id}"]`).remove();
-	setHistoryOpacity();
-});
-
-client.on("timeout", function(channel, username, reason, duration, tags) {
-	let id = tags["target-user-id"];
-	$(`.chatBlock[data-userid="${id}"]`).remove();
-	setHistoryOpacity();
-});
-
-client.on("clearchat", function(channel) {
-	$("#wrapper").empty();
-	lastUser = "-1";
-});
 
 const chatFuncs = {
 	namecolor: function(data, args) {
@@ -252,7 +222,7 @@ const chatFuncs = {
 		rootCSS().setProperty(`--msgWeight${data.user.id}`, weight);
 	},
 
-	"nametransform": function(data, args) {
+	nametransform: function(data, args) {
 		let valid = ["none", "lowercase", "uppercase"];
 		let chosen = valid[0];
 
@@ -270,7 +240,7 @@ const chatFuncs = {
 		rootCSS().setProperty(`--nameTransform${data.user.id}`, chosen);
 	},
 
-	"namevariant": function(data, args) {
+	namevariant: function(data, args) {
 		let valid = ["normal", "small-caps", "unicase"];
 		let chosen = valid[0];
 
@@ -299,7 +269,7 @@ const chatFuncs = {
 		rootCSS().setProperty(`--nameAngle${data.user.id}`, `${angle}deg`);
 	},
 
-	"chatsettings": function(data, args) {
+	chatsettings: function(data, args) {
 		if(args.length !== 19) {
 			console.log("args not correct length");
 			return;
@@ -329,7 +299,7 @@ const chatFuncs = {
 		parseMessage(data);
 	},
 
-	"flags": function(data, args) {
+	flags: function(data, args) {
 		let flags = [];
 		for(let idx = 0; idx < args.length; idx++) {
 			if(flags.length >= parseInt(localStorage.getItem("setting_maxFlagCount"))) {
@@ -349,9 +319,9 @@ const chatFuncs = {
 		console.log(`set flag badges for ${data.user.username} to ${flags}`)
 		localStorage.setItem(`flags_${data.user.id}`, flags);
 	},
-	"flag": function(data, args) { chatFuncs["flags"](data, args); },
+	flag: function(data, args) { chatFuncs["flags"](data, args); },
 
-	"bsr": function(data, args, msgElement) {
+	bsr: function(data, args, msgElement) {
 		if(channelData.game_id !== "503116") {
 			return;
 		}
@@ -558,6 +528,30 @@ const chatFuncs = {
 		systemMessage(`Streamer is using overlay r${overlayRevision}`);
 		checkForUpdate();
 	}
+}
+
+function widthTest(rootElement, userBlock) {
+	$("#testWrapper").append(rootElement);
+
+	let isHidden = userBlock.is(":hidden");
+	if(isHidden) {
+		userBlock.show();
+	}
+
+	let padding = (parseInt(rootCSS().getPropertyValue("--chatBlockPaddingHorizontal")) * 2) + (parseInt(rootCSS().getPropertyValue("--chatBlockIndividualPaddingHorizontal")) * 2);
+	let parentWidth = $("#wrapper").width() - padding;
+	let elementWidth = userBlock.width();
+	let elementLeft = userBlock.position().left;
+
+	if(isHidden) {
+		userBlock.hide();
+	}
+
+	let testWidth = parentWidth - (elementWidth + elementLeft);
+
+	console.log(parentWidth, elementWidth, elementLeft, testWidth);
+
+	return testWidth < 0;
 }
 
 var lastUser;
@@ -786,7 +780,12 @@ function parseMessage(data) {
 				if(localStorage.getItem("setting_avatarAllowedEveryone") === "true") {
 					showPFP = true;
 				} else {
-					if("list" in data.user.badges) {
+					let count = parseInt(localStorage.getItem(`msgCount_${broadcasterData.id}_${data.user.id}`));
+					let maxCount = parseInt(localStorage.getItem("setting_avatarAllowedMessageThreshold"));
+
+					if(count > maxCount && localStorage.getItem("setting_avatarAllowedIncludeTotalMessages") === "true") {
+						showPFP = true;
+					} else if("list" in data.user.badges) {
 						if(typeof data.user.badges.list === "object" && data.user.badges.list !== null) {
 							if(localStorage.getItem("setting_avatarAllowedModerators") === "true" && ("broadcaster" in data.user.badges.list || "moderator" in data.user.badges.list)) {
 								showPFP = true;
@@ -1273,35 +1272,17 @@ function parseMessage(data) {
 	if(parseInt(data.user.id) < 0) {
 		secsVisible = parseFloat(localStorage.getItem("setting_chatRemoveSystemMessageDelay"));
 	} else {
-		checkForExternalBadges(data, badgeBlock);
+		checkForExternalBadges(data, badgeBlock, rootElement, userBlock);
 	}
 
-	// checking to see if things end up overflowing
-	let widthTest = function() {
-		$("#testWrapper").append(rootElement);
-
-		let isHidden = userBlock.is(":hidden");
-		if(isHidden) {
-			userBlock.show();
+	let elementChecks = [flagBlock, badgeBlock, pfpBlock, pronounsBlock];
+	for(let i in elementChecks) {
+		let testAgainst = elementChecks[i];
+		if(widthTest(rootElement, userBlock)) {
+			testAgainst.hide();
 		}
-
-		let expectedWidth = userBlock.width();
-		let padding = (parseInt(rootCSS().getPropertyValue("--chatBlockPaddingHorizontal")) * 2) + (parseInt(rootCSS().getPropertyValue("--chatBlockIndividualPaddingHorizontal")) * 2);
-		let maxWidth = $("#wrapper").width() - padding;
-		$("#testWrapper").empty();
-
-		if(isHidden) {
-			userBlock.hide();
-		}
-
-		return expectedWidth > maxWidth;
 	}
-
-	if(widthTest()) { flagBlock.hide(); }
-	if(widthTest()) { badgeBlock.hide(); }
-	if(widthTest()) { pfpBlock.hide(); }
-	if(widthTest()) { pronounsBlock.hide(); }
-	if(widthTest()) { nameBlock.addClass("clip"); }
+	if(widthTest(rootElement, userBlock)) { nameBlock.addClass("clip"); }
 
 	$("#wrapper").append(rootElement);
 
@@ -1405,7 +1386,7 @@ function get7TVBadges() {
 }
 get7TVBadges();
 
-function checkForExternalBadges(data, badgeBlock) {
+function checkForExternalBadges(data, badgeBlock, rootElement, userBlock) {
 	console.log(data);
 	let id = data.user.id;
 
@@ -1438,7 +1419,7 @@ function checkForExternalBadges(data, badgeBlock) {
 
 		getFFZBadges(data, function(data, response) {
 			console.log(`got external badges for ${data.user.username}`);
-			checkIfExternalBadgesDone(data, badgeBlock);
+			checkIfExternalBadgesDone(data, badgeBlock, rootElement, userBlock);
 		});
 	} else {
 		if(!("ffz" in externalBadgeCache[id])) {
@@ -1462,15 +1443,15 @@ function checkForExternalBadges(data, badgeBlock) {
 
 		if(Date.now() > externalBadgeCache[id].ffz.expires) {
 			getFFZBadges(data, function(data, response) {
-				checkIfExternalBadgesDone(data, badgeBlock);
+				checkIfExternalBadgesDone(data, badgeBlock, rootElement, userBlock);
 			});
 		} else {
-			renderExternalBadges(data, badgeBlock);
+			renderExternalBadges(data, badgeBlock, rootElement, userBlock);
 		}
 	}
 }
 
-function renderExternalBadges(data, badgeBlock) {
+function renderExternalBadges(data, badgeBlock, rootElement, userBlock) {
 	if(!badgeBlock) {
 		return;
 	}
@@ -1491,10 +1472,14 @@ function renderExternalBadges(data, badgeBlock) {
 			badgeBlock.show();
 			badgeBlock.append(badgeElem);
 		}
-	}	
+	}
+
+	if(widthTest(rootElement, userBlock)) {
+		badgeBlock.hide();
+	}
 }
 
-function checkIfExternalBadgesDone(data, badgeBlock) {
+function checkIfExternalBadgesDone(data, badgeBlock, rootElement, userBlock) {
 	let id = data.user.id;
 	let okToRender = true;
 
@@ -1512,7 +1497,7 @@ function checkIfExternalBadgesDone(data, badgeBlock) {
 	}
 
 	if(okToRender) {
-		renderExternalBadges(data, badgeBlock);
+		renderExternalBadges(data, badgeBlock, rootElement, userBlock);
 	}
 }
 
@@ -1684,14 +1669,3 @@ function startBTTVWebsocket() {
 		setTimeout(startBTTVWebsocket, 20000);
 	});
 }
-startBTTVWebsocket();
-
-client.on("raw_message", (messageCloned, message) => {
-	if(localStorage.getItem("setting_debugRawMessages") === "false") {
-		return;
-	}
-
-	let d = new Date();
-	let time = `${d.getHours().toString().padStart(2, "0")}:${d.getMinutes().toString().padStart(2, "0")}`;
-	console.log(`[RAW] [${time}] ${message.raw}`);
-});

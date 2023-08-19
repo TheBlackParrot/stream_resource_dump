@@ -845,18 +845,7 @@ const settingUpdaters = {
 	},
 	sound_newMsg_URL: function(value) {
 		if(sounds["newMsg"].value !== value) {
-			sounds["newMsg"].value = value;
-
-			sounds["newMsg"].urls = [];
-			if(value === "<jerma noises>") {
-				for(let i = 1; i <= 7; i++) {
-					sounds["newMsg"].urls.push(`sounds/jerma-teacher-noise-${i}.ogg`);
-				}
-			} else {
-				sounds["newMsg"].urls.push(value);
-			}
-
-			loadSound("newMsg");
+			initSoundMetadata();
 		}
 	},
 
@@ -878,6 +867,11 @@ const settingUpdaters = {
 			value = 24000;
 		}
 		noiseLowPassFilter.frequency.value = value;
+	},
+	sound_newMsg_CustomURLs: function(value) {
+		if(localStorage.getItem("setting_sound_newMsg_URL") === "<use custom>") {
+			initSoundMetadata();
+		}
 	}
 };
 

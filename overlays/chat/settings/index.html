@@ -24,6 +24,9 @@
 	<link rel="stylesheet" type="text/css" href="main.css">
 
 	<script type="text/javascript" src="jquery-3.6.0.min.js"></script>
+	<script type="text/javascript" src="socket.io.js"></script>
+	<script type="text/javascript" src="tmi.min.js"></script>
+	<script type="text/javascript" src="obs-ws-5.0.3.min.js"></script>
 </head>
 <body>
 	<div id="wrapper">
@@ -32,6 +35,7 @@
 				<div class="row" data-tab="about"><i class="fas fa-heart"></i>About</div>
 				<hr/>
 				<div class="row" data-tab="auth"><i class="fas fa-user-shield"></i>Authentication</div>
+				<div class="row" data-tab="connections"><i class="fas fa-plug"></i>Connections</div>
 				<div class="row" data-tab="function"><i class="fas fa-cogs"></i>Function</div>
 				<hr/>
 				<div class="row" data-tab="appearance"><i class="fas fa-palette"></i>Appearance</div>
@@ -1213,7 +1217,7 @@
 					</div>
 					<hr/>
 					<div class="setting">
-						<div class="settingCell smol" style="line-height: 20px;">
+						<div class="settingCell smol">
 							Local time formatting available: <a href="https://moment.github.io/luxon/#/formatting?id=table-of-tokens">here</a><br/>
 							Duration time formatting available: <a href="https://moment.github.io/luxon/api-docs/index.html#durationtoformat">here</a>
 						</div>
@@ -1297,7 +1301,7 @@
 						<div class="settingCell">
 							<input type="number" id="timestampPadding" min="-50" max="50" step="0.5" value="10"/>px
 						</div>
-					</div>					
+					</div>
 				</div>
 				<div class="part">
 					<h1>Debug</h1>
@@ -1309,6 +1313,14 @@
 					<div class="setting">
 						<div class="settingCell">
 							<input id="debugFreezeChat" type="checkbox"/> <span class="settingInfo">Don't render new chat messages</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">AJAX timeout</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="ajaxTimeout" min="3" max="99" step="1" value="7"/>seconds
 						</div>
 					</div>
 				</div>
@@ -1583,6 +1595,20 @@
 					<div class="setting" data-dependent="avatars">
 						<div class="settingCell">
 							<input id="avatarAllowedStaff" type="checkbox"/> <span class="settingInfo">Twitch staff</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting" data-dependent="avatars">
+						<div class="settingCell">
+							<input id="avatarAllowedIncludeTotalMessages" type="checkbox"/> <span class="settingInfo">Active chatters</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="avatars">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Sent messages threshold</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="avatarAllowedMessageThreshold" min="0" max="9999" step="25" value="200"/>messages
 						</div>
 					</div>
 					<hr/>
@@ -1958,17 +1984,6 @@
 			</div>
 			<div class="section" data-content="auth" data-sensitive="true">
 				<div class="part">
-					<h1>Twitch Connection</h1>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Twitch channel to use</span>
-						</div>
-						<div class="settingCell">
-							<input id="twitchChannel" type="text" value=""/>
-						</div>
-					</div>
-				</div>
-				<div class="part">
 					<h1>Twitch API Tokens</h1>
 					<div class="setting">
 						<div class="settingCellLabel">
@@ -2013,23 +2028,7 @@
 					</div>
 				</div>
 				<div class="part">
-					<h1>OBS Websocket Connection</h1>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">IP address</span>
-						</div>
-						<div class="settingCell">
-							<input id="obs_ip" type="text" value="127.0.0.1"/>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Port</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="obs_port" min="1" max="65536" step="1" value="4455"/>
-						</div>
-					</div>
+					<h1>OBS</h1>
 					<div class="setting">
 						<div class="settingCell">
 							<input id="obs_usePassword" type="checkbox" data-dependent="obsPassword"/> <span class="settingInfo">Authenticate using a password</span>
@@ -2043,21 +2042,115 @@
 							<input id="obs_password" type="password" value=""/>
 						</div>
 					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCell smol">
-							Some extra overlays require connection to OBS; this is not necessary for the chat overlay to function.
-						</div>
-					</div>
 				</div>
 			</div>
 			<div class="section" data-content="about">
 				<div class="part">
-					<h1>TheBlackParrot's Chat Overlay</h1>
+					<h1>TheBlackParrot's Overlay Suite</h1>
 					<div class="setting settingOnlyText">
-						<p>This is the configurator for my overlays, make sure this and any other part of the overlay suite is loaded in OBS!</p>
+						<p>This is the settings panel for my streaming overlays, make sure this and any other part of the overlay suite is loaded in OBS!</p>
 						<p>If anything seems wrong or is malfunctioning, make sure you refresh the cache on all overlay sources (it's in the properties for each source).</p>
 						<p>Links to all public overlays and for more information on them are available at <a href="https://theblackparrot.me/overlays">https://theblackparrot.me/overlays/</a></p>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Status</h1>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<strong>Beat Saber Stats Overlay</strong>
+						</div>
+						<div class="settingCell">
+							<div class="statusCircle grayCircle" id="BSStatsOverlayStatus"></div> <div class="statusMessage grayMessage">inactive</div>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<strong>Beat Saber VOD Audio System</strong>
+						</div>
+						<div class="settingCell">
+							<div class="statusCircle grayCircle" id="BSVASStatus"></div> <div class="statusMessage grayMessage">inactive</div>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<strong>Chat Overlay</strong>
+						</div>
+						<div class="settingCell">
+							<div class="statusCircle grayCircle" id="ChatOverlayStatus"></div> <div class="statusMessage grayMessage">inactive</div>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<strong>Event List / Alerts Overlay</strong>
+						</div>
+						<div class="settingCell">
+							<div class="statusCircle grayCircle" id="AlertsOverlayStatus"></div> <div class="statusMessage grayMessage">inactive</div>
+						</div>
+					</div>
+					<div class="setting" style="display: none;">
+						<div class="settingCellLabel">
+							<strong>Clock Overlay</strong>
+						</div>
+						<div class="settingCell">
+							<div class="statusCircle grayCircle" id="ClockOverlayStatus"></div> <div class="statusMessage grayMessage">inactive</div>
+						</div>
+					</div>
+					<div class="setting" style="display: none;">
+						<div class="settingCellLabel">
+							<strong>Goal Tracking Overlay</strong>
+						</div>
+						<div class="settingCell">
+							<div class="statusCircle grayCircle" id="GoalsOverlayStatus"></div> <div class="statusMessage grayMessage">inactive</div>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<strong>Beat Saber Plus</strong>
+						</div>
+						<div class="settingCell">
+							<div class="statusCircle grayCircle" id="BSPlusStatus"></div> <div class="statusMessage grayMessage">inactive</div>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<strong>OBS (Websocket v5.x)</strong>
+						</div>
+						<div class="settingCell">
+							<div class="statusCircle grayCircle" id="OBSStatus"></div> <div class="statusMessage grayMessage">inactive</div>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<strong>StreamElements Socket</strong>
+						</div>
+						<div class="settingCell">
+							<div class="statusCircle grayCircle" id="StreamElementsStatus"></div> <div class="statusMessage grayMessage">inactive</div>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<strong>Streamlabs Socket</strong>
+						</div>
+						<div class="settingCell">
+							<div class="statusCircle grayCircle" id="StreamlabsStatus"></div> <div class="statusMessage grayMessage">inactive</div>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<strong>Twitch Helix API</strong>
+						</div>
+						<div class="settingCell">
+							<div class="statusCircle grayCircle" id="TwitchHelixStatus"></div> <div class="statusMessage grayMessage">inactive</div>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<strong>Twitch IRC</strong>
+						</div>
+						<div class="settingCell">
+							<div class="statusCircle grayCircle" id="TwitchIRCStatus"></div> <div class="statusMessage grayMessage">inactive</div>
+						</div>
 					</div>
 				</div>
 				<div class="part">
@@ -2223,25 +2316,6 @@
 					</div>
 				</div>
 				<div class="part">
-					<h1>BeatSaberPlus Connection</h1>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">IP address</span>
-						</div>
-						<div class="settingCell">
-							<input id="bsplus_ip" type="text" value="127.0.0.1"/>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Port</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="bsplus_port" min="1" max="65536" step="1" value="2947"/>
-						</div>
-					</div>
-				</div>
-				<div class="part">
 					<h1>Database</h1>
 					<div class="setting">
 						<div class="settingCell">
@@ -2328,6 +2402,13 @@
 						</div>
 						<div class="settingCell">
 							<select id="sound_newMsg_URL">
+								<option value="<use custom>">(Custom)</option>
+								<option value="sounds/boop-1.ogg">Boop 1</option>
+								<option value="sounds/boop-2.ogg">Boop 2</option>
+								<option value="sounds/boop-3.ogg">Boop 3</option>
+								<option value="sounds/boop-4.ogg">Boop 4</option>
+								<option value="sounds/boop-5.ogg">Boop 5</option>
+								<option value="<boop noises>">Boops</option>
 								<option value="sounds/dodoo-1.ogg">Dodoo 1</option>
 								<option value="sounds/dodoo-2.ogg">Dodoo 2</option>
 								<option value="sounds/dodoo-3.ogg">Dodoo 3</option>
@@ -2337,8 +2418,14 @@
 								<option value="sounds/dodoo-noclick-3.ogg">Dodoo 3 (Soft)</option>
 								<option value="sounds/dodoo-noclick-4.ogg">Dodoo 4 (Soft)</option>
 								<option value="<jerma noises>">Jerma985 Teacher Noises</option>
+								<option value="<keyboard noises>">Keyboard Typing</option>
+								<option value="sounds/mumble-notif.ogg">Mumble Message</option>
 								<option value="sounds/notif-1.ogg">Notif 1</option>
 								<option value="sounds/notif-2.ogg">Notif 2</option>
+								<option value="sounds/psst.ogg">Psst</option>
+								<option value="sounds/skype-notif.ogg">Skype Message</option>
+								<option value="sounds/ts-inbound.ogg">TeamSpeak Message</option>
+								<option value="sounds/wink.ogg">Wink</option>
 								<option value="sounds/woop-1.ogg">Woop 1</option>
 								<option value="sounds/woop-2.ogg">Woop 2</option>
 								<option value="sounds/woop-3.ogg">Woop 3</option>
@@ -2348,6 +2435,7 @@
 								<option value="sounds/woosh-4.ogg">Woosh 4</option>
 								<option value="sounds/woosh-5.ogg">Woosh 5</option>
 								<option value="sounds/woosh-6.ogg">Woosh 6</option>
+								<option value="sounds/youve-got-mail.ogg">You've Got Mail</option>
 							</select>
 						</div>
 					</div>
@@ -2386,6 +2474,72 @@
 							<input type="number" id="sound_newMsg_Delay" min="0" max="10" step="0.05" value="0.15"/>s
 						</div>
 					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Custom sound URLs<br/><span style="font-size: var(--font-size-smol); opacity: 0.67;">(One URL per line)</span></span>
+						</div>
+						<div class="settingCell">
+							<textarea id="sound_newMsg_CustomURLs"></textarea>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell smol">
+							External URLs must have Access-Control-Allow-Origin headers that allow this page's root domain, or everything. Many websites have cross-origin requests blocked, if your sounds do not work, try a host that allows cross-origin requests or use a host you have control over. <a href="https://catbox.moe">catbox.moe</a> is one that I'm aware of that allows cross-origin requests.
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section" data-content="connections">
+				<div class="part">
+					<h1>Twitch</h1>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Twitch channel to join</span>
+						</div>
+						<div class="settingCell">
+							<input id="twitchChannel" type="text" value=""/>
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>OBS</h1>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">IP address</span>
+						</div>
+						<div class="settingCell">
+							<input id="obs_ip" type="text" value="127.0.0.1"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Port</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="obs_port" min="1" max="65536" step="1" value="4455"/>
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Beat Saber Plus</h1>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">IP address</span>
+						</div>
+						<div class="settingCell">
+							<input id="bsplus_ip" type="text" value="127.0.0.1"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Port</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bsplus_port" min="1" max="65536" step="1" value="2947"/>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -2406,8 +2560,16 @@
 		</div>
 	</div>
 
+	<script type="text/javascript" src="defaults.js"></script>
 	<script type="text/javascript" src="main.js"></script>
-	<script type="text/javascript" src="broadcast.js"></script>
 	<script type="text/javascript" src="settings.js"></script>
+	<script type="text/javascript" src="backups.js"></script>
+	<script type="text/javascript" src="broadcast.js"></script>
+
+	<script type="text/javascript" src="connections/twitch.js"></script>
+	<script type="text/javascript" src="connections/obs.js"></script>
+	<script type="text/javascript" src="connections/bsplus.js"></script>
+	<script type="text/javascript" src="connections/streamlabs.js"></script>
+	<script type="text/javascript" src="connections/streamelements.js"></script>
 </body>
 </html>

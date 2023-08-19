@@ -1,6 +1,6 @@
-const broadcastChannel = new BroadcastChannel("settings_overlay");
+const settingsChannel = new BroadcastChannel("settings_overlay");
 
-function postToChannel(event, data) {
+function postToSettingsChannel(event, data) {
 	let message = {
 		event: event
 	};
@@ -9,42 +9,73 @@ function postToChannel(event, data) {
 	}
 
 	console.log(message);
-	broadcastChannel.postMessage(message);
+	settingsChannel.postMessage(message);
 }
+postToSettingsChannel("ChatOverlayExists", {
+	version: overlayRevision,
+	timestamp: overlayRevisionTimestamp
+});
 
-broadcastFuncs = {
+settingsFuncs = {
 	reload: function(message) {
 		setTimeout(function() {
 			location.reload();
 		}, 100);
 	},
 
-	testChatMessage: function(message) {
+	testChatMessage: function() {
 		lastUser = -69; // nice
 		let col = Math.floor(Math.random() * 16777216);
 		let r = ((col >> 16) & 0xFF).toString(16).padStart(2, "0");
 		let g = ((col >> 8) & 0xFF).toString(16).padStart(2, "0");
 		let b = (col & 0xFF).toString(16).padStart(2, "0");
 
-		//info=subscriber/25;badges=broadcaster/1,subscriber/3024;client-nonce=d101a84203af3f39502904e6a317672c;color=#8A2BE2;display-name=TheBlackParrot;emotes=305954156:11-18/25:5-9;first-msg=0;flags=;id=7f097686-fb53-4a0a-97d6-ee90ff0d3a05;mod=0;returning-chatter=0;room-id=43464015;subscriber=1;tmi-sent-ts=1689412906804;turbo=0;user-id=43464015;user-type= :theblackparrot!theblackparrot@theblackparrot.tmi.twitch.tv PRIVMSG #theblackparrot :test Kappa PogChamp
+		let tagsObject = {
+			"badges": {
+				"broadcaster": "1"
+			},
+			"username": broadcasterData.login,
+			"display-name": broadcasterData.display_name,
+			"user-id": "-1",
+			"is-overlay-message": false,
+			"message-type": "system",
+			"emotes": {
+				305954156: ['205-212'],
+				25: ['199-203']
+			},
+			"id": `system-${Date.now()}`,
+			"color": `#${r}${g}${b}`
+		}
 
-		let exMsg = "Hello there! This is a *fake message* so that you can see what your *chat settings* look like! **Have fun!** AaBbCcDd EeFfGgHh IiJjKkLl MmNnOoPp QqRrSsTt UuVvWwXx YyZz 0123456789 Also, look! Emotes! Kappa PogChamp catJAM ~~sarcastic text~~";
-		let msg = `@badge-info=;badges=broadcaster/1;client-nonce=balls;display-name=${broadcasterData.display_name};emotes=305954156:205-212/25:199-203;first-msg=0;flags=;id=1234-abcd;mod=0;returning-chatter=0;room-id=${broadcasterData.id};subscriber=0;tmi-sent-ts=${Date.now()};turbo=0;user-id=-1;user-type=;color=#${r}${g}${b} :${broadcasterData.login}!${broadcasterData.login}@${broadcasterData.login}.tmi.twitch.tv PRIVMSG #${broadcasterData.login} :${exMsg}`;
-		client._onMessage({
-			data: msg
-		});
+		prepareMessage(tagsObject, "Hello there! This is a *fake message* so that you can see what your *chat settings* look like! **Have fun!** AaBbCcDd EeFfGgHh IiJjKkLl MmNnOoPp QqRrSsTt UuVvWwXx YyZz 0123456789 Also, look! Emotes! Kappa PogChamp catJAM ~~sarcastic text~~", false, false);
 	},
 
 	clearChatMessages: function(message) {
 		$("#wrapper").empty();
+	},
+
+	settingsOverlayLoaded: function() {
+		postToSettingsChannel("ChatOverlayExists", {
+			version: overlayRevision,
+			timestamp: overlayRevisionTimestamp
+		});
+
+		setTwitchHelixReachable(twitchHelixReachable);
+	},
+
+	settingsKeys: function(message) {
+		for(let i in message.data) {
+			let setting = message.data[i];
+			updateSetting(`setting_${setting}`, localStorage.getItem(`setting_${setting}`));
+		}
 	}
 }
 
-broadcastChannel.onmessage = function(message) {
+settingsChannel.onmessage = function(message) {
 	console.log(message);
 	message = message.data;
 
-	if(message.event in broadcastFuncs) {
-		broadcastFuncs[message.event](message);
+	if(message.event in settingsFuncs) {
+		settingsFuncs[message.event](message);
 	}
 };

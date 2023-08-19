@@ -18,14 +18,29 @@ function callTwitch(data, callback) {
 			if(typeof callback === "function") {
 				callback(data);
 			}
+
+			setTwitchHelixReachable(true);
+		},
+
+		error: function(data) {
+			setTwitchHelixReachable(false);
 		}
 	})	
 }
 
 function systemMessage(msg) {
-	client._onMessage({
-		data: `@badge-info=;badges=;color=#ffffff;display-name=Overlay (r${overlayRevision});id=-1;mod=0;room-id=${broadcasterData.id};subscriber=0;tmi-sent-ts=${Date.now()};turbo=0;user-id=-1;is-overlay-message=true :<overlay>!<overlay>@<overlay>.tmi.twitch.tv PRIVMSG #${broadcasterData.username} :${msg}`
-	});
+	let tagsObject = {
+		"username": "<system>",
+		"display-name": `Overlay (r${overlayRevision})`,
+		"user-id": "-1",
+		"is-overlay-message": true,
+		"message-type": "system",
+		"emotes": null,
+		"id": `system-${Date.now()}`,
+		"color": "#ffffff"
+	}
+
+	prepareMessage(tagsObject, msg, false, false);
 }
 
 function formatTime(val) {

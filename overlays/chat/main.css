@@ -166,6 +166,7 @@ body {
 	-webkit-text-fill-color: transparent;
 	background-color: var(--pronounsColor);
 	background-image: var(--pronounsGradient);
+	flex: none; /* wtf */
 }
 
 .emote {
@@ -385,7 +386,7 @@ img.emoji {
    height: 1.1em;
    width: 1.1em;
    font-size: 1.1em;
-   vertical-align: -0.15em;
+   vertical-align: text-bottom;
 }
 
 .clip {
@@ -476,6 +477,7 @@ img.emoji {
 	width: 1em !important;
 	font-size: var(--bigEmoteSize) !important;
 	border-radius: var(--emoteBorderRadius);
+	vertical-align: unset !important;
 }
 
 .left .bigEmote {

@@ -1,4 +1,4 @@
-const broadcastChannel = new BroadcastChannel("settings_overlay");
+const settingsChannel = new BroadcastChannel("settings_overlay");
 
 function postToChannel(event, data) {
 	let message = {
@@ -9,7 +9,7 @@ function postToChannel(event, data) {
 	}
 
 	console.log(message);
-	broadcastChannel.postMessage(message);
+	settingsChannel.postMessage(message);
 }
 
 $("#reloadOverlayButton").on("mouseup", function(e) {
@@ -31,15 +31,62 @@ broadcastFuncs = {
 		}
 
 		console.log("BS VOD Audio overlay is active");
+		changeStatusCircle("BSVASStatus", "green", "loaded");
 
 		if(!$(".extraHR").length) {
 			$("#rows").append($('<hr class="extraHR"/>'));
 		}
-		$("#rows").append('<div class="row extraRow" data-tab="bsvodaudio"><i class="fas fa-wrench"></i>BS VOD Audio</div>');		
+		$("#rows").append('<div class="row extraRow" data-tab="bsvodaudio"><i class="fas fa-wrench"></i>BS VOD Audio</div>');
+
+		changeStatusCircle("BSPlusStatus", "red", "disconnected");
+		changeStatusCircle("OBSStatus", "red", "disconnected");
+
+		startBSPlusWebsocket();
+		connectOBS();
+	},
+
+	ChatOverlayExists: function(data) {
+		data = data.data;
+		console.log("Chat overlay is active");
+		changeStatusCircle("ChatOverlayStatus", "green", `loaded (r${data.version})`);
+
+		if(allowedToProceed && !isTwitchRunning) {
+			isTwitchRunning = true;
+			client.connect().catch(console.error);
+		}
+
+		postToChannel("settingsKeys", Object.keys(defaultConfig));
+	},
+
+	TwitchHelixStatus: function(state) {
+		if(state) {
+			changeStatusCircle("TwitchHelixStatus", "green", "reachable");
+		} else {
+			changeStatusCircle("TwitchHelixStatus", "red", "unreachable");
+		}
+	},
+
+	AlertsOverlayExists: function(data) {
+		console.log("Alerts overlay is active");
+		changeStatusCircle("AlertsOverlayStatus", "green", `loaded`);
+
+		startSLWebsocket();
+		startSEWebsocket();
+
+		if(allowedToProceed && !isTwitchRunning) {
+			isTwitchRunning = true;
+			client.connect().catch(console.error);
+		}
+	},
+
+	BSStatsOverlayExists: function(data) {
+		changeStatusCircle("BSPlusStatus", "red", "disconnected");
+		changeStatusCircle("BSStatsOverlayStatus", "green", "loaded");
+		startBSPlusWebsocket();
 	}
 };
 
-broadcastChannel.onmessage = function(message) {
+settingsChannel.onmessage = function(message) {
 	console.log(message);
 	message = message.data;
 

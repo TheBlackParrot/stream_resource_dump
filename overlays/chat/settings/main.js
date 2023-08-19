@@ -1,20 +1,29 @@
+$.ajaxSetup({ timeout: parseInt(localStorage.getItem("setting_ajaxTimeout")) * 1000 || 7000 });
+
+function changeStatusCircle(which, status, msg) {
+	let circleWhich = $(`#${which}`);
+	let msgWhich = circleWhich.parent().children(".statusMessage");
+
+	circleWhich.removeClass("grayCircle").removeClass("redCircle").removeClass("greenCircle").addClass(`${status}Circle`);
+	msgWhich.removeClass("grayMessage").removeClass("redMessage").removeClass("greenMessage").addClass(`${status}Message`).text(msg);
+}
+
 $("#sensitive .section").show();
 
-const overlayRevision = 13;
+const overlayRevision = 15;
+const overlayRevisionTimestamp = 1692136799545;
 $("#revision").text(`revision ${overlayRevision}`);
 
 function resetEverything() {
-	// old v1
-	let tempID = localStorage.getItem("twitch_clientID");
-	let tempSecret = localStorage.getItem("twitch_clientSecret");
-	if(!tempID) {
-		// new v2
-		tempID = localStorage.getItem("setting_twitchClientID");
-		tempSecret = localStorage.getItem("setting_twitchClientSecret");
-		tempChannel = localStorage.getItem("setting_twitchChannel");
-	}
+	tempID = localStorage.getItem("setting_twitchClientID");
+	tempSecret = localStorage.getItem("setting_twitchClientSecret");
+	tempChannel = localStorage.getItem("setting_twitchChannel");
 
-	localStorage.clear();
+	doSettingsBackup();
+
+	for(let setting in defaultConfig) {
+		localStorage.removeItem(`setting_${setting}`);
+	}
 
 	if(tempID) {
 		localStorage.setItem("setting_twitchClientID", tempID);
@@ -151,8 +160,18 @@ $("input, select, textarea").on("change", function(e) {
 	}
 
 	if(value !== null && setting && loadingInit) {
+		let oldValue = localStorage.getItem(`setting_${setting}`);
+
 		console.log(`setting ${setting} is now ${value}`);
 		localStorage.setItem(`setting_${setting}`, value);
+
+		if(setting === "twitchChannel" && value !== oldValue && isTwitchRunning) {
+			client.part(oldValue).then(function() {
+				client.join(value).then(function() {
+					postToChannel("reload");
+				});
+			});
+		}
 	}
 });
 
@@ -193,5 +212,3 @@ $.get(`version.json?sigh=${Date.now()}`, function(data) {
 		$("#updateString").html('<i class="fas fa-check"></i> Up to date');
 	}
 });
-
-localStorage.setItem("_checkPresent_bsvodaudio", Date.now());
