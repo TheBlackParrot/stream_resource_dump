@@ -1,3 +1,6 @@
+var callTwitchQueue = [];
+
+var lastAsk = Infinity;
 function callTwitch(data, callback) {
 	if(!allowedToProceed) {
 		console.log("No Client ID or Secret is set.");
@@ -8,22 +11,46 @@ function callTwitch(data, callback) {
 		type: "GET",
 		url: `https://api.twitch.tv/helix/${data.endpoint}`,
 		headers: {
-			"Authorization": `Bearer ${twitchAccessToken}`,
+			"Authorization": `Bearer ${localStorage.getItem("twitch_accessToken")}`,
 			"Client-Id": twitchClientId
 		},
 
 		data: data.args,
 
-		success: function(data) {
-			if(typeof callback === "function") {
-				callback(data);
-			}
-
-			setTwitchHelixReachable(true);
-		},
-
 		error: function(data) {
 			setTwitchHelixReachable(false);
+		},
+
+		statusCode: {
+			200: function(data) {
+				if(typeof callback === "function") {
+					callback(data);
+				}
+
+				setTwitchHelixReachable(true);				
+			},
+
+			401: function() {
+				console.log("token unauthorized");
+				systemMessage("Twitch authentication token error, fetching a new one...");
+
+				if(Date.now() < lastAsk) {
+					postToTwitchEventChannel("RefreshAuthenticationToken");
+					lastAsk = Date.now();
+				}
+
+				if(typeof callback === "function") {
+					let queueObj = {
+						callback: callback
+					};
+
+					if(typeof data !== "undefined") {
+						queueObj.data = data;
+					}
+
+					callTwitchQueue.push(queueObj);
+				}
+			}
 		}
 	})	
 }
@@ -110,6 +137,16 @@ function set7TVPaint(nameBlock, which, userID) {
 }
 
 function getTwitchUserInfo(id, callback) {
+	if(typeof id === "undefined") {
+		return;
+	}
+	if(id === "undefined") {
+		return;
+	}
+	if(!("id" in broadcasterData)) {
+		return;
+	}
+
 	if(id === "-1") {
 		id = broadcasterData.id;
 	}

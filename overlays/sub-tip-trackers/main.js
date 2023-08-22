@@ -6,17 +6,10 @@ var goals = {
 	},
 
 	tips: {
-		title: "Tips/Donations (Monthly)",
-		goal: 500,
+		title: "Ensure I'm safe to move out",
+		goal: 1000,
 		type: "currency",
 		charity: false
-	},
-
-	jdrf: {
-		title: "JDRF Creators for Cures (!jdrf)",
-		goal: 500,
-		type: "currency",
-		charity: true
 	}
 };
 
@@ -148,7 +141,7 @@ function setTracker(which, value) {
 	}
 }
 
-const broadcasterName = query.get("channel").toLowerCase();
+const broadcasterName = localStorage.getItem(`setting_twitchChannel`);
 var allowedToProceed = true;
 
 if(!broadcasterName || broadcasterName === "null") {
@@ -156,79 +149,96 @@ if(!broadcasterName || broadcasterName === "null") {
 	console.log("No channel is set, use ?channel=channel in your URL");
 }
 
-const client = new tmi.Client({
-	options: {
-		debug: true
-	},
-	channels: [broadcasterName]
-});
-if(allowedToProceed) {
-	client.connect().catch(console.error);
+var twitchHelixReachable = false;
+function setTwitchHelixReachable(state) {
+	twitchHelixReachable = state;
+	postToSettingsChannel("TwitchHelixStatus", state);
 }
 
-client.on("subscription", (channel, username, methods, message, tags) => {
-	setTracker("subs", goals.subs.current + 1);
-});
-
 var keepSkippingUntilZero = 0;
+const twitchEventFuncs = {
+	subscription: function(data) {
+		setTracker("subs", goals.subs.current + 1);
+	},
 
-client.on("subgift", (channel, username, streakMonths, recipient, methods, tags) => {
-	if(keepSkippingUntilZero) {
-		keepSkippingUntilZero--;
-		return;
-	}
+	subgift: function(data) {
+		if(keepSkippingUntilZero) {
+			keepSkippingUntilZero--;
+			return;
+		}
 
-	setTracker("subs", goals.subs.current + 1);
-});
+		setTracker("subs", goals.subs.current + 1);
+	},
 
-client.on("submysterygift", (channel, username, numbOfSubs, methods, tags) => {
-	keepSkippingUntilZero = numbOfSubs;
-	setTracker("subs", goals.subs.current + numbOfSubs);
-});
+	submysterygift: function(data) {
+		keepSkippingUntilZero = data.numbOfSubs;
+		setTracker("subs", goals.subs.current + data.numbOfSubs);
+	},
 
-client.on('message', function(channel, tags, message, self) {
-	if(self) {
-		return;
-	}
+	message: function(data) {
+		let channel = data.channel;
+		let tags = data.tags;
+		let message = data.message;
+		let self = data.self;
 
-	if("badges" in tags) {
-		let badges = tags.badges;
-		if(badges !== null) {
-			if(!("moderator" in badges || "broadcaster" in badges)) {
+		if(self) {
+			return;
+		}
+
+		if("badges" in tags) {
+			let badges = tags.badges;
+			if(badges !== null) {
+				if(!("moderator" in badges || "broadcaster" in badges)) {
+					return;
+				}
+			} else {
 				return;
 			}
 		} else {
 			return;
 		}
-	} else {
-		return;
-	}
 
-	let parts = message.split(" ");
-	switch(parts[0]) {
-		case "!goalset":
-			if(parts[1] in goals) {
-				let value = 0;
-				if(parts.length === 3) {
-					if(!isNaN(parseFloat(parts[2]))) {
-						setTracker(parts[1], parseFloat(parts[2]));
+		let parts = message.split(" ");
+		switch(parts[0]) {
+			case "!goalset":
+				if(parts[1] in goals) {
+					let value = 0;
+					if(parts.length === 3) {
+						if(!isNaN(parseFloat(parts[2]))) {
+							setTracker(parts[1], parseFloat(parts[2]));
+						}
 					}
 				}
-			}
-			break;
+				break;
 
-		case "!goaladd":
-			if(parts[1] in goals) {
-				let value = 0;
-				if(parts.length === 3) {
-					if(!isNaN(parseFloat(parts[2]))) {
-						setTracker(parts[1], goals[parts[1]].current + parseFloat(parts[2]));
+			case "!goaladd":
+				if(parts[1] in goals) {
+					let value = 0;
+					if(parts.length === 3) {
+						if(!isNaN(parseFloat(parts[2]))) {
+							setTracker(parts[1], goals[parts[1]].current + parseFloat(parts[2]));
+						}
 					}
 				}
-			}
-			break;
+				break;
+		}
 	}
-});
+};
+
+const twitchEventChannel = new BroadcastChannel("twitch_chat");
+
+twitchEventChannel.onmessage = function(message) {
+	console.log(message);
+	message = message.data;
+
+	if(message.event in twitchEventFuncs) {
+		if("data" in message) {
+			twitchEventFuncs[message.event](message.data);
+		} else {
+			twitchEventFuncs[message.event]();
+		}
+	}
+};
 
 window.addEventListener("storage", function(event) {
 	switch(event.key) {

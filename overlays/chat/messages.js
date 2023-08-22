@@ -547,11 +547,7 @@ function widthTest(rootElement, userBlock) {
 		userBlock.hide();
 	}
 
-	let testWidth = parentWidth - (elementWidth + elementLeft);
-
-	console.log(parentWidth, elementWidth, elementLeft, testWidth);
-
-	return testWidth < 0;
+	return parentWidth - (elementWidth + elementLeft) < 0;
 }
 
 var lastUser;
@@ -1477,6 +1473,7 @@ function renderExternalBadges(data, badgeBlock, rootElement, userBlock) {
 	if(widthTest(rootElement, userBlock)) {
 		badgeBlock.hide();
 	}
+	$("#wrapper").append(rootElement);
 }
 
 function checkIfExternalBadgesDone(data, badgeBlock, rootElement, userBlock) {

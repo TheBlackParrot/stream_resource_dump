@@ -27,7 +27,7 @@
                 },
                 {
                     "key": "bsName",
-                    "value": "Float"
+                    "value": "Idle"
                 },
                 {
                     "key": "isToggle",
@@ -94,7 +94,7 @@
                 },
                 {
                     "key": "bsName",
-                    "value": "Float"
+                    "value": "Idle"
                 },
                 {
                     "key": "isToggle",
@@ -198,7 +198,7 @@
                 },
                 {
                     "key": "max",
-                    "value": "6500"
+                    "value": "6000"
                 }
             ],
             "posX": 3.0,
@@ -265,11 +265,11 @@
                 },
                 {
                     "key": "min",
-                    "value": "30"
+                    "value": "40"
                 },
                 {
                     "key": "max",
-                    "value": "250"
+                    "value": "300"
                 }
             ],
             "posX": 795.0,
@@ -316,7 +316,7 @@
                 },
                 {
                     "key": "smoothTime",
-                    "value": "0.06"
+                    "value": "0.08"
                 }
             ],
             "posX": 796.667236328125,
@@ -579,6 +579,35 @@
                 "c2e3449d-ba9b-4ddb-93d3-c3e815dbb44e638256721756566075"
             ],
             "headerColor": 0
+        },
+        {
+            "id": "879ed163-b021-4ec6-9ce4-ab24d62492bf",
+            "values": [
+                {
+                    "key": "bsValue",
+                    "value": "100"
+                },
+                {
+                    "key": "bsName",
+                    "value": "Blink"
+                },
+                {
+                    "key": "isToggle",
+                    "value": "0"
+                },
+                {
+                    "key": "smoothTime",
+                    "value": "0"
+                }
+            ],
+            "posX": 74.00054931640625,
+            "posY": 68.99765014648438,
+            "path": "Nodes/BlendshapeNode",
+            "inputSocketIds": [
+                "e8937930-db64-4e82-a1d0-dd22c1e51846638275699902067593"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
         }
     ],
     "connections": [
@@ -686,6 +715,11 @@
             "id": "8e36446c-22cf-47fa-a4a9-55e2b27771cc",
             "outputSocketId": "1e78624a-b1c1-48a2-a933-0ca71eb33394638256721756566075",
             "inputSocketId": "c8711809-b152-48f6-95f1-34c8aed1033a638256721129282080"
+        },
+        {
+            "id": "e043dfdd-cee2-441f-a51a-377fc3b92193",
+            "outputSocketId": "af18dfce-5a32-47ff-bb54-ff3185d991eb638180441213488023",
+            "inputSocketId": "e8937930-db64-4e82-a1d0-dd22c1e51846638275699902067593"
         }
     ]
 }

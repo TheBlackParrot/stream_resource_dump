@@ -21,7 +21,6 @@ $.get("fonts.json", function(data) {
 	fonts = data;
 });
 
-var twitchAccessToken;
 var broadcasterData = {};
 var channelData = {};
 var streamData = {"started_at": new Date().toISOString()};
@@ -35,164 +34,134 @@ function setTwitchHelixReachable(state) {
 	postToSettingsChannel("TwitchHelixStatus", state);
 }
 
-function setTwitchAccessToken() {
-	if(!allowedToProceed) {
-		console.log("No Client ID or Secret is set.");
-		return;
-	}
+function getStuffReady() {
+	console.log(`getting broadcaster information for ${broadcasterName}...`);
 
-	console.log("getting access token...");
-
-	$.ajax({
-		type: "POST",
-		url: "https://id.twitch.tv/oauth2/token",
-		
-		data: {
-			"client_id": twitchClientId,
-			"client_secret": twitchClientSecret,
-			"grant_type": "client_credentials"
-		},
-
-		success: function(parentData) {
-			if("access_token" in parentData) {
-				console.log("got access token...");
-				twitchAccessToken = parentData.access_token;
-
-				setTwitchHelixReachable(true);
-
-				console.log(`getting broadcaster information for ${broadcasterName}...`);
-
-				callTwitch({
-					"endpoint": "users",
-					"args": {
-						"login": broadcasterName
-					}
-				}, function(rawUserResponse) {
-					broadcasterData = rawUserResponse.data[0];
-					console.log(`got broadcaster information for ${broadcasterData.display_name} (${broadcasterData.id})`);
-					console.log("getting chat badges...");
-
-					callTwitch({
-						"endpoint": "chat/badges/global"
-					}, function(badgeResponse) {
-						console.log("got global chat badges");
-
-						let subBlock = -1;
-						for(let i in badgeResponse.data) {
-							if(badgeResponse.data[i].set_id === "subscriber") {
-								subBlock = i;
-							}
-
-							twitchBadges.push(badgeResponse.data[i]);
-						}
-
-						callTwitch({
-							"endpoint": "chat/badges",
-							"args": {
-								"broadcaster_id": broadcasterData.id
-							}
-						}, function(channelBadgeResponse) {
-							console.log("got channel chat badges");
-							for(let i in channelBadgeResponse.data) {
-								let badge = channelBadgeResponse.data[i];
-
-								if(badge.set_id === "subscriber") {
-									for(let j in badge.versions) {
-										let badgeData = badge.versions[j];
-										let foundOldBadge = false;
-
-										for(let k in twitchBadges[subBlock].versions) {
-											let oldBadgeData = twitchBadges[subBlock].versions[k];
-
-											if(oldBadgeData.id === badgeData.id) {
-												twitchBadges[subBlock].versions[k] = badgeData;
-												foundOldBadge = true;
-											}
-										}
-										if(!foundOldBadge) {
-											twitchBadges[subBlock].versions.push(badge.versions[j]);
-										}
-									}
-								} else {
-									twitchBadges.push(badge);
-								}
-							}
-						});
-					});
-
-					console.log("getting cheermotes...");
-					callTwitch({
-						"endpoint": "bits/cheermotes",
-						"args": {
-							"broadcaster_id": broadcasterData.id
-						}
-					}, function(cheermoteResponse) {
-						console.log("got cheermotes");
-						for(let i in cheermoteResponse.data) {
-							let mote = cheermoteResponse.data[i];
-							mote.prefix = mote.prefix.toLowerCase();
-							
-							cheermotes[mote.prefix] = {};
-
-							for(let j in mote.tiers) {
-								let tier = mote.tiers[j];
-
-								let animHighestRes = 0;
-								let animHighestResImage = null;
-								let staticHighestRes = 0;
-								let staticHighestResImage = null;
-
-								for(let k in tier.images.dark.animated) {
-									let image = tier.images.dark.animated[k];
-									if(k > animHighestRes) {
-										animHighestRes = k;
-										animHighestResImage = image;
-									}
-								}
-
-								for(let k in tier.images.dark.static) {
-									let image = tier.images.dark.static[k];
-									if(k > staticHighestRes) {
-										staticHighestRes = k;
-										staticHighestResImage = image;
-									}
-								}
-
-								cheermotes[mote.prefix][tier.min_bits] = {
-									color: tier.color,
-									images: {
-										animated: animHighestResImage,
-										static: staticHighestResImage,
-									}
-								};
-							}
-						}
-					});
-
-					//getGlobalChannelEmotes(broadcasterData);
-
-					console.log("getting channel information...");
-					callTwitch({
-						"endpoint": "channels",
-						"args": {
-							"broadcaster_id": broadcasterData.id
-						}
-					}, function(channelResponse) {
-						console.log("got channel information");
-						channelData = channelResponse.data[0];
-						systemMessage(`Showing chat for **#${broadcasterData.login}**${broadcasterData.login === broadcasterName.display_name ? "" : ` *(a.k.a. ${broadcasterData.display_name})*`}`);
-
-						getTwitchStreamData();
-					});
-				});
-			} else {
-				console.log(data);
-				setTwitchHelixReachable(false);
-			}
+	callTwitch({
+		"endpoint": "users",
+		"args": {
+			"login": broadcasterName
 		}
+	}, function(rawUserResponse) {
+		broadcasterData = rawUserResponse.data[0];
+		console.log(`got broadcaster information for ${broadcasterData.display_name} (${broadcasterData.id})`);
+		console.log("getting chat badges...");
+
+		callTwitch({
+			"endpoint": "chat/badges/global"
+		}, function(badgeResponse) {
+			console.log("got global chat badges");
+
+			let subBlock = -1;
+			for(let i in badgeResponse.data) {
+				if(badgeResponse.data[i].set_id === "subscriber") {
+					subBlock = i;
+				}
+
+				twitchBadges.push(badgeResponse.data[i]);
+			}
+
+			callTwitch({
+				"endpoint": "chat/badges",
+				"args": {
+					"broadcaster_id": broadcasterData.id
+				}
+			}, function(channelBadgeResponse) {
+				console.log("got channel chat badges");
+				for(let i in channelBadgeResponse.data) {
+					let badge = channelBadgeResponse.data[i];
+
+					if(badge.set_id === "subscriber") {
+						for(let j in badge.versions) {
+							let badgeData = badge.versions[j];
+							let foundOldBadge = false;
+
+							for(let k in twitchBadges[subBlock].versions) {
+								let oldBadgeData = twitchBadges[subBlock].versions[k];
+
+								if(oldBadgeData.id === badgeData.id) {
+									twitchBadges[subBlock].versions[k] = badgeData;
+									foundOldBadge = true;
+								}
+							}
+							if(!foundOldBadge) {
+								twitchBadges[subBlock].versions.push(badge.versions[j]);
+							}
+						}
+					} else {
+						twitchBadges.push(badge);
+					}
+				}
+			});
+		});
+
+		console.log("getting cheermotes...");
+		callTwitch({
+			"endpoint": "bits/cheermotes",
+			"args": {
+				"broadcaster_id": broadcasterData.id
+			}
+		}, function(cheermoteResponse) {
+			console.log("got cheermotes");
+			for(let i in cheermoteResponse.data) {
+				let mote = cheermoteResponse.data[i];
+				mote.prefix = mote.prefix.toLowerCase();
+				
+				cheermotes[mote.prefix] = {};
+
+				for(let j in mote.tiers) {
+					let tier = mote.tiers[j];
+
+					let animHighestRes = 0;
+					let animHighestResImage = null;
+					let staticHighestRes = 0;
+					let staticHighestResImage = null;
+
+					for(let k in tier.images.dark.animated) {
+						let image = tier.images.dark.animated[k];
+						if(k > animHighestRes) {
+							animHighestRes = k;
+							animHighestResImage = image;
+						}
+					}
+
+					for(let k in tier.images.dark.static) {
+						let image = tier.images.dark.static[k];
+						if(k > staticHighestRes) {
+							staticHighestRes = k;
+							staticHighestResImage = image;
+						}
+					}
+
+					cheermotes[mote.prefix][tier.min_bits] = {
+						color: tier.color,
+						images: {
+							animated: animHighestResImage,
+							static: staticHighestResImage,
+						}
+					};
+				}
+			}
+		});
+
+		//getGlobalChannelEmotes(broadcasterData);
+
+		console.log("getting channel information...");
+		callTwitch({
+			"endpoint": "channels",
+			"args": {
+				"broadcaster_id": broadcasterData.id
+			}
+		}, function(channelResponse) {
+			console.log("got channel information");
+			channelData = channelResponse.data[0];
+			systemMessage(`Showing chat for **#${broadcasterData.login}**${broadcasterData.login === broadcasterName.display_name ? "" : ` *(a.k.a. ${broadcasterData.display_name})*`}`);
+
+			getTwitchStreamData();
+		});
 	});
 }
-setTwitchAccessToken();
+getStuffReady();
 
 var streamDataTimeout;
 function getTwitchStreamData() {
@@ -469,6 +438,18 @@ function checkForUpdate() {
 
 const twitchEventChannel = new BroadcastChannel("twitch_chat");
 
+function postToTwitchEventChannel(event, data) {
+	let message = {
+		event: event
+	};
+	if(data) {
+		message.data = data;
+	}
+
+	console.log(message);
+	twitchEventChannel.postMessage(message);
+}
+
 const twitchEventFuncs = {
 	message: function(data) {
 		prepareMessage(data.tags, data.message, data.self, false);
@@ -507,6 +488,24 @@ const twitchEventFuncs = {
 	clearchat: function(data) {
 		$("#wrapper").empty();
 		lastUser = "-1";
+	},
+
+	AccessTokenRefreshed: function(data) {
+		lastAsk = Infinity;
+
+		systemMessage("Twitch authentication token refreshed!");
+
+		callTwitchQueue = callTwitchQueue.filter(function(queueObj) {
+			if(typeof queueObj.callback === "function") {
+				if("data" in queueObj) {
+					callTwitch(queueObj.data, queueObj.callback);
+				} else {
+					queueObj.callback();
+				}
+			}
+
+			return false;
+		});
 	}
 }
 

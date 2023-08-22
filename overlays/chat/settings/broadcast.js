@@ -83,6 +83,17 @@ broadcastFuncs = {
 		changeStatusCircle("BSPlusStatus", "red", "disconnected");
 		changeStatusCircle("BSStatsOverlayStatus", "green", "loaded");
 		startBSPlusWebsocket();
+	},
+
+	GoalTrackingOverlayExists: function(data) {
+		data = data.data;
+		console.log("Goal tracking overlay is active");
+		changeStatusCircle("GoalsOverlayStatus", "green", `loaded`);
+
+		if(allowedToProceed && !isTwitchRunning) {
+			isTwitchRunning = true;
+			client.connect().catch(console.error);
+		}
 	}
 };
 

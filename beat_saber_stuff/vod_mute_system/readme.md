@@ -1,3 +1,6 @@
+# No longer maintained
+I've merged this in with my overlay suite, check the main overlays folder in the project root. This should still function fine so long as BeatSaberPlus's websocket protocol doesn't change.
+
 # Beat Saber VOD Audio Mute/Unmute System
 I wanted to give the VOD watchers of my Twitch stream some game audio when I could, so I made a system that would automatically toggle on/off the "VOD Audio Track 2" thing in OBS.
 

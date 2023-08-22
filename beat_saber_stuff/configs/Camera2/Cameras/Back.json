@@ -11,7 +11,7 @@
     "Sabers": true
   },
   "type": "FirstPerson",
-  "FOV": 60.0,
+  "FOV": 68.0,
   "layer": 2,
   "antiAliasing": 2,
   "renderScale": 1.0,
@@ -21,26 +21,26 @@
   "viewRect": {
     "x": 0.0,
     "y": 0.0,
-    "width": 1.52,
+    "width": 1.5,
     "height": 1.0,
-    "locked": false
+    "locked": true
   },
   "Multiplayer": {
     "followSpectatorPlattform": true
   },
   "Smoothfollow": {
-    "position": 10.0,
-    "rotation": 2.7,
+    "position": 30.0,
+    "rotation": 4.8,
     "followReplayPosition": true,
     "limits": {
       "pos_x": "-Infinity:Infinity",
       "pos_y": "-Infinity:Infinity",
       "pos_z": "-Infinity:Infinity",
-      "rot_x": "-10:10",
+      "rot_x": "-Infinity:Infinity",
       "rot_y": "-Infinity:Infinity",
       "rot_z": "0:0"
     },
-    "pivotingOffset": false
+    "pivotingOffset": true
   },
   "ModmapExtensions": {
     "autoOpaqueWalls": true,
@@ -55,11 +55,11 @@
   },
   "targetPos": {
     "x": 0.0,
-    "y": -0.15,
-    "z": -1.2
+    "y": -0.2,
+    "z": -0.6
   },
   "targetRot": {
-    "x": -1.0,
+    "x": 1.0,
     "y": 0.0,
     "z": 0.0
   }

@@ -161,6 +161,69 @@ client.on("disconnected", function() {
 	changeStatusCircle("TwitchIRCStatus", "red", "disconnected");
 });
 
+var gettingAccessToken = false;
+var lastRefresh = 0;
+const twitchFuncs = {
+	RefreshAuthenticationToken: function() {
+		if(!allowedToProceed) {
+			console.log("No Client ID or Secret is set.");
+			return;
+		}
+
+		if(gettingAccessToken) {
+			console.log("already fetching a token, hold your horses!!!");
+			return;
+		}
+
+		if(Date.now() - lastRefresh < 10000) {
+			// this is a very hacky way to stop refresh spam but w/e
+			console.log("already fetched a token within the last 10 seconds, chill");
+			return;
+		}
+
+		gettingAccessToken = true;
+		console.log("getting access token...");
+
+		$.ajax({
+			type: "POST",
+			url: "https://id.twitch.tv/oauth2/token",
+			
+			data: {
+				"client_id": twitchClientId,
+				"client_secret": twitchClientSecret,
+				"grant_type": "client_credentials"
+			},
+
+			success: function(parentData) {
+				console.log(parentData);
+
+				if("access_token" in parentData) {
+					console.log("got access token...");
+					localStorage.setItem("twitch_accessToken", parentData.access_token);
+
+					postToTwitchEventChannel("AccessTokenRefreshed");
+				}
+
+				gettingAccessToken = false;
+				lastRefresh = Date.now();
+			},
+
+			error: function() {
+				gettingAccessToken = false;
+			}
+		});
+	}
+};
+
+twitchEventChannel.onmessage = function(message) {
+	console.log(message);
+	message = message.data;
+
+	if(message.event in twitchFuncs) {
+		twitchFuncs[message.event](message);
+	}
+};
+
 /*
 setTimeout(function() {
 	client._onMessage({

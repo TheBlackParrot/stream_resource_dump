@@ -1,49 +1,73 @@
-Chroma / NoodleExtensions
-	- CustomJSONData
-	- Heck
-	- LookupID
+Unless otherwise noted with a URL, these mods should be found in BeatMods's repositories (via ModAssistant).
+Naluluna mods are available through her own mod manager.
 
 AdBlocker
-AudioLink
 BeatLeader
 BeatSaberPlus
+ - https://github.com/hardcpp/BeatSaberPlus
 BeatSaverDownloader
 BeatSaverUpdater
 BeatSaverVoting
-BetterSongList
+BetterSongList (iPixelGalaxy's fork)
+ - https://github.com/iPixelGalaxy/BeatSaber_BetterSongList
 BetterSongSearch
 BetterSort.LastPlayed
 BSIndexHapticFix
+ - https://github.com/hardcpp/BSIndexHapticFix
 BSNightcore
+ - https://github.com/Puplip/BSNightcore
 Camera2
-Chirality
+Chroma
+ClockAndVolume
+ - https://github.com/iPixelGalaxy/ClockAndVolume
+CustomJSONData
 CustomPlatforms
-CustomSaber
 EasyOffset
-Enhancements
 EnvironmentHider
-FastFail
-GottaGoFast
+ - https://github.com/Redageddon/EnvironmentHider
+Heck
+HitScoreVisualizer
+ - https://github.com/ErisApps/HitScoreVisualizer
 HitsoundTweaks
 ImageFactory
-JDFixer
+LookupID
 MappingExtensions
 MemoryMinimizer
+ - https://discord.com/channels/441805394323439646/950792822116724777/954469889433796678
+MenuPillars
 MenuSaberColors
-NalulunaAudioLatency
-NalulunaHitbox
+NalulunaCounters
 NalulunaMenu
 NalulunaRewinder
+NalulunaSound
 NjsFixer
+ - (seems like the binaries are missing now, check this folder for what i've got)
+NoodleExtensions
+NoteMovementFix
+ - https://github.com/Loloppe/BeatSaber_NoteMovementFix
+OffsetFixer
+ - https://github.com/Loloppe/BeatSaber_OffsetFixer
 ParticleOverdrive
+PauseCredit
+ - https://github.com/Futuremappermydud/PauseCredit
+PauseMusic
+ - https://github.com/Futuremappermydud/PauseMusic
+PlayFirst
 PlaylistManager
+ReeSabers
+ - https://www.beatleader.xyz/supporting-project/link
+SaberFactory
 ScorePercentage
-SearchFixes
 SmoothedController
+ - https://github.com/kinsi55/BeatSaber_SmoothedController
+SongCore (Pink's fork)
+ - https://github.com/ModdingPink/SongCoreLegacy
 SongDetailsCache
 SoundReplacer
 TakeMeToResults
 Tweaks55
 UITweaks
 Unfunny
+ - https://github.com/kaitlyndotmoe/Unfunny
 wipbot
+ - https://github.com/catsethecat/wipbot

@@ -1,16 +1,16 @@
 ﻿{
   "Enabled": true,
-  "RemoveDebris": false,
-  "RemoveAllCutParticles": false,
-  "RemoveObstacleParticles": true,
+  "RemoveDebris": true,
+  "RemoveAllCutParticles": true,
+  "RemoveObstacleParticles": false,
   "RemoveSaberBurnMarks": true,
   "RemoveSaberBurnMarkSparkles": true,
   "RemoveSaberClashEffects": true,
   "RemoveWorldParticles": true,
   "Environment": {
     "RemoveMusicBandLogo": true,
-    "RemoveFullComboLossAnimation": true,
-    "NoFake360HUD": false
+    "RemoveFullComboLossAnimation": false,
+    "NoFake360HUD": true
   },
   "LevelSelection": {
     "RemoveBaseGameFilterButton": true,
@@ -31,7 +31,6 @@
     }
   },
   "PlayerOptions": {
-    "JumpDurationIncrement": 0,
     "ReorderPlayerSettings": true,
     "MergeLightPressetOptions": true,
     "OverrideLightIntensityOption": true,
@@ -40,21 +39,21 @@
   "MainMenu": {
     "OverrideMenuEnvColors": true,
     "BaseColor": {
-      "r": 0.599065959,
-      "g": 0.5115881,
-      "b": 1.0,
+      "r": 0.0,
+      "g": 0.0,
+      "b": 0.0,
       "a": 1.0
     },
     "LevelClearedColor": {
-      "r": 0.0,
+      "r": 0.591999948,
       "g": 1.0,
-      "b": 0.0,
+      "b": 0.399999976,
       "a": 1.0
     },
     "LevelFailedColor": {
       "r": 1.0,
-      "g": 0.0,
-      "b": 0.0,
+      "g": 0.507999957,
+      "b": 0.399999976,
       "a": 1.0
     },
     "DisableEditorButtonOnMainMenu": true,

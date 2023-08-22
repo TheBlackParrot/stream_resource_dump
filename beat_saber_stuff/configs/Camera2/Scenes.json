@@ -1,8 +1,6 @@
 {
   "scenes": {
-    "Menu": [
-      "Menu"
-    ],
+    "Menu": [],
     "MultiplayerMenu": [],
     "Playing": [],
     "Playing360": [],
@@ -19,19 +17,11 @@
     ],
     "Regular Menu": [
       "Menu"
-    ],
-    "Menu Funny Moments": [],
-    "Modcharts": [
-      "Back",
-      "VT+ Glow Source"
-    ],
-    "Thirdperson": []
+    ]
   },
   "customSceneBindings": {
-    "F7": "Regular Menu",
-    "F6": "Menu Funny Moments",
-    "F5": "Thirdperson",
-    "F4": "Regular Scene"
+    "F7": "Regular Scene",
+    "F6": "Regular Menu"
   },
   "autoswitchFromCustom": false
 }

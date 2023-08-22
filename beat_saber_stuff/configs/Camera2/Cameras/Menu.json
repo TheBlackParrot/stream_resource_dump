@@ -11,7 +11,7 @@
     "Sabers": true
   },
   "type": "FirstPerson",
-  "FOV": 36.0,
+  "FOV": 35.96,
   "layer": 1,
   "antiAliasing": 4,
   "renderScale": 1.5,

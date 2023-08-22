@@ -445,6 +445,44 @@
             ],
             "outputSocketIds": [],
             "headerColor": 0
+        },
+        {
+            "id": "93df8712-073b-4d1c-81eb-7e4913e3a737",
+            "values": [
+                {
+                    "key": "paramName",
+                    "value": "HeartRateWS"
+                },
+                {
+                    "key": "value",
+                    "value": "130"
+                }
+            ],
+            "posX": -622.3333129882813,
+            "posY": 276.66668701171877,
+            "path": "Nodes/SetParamNode",
+            "inputSocketIds": [
+                "0b364045-23cd-430f-86c5-96ec45646d71638275736081519615"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "70db2801-3444-44c9-82cb-cedc3eacb196",
+            "values": [
+                {
+                    "key": "triggerName",
+                    "value": ""
+                }
+            ],
+            "posX": -889.3330078125,
+            "posY": 267.3344421386719,
+            "path": "Nodes/TriggerNode",
+            "inputSocketIds": [],
+            "outputSocketIds": [
+                "591c8689-0889-4f65-a758-765a68e612dd638275736274749632"
+            ],
+            "headerColor": 0
         }
     ],
     "connections": [
@@ -537,6 +575,16 @@
             "id": "062efd4e-d93f-4506-af80-b1740694f806",
             "outputSocketId": "1e54f86e-ae9f-44f7-9ae5-dc80825ab13d638179213807228359",
             "inputSocketId": "4c9d2a10-d6ea-4d28-828a-bd996c96ea25638179214476424996"
+        },
+        {
+            "id": "89688ada-82db-4ccc-9cb9-08e935388af7",
+            "outputSocketId": "591c8689-0889-4f65-a758-765a68e612dd638275736274749632",
+            "inputSocketId": "0b364045-23cd-430f-86c5-96ec45646d71638275736081519615"
+        },
+        {
+            "id": "dc85c091-7b61-4311-abb4-b4ef641a2a0b",
+            "outputSocketId": "591c8689-0889-4f65-a758-765a68e612dd638275736274749632",
+            "inputSocketId": "0751cfba-1525-4cc7-bb08-854c15ba1309638177676170524806"
         }
     ]
 }

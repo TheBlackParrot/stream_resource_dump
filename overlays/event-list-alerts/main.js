@@ -33,7 +33,6 @@ var allowedToProceed = true;
 
 const twitchClientId = localStorage.getItem(`setting_twitchClientID`);
 const twitchClientSecret = localStorage.getItem(`setting_twitchClientSecret`);
-const streamelementsJWTToken = localStorage.getItem(`setting_streamelementsJWTToken`);
 const broadcasterName = localStorage.getItem(`setting_twitchChannel`);
 
 if(!broadcasterName || broadcasterName === "null") {
@@ -161,47 +160,7 @@ function startTiltifyWebsocket() {
 	});
 }
 
-var twitchAccessToken;
-function setTwitchAccessToken() {
-	if(!allowedToProceed) {
-		console.log("No Client ID or Secret is set.");
-		return;
-	}
-
-	console.log("getting access token...");
-
-	$.ajax({
-		type: "POST",
-		url: "https://id.twitch.tv/oauth2/token",
-		
-		data: {
-			"client_id": twitchClientId,
-			"client_secret": twitchClientSecret,
-			"grant_type": "client_credentials"
-		},
-
-		success: function(parentData) {
-			if("access_token" in parentData) {
-				console.log("got access token...");
-				twitchAccessToken = parentData.access_token;
-
-				setTwitchHelixReachable(true);
-
-				if(allowedToProceed) {
-					startTiltifyWebsocket();
-				}
-			} else {
-				console.log(data);
-			}
-		},
-
-		error: function(data) {
-			setTwitchHelixReachable(false);
-		}
-	});
-}
-setTwitchAccessToken();
-
+var lastAsk = Infinity;
 function callTwitch(data, callback) {
 	if(!allowedToProceed) {
 		console.log("No Client ID or Secret is set.");
@@ -212,22 +171,45 @@ function callTwitch(data, callback) {
 		type: "GET",
 		url: `https://api.twitch.tv/helix/${data.endpoint}`,
 		headers: {
-			"Authorization": `Bearer ${twitchAccessToken}`,
+			"Authorization": `Bearer ${localStorage.getItem("twitch_accessToken")}`,
 			"Client-Id": twitchClientId
 		},
 
 		data: data.args,
 
-		success: function(data) {
-			if(typeof callback === "function") {
-				callback(data);
-			}
-
-			setTwitchHelixReachable(true);
-		},
-
 		error: function(data) {
 			setTwitchHelixReachable(false);
+		},
+
+		statusCode: {
+			200: function(data) {
+				if(typeof callback === "function") {
+					callback(data);
+				}
+
+				setTwitchHelixReachable(true);				
+			},
+
+			401: function() {
+				console.log("token unauthorized");
+
+				if(Date.now() < lastAsk) {
+					postToTwitchEventChannel("RefreshAuthenticationToken");
+					lastAsk = Date.now();
+				}
+
+				if(typeof callback === "function") {
+					let queueObj = {
+						callback: callback
+					};
+
+					if(typeof data !== "undefined") {
+						queueObj.data = data;
+					}
+
+					callTwitchQueue.push(queueObj);
+				}
+			}
 		}
 	})	
 }
@@ -455,6 +437,7 @@ function doAlert() {
 
 // absolutely frick you, twitch
 var keepSkippingUntilZero = 0;
+var callTwitchQueue = [];
 
 const twitchEventFuncs = {
 	cheer: function(data) {
@@ -697,6 +680,22 @@ const twitchEventFuncs = {
 		}
 
 		addAlert({username: tags.username, name: name, showPFP: showPFP, html: alertHtml, doTTS: false, reverse: true, audio: greetingSound});
+	},
+
+	AccessTokenRefreshed: function(data) {
+		lastAsk = Infinity;
+
+		callTwitchQueue = callTwitchQueue.filter(function(queueObj) {
+			if(typeof queueObj.callback === "function") {
+				if("data" in queueObj) {
+					callTwitch(queueObj.data, queueObj.callback);
+				} else {
+					queueObj.callback();
+				}
+			}
+
+			return false;
+		});
 	}
 };
 
@@ -766,7 +765,8 @@ var customGreetingSounds = {
 	"pasketi": "ur_my_friend_now.ogg",
 	"saphirapendragon": "roadrunner_meep_meep.ogg",
 	"nebelmonsterchen": "Hello_-_Adele_Sound_effect.ogg",
-	"silvereagledev": "bird_up.ogg"
+	"silvereagledev": "bird_up.ogg",
+	"latinfoxy": "fox_hehehe.ogg"
 };
 var greetingSoundAmount = 11;
 

@@ -57,11 +57,14 @@ obsFuncs = {
 	}
 }
 
-obsEventChannel.onmessage = function(message) {
+obsEventChannel.onmessage = async function(message) {
 	console.log(message);
 	data = message.data;
 
-	if(message.event in obsFuncs) {
-		broadcastFuncs[message.event](data);
+	if(data.event in obsFuncs) {
+		console.log(`${data.event} in obsFuncs`);
+		await obsFuncs[data.event](data.data);
+	} else {
+		console.log(`${data.event} not in obsFuncs`);
 	}
 };

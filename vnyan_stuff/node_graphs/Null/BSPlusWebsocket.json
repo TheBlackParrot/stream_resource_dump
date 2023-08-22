@@ -364,7 +364,7 @@
                 },
                 {
                     "key": "bsName",
-                    "value": "BlinkHold"
+                    "value": "Blink"
                 },
                 {
                     "key": "isToggle",
@@ -393,7 +393,7 @@
                 },
                 {
                     "key": "seconds",
-                    "value": "3000"
+                    "value": "2500"
                 }
             ],
             "posX": 1063.3355712890625,
@@ -832,6 +832,77 @@
             ],
             "outputSocketIds": [],
             "headerColor": 0
+        },
+        {
+            "id": "fe97c47b-38b8-41f7-8eab-d3220167f2e9",
+            "values": [
+                {
+                    "key": "bsValue",
+                    "value": "25"
+                },
+                {
+                    "key": "bsName",
+                    "value": "Blink"
+                },
+                {
+                    "key": "isToggle",
+                    "value": "0"
+                },
+                {
+                    "key": "smoothTime",
+                    "value": "0.4"
+                }
+            ],
+            "posX": -95.00000762939453,
+            "posY": -373.0,
+            "path": "Nodes/BlendshapeNode",
+            "inputSocketIds": [
+                "c1c70847-a57d-4ad8-822f-75ba0c8cfd4c638276464203809870"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "1f26227e-84b2-4f45-a045-ce59cd1474c0",
+            "values": [
+                {
+                    "key": "paramName",
+                    "value": "AllowBlinking"
+                },
+                {
+                    "key": "value",
+                    "value": "false"
+                }
+            ],
+            "posX": 1062.333740234375,
+            "posY": -1063.3338623046875,
+            "path": "Nodes/SetTextParamNode",
+            "inputSocketIds": [
+                "16ee9598-97ec-4a01-aa4c-eeaf91ab041d638276465719578206"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "a8f909cc-41f9-4564-bd48-af9246a88da9",
+            "values": [
+                {
+                    "key": "paramName",
+                    "value": "AllowBlinking"
+                },
+                {
+                    "key": "value",
+                    "value": "true"
+                }
+            ],
+            "posX": 1629.0003662109375,
+            "posY": -860.00048828125,
+            "path": "Nodes/SetTextParamNode",
+            "inputSocketIds": [
+                "d28b6005-8156-409d-9331-f4205c69d3ff638276465804936486"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
         }
     ],
     "connections": [
@@ -984,6 +1055,26 @@
             "id": "591c8d03-f654-4e28-a1de-103c49eb88fa",
             "outputSocketId": "7a9d7cc8-0007-4151-8187-4768091f0c9a638177555241339217",
             "inputSocketId": "b07b939b-44b0-4e52-ba46-c51736901847638215400001574553"
+        },
+        {
+            "id": "047e9624-c3ed-4d5d-905b-2aa354afe523",
+            "outputSocketId": "4d5fd1cb-1eec-4b23-a978-75b88b69179b638179215242514258",
+            "inputSocketId": "c1c70847-a57d-4ad8-822f-75ba0c8cfd4c638276464203809870"
+        },
+        {
+            "id": "11b7a545-478d-42df-beee-497a33900aab",
+            "outputSocketId": "3e4ba66c-352b-419d-884f-77b9d5744c8a638179227465977010",
+            "inputSocketId": "16ee9598-97ec-4a01-aa4c-eeaf91ab041d638276465719578206"
+        },
+        {
+            "id": "b14f5ec0-94d7-4a43-ba0e-3178ca7ad468",
+            "outputSocketId": "f2ad8f52-b994-41a7-9bfd-18c46192dfb6638179228168213407",
+            "inputSocketId": "d28b6005-8156-409d-9331-f4205c69d3ff638276465804936486"
+        },
+        {
+            "id": "c6882309-4cee-417e-aa51-e1cc397a6677",
+            "outputSocketId": "c9f4b8b0-f706-4037-841b-0bede7920d6a638179228081408339",
+            "inputSocketId": "d28b6005-8156-409d-9331-f4205c69d3ff638276465804936486"
         }
     ]
 }

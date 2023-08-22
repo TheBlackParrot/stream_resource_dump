@@ -58,18 +58,19 @@ function syncRemoteDatabases() {
 }
 syncRemoteDatabases();
 
+const obsEventChannel = new BroadcastChannel("obs");
 const bsplusEventChannel = new BroadcastChannel("bsplus");
 
-function postToBSPlusEventChannel(event, data) {
+function postToOBSEventChannel(event, data) {
 	let message = {
 		event: event
 	};
-	if(data) {
+	if(typeof data !== "undefined") {
 		message.data = data;
 	}
 
 	console.log(message);
-	bsplusEventChannel.postMessage(message);
+	obsEventChannel.postMessage(message);
 }
 
 bsplusEventChannel.onmessage = function(message) {
@@ -88,10 +89,10 @@ var eventFuncs = {
 		if(data.gameStateChanged === "Menu") {
 			if(localStorage.getItem("setting_bsvodaudio_muteOnMenu") === "true") {
 				console.log("Muting VOD audio, in menu");
-				postToBSPlusEventChannel("toggleVODAudio", false);
+				postToOBSEventChannel("toggleVODAudio", false);
 			} else {
 				console.log("Unmuting VOD audio, in menu");
-				postToBSPlusEventChannel("toggleVODAudio", true);
+				postToOBSEventChannel("toggleVODAudio", true);
 			}
 		}
 	},
@@ -172,17 +173,6 @@ var eventFuncs = {
 			}
 		}
 
-		if(found === "") {
-			currentVODAudioState = "Unknown";
-		} else {
-			if(allow) {
-				currentVODAudioState = "Safe";
-			} else {
-				currentVODAudioState = "Unsafe";
-			}
-		}
-		checkAudioState();
-
 		$(":root").get(0).style.setProperty("--currentHash", `"${map.hash}"`);
 		$(":root").get(0).style.setProperty("--currentTitle", `"${map.name}${(map.sub_name == "" ? "" : " " + map.sub_name)}"`);
 		$(":root").get(0).style.setProperty("--currentArtist", `"${map.artist}"`);
@@ -190,7 +180,7 @@ var eventFuncs = {
 		$(":root").get(0).style.setProperty("--currentBSR", `"${map.BSRKey}"`); // this is currently blank as of BS+ v6.0.8
 		$(":root").get(0).style.setProperty("--currentArt", `url(data:image/jpeg;base64,${map.coverRaw.trim()})`);
 
-		postToBSPlusEventChannel("toggleVODAudio", allow);
+		postToOBSEventChannel("toggleVODAudio", allow);
 	}
 }
 
