@@ -280,6 +280,19 @@ const defaultConfig = {
 	"sound_newMsg_CustomURLs": "",
 	"avatarAllowedIncludeTotalMessages": "false",
 	"avatarAllowedMessageThreshold": "200",
+	"obs_ip": "127.0.0.1",
+	"obs_port": "4455",
+	"obs_password": "",
+	"obs_usePassword": "false",
+	"bsvodaudio_audioSource": "",
+	"bsvodaudio_vodAudioTrack": "2",
+	"bsvodaudio_syncRemoteDBs": "true",
+	"bsvodaudio_remoteDBURLs": "https://gist.githubusercontent.com/TheBlackParrot/ea2126f4f2af4f47455cd072d2e975e5/raw/db.json",
+	"bsplus_ip": "127.0.0.1",
+	"bsplus_port": "2947",
+	"bsvodaudio_muteOnConflict": "true",
+	"bsvodaudio_muteOnUnknown": "true",
+	"bsvodaudio_muteOnMenu": "true"
 };
 
 for(let setting in defaultConfig) {

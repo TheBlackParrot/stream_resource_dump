@@ -1,4 +1,4 @@
-$.ajaxSetup({ timeout: 7000 });
+$.ajaxSetup({ timeout: 10000 });
 
 var remoteDB = {};
 var db = {
@@ -172,6 +172,12 @@ var eventFuncs = {
 				}
 			}
 		}
+
+		currentVODAudioState = "Unknown";
+		if(map.isVODSafe) {
+			currentVODAudioState = (map.isVODSafe === 1 ? "Safe" : "Unsafe");
+		}
+		checkAudioState();
 
 		$(":root").get(0).style.setProperty("--currentHash", `"${map.hash}"`);
 		$(":root").get(0).style.setProperty("--currentTitle", `"${map.name}${(map.sub_name == "" ? "" : " " + map.sub_name)}"`);
