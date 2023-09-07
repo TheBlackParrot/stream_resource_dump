@@ -872,6 +872,80 @@ const settingUpdaters = {
 		if(localStorage.getItem("setting_sound_newMsg_URL") === "<use custom>") {
 			initSoundMetadata();
 		}
+	},
+
+	avatarsBGSize: function(value) {
+		rootCSS().setProperty("--avatarsBGSize", `${value}px`);
+	},
+	avatarsBGHorizontalPadding: function(value) {
+		rootCSS().setProperty("--avatarsBGHorizontalPadding", `${value}px`);
+	},
+	avatarsBGVerticalPadding: function(value) {
+		rootCSS().setProperty("--avatarsBGVerticalPadding", `${value}px`);
+	},
+	avatarsBGBorderRadius: function(value) {
+		rootCSS().setProperty("--avatarsBGBorderRadius", `${value}px`);
+	},
+	avatarsBGMagnification: function(value) {
+		rootCSS().setProperty("--avatarsBGMagnification", `${value}%`);
+	},
+	avatarsBGStartOpacity: function(value) {
+		rootCSS().setProperty("--avatarsBGStartOpacity", value/100);
+	},
+	avatarsBGEndOpacity: function(value) {
+		rootCSS().setProperty("--avatarsBGEndOpacity", value/100);
+	},
+	avatarsBGStartFadeAt: function(value) {
+		rootCSS().setProperty("--avatarsBGStartFadeAt", `${value}%`);
+	},
+	avatarsBGEndFadeAt: function(value) {
+		rootCSS().setProperty("--avatarsBGEndFadeAt", `${value}%`);
+	},
+	avatarsBGFadeAngle: function(value) {
+		rootCSS().setProperty("--avatarsBGFadeAngle", `${value}deg`);
+	},
+	enableAvatarsBGShadow: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--shadowStuffAvatarBG", "var(--originalShadowStuff)");
+		} else {
+			rootCSS().setProperty("--shadowStuffAvatarBG", "drop-shadow(0px 0px 0px transparent)");
+		}
+	},
+	enableAvatarsBGOutline: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--outlineStuffAvatarBG", "var(--originalOutlineStuff)");
+		} else {
+			rootCSS().setProperty("--outlineStuffAvatarBG", "drop-shadow(0px 0px 0px transparent)");
+		}
+	},
+	avatarsBGBlurAmount: function(value) {
+		rootCSS().setProperty("--avatarsBGBlurAmount", `${value}px`);
+	},
+
+	applyGradientToBadges: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--badgeGradientDisplay", "block");
+		} else {
+			rootCSS().setProperty("--badgeGradientDisplay", "none");
+		}
+	},
+	badgeGradientColorStart: function(value) {
+		rootCSS().setProperty("--badgeGradientColorStart", value);
+	},
+	badgeGradientColorEnd: function(value) {
+		rootCSS().setProperty("--badgeGradientColorEnd", value);
+	},
+	badgeGradientAngle: function(value) {
+		rootCSS().setProperty("--badgeGradientAngle", `${value}deg`);
+	},
+	badgeGradientStart: function(value) {
+		rootCSS().setProperty("--badgeGradientStart", `${value}%`);
+	},
+	badgeGradientEnd: function(value) {
+		rootCSS().setProperty("--badgeGradientEnd", `${value}%`);
+	},
+	badgeGradientBlendMode: function(value) {
+		rootCSS().setProperty("--badgeGradientBlendMode", value);
 	}
 };
 

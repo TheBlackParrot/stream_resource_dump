@@ -595,7 +595,9 @@ function parseMessage(data) {
 
 	let rootElement = $(`<div class="chatBlock" data-msgIdx="${messageCount}" data-combinedIdx="${combinedCount}" data-msgUUID="${data.uuid}" data-userID="${data.user.id}"></div>`);
 	let wrapperElement = $('<div class="effectWrapper"></div>');
+	let avatarBGWrapperElement = $('<div class="avatarBGWrapper"></div>');
 	rootElement.append(wrapperElement);
+	wrapperElement.append(avatarBGWrapperElement);
 
 	if(localStorage.getItem("setting_chatAnimationsIn") === "true") {
 		wrapperElement.addClass("slideIn");
@@ -620,6 +622,10 @@ function parseMessage(data) {
 				lastElem.css("border-bottom", "0px");
 			} else {
 				lastElem.removeClass("last_message").addClass("middle_message");
+
+				if(!lastElem.length) {
+					lastElem.addClass("first_message");
+				}
 			}
 
 			userBlock.css("margin-top", "0px");
@@ -640,6 +646,7 @@ function parseMessage(data) {
 		}		
 		if(localStorage.getItem("setting_chatAnimationsIn") === "true") {
 			userBlock.removeClass("userInfoIn").addClass("justFadeIn");
+			avatarBGWrapperElement.addClass("justFadeIn");
 		}
 	}
 	lastUser = data.user.id;
@@ -663,6 +670,7 @@ function parseMessage(data) {
 		for(let badgeType in data.user.badges.list) {
 			let showBadge = true;
 			let foundBadge = false;
+			let addGradient = false;
 
 			for(let checkAgainst in twitchBadgeTypes) {
 				let badgeTypeData = twitchBadgeTypes[checkAgainst];
@@ -671,6 +679,10 @@ function parseMessage(data) {
 					if(localStorage.getItem(`setting_${badgeTypeData.setting}`) === "false") {
 						showBadge = false;
 						break;
+					}
+
+					if(badgeTypeData.is_solid) {
+						addGradient = true;
 					}
 				}
 			}
@@ -707,11 +719,15 @@ function parseMessage(data) {
 				}
 			}
 
-			let badgeElem = $(`<img src="${url}"/>`);
+			let badgeElem = $(`<span class="badgeWrap"></span>`);
+			badgeElem.css("background-image", `url('${url}')`);
 			if(badgeType === "subscriber") {
 				badgeElem.addClass("sub_badge");
 			} else {
 				badgeElem.addClass("normal_badge");
+				if(addGradient) {
+					badgeElem.addClass("badgeGradient");
+				}
 			}
 
 			badgeBlock.append(badgeElem);
@@ -838,6 +854,9 @@ function parseMessage(data) {
 
 			if(showPFP) {
 				pfpBlock.show();
+				if(localStorage.getItem("setting_enableAvatarsAsBackground") === "true") {
+					avatarBGWrapperElement.append($(`<div class="avatarBG avatarBGLeft" style="background-image: url('${userData.profile_image_url}');"/>`));
+				}
 			} else {
 				pfpBlock.hide();
 			}
@@ -1288,9 +1307,11 @@ function parseMessage(data) {
 				wrapperElement.removeClass("slideIn").addClass("slideOut");
 				wrapperElement.one("animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd", function() {
 					$(rootElement).remove();
+					$(".chatBlock:first-child .effectWrapper").find(".avatarBGWrapper").show();
 				});
 			} else {
 				rootElement.remove();
+				$(".chatBlock:first-child .effectWrapper").find(".avatarBGWrapper").show();
 			}
 		}, secsVisible * 1000);
 	}
@@ -1460,7 +1481,9 @@ function renderExternalBadges(data, badgeBlock, rootElement, userBlock) {
 		for(let i in cacheData.badges) {
 			let badge = cacheData.badges[i];
 
-			let badgeElem = $(`<img class="normal_badge" src="${badge.img}"/>`);
+			//let badgeElem = $(`<img class="normal_badge" src="${badge.img}"/>`);
+			let badgeElem = $(`<span class="badgeWrap normal_badge badgeGradient"></span>`);
+			badgeElem.css("background-image", `url('${badge.img}')`);
 			if("color" in badge) {
 				badgeElem.css("background-color", badge.color);
 			}

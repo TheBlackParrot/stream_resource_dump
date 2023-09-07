@@ -126,9 +126,31 @@
 	--avatarSize: 34px;
 	--avatarBorderRadius: 10px;
 
+	--avatarsBGSize: 150px;
+	--avatarsBGHorizontalPadding: 8px;
+	--avatarsBGVerticalPadding: 8px;
+	--avatarsBGBorderRadius: 8px;
+	--avatarsBGMagnification: 125%;
+	--avatarsBGStartOpacity: 1;
+	--avatarsBGEndOpacity: 0;
+	--avatarsBGStartFadeAt: -50%;
+	--avatarsBGEndFadeAt: 50%;
+	--avatarsBGFadeAngle: 110deg;
+	--outlineStuffAvatarBG: drop-shadow(0px 0px 0px transparent);
+	--shadowStuffAvatarBG: var(--originalShadowStuff);
+	--avatarsBGEffects: var(--outlineStuffAvatarBG) var(--shadowStuffAvatarBG);
+	--avatarsBGBlurAmount: 0px;
+
 	--badgeBorderRadius: 4px;
 	--subBadgeBorderRadius: var(--badgeBorderRadius);
 	--badgeSize: 28px;
+	--badgeGradientDisplay: none;
+	--badgeGradientColorStart: #555555ff;
+	--badgeGradientColorEnd: #000000ff;
+	--badgeGradientAngle: 0deg;
+	--badgeGradientStart: 0%;
+	--badgeGradientEnd: 100%;
+	--badgeGradientBlendMode: screen;
 
 	--pronounsColor: rgba(128, 128, 128, 1);
 	--pronounsColorSecondary: rgba(255, 255, 255, 1);

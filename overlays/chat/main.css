@@ -105,7 +105,7 @@ body {
 	display: inline-flex !important;
 }
 
-.badges img {
+.badgeWrap {
 	width: var(--badgeSize);
 	min-width: var(--badgeSize);
 	max-width: var(--badgeSize);
@@ -113,12 +113,24 @@ body {
 	min-height: var(--badgeSize);
 	max-height: var(--badgeSize);
 	margin-right: var(--badgeSpacing);
+	background-position: center;
+	background-size: contain;
 }
 
 .sub_badge { border-radius: var(--subBadgeBorderRadius); }
 .normal_badge { border-radius: var(--badgeBorderRadius); }
 
-.badges img:last-child {
+.badgeGradient:after {
+	background-image: linear-gradient(var(--badgeGradientAngle), var(--badgeGradientColorStart) var(--badgeGradientStart), var(--badgeGradientColorEnd) var(--badgeGradientEnd));
+	width: 100%;
+	height: 100%;
+	display: var(--badgeGradientDisplay);
+	content: "";
+	border-radius: var(--badgeBorderRadius);
+	mix-blend-mode: var(--badgeGradientBlendMode);
+}
+
+.badgeWrap:last-child {
 	margin-right: 0px;
 }
 
@@ -578,3 +590,44 @@ img.emoji {
 	flex-direction: column;
 	bottom: 0px;
 }
+
+.avatarBGWrapper {
+	display: none;
+	height: calc(100% + var(--avatarsBGVerticalPadding));
+	width: 100%;
+	position: absolute;
+	filter: var(--avatarsBGEffects);
+	backdrop-filter: opacity(0);
+}
+
+.first_message .avatarBGWrapper {
+	display: inline-block;
+}
+
+.avatarBG {
+	height: 100%;
+	width: 100%;
+	max-height: var(--avatarsBGSize);
+	max-width: var(--avatarsBGSize);
+	background-size: var(--avatarsBGMagnification);
+	background-repeat: no-repeat;
+	background-position: center;
+	-webkit-mask-image: linear-gradient(var(--avatarsBGFadeAngle), rgba(0, 0, 0, var(--avatarsBGStartOpacity)) var(--avatarsBGStartFadeAt), rgba(0, 0, 0, var(--avatarsBGEndOpacity)) var(--avatarsBGEndFadeAt));
+	filter: blur(var(--avatarsBGBlurAmount));
+	backdrop-filter: opacity(0);
+}
+
+.avatarBGLeft {
+	border-top-left-radius: var(--avatarsBGBorderRadius);
+	border-bottom-left-radius: var(--avatarsBGBorderRadius);
+	margin-left: calc(-1 * var(--avatarsBGHorizontalPadding));
+}
+
+.avatarBGRight {
+	border-top-right-radius: var(--avatarsBGBorderRadius);
+	border-bottom-right-radius: var(--avatarsBGBorderRadius);
+	margin-right: calc(-1 * var(--avatarsBGHorizontalPadding));
+}
+
+.top .avatarBGLeft, .top .avatarBGRight { margin-bottom: calc(-0.5 * var(--avatarsBGVerticalPadding)); }
+.bottom .avatarBGLeft, .bottom .avatarBGRight { margin-top: calc(-0.5 * var(--avatarsBGVerticalPadding)); }

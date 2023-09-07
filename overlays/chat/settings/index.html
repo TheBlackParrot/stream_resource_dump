@@ -113,7 +113,7 @@
 							<span class="settingInfo">Glow radius</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="chatHighlightGlowRadius" min="1" max="16" step="1" value="3"/>px
+							<input type="number" id="chatHighlightGlowRadius" min="1" max="16" step="1" value="4"/>px
 						</div>
 					</div>
 				</div>
@@ -416,7 +416,7 @@
 					</div>
 					<div class="setting">
 						<div class="settingCell">
-							<input id="chatMessageReflectUserColor" type="checkbox"/> <span class="settingInfo">Color fades into the chatter's own color</span>
+							<input checked id="chatMessageReflectUserColor" type="checkbox"/> <span class="settingInfo">Color fades into the chatter's own color</span>
 						</div>
 					</div>
 					<div class="setting">
@@ -486,7 +486,7 @@
 							<span class="settingInfo">Line height</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="chatMessageLineHeight" min="16" max="64" step="0.5" value="30"/>px
+							<input type="number" id="chatMessageLineHeight" min="16" max="64" step="0.5" value="28"/>px
 						</div>
 					</div>
 					<hr/>
@@ -1392,7 +1392,65 @@
 					</div>
 					<div class="setting" data-dependent="twitchBadges">
 						<div class="settingCell">
-							<input id="applyBorderRadiusToSubBadges" type="checkbox"/> <span class="settingInfo">Apply border radius setting to subscriber badges</span>
+							<input id="applyBorderRadiusToSubBadges" type="checkbox"/> <span class="settingInfo">Apply border radius setting to subscriber and non-role badges</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="applyGradientToBadges" type="checkbox" data-dependent="twitchBadgesGradients"/> <span class="settingInfo">Render a gradient on top of role and external badges</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="twitchBadgesGradients">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Colors</span>
+						</div>
+						<div class="settingCell">
+							<input id="badgeGradientColorStart" type="text" data-coloris value="#555555ff"/><i class="fas fa-long-arrow-alt-right"></i><input id="badgeGradientColorEnd" type="text" data-coloris value="#000000ff"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="twitchBadgesGradients">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Angle</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="badgeGradientAngle" min="-360" max="360" step="1" value="150"/>deg
+						</div>
+					</div>
+					<div class="setting" data-dependent="twitchBadgesGradients">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Gradient runs from</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="badgeGradientStart" min="-300" max="300" step="1" value="0"/>%<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="badgeGradientEnd" min="-300" max="300" step="1" value="0"/>%
+						</div>
+					</div>
+					<div class="setting" data-dependent="twitchBadgesGradients">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Blending mode</span>
+						</div>
+						<div class="settingCell">
+							<select id="badgeGradientBlendMode">
+								<option value="normal">Normal</option>
+								<option value="overlay">Overlay</option>
+								<option value="multiply">Multiply</option>
+								<option value="screen">Screen</option>
+								<option value="darken">Darken</option>
+								<option value="lighten">Lighten</option>
+								<option value="color-dodge">Color dodge</option>
+								<option value="color-burn">Color burn</option>
+								<option value="hard-light">Hard light</option>
+								<option value="soft-light">Soft light</option>
+								<option value="difference">Difference</option>
+								<option value="exclusion">Exclusion</option>
+								<option value="hue">Hue</option>
+								<option value="saturation">Saturation</option>
+								<option value="color">Color</option>
+								<option value="luminosity">Luminosity</option>
+								<option selected value="plus-lighter">Plus lighter</option>
+								<!-- plus-darker is missing as of Vivaldi 6.2.3105.45, going to assume the same goes for OBS's CEF -->
+								<!--<option value="plus-darker">Plus darker</option>-->
+							</select>
 						</div>
 					</div>
 				</div>
@@ -1516,7 +1574,6 @@
 							<input checked id="hideDefaultAvatars" type="checkbox" data-dependent="avatars"/> <span class="settingInfo">Hide default avatars regardless of permission settings</span>
 						</div>
 					</div>
-
 				</div>
 				<div class="part">
 					<h1>Appearance</h1>
@@ -1538,6 +1595,102 @@
 								<option selected value="squircle">Squircle</option>
 								<option value="square">Square</option>
 							</select>
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Background Effect</h1>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="enableAvatarsAsBackground" type="checkbox" data-dependent="avatarsBG"/> <span class="settingInfo">Display avatars underneath chat message blocks</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting" data-dependent="avatarsBG">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="avatarsBGSize" min="0" max="999" step="1" value="350"/>px
+						</div>
+					</div>
+					<div class="setting" data-dependent="avatarsBG">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Horizontal padding</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="avatarsBGHorizontalPadding" min="0" max="99" step="1" value="8"/>px
+						</div>
+					</div>
+					<div class="setting" data-dependent="avatarsBG">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Vertical padding</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="avatarsBGVerticalPadding" min="0" max="99" step="1" value="12"/>px
+						</div>
+					</div>
+					<hr/>
+					<div class="setting" data-dependent="avatarsBG">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Border radius</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="avatarsBGBorderRadius" min="0" max="99" step="0.5" value="8"/>px
+						</div>
+					</div>
+					<div class="setting" data-dependent="avatarsBG">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Magnification</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="avatarsBGMagnification" min="100" max="400" step="1" value="140"/>%
+						</div>
+					</div>
+					<hr/>
+					<div class="setting" data-dependent="avatarsBG">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Fade opacity</span>
+						</div>
+						<div class="settingCell">
+							<div>
+								<input type="number" id="avatarsBGStartOpacity" min="0" max="100" step="1" value="85"/>%<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="avatarsBGEndOpacity" min="0" max="100" step="1" value="0"/>%
+							</div>
+						</div>
+					</div>
+					<div class="setting" data-dependent="avatarsBG">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Fade from</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="avatarsBGStartFadeAt" min="-300" max="300" step="1" value="20"/>%<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="avatarsBGEndFadeAt" min="-300" max="300" step="1" value="75"/>% of block width
+						</div>
+					</div>
+					<div class="setting" data-dependent="avatarsBG">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Fade angle</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="avatarsBGFadeAngle" min="0" max="360" step="1" value="125"/>deg
+						</div>
+					</div>
+					<hr/>
+					<div class="setting" data-dependent="avatarsBG">
+						<div class="settingCell">
+							<input id="enableAvatarsBGOutline" type="checkbox"/> <span class="settingInfo">Draw outlines underneath opaque image content</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="avatarsBG">
+						<div class="settingCell">
+							<input checked id="enableAvatarsBGShadow" type="checkbox"/> <span class="settingInfo">Draw shadows underneath opaque image content</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="avatarsBG">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Blur amount</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="avatarsBGBlurAmount" min="0" max="24" step="1" value="0"/>px
 						</div>
 					</div>
 				</div>
@@ -2235,7 +2388,7 @@
 							<span class="settingInfo">Max emotes to show</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="chatMaxBigEmotes" min="0" max="100" step="1" value="10"/>
+							<input type="number" id="chatMaxBigEmotes" min="0" max="100" step="1" value="8"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="bigEmotes">

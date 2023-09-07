@@ -322,6 +322,16 @@ function getExternalChannelEmotes(broadcasterData) {
 				systemMessage("*Fetched channel's 7TV emotes*");
 				console.log(data);
 
+				if(data.emote_set === null) {
+					systemMessage("*Unable to fetch channel's 7TV emotes, active emote set is... empty?*");
+					return;
+				}
+
+				if(!("emotes" in data.emote_set)) {
+					systemMessage("*Unable to fetch channel's 7TV emotes, required JS object isn't present?*");
+					return;
+				}
+
 				for(let i in data.emote_set.emotes) {
 					let emote = data.emote_set.emotes[i];
 					let urls = emote.data.host.files;
