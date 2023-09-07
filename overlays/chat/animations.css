@@ -175,3 +175,30 @@
 	animation-iteration-count: 1;
 	animation-timing-function: ease;
 }
+
+@keyframes zoomAvatarBGOutKF {
+	0% {
+		background-size: calc(var(--avatarsBGMagnification) * 1.7);
+		background-position-x: calc(-1 * var(--avatarsBGSize) / 1.5);
+		opacity: 0%;
+	}
+
+	85% {
+		background-position-x: calc(-1 * var(--avatarsBGSize) / 2.5);
+	}
+
+	100% {
+		background-size: var(--avatarsBGMagnification);
+		background-position-x: calc(-1 * var(--avatarsBGSize) / 2.5);
+		opacity: 100%;
+	}
+}
+
+.zoomAvatarBGOut {
+	animation-name: zoomAvatarBGOutKF;
+	animation-delay: calc(var(--animationsInDuration) / 3);
+	animation-duration: calc(var(--animationsInDuration) * 2);
+	animation-fill-mode: both;
+	animation-iteration-count: 1;
+	animation-timing-function: var(--timingFuncEaseOutCubic);	
+}

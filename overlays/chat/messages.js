@@ -855,7 +855,7 @@ function parseMessage(data) {
 			if(showPFP) {
 				pfpBlock.show();
 				if(localStorage.getItem("setting_enableAvatarsAsBackground") === "true") {
-					avatarBGWrapperElement.append($(`<div class="avatarBG avatarBGLeft" style="background-image: url('${userData.profile_image_url}');"/>`));
+					avatarBGWrapperElement.append($(`<div class="avatarBG avatarBGLeft zoomAvatarBGOut" style="background-image: url('${userData.profile_image_url}');"/>`));
 				}
 			} else {
 				pfpBlock.hide();
