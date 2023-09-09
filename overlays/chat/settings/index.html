@@ -538,6 +538,79 @@
 					</div>
 				</div>
 				<div class="part">
+					<h1>Event Tags</h1>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Color</span>
+						</div>
+						<div class="settingCell">
+							<input id="eventTagsColor" type="text" data-coloris value="#FFFFFFFF"/>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Font</span>
+						</div>
+						<div class="settingCell">
+							<input id="eventTagsFont" type="text" value="Manrope"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="eventTagsFontSize" min="4" max="64" step="0.25" value="14"/>pt
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="eventTagsFontWeight" min="100" max="900" step="25" value="900"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Additional weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="eventTagsFontWeightExtra" min="0" max="4" step="0.05" value="0.7"/>px
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Letter spacing</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="eventTagsLetterSpacing" min="-12" max="12" step="0.2" value="-0.2"/>px
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Transform</span>
+						</div>
+						<div class="settingCell">
+							<select id="eventTagsTransform">
+								<option value="capitalize">Capitalize</option>
+								<option value="lowercase">Lowercase</option>
+								<option selected value="uppercase">Uppercase</option>
+								<option value="none">Do not transform</option>
+							</select>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Line height</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="eventTagsLineHeight" min="16" max="64" step="0.5" value="22"/>px
+						</div>
+					</div>
+				</div>
+				<div class="part">
 					<h1>Positioning</h1>
 					<div class="setting">
 						<div class="settingCell">
@@ -1189,6 +1262,47 @@
 							<input checked id="chatParseMarkdown" type="checkbox"/> <span class="settingInfo">Allow inline Markdown formatting</span>
 						</div>
 					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="enableEventTagsSubs" type="checkbox" data-dependent="eventTagsSubs"/> <span class="settingInfo">Tag messages with subscription notices</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="eventTagsSubs">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Resub format</span>
+						</div>
+						<div class="settingCell">
+							<input id="eventTagsResubFormat" type="text" value="resubscription (%amount months)"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="eventTagsSubs">
+						<div class="settingCellLabel">
+							<span class="settingInfo">New sub format</span>
+						</div>
+						<div class="settingCell">
+							<input id="eventTagsNewSubFormat" type="text" value="new subscription"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="enableEventTagsBits" type="checkbox" data-dependent="eventTagsBits"/> <span class="settingInfo">Tag messages with cheer notices</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="eventTagsBits">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Cheer format</span>
+						</div>
+						<div class="settingCell">
+							<input id="eventTagsCheerFormat" type="text" value="cheered %amount bits"/>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell smol">
+							Use <tt>%amount</tt> in fields with varying amounts to show the amount of said event
+						</div>
+					</div>
 				</div>
 				<div class="part">
 					<h1>Timestamps</h1>
@@ -1359,7 +1473,7 @@
 							<span class="settingInfo">Size</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="flagsSize" min="0" max="64" step="1" value="22"/>px
+							<input type="number" id="flagsSize" min="0" max="64" step="1" value="18"/>px
 						</div>
 					</div>
 					<div class="setting" data-dependent="flags">
@@ -1367,7 +1481,7 @@
 							<span class="settingInfo">Extra spacing</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="flagsSpacing" min="-32" max="32" step="1" value="2"/>px
+							<input type="number" id="flagsSpacing" min="-32" max="32" step="1" value="1"/>px
 						</div>
 					</div>
 				</div>
@@ -1654,7 +1768,7 @@
 						</div>
 						<div class="settingCell">
 							<div>
-								<input type="number" id="avatarsBGStartOpacity" min="0" max="100" step="1" value="85"/>%<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="avatarsBGEndOpacity" min="0" max="100" step="1" value="0"/>%
+								<input type="number" id="avatarsBGStartOpacity" min="0" max="100" step="1" value="100"/>%<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="avatarsBGEndOpacity" min="0" max="100" step="1" value="0"/>%
 							</div>
 						</div>
 					</div>
@@ -1663,7 +1777,7 @@
 							<span class="settingInfo">Fade from</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="avatarsBGStartFadeAt" min="-300" max="300" step="1" value="20"/>%<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="avatarsBGEndFadeAt" min="-300" max="300" step="1" value="75"/>% of block width
+							<input type="number" id="avatarsBGStartFadeAt" min="-300" max="300" step="1" value="0"/>%<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="avatarsBGEndFadeAt" min="-300" max="300" step="1" value="75"/>% of block width
 						</div>
 					</div>
 					<div class="setting" data-dependent="avatarsBG">
@@ -1691,6 +1805,66 @@
 						</div>
 						<div class="settingCell">
 							<input type="number" id="avatarsBGBlurAmount" min="0" max="24" step="1" value="0"/>px
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="avatarsBGAnimateAppearance" type="checkbox" data-dependent="animateBG"/> <span class="settingInfo">Animate background on appearance</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="animateBG">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Delay</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="avatarsBGAnimationDelay" min="0" max="10" step="0.01" value="0.2"/>s
+						</div>
+					</div>
+					<div class="setting" data-dependent="animateBG">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Duration</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="avatarsBGAnimationDuration" min="0" max="99" step="0.1" value="1"/>s
+						</div>
+					</div>
+					<div class="setting" data-dependent="animateBG">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Timing function</span>
+						</div>
+						<div class="settingCell">
+							<select id="avatarsBGAnimationTimingFunc">
+								<option value="Linear">Linear</option>
+								<option value="Ease">Ease</option>
+								<option value="EaseIn">EaseIn</option>
+								<option value="EaseInSine">EaseInSine</option>
+								<option value="EaseInQuad">EaseInQuad</option>
+								<option value="EaseInCubic">EaseInCubic</option>
+								<option value="EaseInQuart">EaseInQuart</option>
+								<option value="EaseInQuint">EaseInQuint</option>
+								<option value="EaseInExpo">EaseInExpo</option>
+								<option value="EaseInCirc">EaseInCirc</option>
+								<option value="EaseInBack">EaseInBack</option>
+								<option value="EaseOut">EaseOut</option>
+								<option value="EaseOutSine">EaseOutSine</option>
+								<option value="EaseOutQuad">EaseOutQuad</option>
+								<option selected value="EaseOutCubic">EaseOutCubic</option>
+								<option value="EaseOutQuart">EaseOutQuart</option>
+								<option value="EaseOutQuint">EaseOutQuint</option>
+								<option value="EaseOutExpo">EaseOutExpo</option>
+								<option value="EaseOutCirc">EaseOutCirc</option>
+								<option value="EaseOutBack">EaseOutBack</option>
+								<option value="EaseInOut">EaseInOut</option>
+								<option value="EaseInOutSine">EaseInOutSine</option>
+								<option value="EaseInOutQuad">EaseInOutQuad</option>
+								<option value="EaseInOutCubic">EaseInOutCubic</option>
+								<option value="EaseInOutQuart">EaseInOutQuart</option>
+								<option value="EaseInOutQuint">EaseInOutQuint</option>
+								<option value="EaseInOutExpo">EaseInOutExpo</option>
+								<option value="EaseInOutCirc">EaseInOutCirc</option>
+								<option value="EaseInOutBack">EaseInOutBack</option>
+							</select>
 						</div>
 					</div>
 				</div>

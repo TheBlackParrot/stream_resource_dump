@@ -946,6 +946,41 @@ const settingUpdaters = {
 	},
 	badgeGradientBlendMode: function(value) {
 		rootCSS().setProperty("--badgeGradientBlendMode", value);
+	},
+
+	eventTagsColor: function(value) {
+		rootCSS().setProperty("--eventTagsColor", value);
+	},
+	eventTagsFont: function(value) {
+		rootCSS().setProperty("--eventTagsFont", value);
+	},
+	eventTagsFontSize: function(value) {
+		rootCSS().setProperty("--eventTagsFontSize", `${value}px`);
+	},
+	eventTagsFontWeight: function(value) {
+		rootCSS().setProperty("--eventTagsFontWeight", value);
+	},
+	eventTagsFontWeightExtra: function(value) {
+		rootCSS().setProperty("--eventTagsFontWeightExtra", `${value}px`);
+	},
+	eventTagsLetterSpacing: function(value) {
+		rootCSS().setProperty("--eventTagsLetterSpacing", `${value}px`);
+	},
+	eventTagsTransform: function(value) {
+		rootCSS().setProperty("--eventTagsTransform", value);
+	},
+	eventTagsLineHeight: function(value) {
+		rootCSS().setProperty("--eventTagsLineHeight", `${value}px`);
+	},
+
+	avatarsBGAnimationDuration: function(value) {
+		rootCSS().setProperty("--avatarsBGAnimationDuration", `${value}s`);
+	},
+	avatarsBGAnimationDelay: function(value) {
+		rootCSS().setProperty("--avatarsBGAnimationDelay", `${value}s`);
+	},
+	avatarsBGAnimationTimingFunc: function(value) {
+		rootCSS().setProperty("--avatarsBGAnimationTimingFunc", `var(--timingFunc${value})`);
 	}
 };
 

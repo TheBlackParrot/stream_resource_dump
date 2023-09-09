@@ -43,7 +43,7 @@ function prepareMessage(tags, message, self, forceHighlight) {
 	}
 
 	getTwitchUserInfo(tags['user-id'], function(userData) {
-		parseMessage({
+		let outObject = {
 			message: message.trim(),
 			isOverlayMessage: isOverlayMessage,
 			type: tags['message-type'],
@@ -62,7 +62,30 @@ function prepareMessage(tags, message, self, forceHighlight) {
 				color: tags['color'],
 				moderator: moderator
 			}
-		});
+		};
+
+		switch(outObject.type) {
+			case "resub":
+				if(localStorage.getItem("setting_enableEventTagsSubs") === "true") {
+					outObject.extraInfo = localStorage.getItem("setting_eventTagsResubFormat").replaceAll("%amount", tags['msg-param-cumulative-months']);
+				}
+				break;
+
+			case "subscription":
+				if(localStorage.getItem("setting_enableEventTagsSubs") === "true") {
+					outObject.extraInfo = localStorage.getItem("setting_eventTagsNewSubFormat");
+				}
+				break;
+
+			case "cheer":
+			case "chat":
+				if("bits" in tags && localStorage.getItem("setting_enableEventTagsBits") === "true") {
+					outObject.extraInfo = localStorage.getItem("setting_eventTagsCheerFormat").replaceAll("%amount", parseInt(tags['bits']).toLocaleString());
+				}
+				break;
+		}
+
+		parseMessage(outObject);
 	});	
 }
 
@@ -779,6 +802,10 @@ function parseMessage(data) {
 		}
 
 		getTwitchUserInfo(data.user.id, function(userData) {
+			if(userData === null) {
+				return;
+			}
+
 			pfpBlock.attr("src", userData.profile_image_url);
 
 			if(!localStorage.getItem(`pfpShape_${data.user.id}`)) { localStorage.setItem(`pfpShape_${data.user.id}`, "var(--avatarBorderRadius)"); }
@@ -854,8 +881,14 @@ function parseMessage(data) {
 
 			if(showPFP) {
 				pfpBlock.show();
+				
 				if(localStorage.getItem("setting_enableAvatarsAsBackground") === "true") {
-					avatarBGWrapperElement.append($(`<div class="avatarBG avatarBGLeft zoomAvatarBGOut" style="background-image: url('${userData.profile_image_url}');"/>`));
+					let avatarBGElement = $(`<div class="avatarBG avatarBGLeft" style="background-image: url('${userData.profile_image_url}');"/>`);
+					avatarBGWrapperElement.append(avatarBGElement);
+
+					if(localStorage.getItem("setting_avatarsBGAnimateAppearance") === "true") {
+						avatarBGElement.addClass("zoomAvatarBGOut");
+					}
 				}
 			} else {
 				pfpBlock.hide();
@@ -1237,6 +1270,12 @@ function parseMessage(data) {
 		}
 
 		messageBlock.html(words.join(" "));
+	}
+
+	let extraInfoBlock;
+	if("extraInfo" in data) {
+		extraInfoBlock = $(`<div class="extraInfo">${data.extraInfo}</div>`);
+		wrapperElement.append(extraInfoBlock);
 	}
 
 	wrapperElement.append(messageBlock);

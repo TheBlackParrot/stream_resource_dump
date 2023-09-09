@@ -196,9 +196,9 @@
 
 .zoomAvatarBGOut {
 	animation-name: zoomAvatarBGOutKF;
-	animation-delay: calc(var(--animationsInDuration) / 3);
-	animation-duration: calc(var(--animationsInDuration) * 2);
+	animation-delay: var(--avatarsBGAnimationDelay);
+	animation-duration: var(--avatarsBGAnimationDuration);
 	animation-fill-mode: both;
 	animation-iteration-count: 1;
-	animation-timing-function: var(--timingFuncEaseOutCubic);	
+	animation-timing-function: var(--avatarsBGAnimationTimingFunc);
 }
