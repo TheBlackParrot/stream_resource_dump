@@ -44,8 +44,9 @@ function startSLWebsocket() {
 		}
 	});
 
-	socket.on('event', (eventData) => {
-		if(!eventData.for) { return; }
+	socket.on('event', function(eventData) {
+		console.log(eventData);
+		if(eventData.for !== "streamlabs") { return; }
 
 		if(streamlabsSeenEventIDs.indexOf(eventData.event_id) !== -1) {
 			console.log("Event already triggered, ignoring");
@@ -53,7 +54,6 @@ function startSLWebsocket() {
 		}
 		streamlabsSeenEventIDs.push(eventData.event_id);
 
-		console.log(eventData);
 		postToStreamlabsEventChannel(eventData);
 	});
 }

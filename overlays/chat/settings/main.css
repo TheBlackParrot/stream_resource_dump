@@ -434,14 +434,16 @@ a {
     align-self: center;
     justify-content: end;
 }
+.button {
+	font-size: var(--button-font-size);
+}
 #sideButtons .button {
 	margin-top: calc(var(--sidebar-padding) / 2);
 	margin-bottom: calc(var(--sidebar-padding) / 2);
 	margin-left: var(--sidebar-padding);
 	margin-right: var(--sidebar-padding);
-	font-size: var(--button-font-size);
 }
-#resetOverlayButton {
+#resetOverlayButton, #deleteBackupButton {
 	background-color: #c01020;
 }
 
@@ -634,3 +636,20 @@ input[type="range"]::-webkit-slider-runnable-track {
 .grayMessage { color: var(--status-circle-gray-color); }
 .greenMessage { color: var(--status-circle-green-color); }
 .redMessage { color: var(--status-circle-red-color); }
+
+#selectedBackupWrap {
+	margin-right: calc(var(--settings-padding) / 1.5);
+	padding-right: calc(var(--settings-padding) / 1.5);
+	border-right: 1px solid var(--border-color);
+}
+
+.settingCell .button {
+	margin-right: calc(var(--settings-padding) / 2);
+}
+.settingCell .button:last-child {
+	margin-right: 0px;
+}
+
+#generateBackupButton {
+	background-color: #209060;
+}

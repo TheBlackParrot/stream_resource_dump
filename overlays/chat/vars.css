@@ -184,10 +184,10 @@
 
 	--eventTagsColor: #FFFFFFFF;
 	--eventTagsFont: "Manrope";
-	--eventTagsFontSize: 12px;
+	--eventTagsFontSize: 14pt;
 	--eventTagsFontWeight: 900;
-	--eventTagsFontWeightExtra: 0.5px;
+	--eventTagsFontWeightExtra: 0.7px;
 	--eventTagsLetterSpacing: -0.2px;
 	--eventTagsTransform: uppercase;
-	--eventTagsLineHeight: 28px;
+	--eventTagsLineHeight: 26px;
 }

@@ -326,10 +326,11 @@ const defaultConfig = {
 	"eventTagsFont": "Manrope",
 	"eventTagsFontSize": "14",
 	"eventTagsFontWeight": "900",
-	"eventTagsFontWeightExtra": "0.7",
+	"eventTagsFontWeightExtra": "0.6",
 	"eventTagsLetterSpacing": "-0.2",
 	"eventTagsTransform": "uppercase",
-	"eventTagsLineHeight": "22"
+	"eventTagsLineHeight": "28",
+	"useNewerEmojiRegex": "false"
 };
 
 for(let setting in defaultConfig) {

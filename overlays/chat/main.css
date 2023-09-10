@@ -205,7 +205,6 @@ body {
 	text-transform: var(--messageTransform);
 }
 .extraInfo {
-	/* todo: settings */;
 	background-color: var(--eventTagsColor);
 	font-family: var(--eventTagsFont);
 	font-size: var(--eventTagsFontSize);

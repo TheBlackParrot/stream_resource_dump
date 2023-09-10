@@ -16,7 +16,7 @@ function prepareMessage(tags, message, self, forceHighlight) {
 
 	console.log(tags);
 
-	if(hideAccounts.indexOf(tags['username']) !== -1) {
+	if(hideAccounts.indexOf(tags['username'].toLowerCase()) !== -1) {
 		return;
 	}
 
@@ -669,7 +669,6 @@ function parseMessage(data) {
 		}		
 		if(localStorage.getItem("setting_chatAnimationsIn") === "true") {
 			userBlock.removeClass("userInfoIn").addClass("justFadeIn");
-			avatarBGWrapperElement.addClass("justFadeIn");
 		}
 	}
 	lastUser = data.user.id;
@@ -1125,8 +1124,14 @@ function parseMessage(data) {
 			}
 		}
 		//console.log(` 4: ${externalPostRemoval}`);
-		//externalPostRemoval = externalPostRemoval.join("").replace(/\p{RGI_Emoji}+/vg, '');
-		externalPostRemoval = externalPostRemoval.join("").replace(/\p{Extended_Pictographic}/ug, '');
+		let re;
+		if(localStorage.getItem("setting_useNewerEmojiRegex") === "true") {
+			re = new RegExp("\\p{RGI_Emoji}+", "vg");
+		} else {
+			re = new RegExp("\\p{Extended_Pictographic}", "ug");
+		}
+		externalPostRemoval = externalPostRemoval.join("").replace(re, '');
+
 		let eprw = externalPostRemoval.split(" ");
 		let eprww = [];
 		for(let wordIdx in eprw) {
@@ -1353,6 +1358,10 @@ function parseMessage(data) {
 				$(".chatBlock:first-child .effectWrapper").find(".avatarBGWrapper").show();
 			}
 		}, secsVisible * 1000);
+	}
+
+	if($(".chatBlock").length === 1) {
+		$(".chatBlock:first-child .effectWrapper").find(".avatarBGWrapper").show();
 	}
 
 	testNameBlock = nameBlock;

@@ -245,7 +245,7 @@ const settingUpdaters = {
 	chatHideAccounts: function(value) {
 		hideAccounts = [];
 		if(value) {
-			hideAccounts = value.split("\n");
+			hideAccounts = value.toLowerCase().split("\n");
 		}
 	},
 
@@ -955,7 +955,7 @@ const settingUpdaters = {
 		rootCSS().setProperty("--eventTagsFont", value);
 	},
 	eventTagsFontSize: function(value) {
-		rootCSS().setProperty("--eventTagsFontSize", `${value}px`);
+		rootCSS().setProperty("--eventTagsFontSize", `${value}pt`);
 	},
 	eventTagsFontWeight: function(value) {
 		rootCSS().setProperty("--eventTagsFontWeight", value);

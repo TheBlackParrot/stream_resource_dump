@@ -1,10 +1,10 @@
 @keyframes userInfoInKF {
 	0% {
-		transform: translateY(20px);
+		transform: translate3d(0px, 20px, 0px);
 	}
 
 	100% {
-		transform: translateY(0px);
+		transform: translate3d(0px, 0px, 0px);
 	}
 }
 
@@ -85,7 +85,7 @@
 	0% {
 		opacity: 	var(--messageInOpacityStart);
 
-		transform: 	translate(var(--messageInXTransformStart), var(--messageInYTransformStart))
+		transform: 	translate3d(var(--messageInXTransformStart), var(--messageInYTransformStart), 0px)
 					scale(var(--messageInScaleXStart), var(--messageInScaleYStart))
 					skew(var(--messageInSkewXStart), var(--messageInSkewYStart))
 					rotate(var(--messageInRotateStart));
@@ -100,7 +100,7 @@
 	100% {
 		opacity: 	var(--messageInOpacityEnd);
 
-		transform: 	translate(var(--messageInXTransformEnd), var(--messageInYTransformEnd))
+		transform: 	translate3d(var(--messageInXTransformEnd), var(--messageInYTransformEnd), 0px)
 					scale(var(--messageInScaleXEnd), var(--messageInScaleYEnd))
 					skew(var(--messageInSkewXEnd), var(--messageInSkewYEnd))
 					rotate(var(--messageInRotateEnd));
@@ -117,7 +117,7 @@
 	0% {
 		opacity: 	var(--messageOutOpacityStart);
 
-		transform: 	translate(var(--messageOutXTransformStart), var(--messageOutYTransformStart))
+		transform: 	translate3d(var(--messageOutXTransformStart), var(--messageOutYTransformStart), 0px)
 					scale(var(--messageOutScaleXStart), var(--messageOutScaleYStart))
 					skew(var(--messageOutSkewXStart), var(--messageOutSkewYStart))
 					rotate(var(--messageOutRotateStart));
@@ -132,7 +132,7 @@
 	100% {
 		opacity: 	var(--messageOutOpacityEnd);
 
-		transform: 	translate(var(--messageOutXTransformEnd), var(--messageOutYTransformEnd))
+		transform: 	translate3d(var(--messageOutXTransformEnd), var(--messageOutYTransformEnd), 0px)
 					scale(var(--messageOutScaleXEnd), var(--messageOutScaleYEnd))
 					skew(var(--messageOutSkewXEnd), var(--messageOutSkewYEnd))
 					rotate(var(--messageOutRotateEnd));

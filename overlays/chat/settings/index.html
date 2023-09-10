@@ -577,7 +577,7 @@
 							<span class="settingInfo">Additional weight</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="eventTagsFontWeightExtra" min="0" max="4" step="0.05" value="0.7"/>px
+							<input type="number" id="eventTagsFontWeightExtra" min="0" max="4" step="0.05" value="0.6"/>px
 						</div>
 					</div>
 					<div class="setting">
@@ -606,7 +606,7 @@
 							<span class="settingInfo">Line height</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="eventTagsLineHeight" min="16" max="64" step="0.5" value="22"/>px
+							<input type="number" id="eventTagsLineHeight" min="16" max="64" step="0.5" value="28"/>px
 						</div>
 					</div>
 				</div>
@@ -2524,6 +2524,27 @@
 						</div>
 					</div>
 				</div>
+				<div class="part">
+					<h1>Backups</h1>
+					<div class="setting">
+						<div class="settingCell">
+							<div id="selectedBackupWrap">
+								<select class="selectedBackup">
+								</select>
+							</div>
+							<div class="button" id="restoreBackupButton">Restore from Backup</div><div class="button" id="deleteBackupButton">Delete Backup</div>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<div class="button" id="generateBackupButton">Backup Current Settings</div>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting smol">
+						Backups are automatically generated every time you open OBS, and before any major overall changes (e.g. resetting settings to default, or restoring backups).
+					</div>
+				</div>
 			</div>
 			<div class="section" data-content="emotes">
 				<div class="part">
@@ -2587,6 +2608,17 @@
 						</div>
 						<div class="settingCell">
 							<input type="number" id="chatBigEmoteMarginVertical" min="0" max="64" step="1" value="4"/>px
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="useNewerEmojiRegex" type="checkbox"/> <span class="settingInfo">Use newer regex pattern matching for checking if messages only contain emotes</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell smol">
+							This setting is experimental and (for me, at least) breaks chat parsing in the current version of OBS. In browsers, this will fix some unicode emoji not being set to trigger big emote mode.
 						</div>
 					</div>
 				</div>
