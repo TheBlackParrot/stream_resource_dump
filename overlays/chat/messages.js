@@ -16,7 +16,13 @@ function prepareMessage(tags, message, self, forceHighlight) {
 
 	console.log(tags);
 
-	if(hideAccounts.indexOf(tags['username'].toLowerCase()) !== -1) {
+	let usernameTagActual;
+	if("username" in tags) {
+		usernameTagActual = tags['username'];
+	} else if("login" in tags) {
+		usernameTagActual = tags['login'];
+	}
+	if(hideAccounts.indexOf(usernameTagActual.toLowerCase()) !== -1) {
 		return;
 	}
 
@@ -54,7 +60,7 @@ function prepareMessage(tags, message, self, forceHighlight) {
 			user: {
 				id: tags['user-id'],
 				name: tags['display-name'],
-				username: tags['username'],
+				username: usernameTagActual,
 				badges: {
 					list: tags['badges'],
 					info: tags['badge-info']
