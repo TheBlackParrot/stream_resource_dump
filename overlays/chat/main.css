@@ -630,6 +630,18 @@ img.emoji {
 	-webkit-mask-image: linear-gradient(var(--avatarsBGFadeAngle), rgba(0, 0, 0, var(--avatarsBGStartOpacity)) var(--avatarsBGStartFadeAt), rgba(0, 0, 0, var(--avatarsBGEndOpacity)) var(--avatarsBGEndFadeAt));
 	filter: blur(var(--avatarsBGBlurAmount));
 	backdrop-filter: opacity(0);
+	border-color: var(--avatarsBGBorderColor);
+	border-width: var(--avatarsBGBorderSize);
+	border-style: var(--avatarsBGBorderStyle);
+	position: relative;
+	top: var(--avatarsBGBorderOffset);
+}
+
+.left .avatarBG {
+	left: var(--avatarsBGBorderOffset);
+}
+.right .avatarBG {
+	right: var(--avatarsBGBorderOffset);
 }
 
 .avatarBGLeft {

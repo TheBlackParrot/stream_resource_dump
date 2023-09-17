@@ -1541,6 +1541,10 @@ function getFFZBadges(data, callback) {
 		return;
 	}
 
+	if(!(id in externalBadgeCache)) {
+		externalBadgeCache[id] = createBadgeCacheObject(data);
+	}
+
 	externalBadgeCache[id].ffz = {
 		expires: Date.now() + 3600000,
 		badges: []
@@ -1615,6 +1619,52 @@ function get7TVBadges() {
 	})	
 }
 
+function createBadgeCacheObject(data) {
+	let outObject = {
+		ffz: {
+			expires: null,
+			badges: []
+		},
+		bttv: {
+			expires: null,
+			badges: []
+		},
+		seventv: {
+			expires: null,
+			badges: []
+		},
+		overlay: {
+			expires: Infinity,
+			badges: []
+		}
+	};
+
+	for(let i in sevenTVBadges) {
+		let stvBadge = sevenTVBadges[i];
+		if(stvBadge.users.indexOf(data.user.id) !== -1) {
+			outObject.seventv.badges.push({
+				img: stvBadge.urls[stvBadge.urls.length-1][1]
+			});
+		}
+	}
+
+	if(data.user.broadcasterType === "affiliate" && localStorage.getItem("setting_enableAffiliateBadges") === "true") {
+		outObject.overlay.badges.push({
+			img: "icons/seedling.png",
+			color: "var(--affiliateBadgeColor)"
+		});
+	}
+
+	if(data.user.bot && localStorage.getItem("setting_enableBotBadges") === "true") {
+		outObject.overlay.badges.push({
+			img: "icons/gear.png",
+			color: "var(--botBadgeColor)"
+		});
+	}
+
+	return outObject;
+}
+
 function checkForExternalBadges(data, badgeBlock, rootElement, userBlock) {
 	console.log(data);
 	let id = data.user.id;
@@ -1626,47 +1676,7 @@ function checkForExternalBadges(data, badgeBlock, rootElement, userBlock) {
 	if(!(id in externalBadgeCache)) {
 		console.log(`external badges not cached for ${data.user.username}`);
 
-		externalBadgeCache[id] = {
-			ffz: {
-				expires: null,
-				badges: []
-			},
-			bttv: {
-				expires: null,
-				badges: []
-			},
-			seventv: {
-				expires: null,
-				badges: []
-			},
-			overlay: {
-				expires: Infinity,
-				badges: []
-			}
-		};
-
-		for(let i in sevenTVBadges) {
-			let stvBadge = sevenTVBadges[i];
-			if(stvBadge.users.indexOf(id) !== -1) {
-				externalBadgeCache[id].seventv.badges.push({
-					img: stvBadge.urls[stvBadge.urls.length-1][1]
-				});
-			}
-		}
-
-		if(data.user.broadcasterType === "affiliate" && localStorage.getItem("setting_enableAffiliateBadges") === "true") {
-			externalBadgeCache[id].overlay.badges.push({
-				img: "icons/seedling.png",
-				color: "#2d3540"
-			});
-		}
-
-		if(data.user.bot && localStorage.getItem("setting_enableBotBadges") === "true") {
-			externalBadgeCache[id].overlay.badges.push({
-				img: "icons/gear.png",
-				color: "#666a68"
-			});
-		}
+		externalBadgeCache[id] = createBadgeCacheObject(data);
 
 		getFFZBadges(data, function(data, response) {
 			console.log(`got external badges for ${data.user.username}`);
@@ -1704,7 +1714,11 @@ function renderExternalBadges(data, badgeBlock, rootElement, userBlock) {
 			}
 
 			badgeBlock.show();
-			badgeBlock.append(badgeElem);
+			if(service === "overlay") {
+				badgeBlock.prepend(badgeElem);
+			} else {
+				badgeBlock.append(badgeElem);
+			}
 		}
 	}
 
@@ -1736,7 +1750,7 @@ function checkIfExternalBadgesDone(data, badgeBlock, rootElement, userBlock) {
 	}
 }
 
-function bttvBadge(data) {
+function bttvBadge(data, userData) {
 	if(!("data" in data)) {
 		console.log("no data");
 		return;
@@ -1758,23 +1772,16 @@ function bttvBadge(data) {
 		return;
 	}
 
-	let id = data.providerId;
+	let id = parseInt(data.providerId);
 
 	if(!(id in externalBadgeCache)) {
-		externalBadgeCache[id] = {
-			ffz: {
-				expires: null,
-				badges: []
-			},
-			bttv: {
-				expires: null,
-				badges: []
-			},
-			seventv: {
-				expires: null,
-				badges: []
+		externalBadgeCache[id] = createBadgeCacheObject({
+			user: {
+				id: id,
+				broadcasterType: userData.broadcaster_type,
+				bot: isUserBot(userData.login)
 			}
-		};
+		});
 	}
 
 	externalBadgeCache[id].bttv.badges = [{
@@ -1855,7 +1862,9 @@ function startBTTVWebsocket() {
 		switch(data.name) {
 			case "lookup_user":
 				if(localStorage.getItem("setting_enableBTTVBadges") === "true") {
-					bttvBadge(data);
+					getTwitchUserInfo(data.data.providerId, function(userData) {
+						bttvBadge(data, userData);
+					});
 				}
 				break;
 

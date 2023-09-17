@@ -24,7 +24,7 @@ const defaultConfig = {
 	"enableBTTVBadges": "true",
 	"twitchClientSecret": "",
 	"chatParseMarkdown": "true",
-	"chatHideAccounts": "nightbot\nstreamlabs\nstreamelements\nkofistreambot\nblerp\nsery_bot\ncommanderroot",
+	"chatHideAccounts": "",
 	"twitchChannel": "",
 	"chatOutlinesColor": "#ffffff",
 	"chatMessageFontSize": "16",
@@ -335,11 +335,16 @@ const defaultConfig = {
 	"enableAffiliateBadges": "false",
 	"enableBotBadges": "true",
 	"autoHideAllKnownBots": "true",
-	"chatNameUsesProminentColor": "false"
+	"chatNameUsesProminentColor": "false",
+	"avatarsBGBorder": "false",
+	"avatarsBGBorderColor": "#FFFFFF40",
+	"avatarsBGBorderSize": "1",
+	"avatarsBGBorderStyle": "solid",
+	"allowConsoleMessages": "false"
 };
 
 for(let setting in defaultConfig) {
-	if(!localStorage.getItem(`setting_${setting}`)) {
+	if(localStorage.getItem(`setting_${setting}`) === null) {
 		console.log(`saving default value for setting ${setting}`);
 		localStorage.setItem(`setting_${setting}`, defaultConfig[setting]);
 	}

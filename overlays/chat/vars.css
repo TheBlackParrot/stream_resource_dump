@@ -140,6 +140,11 @@
 	--shadowStuffAvatarBG: var(--originalShadowStuff);
 	--avatarsBGEffects: var(--outlineStuffAvatarBG) var(--shadowStuffAvatarBG);
 	--avatarsBGBlurAmount: 0px;
+	--avatarsBGBorderColor: #ffffff20;
+	--avatarsBGBorderSize: 0px;
+	--avatarsBGBorderSizeActual: 1px;
+	--avatarsBGBorderStyle: solid;
+	--avatarsBGBorderOffset: 0px;
 
 	--badgeBorderRadius: 4px;
 	--subBadgeBorderRadius: var(--badgeBorderRadius);
@@ -151,6 +156,9 @@
 	--badgeGradientStart: 0%;
 	--badgeGradientEnd: 100%;
 	--badgeGradientBlendMode: screen;
+
+	--affiliateBadgeColor: #2d3540;
+	--botBadgeColor: #555b59;
 
 	--pronounsColor: rgba(128, 128, 128, 1);
 	--pronounsColorSecondary: rgba(255, 255, 255, 1);

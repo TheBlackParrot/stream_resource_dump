@@ -1449,6 +1449,11 @@
 					<h1>Debug</h1>
 					<div class="setting">
 						<div class="settingCell">
+							<input id="allowConsoleMessages" type="checkbox"/> <span class="settingInfo">Allow console output</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
 							<input id="debugRawMessages" type="checkbox"/> <span class="settingInfo">Log raw Twitch IRC messages to the DevTools console</span>
 						</div>
 					</div>
@@ -1825,6 +1830,45 @@
 						</div>
 						<div class="settingCell">
 							<input type="number" id="avatarsBGFadeAngle" min="0" max="360" step="1" value="135"/>deg
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="avatarsBGBorder" type="checkbox" data-dependent="avatarsBGBorder"/> <span class="settingInfo">Enable outlines around avatar backgrounds</span>
+						</div>
+					</div>
+					<div class="setting disabled" data-dependent="avatarsBGBorder">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Color</span>
+						</div>
+						<div class="settingCell">
+							<input id="avatarsBGBorderColor" type="text" data-coloris value="#FFFFFF40"/>
+						</div>
+					</div>
+					<div class="setting disabled" data-dependent="avatarsBGBorder">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="avatarsBGBorderSize" min="0" max="8" step="1" value="1"/>px
+						</div>
+					</div>
+					<div class="setting disabled" data-dependent="avatarsBGBorder">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Style</span>
+						</div>
+						<div class="settingCell">
+							<select id="avatarsBGBorderStyle">
+								<option value="dashed">Dashed</option>
+								<option value="dotted">Dotted</option>
+								<option value="double">Double</option>
+								<option value="groove">Groove</option>
+								<option value="inset">Inset</option>
+								<option value="outset">Outset</option>
+								<option value="ridge">Ridge</option>
+								<option selected value="solid">Solid</option>
+							</select>
 						</div>
 					</div>
 					<hr/>

@@ -97,53 +97,38 @@
 	--messageInFilterFunctionsEnd: "";
 	--messageOutFilterFunctionsStart: "";
 	--messageOutFilterFunctionsEnd: "";
+
+	--messageInTransformFunctionsStart: "";
+	--messageInTransformFunctionsEnd: "";
+	--messageOutTransformFunctionsStart: "";
+	--messageOutTransformFunctionsEnd: "";
 }
 
 @keyframes messageInKF {
 	0% {
-		opacity: 	var(--messageInOpacityStart);
-
-		transform: 	var(--currentMessageInTranslateFunctionStart)
-					scale(var(--messageInScaleXStart), var(--messageInScaleYStart))
-					skew(var(--messageInSkewXStart), var(--messageInSkewYStart))
-					rotate(var(--messageInRotateStart));
-
-		filter:		var(--messageInFilterFunctionsStart);
+		opacity: var(--messageInOpacityStart);
+		transform: var(--messageInTransformFunctionsStart);
+		filter: var(--messageInFilterFunctionsStart);
 	}
 
 	100% {
-		opacity: 	var(--messageInOpacityEnd);
-
-		transform: 	var(--currentMessageInTranslateFunctionEnd)
-					scale(var(--messageInScaleXEnd), var(--messageInScaleYEnd))
-					skew(var(--messageInSkewXEnd), var(--messageInSkewYEnd))
-					rotate(var(--messageInRotateEnd));
-
-		filter: 	var(--messageInFilterFunctionsEnd);
+		opacity: var(--messageInOpacityEnd);
+		transform: var(--messageInTransformFunctionsEnd);
+		filter: var(--messageInFilterFunctionsEnd);
 	}
 }
 
 @keyframes messageOutKF {
 	0% {
-		opacity: 	var(--messageOutOpacityStart);
-
-		transform: 	var(--currentMessageOutTranslateFunctionStart)
-					scale(var(--messageOutScaleXStart), var(--messageOutScaleYStart))
-					skew(var(--messageOutSkewXStart), var(--messageOutSkewYStart))
-					rotate(var(--messageOutRotateStart));
-
-		filter:		var(--messageOutFilterFunctionsStart);
+		opacity: var(--messageOutOpacityStart);
+		transform: var(--messageOutTransformFunctionsStart);
+		filter: var(--messageOutFilterFunctionsStart);
 	}
 
 	100% {
-		opacity: 	var(--messageOutOpacityEnd);
-
-		transform: 	var(--currentMessageOutTranslateFunctionEnd)
-					scale(var(--messageOutScaleXEnd), var(--messageOutScaleYEnd))
-					skew(var(--messageOutSkewXEnd), var(--messageOutSkewYEnd))
-					rotate(var(--messageOutRotateEnd));
-
-		filter:		var(--messageOutFilterFunctionsEnd);
+		opacity: var(--messageOutOpacityEnd);
+		transform: var(--messageOutTransformFunctionsEnd);
+		filter: var(--messageOutFilterFunctionsEnd);
 	}
 }
 

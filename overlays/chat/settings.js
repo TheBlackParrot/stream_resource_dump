@@ -270,8 +270,52 @@ function checkFilterAnimationSettings() {
 }
 
 function checkTransformAnimationSettings() {
-	// todo
+	let allowIn = {
+		start: [],
+		end: []
+	};
+	let allowOut = {
+		start: [],
+		end: []
+	};
+
+	let directions = ["In", "Out"];
+	for(let i in directions) {
+		let direction = directions[i];
+		let allowObject = (direction === "In" ? allowIn : allowOut);
+
+		if(localStorage.getItem(`setting_message${direction}XTransformStart`) !== localStorage.getItem(`setting_message${direction}XTransformEnd`)
+		   || localStorage.getItem(`setting_message${direction}YTransformStart`) !== localStorage.getItem(`setting_message${direction}YTransformEnd`)) {
+			allowObject.start.push(`var(--currentMessage${direction}TranslateFunctionStart)`);
+			allowObject.end.push(`var(--currentMessage${direction}TranslateFunctionEnd)`);
+		}
+
+		if(localStorage.getItem(`setting_message${direction}ScaleXStart`) !== localStorage.getItem(`setting_message${direction}ScaleXEnd`)
+		   || localStorage.getItem(`setting_message${direction}ScaleYStart`) !== localStorage.getItem(`setting_message${direction}ScaleYEnd`)) {
+			allowObject.start.push(`scale(var(--message${direction}ScaleXStart), var(--message${direction}ScaleYStart))`);
+			allowObject.end.push(`scale(var(--message${direction}ScaleXEnd), var(--message${direction}ScaleYEnd))`);
+		}
+
+		if(localStorage.getItem(`setting_message${direction}SkewXStart`) !== localStorage.getItem(`setting_message${direction}SkewXEnd`)
+		   || localStorage.getItem(`setting_message${direction}SkewYStart`) !== localStorage.getItem(`setting_message${direction}SkewYEnd`)) {
+			allowObject.start.push(`skew(var(--message${direction}SkewXStart), var(--message${direction}SkewYStart))`);
+			allowObject.end.push(`skew(var(--message${direction}SkewXEnd), var(--message${direction}SkewYEnd))`);
+		}
+
+		if(localStorage.getItem(`setting_message${direction}RotateStart`) !== localStorage.getItem(`setting_message${direction}RotateEnd`)) {
+			allowObject.start.push(`rotate(var(--message${direction}RotateStart))`);
+			allowObject.end.push(`rotate(var(--message${direction}RotateEnd))`);
+		}
+	}
+
+	rootCSS().setProperty("--messageInTransformFunctionsStart", allowIn.start.join(" "));
+	rootCSS().setProperty("--messageInTransformFunctionsEnd", allowIn.end.join(" "));
+	rootCSS().setProperty("--messageOutTransformFunctionsStart", allowOut.start.join(" "));
+	rootCSS().setProperty("--messageOutTransformFunctionsEnd", allowOut.end.join(" "));
 }
+
+var consoleHolder = console;
+var hasInitConsoleOverride = false;
 
 const settingUpdaters = {
 	chatHideAccounts: function(value) {
@@ -702,15 +746,19 @@ const settingUpdaters = {
 	},
 	messageInXTransformStart: function(value) {
 		rootCSS().setProperty("--messageInXTransformStart", `${value}vw`);
+		checkTransformAnimationSettings();
 	},
 	messageInXTransformEnd: function(value) {
 		rootCSS().setProperty("--messageInXTransformEnd", `${value}vw`);
+		checkTransformAnimationSettings();
 	},
 	messageInYTransformStart: function(value) {
 		rootCSS().setProperty("--messageInYTransformStart", `${value}vh`);
+		checkTransformAnimationSettings();
 	},
 	messageInYTransformEnd: function(value) {
 		rootCSS().setProperty("--messageInYTransformEnd", `${value}vh`);
+		checkTransformAnimationSettings();
 	},
 	messageInBlurStart: function(value) {
 		rootCSS().setProperty("--messageInBlurStart", `${value}px`);
@@ -722,33 +770,43 @@ const settingUpdaters = {
 	},
 	messageInScaleXStart: function(value) {
 		rootCSS().setProperty("--messageInScaleXStart", `${value}%`);
+		checkTransformAnimationSettings();
 	},
 	messageInScaleXEnd: function(value) {
 		rootCSS().setProperty("--messageInScaleXEnd", `${value}%`);
+		checkTransformAnimationSettings();
 	},
 	messageInScaleYStart: function(value) {
 		rootCSS().setProperty("--messageInScaleYStart", `${value}%`);
+		checkTransformAnimationSettings();
 	},
 	messageInScaleYEnd: function(value) {
 		rootCSS().setProperty("--messageInScaleYEnd", `${value}%`);
+		checkTransformAnimationSettings();
 	},
 	messageInSkewXStart: function(value) {
 		rootCSS().setProperty("--messageInSkewXStart", `${value}deg`);
+		checkTransformAnimationSettings();
 	},
 	messageInSkewXEnd: function(value) {
 		rootCSS().setProperty("--messageInSkewXEnd", `${value}deg`);
+		checkTransformAnimationSettings();
 	},
 	messageInSkewYStart: function(value) {
 		rootCSS().setProperty("--messageInSkewYStart", `${value}deg`);
+		checkTransformAnimationSettings();
 	},
 	messageInSkewYEnd: function(value) {
 		rootCSS().setProperty("--messageInSkewYEnd", `${value}deg`);
+		checkTransformAnimationSettings();
 	},
 	messageInRotateStart: function(value) {
 		rootCSS().setProperty("--messageInRotateStart", `${value}deg`);
+		checkTransformAnimationSettings();
 	},
 	messageInRotateEnd: function(value) {
 		rootCSS().setProperty("--messageInRotateEnd", `${value}deg`);
+		checkTransformAnimationSettings();
 	},
 	messageInBrightnessStart: function(value) {
 		rootCSS().setProperty("--messageInBrightnessStart", `${value}%`);
@@ -790,15 +848,19 @@ const settingUpdaters = {
 	},
 	messageOutXTransformStart: function(value) {
 		rootCSS().setProperty("--messageOutXTransformStart", `${value}vw`);
+		checkTransformAnimationSettings();
 	},
 	messageOutXTransformEnd: function(value) {
 		rootCSS().setProperty("--messageOutXTransformEnd", `${value}vw`);
+		checkTransformAnimationSettings();
 	},
 	messageOutYTransformStart: function(value) {
 		rootCSS().setProperty("--messageOutYTransformStart", `${value}vh`);
+		checkTransformAnimationSettings();
 	},
 	messageOutYTransformEnd: function(value) {
 		rootCSS().setProperty("--messageOutYTransformEnd", `${value}vh`);
+		checkTransformAnimationSettings();
 	},
 	messageOutBlurStart: function(value) {
 		rootCSS().setProperty("--messageOutBlurStart", `${value}px`);
@@ -810,33 +872,43 @@ const settingUpdaters = {
 	},
 	messageOutScaleXStart: function(value) {
 		rootCSS().setProperty("--messageOutScaleXStart", `${value}%`);
+		checkTransformAnimationSettings();
 	},
 	messageOutScaleXEnd: function(value) {
 		rootCSS().setProperty("--messageOutScaleXEnd", `${value}%`);
+		checkTransformAnimationSettings();
 	},
 	messageOutScaleYStart: function(value) {
 		rootCSS().setProperty("--messageOutScaleYStart", `${value}%`);
+		checkTransformAnimationSettings();
 	},
 	messageOutScaleYEnd: function(value) {
 		rootCSS().setProperty("--messageOutScaleYEnd", `${value}%`);
+		checkTransformAnimationSettings();
 	},
 	messageOutSkewXStart: function(value) {
 		rootCSS().setProperty("--messageOutSkewXStart", `${value}deg`);
+		checkTransformAnimationSettings();
 	},
 	messageOutSkewXEnd: function(value) {
 		rootCSS().setProperty("--messageOutSkewXEnd", `${value}deg`);
+		checkTransformAnimationSettings();
 	},
 	messageOutSkewYStart: function(value) {
 		rootCSS().setProperty("--messageOutSkewYStart", `${value}deg`);
+		checkTransformAnimationSettings();
 	},
 	messageOutSkewYEnd: function(value) {
 		rootCSS().setProperty("--messageOutSkewYEnd", `${value}deg`);
+		checkTransformAnimationSettings();
 	},
 	messageOutRotateStart: function(value) {
 		rootCSS().setProperty("--messageOutRotateStart", `${value}deg`);
+		checkTransformAnimationSettings();
 	},
 	messageOutRotateEnd: function(value) {
 		rootCSS().setProperty("--messageOutRotateEnd", `${value}deg`);
+		checkTransformAnimationSettings();
 	},
 	messageOutBrightnessStart: function(value) {
 		rootCSS().setProperty("--messageOutBrightnessStart", `${value}%`);
@@ -1048,6 +1120,42 @@ const settingUpdaters = {
 				sessionStorage.removeItem(key);
 				console.log(`cleared ${key}`);
 			}
+		}
+	},
+
+	avatarsBGBorder: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--avatarsBGBorderSize", "var(--avatarsBGBorderSizeActual)");
+			rootCSS().setProperty("--avatarsBGBorderOffset", "calc(var(--avatarsBGBorderSizeActual) * -1)");
+		} else {
+			rootCSS().setProperty("--avatarsBGBorderSize", "0px");
+			rootCSS().setProperty("--avatarsBGBorderOffset", "0px");
+		}
+	},
+	avatarsBGBorderColor: function(value) {
+		rootCSS().setProperty("--avatarsBGBorderColor", value);
+	},
+	avatarsBGBorderSize: function(value) {
+		rootCSS().setProperty("--avatarsBGBorderSizeActual", `${value}px`);
+	},
+	avatarsBGBorderStyle: function(value) {
+		rootCSS().setProperty("--avatarsBGBorderStyle", value);
+	},
+
+	allowConsoleMessages: function(value, oldValue) {
+		if(hasInitConsoleOverride && value === oldValue) {
+			return;
+		}
+		hasInitConsoleOverride = true;
+
+		if(value === "false") {
+			consoleHolder = console;
+			console = {};
+			Object.keys(consoleHolder).forEach(function(key) {
+				console[key] = function(){};
+			});
+		} else {
+			console = consoleHolder;
 		}
 	}
 };
