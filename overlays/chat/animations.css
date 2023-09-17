@@ -79,37 +79,47 @@
 	--animationsOutOriginPoint: left center;
 	--animationsInTimingFunc: var(--timingFuncEaseInOutCubic);
 	--animationsOutTimingFunc: var(--timingFuncEaseInBack);
+
+	--messageInTranslate3dFunctionStart: translate3d(var(--messageInXTransformStart), var(--messageInYTransformStart), 0px);
+	--messageInTranslate3dFunctionEnd: translate3d(var(--messageInXTransformEnd), var(--messageInYTransformEnd), 0px);
+	--messageOutTranslate3dFunctionStart: translate3d(var(--messageOutXTransformStart), var(--messageOutYTransformStart), 0px);
+	--messageOutTranslate3dFunctionEnd: translate3d(var(--messageOutXTransformEnd), var(--messageOutYTransformEnd), 0px);
+	--messageInTranslate2dFunctionStart: translate(var(--messageInXTransformStart), var(--messageInYTransformStart));
+	--messageInTranslate2dFunctionEnd: translate(var(--messageInXTransformEnd), var(--messageInYTransformEnd));
+	--messageOutTranslate2dFunctionStart: translate(var(--messageOutXTransformStart), var(--messageOutYTransformStart));
+	--messageOutTranslate2dFunctionEnd: translate(var(--messageOutXTransformEnd), var(--messageOutYTransformEnd));
+	--currentMessageInTranslateFunctionStart: var(--messageInTranslate3dFunctionStart);
+	--currentMessageInTranslateFunctionEnd: var(--messageInTranslate3dFunctionEnd);
+	--currentMessageOutTranslateFunctionStart: var(--messageOutTranslate3dFunctionStart);
+	--currentMessageOutTranslateFunctionEnd: var(--messageOutTranslate3dFunctionEnd);
+
+	--messageInFilterFunctionsStart: "";
+	--messageInFilterFunctionsEnd: "";
+	--messageOutFilterFunctionsStart: "";
+	--messageOutFilterFunctionsEnd: "";
 }
 
 @keyframes messageInKF {
 	0% {
 		opacity: 	var(--messageInOpacityStart);
 
-		transform: 	translate3d(var(--messageInXTransformStart), var(--messageInYTransformStart), 0px)
+		transform: 	var(--currentMessageInTranslateFunctionStart)
 					scale(var(--messageInScaleXStart), var(--messageInScaleYStart))
 					skew(var(--messageInSkewXStart), var(--messageInSkewYStart))
 					rotate(var(--messageInRotateStart));
 
-		filter:		contrast(var(--messageInContrastStart))
-					brightness(var(--messageInBrightnessStart))
-					hue-rotate(var(--messageInHueRotateStart))
-					saturate(var(--messageInSaturateStart))
-					blur(var(--messageInBlurStart));
+		filter:		var(--messageInFilterFunctionsStart);
 	}
 
 	100% {
 		opacity: 	var(--messageInOpacityEnd);
 
-		transform: 	translate3d(var(--messageInXTransformEnd), var(--messageInYTransformEnd), 0px)
+		transform: 	var(--currentMessageInTranslateFunctionEnd)
 					scale(var(--messageInScaleXEnd), var(--messageInScaleYEnd))
 					skew(var(--messageInSkewXEnd), var(--messageInSkewYEnd))
 					rotate(var(--messageInRotateEnd));
 
-		filter: 	contrast(var(--messageInContrastEnd))
-					brightness(var(--messageInBrightnessEnd))
-					hue-rotate(var(--messageInHueRotateEnd))
-					saturate(var(--messageInSaturateEnd))
-					blur(var(--messageInBlurEnd));
+		filter: 	var(--messageInFilterFunctionsEnd);
 	}
 }
 
@@ -117,31 +127,23 @@
 	0% {
 		opacity: 	var(--messageOutOpacityStart);
 
-		transform: 	translate3d(var(--messageOutXTransformStart), var(--messageOutYTransformStart), 0px)
+		transform: 	var(--currentMessageOutTranslateFunctionStart)
 					scale(var(--messageOutScaleXStart), var(--messageOutScaleYStart))
 					skew(var(--messageOutSkewXStart), var(--messageOutSkewYStart))
 					rotate(var(--messageOutRotateStart));
 
-		filter:		contrast(var(--messageOutContrastStart))
-					brightness(var(--messageOutBrightnessStart))
-					hue-rotate(var(--messageOutHueRotateStart))
-					saturate(var(--messageOutSaturateStart))
-					blur(var(--messageOutBlurStart));
+		filter:		var(--messageOutFilterFunctionsStart);
 	}
 
 	100% {
 		opacity: 	var(--messageOutOpacityEnd);
 
-		transform: 	translate3d(var(--messageOutXTransformEnd), var(--messageOutYTransformEnd), 0px)
+		transform: 	var(--currentMessageOutTranslateFunctionEnd)
 					scale(var(--messageOutScaleXEnd), var(--messageOutScaleYEnd))
 					skew(var(--messageOutSkewXEnd), var(--messageOutSkewYEnd))
 					rotate(var(--messageOutRotateEnd));
 
-		filter:		contrast(var(--messageOutContrastEnd))
-					brightness(var(--messageOutBrightnessEnd))
-					hue-rotate(var(--messageOutHueRotateEnd))
-					saturate(var(--messageOutSaturateEnd))
-					blur(var(--messageOutBlurEnd));
+		filter:		var(--messageOutFilterFunctionsEnd);
 	}
 }
 

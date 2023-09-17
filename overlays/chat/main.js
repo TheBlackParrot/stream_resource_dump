@@ -47,6 +47,8 @@ function getStuffReady() {
 		console.log(`got broadcaster information for ${broadcasterData.display_name} (${broadcasterData.id})`);
 		console.log("getting chat badges...");
 
+		refreshExternalStuff();
+
 		callTwitch({
 			"endpoint": "chat/badges/global"
 		}, function(badgeResponse) {
@@ -161,7 +163,6 @@ function getStuffReady() {
 		});
 	});
 }
-getStuffReady();
 
 var streamDataTimeout;
 function getTwitchStreamData() {
@@ -446,8 +447,6 @@ function checkForUpdate() {
 	});
 }
 
-const twitchEventChannel = new BroadcastChannel("twitch_chat");
-
 function postToTwitchEventChannel(event, data) {
 	let message = {
 		event: event
@@ -485,7 +484,14 @@ const twitchEventFuncs = {
 
 	messagedeleted: function(data) {
 		let id = data.tags['target-msg-id'];
-		$(`.chatBlock[data-msguuid="${id}"]`).remove();
+		let elem = $(`.effectWrapper[data-msguuid="${id}"]`);
+
+		if(elem.parent().children(".effectWrapper").length === 1) {
+			$(`.chatBlock[data-rootidx="${elem.attr("data-rootidx")}"]`).remove();
+		} else {
+			elem.remove();
+		}
+		
 		setHistoryOpacity();
 	},
 
@@ -518,6 +524,8 @@ const twitchEventFuncs = {
 		});
 	}
 }
+
+const twitchEventChannel = new BroadcastChannel("twitch_chat");
 
 twitchEventChannel.onmessage = function(message) {
 	console.log(message);

@@ -11,10 +11,6 @@ function postToSettingsChannel(event, data) {
 	console.log(message);
 	settingsChannel.postMessage(message);
 }
-postToSettingsChannel("ChatOverlayExists", {
-	version: overlayRevision,
-	timestamp: overlayRevisionTimestamp
-});
 
 settingsFuncs = {
 	reload: function(message) {
@@ -68,6 +64,11 @@ settingsFuncs = {
 			let setting = message.data[i];
 			updateSetting(`setting_${setting}`, localStorage.getItem(`setting_${setting}`));
 		}
+	},
+
+	refreshEmotes: function(message) {
+		chatEmotes = {};
+		refreshExternalStuff();
 	}
 }
 

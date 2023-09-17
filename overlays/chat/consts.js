@@ -1,5 +1,5 @@
-const overlayRevision = 23;
-const overlayRevisionTimestamp = 1694364941668;
+const overlayRevision = 24;
+const overlayRevisionTimestamp = 1694614732579;
 
 const enums = {
 	weight: {
@@ -52,7 +52,7 @@ const twitchBadgeTypes = {
 		is_solid: true
 	},
 	bits: {
-		badges: ["anonymous-cheerer", "bits", "bits-charity"],
+		badges: ["anonymous-cheerer", "bits"],
 		setting: "enableTwitchBitsBadges",
 		is_solid: true
 	},
@@ -67,7 +67,7 @@ const twitchBadgeTypes = {
 		is_solid: false
 	},
 	charity: {
-		badges: ["glhf-pledge"],
+		badges: ["glhf-pledge", "bits-charity"],
 		setting: "enableTwitchCharityBadges",
 		is_solid: false
 	},
@@ -133,3 +133,60 @@ const commonEmotes = {
 };
 
 twemoji.base = "twemoji/";
+
+const funnyBeatSaberMapsToRequestToEverySingleStreamerOnTwitchEverIBetEverySingleOneOfThemWillEnjoyThem = [
+	"25f", "d1cc", "b", "c32d", "922f", "871a", "10c9b", "1e99", "1eb9", "2a121", "24188", "46d4", "24b58", "557f", "1f89a", "335c", "e621", "2c2f4", "11cf8"
+];
+
+const animationFilterFunctions = {
+	Contrast: {
+		incoming: {
+			start: "contrast(var(--messageInContrastStart))",
+			end: "contrast(var(--messageInContrastEnd))"
+		},
+		outgoing: {
+			start: "contrast(var(--messageOutContrastStart))",
+			end: "contrast(var(--messageOutContrastEnd))"				
+		}
+	},
+	Brightness: {
+		incoming: {
+			start: "brightness(var(--messageInBrightnessStart))",
+			end: "brightness(var(--messageInBrightnessEnd))"
+		},
+		outgoing: {
+			start: "brightness(var(--messageOutBrightnessStart))",
+			end: "brightness(var(--messageOutBrightnessEnd))"
+		}
+	},
+	HueRotate: {
+		incoming: {
+			start: "hue-rotate(var(--messageInHueRotateStart))",
+			end: "hue-rotate(var(--messageInHueRotateEnd))"
+		},
+		outgoing: {
+			start: "hue-rotate(var(--messageOutHueRotateStart))",
+			end: "hue-rotate(var(--messageOutHueRotateEnd))"
+		}
+	},
+	Saturate: {
+		incoming: {
+			start: "saturate(var(--messageInSaturateStart))",
+			end: "saturate(var(--messageInSaturateEnd))"
+		},
+		outgoing: {
+			start: "saturate(var(--messageOutSaturateStart))",
+			end: "saturate(var(--messageOutSaturateEnd))"
+		}
+	},
+	Blur: {
+		incoming: {
+			start: "blur(var(--messageInBlurStart))",
+			end: "blur(var(--messageInBlurEnd))"
+		},
+		outgoing: {
+			start: "blur(var(--messageOutBlurStart))",
+			end: "blur(var(--messageOutBlurEnd))"
+		}
+	}
+};

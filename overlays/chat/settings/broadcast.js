@@ -24,6 +24,10 @@ $("#clearMessagesButton").on("mouseup", function(e) {
 	postToChannel("clearChatMessages");
 });
 
+$("#reloadEmotesButton").on("mouseup", function(e) {
+	postToChannel("refreshEmotes");
+});
+
 broadcastFuncs = {
 	BSVodAudioExists: function(message) {
 		if($('.row[data-tab="bsvodaudio"]').is(":visible")) {

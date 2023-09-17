@@ -46,6 +46,10 @@ function startSLWebsocket() {
 
 	socket.on('event', function(eventData) {
 		console.log(eventData);
+		
+		if(!("for" in eventData)) {
+			eventData.for = "streamlabs";
+		}
 		if(eventData.for !== "streamlabs") { return; }
 
 		if(streamlabsSeenEventIDs.indexOf(eventData.event_id) !== -1) {

@@ -53,13 +53,15 @@
 				<div class="row" data-tab="ffz"><i class="icon ffz"></i>FrankerFaceZ</div>
 			</div>
 			<div id="sideButtons">
-				<div class="button" id="sendTestButton">Test Message</div>
-				<div class="button" id="clearMessagesButton">Clear Messages</div>
+				<div class="button" id="sendTestButton"><i class="fas fa-comment-dots"></i> Test Message</div>
+				<div class="button" id="clearMessagesButton"><i class="fas fa-trash-alt"></i> Clear Messages</div>
 				<hr/>
-				<div class="button" id="reloadPanelButton">Refresh Settings</div>
-				<div class="button" id="reloadOverlayButton">Refresh Overlays</div>
+				<div class="button" id="reloadEmotesButton"><i class="fas fa-sync-alt"></i> FFZ / BTTV / 7TV</div>
+				<div class="button" id="reloadOverlayButton"><i class="fas fa-sync-alt"></i> All Overlays</div>
 				<hr/>
-				<div class="button" id="resetOverlayButton">Reset Everything</div>
+				<div class="button" id="reloadPanelButton"><i class="fas fa-sync-alt"></i> Settings Panel</div>
+				<hr/>
+				<div class="button" id="resetOverlayButton"><i class="fas fa-times-circle"></i> Reset to Defaults</div>
 				<div id="versionStuff">
 					<span id="revision"></span> <span id="revisionDate"></span>
 					<br/>
@@ -207,6 +209,12 @@
 						</div>
 						<div class="settingCell">
 							<input id="chatDefaultNameColor" type="text" data-coloris value="#AAAAAA"/>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="chatNameUsesProminentColor" type="checkbox"/> <span class="settingInfo">Use the prominent color of the chatter's avatar over default name colors</span>
 						</div>
 					</div>
 					<hr/>
@@ -561,7 +569,7 @@
 							<span class="settingInfo">Size</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="eventTagsFontSize" min="4" max="64" step="0.25" value="14"/>pt
+							<input type="number" id="eventTagsFontSize" min="4" max="64" step="0.25" value="13"/>pt
 						</div>
 					</div>
 					<div class="setting">
@@ -577,7 +585,7 @@
 							<span class="settingInfo">Additional weight</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="eventTagsFontWeightExtra" min="0" max="4" step="0.05" value="0.6"/>px
+							<input type="number" id="eventTagsFontWeightExtra" min="0" max="4" step="0.05" value="0.75"/>px
 						</div>
 					</div>
 					<div class="setting">
@@ -585,7 +593,7 @@
 							<span class="settingInfo">Letter spacing</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="eventTagsLetterSpacing" min="-12" max="12" step="0.2" value="-0.2"/>px
+							<input type="number" id="eventTagsLetterSpacing" min="-12" max="12" step="0.2" value="0"/>px
 						</div>
 					</div>
 					<div class="setting">
@@ -606,7 +614,7 @@
 							<span class="settingInfo">Line height</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="eventTagsLineHeight" min="16" max="64" step="0.5" value="28"/>px
+							<input type="number" id="eventTagsLineHeight" min="16" max="64" step="0.5" value="26"/>px
 						</div>
 					</div>
 				</div>
@@ -703,6 +711,14 @@
 				</div>
 			</div>
 			<div class="section" data-content="effects">
+				<div class="part">
+					<h1>General</h1>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="use3dTransformsOnAnimations" type="checkbox"/> <span class="settingInfo">Use 3D translation functions to force hardware acceleration for animations</span>
+						</div>
+					</div>
+				</div>
 				<div class="part">
 					<h1>In Animations</h1>
 					<div class="setting">
@@ -1232,12 +1248,24 @@
 							<input type="number" id="chatMessagesHardCap" min="0" max="9999" step="1" value="200"/>messages
 						</div>
 					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="autoHideAllKnownBots" type="checkbox"/> <span class="settingInfo">Automatically hide known bot accounts</span>
+						</div>
+					</div>
 					<div class="setting">
 						<div class="settingCellLabel">
 							<span class="settingInfo">Hide accounts<br/><span style="font-size: var(--font-size-smol); opacity: 0.67;">(One account per line)</span></span>
 						</div>
 						<div class="settingCell">
 							<textarea id="chatHideAccounts"></textarea>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell smol">
+							Known bot list data is fetched from <a href="https://twitchinsights.net/bots">Twitch Insights</a>
 						</div>
 					</div>
 					<hr/>
@@ -1520,7 +1548,7 @@
 							<span class="settingInfo">Colors</span>
 						</div>
 						<div class="settingCell">
-							<input id="badgeGradientColorStart" type="text" data-coloris value="#555555ff"/><i class="fas fa-long-arrow-alt-right"></i><input id="badgeGradientColorEnd" type="text" data-coloris value="#000000ff"/>
+							<input id="badgeGradientColorStart" type="text" data-coloris value="#777777ff"/><i class="fas fa-long-arrow-alt-right"></i><input id="badgeGradientColorEnd" type="text" data-coloris value="#000000ff"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="twitchBadgesGradients">
@@ -1536,7 +1564,7 @@
 							<span class="settingInfo">Gradient runs from</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="badgeGradientStart" min="-300" max="300" step="1" value="0"/>%<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="badgeGradientEnd" min="-300" max="300" step="1" value="0"/>%
+							<input type="number" id="badgeGradientStart" min="-300" max="300" step="1" value="0"/>%<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="badgeGradientEnd" min="-300" max="300" step="1" value="80"/>%
 						</div>
 					</div>
 					<div class="setting" data-dependent="twitchBadgesGradients">
@@ -1674,6 +1702,17 @@
 							<input checked id="enableTwitchHypeTrainBadges" type="checkbox"/> <span class="settingInfo">Hype Train badges</span>
 						</div>
 					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="enableAffiliateBadges" type="checkbox"/> <span class="settingInfo">Show a custom badge for affiliates</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="enableBotBadges" type="checkbox"/> <span class="settingInfo">Show a custom badge for known bot accounts</span>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div class="section" data-content="avatars">
@@ -1725,7 +1764,7 @@
 							<span class="settingInfo">Size</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="avatarsBGSize" min="0" max="999" step="1" value="350"/>px
+							<input type="number" id="avatarsBGSize" min="0" max="999" step="1" value="380"/>px
 						</div>
 					</div>
 					<div class="setting" data-dependent="avatarsBG">
@@ -1777,7 +1816,7 @@
 							<span class="settingInfo">Fade from</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="avatarsBGStartFadeAt" min="-300" max="300" step="1" value="0"/>%<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="avatarsBGEndFadeAt" min="-300" max="300" step="1" value="75"/>% of block width
+							<input type="number" id="avatarsBGStartFadeAt" min="-300" max="300" step="1" value="5"/>%<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="avatarsBGEndFadeAt" min="-300" max="300" step="1" value="60"/>% of block width
 						</div>
 					</div>
 					<div class="setting" data-dependent="avatarsBG">
@@ -1785,7 +1824,7 @@
 							<span class="settingInfo">Fade angle</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="avatarsBGFadeAngle" min="0" max="360" step="1" value="125"/>deg
+							<input type="number" id="avatarsBGFadeAngle" min="0" max="360" step="1" value="135"/>deg
 						</div>
 					</div>
 					<hr/>
@@ -2532,12 +2571,12 @@
 								<select class="selectedBackup">
 								</select>
 							</div>
-							<div class="button" id="restoreBackupButton">Restore from Backup</div><div class="button" id="deleteBackupButton">Delete Backup</div>
+							<div class="button" id="restoreBackupButton"><i class="fas fa-upload"></i> Restore from Backup</div><div class="button" id="deleteBackupButton"><i class="fas fa-trash-alt"></i> Delete Backup</div>
 						</div>
 					</div>
 					<div class="setting">
 						<div class="settingCell">
-							<div class="button" id="generateBackupButton">Backup Current Settings</div>
+							<div class="button" id="generateBackupButton"><i class="fas fa-download"></i> Backup Current Settings</div>
 						</div>
 					</div>
 					<hr/>
@@ -2912,7 +2951,7 @@
 						The data shown in this section is considered to be sensitive information; it is not advised to show this information to the public.<br/><br/>Click the button below to reveal this section's settings.
 					</div>
 					<div class="button" id="hideSensitiveWarning">
-						Reveal Settings
+						<i class="fas fa-check"></i> Reveal Settings
 					</div>
 				</div>
 			</div>

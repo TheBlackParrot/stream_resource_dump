@@ -162,20 +162,50 @@ function getTwitchUserInfo(id, callback) {
 		}, function(rawUserResponse) {
 			if("data" in rawUserResponse) {
 				if(rawUserResponse.data.length) {
-					sessionStorage.setItem(`cache_twitch${id}`, JSON.stringify(rawUserResponse.data[0]));
+					if(localStorage.getItem("setting_chatNameUsesProminentColor") === "true") {
+						Vibrant.from(rawUserResponse.data[0].profile_image_url).maxDimension(120).maxColorCount(80).getPalette().then(function(swatches) {
+							console.log(swatches);
 
+							let wantedSwatch = swatches["Vibrant"];
+							if(wantedSwatch._population === 0) {
+								let maxPop = 0;
+
+								for(let i in swatches) {
+									let swatch = swatches[i];
+
+									if(!swatch._population) {
+										continue;
+									}
+
+									if(swatch._population > maxPop) {
+										wantedSwatch = swatch;
+									}
+								}
+							}
+
+							rawUserResponse.data[0].profile_image_url_color = wantedSwatch.getHex();
+							sessionStorage.setItem(`cache_twitch${id}`, JSON.stringify(rawUserResponse.data[0]));
+
+							if(typeof callback === "function") {
+								callback(rawUserResponse.data[0]);
+							}
+						});
+					} else {
+						sessionStorage.setItem(`cache_twitch${id}`, JSON.stringify(rawUserResponse.data[0]));
+
+						if(typeof callback === "function") {
+							callback(rawUserResponse.data[0]);
+						}
+					}
+				} else {
 					if(typeof callback === "function") {
-						return callback(rawUserResponse.data[0]);
+						return callback(null);
 					}
 				}
-
+			} else {
 				if(typeof callback === "function") {
 					return callback(null);
 				}
-			}
-
-			if(typeof callback === "function") {
-				return callback(null);
 			}
 		});
 	} else {
@@ -313,4 +343,84 @@ function randomFloat(min, max) {
 
 function randomInt(min, max) {
 	return Math.round(randomFloat(min, max));
+}
+
+var knownBots = [];
+function getKnownBotsList(callback) {
+	console.log("getting known bots list...");
+
+	if(sessionStorage.getItem("cache_lastGrabbedKnownBots") === null) {
+		console.log("known bot list hasn't been cached recently");
+
+		$.ajax({
+			type: "GET",
+			url: "https://api.twitchinsights.net/v1/bots/all",
+
+			error: function(data) {
+				console.log("couldn't fetch known bot list, trying previous cache...");
+
+				knownBots = JSON.parse(localStorage.getItem("cache_knownBots"));
+				if(knownBots === null) {
+					console.log("never fetched a known bot list successfully before. Welp.");
+					knownBots = [];
+				}
+
+				if(typeof callback === "function") {
+					callback(knownBots);
+				}
+			},
+
+			statusCode: {
+				200: function(data) {
+					console.log("fetched known bot list");
+
+					if(!data) {
+						if(typeof callback === "function") {
+							callback([]);
+						}
+						return;
+					}
+					if(!("bots" in data)) {
+						if(typeof callback === "function") {
+							callback([]);
+						}
+						return;
+					}
+
+					if(data) {
+						// seems like twitch insights is caching, some other account ID? wtf
+						// names work though
+						knownBots = [];
+						for(let i in data.bots) {
+							let botInfo = data.bots[i];
+							knownBots.push(botInfo[0]);
+						}
+
+						sessionStorage.setItem("cache_lastGrabbedKnownBots", Date.now());
+						localStorage.setItem("cache_knownBots", JSON.stringify(knownBots));
+
+						if(typeof callback === "function") {
+							callback(knownBots);
+						}
+					}
+				}
+			}
+		});
+	} else {
+		console.log("using cached known bot list");
+
+		knownBots = JSON.parse(localStorage.getItem("cache_knownBots"));
+		if(knownBots === null) {
+			console.log("last known bot cache was empty? uh");
+			knownBots = [];
+		}
+		if(typeof callback === "function") {
+			callback(knownBots);
+		}
+	}
+}
+
+function isUserBot(username) {
+	if(knownBots.indexOf(username) !== -1) { return true; }
+	return false;
 }

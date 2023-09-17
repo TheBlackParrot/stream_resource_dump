@@ -132,7 +132,6 @@ function initSoundMetadata() {
 		loadSound(name);
 	}
 }
-initSoundMetadata();
 
 function setVolume(which, volume) {
 	sounds[which].gainNode.gain.value = parseInt(volume) / 100;
@@ -162,7 +161,3 @@ const noiseGain = context.createGain();
 
 noise.connect(noiseGain).connect(noiseLowPassFilter).connect(context.destination);
 noise.start();
-
-$(document).ready(function() {
-	noiseGain.gain.value = (localStorage.getItem("setting_enableConstantNoiseToFixCEFBeingWeird") === "true" ? parseInt(localStorage.getItem("setting_noiseVolume")) / 100 : 0);
-});

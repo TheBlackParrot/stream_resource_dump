@@ -46,6 +46,13 @@ body {
 .chatBlock {
 	margin-left: var(--chatBlockPaddingHorizontal);
 	margin-right: var(--chatBlockPaddingHorizontal);
+}
+.badges, .pronouns, .message, .pfp, .flags, .name, .extraInfo {
+	filter: var(--effectFilters);
+	backdrop-filter: opacity(0);
+}
+
+.overallWrapper {
 	border-radius: var(--chatBlockBorderRadius);
 	background-color: var(--backgroundColor);
 	border-color: var(--chatBlockOutlineColor);
@@ -56,20 +63,12 @@ body {
 	padding-top: var(--chatBlockIndividualPaddingVertical);
 	padding-bottom: var(--chatBlockIndividualPaddingVertical);
 }
-.bottom .chatBlock:last-child {
-	margin-bottom: var(--chatBlockPaddingVertical);
-}
-.top .chatBlock:last-child {
-	margin-top: var(--chatBlockPaddingVertical);
-}
-.badges, .pronouns, .message, .pfp, .flags, .name, .extraInfo {
-	filter: var(--effectFilters);
-	backdrop-filter: opacity(0);
-}
 
 #wrapper .userInfo {
 	flex: 1;
 	min-width: 0;	
+	position: relative;
+	z-index: 2;
 }
 
 .userInfo {
@@ -203,6 +202,8 @@ body {
 	font-size: var(--messageFontSize);
 	letter-spacing: var(--messageLetterSpacing);
 	text-transform: var(--messageTransform);
+	position: relative;
+	z-index: 2;
 }
 .extraInfo {
 	background-color: var(--eventTagsColor);
@@ -261,7 +262,7 @@ tt, code, pre {
 .bsrInfo {
 	word-wrap: break-word;
 	line-height: 26px;
-	margin-top: 4px;
+	margin-top: 8px;
 	white-space: nowrap;
 	margin-bottom: 4px;
 	filter: var(--effectFilters);
@@ -305,16 +306,17 @@ tt, code, pre {
 	white-space: nowrap;
 }
 .songArtist {
+	font-size: 14pt;
 	font-weight: 600;
 	position: relative;
-	top: 5px;
+	top: 6px;
 	white-space: nowrap;
 }
 .mapper {
-	font-weight: 600;
-	font-size: 11pt;
+	font-weight: 500;
+	font-size: 10pt;
 	position: relative;
-	top: 2px;
+	top: 5px;
 	white-space: nowrap;
 }
 
@@ -541,10 +543,10 @@ img.emoji {
 }
 
 .left .bsrArt, .left .bsrCode {
-	margin-right: 13px;
+	margin-right: 10px;
 }
 .right .bsrArt, .right .bsrCode {
-	margin-left: 13px;
+	margin-left: 10px;
 }
 
 .left .bsrExtraInfo {
@@ -604,12 +606,13 @@ img.emoji {
 }
 
 .avatarBGWrapper {
-	display: none;
 	height: calc(100% + var(--avatarsBGVerticalPadding));
 	width: 100%;
 	position: absolute;
 	filter: var(--avatarsBGEffects);
 	backdrop-filter: opacity(0);
+	z-index: 1;
+	top: 0;
 }
 
 .first_message .avatarBGWrapper {
@@ -643,3 +646,12 @@ img.emoji {
 
 .top .avatarBGLeft, .top .avatarBGRight { margin-bottom: calc(-0.5 * var(--avatarsBGVerticalPadding)); }
 .bottom .avatarBGLeft, .bottom .avatarBGRight { margin-top: calc(-0.5 * var(--avatarsBGVerticalPadding)); }
+
+.effectWrapper {
+	position: relative;
+	z-index: 2;
+}
+
+.bottom .chatBlock:last-child {
+	margin-bottom: var(--chatBlockSpacing);
+}

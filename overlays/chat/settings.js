@@ -105,11 +105,8 @@ var hideAccounts = [];
 var refreshExternalStuffTimeout;
 
 function refreshExternalStuff() {
-	clearTimeout(refreshExternalStuffTimeout);
-	refreshExternalStuffTimeout = setTimeout(function() {
-		chatEmotes = (localStorage.getItem("setting_chatShowCommonEmotes") === "true" ? Object.create(commonEmotes) : {});
-		getGlobalChannelEmotes(broadcasterData);
-	}, 10000);
+	chatEmotes = (localStorage.getItem("setting_chatShowCommonEmotes") === "true" ? Object.create(commonEmotes) : {});
+	getGlobalChannelEmotes(broadcasterData);
 }
 
 function normalizeSettingColors(setting) {
@@ -144,7 +141,7 @@ function setHistoryOpacity() {
 	}
 	if(filtersAllFalse) {
 		$(".chatBlock").each(function() {
-			$(this).css("filter", "");
+			$(this).css("filter", "opacity(1)"); // this fixes a... height issue? what the fuck
 		});
 	}
 
@@ -171,7 +168,7 @@ function setHistoryOpacity() {
 		let filterList = [];
 		let transformList = [];
 
-		let thisIdx = parseInt($(this).attr("data-combinedIdx"));
+		let thisIdx = parseInt($(this).attr("data-rootIdx"));
 		let startAfter = parseInt(localStorage.getItem("setting_chatHistoryStartAfter"));
 
 		let opacity = 1;
@@ -184,9 +181,9 @@ function setHistoryOpacity() {
 				opacity = 1;
 			}
 
-			if(opacity !== 1) {
-				filterList.push(`opacity(${opacity})`);
-			}
+			filterList.push(`opacity(${opacity})`);
+		} else {
+			filterList.push(`opacity(1)`);
 		}
 
 		if(opacity <= 0) {
@@ -233,12 +230,47 @@ function setHistoryOpacity() {
 		}
 
 		if(filterList.length) {
-			$(this).css("filter", filterList.join(" "));
+			$(this).children(".overallWrapper").css("filter", filterList.join(" "));
 		}
 		if(transformList.length) {
-			$(this).css("transform", transformList.join(" "));
+			$(this).children(".overallWrapper").css("transform", transformList.join(" "));
 		}
 	});
+}
+
+function checkFilterAnimationSettings() {
+	let settingChecks = Object.keys(animationFilterFunctions);
+
+	let allowIn = {
+		start: [],
+		end: []
+	};
+	let allowOut = {
+		start: [],
+		end: []
+	};
+
+	for(let i in settingChecks) {
+		let set = settingChecks[i];
+
+		if(localStorage.getItem(`setting_messageIn${set}Start`) !== localStorage.getItem(`setting_messageIn${set}End`)) {
+			allowIn.start.push(animationFilterFunctions[set].incoming.start);
+			allowIn.end.push(animationFilterFunctions[set].incoming.end);
+		}
+		if(localStorage.getItem(`setting_messageOut${set}Start`) !== localStorage.getItem(`setting_messageOut${set}End`)) {
+			allowOut.start.push(animationFilterFunctions[set].outgoing.start);
+			allowOut.end.push(animationFilterFunctions[set].outgoing.end);
+		}
+	}
+
+	rootCSS().setProperty("--messageInFilterFunctionsStart", allowIn.start.join(" "));
+	rootCSS().setProperty("--messageInFilterFunctionsEnd", allowIn.end.join(" "));
+	rootCSS().setProperty("--messageOutFilterFunctionsStart", allowOut.start.join(" "));
+	rootCSS().setProperty("--messageOutFilterFunctionsEnd", allowOut.end.join(" "));
+}
+
+function checkTransformAnimationSettings() {
+	// todo
 }
 
 const settingUpdaters = {
@@ -249,27 +281,16 @@ const settingUpdaters = {
 		}
 	},
 
-	enable7TVGlobalEmotes: refreshExternalStuff,
-	enable7TVChannelEmotes: refreshExternalStuff,
-	enableBTTVGlobalEmotes: refreshExternalStuff,
-	enableBTTVChannelEmotes: refreshExternalStuff,
-	enableFFZGlobalEmotes: refreshExternalStuff,
-	enableFFZChannelEmotes: refreshExternalStuff,
-
 	enable7TV: function(value) {
 		sevenTVCosmetics = {};
 		sevenTVBadges = [];
 		sevenTVPaints = [];
 
 		get7TVBadges();
-		refreshExternalStuff();
 	},
 	enableBTTV: function(value) {
-		startBTTVWebsocket();
-		refreshExternalStuff();
 	},
 	enableFFZ: function(value) {
-		refreshExternalStuff();	
 	},
 
 	chatBackgroundColor: function(value) {
@@ -693,9 +714,11 @@ const settingUpdaters = {
 	},
 	messageInBlurStart: function(value) {
 		rootCSS().setProperty("--messageInBlurStart", `${value}px`);
+		checkFilterAnimationSettings();
 	},
 	messageInBlurEnd: function(value) {
 		rootCSS().setProperty("--messageInBlurEnd", `${value}px`);
+		checkFilterAnimationSettings();
 	},
 	messageInScaleXStart: function(value) {
 		rootCSS().setProperty("--messageInScaleXStart", `${value}%`);
@@ -729,27 +752,35 @@ const settingUpdaters = {
 	},
 	messageInBrightnessStart: function(value) {
 		rootCSS().setProperty("--messageInBrightnessStart", `${value}%`);
+		checkFilterAnimationSettings();
 	},
 	messageInBrightnessEnd: function(value) {
 		rootCSS().setProperty("--messageInBrightnessEnd", `${value}%`);
+		checkFilterAnimationSettings();
 	},
 	messageInContrastStart: function(value) {
 		rootCSS().setProperty("--messageInContrastStart", `${value}%`);
+		checkFilterAnimationSettings();
 	},
 	messageInContrastEnd: function(value) {
 		rootCSS().setProperty("--messageInContrastEnd", `${value}%`);
+		checkFilterAnimationSettings();
 	},
 	messageInSaturateStart: function(value) {
 		rootCSS().setProperty("--messageInSaturateStart", `${value}%`);
+		checkFilterAnimationSettings();
 	},
 	messageInSaturateEnd: function(value) {
 		rootCSS().setProperty("--messageInSaturateEnd", `${value}%`);
+		checkFilterAnimationSettings();
 	},
 	messageInHueRotateStart: function(value) {
 		rootCSS().setProperty("--messageInHueRotateStart", `${value}deg`);
+		checkFilterAnimationSettings();
 	},
 	messageInHueRotateEnd: function(value) {
 		rootCSS().setProperty("--messageInHueRotateEnd", `${value}deg`);
+		checkFilterAnimationSettings();
 	},
 	messageOutOpacityStart: function(value) {
 		rootCSS().setProperty("--messageOutOpacityStart", `${value}%`);
@@ -771,9 +802,11 @@ const settingUpdaters = {
 	},
 	messageOutBlurStart: function(value) {
 		rootCSS().setProperty("--messageOutBlurStart", `${value}px`);
+		checkFilterAnimationSettings();
 	},
 	messageOutBlurEnd: function(value) {
 		rootCSS().setProperty("--messageOutBlurEnd", `${value}px`);
+		checkFilterAnimationSettings();
 	},
 	messageOutScaleXStart: function(value) {
 		rootCSS().setProperty("--messageOutScaleXStart", `${value}%`);
@@ -807,27 +840,35 @@ const settingUpdaters = {
 	},
 	messageOutBrightnessStart: function(value) {
 		rootCSS().setProperty("--messageOutBrightnessStart", `${value}%`);
+		checkFilterAnimationSettings();
 	},
 	messageOutBrightnessEnd: function(value) {
 		rootCSS().setProperty("--messageOutBrightnessEnd", `${value}%`);
+		checkFilterAnimationSettings();
 	},
 	messageOutContrastStart: function(value) {
 		rootCSS().setProperty("--messageOutContrastStart", `${value}%`);
+		checkFilterAnimationSettings();
 	},
 	messageOutContrastEnd: function(value) {
 		rootCSS().setProperty("--messageOutContrastEnd", `${value}%`);
+		checkFilterAnimationSettings();
 	},
 	messageOutSaturateStart: function(value) {
 		rootCSS().setProperty("--messageOutSaturateStart", `${value}%`);
+		checkFilterAnimationSettings();
 	},
 	messageOutSaturateEnd: function(value) {
 		rootCSS().setProperty("--messageOutSaturateEnd", `${value}%`);
+		checkFilterAnimationSettings();
 	},
 	messageOutHueRotateStart: function(value) {
 		rootCSS().setProperty("--messageOutHueRotateStart", `${value}deg`);
+		checkFilterAnimationSettings();
 	},
 	messageOutHueRotateEnd: function(value) {
 		rootCSS().setProperty("--messageOutHueRotateEnd", `${value}deg`);
+		checkFilterAnimationSettings();
 	},
 	chatHistoryOriginPoint: function(value) {
 		rootCSS().setProperty("--chatHistoryOriginPoint", value);
@@ -981,12 +1022,38 @@ const settingUpdaters = {
 	},
 	avatarsBGAnimationTimingFunc: function(value) {
 		rootCSS().setProperty("--avatarsBGAnimationTimingFunc", `var(--timingFunc${value})`);
+	},
+
+	use3dTransformsOnAnimations: function(value) {
+		let which = 2;
+		if(value === "true") {
+			which = 3;
+		}
+
+		rootCSS().setProperty("--currentMessageInTranslateFunctionStart", `var(--messageInTranslate${which}dFunctionStart)`);
+		rootCSS().setProperty("--currentMessageInTranslateFunctionEnd", `var(--messageInTranslate${which}dFunctionEnd)`);
+		rootCSS().setProperty("--currentMessageOutTranslateFunctionStart", `var(--messageOutTranslate${which}dFunctionStart)`);
+		rootCSS().setProperty("--currentMessageOutTranslateFunctionEnd", `var(--messageOutTranslate${which}dFunctionEnd)`);
+	},
+
+	chatNameUsesProminentColor: function(value, oldValue) {
+		if(value === oldValue || oldValue === undefined) {
+			return;
+		}
+
+		console.log("clearing twitch API cache...");
+
+		for(let key in sessionStorage) {
+			if(key.substring(0, 12) === "cache_twitch") {
+				sessionStorage.removeItem(key);
+				console.log(`cleared ${key}`);
+			}
+		}
 	}
 };
-
 settingUpdaters["chatHideAccounts"](localStorage.getItem("setting_chatHideAccounts"));
 
-function updateSetting(which, value) {
+function updateSetting(which, value, oldValue) {
 	if(which.indexOf("setting_") === -1) {
 		return;
 	}
@@ -995,9 +1062,9 @@ function updateSetting(which, value) {
 
 	if(setting in settingUpdaters) {
 		console.log(`setting ${setting} updated`);
-		settingUpdaters[setting](value);
+		settingUpdaters[setting](value, oldValue);
 	}
 }
 window.addEventListener("storage", function(event) {
-	updateSetting(event.key, event.newValue);
+	updateSetting(event.key, event.newValue, event.oldValue);
 });

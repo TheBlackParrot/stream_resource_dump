@@ -20,9 +20,12 @@ function prepareMessage(tags, message, self, forceHighlight) {
 	if("username" in tags) {
 		usernameTagActual = tags['username'];
 	} else if("login" in tags) {
-		usernameTagActual = tags['login'];
+		usernameTagActual = tags['login'].toLowerCase();
 	}
-	if(hideAccounts.indexOf(usernameTagActual.toLowerCase()) !== -1) {
+	if(hideAccounts.indexOf(usernameTagActual) !== -1) {
+		return;
+	}
+	if(localStorage.getItem("setting_autoHideAllKnownBots") === "true" && isUserBot(usernameTagActual)) {
 		return;
 	}
 
@@ -66,9 +69,19 @@ function prepareMessage(tags, message, self, forceHighlight) {
 					info: tags['badge-info']
 				},
 				color: tags['color'],
-				moderator: moderator
+				moderator: moderator,
+				avatar: userData.profile_image_url,
+				broadcasterType: userData.broadcaster_type,
+				createdAt: new Date(userData.created_at).getTime(),
+				bot: isUserBot(usernameTagActual)
 			}
 		};
+
+		if(localStorage.getItem("setting_chatNameUsesProminentColor") === "true") {
+			if(canShowPFP(outObject)) {
+				outObject.user.color = userData.profile_image_url_color;
+			}
+		}
 
 		switch(outObject.type) {
 			case "resub":
@@ -374,7 +387,6 @@ const chatFuncs = {
 			return true;
 		}
 
-		//let msgElement = $(`.chatBlock[data-msgUUID="${data.uuid}"]`);
 		msgElement.children(".message").remove();
 
 		let infoElement = $(`<div class="bsrInfo loading"></div>`);
@@ -385,7 +397,7 @@ const chatFuncs = {
 		$.get(`https://api.beatsaver.com/maps/id/${args[0]}`, function(mapData) {
 			console.log(mapData);
 
-			if(mapData.id === "25f") {
+			if(funnyBeatSaberMapsToRequestToEverySingleStreamerOnTwitchEverIBetEverySingleOneOfThemWillEnjoyThem.indexOf(mapData.id) !== -1) {
 				infoElement.addClass("STREAMER_CAN_YOU_PLAY_REALITY_CHECK_ITS_MY_FAVORITE_MAP");
 			}
 
@@ -562,126 +574,69 @@ const chatFuncs = {
 function widthTest(rootElement, userBlock) {
 	$("#testWrapper").append(rootElement);
 
-	let isHidden = userBlock.is(":hidden");
-	if(isHidden) {
-		userBlock.show();
-	}
-
 	let padding = (parseInt(rootCSS().getPropertyValue("--chatBlockPaddingHorizontal")) * 2) + (parseInt(rootCSS().getPropertyValue("--chatBlockIndividualPaddingHorizontal")) * 2);
 	let parentWidth = $("#wrapper").width() - padding;
 	let elementWidth = userBlock.width();
 	let elementLeft = userBlock.position().left;
 
-	if(isHidden) {
-		userBlock.hide();
-	}
-
 	return parentWidth - (elementWidth + elementLeft) < 0;
 }
 
+function renderAvatarBGBlock(data, rootElement) {
+	let avatarBGWrapperElement = $('<div class="avatarBGWrapper"></div>');
+	let avatarBGElement = $(`<div class="avatarBG avatarBGLeft" style="background-image: url('${data.user.avatar}');"/>`);
+
+	let showPFP = canShowPFP(data);
+	if(showPFP && localStorage.getItem("setting_enableAvatarsAsBackground") === "true") {
+		avatarBGWrapperElement.append(avatarBGElement);
+
+		if(localStorage.getItem("setting_avatarsBGAnimateAppearance") === "true") {
+			avatarBGElement.addClass("zoomAvatarBGOut");
+		}
+	}
+
+	return avatarBGWrapperElement;
+}
+
 var lastUser;
+var lastRootElement;
 var lastMessageIdx;
 var messageCount = 0;
 var combinedCount = 0;
 var testNameBlock;
-function parseMessage(data) {
-	if(!allowedToProceed) {
-		console.log("No Client ID or Secret is set.");
-		return;
-	}
-
-	console.log(data);
-
-	if(localStorage.getItem("setting_debugFreezeChat") === "true" || data.message === null) {
-		return;
-	}
-
-	let wantedCommand;
-	let wantedArgs;
-	if(data.message[0] === localStorage.getItem("setting_chatCommandCharacter")) {
-		let parts = data.message.substr(1).split(" ");
-		
-		let cmd = parts[0].toLowerCase();
-		wantedArgs = parts.slice(1);
-
-		if(cmd in chatFuncs) {
-			wantedCommand = chatFuncs[cmd];
-		}
-
-		let continueOn = false;
-		if(typeof wantedCommand === "function") {
-			continueOn = wantedCommand(data, wantedArgs);
-		}
-
-		if(!continueOn && localStorage.getItem("setting_chatHideCommands") === "true") {
-			return;
+function getRootElement(data) {
+	if($(`.chatBlock[data-rootIdx="${combinedCount}"]`).length) {
+		if(lastUser === data.user.id) {
+			return lastRootElement;
 		}
 	}
 
-	if(lastUser !== data.user.id) {
-		combinedCount++; // fricking-
-	}
-
-	let rootElement = $(`<div class="chatBlock" data-msgIdx="${messageCount}" data-combinedIdx="${combinedCount}" data-msgUUID="${data.uuid}" data-userID="${data.user.id}"></div>`);
-	let wrapperElement = $('<div class="effectWrapper"></div>');
-	let avatarBGWrapperElement = $('<div class="avatarBGWrapper"></div>');
-	rootElement.append(wrapperElement);
-	wrapperElement.append(avatarBGWrapperElement);
-
-	if(localStorage.getItem("setting_chatAnimationsIn") === "true") {
-		wrapperElement.addClass("slideIn");
-	}
-
-	let userBlock = $('<div class="userInfo" style="display: none;""></div>');
-	if(localStorage.getItem("setting_chatAnimationsIn") === "true") {
-		userBlock.addClass("userInfoIn");
-	}
-
-	if(lastUser !== data.user.id) {
-		userBlock.show();
-		rootElement.addClass("first_message");
-	} else {
-		let lastElem = $(`.chatBlock[data-msgidx="${lastMessageIdx}"]`);
-		if($("#wrapper").hasClass("bottom")) {
-			if(lastElem.hasClass("first_message")) {
-				lastElem.css("padding-bottom", "0px");
-				lastElem.css("margin-bottom", "0px");
-				lastElem.css("border-bottom-left-radius", "0px");
-				lastElem.css("border-bottom-right-radius", "0px");
-				lastElem.css("border-bottom", "0px");
-			} else {
-				lastElem.removeClass("last_message").addClass("middle_message");
-
-				if(!lastElem.length) {
-					lastElem.addClass("first_message");
-				}
-			}
-
-			userBlock.css("margin-top", "0px");
-			rootElement.css("margin-top", "0px");
-		} else {
-			if(lastElem.hasClass("first_message")) {
-				lastElem.children(".userInfo").hide();
-			}
-		}
-
-		rootElement.addClass("last_message");
-		if($("#wrapper").hasClass("top")) {
-			rootElement.css("padding-bottom", "0px");
-			rootElement.css("margin-bottom", "0px");
-			rootElement.css("border-bottom-left-radius", "0px");
-			rootElement.css("border-bottom-right-radius", "0px");
-			rootElement.css("border-bottom", "0px");
-		}		
-		if(localStorage.getItem("setting_chatAnimationsIn") === "true") {
-			userBlock.removeClass("userInfoIn").addClass("justFadeIn");
-		}
-	}
+	combinedCount++;
 	lastUser = data.user.id;
-	lastMessageIdx = messageCount;
-	messageCount++;
 
+	let rootElement = $(`<div class="chatBlock slideIn" data-rootIdx="${combinedCount}" data-userID="${data.user.id}"></div>`);
+	let overallWrapper = $(`<div class="overallWrapper"></div>`);
+	rootElement.append(overallWrapper);
+
+	rootElement.one("animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd", function() {
+		rootElement.removeClass("slideIn");
+	});
+
+	lastRootElement = [rootElement, overallWrapper];
+
+	let userBlock = renderUserBlock(data, rootElement, overallWrapper);
+	overallWrapper.append(userBlock);
+
+	let avatarBGBlock = renderAvatarBGBlock(data, rootElement);
+	overallWrapper.append(avatarBGBlock);
+
+	$("#wrapper").append(rootElement);
+	return [rootElement, overallWrapper];
+}
+
+function renderBadgeBlock(data, rootElement, userBlock) {
 	let badgeBlock = $('<div class="badges" style="display: none;"></div>');
+
 	if(localStorage.getItem("setting_enableTwitchBadges") === "true" && !data.isOverlayMessage) {
 		if(localStorage.getItem("setting_enableTwitchSubscriberBadges") === "true" && localStorage.getItem(`setting_enableTwitchFounderBadges`) === "false" && data.user.badges.list) {
 			if("founder" in data.user.badges.list) {
@@ -762,9 +717,15 @@ function parseMessage(data) {
 			badgeBlock.show();
 		}
 	}
-	userBlock.append(badgeBlock);
 
+	checkForExternalBadges(data, badgeBlock, rootElement, userBlock);
+
+	return badgeBlock;
+}
+
+function renderFlagBlock(data) {
 	let flagBlock = $('<div class="flags" style="display: none;"></div>');
+
 	if(!localStorage.getItem(`flags_${data.user.id}`)) { localStorage.setItem(`flags_${data.user.id}`, ""); }
 	if(localStorage.getItem("setting_enableFlags") === "true" && !data.isOverlayMessage) {
 		let flags = localStorage.getItem(`flags_${data.user.id}`).split(",");
@@ -781,11 +742,15 @@ function parseMessage(data) {
 				flagBlock.append($(`<span class="flag${flag} flag" style="background-image: url('flags/${filename}'); display: inline-block;"></div>`));
 				flagBlock.show();
 			}
-			userBlock.append(flagBlock);
 		}
 	}
 
+	return flagBlock;
+}
+
+function renderPronounsBlock(data) {
 	let pronounsBlock = $('<div class="pronouns" style="display: none;"></div>');
+
 	if(localStorage.getItem("setting_enablePronouns") === "true" && !data.isOverlayMessage) {
 		getUserPronouns(data.user.username, function(fetched) {
 			if(fetched.pronoun_id !== "NONE") {
@@ -793,112 +758,136 @@ function parseMessage(data) {
 				pronounsBlock.show();
 			}
 		});
-		userBlock.append(pronounsBlock);
 	}
 
-	let pfpBlock = $('<img class="pfp" src="" style="display: none;"/>');
-	userBlock.append(pfpBlock);
-	if(localStorage.getItem("setting_enableAvatars") === "true" && !data.isOverlayMessage) {
-		let pfpURL = "";
+	return pronounsBlock;
+}
 
-		let uID = data.user.id;
-		if(data.user.id < 0) {
-			uID = broadcasterData.id;
+function canShowPFP(data) {
+	if(parseInt(data.user.id) === -1) {
+		return false;
+	}
+
+	if(!localStorage.getItem(`showpfp_${data.user.id}`)) {
+		localStorage.setItem(`showpfp_${data.user.id}`, "yes");
+	}
+
+	if(localStorage.getItem(`showpfp_${data.user.id}`) === "no") {
+		return false;
+	}
+	if(localStorage.getItem("setting_hideDefaultAvatars") === "true" && data.user.avatar.indexOf("user-default-pictures") !== -1) {
+		return false;
+	}
+	if(localStorage.getItem("setting_avatarAllowedEveryone") === "true") {
+		return true;
+	}
+
+	if(localStorage.getItem("setting_avatarAllowedIncludeTotalMessages") === "true") {
+		let count = parseInt(localStorage.getItem(`msgCount_${broadcasterData.id}_${data.user.id}`));
+		let maxCount = parseInt(localStorage.getItem("setting_avatarAllowedMessageThreshold"));
+
+		if(count > maxCount) {
+			return true;
 		}
+	}
 
-		getTwitchUserInfo(data.user.id, function(userData) {
-			if(userData === null) {
-				return;
+	if(localStorage.getItem("setting_avatarAllowedAffiliates") === "true" && "broadcasterType" in data.user) {
+		if(data.user.broadcasterType === "affiliate") {
+			return true;
+		}
+	}
+
+	if(!("list" in data.user.badges)) {
+		return false;
+	}
+	if(typeof data.user.badges.list !== "object" || data.user.badges.list === null) {
+		return false;
+	}
+
+	if(localStorage.getItem("setting_avatarAllowedModerators") === "true" && ("broadcaster" in data.user.badges.list || "moderator" in data.user.badges.list)) {
+		return true;
+	} else if(localStorage.getItem("setting_avatarAllowedVIPs") === "true" && "vip" in data.user.badges.list) {
+		return true;
+	} else if(localStorage.getItem("setting_avatarAllowedSubscribers") === "true" && ("subscriber" in data.user.badges.list || "founder" in data.user.badges.list)) {
+		return true;
+	} else if(localStorage.getItem("setting_avatarAllowedTurbo") === "true" && "turbo" in data.user.badges.list) {
+		return true;
+	} else if(localStorage.getItem("setting_avatarAllowedPrime") === "true" && "premium" in data.user.badges.list) {
+		return true;
+	} else if(localStorage.getItem("setting_avatarAllowedArtist") === "true" && "artist-badge" in data.user.badges.list) {
+		return true;
+	} else if(localStorage.getItem("setting_avatarAllowedPartner") === "true" && "broadcasterType" in data.user) {
+		if(data.user.broadcasterType === "partner" || data.user.broadcasterType === "ambassador") {
+			// i have no idea if ambassadors are a valid field for this but im including it just in case
+			return true;
+		}
+	} else if(localStorage.getItem("setting_avatarAllowedStaff") === "true" && ("staff" in data.user.badges.list || "admin" in data.user.badges.list || "global_mod" in data.user.badges.list)) {
+		return true;
+	} else if(localStorage.getItem("setting_avatarAllowedIncludeBits") === "true" && ("bits" in data.user.badges.list || "bits-leader" in data.user.badges.list)) {
+		if("bits-leader" in data.user.badges.list) {
+			return true;
+		} else if("bits" in data.user.badges.list) {
+			let bitAmount = parseInt(data.user.badges.list.bits);
+			if(bitAmount >= parseInt(localStorage.getItem("setting_avatarAllowedBitsMinimum"))) {
+				return true;
 			}
-
-			pfpBlock.attr("src", userData.profile_image_url);
-
-			if(!localStorage.getItem(`pfpShape_${data.user.id}`)) { localStorage.setItem(`pfpShape_${data.user.id}`, "var(--avatarBorderRadius)"); }
-			rootCSS().setProperty(`--pfpShape${data.user.id}`, localStorage.getItem(`pfpShape_${data.user.id}`));
-			pfpBlock.css("border-radius", `var(--pfpShape${data.user.id})`);
-
-			if(!localStorage.getItem(`showpfp_${data.user.id}`)) { localStorage.setItem(`showpfp_${data.user.id}`, "yes"); }
-
-			let showPFP = false;
-			if(localStorage.getItem(`showpfp_${data.user.id}`) === "yes") {
-				if(localStorage.getItem("setting_avatarAllowedEveryone") === "true") {
-					showPFP = true;
-				} else {
-					let count = parseInt(localStorage.getItem(`msgCount_${broadcasterData.id}_${data.user.id}`));
-					let maxCount = parseInt(localStorage.getItem("setting_avatarAllowedMessageThreshold"));
-
-					if(count > maxCount && localStorage.getItem("setting_avatarAllowedIncludeTotalMessages") === "true") {
-						showPFP = true;
-					} else if("list" in data.user.badges) {
-						if(typeof data.user.badges.list === "object" && data.user.badges.list !== null) {
-							if(localStorage.getItem("setting_avatarAllowedModerators") === "true" && ("broadcaster" in data.user.badges.list || "moderator" in data.user.badges.list)) {
-								showPFP = true;
-							} else if(localStorage.getItem("setting_avatarAllowedVIPs") === "true" && "vip" in data.user.badges.list) {
-								showPFP = true;
-							} else if(localStorage.getItem("setting_avatarAllowedSubscribers") === "true" && ("subscriber" in data.user.badges.list || "founder" in data.user.badges.list)) {
-								showPFP = true;
-							} else if(localStorage.getItem("setting_avatarAllowedTurbo") === "true" && "turbo" in data.user.badges.list) {
-								showPFP = true;
-							} else if(localStorage.getItem("setting_avatarAllowedPrime") === "true" && "premium" in data.user.badges.list) {
-								showPFP = true;
-							} else if(localStorage.getItem("setting_avatarAllowedArtist") === "true" && "artist-badge" in data.user.badges.list) {
-								showPFP = true;
-							} else if(localStorage.getItem("setting_avatarAllowedPartner") === "true" && "broadcaster_type" in userData) {
-								if(userData.broadcaster_type === "partner" || userData.broadcaster_type === "ambassador") {
-									// i have no idea if ambassadors are a valid field for this but im including it just in case
-									showPFP = true;
-								}
-							} else if(localStorage.getItem("setting_avatarAllowedStaff") === "true" && ("staff" in data.user.badges.list || "admin" in data.user.badges.list || "global_mod" in data.user.badges.list)) {
-								showPFP = true;
-							} else if(localStorage.getItem("setting_avatarAllowedAffiliates") === "true" && "broadcaster_type" in userData) {
-								if(userData.broadcaster_type === "affiliate") {
-									showPFP = true;
-								}
-							} else if(localStorage.getItem("setting_avatarAllowedIncludeBits") === "true" && ("bits" in data.user.badges.list || "bits-leader" in data.user.badges.list)) {
-								if("bits-leader" in data.user.badges.list) {
-									showPFP = true;
-								} else if("bits" in data.user.badges.list) {
-									let bitAmount = parseInt(data.user.badges.list.bits);
-									if(bitAmount >= parseInt(localStorage.getItem("setting_avatarAllowedBitsMinimum"))) {
-										showPFP = true;
-									}
-								}
-							} else if(localStorage.getItem("setting_avatarAllowedIncludeGifts") === "true" && ("sub-gifter" in data.user.badges.list || "sub-gift-leader" in data.user.badges.list)) {
-								if("sub-gift-leader" in data.user.badges.list) {
-									showPFP = true;
-								} else if("sub-gifter" in data.user.badges.list) {
-									let giftAmount = parseInt(data.user.badges.list['sub-gifter']);
-									if(giftAmount >= parseInt(localStorage.getItem("setting_avatarAllowedGiftsMinimum"))) {
-										showPFP = true;
-									}
-								}
-							}
-						}
-					}
-				}
+		}
+	} else if(localStorage.getItem("setting_avatarAllowedIncludeGifts") === "true" && ("sub-gifter" in data.user.badges.list || "sub-gift-leader" in data.user.badges.list)) {
+		if("sub-gift-leader" in data.user.badges.list) {
+			return true;
+		} else if("sub-gifter" in data.user.badges.list) {
+			let giftAmount = parseInt(data.user.badges.list['sub-gifter']);
+			if(giftAmount >= parseInt(localStorage.getItem("setting_avatarAllowedGiftsMinimum"))) {
+				return true;
 			}
+		}
+	}
 
-			if(localStorage.getItem("setting_hideDefaultAvatars") === "true" && showPFP) {
-				if(userData.profile_image_url.indexOf("user-default-pictures") !== -1) {
-					showPFP = false;
-				}
+	return false;
+}
+
+function renderAvatarBlock(data) {
+	let pfpBlock = $('<img class="pfp" src="" style="display: none;"/>');
+
+	if(localStorage.getItem("setting_enableAvatars") === "false" || data.isOverlayMessage) {
+		return pfpBlock;
+	}
+
+	let pfpURL = "";
+
+	let uID = data.user.id;
+	if(data.user.id < 0) {
+		uID = broadcasterData.id;
+	}
+
+	pfpBlock.attr("src", data.user.avatar);
+
+	if(!localStorage.getItem(`pfpShape_${data.user.id}`)) { localStorage.setItem(`pfpShape_${data.user.id}`, "var(--avatarBorderRadius)"); }
+	rootCSS().setProperty(`--pfpShape${data.user.id}`, localStorage.getItem(`pfpShape_${data.user.id}`));
+	pfpBlock.css("border-radius", `var(--pfpShape${data.user.id})`);
+
+	let showPFP = canShowPFP(data);
+
+	if(showPFP) {
+		pfpBlock.show();
+		
+		if(localStorage.getItem("setting_enableAvatarsAsBackground") === "true") {
+			let avatarBGElement = $(`<div class="avatarBG avatarBGLeft" style="background-image: url('${data.user.avatar}');"/>`);
+
+			if(localStorage.getItem("setting_avatarsBGAnimateAppearance") === "true") {
+				avatarBGElement.addClass("zoomAvatarBGOut");
 			}
+		}
+	} else {
+		pfpBlock.hide();
+	}
 
-			if(showPFP) {
-				pfpBlock.show();
-				
-				if(localStorage.getItem("setting_enableAvatarsAsBackground") === "true") {
-					let avatarBGElement = $(`<div class="avatarBG avatarBGLeft" style="background-image: url('${userData.profile_image_url}');"/>`);
-					avatarBGWrapperElement.append(avatarBGElement);
+	return pfpBlock;
+}
 
-					if(localStorage.getItem("setting_avatarsBGAnimateAppearance") === "true") {
-						avatarBGElement.addClass("zoomAvatarBGOut");
-					}
-				}
-			} else {
-				pfpBlock.hide();
-			}
-		});
+function initUserBlockCustomizations(data, elements) {
+	if(data.isOverlayMessage) {
+		return;
 	}
 
 	let customizationOK = (localStorage.getItem("setting_allowUserCustomizations") === "true");
@@ -911,7 +900,6 @@ function parseMessage(data) {
 	}
 	if(!localStorage.getItem(`color2_${data.user.id}`)) { localStorage.setItem(`color2_${data.user.id}`, "var(--defaultNameColorSecondary)"); }
 	if(!localStorage.getItem(`nameangle_${data.user.id}`)) { localStorage.setItem(`nameangle_${data.user.id}`, "var(--nameGradientAngle)"); }
-	if(!localStorage.getItem(`usename_${data.user.id}`)) { localStorage.setItem(`usename_${data.user.id}`, "name"); }
 	if(customizationOK) {
 		if(!localStorage.getItem(`namefont_${data.user.id}`)) { localStorage.setItem(`namefont_${data.user.id}`, "var(--nameFont)"); }
 		if(!localStorage.getItem(`nameweight_${data.user.id}`)) { localStorage.setItem(`nameweight_${data.user.id}`, "var(--nameFontWeight)"); }
@@ -953,18 +941,15 @@ function parseMessage(data) {
 		rootCSS().setProperty(`--nameAngle${data.user.id}`, "var(--nameGradientAngle)");
 	}
 
-	let nameBlock = $(`<div class="name" data-userid="${data.user.id}">${data.user[localStorage.getItem(`usename_${data.user.id}`)]}</div>`);
-	let messageBlock = $('<div class="message"></div>');
-
 	let colorToUse = `color_${data.user.id}`;
 	if(localStorage.getItem("setting_chatDefaultNameColorForced") === "true") {
-		nameBlock.css("background-color", "var(--nameBackgroundNoGradientDefault)");
+		elements.nameBlock.css("background-color", "var(--nameBackgroundNoGradientDefault)");
 		colorToUse = `setting_chatDefaultNameColor`;
 	} else {
-		nameBlock.css("background-color", `var(--nameColor${data.user.id})`);
+		elements.nameBlock.css("background-color", `var(--nameColor${data.user.id})`);
 
 		if(localStorage.getItem("setting_chatNameUsesGradient") === "true" && usesCustomColor) {
-			nameBlock.css("background-image", `linear-gradient(var(--nameAngle${data.user.id}), var(--nameColorSecondary${data.user.id}) 0%, transparent 75%)`);
+			elements.nameBlock.css("background-image", `linear-gradient(var(--nameAngle${data.user.id}), var(--nameColorSecondary${data.user.id}) 0%, transparent 75%)`);
 		}
 	}
 
@@ -973,14 +958,13 @@ function parseMessage(data) {
 		userColorUsed = localStorage.getItem("setting_chatDefaultNameColor");
 	}
 
-	// i should really make these a lambda function or something fml
 	if(localStorage.getItem("setting_chatOutlinesReflectUserColor") === "true") {
 		rootCSS().setProperty(`--borderColor${data.user.id}`, interpolateColor(
 			localStorage.getItem("setting_chatOutlinesColor"),
 			userColorUsed,
 			parseFloat(localStorage.getItem(`setting_chatOutlinesUserColorAmount`)
 		)));
-		rootElement.css("border-color", `var(--borderColor${data.user.id})`);
+		elements.overallWrapper.css("border-color", `var(--borderColor${data.user.id})`);
 	}
 	if(localStorage.getItem("setting_chatBackgroundReflectUserColor") === "true") {
 		rootCSS().setProperty(`--bgColor${data.user.id}`, interpolateColor(
@@ -988,7 +972,7 @@ function parseMessage(data) {
 			userColorUsed,
 			parseFloat(localStorage.getItem(`setting_chatBackgroundUserColorAmount`)
 		)));
-		rootElement.css("background-color", `var(--bgColor${data.user.id})`);
+		elements.overallWrapper.css("background-color", `var(--bgColor${data.user.id})`);
 	}
 	if(localStorage.getItem("setting_chatMessageUserInfoBackgroundReflectUserColor") === "true") {
 		rootCSS().setProperty(`--userInfoBGColor${data.user.id}`, interpolateColor(
@@ -996,7 +980,7 @@ function parseMessage(data) {
 			userColorUsed,
 			parseFloat(localStorage.getItem(`setting_chatMessageUserInfoBackgroundUserColorAmount`)
 		)));
-		userBlock.css("background-color", `var(--userInfoBGColor${data.user.id})`);
+		elements.userBlock.css("background-color", `var(--userInfoBGColor${data.user.id})`);
 	}
 	if(localStorage.getItem("setting_chatMessageUserInfoOutlinesReflectUserColor") === "true") {
 		rootCSS().setProperty(`--userOutlineColor${data.user.id}`, interpolateColor(
@@ -1004,7 +988,7 @@ function parseMessage(data) {
 			userColorUsed,
 			parseFloat(localStorage.getItem(`setting_chatMessageUserInfoOutlinesUserColorAmount`)
 		)));
-		userBlock.css("border-color", `var(--userOutlineColor${data.user.id})`);
+		elements.userBlock.css("border-color", `var(--userOutlineColor${data.user.id})`);
 	}
 	if(localStorage.getItem("setting_pronounsReflectUserColor") === "true") {
 		rootCSS().setProperty(`--pronounsColor${data.user.id}`, interpolateColor(
@@ -1012,18 +996,88 @@ function parseMessage(data) {
 			userColorUsed,
 			parseFloat(localStorage.getItem(`setting_pronounsUserColorAmount`)
 		)));
-		pronounsBlock.css("background-color", `var(--pronounsColor${data.user.id})`);
-	}
-	if(localStorage.getItem("setting_chatMessageReflectUserColor") === "true") {
-		rootCSS().setProperty(`--chatMessageColor${data.user.id}`, interpolateColor(
-			localStorage.getItem("setting_chatMessageColor"),
-			userColorUsed,
-			parseFloat(localStorage.getItem(`setting_chatMessageUserColorAmount`)
-		)));
-		messageBlock.css("color", `var(--chatMessageColor${data.user.id})`);
+		elements.pronounsBlock.css("background-color", `var(--pronounsColor${data.user.id})`);
 	}
 
 	if(customizationOK && !data.isOverlayMessage) {
+		rootCSS().setProperty(`--nameSize${data.user.id}`, localStorage.getItem(`namesize_${data.user.id}`));
+		if(localStorage.getItem("setting_chatNameFontSize") !== "16") {
+			let scale = parseFloat(localStorage.getItem("setting_chatNameFontSize")) / 16;
+			if(localStorage.getItem(`namesize_${data.user.id}`) !== "var(--nameFontSize)") {
+				rootCSS().setProperty(`--nameSize${data.user.id}`, `calc(${localStorage.getItem(`namesize_${data.user.id}`)} * ${scale})`);
+			}
+		}
+
+		rootCSS().setProperty(`--nameSpacing${data.user.id}`, localStorage.getItem(`namespacing_${data.user.id}`));
+		if(localStorage.getItem("setting_chatNameLetterSpacing") !== "1") {
+			let scale = parseFloat(localStorage.getItem("setting_chatNameLetterSpacing"));
+			if(localStorage.getItem(`namespacing_${data.user.id}`) !== "var(--nameLetterSpacing)") {
+				rootCSS().setProperty(`--nameSpacing${data.user.id}`, `calc(${localStorage.getItem(`namespacing_${data.user.id}`)} * ${scale})`);
+			}
+		}
+
+		rootCSS().setProperty(`--nameFont${data.user.id}`, localStorage.getItem(`namefont_${data.user.id}`));
+		rootCSS().setProperty(`--nameWeight${data.user.id}`, localStorage.getItem(`nameweight_${data.user.id}`));
+		rootCSS().setProperty(`--nameStyle${data.user.id}`, localStorage.getItem(`namestyle_${data.user.id}`));
+		rootCSS().setProperty(`--nameTransform${data.user.id}`, localStorage.getItem(`nametransform_${data.user.id}`));
+		rootCSS().setProperty(`--nameVariant${data.user.id}`, localStorage.getItem(`namevariant_${data.user.id}`));
+		rootCSS().setProperty(`--nameShadow${data.user.id}`, localStorage.getItem(`nameshadow_${data.user.id}`) === "yes" ? `var(--shadowStuff)` : "");
+		rootCSS().setProperty(`--nameOutline${data.user.id}`, localStorage.getItem(`nameoutline_${data.user.id}`) === "yes" ? `var(--outlineStuff)` : "");
+		rootCSS().setProperty(`--nameEffects${data.user.id}`, `var(--nameOutline${data.user.id})var(--nameShadow${data.user.id})`);
+
+		elements.nameBlock.css("font-family", `var(--nameFont${data.user.id})`);
+		elements.nameBlock.css("font-weight", `var(--nameWeight${data.user.id})`);
+		elements.nameBlock.css("font-size", `var(--nameSize${data.user.id})`);
+		elements.nameBlock.css("font-style", `var(--nameStyle${data.user.id})`);
+		elements.nameBlock.css("letter-spacing", `var(--nameSpacing${data.user.id})`);
+		elements.nameBlock.css("text-transform", `var(--nameTransform${data.user.id})`);
+		elements.nameBlock.css("font-variant", `var(--nameVariant${data.user.id})`);
+		elements.nameBlock.css("filter", `var(--nameEffects${data.user.id})`);
+	}
+}
+
+function renderNameBlock(data) {
+	if(!localStorage.getItem(`usename_${data.user.id}`)) { localStorage.setItem(`usename_${data.user.id}`, "name"); }
+
+	let nameBlock = $(`<div class="name" data-userid="${data.user.id}">${data.user[localStorage.getItem(`usename_${data.user.id}`)]}</div>`);
+	testNameBlock = nameBlock;
+	return nameBlock;
+}
+
+function renderUserBlock(data, rootElement, overallWrapper) {
+	let userBlock = $('<div class="userInfo"></div>');
+	if(localStorage.getItem("setting_chatAnimationsIn") === "true") {
+		userBlock.addClass("userInfoIn");
+	}
+
+	let badgeBlock = renderBadgeBlock(data, rootElement, userBlock);
+	let flagBlock = renderFlagBlock(data);
+	let pronounsBlock = renderPronounsBlock(data);
+	let pfpBlock = renderAvatarBlock(data);
+	let nameBlock = renderNameBlock(data);
+	userBlock.append(badgeBlock);
+	userBlock.append(flagBlock);
+	userBlock.append(pronounsBlock);
+	userBlock.append(pfpBlock);
+	userBlock.append(nameBlock);
+
+	if(data.user.id !== -1) {
+		initUserBlockCustomizations(data, {
+			rootElement: rootElement,
+			overallWrapper: overallWrapper,
+			userBlock: userBlock,
+			badgeBlock: badgeBlock,
+			flagBlock: flagBlock,
+			pronounsBlock: pronounsBlock,
+			pfpBlock: pfpBlock,
+			nameBlock: nameBlock
+		});
+	}
+
+	let customizationOK = (localStorage.getItem("setting_allowUserCustomizations") === "true");
+	let usesCustomColor = (customizationOK && localStorage.getItem(`color2_${data.user.id}`) !== "var(--defaultNameColorSecondary)");
+
+	if(customizationOK) {
 		rootCSS().setProperty(`--nameSize${data.user.id}`, localStorage.getItem(`namesize_${data.user.id}`));
 		if(localStorage.getItem("setting_chatNameFontSize") !== "16") {
 			let scale = parseFloat(localStorage.getItem("setting_chatNameFontSize")) / 16;
@@ -1057,7 +1111,53 @@ function parseMessage(data) {
 		nameBlock.css("text-transform", `var(--nameTransform${data.user.id})`);
 		nameBlock.css("font-variant", `var(--nameVariant${data.user.id})`);
 		nameBlock.css("filter", `var(--nameEffects${data.user.id})`);
+	}
 
+	if(localStorage.getItem(`use7tvpaint_${data.user.id}`) === "yes" && !data.isOverlayMessage) {
+		for(let i in sevenTVPaints) {
+			let paint = sevenTVPaints[i];
+			if(paint.users.indexOf(data.user.id) !== -1) {
+				set7TVPaint(nameBlock, i, data.user.id);
+				break;
+			}
+		}
+	}
+
+	let elementChecks = [flagBlock, badgeBlock, pfpBlock, pronounsBlock];
+	for(let i in elementChecks) {
+		let testAgainst = elementChecks[i];
+		if(widthTest(rootElement, userBlock)) {
+			testAgainst.hide();
+		}
+	}
+	if(widthTest(rootElement, userBlock)) { nameBlock.addClass("clip"); }
+
+	return userBlock;
+}
+
+function initMessageBlockCustomizations(data, elements) {
+	if(data.isOverlayMessage) {
+		return;
+	}
+
+	let customizationOK = (localStorage.getItem("setting_allowUserCustomizations") === "true");
+	let colorToUse = (localStorage.getItem("setting_chatDefaultNameColorForced") === "true" ? "setting_chatDefaultNameColor" : `color_${data.user.id}`);
+
+	let userColorUsed = localStorage.getItem(colorToUse);
+	if(!userColorUsed || userColorUsed === "var(--defaultNameColor)") {
+		userColorUsed = localStorage.getItem("setting_chatDefaultNameColor");
+	}
+
+	if(localStorage.getItem("setting_chatMessageReflectUserColor") === "true") {
+		rootCSS().setProperty(`--chatMessageColor${data.user.id}`, interpolateColor(
+			localStorage.getItem("setting_chatMessageColor"),
+			userColorUsed,
+			parseFloat(localStorage.getItem(`setting_chatMessageUserColorAmount`)
+		)));
+		elements.messageBlock.css("color", `var(--chatMessageColor${data.user.id})`);
+	}
+
+	if(customizationOK) {
 		rootCSS().setProperty(`--msgFont${data.user.id}`, localStorage.getItem(`msgfont_${data.user.id}`));
 		rootCSS().setProperty(`--msgWeight${data.user.id}`, localStorage.getItem(`msgweight_${data.user.id}`));
 
@@ -1077,24 +1177,20 @@ function parseMessage(data) {
 			}
 		}
 
-		messageBlock.css("font-family", `var(--msgFont${data.user.id})`);
-		messageBlock.css("font-size", `var(--msgSize${data.user.id})`);
-		messageBlock.css("letter-spacing", `var(--msgSpacing${data.user.id})`);
-		messageBlock.css("font-weight", `var(--msgWeight${data.user.id})`);
+		elements.messageBlock.css("font-family", `var(--msgFont${data.user.id})`);
+		elements.messageBlock.css("font-size", `var(--msgSize${data.user.id})`);
+		elements.messageBlock.css("letter-spacing", `var(--msgSpacing${data.user.id})`);
+		elements.messageBlock.css("font-weight", `var(--msgWeight${data.user.id})`);
 	}
+}
 
-	userBlock.append(nameBlock);
-	wrapperElement.append(userBlock);
+function renderMessageBlock(data, rootElement) {
+	let messageBlock = $('<div class="message"></div>');
 
-	if(localStorage.getItem(`use7tvpaint_${data.user.id}`) === "yes" && !data.isOverlayMessage) {
-		for(let i in sevenTVPaints) {
-			let paint = sevenTVPaints[i];
-			if(paint.users.indexOf(data.user.id) !== -1) {
-				set7TVPaint(nameBlock, i, data.user.id);
-				break;
-			}
-		}
-	}
+	initMessageBlockCustomizations(data, {
+		rootElement: rootElement,
+		messageBlock: messageBlock
+	});
 
 	let originalMessage = Array.from(data.message.trim().normalize());
 
@@ -1186,7 +1282,7 @@ function parseMessage(data) {
 			}
 
 			if(data.parseCheermotes && localStorage.getItem("setting_chatShowCheermotes") === "true") {
-				rootElement.addClass("highlighted");
+				messageBlock.addClass("highlighted");
 
 				for(let cheermoteIdx in cheermotePrefixes) {
 					let prefix = cheermotePrefixes[cheermoteIdx];
@@ -1283,13 +1379,74 @@ function parseMessage(data) {
 		messageBlock.html(words.join(" "));
 	}
 
-	let extraInfoBlock;
-	if("extraInfo" in data) {
-		extraInfoBlock = $(`<div class="extraInfo">${data.extraInfo}</div>`);
-		wrapperElement.append(extraInfoBlock);
+	return messageBlock;
+}
+
+function renderEventTagBlock(data, wrapperElement) {
+	if(!("extraInfo" in data)) {
+		return;
 	}
 
+	let extraInfoBlock = $(`<div class="extraInfo">${data.extraInfo}</div>`);
+	wrapperElement.append(extraInfoBlock);
+
+	return extraInfoBlock;
+}
+
+var messageDecayTimeouts = {};
+
+function parseMessage(data) {
+	if(!allowedToProceed) {
+		console.log("No Client ID or Secret is set.");
+		return;
+	}
+
+	console.log(data);
+
+	if(localStorage.getItem("setting_debugFreezeChat") === "true" || data.message === null) {
+		return;
+	}
+
+	let wantedCommand;
+	let wantedArgs;
+	if(data.message[0] === localStorage.getItem("setting_chatCommandCharacter")) {
+		let parts = data.message.substr(1).split(" ");
+		
+		let cmd = parts[0].toLowerCase();
+		wantedArgs = parts.slice(1);
+
+		if(cmd in chatFuncs) {
+			wantedCommand = chatFuncs[cmd];
+		}
+
+		let continueOn = false;
+		if(typeof wantedCommand === "function") {
+			continueOn = wantedCommand(data, wantedArgs);
+		}
+
+		if(!continueOn && localStorage.getItem("setting_chatHideCommands") === "true") {
+			return;
+		}
+	}
+
+	messageCount++;
+	let rootParts = getRootElement(data);
+	let rootElement = rootParts[0];
+	let overallWrapper = rootParts[1];
+
+	let wrapperElement = $(`<div class="effectWrapper" data-msgUUID="${data.uuid}"></div>`);
+	wrapperElement.attr("data-rootidx", rootElement.attr("data-rootidx"));
+
+	if(localStorage.getItem("setting_chatAnimationsIn") === "true" && overallWrapper.children(".effectWrapper").length) {
+		wrapperElement.addClass("slideIn");
+	}
+
+	let eventTagBlock = renderEventTagBlock(data, wrapperElement);
+
+	let messageBlock = renderMessageBlock(data, rootElement);
 	wrapperElement.append(messageBlock);
+
+	overallWrapper.append(wrapperElement);
 
 	let messageCap = parseInt(localStorage.getItem("setting_chatMessagesHardCap"));
 	while($(".chatBlock").length > messageCap) {
@@ -1297,14 +1454,20 @@ function parseMessage(data) {
 	}
 
 	if(data.highlighted) {
-		rootElement.addClass("highlighted");
+		messageBlock.addClass("highlighted");
+		messageBlock.css("filter", "var(--effectFilters) var(--highlightedEffect)");
+		if(eventTagBlock) {
+			eventTagBlock.css("filter", "var(--effectFilters) var(--highlightedEffect)");
+		}
 	}
 
 	setHistoryOpacity();
 
-	if(localStorage.getItem("setting_chatMessageReflectUserColor") === "true") {
+	if(localStorage.getItem("setting_chatMessageReflectUserColor") === "true" && !data.isOverlayMessage) {
 		messageBlock.find("strong").css("background-color", `var(--chatMessageColor${data.user.id})`);
 	}
+
+	let hasBigEmotes = messageBlock.hasClass("isBigEmoteMode");
 
 	if(typeof wantedCommand === "function") {
 		wantedCommand(data, wantedArgs, wrapperElement);
@@ -1336,41 +1499,22 @@ function parseMessage(data) {
 	let secsVisible = parseFloat(localStorage.getItem("setting_chatRemoveMessageDelay"));
 	if(parseInt(data.user.id) < 0) {
 		secsVisible = parseFloat(localStorage.getItem("setting_chatRemoveSystemMessageDelay"));
-	} else {
-		checkForExternalBadges(data, badgeBlock, rootElement, userBlock);
 	}
-
-	let elementChecks = [flagBlock, badgeBlock, pfpBlock, pronounsBlock];
-	for(let i in elementChecks) {
-		let testAgainst = elementChecks[i];
-		if(widthTest(rootElement, userBlock)) {
-			testAgainst.hide();
-		}
-	}
-	if(widthTest(rootElement, userBlock)) { nameBlock.addClass("clip"); }
-
-	$("#wrapper").append(rootElement);
 
 	if(secsVisible) {
-		setTimeout(function() {
+		clearTimeout(messageDecayTimeouts[combinedCount]);
+
+		messageDecayTimeouts[combinedCount] = setTimeout(function() {
 			if(localStorage.getItem("setting_chatAnimationsOut") === "true") {
-				wrapperElement.removeClass("slideIn").addClass("slideOut");
-				wrapperElement.one("animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd", function() {
+				rootElement.removeClass("slideIn").addClass("slideOut");
+				rootElement.one("animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd", function() {
 					$(rootElement).remove();
-					$(".chatBlock:first-child .effectWrapper").find(".avatarBGWrapper").show();
 				});
 			} else {
 				rootElement.remove();
-				$(".chatBlock:first-child .effectWrapper").find(".avatarBGWrapper").show();
 			}
 		}, secsVisible * 1000);
 	}
-
-	if($(".chatBlock").length === 1) {
-		$(".chatBlock:first-child .effectWrapper").find(".avatarBGWrapper").show();
-	}
-
-	testNameBlock = nameBlock;
 
 	let doSound = true;
 	if(data.isOverlayMessage && localStorage.getItem("setting_playSoundOnSystemMessages") === "false") {
@@ -1402,6 +1546,10 @@ function getFFZBadges(data, callback) {
 		badges: []
 	};
 
+	if(id === -1 || id === "-1") {
+		return;
+	}
+
 	$.ajax({
 		type: "GET",
 		url: `https://api.frankerfacez.com/v1/user/id/${id}`,
@@ -1415,6 +1563,11 @@ function getFFZBadges(data, callback) {
 					let badge = badges[i];
 					let badgeURL = badge.urls[4 in badge.urls ? 4 : 1];
 
+					if(badge.name === "bot") {
+						// doing my own bot tracking, no idea what ffz is doing so we just skip it
+						continue;
+					}
+
 					externalBadgeCache[id].ffz.badges.push({
 						img: badgeURL,
 						color: badge.color
@@ -1424,6 +1577,12 @@ function getFFZBadges(data, callback) {
 
 			if(typeof callback === "function") {
 				callback(data, response);
+			}
+		},
+
+		error: function(xhr, status, err) {
+			if(typeof callback === "function") {
+				callback(data, {});
 			}
 		}
 	})	
@@ -1455,11 +1614,14 @@ function get7TVBadges() {
 		}
 	})	
 }
-get7TVBadges();
 
 function checkForExternalBadges(data, badgeBlock, rootElement, userBlock) {
 	console.log(data);
 	let id = data.user.id;
+
+	if(id === -1 || id === "-1") {
+		return;
+	}
 
 	if(!(id in externalBadgeCache)) {
 		console.log(`external badges not cached for ${data.user.username}`);
@@ -1476,6 +1638,10 @@ function checkForExternalBadges(data, badgeBlock, rootElement, userBlock) {
 			seventv: {
 				expires: null,
 				badges: []
+			},
+			overlay: {
+				expires: Infinity,
+				badges: []
 			}
 		};
 
@@ -1488,30 +1654,25 @@ function checkForExternalBadges(data, badgeBlock, rootElement, userBlock) {
 			}
 		}
 
+		if(data.user.broadcasterType === "affiliate" && localStorage.getItem("setting_enableAffiliateBadges") === "true") {
+			externalBadgeCache[id].overlay.badges.push({
+				img: "icons/seedling.png",
+				color: "#2d3540"
+			});
+		}
+
+		if(data.user.bot && localStorage.getItem("setting_enableBotBadges") === "true") {
+			externalBadgeCache[id].overlay.badges.push({
+				img: "icons/gear.png",
+				color: "#666a68"
+			});
+		}
+
 		getFFZBadges(data, function(data, response) {
 			console.log(`got external badges for ${data.user.username}`);
 			checkIfExternalBadgesDone(data, badgeBlock, rootElement, userBlock);
 		});
 	} else {
-		if(!("ffz" in externalBadgeCache[id])) {
-			externalBadgeCache[id].ffz = {
-				expires: null,
-				badges: []
-			};
-		}
-		if(!("bttv" in externalBadgeCache[id])) {
-			externalBadgeCache[id].bttv = {
-				expires: null,
-				badges: []
-			};
-		}
-		if(!("seventv" in externalBadgeCache[id])) {
-			externalBadgeCache[id].seventv = {
-				expires: null,
-				badges: []
-			};
-		}
-
 		if(Date.now() > externalBadgeCache[id].ffz.expires) {
 			getFFZBadges(data, function(data, response) {
 				checkIfExternalBadgesDone(data, badgeBlock, rootElement, userBlock);
@@ -1524,6 +1685,7 @@ function checkForExternalBadges(data, badgeBlock, rootElement, userBlock) {
 
 function renderExternalBadges(data, badgeBlock, rootElement, userBlock) {
 	if(!badgeBlock) {
+		console.log("no badge block?");
 		return;
 	}
 
@@ -1535,7 +1697,6 @@ function renderExternalBadges(data, badgeBlock, rootElement, userBlock) {
 		for(let i in cacheData.badges) {
 			let badge = cacheData.badges[i];
 
-			//let badgeElem = $(`<img class="normal_badge" src="${badge.img}"/>`);
 			let badgeElem = $(`<span class="badgeWrap normal_badge badgeGradient"></span>`);
 			badgeElem.css("background-image", `url('${badge.img}')`);
 			if("color" in badge) {
@@ -1560,7 +1721,7 @@ function checkIfExternalBadgesDone(data, badgeBlock, rootElement, userBlock) {
 	for(let service in externalBadgeCache[id]) {
 		let cacheData = externalBadgeCache[id][service];
 
-		if(cacheData.expires === null) {
+		if(cacheData.expires === null || service === "overlay") {
 			continue;
 		}
 
@@ -1586,6 +1747,10 @@ function bttvBadge(data) {
 
 	if(!("badge" in data)) {
 		console.log("no badge object");
+		return;
+	}
+	if(data.badge === null) {
+		// wtf
 		return;
 	}
 	if(!Object.keys(data.badge).length) {

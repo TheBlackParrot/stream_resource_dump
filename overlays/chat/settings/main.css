@@ -13,7 +13,7 @@
 	--sidebar-row-height: 34px;
 	--sidebar-padding: 12px;
 	--sidebar-row-text-color: #cbadff;
-	--sidebar-width: 200px;
+	--sidebar-width: 210px;
 	--sidebar-bg-color: #232125;
 	--sidebar-icon-margin: 8px;
 	--sidebar-icon-width: 1.2em;
@@ -398,6 +398,7 @@ textarea {
 #hideSensitiveWarning {
 	margin-top: var(--settings-part-spacing);
 	background-color: #209060;
+	font-size: 16pt;
 }
 
 .fa-exclamation-triangle {
@@ -652,4 +653,8 @@ input[type="range"]::-webkit-slider-runnable-track {
 
 #generateBackupButton {
 	background-color: #209060;
+}
+
+.button i {
+	margin-right: 4px;
 }
