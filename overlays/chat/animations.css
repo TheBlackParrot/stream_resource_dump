@@ -135,10 +135,11 @@
 .slideIn {
 	animation-name: messageInKF;
 	animation-duration: var(--animationsInDuration);
-	animation-fill-mode: forwards;
+	animation-fill-mode: both;
 	animation-iteration-count: 1;
 	animation-timing-function: var(--animationsInTimingFunc);
 	transform-origin: var(--animationsInOriginPoint);
+	animation-delay: 0.25s;
 }
 .slideOut {
 	animation-name: messageOutKF;

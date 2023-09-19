@@ -1016,6 +1016,7 @@ const settingUpdaters = {
 	},
 	avatarsBGFadeAngle: function(value) {
 		rootCSS().setProperty("--avatarsBGFadeAngle", `${value}deg`);
+		rootCSS().setProperty("--avatarsBGFadeAngleNegative", `-${value}deg`);
 	},
 	enableAvatarsBGShadow: function(value) {
 		if(value === "true") {
@@ -1157,6 +1158,19 @@ const settingUpdaters = {
 		} else {
 			console = consoleHolder;
 		}
+	},
+
+	internationalNameSaturation: function(value) {
+		rootCSS().setProperty("--internationalNameSaturation", `${value}%`);
+	},
+	internationalNameMargin: function(value) {
+		rootCSS().setProperty("--internationalNameMargin", `${value}px`);
+	},
+	internationalNameSize: function(value) {
+		rootCSS().setProperty("--internationalNameSize", `${value}%`);
+	},
+	internationalNameWeightScaling: function(value) {
+		rootCSS().setProperty("--internationalNameWeightScaling", `${parseFloat(value)/100}`);
 	}
 };
 settingUpdaters["chatHideAccounts"](localStorage.getItem("setting_chatHideAccounts"));

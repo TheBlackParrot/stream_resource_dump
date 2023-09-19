@@ -10,8 +10,8 @@ function changeStatusCircle(which, status, msg) {
 
 $("#sensitive .section").show();
 
-const overlayRevision = 19;
-const overlayRevisionTimestamp = 1694644907032;
+const overlayRevision = 20;
+const overlayRevisionTimestamp = 1695058060618;
 $("#revision").text(`revision ${overlayRevision}`);
 
 function resetEverything() {
@@ -85,8 +85,16 @@ function settingsCheck() {
 settingsCheck();
 
 var activeRow;
+var scrollTops = {};
+var scrollLefts = {};
 function setRow(which, bypassSensitiveCheck) {
+	if(which === activeRow) {
+		return;
+	}
+
 	console.log(`should show row ${which}`);
+	scrollTops[activeRow] = $("#settings").scrollTop();
+	scrollLefts[activeRow] = $("#settings").scrollLeft();
 
 	activeRow = which;
 	let section = $(`.section[data-content="${which}"]`);
@@ -105,14 +113,23 @@ function setRow(which, bypassSensitiveCheck) {
 		$("#settings").show();
 		section.show();
 	}
+
+	if(which in scrollTops) {
+		$("#settings").scrollTop(scrollTops[which]);
+	} else {
+		$("#settings").scrollTop(0);
+	}
+	if(which in scrollLefts) {
+		$("#settings").scrollLeft(scrollLefts[which]);
+	} else {
+		$("#settings").scrollLeft(0);
+	}
 }
 setRow("about");
 
 $("body").on("click", ".row", function(e) {
 	e.preventDefault();
 	setRow($(this).attr("data-tab"));
-
-	console.log("clicked row");
 });
 
 $('input[type="range"]').on("update", function(e) {

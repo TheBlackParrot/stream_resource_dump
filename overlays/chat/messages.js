@@ -572,6 +572,7 @@ const chatFuncs = {
 }
 
 function widthTest(rootElement, userBlock) {
+	// todo: find some way to defer this
 	$("#testWrapper").append(rootElement);
 
 	let padding = (parseInt(rootCSS().getPropertyValue("--chatBlockPaddingHorizontal")) * 2) + (parseInt(rootCSS().getPropertyValue("--chatBlockIndividualPaddingHorizontal")) * 2);
@@ -579,12 +580,15 @@ function widthTest(rootElement, userBlock) {
 	let elementWidth = userBlock.width();
 	let elementLeft = userBlock.position().left;
 
+	//console.log(elementWidth, elementLeft);
+	//console.log(parentWidth - (elementWidth + elementLeft));
+
 	return parentWidth - (elementWidth + elementLeft) < 0;
 }
 
 function renderAvatarBGBlock(data, rootElement) {
 	let avatarBGWrapperElement = $('<div class="avatarBGWrapper"></div>');
-	let avatarBGElement = $(`<div class="avatarBG avatarBGLeft" style="background-image: url('${data.user.avatar}');"/>`);
+	let avatarBGElement = $(`<div class="avatarBG" style="background-image: url('${data.user.avatar}');"/>`);
 
 	let showPFP = canShowPFP(data);
 	if(showPFP && localStorage.getItem("setting_enableAvatarsAsBackground") === "true") {
@@ -619,7 +623,9 @@ function getRootElement(data) {
 	rootElement.append(overallWrapper);
 
 	rootElement.one("animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd", function() {
-		rootElement.removeClass("slideIn");
+		setTimeout(function() {
+			rootElement.removeClass("slideIn");
+		}, 250); // what the absolute shit
 	});
 
 	lastRootElement = [rootElement, overallWrapper];
@@ -650,6 +656,7 @@ function renderBadgeBlock(data, rootElement, userBlock) {
 			}
 		}
 
+		let useLQImages = (localStorage.getItem("setting_useLowQualityImages") === "true");
 		for(let badgeType in data.user.badges.list) {
 			let showBadge = true;
 			let foundBadge = false;
@@ -689,16 +696,24 @@ function renderBadgeBlock(data, rootElement, userBlock) {
 				for(let i in twitchBadges) {
 					let bdg = twitchBadges[i];
 					if(bdg.set_id === "subscriber") {
-						url = bdg.versions[0].image_url_4x;
-						if(typeof url === "undefined") {
+						if(useLQImages) {
 							url = bdg.versions[0].image_url_1x;
+						} else {
+							url = bdg.versions[0].image_url_4x;
+							if(typeof url === "undefined") {
+								url = bdg.versions[0].image_url_1x;
+							}
 						}
 					}
 				}
 			} else {
-				url = badgeData.image_url_4x;
-				if(typeof url === "undefined") {
+				if(useLQImages) {
 					url = badgeData.image_url_1x;
+				} else {
+					url = badgeData.image_url_4x;
+					if(typeof url === "undefined") {
+						url = badgeData.image_url_1x;
+					}
 				}
 			}
 
@@ -872,7 +887,7 @@ function renderAvatarBlock(data) {
 		pfpBlock.show();
 		
 		if(localStorage.getItem("setting_enableAvatarsAsBackground") === "true") {
-			let avatarBGElement = $(`<div class="avatarBG avatarBGLeft" style="background-image: url('${data.user.avatar}');"/>`);
+			let avatarBGElement = $(`<div class="avatarBG" style="background-image: url('${data.user.avatar}');"/>`);
 
 			if(localStorage.getItem("setting_avatarsBGAnimateAppearance") === "true") {
 				avatarBGElement.addClass("zoomAvatarBGOut");
@@ -941,15 +956,19 @@ function initUserBlockCustomizations(data, elements) {
 		rootCSS().setProperty(`--nameAngle${data.user.id}`, "var(--nameGradientAngle)");
 	}
 
+	let allNameElements = elements.nameBlock.children();
+	let displayNameElement = elements.nameBlock.children(".displayName");
+	let internationalNameElement = elements.nameBlock.children(".internationalName");
+
 	let colorToUse = `color_${data.user.id}`;
 	if(localStorage.getItem("setting_chatDefaultNameColorForced") === "true") {
-		elements.nameBlock.css("background-color", "var(--nameBackgroundNoGradientDefault)");
+		allNameElements.css("background-color", "var(--nameBackgroundNoGradientDefault)");
 		colorToUse = `setting_chatDefaultNameColor`;
 	} else {
-		elements.nameBlock.css("background-color", `var(--nameColor${data.user.id})`);
+		allNameElements.css("background-color", `var(--nameColor${data.user.id})`);
 
 		if(localStorage.getItem("setting_chatNameUsesGradient") === "true" && usesCustomColor) {
-			elements.nameBlock.css("background-image", `linear-gradient(var(--nameAngle${data.user.id}), var(--nameColorSecondary${data.user.id}) 0%, transparent 75%)`);
+			allNameElements.css("background-image", `linear-gradient(var(--nameAngle${data.user.id}), var(--nameColorSecondary${data.user.id}) 0%, transparent 75%)`);
 		}
 	}
 
@@ -1032,14 +1051,31 @@ function initUserBlockCustomizations(data, elements) {
 		elements.nameBlock.css("letter-spacing", `var(--nameSpacing${data.user.id})`);
 		elements.nameBlock.css("text-transform", `var(--nameTransform${data.user.id})`);
 		elements.nameBlock.css("font-variant", `var(--nameVariant${data.user.id})`);
-		elements.nameBlock.css("filter", `var(--nameEffects${data.user.id})`);
+		displayNameElement.css("filter", `var(--nameEffects${data.user.id})`);
+		internationalNameElement.css("filter", `var(--nameEffects${data.user.id}) saturate(var(--internationalNameSaturation))`);
 	}
 }
 
 function renderNameBlock(data) {
 	if(!localStorage.getItem(`usename_${data.user.id}`)) { localStorage.setItem(`usename_${data.user.id}`, "name"); }
 
-	let nameBlock = $(`<div class="name" data-userid="${data.user.id}">${data.user[localStorage.getItem(`usename_${data.user.id}`)]}</div>`);
+	// username = all latin
+	// name = anything
+	let internationalNameBlock = null;
+	if(localStorage.getItem(`usename_${data.user.id}`) === "name") {
+		let name = data.user.name;
+		let nameTest = name.replace(/[\x00-\xFF]/ug, "");
+
+		if(nameTest.length) {
+			internationalNameBlock = $(`<span class="internationalName">${data.user.username}</span>`);
+		}
+	}
+
+	let nameBlock = $(`<div class="name" data-userid="${data.user.id}"><span class="displayName">${data.user[localStorage.getItem(`usename_${data.user.id}`)]}</span></div>`);
+	if(internationalNameBlock !== null) {
+		nameBlock.append(internationalNameBlock);
+	}
+
 	testNameBlock = nameBlock;
 	return nameBlock;
 }
@@ -1072,45 +1108,6 @@ function renderUserBlock(data, rootElement, overallWrapper) {
 			pfpBlock: pfpBlock,
 			nameBlock: nameBlock
 		});
-	}
-
-	let customizationOK = (localStorage.getItem("setting_allowUserCustomizations") === "true");
-	let usesCustomColor = (customizationOK && localStorage.getItem(`color2_${data.user.id}`) !== "var(--defaultNameColorSecondary)");
-
-	if(customizationOK) {
-		rootCSS().setProperty(`--nameSize${data.user.id}`, localStorage.getItem(`namesize_${data.user.id}`));
-		if(localStorage.getItem("setting_chatNameFontSize") !== "16") {
-			let scale = parseFloat(localStorage.getItem("setting_chatNameFontSize")) / 16;
-			if(localStorage.getItem(`namesize_${data.user.id}`) !== "var(--nameFontSize)") {
-				rootCSS().setProperty(`--nameSize${data.user.id}`, `calc(${localStorage.getItem(`namesize_${data.user.id}`)} * ${scale})`);
-			}
-		}
-
-		rootCSS().setProperty(`--nameSpacing${data.user.id}`, localStorage.getItem(`namespacing_${data.user.id}`));
-		if(localStorage.getItem("setting_chatNameLetterSpacing") !== "1") {
-			let scale = parseFloat(localStorage.getItem("setting_chatNameLetterSpacing"));
-			if(localStorage.getItem(`namespacing_${data.user.id}`) !== "var(--nameLetterSpacing)") {
-				rootCSS().setProperty(`--nameSpacing${data.user.id}`, `calc(${localStorage.getItem(`namespacing_${data.user.id}`)} * ${scale})`);
-			}
-		}
-
-		rootCSS().setProperty(`--nameFont${data.user.id}`, localStorage.getItem(`namefont_${data.user.id}`));
-		rootCSS().setProperty(`--nameWeight${data.user.id}`, localStorage.getItem(`nameweight_${data.user.id}`));
-		rootCSS().setProperty(`--nameStyle${data.user.id}`, localStorage.getItem(`namestyle_${data.user.id}`));
-		rootCSS().setProperty(`--nameTransform${data.user.id}`, localStorage.getItem(`nametransform_${data.user.id}`));
-		rootCSS().setProperty(`--nameVariant${data.user.id}`, localStorage.getItem(`namevariant_${data.user.id}`));
-		rootCSS().setProperty(`--nameShadow${data.user.id}`, localStorage.getItem(`nameshadow_${data.user.id}`) === "yes" ? `var(--shadowStuff)` : "");
-		rootCSS().setProperty(`--nameOutline${data.user.id}`, localStorage.getItem(`nameoutline_${data.user.id}`) === "yes" ? `var(--outlineStuff)` : "");
-		rootCSS().setProperty(`--nameEffects${data.user.id}`, `var(--nameOutline${data.user.id})var(--nameShadow${data.user.id})`);
-
-		nameBlock.css("font-family", `var(--nameFont${data.user.id})`);
-		nameBlock.css("font-weight", `var(--nameWeight${data.user.id})`);
-		nameBlock.css("font-size", `var(--nameSize${data.user.id})`);
-		nameBlock.css("font-style", `var(--nameStyle${data.user.id})`);
-		nameBlock.css("letter-spacing", `var(--nameSpacing${data.user.id})`);
-		nameBlock.css("text-transform", `var(--nameTransform${data.user.id})`);
-		nameBlock.css("font-variant", `var(--nameVariant${data.user.id})`);
-		nameBlock.css("filter", `var(--nameEffects${data.user.id})`);
 	}
 
 	if(localStorage.getItem(`use7tvpaint_${data.user.id}`) === "yes" && !data.isOverlayMessage) {
@@ -1195,6 +1192,7 @@ function renderMessageBlock(data, rootElement) {
 	let originalMessage = Array.from(data.message.trim().normalize());
 
 	let hasBigEmotes = false;
+	let useLQImages = (localStorage.getItem("setting_useLowQualityImages") === "true");
 	if(localStorage.getItem("setting_enableEmotes") === "true") {
 		let checkExternalEmotes = Array.from(data.message.trim().normalize());
 
@@ -1210,7 +1208,7 @@ function renderMessageBlock(data, rootElement) {
 						checkExternalEmotes[charIdx] = "";
 					}
 
-					let emoteURL = `https://static-cdn.jtvnw.net/emoticons/v2/${emoteID}/default/dark/3.0`;
+					let emoteURL = `https://static-cdn.jtvnw.net/emoticons/v2/${emoteID}/default/dark/${useLQImages ? "1.0" : "3.0"}`;
 					originalMessage[startAt] = `<span class="emote" style="background-image: url('${emoteURL}');"><img src="${emoteURL}"/></span>`;
 				}
 			}
@@ -1288,6 +1286,11 @@ function renderMessageBlock(data, rootElement) {
 					let prefix = cheermotePrefixes[cheermoteIdx];
 					if(word.toLowerCase().substring(0, prefix.length) === prefix) {
 						let amount = parseInt(word.substring(prefix.length));
+						if(isNaN(amount)) {
+							// not actually a cheer
+							continue;
+						}
+
 						let cheermote = cheermotes[prefix];
 
 						let tiers = Object.keys(cheermote).sort(function(a, b) { return a - b; }).reverse();
@@ -1554,6 +1557,7 @@ function getFFZBadges(data, callback) {
 		return;
 	}
 
+	let useLQImages = (localStorage.getItem("setting_useLowQualityImages") === "true");
 	$.ajax({
 		type: "GET",
 		url: `https://api.frankerfacez.com/v1/user/id/${id}`,
@@ -1565,7 +1569,12 @@ function getFFZBadges(data, callback) {
 				let badges = response.badges;
 				for(let i in badges) {
 					let badge = badges[i];
-					let badgeURL = badge.urls[4 in badge.urls ? 4 : 1];
+					let badgeURL;
+					if(useLQImages) {
+						badgeURL = badge.urls[1];
+					} else {
+						badgeURL = badge.urls[4 in badge.urls ? 4 : 1];
+					}
 
 					if(badge.name === "bot") {
 						// doing my own bot tracking, no idea what ffz is doing so we just skip it
@@ -1639,11 +1648,12 @@ function createBadgeCacheObject(data) {
 		}
 	};
 
+	let useLQImages = (localStorage.getItem("setting_useLowQualityImages") === "true");
 	for(let i in sevenTVBadges) {
 		let stvBadge = sevenTVBadges[i];
 		if(stvBadge.users.indexOf(data.user.id) !== -1) {
 			outObject.seventv.badges.push({
-				img: stvBadge.urls[stvBadge.urls.length-1][1]
+				img: stvBadge.urls[useLQImages ? 0 : stvBadge.urls.length-1][1]
 			});
 		}
 	}
@@ -1823,9 +1833,10 @@ function deleteBTTVEmote(data) {
 function addBTTVEmote(data) {
 	let emote = data.emote;
 	
+	let useLQImages = (localStorage.getItem("setting_useLowQualityImages") === "true");
 	chatEmotes[emote.code] = {
 		service: "bttv",
-		url: `https://cdn.betterttv.net/emote/${emote.id}/3x.${emote.imageType}`,
+		url: `https://cdn.betterttv.net/emote/${emote.id}/${useLQImages ? "1" : "3"}x.${emote.imageType}`,
 		id: emote.id
 	}
 

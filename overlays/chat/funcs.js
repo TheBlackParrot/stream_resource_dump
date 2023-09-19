@@ -128,12 +128,14 @@ function set7TVPaint(nameBlock, which, userID) {
 			shadows = shadowsArr.join(" ");
 		}
 	}
-	//console.log(css);
+
 	if(paint.color !== null) {
-		nameBlock.css("background-color", bgColor);
+		nameBlock.children().css("background-color", bgColor);
 	}
-	nameBlock.css("background-image", css).css("background-size", "contain");
-	nameBlock.css("filter", `var(--nameEffects${userID})${shadows}`);
+
+	nameBlock.children().css("background-image", css).css("background-size", "contain");
+	nameBlock.children(".displayName").css("filter", `var(--nameEffects${userID})${shadows}`);
+	nameBlock.children(".internationalName").css("filter", `var(--nameEffects${userID})${shadows} saturate(var(--internationalNameSaturation))`);
 }
 
 function getTwitchUserInfo(id, callback) {

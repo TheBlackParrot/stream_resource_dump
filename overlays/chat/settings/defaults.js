@@ -340,7 +340,8 @@ const defaultConfig = {
 	"avatarsBGBorderColor": "#FFFFFF40",
 	"avatarsBGBorderSize": "1",
 	"avatarsBGBorderStyle": "solid",
-	"allowConsoleMessages": "false"
+	"allowConsoleMessages": "false",
+	"useLowQualityImages": "false"
 };
 
 for(let setting in defaultConfig) {

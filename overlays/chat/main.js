@@ -199,6 +199,7 @@ function getGlobalChannelEmotes(broadcasterData) {
 		}
 	}
 
+	let useLQImages = (localStorage.getItem("setting_useLowQualityImages") === "true");
 	if(localStorage.getItem("setting_enable7TVGlobalEmotes") === "true" && localStorage.getItem("setting_enable7TV") === "true") {
 		console.log("getting 7tv global emotes...");
 		$.ajax({
@@ -215,7 +216,7 @@ function getGlobalChannelEmotes(broadcasterData) {
 					let urls = emote.data.host.files;
 					chatEmotes[emote.name] = {
 						service: "7tv",
-						url: `https:${emote.data.host.url}/${urls[urls.length-1].name}`
+						url: `https:${emote.data.host.url}/${urls[(useLQImages ? 0 : urls.length-1)].name}`
 					}
 				}
 
@@ -248,7 +249,7 @@ function getGlobalChannelEmotes(broadcasterData) {
 					let emote = data[idx];
 					chatEmotes[emote.code] = {
 						service: "bttv",
-						url: `https://cdn.betterttv.net/emote/${emote.id}/3x.${emote.imageType}`,
+						url: `https://cdn.betterttv.net/emote/${emote.id}/${useLQImages ? 1 : 3}x.${emote.imageType}`,
 						id: emote.id
 					}
 				}
@@ -282,7 +283,12 @@ function getGlobalChannelEmotes(broadcasterData) {
 
 					for(let idx in emotes) {
 						let emote = emotes[idx];
-						let url = emote.urls[4] || emote.urls[1];
+						let url;
+						if(useLQImages) {
+							url = emote.urls[1];
+						} else {
+							url = emote.urls[4] || emote.urls[1];
+						}
 
 						chatEmotes[emote.name] = {
 							service: "ffz",
@@ -312,6 +318,7 @@ function getExternalChannelEmotes(broadcasterData) {
 		return;
 	}
 
+	let useLQImages = (localStorage.getItem("setting_useLowQualityImages") === "true");
 	if(localStorage.getItem("setting_enable7TVChannelEmotes") === "true" && localStorage.getItem("setting_enable7TV") === "true") {
 		console.log("getting 7tv channel emotes...");
 		$.ajax({
@@ -338,7 +345,7 @@ function getExternalChannelEmotes(broadcasterData) {
 					let urls = emote.data.host.files;
 					chatEmotes[emote.name] = {
 						service: "7tv",
-						url: `https:${emote.data.host.url}/${urls[urls.length-1].name}`
+						url: `https:${emote.data.host.url}/${urls[(useLQImages ? 0 : urls.length-1)].name}`
 					}
 				}
 			},
@@ -366,7 +373,7 @@ function getExternalChannelEmotes(broadcasterData) {
 					let emote = data.sharedEmotes[idx];
 					chatEmotes[emote.code] = {
 						service: "bttv",
-						url: `https://cdn.betterttv.net/emote/${emote.id}/3x.${emote.imageType}`,
+						url: `https://cdn.betterttv.net/emote/${emote.id}/${useLQImages ? 1 : 3}x.${emote.imageType}`,
 						id: emote.id
 					}
 				}
@@ -396,7 +403,12 @@ function getExternalChannelEmotes(broadcasterData) {
 
 					for(let idx in emotes) {
 						let emote = emotes[idx];
-						let url = emote.urls[4] || emote.urls[1];
+						let url;
+						if(useLQImages) {
+							url = emote.urls[1];
+						} else {
+							url = emote.urls[4] || emote.urls[1];
+						}
 
 						chatEmotes[emote.name] = {
 							service: "ffz",

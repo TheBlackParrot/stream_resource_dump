@@ -136,6 +136,7 @@
 	--avatarsBGStartFadeAt: -50%;
 	--avatarsBGEndFadeAt: 50%;
 	--avatarsBGFadeAngle: 110deg;
+	--avatarsBGFadeAngleNegative: -110deg; /* oh for fuck's sake */
 	--outlineStuffAvatarBG: drop-shadow(0px 0px 0px transparent);
 	--shadowStuffAvatarBG: var(--originalShadowStuff);
 	--avatarsBGEffects: var(--outlineStuffAvatarBG) var(--shadowStuffAvatarBG);
@@ -198,4 +199,9 @@
 	--eventTagsLetterSpacing: -0.2px;
 	--eventTagsTransform: uppercase;
 	--eventTagsLineHeight: 26px;
+
+	--internationalNameSaturation: 33%;
+	--internationalNameMargin: 7px;
+	--internationalNameSize: 75%;
+	--internationalNameWeightScaling: 0.5;
 }
