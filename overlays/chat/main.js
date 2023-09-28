@@ -216,7 +216,8 @@ function getGlobalChannelEmotes(broadcasterData) {
 					let urls = emote.data.host.files;
 					chatEmotes[emote.name] = {
 						service: "7tv",
-						url: `https:${emote.data.host.url}/${urls[(useLQImages ? 0 : urls.length-1)].name}`
+						url: `https:${emote.data.host.url}/${urls[(useLQImages ? 0 : urls.length-1)].name}`,
+						zeroWidth: (emote.data.flags & 256 === 256)
 					}
 				}
 
@@ -252,6 +253,10 @@ function getGlobalChannelEmotes(broadcasterData) {
 						url: `https://cdn.betterttv.net/emote/${emote.id}/${useLQImages ? 1 : 3}x.${emote.imageType}`,
 						id: emote.id
 					}
+
+					if(emote.modifier) {
+						chatEmotes[emote.code].modifiers = ["Hidden"];
+					}
 				}
 
 				checkIfDone();
@@ -278,7 +283,13 @@ function getGlobalChannelEmotes(broadcasterData) {
 				console.log("got ffz emotes");
 				systemMessage("*Fetched global FrankerFaceZ emotes*");
 
+				console.log(data);
+
 				for(let setIdx in data.sets) {
+					/*if(data.sets[setIdx].title === "Subwoofer Emote Effects") {
+						continue;
+					}*/
+
 					let emotes = data.sets[setIdx].emoticons;
 
 					for(let idx in emotes) {
@@ -293,6 +304,10 @@ function getGlobalChannelEmotes(broadcasterData) {
 						chatEmotes[emote.name] = {
 							service: "ffz",
 							url: url
+						}
+
+						if(emote.modifier) {
+							chatEmotes[emote.name].modifiers = parseFFZModifiers(emote.modifier_flags);
 						}
 					}
 				}
@@ -345,8 +360,9 @@ function getExternalChannelEmotes(broadcasterData) {
 					let urls = emote.data.host.files;
 					chatEmotes[emote.name] = {
 						service: "7tv",
-						url: `https:${emote.data.host.url}/${urls[(useLQImages ? 0 : urls.length-1)].name}`
-					}
+						url: `https:${emote.data.host.url}/${urls[(useLQImages ? 0 : urls.length-1)].name}`,
+						zeroWidth: ((emote.data.flags & 256) === 256)
+					};
 				}
 			},
 

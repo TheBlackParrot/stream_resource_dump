@@ -1,5 +1,5 @@
-const overlayRevision = 25;
-const overlayRevisionTimestamp = 1695058060618;
+const overlayRevision = 27;
+const overlayRevisionTimestamp = 1695263849619;
 
 const enums = {
 	weight: {
@@ -189,4 +189,17 @@ const animationFilterFunctions = {
 			end: "blur(var(--messageOutBlurEnd))"
 		}
 	}
+};
+
+const ffzModifiers = {
+	Hidden: 1,
+	FlipX: 2,
+	FlipY: 4,
+	GrowX: 8,
+	Rainbow: 2048,
+	HyperRed: 4096,
+	HyperShake: 8192,
+	Cursed: 16384,
+	Jam: 32768,
+	Bounce: 65536
 };

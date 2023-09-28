@@ -90,6 +90,19 @@ function parse7TVColor(color) {
 	return `rgba(${red}, ${green}, ${blue}, ${alpha/255})`;
 }
 
+function parseFFZModifiers(value) {
+	let out = [];
+
+	for(let modifier in ffzModifiers) {
+		let modValue = ffzModifiers[modifier];
+		if((value & modValue) === modValue) {
+			out.push(modifier);
+		}
+	}
+
+	return out;
+}
+
 function set7TVPaint(nameBlock, which, userID) {
 	let paint = sevenTVPaints[which];
 	let css = "";

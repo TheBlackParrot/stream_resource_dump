@@ -204,4 +204,10 @@
 	--internationalNameMargin: 7px;
 	--internationalNameSize: 75%;
 	--internationalNameWeightScaling: 0.5;
+
+	--gradientFadeMaskAngle: 0deg;
+	--gradientFadeMaskStart: 67%;
+	--gradientFadeMaskEnd: 99%;
+
+	--messageBlockDirection: column;
 }

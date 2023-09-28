@@ -86,13 +86,15 @@ function prepareMessage(tags, message, self, forceHighlight) {
 		switch(outObject.type) {
 			case "resub":
 				if(localStorage.getItem("setting_enableEventTagsSubs") === "true") {
-					outObject.extraInfo = localStorage.getItem("setting_eventTagsResubFormat").replaceAll("%amount", tags['msg-param-cumulative-months']);
+					outObject.extraInfo = localStorage.getItem("setting_eventTagsResubFormat")
+						.replaceAll("%amount", tags['msg-param-cumulative-months'])
+						.replaceAll("%tier", subTiers[tags['msg-param-sub-plan']]);
 				}
 				break;
 
 			case "subscription":
 				if(localStorage.getItem("setting_enableEventTagsSubs") === "true") {
-					outObject.extraInfo = localStorage.getItem("setting_eventTagsNewSubFormat");
+					outObject.extraInfo = localStorage.getItem("setting_eventTagsNewSubFormat").replaceAll("%tier", subTiers[tags['msg-param-sub-plan']]);
 				}
 				break;
 
@@ -572,7 +574,6 @@ const chatFuncs = {
 }
 
 function widthTest(rootElement, userBlock) {
-	// todo: find some way to defer this
 	$("#testWrapper").append(rootElement);
 
 	let padding = (parseInt(rootCSS().getPropertyValue("--chatBlockPaddingHorizontal")) * 2) + (parseInt(rootCSS().getPropertyValue("--chatBlockIndividualPaddingHorizontal")) * 2);
@@ -628,16 +629,34 @@ function getRootElement(data) {
 		}, 250); // what the absolute shit
 	});
 
-	lastRootElement = [rootElement, overallWrapper];
-
-	let userBlock = renderUserBlock(data, rootElement, overallWrapper);
+	let userBlockElements = renderUserBlock(data, rootElement, overallWrapper);
+	let userBlock = userBlockElements[0];
 	overallWrapper.append(userBlock);
 
 	let avatarBGBlock = renderAvatarBGBlock(data, rootElement);
 	overallWrapper.append(avatarBGBlock);
 
+	let messageWrapper = $('<div class="messageWrapper"></div>');
+	overallWrapper.append(messageWrapper);
+
+	lastRootElement = [rootElement, overallWrapper, messageWrapper];
+
+	userBlock.waitForImages(function() {
+		// [userBlock, badgeBlock, flagBlock, pronounsBlock, pfpBlock, nameBlock];
+		let elementChecks = [userBlockElements[2], userBlockElements[1], userBlockElements[4], userBlockElements[3]];
+		//                   flags,                badges,               pfp,                  pronouns
+		for(let i in elementChecks) {
+			let testAgainst = elementChecks[i];
+			if(widthTest(rootElement, userBlock)) {
+				testAgainst.hide();
+			}
+		}
+		if(widthTest(rootElement, userBlock)) { userBlockElements[5].children().addClass("clip"); }
+		$("#wrapper").append(rootElement);
+	});
+
 	$("#wrapper").append(rootElement);
-	return [rootElement, overallWrapper];
+	return [rootElement, overallWrapper, messageWrapper];
 }
 
 function renderBadgeBlock(data, rootElement, userBlock) {
@@ -1047,10 +1066,10 @@ function initUserBlockCustomizations(data, elements) {
 		elements.nameBlock.css("font-family", `var(--nameFont${data.user.id})`);
 		elements.nameBlock.css("font-weight", `var(--nameWeight${data.user.id})`);
 		elements.nameBlock.css("font-size", `var(--nameSize${data.user.id})`);
-		elements.nameBlock.css("font-style", `var(--nameStyle${data.user.id})`);
+		allNameElements.css("font-style", `var(--nameStyle${data.user.id})`);
 		elements.nameBlock.css("letter-spacing", `var(--nameSpacing${data.user.id})`);
-		elements.nameBlock.css("text-transform", `var(--nameTransform${data.user.id})`);
-		elements.nameBlock.css("font-variant", `var(--nameVariant${data.user.id})`);
+		allNameElements.css("text-transform", `var(--nameTransform${data.user.id})`);
+		allNameElements.css("font-variant", `var(--nameVariant${data.user.id})`);
 		displayNameElement.css("filter", `var(--nameEffects${data.user.id})`);
 		internationalNameElement.css("filter", `var(--nameEffects${data.user.id}) saturate(var(--internationalNameSaturation))`);
 	}
@@ -1120,16 +1139,7 @@ function renderUserBlock(data, rootElement, overallWrapper) {
 		}
 	}
 
-	let elementChecks = [flagBlock, badgeBlock, pfpBlock, pronounsBlock];
-	for(let i in elementChecks) {
-		let testAgainst = elementChecks[i];
-		if(widthTest(rootElement, userBlock)) {
-			testAgainst.hide();
-		}
-	}
-	if(widthTest(rootElement, userBlock)) { nameBlock.addClass("clip"); }
-
-	return userBlock;
+	return [userBlock, badgeBlock, flagBlock, pronounsBlock, pfpBlock, nameBlock];
 }
 
 function initMessageBlockCustomizations(data, elements) {
@@ -1268,11 +1278,39 @@ function renderMessageBlock(data, rootElement) {
 		let words = stuff.split(" ");
 
 		let cheermotePrefixes = Object.keys(cheermotes);
+		let lastWordWasEmote = false;
 		for(let wordIdx in words) {
 			let word = words[wordIdx];
 			
 			if(word in chatEmotes) {
-				words[wordIdx] = `<span class="emote" style="background-image: url('${chatEmotes[word].url}');"><img src="${chatEmotes[word].url}"/></span>`;
+				let externalEmote = chatEmotes[word];
+				let modifiers = [];
+
+				if("modifiers" in externalEmote) {
+					modifiers = externalEmote.modifiers;
+				}
+
+				let classes = ["emote"];
+				if("zeroWidth" in externalEmote) {
+					if(externalEmote.zeroWidth && lastWordWasEmote) {
+						classes.push("zeroWidthEmote");
+					}
+				}
+
+				words[wordIdx] = `<span class="${classes.join(" ")}" style="background-image: url('${externalEmote.url}');"${modifiers.length ? `data-emotemods="${modifiers.join(" ")}"` : ""}><img src="${externalEmote.url}"/></span>`;
+
+				if(lastWordWasEmote) {
+					if(externalEmote.zeroWidth) {
+						let tempEmote = $(words[wordIdx - 1]).append(words[wordIdx]);
+						words[wordIdx - 1] = tempEmote.prop('outerHTML');
+						words[wordIdx] = "";
+						lastWordWasEmote = false;
+					}
+				} else {
+					lastWordWasEmote = true;
+				}
+			} else {
+				lastWordWasEmote = false;
 			}
 
 			if(word[0] === "@") {
@@ -1348,6 +1386,39 @@ function renderMessageBlock(data, rootElement) {
 				}
 				count++;
 			});
+		}
+
+		let emoteChildren = messageBlock.children(".emote");
+		let lastValidEmote = null;
+		if(emoteChildren.length) {
+			for(let i in emoteChildren) {
+				let emote = emoteChildren.eq(i); // what the fuck
+				let emoteMods = emote.attr("data-emotemods");
+
+				if(typeof emoteMods === "undefined") {
+					lastValidEmote = emote;
+					continue;
+				}
+
+				emoteMods = emoteMods.split(" ");
+				if(emoteMods.indexOf("Hidden") !== -1) {
+					emote.addClass("mod_Hidden");
+				}
+
+				if(lastValidEmote === null) {
+					continue;
+				}
+
+				for(let i in emoteMods) {
+					let mod = emoteMods[i];
+
+					if(mod === "Hidden") {
+						continue;
+					}
+
+					lastValidEmote.addClass(`mod_${mod}`);
+				}
+			}
 		}
 	} else {
 		let parsedMessage = [];
@@ -1436,11 +1507,12 @@ function parseMessage(data) {
 	let rootParts = getRootElement(data);
 	let rootElement = rootParts[0];
 	let overallWrapper = rootParts[1];
+	let messageWrapper = rootParts[2];
 
 	let wrapperElement = $(`<div class="effectWrapper" data-msgUUID="${data.uuid}"></div>`);
 	wrapperElement.attr("data-rootidx", rootElement.attr("data-rootidx"));
 
-	if(localStorage.getItem("setting_chatAnimationsIn") === "true" && overallWrapper.children(".effectWrapper").length) {
+	if(localStorage.getItem("setting_chatAnimationsIn") === "true" && messageWrapper.children(".effectWrapper").length) {
 		wrapperElement.addClass("slideIn");
 	}
 
@@ -1449,7 +1521,7 @@ function parseMessage(data) {
 	let messageBlock = renderMessageBlock(data, rootElement);
 	wrapperElement.append(messageBlock);
 
-	overallWrapper.append(wrapperElement);
+	messageWrapper.append(wrapperElement);
 
 	let messageCap = parseInt(localStorage.getItem("setting_chatMessagesHardCap"));
 	while($(".chatBlock").length > messageCap) {
@@ -1731,11 +1803,6 @@ function renderExternalBadges(data, badgeBlock, rootElement, userBlock) {
 			}
 		}
 	}
-
-	if(widthTest(rootElement, userBlock)) {
-		badgeBlock.hide();
-	}
-	$("#wrapper").append(rootElement);
 }
 
 function checkIfExternalBadgesDone(data, badgeBlock, rootElement, userBlock) {

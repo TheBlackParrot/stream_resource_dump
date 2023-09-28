@@ -10,8 +10,8 @@ function changeStatusCircle(which, status, msg) {
 
 $("#sensitive .section").show();
 
-const overlayRevision = 20;
-const overlayRevisionTimestamp = 1695058060618;
+const overlayRevision = 21;
+const overlayRevisionTimestamp = 1695263849619;
 $("#revision").text(`revision ${overlayRevision}`);
 
 function resetEverything() {
@@ -88,7 +88,7 @@ var activeRow;
 var scrollTops = {};
 var scrollLefts = {};
 function setRow(which, bypassSensitiveCheck) {
-	if(which === activeRow) {
+	if(which === activeRow && !bypassSensitiveCheck) {
 		return;
 	}
 

@@ -9,7 +9,7 @@ body {
 
 #wrapper {
 	position: fixed;
-	width: var(--overlayWidth);
+	width: calc(var(--overlayWidth) - (var(--chatBlockPaddingHorizontal) * 2));
 	display: flex;
 }
 
@@ -21,6 +21,13 @@ body {
 	width: 100%;
 	display: flex;
 	flex-direction: column;
+}
+
+#wrapper, #testWrapper {
+	margin-top: var(--chatBlockPaddingVertical);
+	margin-bottom: var(--chatBlockPaddingVertical);
+	margin-left: var(--chatBlockPaddingHorizontal);
+	margin-right: var(--chatBlockPaddingHorizontal);
 }
 
 #wrapper .chatBlock {
@@ -42,10 +49,6 @@ body {
 .top .chatBlock {
 	margin-bottom: var(--chatBlockSpacing);
 	margin-top: 0px;	
-}
-.chatBlock {
-	margin-left: var(--chatBlockPaddingHorizontal);
-	margin-right: var(--chatBlockPaddingHorizontal);
 }
 .badges, .pronouns, .message, .pfp, .flags, .displayName, .internationalName, .extraInfo {
 	filter: var(--effectFilters);
@@ -664,13 +667,6 @@ img.emoji {
 	z-index: 2;
 }
 
-.bottom .chatBlock:last-child {
-	margin-bottom: var(--chatBlockSpacing);
-}
-.top .chatBlock:last-child {
-	margin-top: var(--chatBlockSpacing);
-}
-
 .internationalName:before {
 	margin-left: var(--internationalNameMargin);
 	content: "(";
@@ -685,6 +681,25 @@ img.emoji {
 	content: ")";
 }
 
-.top .message {
+#maskWrapper {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+}
 
+.maskEnabled {
+	-webkit-mask-image: linear-gradient(var(--gradientFadeMaskAngle), #000000ff var(--gradientFadeMaskStart), #00000000 var(--gradientFadeMaskEnd));
+}
+
+.messageWrapper {
+	display: flex;
+	flex-direction: var(--messageBlockDirection);
+}
+
+.zeroWidthEmote {
+	position: absolute;
+	left: 0;
+	padding: 0;
 }

@@ -2,7 +2,8 @@ Unless otherwise noted with a URL, these mods should be found in BeatMods's repo
 Naluluna mods are available through her own mod manager.
 
 AdBlocker
-BeatLeader
+BeatmapInformation
+ - https://github.com/denpadokei/BeatmapInformation
 BeatSaberPlus
  - https://github.com/hardcpp/BeatSaberPlus
 BeatSaverDownloader

@@ -121,6 +121,10 @@ function normalizeSettingColors(setting) {
 }
 
 function setHistoryOpacity() {
+	if(localStorage.getItem("setting_debugFreezeChat") === "true") {
+		return;
+	}
+
 	let filtersCheckFor = [
 		"chatFadeHistory",
 		"chatBlurHistory"
@@ -316,6 +320,13 @@ function checkTransformAnimationSettings() {
 
 var consoleHolder = console;
 var hasInitConsoleOverride = false;
+
+var subTiers = {
+	"Prime": "Twitch Prime",
+	"1000": "Tier 1",
+	"2000": "Tier 2",
+	"3000": "Tier 3"
+};
 
 const settingUpdaters = {
 	chatHideAccounts: function(value) {
@@ -957,8 +968,10 @@ const settingUpdaters = {
 		setVolume("newMsg", value);
 	},
 	sound_newMsg_URL: function(value) {
-		if(sounds["newMsg"].value !== value) {
-			initSoundMetadata();
+		if("newMsg" in sounds) {
+			if(sounds["newMsg"].value !== value) {
+				initSoundMetadata();
+			}
 		}
 	},
 
@@ -1171,7 +1184,39 @@ const settingUpdaters = {
 	},
 	internationalNameWeightScaling: function(value) {
 		rootCSS().setProperty("--internationalNameWeightScaling", `${parseFloat(value)/100}`);
-	}
+	},
+
+	gradientFadeMaskEnabled: function(value) {
+		if(value === "true") {
+			$("#maskWrapper").addClass("maskEnabled");
+		} else {
+			$("#maskWrapper").removeClass("maskEnabled");
+		}
+	},
+	gradientFadeMaskAngle: function(value) {
+		rootCSS().setProperty("--gradientFadeMaskAngle", `${value}deg`);
+	},
+	gradientFadeMaskStart: function(value) {
+		rootCSS().setProperty("--gradientFadeMaskStart", `${value}%`);
+	},
+	gradientFadeMaskEnd: function(value) {
+		rootCSS().setProperty("--gradientFadeMaskEnd", `${value}%`);
+	},
+
+	messageBlockDirection: function(value) {
+		let which = "column";
+		
+		if(value === "true") {
+			which = "column-reverse";
+		}
+
+		rootCSS().setProperty("--messageBlockDirection", which);
+	},
+
+	eventTagsPlanNamePrime: function(value) { subTiers["Prime"] = value; },
+	eventTagsPlanNameTier1: function(value) { subTiers["1000"] = value; },
+	eventTagsPlanNameTier2: function(value) { subTiers["2000"] = value; },
+	eventTagsPlanNameTier3: function(value) { subTiers["3000"] = value; }
 };
 settingUpdaters["chatHideAccounts"](localStorage.getItem("setting_chatHideAccounts"));
 

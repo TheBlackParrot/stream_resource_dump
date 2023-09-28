@@ -1,0 +1,19 @@
+.mod_Hidden {
+	display: none;
+}
+/*
+.mod_GrowX {
+	transform: scaleX(2.0);
+	padding: 0.1em 0.9em;
+	background-size: 100% 100%;
+}
+*/
+.mod_Cursed {
+	filter: grayscale(100%) brightness(70%) contrast(250%);
+}
+.mod_FlipY {
+	transform: scaleY(-1);
+}
+.mod_FlipX {
+	transform: scaleX(-1);
+}

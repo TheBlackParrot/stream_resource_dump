@@ -36,10 +36,10 @@
 				<hr/>
 				<div class="row" data-tab="auth"><i class="fas fa-user-shield"></i>Authentication</div>
 				<div class="row" data-tab="connections"><i class="fas fa-plug"></i>Connections</div>
-				<div class="row" data-tab="function"><i class="fas fa-cogs"></i>Function</div>
 				<hr/>
 				<div class="row" data-tab="appearance"><i class="fas fa-palette"></i>Appearance</div>
 				<div class="row" data-tab="effects"><i class="fas fa-magic"></i>Effects</div>
+				<div class="row" data-tab="function"><i class="fas fa-cogs"></i>Function</div>
 				<div class="row" data-tab="sounds"><i class="fas fa-volume-up"></i>Sounds</div>
 				<hr/>
 				<div class="row" data-tab="avatars"><i class="fas fa-image"></i>Avatars</div>
@@ -48,9 +48,7 @@
 				<div class="row" data-tab="flags"><i class="fas fa-flag"></i>Flags</div>
 				<div class="row" data-tab="pronouns"><i class="fas fa-user"></i>Pronouns</div>
 				<hr/>
-				<div class="row" data-tab="7tv"><i class="icon sevtv"></i>7TV</div>
-				<div class="row" data-tab="bttv"><i class="icon bttv"></i>BetterTTV</div>
-				<div class="row" data-tab="ffz"><i class="icon ffz"></i>FrankerFaceZ</div>
+				<div class="row" data-tab="external"><i class="fas fa-cubes"></i>External Services</div>
 			</div>
 			<div id="sideButtons">
 				<div class="button" id="sendTestButton"><i class="fas fa-comment-dots"></i> Test Message</div>
@@ -75,6 +73,28 @@
 					<div class="setting">
 						<div class="settingCell">
 							<input checked id="allowUserCustomizations" type="checkbox"/> <span class="settingInfo">Allow chatters to customize personal settings</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="gradientFadeMaskEnabled" type="checkbox" data-dependent="gradientFadeMask"/> <span class="settingInfo">Apply a gradient mask to the overlay as a whole</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="gradientFadeMask">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Angle</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="gradientFadeMaskAngle" min="-360" max="360" step="1" value="0"/>deg
+						</div>
+					</div>
+					<div class="setting" data-dependent="gradientFadeMask">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Gradient runs from</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="gradientFadeMaskStart" min="-300" max="300" step="1" value="67"/>%<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="gradientFadeMaskEnd" min="-300" max="300" step="1" value="99"/>%
 						</div>
 					</div>
 				</div>
@@ -670,6 +690,12 @@
 					</div>
 					<hr/>
 					<div class="setting">
+						<div class="settingCell">
+							<input id="messageBlockDirection" type="checkbox"/> <span class="settingInfo">Reverse the order of messages within message blocks</span>
+						</div>
+					</div>					
+					<hr/>
+					<div class="setting">
 						<div class="settingCellLabel">
 							<span class="settingInfo">Corner alignment</span>
 						</div>
@@ -699,7 +725,7 @@
 							<span class="settingInfo">Vertical margin</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="chatBlockPaddingVertical" min="0" max="64" step="0.25" value="18"/>px
+							<input type="number" id="chatBlockPaddingVertical" min="0" max="99" step="0.25" value="16"/>px
 						</div>
 					</div>
 					<div class="setting">
@@ -707,7 +733,7 @@
 							<span class="settingInfo">Horizontal margin</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="chatBlockPaddingHorizontal" min="0" max="64" step="0.25" value="18"/>px
+							<input type="number" id="chatBlockPaddingHorizontal" min="0" max="99" step="0.25" value="16"/>px
 						</div>
 					</div>
 					<hr/>
@@ -1285,10 +1311,10 @@
 					</div>
 					<div class="setting">
 						<div class="settingCellLabel">
-							<span class="settingInfo">Limit rendered messages</span>
+							<span class="settingInfo">Limit rendered message blocks</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="chatMessagesHardCap" min="0" max="9999" step="1" value="200"/>messages
+							<input type="number" id="chatMessagesHardCap" min="0" max="9999" step="1" value="30"/>blocks
 						</div>
 					</div>
 					<hr/>
@@ -1344,7 +1370,7 @@
 							<span class="settingInfo">Resub format</span>
 						</div>
 						<div class="settingCell">
-							<input id="eventTagsResubFormat" type="text" value="resubscription (%amount months)"/>
+							<input id="eventTagsResubFormat" type="text" value="%tier resubscription (%amount months)"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="eventTagsSubs">
@@ -1352,7 +1378,7 @@
 							<span class="settingInfo">New sub format</span>
 						</div>
 						<div class="settingCell">
-							<input id="eventTagsNewSubFormat" type="text" value="new subscription"/>
+							<input id="eventTagsNewSubFormat" type="text" value="new %tier subscription"/>
 						</div>
 					</div>
 					<div class="setting">
@@ -1371,7 +1397,41 @@
 					<hr/>
 					<div class="setting">
 						<div class="settingCell smol">
-							Use <tt>%amount</tt> in fields with varying amounts to show the amount of said event
+							Use <tt>%amount</tt> in fields with varying amounts to show the amount of said event<br/>
+							Use <tt>%tier</tt> in subscription/resubscription fields to show the subscription plan name
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Prime plan name</span>
+						</div>
+						<div class="settingCell">
+							<input id="eventTagsPlanNamePrime" type="text" value="Twitch Prime"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Tier 1 plan name</span>
+						</div>
+						<div class="settingCell">
+							<input id="eventTagsPlanNameTier1" type="text" value="Tier 1"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Tier 2 plan name</span>
+						</div>
+						<div class="settingCell">
+							<input id="eventTagsPlanNameTier2" type="text" value="Tier 2"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Tier 3 plan name</span>
+						</div>
+						<div class="settingCell">
+							<input id="eventTagsPlanNameTier3" type="text" value="Tier 3"/>
 						</div>
 					</div>
 				</div>
@@ -2355,8 +2415,9 @@
 					</div>
 				</div>
 			</div>
-			<div class="section" data-content="7tv">
+			<div class="section" data-content="external">
 				<div class="part">
+					<h1><i class="icon sevtv"></i>7TV</h1>
 					<div class="setting">
 						<div class="settingCell">
 							<input checked id="enable7TV" type="checkbox" data-dependent="7tv"/> <span class="settingInfo">Enable 7TV integration</span>
@@ -2384,9 +2445,8 @@
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="section" data-content="bttv">
 				<div class="part">
+					<h1><i class="icon bttv"></i>BetterTTV</h1>
 					<div class="setting">
 						<div class="settingCell">
 							<input checked id="enableBTTV" type="checkbox" data-dependent="bttv"/> <span class="settingInfo">Enable BetterTTV integration</span>
@@ -2409,9 +2469,8 @@
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="section" data-content="ffz">
 				<div class="part">
+					<h1><i class="icon ffz"></i>FrankerFaceZ</h1>
 					<div class="setting">
 						<div class="settingCell">
 							<input checked id="enableFFZ" type="checkbox" data-dependent="ffz"/> <span class="settingInfo">Enable FrankerFaceZ integration</span>
