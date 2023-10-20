@@ -3,81 +3,164 @@
 	--colorLight: "#FFFFFF";
 }
 
-@keyframes fadeIn {
+@keyframes slideIn {
 	0% {
 		transform: translateX(30px);
-		opacity: 0;
 	}
 	100% {
 		transform: translateX(0px);
+	}
+}
+
+@keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+	100% {
 		opacity: 1;
+	}
+}
+
+@keyframes slideOut {
+	0% {
+		transform: translateX(0px);
+	}
+	100% {
+		transform: translateX(30px);
 	}
 }
 
 @keyframes fadeOut {
 	0% {
-		transform: translateX(0px);
 		opacity: 1;
 	}
 	100% {
-		transform: translateX(30px);
 		opacity: 0;
 	}
 }
 
-.fadeIn, .fadeOut {
+.fadeIn, .fadeOut, .slideIn, .slideOut {
 	animation-duration: .5s;
 	animation-direction: forwards;
 	animation-fill-mode: forwards;
 	animation-iteration-count: 1;	
 }
 
-.fadeIn {
-	animation-name: fadeIn;
-}
+.fadeIn { animation-name: fadeIn; }
+.fadeOut { animation-name: fadeOut; }
+.slideIn { animation-name: slideIn; }
+.slideOut { animation-name: slideOut; }
 
-.fadeOut {
-	animation-name: fadeOut;
+:root {
+	--outline-effects-size: 1px;
+	--outline-effects-size-negative: calc(var(--outline-effects-size) * -1);
+	--outline-effects-size-half: calc(var(--outline-effects-size) / 2);
+	--outline-effects-color: #00000073;
+
+	--outline-effects: drop-shadow(var(--outline-effects-size) 0px var(--outline-effects-size-half) var(--outline-effects-color))
+			drop-shadow(var(--outline-effects-size) var(--outline-effects-size-negative) var(--outline-effects-size-half) var(--outline-effects-color))
+			drop-shadow(var(--outline-effects-size) var(--outline-effects-size) var(--outline-effects-size-half) var(--outline-effects-color))
+			drop-shadow(0px var(--outline-effects-size-negative) var(--outline-effects-size-half) var(--outline-effects-color))
+			drop-shadow(0px var(--outline-effects-size) var(--outline-effects-size-half) var(--outline-effects-color))
+			drop-shadow(var(--outline-effects-size-negative) 0px var(--outline-effects-size-half) var(--outline-effects-color))
+			drop-shadow(var(--outline-effects-size-negative) var(--outline-effects-size-negative) var(--outline-effects-size-half) var(--outline-effects-color))
+			drop-shadow(var(--outline-effects-size-negative) var(--outline-effects-size) var(--outline-effects-size-half) var(--outline-effects-color));
+	--outline-effects-actual: var(--outline-effects);
+
+	--shadow-effects-offset-x: 0px;
+	--shadow-effects-offset-y: 1px;
+	--shadow-effects-blur-radius: 2px;
+	--shadow-effects-color: #000000FF;
+
+	--shadow-effects: drop-shadow(var(--shadow-effects-offset-x) var(--shadow-effects-offset-y) var(--shadow-effects-blur-radius) var(--shadow-effects-color));
+	--shadow-effects-actual: var(--shadow-effects);
+
+	--effects: var(--outline-effects-actual) var(--shadow-effects-actual);
+
+	--wrapper-margin: 12px;
+	--element-spacing: 12px;
+
+	--title-font-family: "Manrope";
+	--title-font-size: 19pt;
+	--title-font-weight: 900;
+	--title-transform: none;
+	--title-color: #fff;
+	--title-line-height: 28px;
+	--title-additional-weight: 0.2px;
+	--title-font-style: normal;
+
+	--artist-font-family: "Manrope";
+	--artist-font-size: 12pt;
+	--artist-font-weight: 900;
+	--artist-transform: none;
+	--artist-line-height: 24px;
+	--artist-additional-weight: 0px;
+	--artist-font-style: normal;
+	--artist-color-static: #aaa;
+	--artist-color: var(--colorLight);
+	--artist-gradient-angle: 170deg;
+	--artist-gradient-color: #FFF;
+	--artist-gradient: linear-gradient(var(--artist-gradient-angle), var(--artist-gradient-color) 20%, transparent 100%);
+
+	--scannable-width: 216px;
+
+	--box-shadow-effects-offset-x: 0px;
+	--box-shadow-effects-offset-y: 8px;
+	--box-shadow-effects-blur-radius: 9px;
+	--box-shadow-effects-inset: -5px;
+	--box-shadow-effects-color: #000000FF;
+
+	--box-shadow-effects: var(--box-shadow-effects-offset-x) var(--box-shadow-effects-offset-y) var(--box-shadow-effects-blur-radius) var(--box-shadow-effects-inset) var(--box-shadow-effects-color);
+	--box-shadow-effects-actual: var(--box-shadow-effects);
+
+	--art-size: 52px;
+	--art-outline-size: 2px;
+
+	--show-scannable: flex;
+	--show-art: block;
+	--show-art-outline: block;
 }
 
 body {
 	background: #222;
-	color: #fff;
-	font-family: "Manrope";
 	overflow: hidden;
 }
 
-#testBar, #art, #artShadow, #artBG, #artOutline, #title, #artist, #scannable, #scannableShadow {
-	position: absolute;
+#wrapper {
+	display: flex;
+	flex-direction: row;
+	width: calc(100vw - (var(--wrapper-margin) * 2));
+	margin: var(--wrapper-margin);
 }
-
-#title, #artist {
-	filter: drop-shadow(1px 0px 0px rgba(0, 0, 0, 0.5))
-			drop-shadow(1px -1px 0px rgba(0, 0, 0, 0.5))
-			drop-shadow(1px 1px 0px rgba(0, 0, 0, 0.5))
-			drop-shadow(0px -1px 0px rgba(0, 0, 0, 0.5))
-			drop-shadow(0px 1px 0px rgba(0, 0, 0, 0.5))
-			drop-shadow(-1px 0px 0px rgba(0, 0, 0, 0.5))
-			drop-shadow(-1px -1px 0px rgba(0, 0, 0, 0.5))
-			drop-shadow(-1px 1px 0px rgba(0, 0, 0, 0.5))
-			drop-shadow(0px 1px 1px #000);
-}
-
-#testBar {
-	display: none;
-	background: #777;
-	z-index: 1;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 80px;
+#detailsWrapper {
+	display: flex;
+	flex-direction: column;
+	overflow-x: hidden;
+	filter: var(--effects);
 }
 
 #artOutline, #artBG {
-	top: 12px;
-	left: 246px;
-	width: 56px;
-	height: 56px;
+	position: absolute;
+	display: var(--show-art-outline);
+}
+#art {
+	position: relative;
+	display: block;
+}
+
+#artWrapper, #artOutline, #artBG, #artDoppleganger {
+	width: calc(var(--art-size) + (var(--art-outline-size) * 2));
+	height: calc(var(--art-size) + (var(--art-outline-size) * 2));
+}
+#artDoppleganger {
+	height: 0px !important;
+}
+
+#artWrapper {
+	display: var(--show-art);
+}
+
+#artOutline, #artBG {
 	border-radius: 6px;
 }
 
@@ -93,68 +176,88 @@ body {
 }
 
 #art {
-	top: 14px;
-	left: 248px;
-	width: 52px;
-	height: 52px;
+	top: var(--art-outline-size);
+	left: var(--art-outline-size);
+	width: var(--art-size);
+	height: var(--art-size);
 	border-radius: 6px;
 	z-index: 4;
 }
 
-#artShadow {
-	top: 12px;
-	left: 246px;
-	width: 56px;
-	height: 56px;
-}
-#artShadow, #scannableShadow {
-	border-radius: 6px;
-	z-index: 1;
-	box-shadow: 0px 8px 9px -5px #000;
-}
-
-#title {
-	top: 13px;
-	left: 312px;
-	font-size: 26px;
-	font-weight: 900;
-	color: #fff;
-	z-index: 4;
-}
-
-#artist {
-	top: 47px;
-	left: 312px;
-	z-index: 4;
-	padding-bottom: 6px;
+#titleString, #artistString {
+	line-height: var(--details-line-height);
+	padding-bottom: 2px;
 }
 
 #title, #artist {
-	width: calc(100vw - 328px);
+	width: 100%;
 	white-space: nowrap;
 	overflow-x: clip;
+	flex-grow: 1;
+	display: inline-flex;
 }
 
-#artistString {
-	font-size: 17px;
-	font-weight: 900;
-	background-image: linear-gradient(170deg, #FFF 20%, var(--colorLight) 100%);
+#title {
+	align-items: flex-start;
+	line-height: var(--title-line-height);
+}
+#artist {
+	align-items: flex-end;
+	line-height: var(--artist-line-height);
+}
+
+#titleString {
+	font-family: var(--title-font-family);
+	font-size: var(--title-font-size);
+	font-weight: var(--title-font-weight);
+	background-color: var(--title-color);
+	text-transform: var(--title-transform);
+	font-style: var(--title-font-style);
+	-webkit-text-stroke: var(--title-additional-weight) transparent;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 }
 
-#scannable {
-	top: 12px;
-	left: 16px;
-	width: 216px;
-	height: 54px;
-	border-radius: 8px;
-	z-index: 4;
+.artistStringGradient {
+	background-image: var(--artist-gradient);
 }
 
-#scannableShadow {
-	top: 12px;
-	left: 16px;
-	width: 216px;
-	height: 54px;
+#artistString {
+	font-family: var(--artist-font-family);
+	font-size: var(--artist-font-size);
+	font-weight: var(--artist-font-weight);
+	text-transform: var(--artist-transform);
+	font-style: var(--artist-font-style);
+	background-color: var(--artist-color);
+	-webkit-text-stroke: var(--artist-additional-weight) transparent;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.js-marquee {
+	background-color: var(--title-color);
+	-webkit-text-stroke: var(--title-additional-weight) transparent;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;	
+}
+
+#scannableWrapper {
+	display: var(--show-scannable);
+	width: var(--scannable-width);
+	min-width: var(--scannable-width);
+	align-items: center;
+}
+
+#scannable {
+	display: block;
+	width: 100%;
+	border-radius: 8px;
+}
+
+#scannableWrapper, #artWrapper, #detailsWrapper {
+	margin-right: var(--element-spacing);
+}
+
+.showBoxShadow {
+	box-shadow: var(--box-shadow-effects-actual);
 }

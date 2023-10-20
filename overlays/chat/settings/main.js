@@ -10,8 +10,8 @@ function changeStatusCircle(which, status, msg) {
 
 $("#sensitive .section").show();
 
-const overlayRevision = 22;
-const overlayRevisionTimestamp = 1697398044653;
+const overlayRevision = 24;
+const overlayRevisionTimestamp = 1697742392904;
 $("#revision").text(`revision ${overlayRevision}`);
 
 function resetEverything() {
@@ -141,6 +141,10 @@ $('input[type="range"]').on("update", function(e) {
 });
 
 $("input, select, textarea").on("change", function(e) {
+	if($(this).attr("data-ignoreSetting") === "true") {
+		return;
+	}
+	
 	let value = null;
 	let parent = $(this).parent().parent();
 	let setting = $(this).attr("id");
@@ -225,7 +229,9 @@ $("#resetOverlayButton").on("mouseup", function(e) {
 $.get(`version.json?sigh=${Date.now()}`, function(data) {
 	if(overlayRevision !== data.revision) {
 		$("#updateString").html('<i class="fas fa-times"></i> Out of date!');
+		addNotification(`Overlay settings panel is out of date! (You are running r${overlayRevision}, server reports r${data.revision})`, {bgColor: "var(--notif-color-warning)", textColor: "#000", duration: 10});
 	} else {
 		$("#updateString").html('<i class="fas fa-check"></i> Up to date');
+		addNotification("Overlay settings panel is up to date!", {bgColor: "var(--notif-color-success)", duration: 10});
 	}
 });

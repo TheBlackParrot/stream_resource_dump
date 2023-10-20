@@ -27,6 +27,7 @@
 	<script type="text/javascript" src="socket.io.js"></script>
 	<script type="text/javascript" src="tmi.min.js"></script>
 	<script type="text/javascript" src="obs-ws-5.0.3.min.js"></script>
+	<script type="text/javascript" src="vibrant.min.js"></script>
 </head>
 <body>
 	<div id="wrapper">
@@ -415,6 +416,23 @@
 					</div>
 					<hr/>
 					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Vertical offset</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="userInfoOffsetVertical" min="-999" max="999" step="1" value="0"/>px
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Horizontal offset</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="userInfoOffsetHorizontal" min="-999" max="999" step="1" value="0"/>px
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
 						<div class="settingCell">
 							<input id="chatMessageUserInfoOutlines" type="checkbox" data-dependent="userInfoOutlines"/> <span class="settingInfo">Enable outlines around chatter information</span>
 						</div>
@@ -550,6 +568,23 @@
 						</div>
 						<div class="settingCell">
 							<input type="number" id="chatMessageLineHeight" min="16" max="64" step="0.5" value="28"/>px
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Vertical offset</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="messageOffsetVertical" min="-999" max="999" step="1" value="0"/>px
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Horizontal offset</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="messageOffsetHorizontal" min="-999" max="999" step="1" value="0"/>px
 						</div>
 					</div>
 					<hr/>
@@ -2544,6 +2579,7 @@
 						</div>
 						<div class="settingCell">
 							<input id="spotifyClientID" type="password" value=""/>
+							<div class="button" id="connectSpotifyButton"><i class="fab fa-spotify"></i> Connect to Spotify</div>
 						</div>
 					</div>
 				</div>
@@ -2623,6 +2659,14 @@
 							<div class="statusCircle grayCircle" id="ClockOverlayStatus"></div> <div class="statusMessage grayMessage">inactive</div>
 						</div>
 					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<strong>Spotify Overlay</strong>
+						</div>
+						<div class="settingCell">
+							<div class="statusCircle grayCircle" id="SpotifyOverlayStatus"></div> <div class="statusMessage grayMessage">inactive</div>
+						</div>
+					</div>
 					<hr/>
 					<div class="setting">
 						<div class="settingCellLabel">
@@ -2638,6 +2682,14 @@
 						</div>
 						<div class="settingCell">
 							<div class="statusCircle grayCircle" id="OBSStatus"></div> <div class="statusMessage grayMessage">inactive</div>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<strong>Spotify Web API</strong>
+						</div>
+						<div class="settingCell">
+							<div class="statusCircle grayCircle" id="SpotifyStatus"></div> <div class="statusMessage grayMessage">inactive</div>
 						</div>
 					</div>
 					<div class="setting">
@@ -2720,7 +2772,16 @@
 				<div class="part">
 					<h1>Backups</h1>
 					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Backups to keep</span>
+						</div>
 						<div class="settingCell">
+							<input type="number" id="keepAmountOfBackups" min="0" max="9999" step="1" value="100"/>backups
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell centerSetting">
 							<div id="selectedBackupWrap">
 								<select class="selectedBackup">
 								</select>
@@ -2729,13 +2790,25 @@
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingCell">
+						<div class="settingCell centerSetting">
 							<div class="button" id="generateBackupButton"><i class="fas fa-download"></i> Backup Current Settings</div>
 						</div>
 					</div>
 					<hr/>
 					<div class="setting smol">
-						Backups are automatically generated every time you open OBS, and before any major overall changes (e.g. resetting settings to default, or restoring backups).
+						Backups are automatically generated every time you open OBS, and before any major overall changes take place (e.g. resetting settings to default, restoring from a backup, or importing settings).
+					</div>
+				</div>
+				<div class="part">
+					<h1>Import / Export</h1>
+					<div class="setting">
+						<textarea id="settingImportArea" data-ignoreSetting="true"></textarea>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell centerSetting">
+							<div class="button" id="exportNonCriticalSettingsButton"><i class="fas fa-download"></i> Export Non-Critical Settings</div><div class="button" id="exportAllSettingsButton"><i class="fas fa-download"></i> Export ALL Settings</div><div class="button" id="importSettingsButton"><i class="fas fa-upload"></i> Import Settings</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -3094,6 +3167,390 @@
 					</div>
 				</div>
 			</div>
+			<div class="section" data-content="spotify">
+				<div class="part">
+					<h1>Appearance</h1>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Overlay margin</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_overlayMargin" min="0" max="200" step="1" value="12"/>px
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Element spacing</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_elementSpacing" min="0" max="200" step="1" value="12"/>px
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="spotify_enableScannable" type="checkbox" data-dependent="spotify_enableScannable"/> <span class="settingInfo">Display a scannable code linking directly to the currently playing track</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell" data-dependent="spotify_enableScannable">
+							<input id="spotify_scannableUseBlack" type="checkbox"/> <span class="settingInfo">Use black foreground color</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableScannable">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Scannable width</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_scannableSize" min="1" max="640" step="1" value="216"/>px
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="spotify_enableArt" type="checkbox" data-dependent="spotify_enableArt"/> <span class="settingInfo">Display album art/cover art</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableArt">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Art width</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_artSize" min="1" max="640" step="1" value="52"/>px
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="spotify_enableArtOutline" type="checkbox" data-dependent="spotify_enableArtOutline"/> <span class="settingInfo">Display an outline around the album art/cover art</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="spotify_enableArtOutlineProgress" type="checkbox" data-dependent="spotify_enableArtOutlineProgress"/> <span class="settingInfo">Reflect current track progress with the outline</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableArtOutline">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Outline size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_artOutlineSize" min="1" max="64" step="1" value="2"/>px
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Title color</span>
+						</div>
+						<div class="settingCell">
+							<input id="spotify_titleColor" type="text" data-coloris value="#FFFFFFFF"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Font family</span>
+						</div>
+						<div class="settingCell">
+							<input id="spotify_titleFontFamily" type="text" value="Manrope"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Font size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_titleFontSize" min="6" max="96" step="0.5" value="19"/>pt
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Font weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_titleFontWeight" min="100" max="900" step="100" value="900"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Additional font weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_titleAdditionalFontWeight" min="0" max="20" step="0.1" value="0.2"/>px
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Line height</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_titleLineHeight" min="0" max="999" step="1" value="28"/>px
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Transform</span>
+						</div>
+						<div class="settingCell">
+							<select id="spotify_titleTransform">
+								<option value="capitalize">Capitalize</option>
+								<option value="lowercase">Lowercase</option>
+								<option value="uppercase">Uppercase</option>
+								<option selected value="none">Do not transform</option>
+							</select>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Artist color</span>
+						</div>
+						<div class="settingCell">
+							<input id="spotify_artistColor" type="text" data-coloris value="#AAAAAAFF"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Font family</span>
+						</div>
+						<div class="settingCell">
+							<input id="spotify_artistFontFamily" type="text" value="Manrope"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Font size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_artistFontSize" min="6" max="96" step="0.5" value="12"/>pt
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Font weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_artistFontWeight" min="100" max="900" step="100" value="900"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Additional font weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_artistAdditionalFontWeight" min="0" max="20" step="0.1" value="0"/>px
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Line height</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_artistLineHeight" min="0" max="999" step="1" value="24"/>px
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Transform</span>
+						</div>
+						<div class="settingCell">
+							<select id="spotify_artistTransform">
+								<option value="capitalize">Capitalize</option>
+								<option value="lowercase">Lowercase</option>
+								<option value="uppercase">Uppercase</option>
+								<option selected value="none">Do not transform</option>
+							</select>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="spotify_artistColorReflectsArtColor" type="checkbox"/> <span class="settingInfo">Artist color reflects album art/cover art color</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="spotify_artistColorReflectsArtColorDarker" type="checkbox"/> <span class="settingInfo">Use darker album art/cover art color</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="spotify_artistGradient" type="checkbox"/> <span class="settingInfo">Apply a gradient to the artist display</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Gradient color</span>
+						</div>
+						<div class="settingCell">
+							<input id="spotify_artistGradientColor" type="text" data-coloris value="#FFFFFFFF"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Gradient angle</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_artistGradientAngle" min="0" max="360" step="1" value="170"/>deg
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Filters</h1>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="spotify_enableShadowEffects" type="checkbox" data-dependent="spotify_enableShadowEffects"/> <span class="settingInfo">Draw shadows underneath text content</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableShadowEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Color</span>
+						</div>
+						<div class="settingCell">
+							<input id="spotify_shadowColor" type="text" data-coloris value="#000000FF"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableShadowEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">X offset</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_shadowXOffset" min="-32" max="32" step="0.25" value="0"/>px
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableShadowEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Y offset</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_shadowYOffset" min="-32" max="32" step="0.25" value="1"/>px
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableShadowEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Blur amount</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_shadowBlurRadius" min="0" max="32" step="0.25" value="2"/>px
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="spotify_enableOutlineEffects" type="checkbox" data-dependent="spotify_enableOutlineEffects"/> <span class="settingInfo">Draw outlines underneath text content</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableOutlineEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Color</span>
+						</div>
+						<div class="settingCell">
+							<input id="spotify_outlineColor" type="text" data-coloris value="#00000073"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableOutlineEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_outlineSize" min="0" max="3" step="1" value="1"/>px
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="spotify_enableBoxShadowEffects" type="checkbox" data-dependent="spotify_enableBoxShadowEffects"/> <span class="settingInfo">Draw box shadows underneath image content</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableBoxShadowEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Color</span>
+						</div>
+						<div class="settingCell">
+							<input id="spotify_boxShadowColor" type="text" data-coloris value="#000000FF"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableBoxShadowEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">X offset</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_boxShadowXOffset" min="-32" max="32" step="0.25" value="0"/>px
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableBoxShadowEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Y offset</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_boxShadowYOffset" min="-32" max="32" step="0.25" value="8"/>px
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableBoxShadowEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Blur amount</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_boxShadowBlurRadius" min="0" max="32" step="0.25" value="9"/>px
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableBoxShadowEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Blur inset amount</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_boxShadowBlurInset" min="-32" max="32" step="0.25" value="-5"/>px
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Function</h1>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Refresh interval</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_refreshInterval" min="1" max="30" step="0.5" value="5"/>seconds
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableArtOutlineProgress">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Song progress interval</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_progressInterval" min="0.1" max="10" step="0.1" value="0.5"/>seconds
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="spotify_enableMarquee" type="checkbox" data-dependent="spotify_enableMarquee"/> <span class="settingInfo">Scroll the title if it extends outside the boundaries of the page/source</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableMarquee">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Delay between scroll loops</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_marqueeDelay" min="0" max="30" step="0.5" value="7"/>seconds
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableMarquee">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Gap between scroll loops</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_marqueeGap" min="0" max="9999" step="1" value="100"/>px
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableMarquee">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Scroll speed</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_marqueeSpeed" min="1" max="9999" step="1" value="20"/>px / second
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div id="sensitive">
 			<div class="section">
@@ -3112,6 +3569,10 @@
 		</div>
 	</div>
 
+	<div id="notificationWrapper">
+	</div>
+
+	<script type="text/javascript" src="notifs.js"></script>
 	<script type="text/javascript" src="defaults.js"></script>
 	<script type="text/javascript" src="main.js"></script>
 	<script type="text/javascript" src="settings.js"></script>
@@ -3123,5 +3584,6 @@
 	<script type="text/javascript" src="connections/bsplus.js"></script>
 	<script type="text/javascript" src="connections/streamlabs.js"></script>
 	<script type="text/javascript" src="connections/streamelements.js"></script>
+	<script type="text/javascript" src="connections/spotify.js"></script>
 </body>
 </html>

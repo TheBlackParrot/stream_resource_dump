@@ -9,6 +9,10 @@ function loadSettings() {
 		let setting = element.attr("id");
 		let val = null;
 
+		if(element.attr("data-ignoreSetting") === "true") {
+			continue;
+		}
+
 		switch(element.attr("type")) {
 			case "checkbox":
 				val = element.is(":checked");

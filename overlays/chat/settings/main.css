@@ -83,9 +83,17 @@
 	--fsb-list-background: var(--input-bg-color);
 	--fsb-hover-color: var(--sidebar-active-row-text-color);
 	--fsb-hover-background: var(--sidebar-active-row-bg-color);
+
+	--scrollbar-width: 10px;
+	--scrollbar-track: #000;
+
+	--notif-color-success: #209060a0;
+	--notif-color-fail: #c01020a0;
+	--notif-color-normal: #000000c0;
+	--notif-color-warning: #ffee33a0;
 }
-::-webkit-scrollbar { width: 0.67em; }
-::-webkit-scrollbar-track { background-color: #000; }
+::-webkit-scrollbar { width: var(--scrollbar-width); }
+::-webkit-scrollbar-track { background-color: var(--scrollbar-track); }
 ::-webkit-scrollbar-thumb { background-color: var(--sidebar-active-row-bg-color); background-image: var(--button-gradient); }
 
 @font-face {
@@ -153,7 +161,7 @@ body {
 	top: 0px;
 	height: 100vh;
 	box-shadow: var(--sidebar-shadow);
-	z-index: 3;
+	z-index: 4;
 	overflow-y: auto;
 }
 
@@ -165,7 +173,7 @@ body {
 	padding-left: var(--sidebar-padding);
 }
 
-.row .fas {
+.row .fas, .row .fab {
 	margin-right: var(--sidebar-icon-margin);
 	width: var(--sidebar-icon-width);
 	text-align: center;
@@ -276,7 +284,7 @@ h1 .icon {
 	text-align: right;
 	margin-right: calc(var(--settings-padding) / 1.5);
 	padding-right: calc(var(--settings-padding) / 1.5);
-	width: 350px;
+	width: calc(350px - var(--settings-padding));
 	border-right: 1px solid var(--border-color);
 	line-height: var(--input-height);
 	height: var(--input-height);
@@ -660,10 +668,53 @@ input[type="range"]::-webkit-slider-runnable-track {
 	margin-right: 0px;
 }
 
-#generateBackupButton {
+#generateBackupButton, #exportNonCriticalSettingsButton {
 	background-color: #209060;
+}
+#exportAllSettingsButton {
+	background-color: #609020;
 }
 
 .button i {
 	margin-right: 4px;
+}
+
+#settingImportArea {
+	flex-grow: 1;
+	height: calc(var(--input-height) * 10);
+}
+
+#notificationWrapper {
+	position: fixed;
+	left: var(--sidebar-width);
+	bottom: 0;
+	width: calc(100vw - var(--sidebar-width) - var(--scrollbar-width));
+	display: flex;
+	z-index: 3;
+	flex-direction: column;
+}
+#notificationWrapper .notif {
+	display: flex;
+	flex-direction: row;
+	line-height: var(--settings-text-line-height);
+	padding: var(--input-padding);
+	padding-left: calc(var(--input-padding) * 1.5);
+	padding-right: calc(var(--input-padding) * 1.5);
+	border-top: 1px solid rgba(255, 255, 255, 0.2);
+	backdrop-filter: blur(8px);
+}
+.notifMessage {
+	flex-grow: 1;
+}
+.notifClose {
+	padding-left: calc(var(--input-padding) * 1.5);
+	text-align: right;
+}
+
+.centerSetting {
+	justify-content: center;
+}
+
+#connectSpotifyButton {
+	background-color: #1DB954;
 }

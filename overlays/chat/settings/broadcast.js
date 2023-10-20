@@ -59,7 +59,9 @@ broadcastFuncs = {
 			client.connect().catch(console.error);
 		}
 
-		postToChannel("settingsKeys", Object.keys(defaultConfig));
+		let settingsKeys = Object.keys(defaultConfig);
+		let settingsKeysExclude = settingsKeys.filter((key) => key.substr(0, 8) !== "spotify_");
+		postToChannel("settingsKeys", settingsKeysExclude);
 	},
 
 	TwitchHelixStatus: function(state) {
@@ -98,8 +100,37 @@ broadcastFuncs = {
 			isTwitchRunning = true;
 			client.connect().catch(console.error);
 		}
+	},
+
+	SpotifyOverlayExists: function(data) {
+		let settingsKeys = Object.keys(defaultConfig);
+		let settingsKeysSpotify = settingsKeys.filter((key) => key.substr(0, 8) === "spotify_");
+		postToChannel("settingsKeysSpotify", settingsKeysSpotify);
+		
+		if($('.row[data-tab="spotify"]').is(":visible")) {
+			return;
+		}
+
+		data = data.data;
+		console.log("Spotify overlay is active");
+		changeStatusCircle("SpotifyOverlayStatus", "green", `loaded (r${data.version})`);
+
+		if(!$(".extraHR").length) {
+			$("#rows").append($('<hr class="extraHR"/>'));
+		}
+		$("#rows").append('<div class="row extraRow" data-tab="spotify"><i class="fab fa-spotify"></i>Now Playing</div>');
+
+		checkToSendSpotifyData();
 	}
 };
+
+function checkToSendSpotifyData() {
+	if(isSpotifyReady) {
+		updateTrack();
+	} else {
+		setTimeout(checkToSendSpotifyData, 1000);
+	}
+}
 
 settingsChannel.onmessage = function(message) {
 	console.log(message);
