@@ -629,14 +629,13 @@ function getRootElement(data) {
 		}, 250); // what the absolute shit
 	});
 
-	let userBlockElements = renderUserBlock(data, rootElement, overallWrapper);
-	let userBlock = userBlockElements[0];
-	overallWrapper.append(userBlock);
-
-	let avatarBGBlock = renderAvatarBGBlock(data, rootElement);
-	overallWrapper.append(avatarBGBlock);
-
 	let messageWrapper = $('<div class="messageWrapper"></div>');
+	let userBlockElements = renderUserBlock(data, rootElement, overallWrapper, messageWrapper);
+	let userBlock = userBlockElements[0];
+	let avatarBGBlock = renderAvatarBGBlock(data, rootElement);
+
+	overallWrapper.append(userBlock);
+	overallWrapper.append(avatarBGBlock);
 	overallWrapper.append(messageWrapper);
 
 	lastRootElement = [rootElement, overallWrapper, messageWrapper];
@@ -1036,6 +1035,22 @@ function initUserBlockCustomizations(data, elements) {
 		)));
 		elements.pronounsBlock.css("background-color", `var(--pronounsColor${data.user.id})`);
 	}
+	if(localStorage.getItem("setting_chatMessageBackgroundReflectUserColor") === "true") {
+		rootCSS().setProperty(`--messageBackgroundColor${data.user.id}`, interpolateColor(
+			localStorage.getItem("setting_chatMessageBackgroundColor"),
+			userColorUsed,
+			parseFloat(localStorage.getItem(`setting_chatMessageBackgroundUserColorAmount`)
+		)));
+		elements.messageWrapper.css("background-color", `var(--messageBackgroundColor${data.user.id})`);
+	}
+	if(localStorage.getItem("setting_chatMessageOutlinesReflectUserColor") === "true") {
+		rootCSS().setProperty(`--messageOutlineColor${data.user.id}`, interpolateColor(
+			localStorage.getItem("setting_chatMessageOutlinesColor"),
+			userColorUsed,
+			parseFloat(localStorage.getItem(`setting_chatMessageOutlinesUserColorAmount`)
+		)));
+		elements.messageWrapper.css("border-color", `var(--messageOutlineColor${data.user.id})`);
+	}
 
 	if(customizationOK && !data.isOverlayMessage) {
 		rootCSS().setProperty(`--nameSize${data.user.id}`, localStorage.getItem(`namesize_${data.user.id}`));
@@ -1067,11 +1082,15 @@ function initUserBlockCustomizations(data, elements) {
 		elements.nameBlock.css("font-weight", `var(--nameWeight${data.user.id})`);
 		elements.nameBlock.css("font-size", `var(--nameSize${data.user.id})`);
 		allNameElements.css("font-style", `var(--nameStyle${data.user.id})`);
-		elements.nameBlock.css("letter-spacing", `var(--nameSpacing${data.user.id})`);
+		allNameElements.css("letter-spacing", `var(--nameSpacing${data.user.id})`);
 		allNameElements.css("text-transform", `var(--nameTransform${data.user.id})`);
 		allNameElements.css("font-variant", `var(--nameVariant${data.user.id})`);
 		displayNameElement.css("filter", `var(--nameEffects${data.user.id})`);
 		internationalNameElement.css("filter", `var(--nameEffects${data.user.id}) saturate(var(--internationalNameSaturation))`);
+
+		if(localStorage.getItem(`namestyle_${data.user.id}`) === "italic") {
+			allNameElements.css("padding-right", "4px");
+		}
 	}
 }
 
@@ -1099,7 +1118,7 @@ function renderNameBlock(data) {
 	return nameBlock;
 }
 
-function renderUserBlock(data, rootElement, overallWrapper) {
+function renderUserBlock(data, rootElement, overallWrapper, messageWrapper) {
 	let userBlock = $('<div class="userInfo"></div>');
 	if(localStorage.getItem("setting_chatAnimationsIn") === "true") {
 		userBlock.addClass("userInfoIn");
@@ -1125,7 +1144,8 @@ function renderUserBlock(data, rootElement, overallWrapper) {
 			flagBlock: flagBlock,
 			pronounsBlock: pronounsBlock,
 			pfpBlock: pfpBlock,
-			nameBlock: nameBlock
+			nameBlock: nameBlock,
+			messageWrapper: messageWrapper
 		});
 	}
 

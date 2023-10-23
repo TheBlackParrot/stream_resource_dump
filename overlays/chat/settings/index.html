@@ -28,6 +28,7 @@
 	<script type="text/javascript" src="tmi.min.js"></script>
 	<script type="text/javascript" src="obs-ws-5.0.3.min.js"></script>
 	<script type="text/javascript" src="vibrant.min.js"></script>
+	<script type="text/javascript" src="forge.min.js"></script>
 </head>
 <body>
 	<div id="wrapper">
@@ -267,6 +268,7 @@
 						</div>
 						<div class="settingCell">
 							<input id="chatNameFont" type="text" value="Manrope"/>
+							<input id="chatNameFontItalic" type="checkbox"/> <span class="settingInfo">Italic</span>
 						</div>
 					</div>
 					<div class="setting">
@@ -489,6 +491,28 @@
 					<h1>Messages</h1>
 					<div class="setting">
 						<div class="settingCellLabel">
+							<span class="settingInfo">Background color</span>
+						</div>
+						<div class="settingCell">
+							<input id="chatMessageBackgroundColor" type="text" data-coloris value="#00000000"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="chatMessageBackgroundReflectUserColor" type="checkbox"/> <span class="settingInfo">Color fades into the chatter's own color</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Fading amount</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatMessageBackgroundUserColorAmount" min="0" max="100" step="0.5" value="20"/>%
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Text color</span>
 						</div>
 						<div class="settingCell">
@@ -515,6 +539,7 @@
 						</div>
 						<div class="settingCell">
 							<input id="chatMessageFont" type="text" value="Manrope"/>
+							<input id="chatMessageFontItalic" type="checkbox"/> <span class="settingInfo">Italic</span>
 						</div>
 					</div>
 					<div class="setting">
@@ -587,6 +612,83 @@
 							<input type="number" id="messageOffsetHorizontal" min="-999" max="999" step="1" value="0"/>px
 						</div>
 					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Vertical padding</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatMessagePaddingVertical" min="0" max="64" step="0.5" value="0"/>px
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Horizontal padding</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatMessagePaddingHorizontal" min="0" max="64" step="0.5" value="0"/>px
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Border radius</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatMessageBorderRadius" min="0" max="64" step="1" value="0"/>px
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="chatMessageOutlines" type="checkbox" data-dependent="chatMessageOutlines"/> <span class="settingInfo">Enable outlines around chat message blocks</span>
+						</div>
+					</div>
+					<div class="setting disabled" data-dependent="chatMessageOutlines">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Outline color</span>
+						</div>
+						<div class="settingCell">
+							<input id="chatMessageOutlinesColor" type="text" data-coloris value="#FFFFFFFF"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="chatMessageOutlines">
+						<div class="settingCell">
+							<input id="chatMessageOutlinesReflectUserColor" type="checkbox"/> <span class="settingInfo">Color fades into the chatter's own color</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="chatMessageOutlines">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Fading amount</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatMessageOutlinesUserColorAmount" min="0" max="100" step="0.5" value="100"/>%
+						</div>
+					</div>
+					<hr/>
+					<div class="setting disabled" data-dependent="chatMessageOutlines">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatMessageOutlinesSize" min="0" max="8" step="1" value="1"/>px
+						</div>
+					</div>
+					<div class="setting disabled" data-dependent="chatMessageOutlines">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Style</span>
+						</div>
+						<div class="settingCell">
+							<select id="chatMessageOutlinesStyle">
+								<option value="dashed">Dashed</option>
+								<option value="dotted">Dotted</option>
+								<option value="double">Double</option>
+								<option value="groove">Groove</option>
+								<option value="inset">Inset</option>
+								<option value="outset">Outset</option>
+								<option value="ridge">Ridge</option>
+								<option selected value="solid">Solid</option>
+							</select>
+						</div>
+					</div>
 					<hr/>
 					<div class="setting">
 						<div class="settingCell">
@@ -652,6 +754,7 @@
 						</div>
 						<div class="settingCell">
 							<input id="eventTagsFont" type="text" value="Manrope"/>
+							<input id="eventTagsFontItalic" type="checkbox"/> <span class="settingInfo">Italic</span>
 						</div>
 					</div>
 					<div class="setting">
@@ -1539,6 +1642,7 @@
 						</div>
 						<div class="settingCell">
 							<input id="timestampFont" type="text" value="Manrope"/>
+							<input id="timestampFontItalic" type="checkbox"/> <span class="settingInfo">Italic</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="timestamps">
@@ -2269,6 +2373,7 @@
 						</div>
 						<div class="settingCell">
 							<input id="pronounsFont" type="text" value="Manrope"/>
+							<input id="pronounsFontItalic" type="checkbox"/> <span class="settingInfo">Italic</span>
 						</div>
 					</div>
 					<div class="setting">
@@ -3169,7 +3274,7 @@
 			</div>
 			<div class="section" data-content="spotify">
 				<div class="part">
-					<h1>Appearance</h1>
+					<h1>Layout</h1>
 					<div class="setting">
 						<div class="settingCellLabel">
 							<span class="settingInfo">Overlay margin</span>
@@ -3186,7 +3291,9 @@
 							<input type="number" id="spotify_elementSpacing" min="0" max="200" step="1" value="12"/>px
 						</div>
 					</div>
-					<hr/>
+				</div>
+				<div class="part">
+					<h1>Scannables</h1>
 					<div class="setting">
 						<div class="settingCell">
 							<input checked id="spotify_enableScannable" type="checkbox" data-dependent="spotify_enableScannable"/> <span class="settingInfo">Display a scannable code linking directly to the currently playing track</span>
@@ -3205,7 +3312,9 @@
 							<input type="number" id="spotify_scannableSize" min="1" max="640" step="1" value="216"/>px
 						</div>
 					</div>
-					<hr/>
+				</div>
+				<div class="part">
+					<h1>Cover Art</h1>
 					<div class="setting">
 						<div class="settingCell">
 							<input checked id="spotify_enableArt" type="checkbox" data-dependent="spotify_enableArt"/> <span class="settingInfo">Display album art/cover art</span>
@@ -3213,12 +3322,13 @@
 					</div>
 					<div class="setting" data-dependent="spotify_enableArt">
 						<div class="settingCellLabel">
-							<span class="settingInfo">Art width</span>
+							<span class="settingInfo">Size</span>
 						</div>
 						<div class="settingCell">
 							<input type="number" id="spotify_artSize" min="1" max="640" step="1" value="52"/>px
 						</div>
 					</div>
+					<hr/>
 					<div class="setting">
 						<div class="settingCell">
 							<input checked id="spotify_enableArtOutline" type="checkbox" data-dependent="spotify_enableArtOutline"/> <span class="settingInfo">Display an outline around the album art/cover art</span>
@@ -3237,10 +3347,12 @@
 							<input type="number" id="spotify_artOutlineSize" min="1" max="64" step="1" value="2"/>px
 						</div>
 					</div>
-					<hr/>
+				</div>
+				<div class="part">
+					<h1>Title</h1>
 					<div class="setting">
 						<div class="settingCellLabel">
-							<span class="settingInfo">Title color</span>
+							<span class="settingInfo">Color</span>
 						</div>
 						<div class="settingCell">
 							<input id="spotify_titleColor" type="text" data-coloris value="#FFFFFFFF"/>
@@ -3248,15 +3360,16 @@
 					</div>
 					<div class="setting">
 						<div class="settingCellLabel">
-							<span class="settingInfo">Font family</span>
+							<span class="settingInfo">Font</span>
 						</div>
 						<div class="settingCell">
 							<input id="spotify_titleFontFamily" type="text" value="Manrope"/>
+							<input id="spotify_titleFontItalic" type="checkbox"/> <span class="settingInfo">Italic</span>
 						</div>
 					</div>
 					<div class="setting">
 						<div class="settingCellLabel">
-							<span class="settingInfo">Font size</span>
+							<span class="settingInfo">Size</span>
 						</div>
 						<div class="settingCell">
 							<input type="number" id="spotify_titleFontSize" min="6" max="96" step="0.5" value="19"/>pt
@@ -3264,7 +3377,7 @@
 					</div>
 					<div class="setting">
 						<div class="settingCellLabel">
-							<span class="settingInfo">Font weight</span>
+							<span class="settingInfo">Weight</span>
 						</div>
 						<div class="settingCell">
 							<input type="number" id="spotify_titleFontWeight" min="100" max="900" step="100" value="900"/>
@@ -3272,7 +3385,7 @@
 					</div>
 					<div class="setting">
 						<div class="settingCellLabel">
-							<span class="settingInfo">Additional font weight</span>
+							<span class="settingInfo">Additional weight</span>
 						</div>
 						<div class="settingCell">
 							<input type="number" id="spotify_titleAdditionalFontWeight" min="0" max="20" step="0.1" value="0.2"/>px
@@ -3299,26 +3412,40 @@
 							</select>
 						</div>
 					</div>
-					<hr/>
+				</div>
+				<div class="part">
+					<h1>Artist</h1>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="spotify_artistColorReflectsArtColor" type="checkbox"/> <span class="settingInfo">Artist color reflects album art/cover art color</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="spotify_artistColorReflectsArtColorDarker" type="checkbox"/> <span class="settingInfo">Use darker album art/cover art color</span>
+						</div>
+					</div>
 					<div class="setting">
 						<div class="settingCellLabel">
-							<span class="settingInfo">Artist color</span>
+							<span class="settingInfo">Color</span>
 						</div>
 						<div class="settingCell">
 							<input id="spotify_artistColor" type="text" data-coloris value="#AAAAAAFF"/>
 						</div>
 					</div>
+					<hr/>
 					<div class="setting">
 						<div class="settingCellLabel">
-							<span class="settingInfo">Font family</span>
+							<span class="settingInfo">Font</span>
 						</div>
 						<div class="settingCell">
 							<input id="spotify_artistFontFamily" type="text" value="Manrope"/>
+							<input id="spotify_artistFontItalic" type="checkbox"/> <span class="settingInfo">Italic</span>
 						</div>
 					</div>
 					<div class="setting">
 						<div class="settingCellLabel">
-							<span class="settingInfo">Font size</span>
+							<span class="settingInfo">Size</span>
 						</div>
 						<div class="settingCell">
 							<input type="number" id="spotify_artistFontSize" min="6" max="96" step="0.5" value="12"/>pt
@@ -3326,7 +3453,7 @@
 					</div>
 					<div class="setting">
 						<div class="settingCellLabel">
-							<span class="settingInfo">Font weight</span>
+							<span class="settingInfo">Weight</span>
 						</div>
 						<div class="settingCell">
 							<input type="number" id="spotify_artistFontWeight" min="100" max="900" step="100" value="900"/>
@@ -3334,7 +3461,7 @@
 					</div>
 					<div class="setting">
 						<div class="settingCellLabel">
-							<span class="settingInfo">Additional font weight</span>
+							<span class="settingInfo">Additional weight</span>
 						</div>
 						<div class="settingCell">
 							<input type="number" id="spotify_artistAdditionalFontWeight" min="0" max="20" step="0.1" value="0"/>px
@@ -3361,16 +3488,7 @@
 							</select>
 						</div>
 					</div>
-					<div class="setting">
-						<div class="settingCell">
-							<input checked id="spotify_artistColorReflectsArtColor" type="checkbox"/> <span class="settingInfo">Artist color reflects album art/cover art color</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCell">
-							<input id="spotify_artistColorReflectsArtColorDarker" type="checkbox"/> <span class="settingInfo">Use darker album art/cover art color</span>
-						</div>
-					</div>
+					<hr/>
 					<div class="setting">
 						<div class="settingCell">
 							<input checked id="spotify_artistGradient" type="checkbox"/> <span class="settingInfo">Apply a gradient to the artist display</span>

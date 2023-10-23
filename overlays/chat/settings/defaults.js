@@ -136,7 +136,9 @@ const nonPublicSettings = [
 	"spotify_artistGradientColor",
 	"spotify_artistGradientAngle",
 	"spotify_scannableUseBlack",
-	"spotify_artistColorReflectsArtColorDarker"
+	"spotify_artistColorReflectsArtColorDarker",
+	"spotify_titleFontItalic",
+	"spotify_artistFontItalic"
 ];
 
 const defaultConfig = {
@@ -545,7 +547,26 @@ const defaultConfig = {
 	"spotify_artistGradientColor": "#FFFFFFFF",
 	"spotify_artistGradientAngle": "170",
 	"spotify_scannableUseBlack": "false",
-	"spotify_artistColorReflectsArtColorDarker": "false"
+	"spotify_artistColorReflectsArtColorDarker": "false",
+	"chatNameFontItalic": "false",
+	"chatMessageFontItalic": "false",
+	"eventTagsFontItalic": "false",
+	"pronounsFontItalic": "false",
+	"spotify_titleFontItalic": "false",
+	"spotify_artistFontItalic": "false",
+	"timestampFontItalic": "false",
+	"chatMessageBackgroundColor": "#00000000",
+	"chatMessageBackgroundReflectUserColor": "false",
+	"chatMessageBackgroundUserColorAmount": "20",
+	"chatMessagePaddingVertical": "0",
+	"chatMessagePaddingHorizontal": "0",
+	"chatMessageBorderRadius": "0",
+	"chatMessageOutlines": "false",
+	"chatMessageOutlinesColor": "#FFFFFFFF",
+	"chatMessageOutlinesReflectUserColor": "false",
+	"chatMessageOutlinesUserColorAmount": "100",
+	"chatMessageOutlinesSize": "1",
+	"chatMessageOutlinesStyle": "solid"
 };
 
 for(let setting in defaultConfig) {

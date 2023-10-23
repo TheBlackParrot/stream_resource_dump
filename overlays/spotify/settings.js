@@ -1,5 +1,5 @@
-const overlayRevision = 2;
-const overlayRevisionTimestamp = 1697745361517;
+const overlayRevision = 3;
+const overlayRevisionTimestamp = 1698020507248;
 
 const settingsChannel = new BroadcastChannel("settings_overlay");
 
@@ -223,6 +223,21 @@ const settingUpdaters = {
 			rootCSS().setProperty("--artist-color", "var(--colorDark)");
 		} else {
 			rootCSS().setProperty("--artist-color", "var(--colorLight)");
+		}
+	},
+
+	titleFontItalic: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--title-font-style", "italic");
+		} else {
+			rootCSS().setProperty("--title-font-style", "normal");
+		}
+	},
+	artistFontItalic: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--artist-font-style", "italic");
+		} else {
+			rootCSS().setProperty("--artist-font-style", "normal");
 		}
 	}
 };

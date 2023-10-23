@@ -151,7 +151,6 @@ body {
 
 .name {
 	display: inline-block !important;
-	padding-right: 5px;	
 	height: 34px;
 	line-height: 34px;
 	font-family: var(--nameFont);
@@ -167,6 +166,7 @@ body {
 	letter-spacing: var(--nameLetterSpacing);
 	background-color: var(--defaultNameColor);
 	background-image: var(--nameBackground);
+	font-style: var(--nameFontStyle);
 }
 
 .pronouns {
@@ -181,6 +181,7 @@ body {
 	background-color: var(--pronounsColor);
 	background-image: var(--pronounsGradient);
 	flex: none; /* wtf */
+	font-style: var(--pronounsFontStyle);
 }
 
 .emote {
@@ -207,6 +208,7 @@ body {
 	text-transform: var(--messageTransform);
 	position: relative;
 	z-index: 2;
+	font-style: var(--messageFontStyle);
 }
 .extraInfo {
 	background-color: var(--eventTagsColor);
@@ -219,6 +221,7 @@ body {
 	letter-spacing: var(--eventTagsLetterSpacing);
 	line-height: var(--eventTagsLineHeight);
 	text-transform: var(--eventTagsTransform);
+	font-style: var(--eventTagsFontStyle);
 }
 
 .actionMessage {
@@ -446,6 +449,7 @@ img.emoji {
 	margin-right: var(--timestampPadding);
 	line-height: var(--messageLineHeight);
 	font-variant: tabular-nums;
+	font-style: var(--timestampFontStyle);
 }
 
 .left {
@@ -514,11 +518,6 @@ img.emoji {
 }
 .right .bigEmote {
 	margin-left: var(--bigEmoteMargin);
-}
-
-.right .userInfo {
-	position: relative;
-	left: 5px;
 }
 
 .isBigEmoteMode {
@@ -675,6 +674,8 @@ img.emoji {
 .internationalName {
 	font-size: var(--internationalNameSize); /* use percentages */
 	-webkit-text-stroke: calc(var(--nameFontWeightExtra) * var(--internationalNameWeightScaling)) transparent;
+	position: relative;
+	left: -6px;
 }
 
 .internationalName:after {
@@ -696,7 +697,27 @@ img.emoji {
 .messageWrapper {
 	display: flex;
 	flex-direction: var(--messageBlockDirection);
+	position: relative;
+	background-color: var(--messageBackgroundColor);
+	padding-top: var(--messagePaddingVertical);
+	padding-bottom: var(--messagePaddingVertical);
+	padding-left: var(--messagePaddingHorizontal);
+	padding-right: var(--messagePaddingHorizontal);
+	border-radius: var(--messageBorderRadius);
+	border-color: var(--messageOutlineColor);
+	border-width: var(--messageOutlineSize);
+	border-style: var(--messageOutlineStyle);
 }
+
+.left .messageWrapper { left: var(--messageOffsetHorizontal); }
+.right .messageWrapper { right: var(--messageOffsetHorizontal); }
+.top .messageWrapper { top: var(--messageOffsetVertical); }
+.bottom .messageWrapper { bottom: var(--messageOffsetVertical); }
+
+.left .userInfo { left: var(--userInfoOffsetHorizontal); }
+.right .userInfo { right: var(--userInfoOffsetHorizontal); }
+.top .userInfo { top: var(--userInfoOffsetVertical); }
+.bottom .userInfo { bottom: var(--userInfoOffsetVertical); }
 
 .zeroWidthEmote {
 	position: absolute;

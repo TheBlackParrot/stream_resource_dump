@@ -71,6 +71,17 @@
 	--messageSeparatorSpacingActual: 0px;
 	--messageSeparatorSpacing: 0px;
 	--messageSeparatorStyle: solid;
+	--messageFontStyle: normal;
+	--messageBackgroundColor: transparent;
+	--messagePaddingVertical: 0px;
+	--messagePaddingHorizontal: 0px;
+	--messageBorderRadius: 0px;
+
+	--messageOutlineColor: rgba(255, 255, 255, 1);
+	--messageOutlineSize: 0px;
+	--messageOutlineSizeActual: 1px;
+	--messageOutlineStyle: solid;
+	--messageOutline: none;
 
 	--chatBlockPaddingVertical: 18px;
 	--chatBlockPaddingHorizontal: 18px;
@@ -171,6 +182,7 @@
 	--pronounsFontWeightExtra: 0.5px;
 	--pronounsLetterSpacing: 0px;
 	--pronounsTransform: uppercase;
+	--pronounsFontStyle: normal;
 
 	--flagsBorderRadius: 4px;
 	--flagsSize: 22px;
@@ -186,6 +198,7 @@
 	--timestampFontWeightExtra: 0.5px;
 	--timestampLetterSpacing: 0px;
 	--timestampPadding: 10px;
+	--timestampFontStyle: normal;
 
 	--highlightedEffect: drop-shadow(0px 0px var(--highlightGlowRadius) var(--highlightBackgroundColor));
 
@@ -199,6 +212,7 @@
 	--eventTagsLetterSpacing: -0.2px;
 	--eventTagsTransform: uppercase;
 	--eventTagsLineHeight: 26px;
+	--eventTagsFontStyle: normal;
 
 	--internationalNameSaturation: 33%;
 	--internationalNameMargin: 7px;
@@ -210,4 +224,9 @@
 	--gradientFadeMaskEnd: 99%;
 
 	--messageBlockDirection: column;
+
+	--messageOffsetHorizontal: 0px;
+	--messageOffsetVertical: 0px;
+	--userInfoOffsetVertical: 0px;
+	--userInfoOffsetHorizontal: 0px;
 }

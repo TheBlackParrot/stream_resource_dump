@@ -1216,7 +1216,86 @@ const settingUpdaters = {
 	eventTagsPlanNamePrime: function(value) { subTiers["Prime"] = value; },
 	eventTagsPlanNameTier1: function(value) { subTiers["1000"] = value; },
 	eventTagsPlanNameTier2: function(value) { subTiers["2000"] = value; },
-	eventTagsPlanNameTier3: function(value) { subTiers["3000"] = value; }
+	eventTagsPlanNameTier3: function(value) { subTiers["3000"] = value; },
+
+	messageOffsetVertical: function(value) {
+		rootCSS().setProperty("--messageOffsetVertical", `${value}px`);
+	},
+	messageOffsetHorizontal: function(value) {
+		rootCSS().setProperty("--messageOffsetHorizontal", `${value}px`);
+	},
+	userInfoOffsetVertical: function(value) {
+		rootCSS().setProperty("--userInfoOffsetVertical", `${value}px`);
+	},
+	userInfoOffsetHorizontal: function(value) {
+		rootCSS().setProperty("--userInfoOffsetHorizontal", `${value}px`);
+	},
+
+	chatNameFontItalic: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--nameFontStyle", "italic");
+		} else {
+			rootCSS().setProperty("--nameFontStyle", "normal");
+		}
+	},
+	chatMessageFontItalic: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--messageFontStyle", "italic");
+		} else {
+			rootCSS().setProperty("--messageFontStyle", "normal");
+		}
+	},
+	eventTagsFontItalic: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--eventTagsFontStyle", "italic");
+		} else {
+			rootCSS().setProperty("--eventTagsFontStyle", "normal");
+		}
+	},
+	pronounsFontItalic: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--pronounsFontStyle", "italic");
+		} else {
+			rootCSS().setProperty("--pronounsFontStyle", "normal");
+		}
+	},
+	timestampFontItalic: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--timestampFontStyle", "italic");
+		} else {
+			rootCSS().setProperty("--timestampFontStyle", "normal");
+		}
+	},
+	chatMessageBackgroundColor: function(value) {
+		rootCSS().setProperty("--messageBackgroundColor", value);
+	},
+
+	chatMessagePaddingVertical: function(value) {
+		rootCSS().setProperty("--messagePaddingVertical", `${value}px`);
+	},
+	chatMessagePaddingHorizontal: function(value) {
+		rootCSS().setProperty("--messagePaddingHorizontal", `${value}px`);
+	},
+	chatMessageBorderRadius: function(value) {
+		rootCSS().setProperty("--messageBorderRadius", `${value}px`);
+	},
+
+	chatMessageOutlines: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--messageOutlineSize", "var(--messageOutlineSizeActual)");
+		} else {
+			rootCSS().setProperty("--messageOutlineSize", "0px");
+		}
+	},
+	chatMessageOutlinesColor: function(value) {
+		rootCSS().setProperty("--messageOutlineColor", value);
+	},
+	chatMessageOutlinesSize: function(value) {
+		rootCSS().setProperty("--messageOutlineSizeActual", `${value}px`);
+	},
+	chatMessageOutlinesStyle: function(value) {
+		rootCSS().setProperty("--messageOutlineStyle", value);
+	},
 };
 settingUpdaters["chatHideAccounts"](localStorage.getItem("setting_chatHideAccounts"));
 
