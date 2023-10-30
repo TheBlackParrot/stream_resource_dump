@@ -16,19 +16,6 @@ settings = None
 with open("settings.json", "r") as settingsFile:
     settings = json.load(settingsFile)
 
-ttsStuff = None
-with open("tts_data.json", "r") as ttsStuffFile:
-    ttsStuff = json.load(ttsStuffFile)
-dictReplace = None
-with open("dict.json", "r") as dictFile:
-    dictReplace = json.load(dictFile)
-faceReplace = None
-with open("faces.json", "r") as facesFile:
-    faceReplace = json.load(facesFile)
-symReplace = None
-with open("symbols.json", "r") as symFile:
-    symReplace = json.load(symFile)
-
 device = torch.device('cpu')
 torch.set_num_threads(settings["tts"]["cpu_threads"])
 
@@ -81,6 +68,19 @@ class MyServer(BaseHTTPRequestHandler):
             cache.pop(md5hash, None)
             cleanCache()
             return
+
+        dictReplace = None
+        with open("dict.json", "r") as dictFile:
+            dictReplace = json.load(dictFile)
+        ttsStuff = None
+        with open("tts_data.json", "r") as ttsStuffFile:
+            ttsStuff = json.load(ttsStuffFile)
+        faceReplace = None
+        with open("faces.json", "r") as facesFile:
+            faceReplace = json.load(facesFile)
+        symReplace = None
+        with open("symbols.json", "r") as symFile:
+            symReplace = json.load(symFile)
 
         if _type == "name":
             if _data in ttsStuff:
