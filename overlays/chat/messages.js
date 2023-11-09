@@ -1149,13 +1149,9 @@ function renderUserBlock(data, rootElement, overallWrapper, messageWrapper) {
 		});
 	}
 
-	if(localStorage.getItem(`use7tvpaint_${data.user.id}`) === "yes" && !data.isOverlayMessage) {
-		for(let i in sevenTVPaints) {
-			let paint = sevenTVPaints[i];
-			if(paint.users.indexOf(data.user.id) !== -1) {
-				set7TVPaint(nameBlock, i, data.user.id);
-				break;
-			}
+	if(localStorage.getItem(`use7tvpaint_${data.user.id}`) === "yes" && !data.isOverlayMessage && data.user.id in sevenTVUsers) {
+		if("paint" in sevenTVUsers[data.user.id]) {
+			set7TVPaint(nameBlock, sevenTVUsers[data.user.id].paint, data.user.id);
 		}
 	}
 
@@ -1693,53 +1689,12 @@ function getFFZBadges(data, callback) {
 	})	
 }
 
-// 7TV just stores all their badge data in one URL, get it now
 var sevenTVCosmetics = {};
 var sevenTVBadges = [];
 var sevenTVPaints = [];
-function get7TVBadges() {
-	console.log("getting 7TV badges...");
-	if(localStorage.getItem("setting_enable7TV") === "false") {
-		console.log("7TV is disabled");
-		return;
-	}
+var sevenTVUsers = {};
 
-	$.ajax({
-		type: "GET",
-		url: `https://7tv.io/v2/cosmetics?user_identifier=twitch_id`,
-
-		success: function(response) {
-			sevenTVCosmetics = response;
-			if(localStorage.getItem("setting_enable7TVBadges") === "true") {
-				sevenTVBadges = response.badges;
-			}
-			if(localStorage.getItem("setting_enable7TVUserPaints") === "true") {
-				sevenTVPaints = response.paints;
-			}
-		}
-	})	
-}
-
-function createBadgeCacheObject(data) {
-	let outObject = {
-		ffz: {
-			expires: null,
-			badges: []
-		},
-		bttv: {
-			expires: null,
-			badges: []
-		},
-		seventv: {
-			expires: null,
-			badges: []
-		},
-		overlay: {
-			expires: Infinity,
-			badges: []
-		}
-	};
-
+function initBadgeCacheObject(data, outObject) {
 	let useLQImages = (localStorage.getItem("setting_useLowQualityImages") === "true");
 	for(let i in sevenTVBadges) {
 		let stvBadge = sevenTVBadges[i];
@@ -1764,6 +1719,38 @@ function createBadgeCacheObject(data) {
 		});
 	}
 
+	outObject.hasFullyUpdated = true;
+	return outObject;
+}
+
+function createBadgeCacheObject(data) {
+	let outObject = {
+		hasFullyUpdated: false,
+
+		ffz: {
+			expires: null,
+			badges: []
+		},
+		bttv: {
+			expires: null,
+			badges: []
+		},
+		seventv: {
+			expires: null,
+			badges: []
+		},
+		overlay: {
+			expires: Infinity,
+			badges: []
+		}
+	};
+
+	if(!("user" in data)) {
+		return outObject;
+	} else {
+		outObject = initBadgeCacheObject(data, outObject);
+	}
+
 	return outObject;
 }
 
@@ -1785,6 +1772,10 @@ function checkForExternalBadges(data, badgeBlock, rootElement, userBlock) {
 			checkIfExternalBadgesDone(data, badgeBlock, rootElement, userBlock);
 		});
 	} else {
+		if(!externalBadgeCache[id].hasFullyUpdated) {
+			initBadgeCacheObject(data, externalBadgeCache[id]);
+		}
+
 		if(Date.now() > externalBadgeCache[id].ffz.expires) {
 			getFFZBadges(data, function(data, response) {
 				checkIfExternalBadgesDone(data, badgeBlock, rootElement, userBlock);
@@ -2013,5 +2004,179 @@ function startBTTVWebsocket() {
 	bttvWS.addEventListener("close", function() {
 		console.log("Disconnected from BTTV, trying again in 20 seconds...");
 		setTimeout(startBTTVWebsocket, 20000);
+	});
+}
+
+// TODO: i really just need to make these classes frick
+var sevenTVWS;
+function start7TVWebsocket() {
+	console.log("Starting connection to 7TV...");
+	if(localStorage.getItem("setting_enable7TV") === "false") {
+		try {
+			sevenTVWS.close();
+		} catch {
+			// do nothing
+		}
+		console.log("7TV is disabled");
+		return;
+	}
+
+	if(typeof sevenTVWS === "undefined") {
+		sevenTVWS = new WebSocket('wss://events.7tv.io/v3');
+	} else {
+		try {
+			sevenTVWS.close();
+		} catch {
+			// do nothing
+		}		
+	}
+
+	let subscribe = function(type) {
+		let msg = {
+			op: 35,
+			d: {
+				type: type,
+				condition: {
+					ctx: 'channel',
+					id: broadcasterData.id,
+					platform: 'TWITCH'
+				}
+			}
+		};
+
+		sevenTVWS.send(JSON.stringify(msg));
+	}
+
+	const dispatchFuncs = {
+		"entitlement.create": function(data) {
+			if(data.kind !== "BADGE" && data.kind !== "PAINT") {
+				// only need badges. not supporting user emote sets, sorry
+				return;
+			}
+
+			let userData;
+			for(const connection of data.user.connections) {
+				if(connection.platform !== "TWITCH") {
+					continue;
+				}
+
+				userData = connection;
+				break;
+			}
+
+			if(!userData) {
+				return;
+			}
+			userData.id = parseInt(userData.id);
+
+			switch(data.kind) {
+				case "BADGE":
+					let size = "3x";
+					if(localStorage.getItem("setting_useLowQualityImages") === "true") {
+						size = "1x";
+					}
+
+					if(!(userData.id in externalBadgeCache)) {
+						externalBadgeCache[parseInt(userData.id)] = createBadgeCacheObject({});
+					}
+
+					externalBadgeCache[parseInt(userData.id)].seventv.badges.push({
+						ref_id: data.ref_id,
+						img: `https://cdn.7tv.app/badge/${data.ref_id}/${size}`
+					});
+					break;
+
+				case "PAINT":
+					sevenTVPaints[data.ref_id].users.push(userData.id);
+					if(!(userData.id in sevenTVUsers)) {
+						sevenTVUsers[userData.id] = {};
+					}
+					sevenTVUsers[userData.id].paint = data.ref_id;
+					break;
+			}
+		},
+
+		"entitlement.delete": function(data) {
+			if(data.kind !== "BADGE") {
+				// only need badges. not supporting user emote sets, sorry
+				return;
+			}
+
+			let userData;
+			for(const connection of data.user.connections) {
+				if(connection.platform !== "TWITCH") {
+					continue;
+				}
+
+				userData = connection;
+				break;
+			}
+
+			if(!userData) {
+				return;
+			}
+			userData.id = parseInt(userData.id);
+
+			if(!(userData.id in externalBadgeCache)) {
+				return;
+			}
+
+			let newBadgeArray = [];
+			for(const badge of externalBadgeCache[parseInt(userData.id)].seventv.badges) {
+				if(badge.ref_id !== data.ref_id) {
+					newBadgeArray.push(badge);
+				}
+			}
+
+			externalBadgeCache[parseInt(userData.id)].seventv.badges = newBadgeArray;
+		},
+
+		"cosmetic.create": function(data) {
+			if(data.kind !== "PAINT") {
+				return;
+			}
+
+			data.data.users = [];
+
+			sevenTVPaints[data.id] = data.data;
+		}
+	};
+
+	let dispatch = function(data) {
+		if(data.type in dispatchFuncs) {
+			dispatchFuncs[data.type](data.body.object)
+		}
+	}
+
+	sevenTVWS.addEventListener("message", function(msg) {
+		let data = JSON.parse(msg.data);
+		console.log(data);
+
+		if(data.op === 0) {
+			dispatch(data.d);
+		}
+	});
+
+	sevenTVWS.addEventListener("open", function() {
+		console.log("Successfully connected to 7TV");
+
+		let waitForBroadcasterData = function() {
+			if(!("id" in broadcasterData)) {
+				console.log("no broadcaster data yet...");
+				setTimeout(waitForBroadcasterData, 1000);
+				return;
+			} else {
+				console.log("broadcaster data is present, doing 7TV subscriptions...");
+			}
+
+			subscribe("cosmetic.*");
+			subscribe("entitlement.*");
+		};
+		waitForBroadcasterData();
+	});
+
+	sevenTVWS.addEventListener("close", function() {
+		console.log("Disconnected from 7TV, trying again in 20 seconds...");
+		setTimeout(start7TVWebsocket, 20000);
 	});
 }

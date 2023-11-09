@@ -340,8 +340,7 @@ const settingUpdaters = {
 		sevenTVCosmetics = {};
 		sevenTVBadges = [];
 		sevenTVPaints = [];
-
-		get7TVBadges();
+		sevenTVUsers = {};
 	},
 	enableBTTV: function(value) {
 	},

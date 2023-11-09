@@ -22,7 +22,7 @@
                 },
                 {
                     "key": "seconds",
-                    "value": "50"
+                    "value": "70"
                 }
             ],
             "posX": -13.0,
@@ -39,7 +39,7 @@
             "values": [
                 {
                     "key": "intensity",
-                    "value": "0.46"
+                    "value": "0.52"
                 },
                 {
                     "key": "color_r",
@@ -55,7 +55,7 @@
                 },
                 {
                     "key": "seconds",
-                    "value": "50"
+                    "value": "70"
                 }
             ],
             "posX": 183.0,
@@ -158,7 +158,7 @@
                 },
                 {
                     "key": "seconds",
-                    "value": "50"
+                    "value": "70"
                 }
             ],
             "posX": -12.0,
@@ -191,7 +191,7 @@
                 },
                 {
                     "key": "seconds",
-                    "value": "50"
+                    "value": "70"
                 }
             ],
             "posX": 195.0,
@@ -600,6 +600,287 @@
             ],
             "outputSocketIds": [],
             "headerColor": 0
+        },
+        {
+            "id": "97a13d51-18f0-4e7a-87de-f7c18749fed7",
+            "values": [
+                {
+                    "key": "paramName",
+                    "value": "BreakLights"
+                },
+                {
+                    "key": "min",
+                    "value": "0"
+                },
+                {
+                    "key": "max",
+                    "value": "50"
+                }
+            ],
+            "posX": 10.33258056640625,
+            "posY": 1337.0028076171875,
+            "path": "Nodes/RandomParamNode",
+            "inputSocketIds": [
+                "776bf95f-1d18-4a2c-bf2e-5a7524fdb4c7638296726766408249"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "55cb1a6f-a329-4ad8-8673-15d2d5f28c60",
+            "values": [
+                {
+                    "key": "enabled",
+                    "value": "0"
+                },
+                {
+                    "key": "redeemId",
+                    "value": "1b722eba-f109-42a9-98d2-4ddb76371ab3"
+                },
+                {
+                    "key": "title",
+                    "value": "Turn off/on the lights"
+                },
+                {
+                    "key": "cost",
+                    "value": "20"
+                },
+                {
+                    "key": "useprompt",
+                    "value": "0"
+                },
+                {
+                    "key": "prompt",
+                    "value": ""
+                },
+                {
+                    "key": "usecooldown",
+                    "value": "0"
+                },
+                {
+                    "key": "cooldown",
+                    "value": ""
+                }
+            ],
+            "posX": 1233.666015625,
+            "posY": 1405.3360595703125,
+            "path": "Nodes/EditTwitchRedeemNode",
+            "inputSocketIds": [
+                "708b5dc4-a42a-4844-82d5-a91039cbad8b638296726943760908"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "24a5a3d2-9a70-447f-828b-d95d287c006a",
+            "values": [
+                {
+                    "key": "triggerName",
+                    "value": "CheckToBreakLights"
+                },
+                {
+                    "key": "callTime",
+                    "value": "0"
+                }
+            ],
+            "posX": 15.33258056640625,
+            "posY": 1143.66943359375,
+            "path": "Nodes/CallTriggerNode",
+            "inputSocketIds": [
+                "04fa0d55-2f23-4403-8ced-15f2ffbe947e638296727359006513"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "7d67c240-8224-4d02-9873-060a6570ef5d",
+            "values": [],
+            "posX": -231.3340606689453,
+            "posY": 1230.3363037109375,
+            "path": "Nodes/Ordered5Node",
+            "inputSocketIds": [
+                "41bf8e9d-302b-4908-a898-5b1346102b8a638296727522058479"
+            ],
+            "outputSocketIds": [
+                "69062b85-ea74-4963-96ed-c1da21830d96638296727522058479",
+                "dd6956bb-233b-4732-9ed8-14a9624e5a8a638296727522058479",
+                "ce736705-9799-4331-96a6-0f9d9d482c4d638296727522058479",
+                "03d074ba-3841-4b5c-b26b-d64932c6f2d6638296727522058479",
+                "010c8e02-f237-48fe-ad02-a156666592a9638296727522058479"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "11e6226e-7c66-424f-beb2-9c847e0f6f15",
+            "values": [
+                {
+                    "key": "triggerName",
+                    "value": "CheckToBreakLights"
+                }
+            ],
+            "posX": 480.33251953125,
+            "posY": 1248.66943359375,
+            "path": "Nodes/TriggerNode",
+            "inputSocketIds": [],
+            "outputSocketIds": [
+                "864e4da7-d007-4d11-98ea-80b0c3c90453638296727764950164"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "8db2757e-30da-40f7-afe7-00a57e32d626",
+            "values": [
+                {
+                    "key": "pname",
+                    "value": "BreakLights"
+                },
+                {
+                    "key": "pvalue",
+                    "value": "50"
+                }
+            ],
+            "posX": 723.6658325195313,
+            "posY": 1248.66943359375,
+            "path": "Nodes/FilterParamNode",
+            "inputSocketIds": [
+                "18d07c58-a3f6-4ef8-9855-4884fef98a19638296727885655450"
+            ],
+            "outputSocketIds": [
+                "23da715d-9ac5-4775-a249-d59b890e7bc5638296727885655450",
+                "06c1982b-e032-4df0-b287-c39385dd28b9638296727885655450",
+                "6c6bf890-a7df-4cc0-957f-6e7463c7658f638296727885655450"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "6460a68e-0669-405e-b22c-d6f65ae46c77",
+            "values": [
+                {
+                    "key": "timerName",
+                    "value": "FixLights"
+                }
+            ],
+            "posX": 479.99700927734377,
+            "posY": 1555.0029296875,
+            "path": "Nodes/TimerNode",
+            "inputSocketIds": [],
+            "outputSocketIds": [
+                "46a7a679-83d4-4ed3-af03-d9a1c4ba2c19638296729178542534"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "48334440-cf4e-4c54-9cd6-cde53d86e0d6",
+            "values": [
+                {
+                    "key": "timerName",
+                    "value": "FixLights"
+                },
+                {
+                    "key": "seconds",
+                    "value": "900000"
+                }
+            ],
+            "posX": 1456.663818359375,
+            "posY": 1053.3363037109375,
+            "path": "Nodes/SetTimerNode",
+            "inputSocketIds": [
+                "2b72e669-9473-46af-a7d3-2a0e8576d686638296729184506993"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "284dbf85-0e89-451b-8843-48e1bf433cca",
+            "values": [],
+            "posX": 983.6658935546875,
+            "posY": 1238.6697998046875,
+            "path": "Nodes/Ordered5Node",
+            "inputSocketIds": [
+                "55b6a1e5-8d8a-4a32-b10e-7e3deccdfad9638296729268459787"
+            ],
+            "outputSocketIds": [
+                "4e3b35f0-21bb-4f39-b9d6-6137dae57555638296729268459787",
+                "a26b04d7-167c-47dc-9c3f-d3cec8854c04638296729268459787",
+                "e3badbe8-3855-4c8f-8448-690c34282b2a638296729268459787",
+                "6465a481-c7de-4690-b37f-bfefb4c3adab638296729268459787",
+                "0392c387-a731-4bf8-b2c9-40c840883a27638296729268459787"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "9bff4cae-e95d-41a3-8de9-d3c8847ea252",
+            "values": [
+                {
+                    "key": "enabled",
+                    "value": "1"
+                },
+                {
+                    "key": "redeemId",
+                    "value": "1b722eba-f109-42a9-98d2-4ddb76371ab3"
+                },
+                {
+                    "key": "title",
+                    "value": "Turn off/on the lights"
+                },
+                {
+                    "key": "cost",
+                    "value": "20"
+                },
+                {
+                    "key": "useprompt",
+                    "value": "0"
+                },
+                {
+                    "key": "prompt",
+                    "value": ""
+                },
+                {
+                    "key": "usecooldown",
+                    "value": "0"
+                },
+                {
+                    "key": "cooldown",
+                    "value": ""
+                }
+            ],
+            "posX": 723.6660766601563,
+            "posY": 1580.3359375,
+            "path": "Nodes/EditTwitchRedeemNode",
+            "inputSocketIds": [
+                "3fea8504-9561-49e0-a7fa-68ec506f1469638296730067122204"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "d1b3e0d5-8bae-4148-9365-a52629cd91d4",
+            "values": [
+                {
+                    "key": "soundFile",
+                    "value": "UjhYZHJleEwvejExdzNEbnpra1RLQlYwbkdPTysyY0FSOFNqcWJYZi9rUG52Ukw4UTVpd2VOdW9PRndxS2Q5dg=="
+                },
+                {
+                    "key": "volume",
+                    "value": "0.5104164"
+                },
+                {
+                    "key": "duration",
+                    "value": ""
+                },
+                {
+                    "key": "fadeout",
+                    "value": ""
+                }
+            ],
+            "posX": 1236.6636962890625,
+            "posY": 1091.6695556640625,
+            "path": "Nodes/SoundNode",
+            "inputSocketIds": [
+                "8f911ec2-5677-427d-9937-a5366015d94b638296730611474370"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
         }
     ],
     "connections": [
@@ -707,6 +988,51 @@
             "id": "d5ecc953-f27f-4e79-bf5f-4f9ae4a20085",
             "outputSocketId": "ad40487f-726f-4b47-83fa-39a1365f8c5f638282597903891976",
             "inputSocketId": "a337617f-b862-46c8-8071-9f1084c6c69d638282604827444654"
+        },
+        {
+            "id": "308a9256-4d60-4fde-8274-7852c18caa1c",
+            "outputSocketId": "943e75fd-1cbd-4fa9-94f2-ec06bf4ac256638279382303762126",
+            "inputSocketId": "41bf8e9d-302b-4908-a898-5b1346102b8a638296727522058479"
+        },
+        {
+            "id": "b3849873-ac26-4948-8eda-7ac678a58ffb",
+            "outputSocketId": "69062b85-ea74-4963-96ed-c1da21830d96638296727522058479",
+            "inputSocketId": "776bf95f-1d18-4a2c-bf2e-5a7524fdb4c7638296726766408249"
+        },
+        {
+            "id": "64b0804f-07cd-4c4c-9a6a-67eda5423362",
+            "outputSocketId": "dd6956bb-233b-4732-9ed8-14a9624e5a8a638296727522058479",
+            "inputSocketId": "04fa0d55-2f23-4403-8ced-15f2ffbe947e638296727359006513"
+        },
+        {
+            "id": "4a51ada4-29cc-4907-9f00-e115f953a5ca",
+            "outputSocketId": "864e4da7-d007-4d11-98ea-80b0c3c90453638296727764950164",
+            "inputSocketId": "18d07c58-a3f6-4ef8-9855-4884fef98a19638296727885655450"
+        },
+        {
+            "id": "21cf5b60-7287-49ff-9820-b32e224e0e6d",
+            "outputSocketId": "06c1982b-e032-4df0-b287-c39385dd28b9638296727885655450",
+            "inputSocketId": "55b6a1e5-8d8a-4a32-b10e-7e3deccdfad9638296729268459787"
+        },
+        {
+            "id": "bc723e71-de7a-4119-9d0b-358c2563e95c",
+            "outputSocketId": "4e3b35f0-21bb-4f39-b9d6-6137dae57555638296729268459787",
+            "inputSocketId": "708b5dc4-a42a-4844-82d5-a91039cbad8b638296726943760908"
+        },
+        {
+            "id": "c5665ce0-511d-4d2a-a592-e0c6aaa882aa",
+            "outputSocketId": "46a7a679-83d4-4ed3-af03-d9a1c4ba2c19638296729178542534",
+            "inputSocketId": "3fea8504-9561-49e0-a7fa-68ec506f1469638296730067122204"
+        },
+        {
+            "id": "3ea77968-9c36-4ebf-a898-9a00a55cd04c",
+            "outputSocketId": "e3badbe8-3855-4c8f-8448-690c34282b2a638296729268459787",
+            "inputSocketId": "2b72e669-9473-46af-a7d3-2a0e8576d686638296729184506993"
+        },
+        {
+            "id": "4d2d70e4-211a-4fb0-a0ea-6d4906397011",
+            "outputSocketId": "a26b04d7-167c-47dc-9c3f-d3cec8854c04638296729268459787",
+            "inputSocketId": "8f911ec2-5677-427d-9937-a5366015d94b638296730611474370"
         }
     ]
 }

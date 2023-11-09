@@ -39,7 +39,7 @@
                 },
                 {
                     "key": "seconds",
-                    "value": "1000"
+                    "value": "250"
                 },
                 {
                     "key": "toggle",
@@ -76,7 +76,7 @@
                 },
                 {
                     "key": "seconds",
-                    "value": "1000"
+                    "value": "250"
                 },
                 {
                     "key": "toggle",
@@ -113,7 +113,7 @@
                 },
                 {
                     "key": "seconds",
-                    "value": "1000"
+                    "value": "250"
                 },
                 {
                     "key": "toggle",
@@ -150,7 +150,7 @@
                 },
                 {
                     "key": "seconds",
-                    "value": "1000"
+                    "value": "250"
                 },
                 {
                     "key": "toggle",
@@ -204,7 +204,7 @@
                 },
                 {
                     "key": "seconds",
-                    "value": "900"
+                    "value": "300"
                 },
                 {
                     "key": "toggle",
@@ -241,7 +241,7 @@
                 },
                 {
                     "key": "seconds",
-                    "value": "900"
+                    "value": "300"
                 },
                 {
                     "key": "toggle",
@@ -278,7 +278,7 @@
                 },
                 {
                     "key": "seconds",
-                    "value": "900"
+                    "value": "300"
                 },
                 {
                     "key": "toggle",
@@ -315,7 +315,7 @@
                 },
                 {
                     "key": "seconds",
-                    "value": "900"
+                    "value": "300"
                 },
                 {
                     "key": "toggle",
@@ -407,7 +407,7 @@
                 },
                 {
                     "key": "seconds",
-                    "value": "750"
+                    "value": "300"
                 },
                 {
                     "key": "toggle",
@@ -444,7 +444,7 @@
                 },
                 {
                     "key": "seconds",
-                    "value": "750"
+                    "value": "300"
                 },
                 {
                     "key": "toggle",
@@ -481,7 +481,7 @@
                 },
                 {
                     "key": "seconds",
-                    "value": "750"
+                    "value": "300"
                 },
                 {
                     "key": "toggle",
@@ -518,7 +518,7 @@
                 },
                 {
                     "key": "seconds",
-                    "value": "750"
+                    "value": "300"
                 },
                 {
                     "key": "toggle",
@@ -698,6 +698,374 @@
             ],
             "outputSocketIds": [],
             "headerColor": 0
+        },
+        {
+            "id": "6e1d09f2-1d24-42c7-88b9-27713d7a0244",
+            "values": [
+                {
+                    "key": "paramName",
+                    "value": "InExpression"
+                },
+                {
+                    "key": "value",
+                    "value": "true"
+                }
+            ],
+            "posX": 601.3359375,
+            "posY": 620.6683349609375,
+            "path": "Nodes/SetTextParamNode",
+            "inputSocketIds": [
+                "adcc8ad4-5817-4ce8-b27b-6b98da52dfc7638342038284408459"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "d661254a-dfbd-4280-b823-09c1b5ac90e3",
+            "values": [
+                {
+                    "key": "triggerName",
+                    "value": ""
+                }
+            ],
+            "posX": 369.00201416015627,
+            "posY": 600.0018310546875,
+            "path": "Nodes/TriggerNode",
+            "inputSocketIds": [],
+            "outputSocketIds": [
+                "b7826206-81b0-43c2-be6f-e562b9bbe28d638342038384403238"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "7022dc8b-a04a-4614-b9c4-f07cee95b4a2",
+            "values": [
+                {
+                    "key": "triggerName",
+                    "value": "EarsOhShit"
+                }
+            ],
+            "posX": 1077.6666259765625,
+            "posY": 44.333343505859378,
+            "path": "Nodes/TriggerNode",
+            "inputSocketIds": [],
+            "outputSocketIds": [
+                "3d3b602b-5ab5-428e-b2fb-f8206a16fb96638342038508701193"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "f35a0758-2d91-4281-8323-9e82c62848dd",
+            "values": [
+                {
+                    "key": "rotx",
+                    "value": "12"
+                },
+                {
+                    "key": "roty",
+                    "value": "10"
+                },
+                {
+                    "key": "rotz",
+                    "value": "-10"
+                },
+                {
+                    "key": "name",
+                    "value": "Ear_T_L"
+                },
+                {
+                    "key": "seconds",
+                    "value": "200"
+                },
+                {
+                    "key": "toggle",
+                    "value": "0"
+                }
+            ],
+            "posX": 1317.6666259765625,
+            "posY": 213.0,
+            "path": "Nodes/ObjectRotNode",
+            "inputSocketIds": [
+                "9a512d56-caf1-4be9-9a1e-91ba0da6b087638342038604743016"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "a4fa7ba0-2c5b-4d27-8ccf-5df8666fbfe2",
+            "values": [
+                {
+                    "key": "rotx",
+                    "value": "12"
+                },
+                {
+                    "key": "roty",
+                    "value": "-10"
+                },
+                {
+                    "key": "rotz",
+                    "value": "10"
+                },
+                {
+                    "key": "name",
+                    "value": "Ear_T_R"
+                },
+                {
+                    "key": "seconds",
+                    "value": "200"
+                },
+                {
+                    "key": "toggle",
+                    "value": "0"
+                }
+            ],
+            "posX": 1530.666748046875,
+            "posY": 212.33331298828126,
+            "path": "Nodes/ObjectRotNode",
+            "inputSocketIds": [
+                "c2c99bb0-7721-4914-b398-55e75c9dbd56638342038626894586"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "bd86a046-4220-48c9-992b-d0509f0d64d5",
+            "values": [
+                {
+                    "key": "rotx",
+                    "value": "12"
+                },
+                {
+                    "key": "roty",
+                    "value": "-10"
+                },
+                {
+                    "key": "rotz",
+                    "value": "-10"
+                },
+                {
+                    "key": "name",
+                    "value": "Ear_BT_L"
+                },
+                {
+                    "key": "seconds",
+                    "value": "200"
+                },
+                {
+                    "key": "toggle",
+                    "value": "0"
+                }
+            ],
+            "posX": 1321.0,
+            "posY": -113.33334350585938,
+            "path": "Nodes/ObjectRotNode",
+            "inputSocketIds": [
+                "872098bb-af13-4fd2-a05a-80a901e4ce52638342038661390383"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "f4166b4e-a5fb-4b86-b3e4-1821bf49ce5b",
+            "values": [
+                {
+                    "key": "rotx",
+                    "value": "12"
+                },
+                {
+                    "key": "roty",
+                    "value": "10"
+                },
+                {
+                    "key": "rotz",
+                    "value": "10"
+                },
+                {
+                    "key": "name",
+                    "value": "Ear_BT_R"
+                },
+                {
+                    "key": "seconds",
+                    "value": "200"
+                },
+                {
+                    "key": "toggle",
+                    "value": "0"
+                }
+            ],
+            "posX": 1531.0,
+            "posY": -118.0,
+            "path": "Nodes/ObjectRotNode",
+            "inputSocketIds": [
+                "9fe4e3d1-fc43-47c8-a8f6-1e6c6effe711638342038698042791"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "49cb5904-7582-4f58-9f4d-016635937ac3",
+            "values": [
+                {
+                    "key": "triggerName",
+                    "value": "EarsYikes"
+                }
+            ],
+            "posX": 1045.9998779296875,
+            "posY": -784.0,
+            "path": "Nodes/TriggerNode",
+            "inputSocketIds": [],
+            "outputSocketIds": [
+                "d39b68d3-7e9a-43f7-b091-dcce9f90b69f638342052767164310"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "b9ed71dc-77b3-4c21-b29c-c303aa25cd8d",
+            "values": [
+                {
+                    "key": "rotx",
+                    "value": "-8"
+                },
+                {
+                    "key": "roty",
+                    "value": "20"
+                },
+                {
+                    "key": "rotz",
+                    "value": ""
+                },
+                {
+                    "key": "name",
+                    "value": "Ear_T_L"
+                },
+                {
+                    "key": "seconds",
+                    "value": "200"
+                },
+                {
+                    "key": "toggle",
+                    "value": "0"
+                }
+            ],
+            "posX": 1317.6666259765625,
+            "posY": -638.6666259765625,
+            "path": "Nodes/ObjectRotNode",
+            "inputSocketIds": [
+                "892a68a1-2fd3-4d4f-9ee9-3898eba455c9638342052893663913"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "647a8f62-e071-46ea-bfe0-b7a751d51af5",
+            "values": [
+                {
+                    "key": "rotx",
+                    "value": "-8"
+                },
+                {
+                    "key": "roty",
+                    "value": "-20"
+                },
+                {
+                    "key": "rotz",
+                    "value": ""
+                },
+                {
+                    "key": "name",
+                    "value": "Ear_T_R"
+                },
+                {
+                    "key": "seconds",
+                    "value": "200"
+                },
+                {
+                    "key": "toggle",
+                    "value": "0"
+                }
+            ],
+            "posX": 1535.666748046875,
+            "posY": -639.3333129882813,
+            "path": "Nodes/ObjectRotNode",
+            "inputSocketIds": [
+                "7ad12738-ef4c-4db7-84ee-6574ce13ed87638342052926428411"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "6ad0ebeb-09a8-405a-8225-f73e28d2f93c",
+            "values": [
+                {
+                    "key": "rotx",
+                    "value": "-8"
+                },
+                {
+                    "key": "roty",
+                    "value": "20"
+                },
+                {
+                    "key": "rotz",
+                    "value": ""
+                },
+                {
+                    "key": "name",
+                    "value": "Ear_BT_L"
+                },
+                {
+                    "key": "seconds",
+                    "value": "200"
+                },
+                {
+                    "key": "toggle",
+                    "value": "0"
+                }
+            ],
+            "posX": 1317.666748046875,
+            "posY": -974.9999389648438,
+            "path": "Nodes/ObjectRotNode",
+            "inputSocketIds": [
+                "7e91bb24-f453-497b-9a9b-af7672782a7f638342052959713306"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "a9c9de00-74c8-4e2e-a260-2ee724d82959",
+            "values": [
+                {
+                    "key": "rotx",
+                    "value": "-8"
+                },
+                {
+                    "key": "roty",
+                    "value": "-20"
+                },
+                {
+                    "key": "rotz",
+                    "value": ""
+                },
+                {
+                    "key": "name",
+                    "value": "Ear_BT_R"
+                },
+                {
+                    "key": "seconds",
+                    "value": "200"
+                },
+                {
+                    "key": "toggle",
+                    "value": "0"
+                }
+            ],
+            "posX": 1537.666748046875,
+            "posY": -976.3333129882813,
+            "path": "Nodes/ObjectRotNode",
+            "inputSocketIds": [
+                "d2750bb0-6b2c-4868-a152-193863cbf1c5638342053035444941"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
         }
     ],
     "connections": [
@@ -785,6 +1153,51 @@
             "id": "b209303c-535e-4503-9b5a-6b23cd9e3bba",
             "outputSocketId": "0ab91133-f270-4d0c-85ad-a435233a0878638182323682574298",
             "inputSocketId": "2bdcf625-b0f1-4346-b228-3dc2c66b8bbe638182323820220920"
+        },
+        {
+            "id": "360b8973-8177-4db8-b95d-92e27b7c2fb2",
+            "outputSocketId": "b7826206-81b0-43c2-be6f-e562b9bbe28d638342038384403238",
+            "inputSocketId": "adcc8ad4-5817-4ce8-b27b-6b98da52dfc7638342038284408459"
+        },
+        {
+            "id": "607f2f50-f548-49bd-bcbb-0c0692760313",
+            "outputSocketId": "3d3b602b-5ab5-428e-b2fb-f8206a16fb96638342038508701193",
+            "inputSocketId": "9a512d56-caf1-4be9-9a1e-91ba0da6b087638342038604743016"
+        },
+        {
+            "id": "781e5dee-09a4-4977-b7d5-12ff9446e586",
+            "outputSocketId": "3d3b602b-5ab5-428e-b2fb-f8206a16fb96638342038508701193",
+            "inputSocketId": "c2c99bb0-7721-4914-b398-55e75c9dbd56638342038626894586"
+        },
+        {
+            "id": "38c41c33-87c1-483c-ab59-464365a97274",
+            "outputSocketId": "3d3b602b-5ab5-428e-b2fb-f8206a16fb96638342038508701193",
+            "inputSocketId": "872098bb-af13-4fd2-a05a-80a901e4ce52638342038661390383"
+        },
+        {
+            "id": "f44e35ba-8db2-43a6-b890-bb32bb8531b1",
+            "outputSocketId": "3d3b602b-5ab5-428e-b2fb-f8206a16fb96638342038508701193",
+            "inputSocketId": "9fe4e3d1-fc43-47c8-a8f6-1e6c6effe711638342038698042791"
+        },
+        {
+            "id": "25ce2443-8246-410e-b287-d62aac95848d",
+            "outputSocketId": "d39b68d3-7e9a-43f7-b091-dcce9f90b69f638342052767164310",
+            "inputSocketId": "892a68a1-2fd3-4d4f-9ee9-3898eba455c9638342052893663913"
+        },
+        {
+            "id": "e026b099-4159-4894-8e26-a84158bf5e30",
+            "outputSocketId": "d39b68d3-7e9a-43f7-b091-dcce9f90b69f638342052767164310",
+            "inputSocketId": "7ad12738-ef4c-4db7-84ee-6574ce13ed87638342052926428411"
+        },
+        {
+            "id": "4021c40d-00c3-4f86-9dbe-feb7884c19e4",
+            "outputSocketId": "d39b68d3-7e9a-43f7-b091-dcce9f90b69f638342052767164310",
+            "inputSocketId": "7e91bb24-f453-497b-9a9b-af7672782a7f638342052959713306"
+        },
+        {
+            "id": "6d693323-34bb-433a-be1e-64c19d8cd1cb",
+            "outputSocketId": "d39b68d3-7e9a-43f7-b091-dcce9f90b69f638342052767164310",
+            "inputSocketId": "d2750bb0-6b2c-4868-a152-193863cbf1c5638342053035444941"
         }
     ]
 }

@@ -13,6 +13,7 @@ window.addEventListener("load", function() {
 	}, 500);
 
 	startBTTVWebsocket();
+	start7TVWebsocket();
 
 	// this is in a deferred script but for some reason it still wants more time
 	setTimeout(checkForUpdate, 1000);

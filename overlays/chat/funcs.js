@@ -103,27 +103,31 @@ function parseFFZModifiers(value) {
 	return out;
 }
 
-function set7TVPaint(nameBlock, which, userID) {
-	let paint = sevenTVPaints[which];
+function set7TVPaint(nameBlock, paintID, userID) {
+	if(!(paintID in sevenTVPaints)) {
+		return;
+	}
+
+	const paint = sevenTVPaints[paintID];
 	let css = "";
 	let bgColor = parse7TVColor(paint.color);
 
-	if(paint.function === "url") {
+	if(paint.image_url !== "") {
 		css = `url(${paint.image_url})`;
 	} else {
 		let stops = [];
-		for(let i in paint.stops) {
-			let stop = paint.stops[i];
+
+		for(const stop of paint.stops) {
 			stops.push(`${parse7TVColor(stop.color)} ${stop.at*100}%`);
 		}
 		
-		let func = paint.function;
+		let func = paint.function.replaceAll("_", "-").toLowerCase();
 		if(paint.repeat) {
 			func = `repeating-${paint.function}`;
 		}
 
 		let angle = `${paint.angle}deg`
-		if(paint.function === "radial-gradient") {
+		if(func === "radial-gradient") {
 			angle = `${paint.shape} at ${paint.angle}%`;
 		}
 
@@ -131,11 +135,10 @@ function set7TVPaint(nameBlock, which, userID) {
 	}
 
 	let shadows = "";
-	if("drop_shadows" in paint) {
+	if("shadows" in paint) {
 		let shadowsArr = [];
-		if(paint.drop_shadows.length) {
-			for(let i in paint.drop_shadows) {
-				let s = paint.drop_shadows[i];
+		if(paint.shadows.length) {
+			for(const s of paint.shadows) {
 				shadowsArr.push(`drop-shadow(${s.x_offset}px ${s.y_offset}px ${s.radius}px ${parse7TVColor(s.color)})`);
 			}
 			shadows = shadowsArr.join(" ");
@@ -439,3 +442,16 @@ function isUserBot(username) {
 	if(knownBots.indexOf(username) !== -1) { return true; }
 	return false;
 }
+
+/*
+const idChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+function getRandomIDString(length) {
+	var out = "";
+
+	for(let i = 0; i < length; i++) {
+		out = `${out}${idChars[Math.floor(Math.random() * idChars.length)]}`
+	}
+
+	return out;
+}
+*/

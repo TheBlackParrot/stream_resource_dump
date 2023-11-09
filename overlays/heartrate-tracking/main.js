@@ -63,6 +63,11 @@ function startConnection() {
 	stream.on("data", function(data) {
 		sendData(data);
 		startReconnectStuff(stream);
+
+		if(disconnected) {
+			broadcastData({event: "connected"});
+			disconnected = false;
+		}
 	});
 
 	stream.getBatteryLevel(function(){}); // do nothing, this should be handled in the event
