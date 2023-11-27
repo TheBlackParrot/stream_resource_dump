@@ -1420,7 +1420,35 @@
 					</div>
 				</div>
 			</div>
-			<div class="section" data-content="function">
+			<div class="section" data-content="function" data-sensitive="true">
+				<div class="part">
+					<h1>Overlay Management</h1>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="allowModeratorsToRefresh" type="checkbox"/> <span class="settingInfo">Allow moderators to refresh the overlays</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="allowParrotToRefresh" type="checkbox"/> <span class="settingInfo">Allow Parrot to refresh the overlays</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="debugFreezeChat" type="checkbox"/> <span class="settingInfo">Don't render new chat messages</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Remote data fetching timeout</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="ajaxTimeout" min="3" max="99" step="1" value="7"/>seconds
+						</div>
+					</div>
+				</div>
 				<div class="part">
 					<h1>Images</h1>
 					<div class="setting">
@@ -1487,6 +1515,15 @@
 						</div>
 						<div class="settingCell">
 							<input id="chatCommandCharacter" type="text" value="!"/>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Censor words in chat<br/><span style="font-size: var(--font-size-smol); opacity: 0.67;">(One word per line)</span></span>
+						</div>
+						<div class="settingCell">
+							<textarea id="bigNoNoWords"></textarea>
 						</div>
 					</div>
 				</div>
@@ -1697,19 +1734,6 @@
 					<div class="setting">
 						<div class="settingCell">
 							<input id="debugRawMessages" type="checkbox"/> <span class="settingInfo">Log raw Twitch IRC messages to the DevTools console</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCell">
-							<input id="debugFreezeChat" type="checkbox"/> <span class="settingInfo">Don't render new chat messages</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">AJAX timeout</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="ajaxTimeout" min="3" max="99" step="1" value="7"/>seconds
 						</div>
 					</div>
 				</div>
@@ -3677,10 +3701,10 @@
 						<i class="fas fa-exclamation-triangle"></i>
 					</div>
 					<div>
-						The data shown in this section is considered to be sensitive information; it is not advised to show this information to the public.<br/><br/>Click the button below to reveal this section's settings.
+						This tab may contain sensitive information and/or content; it is not advised to have this information publicly visible.<br/><br/>Click the button below to reveal this tab.
 					</div>
 					<div class="button" id="hideSensitiveWarning">
-						<i class="fas fa-check"></i> Reveal Settings
+						<i class="fas fa-check"></i> Reveal Tab
 					</div>
 				</div>
 			</div>

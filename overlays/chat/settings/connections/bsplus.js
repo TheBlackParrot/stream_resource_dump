@@ -41,14 +41,18 @@ function startBSPlusWebsocket() {
 	bsplus_ws.addEventListener("open", function() {
 		console.log(`Connected to BS+ websocket at ${url}`);
 		changeStatusCircle("BSPlusStatus", "green", "connected");
+
+		addNotification("Connected to Beat Saber Plus", {bgColor: "var(--notif-color-success)", duration: 5});
 	});
 
 	bsplus_ws.addEventListener("close", function() {
 		bsplusInit = false;
 
-		console.log(`Connection to BS+ websocket ${url} failed, retrying in 15 seconds...`);
+		console.log(`Connection to BS+ websocket ${url} failed, retrying in 20 seconds...`);
 		changeStatusCircle("BSPlusStatus", "red", "disconnected");
-		setTimeout(startBSPlusWebsocket, 15000);
+		setTimeout(startBSPlusWebsocket, 20000);
+
+		addNotification("Disconnected from Beat Saber Plus", {bgColor: "var(--notif-color-fail)", duration: 5});
 
 		delete bsplus_ws;
 	});

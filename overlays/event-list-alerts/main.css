@@ -7,11 +7,11 @@
 }
 @keyframes alertComeInKF {
 	0% {
-		transform: translateX(-100vw);
+		transform: translate3d(-100vw, 0px, 0px);
 		filter: blur(20px);
 	}
 	100% {
-		transform: translateX(0px);
+		transform: translate3d(0px, 0px, 0px);
 		filter: blur(0px);
 	}
 }
@@ -25,11 +25,11 @@
 
 @keyframes alertGoOutKF {
 	0% {
-		transform: translateX(0px);
+		transform: translate3d(0px, 0px, 0px);
 		filter: blur(0px);
 	}
 	100% {
-		transform: translateX(100vw);
+		transform: translate3d(100vw, 0px, 0px);
 		filter: blur(20px);
 	}
 }
@@ -42,8 +42,8 @@
 }
 
 @keyframes alertHoverKF {
-	from { transform: translateY(-2px); }
-	to { transform: translateY(2px); }
+	from { transform: translate3d(0px, -2px, 0px); }
+	to { transform: translate3d(0px, 2px, 0px); }
 }
 .alertHover {
 	animation-name: alertHoverKF;
@@ -60,13 +60,13 @@ body {
 	background: #333;
 	font-family: "Manrope";
 	font-weight: 900;
-	font-size: 18px;
+	font-size: 14px;
 	color: #fff;
 }
 
 #wrapper {
 	position: fixed;
-	bottom: 90px;
+	bottom: 92px;
 	right: 6px;
 	text-align: right;
 	padding-right: 8px;
@@ -101,7 +101,7 @@ body {
 	-webkit-text-stroke: 1px transparent;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
-	margin-right: 8px;
+	margin-right: 6px;
 	letter-spacing: 1px;
 	padding-left: 4px;
 }
@@ -113,7 +113,7 @@ body {
 }
 
 .eventRow {
-	line-height: 26px;
+	line-height: 20px;
 }
 
 .icon {
@@ -124,7 +124,7 @@ body {
 	display: inline;
 }
 .eventRow .icon {
-	margin-right: 5px;
+	margin-right: 3px;
 }
 .icon img {
 	opacity: 0;

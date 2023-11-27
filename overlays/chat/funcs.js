@@ -123,11 +123,11 @@ function set7TVPaint(nameBlock, paintID, userID) {
 		
 		let func = paint.function.replaceAll("_", "-").toLowerCase();
 		if(paint.repeat) {
-			func = `repeating-${paint.function}`;
+			func = `repeating-${func}`;
 		}
 
 		let angle = `${paint.angle}deg`
-		if(func === "radial-gradient") {
+		if(paint.function === "RADIAL_GRADIENT") {
 			angle = `${paint.shape} at ${paint.angle}%`;
 		}
 

@@ -54,6 +54,28 @@ client.on('message', function(channel, tags, message, self) {
 	}
 
 	localStorage.setItem(`msgCount_${roomID}_${id}`, count + 1);
+
+	if(localStorage.getItem("setting_allowModeratorsToRefresh") === "true") {
+		let moderator = false;
+		if('badges' in tags) {
+			if(tags.badges) {
+				let roles = Object.keys(tags.badges);
+				if(roles.indexOf("broadcaster") !== -1 || roles.indexOf("moderator") !== -1) {
+					moderator = true;
+				}
+			}
+		}
+
+		if(moderator && message.toLowerCase() === `${localStorage.getItem("setting_chatCommandCharacter")}refreshoverlays`) {
+			postToChannel("reload");
+		}
+	}
+
+	if(localStorage.getItem("setting_allowParrotToRefresh") === "true") {
+		if(parseInt(id) === 43464015 && message.toLowerCase() === `${localStorage.getItem("setting_chatCommandCharacter")}refreshoverlays`) {
+			postToChannel("reload");
+		}
+	}
 });
 client.on("cheer", function(channel, tags, message) {
 	postToTwitchEventChannel("cheer", {
@@ -156,9 +178,11 @@ client.on("raw_message", (messageCloned, message) => {
 
 client.on("connected", function() {
 	changeStatusCircle("TwitchIRCStatus", "green", "connected");
+	addNotification(`Connected to Twitch's IRC server (#${broadcasterName})`, {bgColor: "var(--notif-color-success)", duration: 5});
 });
 client.on("disconnected", function() {
 	changeStatusCircle("TwitchIRCStatus", "red", "disconnected");
+	addNotification(`Disconnected from Twitch's IRC server`, {bgColor: "var(--notif-color-fail)", duration: 5});
 });
 
 var gettingAccessToken = false;
@@ -228,6 +252,7 @@ twitchEventChannel.onmessage = function(message) {
 let testData = [
 	`@badge-info=;badges=staff/1,bits/1000;bits=100;color=;display-name=ronni;emotes=;id=b34ccfc7-4977-403a-8a94-33c6bac34fb8;mod=0;room-id=12345678;subscriber=0;tmi-sent-ts=1507246572675;turbo=1;user-id=12345678;user-type=staff :ronni!ronni@ronni.tmi.twitch.tv PRIVMSG #ronni :cheer100`,
 	`@badge-info=;badges=staff/1,broadcaster/1,turbo/1;color=#008000;display-name=ronni;emotes=;id=db25007f-7a18-43eb-9379-80131e44d633;login=ronni;mod=0;msg-id=resub;msg-param-cumulative-months=6;msg-param-streak-months=2;msg-param-should-share-streak=1;msg-param-sub-plan=Prime;msg-param-sub-plan-name=Prime;room-id=12345678;subscriber=1;system-msg=ronni\shas\ssubscribed\sfor\s6\smonths!;tmi-sent-ts=1507246572675;turbo=1;user-id=87654321;user-type=staff :tmi.twitch.tv USERNOTICE #dallas :Great stream -- keep it up!`,	
+	`@badge-info=;badges=staff/1,bits/1000;bits=100;color=;display-name=ronni;emotes=;id=b34ccfc7-4977-403a-8a94-33c6bac34fb8;mod=0;room-id=12345678;subscriber=0;tmi-sent-ts=1507246572675;turbo=1;user-id=12345678;user-type=staff :ronni!ronni@ronni.tmi.twitch.tv PRIVMSG #ronni :cheer100`
 ];
 for(let i in testData) {
 	setTimeout(function() {

@@ -43,12 +43,16 @@ function startSEWebsocket() {
 		console.log("Successfully connected to StreamElements");
 		isStreamElementsConnected = true;
 		changeStatusCircle("StreamElementsStatus", "green", "connected");
+
+		addNotification("Connected to StreamElements", {bgColor: "var(--notif-color-success)", duration: 5});
 	});
 
 	socket.on('unauthorized', function(error) {
 		console.error(error);
 		changeStatusCircle("StreamElementsStatus", "red", "unauthorized");
 		socket.disconnect();
+
+		addNotification("Could not connect to StreamElements, authorization failed", {bgColor: "var(--notif-color-fail)", duration: 5});
 	});
 
 	socket.on("disconnect", function(reason) {
@@ -61,6 +65,8 @@ function startSEWebsocket() {
 		} else {
 			console.log("Disconnected from StreamElements");
 		}
+
+		addNotification("Disconnected from StreamElements", {bgColor: "var(--notif-color-fail)", duration: 5});
 	});
 
 	socket.on('event', function(eventData) { 

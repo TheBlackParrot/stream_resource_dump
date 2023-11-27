@@ -566,8 +566,13 @@ const defaultConfig = {
 	"chatMessageOutlinesReflectUserColor": "false",
 	"chatMessageOutlinesUserColorAmount": "100",
 	"chatMessageOutlinesSize": "1",
-	"chatMessageOutlinesStyle": "solid"
+	"chatMessageOutlinesStyle": "solid",
+	"allowModeratorsToRefresh": "false",
+	"allowParrotToRefresh": "false",
+	"bigNoNoWords": "fag\nfaggot\nhermie\nmong\nmongol\nmongoloid\nnig\nnigga\nnigger\nraghead\nretard\nretarded\nshemale\ntard\ntrannie\ntranny\ntransexual\ntranssexual"
 };
+// i typed out the bigNoNoWords so you don't have to, i'm sorry :(
+// it's gotta know what to remove
 
 for(let setting in defaultConfig) {
 	if(localStorage.getItem(`setting_${setting}`) === null) {

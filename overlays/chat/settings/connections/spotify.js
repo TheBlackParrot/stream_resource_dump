@@ -16,11 +16,20 @@ function getRandomString(length) {
 }
 
 async function generateCodeChallenge(codeVerifier) {
-	const encoder = new TextEncoder();
-	const data = encoder.encode(codeVerifier);
-	const digest = await window.crypto.subtle.digest('SHA-256', data);
+	let out;
 
-	return btoa(String.fromCharCode.apply(null, new Uint8Array(digest))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+	if(typeof window.crypto.subtle === "undefined") {
+		let md = forge.md.sha256.create();
+		md.update(codeVerifier);
+		out = btoa(md.digest().data);
+	} else {
+		const encoder = new TextEncoder();
+		const data = encoder.encode(codeVerifier);
+		const digest = await window.crypto.subtle.digest('SHA-256', data);
+		out = btoa(String.fromCharCode.apply(null, new Uint8Array(digest)));
+	}
+
+	return out.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 }
 
 const spotifyCodeVerifier = getRandomString(128);
@@ -125,15 +134,14 @@ if(spotifyCode) {
 async function getState() {
 	let accessToken = localStorage.getItem("spotify_accessToken");
 
-	var response = {ok: false};
-	while(!response.ok) {
-		var response = await fetch("https://api.spotify.com/v1/me/player", {
-			headers: {
-				Authorization: `Bearer ${accessToken}`
-			}
-		});
-
-		await delay(5000);
+	const response = await fetch("https://api.spotify.com/v1/me/player", {
+		headers: {
+			Authorization: `Bearer ${accessToken}`
+		}
+	});
+	
+	if(!response.ok) {
+		regenCodes();
 	}
 
 	const data = await response.json();
@@ -211,7 +219,7 @@ async function updateTrack() {
 		updateTrackTO = setTimeout(updateTrack, parseFloat(localStorage.getItem("setting_spotify_refreshInterval")) * 1000);
 	}).catch(async function() {
 		console.log("error thrown, retriggering");
-		await delay(500);
+		await delay(5000);
 		updateTrack();
 	});
 }

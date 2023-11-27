@@ -54,12 +54,12 @@ function processStreamlabsEvent(eventData) {
 	console.log(eventData);
 	let data = eventData.message[0];
 
-	if(eventData.for === "streamlabs" && eventData.type === "donation") {
+	if(eventData.type === "donation") {
 		sendEvent({name: data.from}, {text: `${data.formatted_amount} ${data.currency}`});
 		addAlert({name: data.from, showPFP: false, html: `tipped <span class="alertBold alertThing">${data.formatted_amount} ${data.currency}</span> via Streamlabs!`, audio: "positive-game-sound-2.ogg"});
 	}
 
-	if(eventData.for === "treatstream" && eventData.type === "treat") {
+	if(eventData.type === "treat") {
 		// TODO: move this to treatstream's actual API in case something happens on streamlabs's side, always good to reduce points of failure.
 		// (https://treatstream.com/api/details)
 		// streamlabs will do in the meantime
@@ -159,6 +159,7 @@ function startTiltifyWebsocket() {
 		setTimeout(startTiltifyWebsocket, 20000);
 	});
 }
+startTiltifyWebsocket();
 
 var lastAsk = Infinity;
 function callTwitch(data, callback) {
@@ -720,6 +721,18 @@ twitchEventChannel.onmessage = function(message) {
 	}
 };
 
+function postToTwitchEventChannel(event, data) {
+	let message = {
+		event: event
+	};
+	if(data) {
+		message.data = data;
+	}
+
+	console.log(message);
+	twitchEventChannel.postMessage(message);
+}
+
 const hideAccounts = [
 	"streamlabs",
 	"streamelements",
@@ -766,7 +779,8 @@ var customGreetingSounds = {
 	"saphirapendragon": "roadrunner_meep_meep.ogg",
 	"nebelmonsterchen": "Hello_-_Adele_Sound_effect.ogg",
 	"silvereagledev": "bird_up.ogg",
-	"latinfoxy": "fox_hehehe.ogg"
+	"latinfoxy": "fox_hehehe.ogg",
+	"gabrielhtx": "scout_circles.ogg"
 };
 var greetingSoundAmount = 11;
 

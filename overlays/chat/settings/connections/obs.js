@@ -25,13 +25,17 @@ async function connectOBS() {
 
 		console.log(`Connected to OBS Websocket Server v${details.obsWebSocketVersion} (using RPC v${details.negotiatedRpcVersion})`);
 		changeStatusCircle("OBSStatus", "green", `connected (v${details.obsWebSocketVersion}; RPC v${details.negotiatedRpcVersion})`);
+
+		addNotification("Connected to OBS", {bgColor: "var(--notif-color-success)", duration: 5});
 	} catch (error) {
-		console.error('Failed to connect to OBS, retrying in 15 seconds...', error.code, error.message);
+		console.error('Failed to connect to OBS, retrying in 20 seconds...', error.code, error.message);
 		changeStatusCircle("OBSStatus", "red", "disconnected");
+
+		addNotification("Disconnected from OBS", {bgColor: "var(--notif-color-fail)", duration: 5});
 
 		setTimeout(function() {
 			connectOBS();
-		}, 15000);
+		}, 20000);
 	}
 }
 

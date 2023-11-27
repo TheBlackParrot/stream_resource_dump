@@ -53,7 +53,7 @@ function prepareMessage(tags, message, self, forceHighlight) {
 
 	getTwitchUserInfo(tags['user-id'], function(userData) {
 		let outObject = {
-			message: message.trim(),
+			message: message,
 			isOverlayMessage: isOverlayMessage,
 			type: tags['message-type'],
 			highlighted: highlighted,
@@ -422,6 +422,17 @@ const chatFuncs = {
 				}
 
 				infoElement.removeClass("loading");
+
+				const bigNoNoWords = localStorage.getItem("setting_bigNoNoWords").split("\n");
+				for(const toCheck of ["songName", "songAuthorName", "songSubName", "levelAuthorName"]) {
+					mapData.metadata[toCheck] = mapData.metadata[toCheck].trim().split(" ").map(function(word) {
+						if(bigNoNoWords.indexOf(word.toLowerCase()) !== -1) {
+							canShowArt = false;
+							return "[REDACTED]";
+						}
+						return word;
+					}).join(" ");
+				}
 
 				let artElement = $(`<div class="bsrArt"></div>`);
 				if(canShowArt) {
@@ -1369,6 +1380,14 @@ function renderMessageBlock(data, rootElement) {
 
 		//console.log(` 8: ${words}`);
 
+		const bigNoNoWords = localStorage.getItem("setting_bigNoNoWords").split("\n");
+		words = words.map(function(word) {
+			if(bigNoNoWords.indexOf(word.toLowerCase()) !== -1) {
+				return "[REDACTED]";
+			}
+			return word;
+		});
+
 		// what i'm doing here to fix in-line seamless emotes is stupid but it works yay
 		messageBlock.html(words.join(" ").replaceAll("</span> <span", "</span><span"));
 
@@ -1459,6 +1478,15 @@ function renderMessageBlock(data, rootElement) {
 		}
 
 		let words = stuff.split(" ");
+
+		const bigNoNoWords = localStorage.getItem("setting_bigNoNoWords").split("\n");
+		words = words.map(function(word) {
+			if(bigNoNoWords.indexOf(word.toLowerCase()) !== -1) {
+				return "[REDACTED]";
+			}
+			return word;
+		});
+
 		for(let wordIdx in words) {
 			let word = words[wordIdx];
 			if(word[0] === "@") {
@@ -2009,27 +2037,15 @@ function startBTTVWebsocket() {
 
 // TODO: i really just need to make these classes frick
 var sevenTVWS;
+//var sevenTVSessionID;
 function start7TVWebsocket() {
 	console.log("Starting connection to 7TV...");
 	if(localStorage.getItem("setting_enable7TV") === "false") {
-		try {
-			sevenTVWS.close();
-		} catch {
-			// do nothing
-		}
 		console.log("7TV is disabled");
 		return;
 	}
 
-	if(typeof sevenTVWS === "undefined") {
-		sevenTVWS = new WebSocket('wss://events.7tv.io/v3');
-	} else {
-		try {
-			sevenTVWS.close();
-		} catch {
-			// do nothing
-		}		
-	}
+	sevenTVWS = new WebSocket('wss://events.7tv.io/v3');
 
 	let subscribe = function(type) {
 		let msg = {
@@ -2050,7 +2066,6 @@ function start7TVWebsocket() {
 	const dispatchFuncs = {
 		"entitlement.create": function(data) {
 			if(data.kind !== "BADGE" && data.kind !== "PAINT") {
-				// only need badges. not supporting user emote sets, sorry
 				return;
 			}
 
@@ -2080,25 +2095,35 @@ function start7TVWebsocket() {
 						externalBadgeCache[parseInt(userData.id)] = createBadgeCacheObject({});
 					}
 
-					externalBadgeCache[parseInt(userData.id)].seventv.badges.push({
-						ref_id: data.ref_id,
-						img: `https://cdn.7tv.app/badge/${data.ref_id}/${size}`
-					});
+					var foundRefID = false;
+					for(const currentBadge of externalBadgeCache[parseInt(userData.id)].seventv.badges) {
+						if(currentBadge.ref_id === data.ref_id) {
+							foundRefID = true;
+						}
+					}
+					if(!foundRefID) {
+						externalBadgeCache[parseInt(userData.id)].seventv.badges.push({
+							ref_id: data.ref_id,
+							img: `https://cdn.7tv.app/badge/${data.ref_id}/${size}`
+						});
+					}
 					break;
 
 				case "PAINT":
-					sevenTVPaints[data.ref_id].users.push(userData.id);
+					if(sevenTVPaints[data.ref_id].users.indexOf(userData.id) === -1) {
+						sevenTVPaints[data.ref_id].users.push(userData.id);
+					}
 					if(!(userData.id in sevenTVUsers)) {
 						sevenTVUsers[userData.id] = {};
 					}
+
 					sevenTVUsers[userData.id].paint = data.ref_id;
 					break;
 			}
 		},
 
 		"entitlement.delete": function(data) {
-			if(data.kind !== "BADGE") {
-				// only need badges. not supporting user emote sets, sorry
+			if(data.kind !== "BADGE" && data.kind !== "PAINT") {
 				return;
 			}
 
@@ -2117,18 +2142,29 @@ function start7TVWebsocket() {
 			}
 			userData.id = parseInt(userData.id);
 
-			if(!(userData.id in externalBadgeCache)) {
-				return;
-			}
+			switch(data.kind) {
+				case "BADGE":
+					if(!(userData.id in externalBadgeCache)) {
+						return;
+					}
 
-			let newBadgeArray = [];
-			for(const badge of externalBadgeCache[parseInt(userData.id)].seventv.badges) {
-				if(badge.ref_id !== data.ref_id) {
-					newBadgeArray.push(badge);
-				}
-			}
+					externalBadgeCache[userData.id].seventv.badges = externalBadgeCache[userData.id].seventv.badges.filter(function(badge) { 
+						return badge.ref_id !== data.ref_id;
+					});
+					break;
 
-			externalBadgeCache[parseInt(userData.id)].seventv.badges = newBadgeArray;
+				case "PAINT":
+					sevenTVPaints[data.ref_id].users = sevenTVPaints[data.ref_id].users.filter(function(u) { return u !== userData.id; });
+
+					if(!(userData.id in sevenTVUsers)) {
+						sevenTVUsers[userData.id] = {paint: null};
+					} else {
+						if(sevenTVUsers[userData.id].paint === data.ref_id) {
+							sevenTVUsers[userData.id].paint = null;
+						}
+					}
+					break;
+			}
 		},
 
 		"cosmetic.create": function(data) {
@@ -2152,8 +2188,25 @@ function start7TVWebsocket() {
 		let data = JSON.parse(msg.data);
 		console.log(data);
 
-		if(data.op === 0) {
-			dispatch(data.d);
+		switch(data.op) {
+			case 0:
+				dispatch(data.d);
+				break;
+
+			case 1:
+				/*if(!sevenTVSessionID) {
+					sevenTVSessionID = data.d.session_id;
+				}*/
+				break;
+
+			case 2:
+				// ok what is 37 supposed to be
+				// sevenTVWS.send(JSON.stringify({op: 37}));
+				break;
+
+			case 4:
+				sevenTVWS.close();
+				break;
 		}
 	});
 
@@ -2169,6 +2222,21 @@ function start7TVWebsocket() {
 				console.log("broadcaster data is present, doing 7TV subscriptions...");
 			}
 
+			// 7tv's v3 API is unfinished, in case you're wondering why no one's using opcode 34/RESUME
+			// it's because there's nothing there. it's commented out. it will *always return a failure*, the FFZ 7tv addon also just restarts the connection
+			/*if(sevenTVSessionID) {
+				let msg = {
+					op: 34,
+					d: {
+						session_id: sevenTVSessionID
+					}
+				};
+				sevenTVWS.send(JSON.stringify(msg));
+			} else {
+				subscribe("cosmetic.*");
+				subscribe("entitlement.*");
+			}*/
+
 			subscribe("cosmetic.*");
 			subscribe("entitlement.*");
 		};
@@ -2176,7 +2244,7 @@ function start7TVWebsocket() {
 	});
 
 	sevenTVWS.addEventListener("close", function() {
-		console.log("Disconnected from 7TV, trying again in 20 seconds...");
-		setTimeout(start7TVWebsocket, 20000);
+		console.log("Disconnected from 7TV, trying again in 5 seconds...");
+		setTimeout(start7TVWebsocket, 5000);
 	});
 }

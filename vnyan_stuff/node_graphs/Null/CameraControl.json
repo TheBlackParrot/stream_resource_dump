@@ -623,6 +623,208 @@
                 "86caf4c4-1fb9-472d-b34d-4b0025d1a312638272511805584865"
             ],
             "headerColor": 0
+        },
+        {
+            "id": "3061b7f2-f5ed-4069-adb1-51a496ebcdc9",
+            "values": [
+                {
+                    "key": "triggerName",
+                    "value": "SetPrevCam"
+                }
+            ],
+            "posX": -503.3320007324219,
+            "posY": -1290.666259765625,
+            "path": "Nodes/TriggerNode",
+            "inputSocketIds": [],
+            "outputSocketIds": [
+                "8a4f7d1c-91cd-4dee-b2e7-35a448d3a255638363945781579694"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "8c8a77c0-3e55-4d55-a625-b1baa482c1fd",
+            "values": [
+                {
+                    "key": "triggerName",
+                    "value": "MenuCam"
+                },
+                {
+                    "key": "callTime",
+                    "value": "1"
+                }
+            ],
+            "posX": 120.0013427734375,
+            "posY": -1300.666748046875,
+            "path": "Nodes/CallTriggerNode",
+            "inputSocketIds": [
+                "bf671b4a-8799-4c4f-a13f-abfdc8e661cf638363945839443386"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "5190d69d-cf74-4c73-bdba-490606ca503a",
+            "values": [
+                {
+                    "key": "value",
+                    "value": "<CurrentCamera>"
+                },
+                {
+                    "key": "compare",
+                    "value": "Menu"
+                },
+                {
+                    "key": "type",
+                    "value": "0"
+                }
+            ],
+            "posX": -196.66537475585938,
+            "posY": -1300.666259765625,
+            "path": "Nodes/CompareTextNode",
+            "inputSocketIds": [
+                "65691388-a3af-4029-a66f-63b3dec16bd5638363946009348139"
+            ],
+            "outputSocketIds": [
+                "355cf515-f273-4026-af90-9e12ebbe3bf1638363946009348139",
+                "db997985-9057-4957-b102-ece71ea8e9b4638363946009348139"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "e7887a78-400e-4d36-a6e9-e4a234b625b7",
+            "values": [
+                {
+                    "key": "value",
+                    "value": "<CurrentCamera>"
+                },
+                {
+                    "key": "compare",
+                    "value": "Playing"
+                },
+                {
+                    "key": "type",
+                    "value": "0"
+                }
+            ],
+            "posX": -196.66537475585938,
+            "posY": -1513.99951171875,
+            "path": "Nodes/CompareTextNode",
+            "inputSocketIds": [
+                "2871092b-edef-466f-9037-af1a10885329638363946572981633"
+            ],
+            "outputSocketIds": [
+                "bbc5aad0-00f7-4529-9c9d-21d738cb8acc638363946572981633",
+                "7152660a-8973-4c2f-9557-c197cc3e7b72638363946572981633"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "97152fde-4901-4edf-b2e0-4994e4c4a912",
+            "values": [
+                {
+                    "key": "triggerName",
+                    "value": "PlayingCam"
+                },
+                {
+                    "key": "callTime",
+                    "value": "1"
+                }
+            ],
+            "posX": 123.33465576171875,
+            "posY": -1522.333251953125,
+            "path": "Nodes/CallTriggerNode",
+            "inputSocketIds": [
+                "2f701044-0fe4-48fa-985d-33a259b50664638363946650307133"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "f92ad7e3-c089-45af-b4e7-6597b2dd79e7",
+            "values": [
+                {
+                    "key": "value",
+                    "value": "<CurrentCamera>"
+                },
+                {
+                    "key": "compare",
+                    "value": "Intermission"
+                },
+                {
+                    "key": "type",
+                    "value": "0"
+                }
+            ],
+            "posX": -194.9987030029297,
+            "posY": -1728.9993896484375,
+            "path": "Nodes/CompareTextNode",
+            "inputSocketIds": [
+                "2d03b8e8-9fe9-4273-b656-84f6600ce1f3638363946759951242"
+            ],
+            "outputSocketIds": [
+                "ee02a592-6fb9-4a73-bb24-d5f514fd970f638363946759951242",
+                "5daa9a90-a105-4ec5-abbf-9d3fe20d5036638363946759951242"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "dd21381b-0b2a-41de-a39d-a2e974f08a57",
+            "values": [
+                {
+                    "key": "triggerName",
+                    "value": "IntermissionCam"
+                },
+                {
+                    "key": "callTime",
+                    "value": "1"
+                }
+            ],
+            "posX": 130.00131225585938,
+            "posY": -1738.9998779296875,
+            "path": "Nodes/CallTriggerNode",
+            "inputSocketIds": [
+                "a3c09442-bd74-4bfc-a37a-6cd96de956e3638363946834462969"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "10dd6aa1-ea19-4861-9f7b-961c6844a12a",
+            "values": [
+                {
+                    "key": "timerName",
+                    "value": "SetPrevCam"
+                }
+            ],
+            "posX": -506.6657409667969,
+            "posY": -1403.9998779296875,
+            "path": "Nodes/TimerNode",
+            "inputSocketIds": [],
+            "outputSocketIds": [
+                "c4879e6a-734e-40fa-bc2c-11a9f8984cf6638363948735223703"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "b78dd183-245b-4e79-8ea9-2b234ec34faa",
+            "values": [
+                {
+                    "key": "camera",
+                    "value": "0"
+                },
+                {
+                    "key": "duration",
+                    "value": ""
+                }
+            ],
+            "posX": 126.33467102050781,
+            "posY": -1955.168212890625,
+            "path": "Nodes/CameraNode",
+            "inputSocketIds": [
+                "56d4cd76-d858-4833-9c6d-5840764d8e53638366363769913079"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
         }
     ],
     "connections": [
@@ -780,6 +982,46 @@
             "id": "7991c209-e00b-4e26-8021-9a9b6ca20bcc",
             "outputSocketId": "54354d2d-5ffd-45c3-bc98-a2f3ab552b24638272508077712163",
             "inputSocketId": "560005e8-c5dd-412e-ac76-5e20335f849a638272510310202609"
+        },
+        {
+            "id": "a16e9617-3fe5-439b-9412-cc8a2cc35af6",
+            "outputSocketId": "8a4f7d1c-91cd-4dee-b2e7-35a448d3a255638363945781579694",
+            "inputSocketId": "65691388-a3af-4029-a66f-63b3dec16bd5638363946009348139"
+        },
+        {
+            "id": "3681f71b-5099-4dcd-ab57-6b3f2902b8cb",
+            "outputSocketId": "355cf515-f273-4026-af90-9e12ebbe3bf1638363946009348139",
+            "inputSocketId": "bf671b4a-8799-4c4f-a13f-abfdc8e661cf638363945839443386"
+        },
+        {
+            "id": "f6686f4a-7e46-4f3e-addd-71b8d2b50184",
+            "outputSocketId": "db997985-9057-4957-b102-ece71ea8e9b4638363946009348139",
+            "inputSocketId": "2871092b-edef-466f-9037-af1a10885329638363946572981633"
+        },
+        {
+            "id": "86ed495d-2eeb-4ca9-88c6-45598b9819b8",
+            "outputSocketId": "bbc5aad0-00f7-4529-9c9d-21d738cb8acc638363946572981633",
+            "inputSocketId": "2f701044-0fe4-48fa-985d-33a259b50664638363946650307133"
+        },
+        {
+            "id": "93868333-d66b-4cf6-8bbd-c7e82cd9ee78",
+            "outputSocketId": "7152660a-8973-4c2f-9557-c197cc3e7b72638363946572981633",
+            "inputSocketId": "2d03b8e8-9fe9-4273-b656-84f6600ce1f3638363946759951242"
+        },
+        {
+            "id": "d3691b9b-ce18-4c9c-ac6e-cedfc98ef2e9",
+            "outputSocketId": "ee02a592-6fb9-4a73-bb24-d5f514fd970f638363946759951242",
+            "inputSocketId": "a3c09442-bd74-4bfc-a37a-6cd96de956e3638363946834462969"
+        },
+        {
+            "id": "f9429463-ef35-406b-9dda-caece15b6b72",
+            "outputSocketId": "c4879e6a-734e-40fa-bc2c-11a9f8984cf6638363948735223703",
+            "inputSocketId": "65691388-a3af-4029-a66f-63b3dec16bd5638363946009348139"
+        },
+        {
+            "id": "b068abc0-caa6-4dd9-a2dd-1ff023a811cc",
+            "outputSocketId": "5daa9a90-a105-4ec5-abbf-9d3fe20d5036638363946759951242",
+            "inputSocketId": "56d4cd76-d858-4833-9c6d-5840764d8e53638366363769913079"
         }
     ]
 }

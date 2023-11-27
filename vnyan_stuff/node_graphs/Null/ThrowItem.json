@@ -27,7 +27,7 @@
                 },
                 {
                     "key": "items",
-                    "value": "5 Side Diamond;8 Ball;Banana;Barrel;Basketball;Bell;Bone;Boo;Cake;Coin;Crab;Donut;Duck;Fish;Hambuger;Laptop;Metal Nut;Moai;Nut;Onion;Pizza;Ring;Skull;SoccerBall;Star;Tennis Ball;Wooden Box"
+                    "value": "5 Side Diamond;8 Ball;Banana;Barrel;Basketball;Bell;Bone;Boo;Cake;Coin;Crab;Donut;Fish;Hambuger;Laptop;Metal Nut;Moai;Nut;Onion;Pizza;Skull;SoccerBall;Star;Tennis Ball;Wooden Box"
                 },
                 {
                     "key": "flinch",
@@ -234,11 +234,11 @@
                 },
                 {
                     "key": "min",
-                    "value": "100"
+                    "value": "300"
                 },
                 {
                     "key": "max",
-                    "value": "500"
+                    "value": "700"
                 }
             ],
             "posX": -89.6663818359375,
@@ -1730,7 +1730,7 @@
                 },
                 {
                     "key": "items",
-                    "value": "Bloq (Blue) (Alt);Bloq (Red) (Alt)"
+                    "value": "Bloq (Blue) (Alt)"
                 },
                 {
                     "key": "flinch",
@@ -1742,7 +1742,7 @@
                 },
                 {
                     "key": "volume",
-                    "value": "0.6305735"
+                    "value": "0.5414015"
                 },
                 {
                     "key": "tag",

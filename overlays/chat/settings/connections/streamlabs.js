@@ -30,6 +30,8 @@ function startSLWebsocket() {
 		console.log("Successfully connected to Streamlabs");
 		isStreamlabsConnected = true;
 		changeStatusCircle("StreamlabsStatus", "green", "connected");
+
+		addNotification("Connected to Streamlabs", {bgColor: "var(--notif-color-success)", duration: 5});
 	});
 
 	socket.on("disconnect", function() {
@@ -42,6 +44,8 @@ function startSLWebsocket() {
 		} else {
 			console.log("Disconnected from Streamlabs");
 		}
+
+		addNotification("Disconnected from Streamlabs", {bgColor: "var(--notif-color-fail)", duration: 5});
 	});
 
 	socket.on('event', function(eventData) {
