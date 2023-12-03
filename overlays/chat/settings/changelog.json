@@ -1,0 +1,42 @@
+{
+	"1701610973962": {
+		"updates": {
+			"spotify": {
+				"revision": 5,
+				"notes": [
+					[
+						"overlay will now hide itself when paused (can be turned off)"
+					],
+					[
+						"gradients can now be drawn over scannables",
+						["this may make the scannables harder for spotify apps to read if the gradient applied is too strong, use with caution"]
+					],
+					[
+						"added border radius setting for scannables"
+					],
+					[
+						"added border radius setting for cover art",
+						["i forgor to un-hardcode these my bad"]
+					],
+					[
+						"removed setting for scannable width",
+						["updates to how scannables are being rendered in the DOM makes dealing with this setting a lot more of a headache, it'll now just fill available space"]
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 28,
+				"notes": [
+					[
+						"changelogs are now shown in the new Updates tab"
+					],
+					[
+						"removed critical flag on most of the spotify settings",
+						["settings pertaining to functionality will remain marked as critical"]
+					]
+				]
+			}
+		}
+	}
+}

@@ -46,11 +46,45 @@ const spotifyFuncs = {
 		if(data.isPlaying) {
 			if(!wasPreviouslyPlaying) {
 				startTimers();
+
+				if(localStorage.getItem("setting_spotify_hideOnPause") === "true") {
+					updateMarquee();
+
+					$("#detailsWrapper").removeClass("fadeOut").addClass("fadeIn");
+					$("#title").removeClass("slideOut").addClass("slideIn");
+					setTimeout(function() {
+						$("#artist").removeClass("slideOut").addClass("slideIn");
+					}, 100);
+
+					setTimeout(function() {
+						$("#art, #artBG, #artOutline").fadeIn(500);
+					}, 250);
+
+					setTimeout(function() {
+						$("#scannable, #scannableActual").fadeIn(500);
+					}, 500);
+				}
 			}
 			wasPreviouslyPlaying = true;
 		} else {
 			if(wasPreviouslyPlaying) {
 				stopTimers();
+
+				if(localStorage.getItem("setting_spotify_hideOnPause") === "true") {
+					$("#detailsWrapper").removeClass("fadeIn").addClass("fadeOut");
+					$("#title").removeClass("slideIn").addClass("slideOut");
+					setTimeout(function() {
+						$("#artist").removeClass("slideIn").addClass("slideOut");
+					}, 100);
+
+					setTimeout(function() {
+						$("#art, #artBG, #artOutline").fadeOut(250);
+					}, 250);
+
+					setTimeout(function() {
+						$("#scannable, #scannableActual").fadeOut(250);
+					}, 500);
+				}
 			}
 			wasPreviouslyPlaying = false;
 		}
@@ -98,10 +132,15 @@ const spotifyFuncs = {
 		}, 250);
 
 		setTimeout(function() {
-			$("#scannable").fadeOut(250, function() {
-				$("#scannable").attr("src", data.scannable[(localStorage.getItem("setting_spotify_scannableUseBlack") === "true" ? "black" : "white")]);
+			$("#scannable, #scannableActual").fadeOut(250, function() {
+				let scannableImage = data.scannable[(localStorage.getItem("setting_spotify_scannableUseBlack") === "true" ? "black" : "white")];
+
+				$("#scannable").attr("src", scannableImage);
+				//$("#scannableActual").css("background-image", `url(${scannableImage})`);
+				//document.getElementById("scannableActual").style.backgroundImage = `url('${scannableImage}')`;
+				rootCSS().setProperty("--workingAroundFunnyChromiumBugLolXD", `url('${scannableImage}')`);
 				$("#scannable").on("load", function() {
-					$("#scannable").fadeIn(500);
+					$("#scannable, #scannableActual").fadeIn(500);
 				});
 			});
 		}, 500)

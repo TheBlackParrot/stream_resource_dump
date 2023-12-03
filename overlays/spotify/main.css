@@ -102,7 +102,7 @@
 	--artist-gradient-color: #FFF;
 	--artist-gradient: linear-gradient(var(--artist-gradient-angle), var(--artist-gradient-color) 20%, transparent 100%);
 
-	--scannable-width: 216px;
+	--scannable-width: 224px;
 
 	--box-shadow-effects-offset-x: 0px;
 	--box-shadow-effects-offset-y: 8px;
@@ -119,6 +119,18 @@
 	--show-scannable: flex;
 	--show-art: block;
 	--show-art-outline: block;
+
+	--scannable-border-radius: 8px;
+	--art-border-radius: 6px;
+
+	--scannable-gradient-angle: 170deg;
+	--scannable-gradient-color-start: #FFF;
+	--scannable-gradient-percent-start: 10%;
+	--scannable-gradient-color-end: #333;
+	--scannable-gradient-percent-end: 80%;
+	--scannable-gradient: linear-gradient(var(--scannable-gradient-angle), var(--scannable-gradient-color-start) var(--scannable-gradient-percent-start), var(--scannable-gradient-color-end) var(--scannable-gradient-percent-end));
+	--scannable-gradient-actual: var(--scannable-gradient);
+	--scannable-gradient-blend-mode: soft-light;
 }
 
 body {
@@ -137,6 +149,7 @@ body {
 	flex-direction: column;
 	overflow-x: hidden;
 	filter: var(--effects);
+	width: 100%;
 }
 
 #artOutline, #artBG {
@@ -161,7 +174,7 @@ body {
 }
 
 #artOutline, #artBG {
-	border-radius: 6px;
+	border-radius: var(--art-border-radius);
 }
 
 #artOutline {
@@ -180,7 +193,7 @@ body {
 	left: var(--art-outline-size);
 	width: var(--art-size);
 	height: var(--art-size);
-	border-radius: 6px;
+	border-radius: var(--art-border-radius);
 	z-index: 4;
 }
 
@@ -248,16 +261,36 @@ body {
 	align-items: center;
 }
 
-#scannable {
+#scannableActual {
 	display: block;
 	width: 100%;
-	border-radius: 8px;
+	height: 100%;
+	border-radius: var(--scannable-border-radius);
+	background-image: var(--workingAroundFunnyChromiumBugLolXD);
+	background-size: contain;
+	background-repeat: no-repeat;
 }
 
-#scannableWrapper, #artWrapper, #detailsWrapper {
+#scannableWrapper, #artWrapper {
 	margin-right: var(--element-spacing);
 }
 
 .showBoxShadow {
 	box-shadow: var(--box-shadow-effects-actual);
+}
+
+#scannableActual:after {
+	background-image: var(--scannable-gradient-actual);
+	width: 100%;
+	height: 100%;
+	display: block;
+	content: "";
+	border-radius: var(--scannable-border-radius);
+	mix-blend-mode: var(--scannable-gradient-blend-mode);
+}
+
+#scannable {
+	position: fixed;
+	top: -1000px;
+	left: -1000px;
 }

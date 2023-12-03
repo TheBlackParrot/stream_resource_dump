@@ -39,6 +39,7 @@
 
 	--settings-part-spacing: 48px;
 	--settings-part-head-font-size: calc(var(--font-size) * 1.4);
+	--settings-part-subhead-font-size: calc(var(--font-size) * 1.2);
 
 	--input-height: 22px;
 	--input-padding: 8px;
@@ -91,6 +92,8 @@
 	--notif-color-fail: #c01020a0;
 	--notif-color-normal: #000000c0;
 	--notif-color-warning: #ffee33a0;
+
+	--header-shadow: drop-shadow(0px 1px 2px #000);
 }
 ::-webkit-scrollbar { width: var(--scrollbar-width); }
 ::-webkit-scrollbar-track { background-color: var(--scrollbar-track); }
@@ -263,7 +266,17 @@ h1 .icon {
 	font-weight: var(--font-weight-bold);
 	background-image:  linear-gradient(to top, var(--border-color-bright) -30px, transparent 8px);
 	color: var(--settings-header-color);
-	filter: drop-shadow(0px 1px 2px #000);
+	filter: var(--header-shadow);
+}
+
+.part h2 {
+	color: var(--settings-header-color);
+	font-size: var(--settings-part-subhead-font-size);
+	filter: var(--header-shadow);
+}
+.part h2 em {
+	opacity: 0.5;
+	font-size: var(--font-size);
 }
 
 .setting {
@@ -717,4 +730,33 @@ input[type="range"]::-webkit-slider-runnable-track {
 
 #connectSpotifyButton {
 	background-color: #1DB954;
+}
+
+ol li, .part h2 {
+	margin-bottom: 12px;
+}
+
+ol li:before {
+	content: "• ";
+	color: var(--settings-header-color);
+}
+
+ol li ol {
+	margin-left: 0.5em;
+	padding-left: 1em;
+	margin-top: 4px;
+	border-left: 3px solid var(--border-color);
+	font-weight: 500;
+	opacity: 0.67;
+	font-size: var(--font-size-smol);
+	line-height: 1.4em;
+}
+
+ol li ol li:before {
+	content: "";
+}
+
+.newUpdates {
+	font-size: var(--font-size-smol);
+	opacity: 0.67;
 }

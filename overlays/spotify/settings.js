@@ -1,5 +1,5 @@
-const overlayRevision = 3;
-const overlayRevisionTimestamp = 1698020507248;
+const overlayRevision = 5;
+const overlayRevisionTimestamp = 1701610973962;
 
 const settingsChannel = new BroadcastChannel("settings_overlay");
 
@@ -31,10 +31,6 @@ const settingUpdaters = {
 		} else {
 			rootCSS().setProperty("--show-scannable", "none");
 		}
-	},
-
-	scannableSize: function(value) {
-		rootCSS().setProperty("--scannable-width", `${value}px`);
 	},
 
 	enableArt: function(value) {
@@ -213,8 +209,10 @@ const settingUpdaters = {
 
 		if(value === "true") {
 			$("#scannable").attr("src", currentSong.scannable.black);
+			rootCSS().setProperty("--workingAroundFunnyChromiumBugLolXD", `url('${currentSong.scannable.black}')`);
 		} else {
 			$("#scannable").attr("src", currentSong.scannable.white);
+			rootCSS().setProperty("--workingAroundFunnyChromiumBugLolXD", `url('${currentSong.scannable.white}')`);
 		}
 	},
 
@@ -239,6 +237,38 @@ const settingUpdaters = {
 		} else {
 			rootCSS().setProperty("--artist-font-style", "normal");
 		}
+	},
+
+	enableScannableGradient: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--scannable-gradient-actual", "var(--scannable-gradient)");
+		} else {
+			rootCSS().setProperty("--scannable-gradient-actual", "none");
+		}
+	},
+	scannableGradientColorStart: function(value) {
+		rootCSS().setProperty("--scannable-gradient-color-start", value);
+	},
+	scannableGradientColorEnd: function(value) {
+		rootCSS().setProperty("--scannable-gradient-color-end", value);
+	},
+	scannableGradientAngle: function(value) {
+		rootCSS().setProperty("--scannable-gradient-angle", `${value}deg`);
+	},
+	scannableGradientPercentStart: function(value) {
+		rootCSS().setProperty("--scannable-gradient-percent-start", `${value}%`);
+	},
+	scannableGradientPercentEnd: function(value) {
+		rootCSS().setProperty("--scannable-gradient-percent-end", `${value}%`);
+	},
+	scannableGradientBlendMode: function(value) {
+		rootCSS().setProperty("--scannable-gradient-blend-mode", value);
+	},
+	scannableBorderRadius: function(value) {
+		rootCSS().setProperty("--scannable-border-radius", `${value}px`);
+	},
+	artBorderRadius: function(value) {
+		rootCSS().setProperty("--art-border-radius", `${value}px`);
 	}
 };
 

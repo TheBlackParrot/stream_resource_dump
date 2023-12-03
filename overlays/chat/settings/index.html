@@ -35,6 +35,7 @@
 		<div id="sidebar">
 			<div id="rows">
 				<div class="row" data-tab="about"><i class="fas fa-heart"></i>About</div>
+				<div class="row" data-tab="updates"><i class="fas fa-star"></i>Updates <span class="newUpdates"></span></div>
 				<hr/>
 				<div class="row" data-tab="auth"><i class="fas fa-user-shield"></i>Authentication</div>
 				<div class="row" data-tab="connections"><i class="fas fa-plug"></i>Connections</div>
@@ -3300,6 +3301,12 @@
 				<div class="part">
 					<h1>Layout</h1>
 					<div class="setting">
+						<div class="settingCell">
+							<input checked id="spotify_hideOnPause" type="checkbox"/> <span class="settingInfo">Hide overlay if music is paused</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
 						<div class="settingCellLabel">
 							<span class="settingInfo">Overlay margin</span>
 						</div>
@@ -3328,12 +3335,70 @@
 							<input id="spotify_scannableUseBlack" type="checkbox"/> <span class="settingInfo">Use black foreground color</span>
 						</div>
 					</div>
-					<div class="setting" data-dependent="spotify_enableScannable">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Scannable width</span>
+					<div class="setting">
+						<div class="settingCellLabel" data-dependent="spotify_enableScannable">
+							<span class="settingInfo">Border radius</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="spotify_scannableSize" min="1" max="640" step="1" value="216"/>px
+							<input type="number" id="spotify_scannableBorderRadius" min="0" max="64" step="1" value="8"/>px
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="spotify_enableScannableGradient" type="checkbox" data-dependent="spotify_enableScannableGradient"/> <span class="settingInfo">Apply a gradient to scannables</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableScannableGradient">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Colors</span>
+						</div>
+						<div class="settingCell">
+							<input id="spotify_scannableGradientColorStart" type="text" data-coloris value="#FFFFFFFF"/><i class="fas fa-long-arrow-alt-right"></i><input id="spotify_scannableGradientColorEnd" type="text" data-coloris value="#333333FF"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableScannableGradient">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Angle</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_scannableGradientAngle" min="-360" max="360" step="1" value="170"/>deg
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableScannableGradient">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Gradient runs from</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_scannableGradientPercentStart" min="-300" max="300" step="1" value="10"/>%<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="spotify_scannableGradientPercentEnd" min="-300" max="300" step="1" value="80"/>%
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableScannableGradient">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Blending mode</span>
+						</div>
+						<div class="settingCell">
+							<select id="spotify_scannableGradientBlendMode">
+								<option value="normal">Normal</option>
+								<option value="overlay">Overlay</option>
+								<option value="multiply">Multiply</option>
+								<option value="screen">Screen</option>
+								<option value="darken">Darken</option>
+								<option value="lighten">Lighten</option>
+								<option value="color-dodge">Color dodge</option>
+								<option value="color-burn">Color burn</option>
+								<option value="hard-light">Hard light</option>
+								<option selected value="soft-light">Soft light</option>
+								<option value="difference">Difference</option>
+								<option value="exclusion">Exclusion</option>
+								<option value="hue">Hue</option>
+								<option value="saturation">Saturation</option>
+								<option value="color">Color</option>
+								<option value="luminosity">Luminosity</option>
+								<option value="plus-lighter">Plus lighter</option>
+								<!-- plus-darker is missing as of Vivaldi 6.2.3105.45, going to assume the same goes for OBS's CEF -->
+								<!--<option value="plus-darker">Plus darker</option>-->
+							</select>
 						</div>
 					</div>
 				</div>
@@ -3350,6 +3415,14 @@
 						</div>
 						<div class="settingCell">
 							<input type="number" id="spotify_artSize" min="1" max="640" step="1" value="52"/>px
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableArt">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Border radius</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_artBorderRadius" min="0" max="64" step="1" value="6"/>px
 						</div>
 					</div>
 					<hr/>
@@ -3693,6 +3766,8 @@
 					</div>
 				</div>
 			</div>
+			<div class="section" id="updatesSection" data-content="updates">
+			</div>
 		</div>
 		<div id="sensitive">
 			<div class="section">
@@ -3720,6 +3795,7 @@
 	<script type="text/javascript" src="settings.js"></script>
 	<script type="text/javascript" src="backups.js"></script>
 	<script type="text/javascript" src="broadcast.js"></script>
+	<script type="text/javascript" src="updates.js"></script>
 
 	<script type="text/javascript" src="connections/twitch.js"></script>
 	<script type="text/javascript" src="connections/obs.js"></script>

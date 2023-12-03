@@ -10,8 +10,8 @@ function changeStatusCircle(which, status, msg) {
 
 $("#sensitive .section").show();
 
-const overlayRevision = 27;
-const overlayRevisionTimestamp = 1700443845655;
+const overlayRevision = 28;
+const overlayRevisionTimestamp = 1701610973962;
 $("#revision").text(`revision ${overlayRevision}`);
 
 function resetEverything() {
@@ -123,6 +123,11 @@ function setRow(which, bypassSensitiveCheck) {
 		$("#settings").scrollLeft(scrollLefts[which]);
 	} else {
 		$("#settings").scrollLeft(0);
+	}
+
+	if(which === "updates") {
+		$(".newUpdates").fadeOut(2000);
+		localStorage.setItem("_lastClickedUpdateTab", Date.now());
 	}
 }
 setRow("about");
