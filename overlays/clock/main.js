@@ -1,30 +1,55 @@
 function setTZ() {
-	// undefined will automatically grab the system's locale. which is what we want to happen
-	let tz = new Date().toLocaleTimeString(undefined, { timeZoneName: "short" }).split(" ");
-
-	let offset = new Date().getTimezoneOffset() * -1;
-	let offsetMins = offset % 60;
-	let offsetHrs = Math.floor(offset / 60);
-
-	let formattedOffset = `UTC${offsetHrs >= 0 ? "+" : ""}${offsetHrs}${offsetMins ? `:${offsetMins.toString().padStart(2, "0")}` : ""}`;
-
-	let tzOut = [];
-	if(tz.length === 3) {
-		tzOut.push(tz[2]);
+	if(localStorage.getItem("setting_clock_overrideHeader") === "true") {
+		$("#timezone").text(localStorage.getItem("setting_clock_overrideHeaderString"));
+		return;
 	}
-	tzOut.push(formattedOffset);
 
-	$("#timezone").text(tzOut.join(" / "));
+	const dt = luxon.DateTime.local();
+
+	const tz = {
+		name: dt.offsetNameLong.split(" "),
+		initials: "",
+		prefix: "",
+		offset: dt.offset / 60
+	};
+
+	for(const word of tz.name) {
+		tz.initials += word[0].toUpperCase();
+	}
+
+	if(tz.offset < 0) { 
+		tz.prefix = "";
+	} else if(tz.offset > 0) {
+		tz.prefix = "+";
+	}
+
+	console.log(tz);
+
+	$("#timezone").text(`${tz.initials} / GMT${tz.prefix}${tz.offset}`);
 }
 setTZ();
 
 function doClock() {
-	let d = new Date();
-	let h = d.getHours().toString().padStart(2, "0");
+	const d = new Date();
+
+	let h = d.getHours();
+	if(localStorage.getItem("setting_clock_use12Hour") === "true") {
+		$("#meridiem").text(h >= 12 ? " PM" : " AM");
+		h = (h > 12 ? h % 12 : h);
+	} else {
+		$("#meridiem").empty();
+	}
+
+	if(localStorage.getItem("setting_clock_padHour") === "true") {
+		h = h.toString().padStart(2, "0");
+	}
+
 	let m = d.getMinutes().toString().padStart(2, "0");
 	let s = d.getSeconds().toString().padStart(2, "0");
 
-	$("#clock").html(`${h}:${m}<span id="seconds">${s}</span>`);
+	$("#clockMain").text(`${h}:${m}`);
+	$("#seconds").text(s);
+
 }
 doClock();
 

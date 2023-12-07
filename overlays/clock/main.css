@@ -1,72 +1,135 @@
 :root {
 	--colorDark: #000000;
 	--colorLight: #A695FF;
+
+	--shadowColor: rgba(0, 0, 0, 1);
+	--shadowXOffset: 0px;
+	--shadowYOffset: 1px;
+	--shadowBlurRadius: 2px;
+	--originalShadowStuff: drop-shadow(var(--shadowXOffset) var(--shadowYOffset) var(--shadowBlurRadius) var(--shadowColor));
+	--shadowStuff: var(--originalShadowStuff);
+
+	--outlineSize: 1px;
+	--outlineSizeNegative: -1px;
+	--outlineColor: #000000;
+	--originalOutlineStuff: drop-shadow(var(--outlineSizeNegative) var(--outlineSizeNegative) 0px var(--outlineColor))
+							drop-shadow(var(--outlineSize) var(--outlineSizeNegative) 0px var(--outlineColor))
+							drop-shadow(var(--outlineSizeNegative) var(--outlineSize) 0px var(--outlineColor))
+							drop-shadow(var(--outlineSize) var(--outlineSize) 0px var(--outlineColor));
+	--outlineStuff: var(--originalOutlineStuff);
+
+	--effectFilters: var(--outlineStuff) var(--shadowStuff);
+
+	--horizontalMargin: 8px;
+	--verticalMargin: 8px;
+
+	--verticalSpacing: 2px;
+
+	--timezoneFont: "Manrope";
+	--timezoneFontSize: 12pt;
+	--timezoneFontStyle: "normal";
+	--timezoneFontWeight: 900;
+	--timezoneAddWeight: 0.7px;
+	--timezoneLetterSpacing: 0px;
+	--timezoneColorActual: #A695FF;
+	--timezoneColor: var(--timezoneColorActual);
+
+	--clockFont: "Manrope";
+	--clockFontSize: 27pt;
+	--clockFontStyle: "normal";
+	--clockFontWeight: 900;
+	--clockAddWeight: 1px;
+	--clockLetterSpacing: -1px;
+	--clockColorActual: #FFFFFF;
+	--clockColor: var(--clockColorActual);
+
+	--secondsFont: "Manrope";
+	--secondsFontSize: 21pt;
+	--secondsFontStyle: "normal";
+	--secondsFontWeight: 900;
+	--secondsLetterSpacing: -1px;
+	--secondsAddWeight: 0.9px;
+
+	--meridiemFont: "Manrope";
+	--meridiemFontSize: 12pt;
+	--meridiemFontStyle: "normal";
+	--meridiemFontWeight: 900;
+	--meridiemLetterSpacing: 1px;
+	--meridiemAddWeight: 0.5px;
 }
 
 body {
-	font-family: "Manrope";
-	font-weight: 900;
 	background-color: #333;
 }
 
-#timezone, #clock {
-	filter: drop-shadow(1px 0px 0px rgba(0, 0, 0, 0.5))
-			drop-shadow(1px -1px 0px rgba(0, 0, 0, 0.5))
-			drop-shadow(1px 1px 0px rgba(0, 0, 0, 0.5))
-			drop-shadow(0px -1px 0px rgba(0, 0, 0, 0.5))
-			drop-shadow(0px 1px 0px rgba(0, 0, 0, 0.5))
-			drop-shadow(-1px 0px 0px rgba(0, 0, 0, 0.5))
-			drop-shadow(-1px -1px 0px rgba(0, 0, 0, 0.5))
-			drop-shadow(-1px 1px 0px rgba(0, 0, 0, 0.5))
-			drop-shadow(0px 1px 1px #000);
-}
-#clock, #seconds {
-	font-variant-numeric: tabular-nums;
-	letter-spacing: -0.02em;
+#wrapper {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	display: flex;
+	flex-direction: column;
+	padding-top: var(--verticalMargin);
+	padding-bottom: var(--verticalMargin);
+	padding-left: var(--horizontalMargin);
+	padding-right: var(--horizontalMargin);
 }
 
-#clock, #timezone {
-	position: absolute;
+#timezone, #clock {
+	padding-top: var(--verticalSpacing);
+	padding-bottom: var(--verticalSpacing);
+	padding-left: 4px;
+	padding-right: 4px;
+	filter: var(--effectFilters);
+	text-align: center;
 }
 
 #timezone {
-	left: 10px;
-	top: 13px;
-	font-size: 16px;
-	background-image: linear-gradient(170deg, #FFF 20%, var(--colorLight) 100%);
-	width: 141px;
-	display: block;
-	text-align: center;
-	-webkit-text-stroke: 0.7px transparent;
+	font-family: var(--timezoneFont);
+	font-size: var(--timezoneFontSize);
+	font-style: var(--timezoneFontStyle);
+	font-weight: var(--timezoneFontWeight);
+	background-image: linear-gradient(170deg, #FFF 20%, var(--timezoneColor) 100%);
+	-webkit-text-stroke: var(--timezoneAddWeight) transparent;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
+	letter-spacing: var(--timezoneLetterSpacing);
 }
 
 #clock {
-	position: absolute;
-	font-size: 36px;
-	top: 33px;
-	left: 10px;
-	background-image: linear-gradient(170deg, #FFF 40%, #000 160%);
+	font-family: var(--clockFont);
+	font-size: var(--clockFontSize);
+	letter-spacing: var(--clockLetterSpacing);
+	font-style: var(--clockFontStyle);
+	font-variant-numeric: tabular-nums;
+	font-weight: var(--clockFontWeight);
+	/*background-image: linear-gradient(170deg, #FFF 40%, #000 160%);*/
+	background-color: var(--clockColor);
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
-	-webkit-text-stroke: 1px transparent;
+	-webkit-text-stroke: var(--clockAddWeight) transparent;
+	display: flex;
+	align-items: baseline;
 }
 
-#seconds {
-    font-size: 26px;
-}
 #seconds:before {
 	content: ":";
 }
-
-#bleh {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 80px;
-	height: 80px;
-	z-index: -1;
-	background-color: #f00;
-	display: none;
+#seconds {
+	font-variant-numeric: tabular-nums;
+	font-family: var(--secondsFont);
+	font-size: var(--secondsFontSize);
+	font-style: var(--secondsFontStyle);
+	font-weight: var(--secondsFontWeight);
+	letter-spacing: var(--secondsLetterSpacing);
+	-webkit-text-stroke: var(--secondsAddWeight) transparent;
+}
+#meridiem {
+	font-family: var(--meridiemFont);
+	font-size: var(--meridiemFontSize);
+	letter-spacing: var(--meridiemLetterSpacing);
+	font-style: var(--meridiemFontStyle);
+	font-weight: var(--meridiemFontWeight);
+	text-align: center;
+	white-space: break-spaces;
+	-webkit-text-stroke: var(--meridiemAddWeight) transparent;
 }

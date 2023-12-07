@@ -40,7 +40,7 @@
 }
 
 .fadeIn, .fadeOut, .slideIn, .slideOut {
-	animation-duration: .5s;
+	animation-duration: var(--animation-duration);
 	animation-direction: forwards;
 	animation-fill-mode: forwards;
 	animation-iteration-count: 1;	
@@ -53,18 +53,13 @@
 
 :root {
 	--outline-effects-size: 1px;
-	--outline-effects-size-negative: calc(var(--outline-effects-size) * -1);
-	--outline-effects-size-half: calc(var(--outline-effects-size) / 2);
-	--outline-effects-color: #00000073;
+	--outline-effects-size-negative: -1px;
+	--outline-effects-color: #000000;
 
-	--outline-effects: drop-shadow(var(--outline-effects-size) 0px var(--outline-effects-size-half) var(--outline-effects-color))
-			drop-shadow(var(--outline-effects-size) var(--outline-effects-size-negative) var(--outline-effects-size-half) var(--outline-effects-color))
-			drop-shadow(var(--outline-effects-size) var(--outline-effects-size) var(--outline-effects-size-half) var(--outline-effects-color))
-			drop-shadow(0px var(--outline-effects-size-negative) var(--outline-effects-size-half) var(--outline-effects-color))
-			drop-shadow(0px var(--outline-effects-size) var(--outline-effects-size-half) var(--outline-effects-color))
-			drop-shadow(var(--outline-effects-size-negative) 0px var(--outline-effects-size-half) var(--outline-effects-color))
-			drop-shadow(var(--outline-effects-size-negative) var(--outline-effects-size-negative) var(--outline-effects-size-half) var(--outline-effects-color))
-			drop-shadow(var(--outline-effects-size-negative) var(--outline-effects-size) var(--outline-effects-size-half) var(--outline-effects-color));
+	--outline-effects:	drop-shadow(var(--outline-effects-size-negative) var(--outline-effects-size-negative) 0px var(--outline-effects-color))
+						drop-shadow(var(--outline-effects-size) var(--outline-effects-size-negative) 0px var(--outline-effects-color))
+						drop-shadow(var(--outline-effects-size-negative) var(--outline-effects-size) 0px var(--outline-effects-color))
+						drop-shadow(var(--outline-effects-size) var(--outline-effects-size) 0px var(--outline-effects-color));
 	--outline-effects-actual: var(--outline-effects);
 
 	--shadow-effects-offset-x: 0px;
@@ -131,6 +126,8 @@
 	--scannable-gradient: linear-gradient(var(--scannable-gradient-angle), var(--scannable-gradient-color-start) var(--scannable-gradient-percent-start), var(--scannable-gradient-color-end) var(--scannable-gradient-percent-end));
 	--scannable-gradient-actual: var(--scannable-gradient);
 	--scannable-gradient-blend-mode: soft-light;
+
+	--animation-duration: 0.5s;
 }
 
 body {
@@ -148,7 +145,6 @@ body {
 	display: flex;
 	flex-direction: column;
 	overflow-x: hidden;
-	filter: var(--effects);
 	width: 100%;
 }
 
@@ -197,9 +193,10 @@ body {
 	z-index: 4;
 }
 
-#titleString, #artistString {
+#titleString, #artistString, #albumString {
 	line-height: var(--details-line-height);
 	padding-bottom: 2px;
+	filter: var(--effects);
 }
 
 #title, #artist {
@@ -235,7 +232,7 @@ body {
 	background-image: var(--artist-gradient);
 }
 
-#artistString {
+#artistString, #albumString, #albumString:before, .isSingle:after {
 	font-family: var(--artist-font-family);
 	font-size: var(--artist-font-size);
 	font-weight: var(--artist-font-weight);
@@ -293,4 +290,16 @@ body {
 	position: fixed;
 	top: -1000px;
 	left: -1000px;
+}
+
+#albumString:before {
+	content: "from ";
+	font-weight: calc(var(--artist-font-weight) / 2);
+	font-size: calc(var(--artist-font-size) / 1.1);
+	margin-right: 2px;
+}
+.isSingle:after {
+	content: " (Single)";
+	font-weight: calc(var(--artist-font-weight) / 2);
+	font-size: calc(var(--artist-font-size) / 1.1);
 }

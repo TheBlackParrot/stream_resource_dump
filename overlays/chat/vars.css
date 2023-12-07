@@ -9,18 +9,13 @@
 	--originalShadowStuff: drop-shadow(var(--overlayShadowXOffset) var(--overlayShadowYOffset) var(--overlayShadowBlurRadius) var(--overlayShadowColor));
 	--shadowStuff: var(--originalShadowStuff);
 
-	--overlayOutlineSize: 3px;
-	--overlayOutlineSizeNegative: calc(var(--overlayOutlineSize) * -1);
-	--overlayOutlineSizeHalf: calc(var(--overlayOutlineSize) / 2);
-	--overlayOutlineColor: rgba(0, 0, 0, 0.45);
-	--originalOutlineStuff: drop-shadow(var(--overlayOutlineSize) 0px var(--overlayOutlineSizeHalf) var(--overlayOutlineColor))
-			drop-shadow(var(--overlayOutlineSize) var(--overlayOutlineSizeNegative) var(--overlayOutlineSizeHalf) var(--overlayOutlineColor))
-			drop-shadow(var(--overlayOutlineSize) var(--overlayOutlineSize) var(--overlayOutlineSizeHalf) var(--overlayOutlineColor))
-			drop-shadow(0px var(--overlayOutlineSizeNegative) var(--overlayOutlineSizeHalf) var(--overlayOutlineColor))
-			drop-shadow(0px var(--overlayOutlineSize) var(--overlayOutlineSizeHalf) var(--overlayOutlineColor))
-			drop-shadow(var(--overlayOutlineSizeNegative) 0px var(--overlayOutlineSizeHalf) var(--overlayOutlineColor))
-			drop-shadow(var(--overlayOutlineSizeNegative) var(--overlayOutlineSizeNegative) var(--overlayOutlineSizeHalf) var(--overlayOutlineColor))
-			drop-shadow(var(--overlayOutlineSizeNegative) var(--overlayOutlineSize) var(--overlayOutlineSizeHalf) var(--overlayOutlineColor));
+	--overlayOutlineSize: 1px;
+	--overlayOutlineSizeNegative: -1px;
+	--overlayOutlineColor: #000000;
+	--originalOutlineStuff: drop-shadow(var(--overlayOutlineSizeNegative) var(--overlayOutlineSizeNegative) 0px var(--overlayOutlineColor))
+							drop-shadow(var(--overlayOutlineSize) var(--overlayOutlineSizeNegative) 0px var(--overlayOutlineColor))
+							drop-shadow(var(--overlayOutlineSizeNegative) var(--overlayOutlineSize) 0px var(--overlayOutlineColor))
+							drop-shadow(var(--overlayOutlineSize) var(--overlayOutlineSize) 0px var(--overlayOutlineColor));
 	--outlineStuff: var(--originalOutlineStuff);
 
 	--effectFilters: var(--outlineStuff) var(--shadowStuff);

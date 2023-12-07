@@ -398,7 +398,7 @@
 							<span class="settingInfo">Bottom margin</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="chatMessageUserInfoBottomMargin" min="0" max="64" step="1" value="4"/>px
+							<input type="number" id="chatMessageUserInfoBottomMargin" min="0" max="64" step="1" value="3"/>px
 						</div>
 					</div>
 					<div class="setting">
@@ -414,7 +414,7 @@
 							<span class="settingInfo">Element spacing</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="chatMessageUserInfoElementSpacing" min="0" max="64" step="0.5" value="14"/>px
+							<input type="number" id="chatMessageUserInfoElementSpacing" min="0" max="64" step="0.5" value="12"/>px
 						</div>
 					</div>
 					<hr/>
@@ -548,7 +548,7 @@
 							<span class="settingInfo">Size</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="chatMessageFontSize" min="4" max="64" step="0.25" value="16"/>pt
+							<input type="number" id="chatMessageFontSize" min="4" max="64" step="0.25" value="15"/>pt
 						</div>
 					</div>
 					<div class="setting">
@@ -585,7 +585,7 @@
 							<span class="settingInfo">Emboldening amount</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="messageBoldAmount" min="0" max="4" step="0.05" value="1.25"/>px
+							<input type="number" id="messageBoldAmount" min="0" max="4" step="0.05" value="0.9"/>px
 						</div>
 					</div>
 					<div class="setting">
@@ -593,7 +593,7 @@
 							<span class="settingInfo">Line height</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="chatMessageLineHeight" min="16" max="64" step="0.5" value="28"/>px
+							<input type="number" id="chatMessageLineHeight" min="16" max="64" step="0.5" value="26"/>px
 						</div>
 					</div>
 					<hr/>
@@ -897,7 +897,7 @@
 							<span class="settingInfo">Block spacing</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="chatBlockSpacing" min="0" max="128" step="1" value="20"/>px
+							<input type="number" id="chatBlockSpacing" min="0" max="128" step="1" value="16"/>px
 						</div>
 					</div>
 					<div class="setting">
@@ -1294,7 +1294,7 @@
 							<span class="settingInfo">Start effects after</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="chatHistoryStartAfter" min="0" max="100" step="1" value="3"/>message blocks
+							<input type="number" id="chatHistoryStartAfter" min="0" max="100" step="1" value="4"/>message blocks
 						</div>
 					</div>
 					<hr/>
@@ -1308,7 +1308,7 @@
 							<span class="settingInfo">Fade out per block</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="chatFadeHistoryStep" min="0" max="100" step="0.25" value="7"/>%
+							<input type="number" id="chatFadeHistoryStep" min="0" max="100" step="0.25" value="15"/>%
 						</div>
 					</div>
 					<hr/>
@@ -1408,7 +1408,7 @@
 							<span class="settingInfo">Color</span>
 						</div>
 						<div class="settingCell">
-							<input id="overlayOutlineColor" type="text" data-coloris value="#00000073"/>
+							<input id="overlayOutlineColor" type="text" data-coloris value="#000000"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="overlayOutlines">
@@ -1521,10 +1521,25 @@
 					<hr/>
 					<div class="setting">
 						<div class="settingCellLabel">
-							<span class="settingInfo">Censor words in chat<br/><span style="font-size: var(--font-size-smol); opacity: 0.67;">(One word per line)</span></span>
+							<span class="settingInfo">Censor words in chat<br/><span style="font-size: var(--font-size-smol); opacity: 0.67;">(One word per line, harsher filter)</span></span>
 						</div>
 						<div class="settingCell">
 							<textarea id="bigNoNoWords"></textarea>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Censor words in chat<br/><span style="font-size: var(--font-size-smol); opacity: 0.67;">(One word per line, softer filter)</span></span>
+						</div>
+						<div class="settingCell">
+							<textarea id="bigNoNoWordsWordSpecific"></textarea>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell smol">
+							The harsher filter combines chat messages into one long string of characters with non-letter characters stripped out, and characters with accent marks are "devolved" back to an English alphabet.<br/>
+							The softer filter specifically only looks for the word given, it does not combine the message into one long string of characters. Put words here if you get false positives. (This will also include words given for the harsher filter).
 						</div>
 					</div>
 				</div>
@@ -1722,6 +1737,20 @@
 						</div>
 						<div class="settingCell">
 							<input type="number" id="timestampPadding" min="-50" max="50" step="0.5" value="10"/>px
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Commands</h1>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="cmdEnableBSR" type="checkbox"/> <span class="settingInfo">Show metadata for Beat Saber map requests</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell smol">
+							<tt>bsr</tt> will be automatically disabled if your stream category is not set to <em>Beat Saber</em> when the chat overlay loads.
 						</div>
 					</div>
 				</div>
@@ -2266,12 +2295,12 @@
 					</div>
 					<div class="setting" data-dependent="avatars">
 						<div class="settingCell">
-							<input id="avatarAllowedPartner" type="checkbox"/> <span class="settingInfo">Twitch partners</span>
+							<input checked id="avatarAllowedPartner" type="checkbox"/> <span class="settingInfo">Twitch partners</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="avatars">
 						<div class="settingCell">
-							<input id="avatarAllowedStaff" type="checkbox"/> <span class="settingInfo">Twitch staff</span>
+							<input checked id="avatarAllowedStaff" type="checkbox"/> <span class="settingInfo">Twitch staff</span>
 						</div>
 					</div>
 					<hr/>
@@ -2740,6 +2769,58 @@
 					</div>
 				</div>
 				<div class="part">
+					<h1>Where to find me</h1>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<strong>Bluesky</strong>
+						</div>
+						<div class="settingCell">
+							<tt>@theblackparrot.me</tt>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<strong>Discord</strong>
+						</div>
+						<div class="settingCell" style="line-height: var(--settings-text-line-height); display: inline-block;">
+							<tt>@theblackparrot</tt><br/>
+							<tt>discord.gg/PS95E9sYhJ</tt>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<strong>Github</strong>
+						</div>
+						<div class="settingCell">
+							<tt>TheBlackParrot</tt>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<strong>Ko-fi</strong>
+						</div>
+						<div class="settingCell">
+							<tt>septilateral</tt>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<strong>Telegram</strong>
+						</div>
+						<div class="settingCell">
+							<tt>@theblackparrot</tt>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<strong>Twitch</strong>
+						</div>
+						<div class="settingCell">
+							<tt>theblackparrot</tt>
+						</div>
+					</div>
+				</div>
+				<div class="part">
 					<h1>Status</h1>
 					<div class="setting">
 						<div class="settingCellLabel">
@@ -2767,6 +2848,14 @@
 					</div>
 					<div class="setting">
 						<div class="settingCellLabel">
+							<strong>Clock Overlay</strong>
+						</div>
+						<div class="settingCell">
+							<div class="statusCircle grayCircle" id="ClockOverlayStatus"></div> <div class="statusMessage grayMessage">inactive</div>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
 							<strong>Event List / Alerts Overlay</strong>
 						</div>
 						<div class="settingCell">
@@ -2779,14 +2868,6 @@
 						</div>
 						<div class="settingCell">
 							<div class="statusCircle grayCircle" id="GoalsOverlayStatus"></div> <div class="statusMessage grayMessage">inactive</div>
-						</div>
-					</div>
-					<div class="setting" style="display: none;">
-						<div class="settingCellLabel">
-							<strong>Clock Overlay</strong>
-						</div>
-						<div class="settingCell">
-							<div class="statusCircle grayCircle" id="ClockOverlayStatus"></div> <div class="statusMessage grayMessage">inactive</div>
 						</div>
 					</div>
 					<div class="setting">
@@ -2856,46 +2937,13 @@
 					</div>
 				</div>
 				<div class="part">
-					<h1>Where to find me</h1>
+					<h1>Panel Settings</h1>
 					<div class="setting">
 						<div class="settingCellLabel">
-							<strong>Twitch</strong>
+							<span class="settingInfo">Primary color</span>
 						</div>
 						<div class="settingCell">
-							<tt>theblackparrot</tt>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<strong>Telegram</strong>
-						</div>
-						<div class="settingCell">
-							<tt>@theblackparrot</tt>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<strong>Discord</strong>
-						</div>
-						<div class="settingCell" style="line-height: var(--settings-text-line-height); display: inline-block;">
-							<tt>@theblackparrot</tt><br/>
-							<tt>discord.gg/PS95E9sYhJ</tt>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<strong>Github</strong>
-						</div>
-						<div class="settingCell">
-							<tt>TheBlackParrot</tt>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<strong>Ko-fi</strong>
-						</div>
-						<div class="settingCell">
-							<tt>septilateral</tt>
+							<input id="panel_primaryColor" type="text" data-coloris value="#cbadffff"/>
 						</div>
 					</div>
 				</div>
@@ -3305,6 +3353,11 @@
 							<input checked id="spotify_hideOnPause" type="checkbox"/> <span class="settingInfo">Hide overlay if music is paused</span>
 						</div>
 					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="spotify_enableAnimations" type="checkbox"/> <span class="settingInfo">Enable animations</span>
+						</div>
+					</div>
 					<hr/>
 					<div class="setting">
 						<div class="settingCellLabel">
@@ -3658,7 +3711,7 @@
 							<span class="settingInfo">Color</span>
 						</div>
 						<div class="settingCell">
-							<input id="spotify_outlineColor" type="text" data-coloris value="#00000073"/>
+							<input id="spotify_outlineColor" type="text" data-coloris value="#000000FF"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="spotify_enableOutlineEffects">
@@ -3762,6 +3815,340 @@
 						</div>
 						<div class="settingCell">
 							<input type="number" id="spotify_marqueeSpeed" min="1" max="9999" step="1" value="20"/>px / second
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="spotify_enableArtistAlbumCycle" type="checkbox" data-dependent="spotify_enableArtistAlbumCycle"/> <span class="settingInfo">Show album metadata along with artist metadata</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableArtistAlbumCycle">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Switch every</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_artistAlbumCycleDelay" min="0" max="60" step="0.5" value="10"/>seconds
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section" data-content="clock">
+				<div class="part">
+					<h1>Layout</h1>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Horizontal margin</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clock_overlayMarginHorizontal" min="0" max="200" step="1" value="8"/>px
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Vertical margin</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clock_overlayMarginVertical" min="0" max="200" step="1" value="8"/>px
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Element spacing</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clock_elementSpacing" min="0" max="200" step="1" value="4"/>px
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Function</h1>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="clock_use12Hour" type="checkbox" data-dependent="clock_use12Hour"/> <span class="settingInfo">Use 12-hour time format</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="clock_padHour" type="checkbox"/> <span class="settingInfo">Pad hour with a leading zero</span>
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Header</h1>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="clock_overrideHeader" type="checkbox" data-dependent="clock_overrideHeader"/> <span class="settingInfo">Override text displayed in the header</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="clock_overrideHeader">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Text to display</span>
+						</div>
+						<div class="settingCell">
+							<input id="clock_overrideHeaderString" type="text" value=""/>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Color</span>
+						</div>
+						<div class="settingCell">
+							<input id="clock_headerColor" type="text" data-coloris value="#A695FFFF"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="clock_headerAdaptColor" type="checkbox"/> <span class="settingInfo">Reflect the Now Playing overlay primary color</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Font</span>
+						</div>
+						<div class="settingCell">
+							<input id="clock_headerFont" type="text" value="Manrope"/>
+							<input id="clock_headerFontItalic" type="checkbox"/> <span class="settingInfo">Italic</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clock_headerFontSize" min="4" max="64" step="0.25" value="12"/>pt
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clock_headerFontWeight" min="100" max="900" step="25" value="900"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Additional weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clock_headerFontWeightExtra" min="0" max="8" step="0.1" value="0.7"/>px
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Character spacing</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clock_headerLetterSpacing" min="-12" max="12" step="0.2" value="0"/>px
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Clock</h1>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Color</span>
+						</div>
+						<div class="settingCell">
+							<input id="clock_clockColor" type="text" data-coloris value="#FFFFFFFF"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="clock_clockAdaptColor" type="checkbox"/> <span class="settingInfo">Reflect the Now Playing overlay primary color</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Main font</span>
+						</div>
+						<div class="settingCell">
+							<input id="clock_clockFont" type="text" value="Manrope"/>
+							<input id="clock_clockFontItalic" type="checkbox"/> <span class="settingInfo">Italic</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Seconds font</span>
+						</div>
+						<div class="settingCell">
+							<input id="clock_secondsFont" type="text" value="Manrope"/>
+							<input id="clock_secondsFontItalic" type="checkbox"/> <span class="settingInfo">Italic</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="clock_use12Hour">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Meridiem font</span>
+						</div>
+						<div class="settingCell">
+							<input id="clock_meridiemFont" type="text" value="Manrope"/>
+							<input id="clock_meridiemFontItalic" type="checkbox"/> <span class="settingInfo">Italic</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Main size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clock_clockFontSize" min="4" max="64" step="0.25" value="27"/>pt
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Seconds size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clock_secondsFontSize" min="4" max="64" step="0.25" value="21"/>pt
+						</div>
+					</div>
+					<div class="setting" data-dependent="clock_use12Hour">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Meridiem size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clock_meridiemFontSize" min="4" max="64" step="0.25" value="12"/>pt
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Main weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clock_clockFontWeight" min="100" max="900" step="25" value="900"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Seconds weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clock_secondsFontWeight" min="100" max="900" step="25" value="900"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="clock_use12Hour">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Meridiem weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clock_meridiemFontWeight" min="100" max="900" step="25" value="900"/>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Main extra weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clock_clockFontWeightExtra" min="0" max="8" step="0.1" value="1.2"/>px
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Seconds extra weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clock_secondsFontWeightExtra" min="0" max="8" step="0.1" value="0.9"/>px
+						</div>
+					</div>
+					<div class="setting" data-dependent="clock_use12Hour">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Meridiem extra weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clock_meridiemFontWeightExtra" min="0" max="8" step="0.1" value="0.5"/>px
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Character spacing</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clock_clockLetterSpacing" min="-12" max="12" step="0.2" value="-1"/>px
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Seconds character spacing</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clock_secondsLetterSpacing" min="-12" max="12" step="0.2" value="-1"/>px
+						</div>
+					</div>
+					<div class="setting" data-dependent="clock_use12Hour">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Meridiem character spacing</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clock_meridiemLetterSpacing" min="-12" max="12" step="0.2" value="1"/>px
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Filters</h1>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="clock_enableShadowEffects" type="checkbox" data-dependent="clock_enableShadowEffects"/> <span class="settingInfo">Draw shadows underneath overlay content</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="clock_enableShadowEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Color</span>
+						</div>
+						<div class="settingCell">
+							<input id="clock_shadowColor" type="text" data-coloris value="#000000FF"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="clock_enableShadowEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">X offset</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clock_shadowXOffset" min="-32" max="32" step="0.25" value="0"/>px
+						</div>
+					</div>
+					<div class="setting" data-dependent="clock_enableShadowEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Y offset</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clock_shadowYOffset" min="-32" max="32" step="0.25" value="1"/>px
+						</div>
+					</div>
+					<div class="setting" data-dependent="clock_enableShadowEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Blur amount</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clock_shadowBlurRadius" min="0" max="32" step="0.25" value="2"/>px
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="clock_enableOutlineEffects" type="checkbox" data-dependent="clock_enableOutlineEffects"/> <span class="settingInfo">Draw outlines underneath overlay content</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="clock_enableOutlineEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Color</span>
+						</div>
+						<div class="settingCell">
+							<input id="clock_outlineColor" type="text" data-coloris value="#000000FF"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="clock_enableOutlineEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clock_outlineSize" min="0" max="3" step="1" value="1"/>px
 						</div>
 					</div>
 				</div>

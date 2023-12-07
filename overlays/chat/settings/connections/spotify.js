@@ -149,9 +149,7 @@ async function getState() {
 }
 
 var updateTrackTO;
-var currentSong = {
-	uri: null
-};
+var currentSong;
 
 const spotifyEventChannel = new BroadcastChannel("spotify");
 function postToSpotifyEventChannel(data) {
@@ -164,55 +162,60 @@ function postToSpotifyEventChannel(data) {
 async function updateTrack() {
 	getState().then(async function(response) {
 		if(response.item !== null) {
-			if(currentSong.uri !== response.item.uri) {
-				let artists = [];
-				for(let i in response.item.artists) {
-					let artistItem = response.item.artists[i];
-					artists.push(artistItem.name);
-				}
+			currentSong = response.item;
 
-				let art = response.item.album.images[Math.ceil(response.item.album.images.length / 2) - 1].url;
-				let swatches = await Vibrant.from(art).getSwatches();
-				let colors = {
-					light: [],
-					dark: []
-				};
-				const checks = {
-					light: ["LightVibrant", "Vibrant", "LightMuted", "Muted"],
-					dark: ["DarkVibrant", "DarkMuted", "Muted", "Vibrant"]
-				};
+			let artists = [];
+			for(let i in response.item.artists) {
+				let artistItem = response.item.artists[i];
+				artists.push(artistItem.name);
+			}
 
-				for(let shade in checks) {
-					for(let i in checks[shade]) {
-						let check = checks[shade][i];
-						if(check in swatches) {
-							if(swatches[check] !== null) {
-								colors[shade].push(swatches[check].getRgb());
-							}
+			let art = response.item.album.images[Math.ceil(response.item.album.images.length / 2) - 1].url;
+			let swatches = await Vibrant.from(art).getSwatches();
+			let colors = {
+				light: [],
+				dark: []
+			};
+			const checks = {
+				light: ["LightVibrant", "Vibrant", "LightMuted", "Muted"],
+				dark: ["DarkVibrant", "DarkMuted", "Muted", "Vibrant"]
+			};
+
+			for(let shade in checks) {
+				for(let i in checks[shade]) {
+					let check = checks[shade][i];
+					if(check in swatches) {
+						if(swatches[check] !== null) {
+							colors[shade].push(swatches[check].getRgb());
 						}
 					}
 				}
-				let darkColor = colors.dark[0].map(function(x) { return Math.floor(x).toString(16).padStart(2, "0"); }).join("");
-				let lightColor = colors.light[0].map(function(x) { return Math.floor(x).toString(16).padStart(2, "0"); }).join("");
-
-				postToSpotifyEventChannel({event: "trackData", data: {
-					title: response.item.name,
-					artists: artists,
-					art: art,
-					colors: {
-						dark: `#${darkColor}`,
-						light: `#${lightColor}`
-					},
-					scannable: {
-						black: `https://scannables.scdn.co/uri/plain/jpeg/${lightColor}/black/640/${response.item.uri}`,
-						white: `https://scannables.scdn.co/uri/plain/jpeg/${darkColor}/white/640/${response.item.uri}`
-					},
-					uri: response.item.uri,
-					elapsed: response.progress_ms,
-					duration: response.item.duration_ms,
-					isPlaying: response.is_playing
-				}});
 			}
+			let darkColor = colors.dark[0].map(function(x) { return Math.floor(x).toString(16).padStart(2, "0"); }).join("");
+			let lightColor = colors.light[0].map(function(x) { return Math.floor(x).toString(16).padStart(2, "0"); }).join("");
+
+			// ignore response.item.album.album_type, spotify will always fill this in with "single"
+			postToSpotifyEventChannel({event: "trackData", data: {
+				title: response.item.name,
+				artists: artists,
+				album: {
+					name: response.item.album.name,
+					type: (response.item.album.total_tracks > 2 ? "album" : "single")
+				},
+				art: art,
+				colors: {
+					dark: `#${darkColor}`,
+					light: `#${lightColor}`
+				},
+				scannable: {
+					black: `https://scannables.scdn.co/uri/plain/jpeg/${lightColor}/black/640/${response.item.uri}`,
+					white: `https://scannables.scdn.co/uri/plain/jpeg/${darkColor}/white/640/${response.item.uri}`
+				},
+				uri: response.item.uri,
+				elapsed: response.progress_ms,
+				duration: response.item.duration_ms,
+				isPlaying: response.is_playing
+			}});
 		}
 
 		clearTimeout(updateTrackTO);

@@ -10,8 +10,8 @@ function changeStatusCircle(which, status, msg) {
 
 $("#sensitive .section").show();
 
-const overlayRevision = 28;
-const overlayRevisionTimestamp = 1701610973962;
+const overlayRevision = 29;
+const overlayRevisionTimestamp = 1701910291177;
 $("#revision").text(`revision ${overlayRevision}`);
 
 function resetEverything() {
@@ -198,6 +198,48 @@ $("input, select, textarea").on("change", function(e) {
 				});
 			});
 		}
+
+		if(value.toString() !== defaultConfig[setting] && defaultConfig[setting] !== "") {
+			$(`.resetToDefaultValueButton[data-setting="${setting}"]`).show();
+		} else {
+			$(`.resetToDefaultValueButton[data-setting="${setting}"]`).hide();
+		}
+	}
+
+	if(setting === "panel_primaryColor") {
+		updateSetting(`setting_${setting}`, value);
+	}
+});
+
+$("body").on("mouseup", ".resetToDefaultValueButton", function(e) {
+	const setting = $(this).attr("data-setting");
+	console.log(`wants to reset ${setting}`);
+
+	if(!setting.length) {
+		console.log("setting was empty");
+		return;
+	}
+
+	const newValue = defaultConfig[setting];
+	const element = $(`#${setting}`);
+
+	switch(element.attr("type")) {
+		case "checkbox":
+			element.prop("checked", newValue === "true").trigger("change");
+			break;
+
+		default:
+			element.val(newValue).trigger("update").trigger("change");
+	}
+
+	if(element.is("select")) {
+		FancySelect.update(element[0]);
+	} else if(element.attr("data-coloris") !== undefined) {
+		element[0].dispatchEvent(new Event('input', { bubbles: true }));
+	}
+
+	if(setting === "panel_primaryColor") {
+		updateSetting(`setting_${setting}`, newValue);
 	}
 });
 

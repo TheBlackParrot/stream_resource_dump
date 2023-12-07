@@ -1,4 +1,98 @@
 {
+	"1701910291177": {
+		"updates": {
+			"chat": {
+				"revision": 34,
+				"notes": [
+					[
+						"strengthened word filtering a bit, will now strip out non letter-characters, and reduce characters with any sort of accent marks to ascii-compliant characters and attempt to find words within the stripped string",
+						["(again, these filters are only there to prevent user-defined words from directly appearing on the overlay, there will always be a way to work around it, but it will involve messing the word up in some fashion now)"]
+					],
+					[
+						"added a toggle for !bsr output"
+					],
+					[
+						"simplified the way text outline effects are being rendered",
+						["to restore the effect back to something that looked like it did before this change, set your outline effects color to a fully opaque black. the default has been adjusted"]
+					],
+					[
+						"tweaked some default settings slightly"
+					],
+					[
+						"split the word censors into harder filters and only specific-word filters",
+						["the shorter f and n slurs were triggering false positives on the new system, it's *highly advised* to reset those settings to the new defaults"]
+					],
+					[
+						"apparently i never added the default international name settings?",
+						["uh, woops"]
+					]
+				]
+			},
+
+			"spotify": {
+				"revision": 6,
+				"notes": [
+					[
+						"added an option to display the album/compilation a song is on",
+						["will fade between the artist and the album/comp on a loop (configurable)"]
+					],
+					[
+						"added a toggle for animations"
+					],
+					[
+						"removed unnecessary condition check in state fetching"
+					],
+					[
+						"moved filter effects from parent wrapper elements to the text elements themselves"
+					],
+					[
+						"simplified the way text outline effects are being rendered"
+					]
+				]
+			},
+
+			"clock": {
+				"revision": 1,
+				"notes": [
+					[
+						"now configurable through the settings panel"
+					],
+					[
+						"timezone data now fetched through Luxon, timezone abbreviations should now be automatic for everyone"
+					],
+					[
+						"header can now be forced to show user-defined text"
+					],
+					[
+						"leading zero character on the hour display can now be toggled"
+					],
+					[
+						"added support for 12-hour time format"
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 29,
+				"notes": [
+					[
+						"added a primary color setting specifically for the settings panel in the about tab",
+						["meh, why not /shrug"]
+					],
+					[
+						"re-arranged the about tab a bit"
+					],
+					[
+						"tweaked the overall theme \"just a bit\""
+					],
+					[
+						"added a button to reset each specific setting back to defaults if the setting is not set to the default value"
+					]
+				]
+			}
+		}
+	},
+
 	"1701610973962": {
 		"updates": {
 			"spotify": {

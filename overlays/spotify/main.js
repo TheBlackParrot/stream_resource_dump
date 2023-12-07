@@ -43,6 +43,13 @@ const spotifyFuncs = {
 		elapsed = data.elapsed;
 		lastUpdate = Date.now();
 
+		let enableAnimations = (localStorage.getItem("setting_spotify_enableAnimations") === "true");
+		let timespans = {
+			small: (enableAnimations ? 100 : 0),
+			medium: (enableAnimations ? 250 : 0),
+			large: (enableAnimations ? 500 : 0)
+		};
+
 		if(data.isPlaying) {
 			if(!wasPreviouslyPlaying) {
 				startTimers();
@@ -54,15 +61,15 @@ const spotifyFuncs = {
 					$("#title").removeClass("slideOut").addClass("slideIn");
 					setTimeout(function() {
 						$("#artist").removeClass("slideOut").addClass("slideIn");
-					}, 100);
+					}, timespans.small);
 
 					setTimeout(function() {
-						$("#art, #artBG, #artOutline").fadeIn(500);
-					}, 250);
+						$("#art, #artBG, #artOutline").fadeIn(timespans.large);
+					}, timespans.medium);
 
 					setTimeout(function() {
-						$("#scannable, #scannableActual").fadeIn(500);
-					}, 500);
+						$("#scannable, #scannableActual").fadeIn(timespans.large);
+					}, timespans.large);
 				}
 			}
 			wasPreviouslyPlaying = true;
@@ -75,15 +82,15 @@ const spotifyFuncs = {
 					$("#title").removeClass("slideIn").addClass("slideOut");
 					setTimeout(function() {
 						$("#artist").removeClass("slideIn").addClass("slideOut");
-					}, 100);
+					}, timespans.small);
 
 					setTimeout(function() {
-						$("#art, #artBG, #artOutline").fadeOut(250);
-					}, 250);
+						$("#art, #artBG, #artOutline").fadeOut(timespans.medium);
+					}, timespans.medium);
 
 					setTimeout(function() {
-						$("#scannable, #scannableActual").fadeOut(250);
-					}, 500);
+						$("#scannable, #scannableActual").fadeOut(timespans.medium);
+					}, timespans.large);
 				}
 			}
 			wasPreviouslyPlaying = false;
@@ -94,6 +101,7 @@ const spotifyFuncs = {
 		}
 
 		currentSong = data;
+		clearTimeout(albumArtistCycleTO);
 
 		$("#detailsWrapper").removeClass("fadeIn").addClass("fadeOut");
 
@@ -104,6 +112,16 @@ const spotifyFuncs = {
 			$("#artist").one("animationend", function() {
 				$("#titleString").text(data.title);
 				$("#artistString").text(data.artists.join(", "));
+				$("#albumString").text(data.album.name);
+
+				if(data.album.type === "single") {
+					$("#albumString").addClass("isSingle");
+				} else {
+					$("#albumString").removeClass("isSingle");
+				}
+
+				$("#albumString").hide();
+				$("#artistString").show();
 
 				updateMarquee();
 
@@ -117,22 +135,27 @@ const spotifyFuncs = {
 				$("#title").removeClass("slideOut").addClass("slideIn");
 				setTimeout(function() {
 					$("#artist").removeClass("slideOut").addClass("slideIn");
-				}, 100);
+					if(localStorage.getItem("setting_spotify_enableArtistAlbumCycle") === "true") {
+						albumArtistCycleTO = setTimeout(function() {
+							cycleAlbumArtist("album");
+						}, parseInt(localStorage.getItem("setting_spotify_artistAlbumCycleDelay")) * 1000);
+					}
+				}, timespans.small);
 			});
-		}, 100);
+		}, timespans.small);
 
 		setTimeout(function() {
-			$("#art, #artBG, #artOutline").fadeOut(250, function() {
+			$("#art, #artBG, #artOutline").fadeOut(timespans.medium, function() {
 				$("#art, #artBG, #artOutline").attr("src", data.art);
 
 				$("#art").on("load", function() {
-					$("#art, #artBG, #artOutline").fadeIn(500);
+					$("#art, #artBG, #artOutline").fadeIn(timespans.large);
 				});
 			});
-		}, 250);
+		}, timespans.medium);
 
 		setTimeout(function() {
-			$("#scannable, #scannableActual").fadeOut(250, function() {
+			$("#scannable, #scannableActual").fadeOut(timespans.medium, function() {
 				let scannableImage = data.scannable[(localStorage.getItem("setting_spotify_scannableUseBlack") === "true" ? "black" : "white")];
 
 				$("#scannable").attr("src", scannableImage);
@@ -140,10 +163,10 @@ const spotifyFuncs = {
 				//document.getElementById("scannableActual").style.backgroundImage = `url('${scannableImage}')`;
 				rootCSS().setProperty("--workingAroundFunnyChromiumBugLolXD", `url('${scannableImage}')`);
 				$("#scannable").on("load", function() {
-					$("#scannable, #scannableActual").fadeIn(500);
+					$("#scannable, #scannableActual").fadeIn(timespans.large);
 				});
 			});
-		}, 500)
+		}, timespans.large)
 	}
 };
 
@@ -174,6 +197,31 @@ function stopTimers() {
 		clearInterval(timer);
 		return false;
 	});
+}
+
+var albumArtistCycleTO;
+function cycleAlbumArtist(which) {
+	clearTimeout(albumArtistCycleTO);
+
+	let fadeDuration = (localStorage.getItem("setting_spotify_enableAnimations") === "true" ? 250 : 0)
+
+	if(which === "artist") {
+		$("#albumString").fadeOut(fadeDuration, function() {
+			$("#artistString").fadeIn(fadeDuration);
+		});
+	} else {
+		$("#artistString").fadeOut(fadeDuration, function() {
+			$("#albumString").fadeIn(fadeDuration);
+		});		
+	}
+
+	if(localStorage.getItem("setting_spotify_enableArtistAlbumCycle") === "true") {
+		let nextCycle = (which === "artist" ? "album" : "artist");
+
+		albumArtistCycleTO = setTimeout(function() {
+			cycleAlbumArtist(nextCycle);
+		}, parseInt(localStorage.getItem("setting_spotify_artistAlbumCycleDelay")) * 1000);
+	}
 }
 
 const spotifyChannel = new BroadcastChannel("spotify");

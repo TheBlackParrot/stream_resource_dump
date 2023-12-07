@@ -121,6 +121,24 @@ broadcastFuncs = {
 		$("#rows").append('<div class="row extraRow" data-tab="spotify"><i class="fab fa-spotify"></i>Now Playing</div>');
 
 		checkToSendSpotifyData();
+	},
+
+	ClockOverlayExists: function(message) {
+		let settingsKeys = Object.keys(defaultConfig);
+		let settingsKeysExclude = settingsKeys.filter((key) => key.substr(0, 6) === "clock_");
+		postToChannel("settingsKeysClock", settingsKeysExclude);
+
+		if($('.row[data-tab="clock"]').is(":visible")) {
+			return;
+		}
+
+		console.log("Clock overlay is active");
+		changeStatusCircle("ClockOverlayStatus", "green", `loaded (r${message.data.version})`);
+
+		if(!$(".extraHR").length) {
+			$("#rows").append($('<hr class="extraHR"/>'));
+		}
+		$("#rows").append('<div class="row extraRow" data-tab="clock"><i class="fas fa-clock"></i>Clock</div>');
 	}
 };
 

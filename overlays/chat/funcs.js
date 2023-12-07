@@ -58,7 +58,7 @@ function callTwitch(data, callback) {
 function systemMessage(msg) {
 	let tagsObject = {
 		"username": "<system>",
-		"display-name": `Overlay (r${overlayRevision})`,
+		"display-name": `Chat Overlay (r${overlayRevision})`,
 		"user-id": "-1",
 		"is-overlay-message": true,
 		"message-type": "system",
@@ -443,15 +443,53 @@ function isUserBot(username) {
 	return false;
 }
 
-/*
-const idChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-function getRandomIDString(length) {
-	var out = "";
+function isWordSafe(word) {
+	const bigNoNoWords = [].concat(localStorage.getItem("setting_bigNoNoWords").split("\n"), localStorage.getItem("setting_bigNoNoWordsWordSpecific").split("\n"));
+	word = word.trim().toLowerCase().replace(/[\d,!-/,:-@,[-`,{-~]/gi, "");
 
-	for(let i = 0; i < length; i++) {
-		out = `${out}${idChars[Math.floor(Math.random() * idChars.length)]}`
+	if(bigNoNoWords.indexOf(word) !== -1) {
+		return false;
 	}
 
-	return out;
+	let devolved = word.split("").map(function(char) {
+		if(char in characterDevolveMap) {
+			return characterDevolveMap[char];
+		}
+		return char;
+	}).join("");
+
+	for(const badWord of bigNoNoWords) {
+		if(devolved === badWord) {
+			return false;
+		}
+	}
+
+	return true;
 }
-*/
+
+function isStringSafe(data) {
+	const bigNoNoWords = localStorage.getItem("setting_bigNoNoWords").split("\n");
+
+	let words = data.trim().toLowerCase().replace(/[\d,!-/,:-@,[-`,{-~]/gi, "").split(" ");
+
+	for(const word of words) {
+		if(bigNoNoWords.indexOf(word) !== -1) {
+			return false;
+		}
+	}
+
+	let devolved = words.join("").split("").map(function(char) {
+		if(char in characterDevolveMap) {
+			return characterDevolveMap[char];
+		}
+		return char;
+	}).join("");
+
+	for(const badWord of bigNoNoWords) {
+		if(devolved.indexOf(badWord) !== -1) {
+			return false;
+		}
+	}
+
+	return true;
+}

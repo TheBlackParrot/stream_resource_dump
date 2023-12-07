@@ -366,11 +366,14 @@ const chatFuncs = {
 	flag: function(data, args) { chatFuncs["flags"](data, args); },
 
 	bsr: function(data, args, msgElement) {
+		if(localStorage.getItem("setting_cmdEnableBSR") !== "true") {
+			return;
+		}
+		
 		if(channelData.game_id !== "503116") {
 			return;
 		}
-		// todo: add a setting to disable this
-		// very much future todo: make this an external script or something. make a plugin system. idk.
+
 		if(!args.length) {
 			return;
 		}
@@ -423,15 +426,10 @@ const chatFuncs = {
 
 				infoElement.removeClass("loading");
 
-				const bigNoNoWords = localStorage.getItem("setting_bigNoNoWords").split("\n");
 				for(const toCheck of ["songName", "songAuthorName", "songSubName", "levelAuthorName"]) {
-					mapData.metadata[toCheck] = mapData.metadata[toCheck].trim().split(" ").map(function(word) {
-						if(bigNoNoWords.indexOf(word.toLowerCase()) !== -1) {
-							canShowArt = false;
-							return "[REDACTED]";
-						}
-						return word;
-					}).join(" ");
+					if(!isStringSafe(mapData.metadata[toCheck])) {
+						mapData.metadata[toCheck] = "[REDACTED]";
+					}
 				}
 
 				let artElement = $(`<div class="bsrArt"></div>`);
@@ -1380,9 +1378,8 @@ function renderMessageBlock(data, rootElement) {
 
 		//console.log(` 8: ${words}`);
 
-		const bigNoNoWords = localStorage.getItem("setting_bigNoNoWords").split("\n");
 		words = words.map(function(word) {
-			if(bigNoNoWords.indexOf(word.toLowerCase()) !== -1) {
+			if(!isWordSafe(word)) {
 				return "[REDACTED]";
 			}
 			return word;
@@ -1479,13 +1476,16 @@ function renderMessageBlock(data, rootElement) {
 
 		let words = stuff.split(" ");
 
-		const bigNoNoWords = localStorage.getItem("setting_bigNoNoWords").split("\n");
 		words = words.map(function(word) {
-			if(bigNoNoWords.indexOf(word.toLowerCase()) !== -1) {
+			if(!isWordSafe(word)) {
 				return "[REDACTED]";
 			}
 			return word;
 		});
+
+		if(!isStringSafe(words.join(" "))) {
+			words = ["[REDACTED]"];
+		}
 
 		for(let wordIdx in words) {
 			let word = words[wordIdx];

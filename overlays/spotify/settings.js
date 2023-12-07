@@ -1,5 +1,5 @@
-const overlayRevision = 5;
-const overlayRevisionTimestamp = 1701610973962;
+const overlayRevision = 6;
+const overlayRevisionTimestamp = 1701910291177;
 
 const settingsChannel = new BroadcastChannel("settings_overlay");
 
@@ -124,6 +124,7 @@ const settingUpdaters = {
 	},
 	outlineSize: function(value) {
 		rootCSS().setProperty("--outline-effects-size", `${value}px`);
+		rootCSS().setProperty("--outline-effects-size-negative", `-${value}px`);
 	},
 
 	enableShadowEffects: function(value) {
@@ -191,8 +192,10 @@ const settingUpdaters = {
 	artistGradient: function(value) {
 		if(value === "true") {
 			$("#artistString").addClass("artistStringGradient");
+			$("#albumString").addClass("artistStringGradient");
 		} else {
 			$("#artistString").removeClass("artistStringGradient");
+			$("#albumString").removeClass("artistStringGradient");
 		}
 	},
 	artistGradientColor: function(value) {
@@ -269,6 +272,31 @@ const settingUpdaters = {
 	},
 	artBorderRadius: function(value) {
 		rootCSS().setProperty("--art-border-radius", `${value}px`);
+	},
+
+	enableArtistAlbumCycle: function(value) {
+		if(!$("#albumString").is(":visible") && !$("#artistString").is(":visible")) {
+			return;
+		}
+
+		$("#albumString").hide();
+		$("#artistString").show();
+
+		if(value === "true") {
+			albumArtistCycleTO = setTimeout(function() {
+				cycleAlbumArtist("artist");
+			}, parseInt(localStorage.getItem("spotify_artistAlbumCycleDelay")) * 1000);
+		} else {
+			clearTimeout(albumArtistCycleTO);
+		}
+	},
+
+	enableAnimations: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--animation-duration", `0.5s`);
+		} else {
+			rootCSS().setProperty("--animation-duration", `0s`);
+		}
 	}
 };
 

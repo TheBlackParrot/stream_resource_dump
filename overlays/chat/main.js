@@ -393,6 +393,14 @@ function getExternalChannelEmotes(broadcasterData) {
 						id: emote.id
 					}
 				}
+				for(let idx in data.channelEmotes) {
+					let emote = data.channelEmotes[idx];
+					chatEmotes[emote.code] = {
+						service: "bttv",
+						url: `https://cdn.betterttv.net/emote/${emote.id}/${useLQImages ? 1 : 3}x.${emote.imageType}`,
+						id: emote.id
+					}
+				}
 			},
 
 			error: function(err) {
@@ -468,9 +476,9 @@ function checkForUpdate() {
 	$.get(`version.json?sigh=${Date.now()}`, function(data) {
 		let v_msg = `*(**local:** r${overlayRevision}, **remote:** r${data.revision})*`;
 		if(overlayRevision !== data.revision) {
-			systemMessage(`⚠️ Overlay may be out of date! Please refresh your browser source's cache. ${v_msg}`);
+			systemMessage(`⚠️ The chat overlay may be out of date! Please refresh this browser source's cache in the source properties. ${v_msg}`);
 		} else {
-			systemMessage(`✅ Overlay is up to date. ${v_msg}`);
+			systemMessage(`✅ The chat overlay is up to date! ${v_msg}`);
 		}
 	});
 }

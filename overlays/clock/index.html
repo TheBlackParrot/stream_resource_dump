@@ -4,15 +4,23 @@
 	<link rel="stylesheet" type="text/css" href="reset.css">
 	<link rel="stylesheet" type="text/css" href="fonts.css">
 	<link rel="stylesheet" type="text/css" href="main.css">
+
+	<script type="text/javascript" src="jquery-3.6.0.min.js"></script>
+	<script type="text/javascript" src="luxon.min.js"></script>
 </head>
 
 <body>
-	<div id="clock">00:00<div id="seconds">00</div></div>
-	<div id="timezone">...</div>
+	<div id="wrapper">
+		<div id="timezone">...</div>
+		<div id="clock">
+			<span id="clockMain">00:00</span>
+			<span id="seconds">00</span>
+			<span id="meridiem"></span>
+		</div>
+	</div>
 
-	<div id="bleh"></div>
-
-	<script type="text/javascript" src="jquery-3.6.0.min.js"></script>
+	<script type="text/javascript" src="broadcast.js"></script>
+	<script type="text/javascript" src="settings.js"></script>
 	<script type="text/javascript" src="main.js"></script>
 </body>
 

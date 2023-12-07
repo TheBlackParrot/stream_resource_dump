@@ -499,6 +499,7 @@ const settingUpdaters = {
 	},
 	overlayOutlineSize: function(value) {
 		rootCSS().setProperty("--overlayOutlineSize", `${value}px`);
+		rootCSS().setProperty("--overlayOutlineSizeNegative", `-${value}px`);
 	},
 
 	pronounsAeAer: function(value) { rootCSS().setProperty("--pronouns_aeaer", `"${value}"`); },
