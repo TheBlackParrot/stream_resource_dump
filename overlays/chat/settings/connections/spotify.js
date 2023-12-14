@@ -32,7 +32,7 @@ async function generateCodeChallenge(codeVerifier) {
 	return out.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 }
 
-const spotifyCodeVerifier = getRandomString(128);
+var spotifyCodeVerifier = getRandomString(128);
 
 const spotifyParams = new URLSearchParams(window.location.search);
 const spotifyCode = spotifyParams.get('code');
@@ -150,6 +150,7 @@ async function getState() {
 
 var updateTrackTO;
 var currentSong;
+var lastUpdateDelay = -1;
 
 const spotifyEventChannel = new BroadcastChannel("spotify");
 function postToSpotifyEventChannel(data) {
@@ -160,6 +161,8 @@ function postToSpotifyEventChannel(data) {
 }
 
 async function updateTrack() {
+	const defaultUpdateDelay = parseFloat(localStorage.getItem("setting_spotify_refreshInterval")) * 1000;
+
 	getState().then(async function(response) {
 		if(response.item !== null) {
 			currentSong = response.item;
@@ -216,14 +219,30 @@ async function updateTrack() {
 				duration: response.item.duration_ms,
 				isPlaying: response.is_playing
 			}});
-		}
 
-		clearTimeout(updateTrackTO);
-		updateTrackTO = setTimeout(updateTrack, parseFloat(localStorage.getItem("setting_spotify_refreshInterval")) * 1000);
+			const delay = 100 + (response.item.duration_ms - response.progress_ms);
+
+			if(response.item.duration_ms - response.progress_ms < defaultUpdateDelay && delay !== lastUpdateDelay) {
+				console.log(`triggering early state fetching (${delay}ms remains)`);
+				clearTimeout(updateTrackTO);
+				updateTrackTO = setTimeout(updateTrack, delay);
+			} else {
+				console.log(`not triggering early state fetching (${delay}ms remains)`);
+				clearTimeout(updateTrackTO);
+				updateTrackTO = setTimeout(updateTrack, defaultUpdateDelay);
+			}
+
+			lastUpdateDelay = delay;
+		} else {
+			clearTimeout(updateTrackTO);
+			updateTrackTO = setTimeout(updateTrack, defaultUpdateDelay);
+		}
 	}).catch(async function() {
 		console.log("error thrown, retriggering");
-		await delay(5000);
-		updateTrack();
+		await delay(15000);
+		if(localStorage.getItem('spotify_accessToken')) {
+			updateTrack();
+		}
 	});
 }
 

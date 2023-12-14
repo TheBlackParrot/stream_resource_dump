@@ -20,6 +20,8 @@ function updateMarquee() {
 		let delayAmount = parseFloat(localStorage.getItem("setting_spotify_marqueeDelay")) * 1000;
 
 		if(childWidth > parentWidth) {
+			$("#title").addClass("left");
+
 			$("#titleString").bind('finished', function() {
 				$("#titleString").marquee('pause');
 				setTimeout(function() {
@@ -34,6 +36,8 @@ function updateMarquee() {
 				duplicated: true,
 				gap: parseInt(localStorage.getItem("setting_spotify_marqueeGap"))
 			});
+		} else {
+			$("#title").removeClass("left");
 		}
 	}
 }
@@ -103,6 +107,8 @@ const spotifyFuncs = {
 		currentSong = data;
 		clearTimeout(albumArtistCycleTO);
 
+		stopTimers();
+
 		$("#detailsWrapper").removeClass("fadeIn").addClass("fadeOut");
 
 		$("#title").removeClass("slideIn").addClass("slideOut");
@@ -114,10 +120,16 @@ const spotifyFuncs = {
 				$("#artistString").text(data.artists.join(", "));
 				$("#albumString").text(data.album.name);
 
+				$(":root").get(0).style.setProperty("--currentProgressAngle", '0deg');
+				prevPerc = -1;
+				updateProgress();
+				startTimers();
+
+				$("#albumString").removeClass("isSingle");
 				if(data.album.type === "single") {
-					$("#albumString").addClass("isSingle");
-				} else {
-					$("#albumString").removeClass("isSingle");
+					if(localStorage.getItem("setting_spotify_showSingleIfSingle") === "true") {
+						$("#albumString").addClass("isSingle");
+					}
 				}
 
 				$("#albumString").hide();
@@ -174,21 +186,21 @@ var elapsedTimers = [];
 var timerInterval = parseFloat(localStorage.getItem("setting_spotify_progressInterval")) * 1000;
 var prevPerc = -1;
 
+function updateProgress() {
+	let perc = ((elapsed + (Date.now() - lastUpdate)) / currentSong.duration);
+	if(perc > 1 || localStorage.getItem("setting_spotify_enableArtOutlineProgress") === "false") {
+		perc = 1;
+	}
+
+	if(perc !== prevPerc) {
+		$(":root").get(0).style.setProperty("--currentProgressAngle", `${perc * 360}deg`);
+	}
+	prevPerc = perc;	
+}
+
 function startTimers() {
 	stopTimers();
-
-	let elapsedTimer = setInterval(function() {
-		let perc = ((elapsed + (Date.now() - lastUpdate)) / currentSong.duration);
-		if(perc > 1 || localStorage.getItem("setting_spotify_enableArtOutlineProgress") === "false") {
-			perc = 1;
-		}
-
-		if(perc !== prevPerc) {
-			$(":root").get(0).style.setProperty("--currentProgressAngle", `${perc * 360}deg`);
-		}
-		prevPerc = perc;
-	}, timerInterval);
-
+	let elapsedTimer = setInterval(updateProgress, timerInterval);
 	elapsedTimers.push(elapsedTimer);
 }
 

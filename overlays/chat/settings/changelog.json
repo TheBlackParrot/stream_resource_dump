@@ -1,4 +1,87 @@
 {
+	"1702521029531": {
+		"updates": {
+			"spotify": {
+				"revision": 8,
+				"notes": [
+					[
+						"if a track ends before the next state fetch is triggered, it will now trigger early"
+					],
+					[
+						"increased the state refresh interval's default from 5 seconds to 15 seconds",
+						["this and the above change should heavily lower API requests at the cost of pausing feeling a little less snappy. would highly recommend resetting this setting to the new default"]
+					],
+					[
+						"fixed the track progress outline sometimes showing 100% even after new track data is fetched"
+					],
+					[
+						"added a setting to toggle displaying if an album is a single"
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 31,
+				"notes": [
+					[
+						"cached spotify authentication tokens can now be manually cleared if a manual re-auth is needed"
+					],
+					[
+						"fixed buttons needing a confirmation click not displaying icons after letting the confirmation click expire"
+					],
+					[
+						"ensured buttons needing a confirmation click have a static width set"
+					],
+					[
+						"changed spotify \"artist\" settings to \"secondary metadata\" settings",
+						["they also apply to the album information, so this just makes more sense"]
+					]
+				]
+			}
+		}
+	},
+
+	"1702077102594": {
+		"updates": {
+			"spotify": {
+				"revision": 7,
+				"notes": [
+					[	
+						"fixed shadow effects clipping on the left side of text"
+					],
+					[
+						"scannable height is now a fixed, static setting",
+						["this also fixes \"lines\" appearing below scannables if some other part's height exceeds the scannable's height"]
+					],
+					[
+						"merged line height settings from the title and artist elements into one setting"
+					],
+					[
+						"added setting to right-align the overlay's layout"
+					],
+					[
+						"added setting to flip the order of artist/album and title elements"
+					],
+					[
+						"added setting to change the brightness value of the cover art outline"
+					],
+					[
+						"minor default settings tweaks"
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 30,
+				"notes": [
+					[
+						"(update only contains new settings)"
+					]
+				]
+			}
+		}
+	},
+
 	"1701910291177": {
 		"updates": {
 			"chat": {

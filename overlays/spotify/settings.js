@@ -1,5 +1,5 @@
-const overlayRevision = 6;
-const overlayRevisionTimestamp = 1701910291177;
+const overlayRevision = 8;
+const overlayRevisionTimestamp = 1702506483275;
 
 const settingsChannel = new BroadcastChannel("settings_overlay");
 
@@ -86,9 +86,6 @@ const settingUpdaters = {
 	titleAdditionalFontWeight: function(value) {
 		rootCSS().setProperty("--title-additional-weight", `${value}px`);
 	},
-	titleLineHeight: function(value) {
-		rootCSS().setProperty("--title-line-height", `${value}px`);
-	},
 	titleTransform: function(value) {
 		rootCSS().setProperty("--title-transform", value);
 	},
@@ -104,9 +101,6 @@ const settingUpdaters = {
 	},
 	artistAdditionalFontWeight: function(value) {
 		rootCSS().setProperty("--artist-additional-weight", `${value}px`);
-	},
-	artistLineHeight: function(value) {
-		rootCSS().setProperty("--artist-line-height", `${value}px`);
 	},
 	artistTransform: function(value) {
 		rootCSS().setProperty("--artist-transform", value);
@@ -296,6 +290,50 @@ const settingUpdaters = {
 			rootCSS().setProperty("--animation-duration", `0.5s`);
 		} else {
 			rootCSS().setProperty("--animation-duration", `0s`);
+		}
+	},
+
+	scannableHeight: function(value) {
+		const heightRatio = 640/160;
+		rootCSS().setProperty("--scannable-height", `${value}px`);
+		rootCSS().setProperty("--scannable-width", `${value * heightRatio}px`);
+	},
+
+	lineHeight: function(value) {
+		rootCSS().setProperty("--details-line-height", `${value}px`);
+	},
+
+	useRTL: function(value) {
+		if(value === "true") {
+			$("#wrapper").removeClass("left").addClass("right");
+		} else {
+			$("#wrapper").removeClass("right").addClass("left");
+		}
+	},
+
+	flipDetails: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--details-order", "column-reverse");
+		} else {
+			rootCSS().setProperty("--details-order", "column");
+		}		
+	},
+
+	artOutlineBrightness: function(value) {
+		rootCSS().setProperty("--art-outline-brightness", `${value}%`);
+	},
+
+	showSingleIfSingle: function(value) {
+		if(currentSong.uri === null) {
+			return;
+		}
+
+		$("#albumString").removeClass("isSingle");
+
+		if(currentSong.album.type === "single") {
+			if(value === "true") {
+				$("#albumString").addClass("isSingle");
+			}
 		}
 	}
 };

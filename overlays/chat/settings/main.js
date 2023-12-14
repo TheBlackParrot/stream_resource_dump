@@ -10,8 +10,8 @@ function changeStatusCircle(which, status, msg) {
 
 $("#sensitive .section").show();
 
-const overlayRevision = 29;
-const overlayRevisionTimestamp = 1701910291177;
+const overlayRevision = 31;
+const overlayRevisionTimestamp = 1702506483275;
 $("#revision").text(`revision ${overlayRevision}`);
 
 function resetEverything() {
@@ -252,7 +252,25 @@ $("#hideSensitiveWarning").on("mouseup", function(e) {
 
 $("#reloadPanelButton").on("mouseup", function(e) {
 	location.reload();
-})
+});
+
+function changeButtonText(element, str, showIcon) {
+	const oldWidth = `${element.width()}px`;
+
+	const iconElements = element.children("i");
+	if(iconElements.length) {
+		element.attr("data-icon", $(iconElements[0]).attr("class"));
+	}
+
+	element.text(str);
+
+	if(showIcon) {
+		let icon = element.attr("data-icon");
+		element.css("width", "").prepend($(`<i class="${icon}"></i>`));
+	} else {
+		element.css("width", oldWidth);
+	}
+}
 
 var resetTimeout;
 $("#resetOverlayButton").on("mouseup", function(e) {
@@ -264,14 +282,36 @@ $("#resetOverlayButton").on("mouseup", function(e) {
 			postToChannel("reload");
 			location.reload();
 		}, 100);
+
+		changeButtonText($(this), "Reset to Defaults", true);
 	}
 
-	$(this).text("Are you sure?");
+	changeButtonText($(this), "Are you sure?", false);
 	var elem = $(this); // augh
 	resetTimeout = setTimeout(function() {
-		elem.text("Reset to Defaults");
+		changeButtonText(elem, "Reset to Defaults", true);
 	}, 5000);
 })
+
+$("#clearSpotifyButton").on("mouseup", function(e) {
+	e.preventDefault();
+
+	if($(this).text() === "Are you sure?") {
+		spotifyCodeVerifier = getRandomString(128);
+		localStorage.removeItem("spotify_refreshToken");
+		localStorage.removeItem("spotify_accessToken");
+		clearTimeout(updateTrackTO);
+
+		addNotification("Cached Spotify tokens have been cleared, please reconnect to Spotify.", {duration: 10});
+		changeButtonText($(this), "Clear Cached Tokens", true);
+	}
+
+	changeButtonText($(this), "Are you sure?", false);
+	var elem = $(this); // augh
+	resetTimeout = setTimeout(function() {
+		changeButtonText(elem, "Clear Cached Tokens", true);
+	}, 5000);
+});
 
 $.get(`version.json?sigh=${Date.now()}`, function(data) {
 	if(overlayRevision !== data.revision) {

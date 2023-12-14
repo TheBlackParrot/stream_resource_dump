@@ -75,12 +75,14 @@
 	--wrapper-margin: 12px;
 	--element-spacing: 12px;
 
+	--details-line-height: 24px;
+	--details-order: column;
+
 	--title-font-family: "Manrope";
 	--title-font-size: 19pt;
 	--title-font-weight: 900;
 	--title-transform: none;
 	--title-color: #fff;
-	--title-line-height: 28px;
 	--title-additional-weight: 0.2px;
 	--title-font-style: normal;
 
@@ -88,7 +90,6 @@
 	--artist-font-size: 12pt;
 	--artist-font-weight: 900;
 	--artist-transform: none;
-	--artist-line-height: 24px;
 	--artist-additional-weight: 0px;
 	--artist-font-style: normal;
 	--artist-color-static: #aaa;
@@ -110,6 +111,7 @@
 
 	--art-size: 52px;
 	--art-outline-size: 2px;
+	--art-outline-brightness: 175%;
 
 	--show-scannable: flex;
 	--show-art: block;
@@ -126,13 +128,21 @@
 	--scannable-gradient: linear-gradient(var(--scannable-gradient-angle), var(--scannable-gradient-color-start) var(--scannable-gradient-percent-start), var(--scannable-gradient-color-end) var(--scannable-gradient-percent-end));
 	--scannable-gradient-actual: var(--scannable-gradient);
 	--scannable-gradient-blend-mode: soft-light;
+	--scannable-height: 52px;
 
 	--animation-duration: 0.5s;
 }
 
 body {
-	background: #222;
+	background: #aaa;
 	overflow: hidden;
+}
+
+.left {
+	direction: ltr;
+}
+.right {
+	direction: rtl;
 }
 
 #wrapper {
@@ -140,12 +150,23 @@ body {
 	flex-direction: row;
 	width: calc(100vw - (var(--wrapper-margin) * 2));
 	margin: var(--wrapper-margin);
+	align-items: center;
 }
 #detailsWrapper {
 	display: flex;
-	flex-direction: column;
+	flex-direction: var(--details-order);
 	overflow-x: hidden;
 	width: 100%;
+	position: relative;
+	top: 2px;
+	align-items: center;
+	align-self: stretch;
+}
+.left #detailsWrapper {
+	left: -4px;
+}
+.right #detailsWrapper {
+	right: -4px;
 }
 
 #artOutline, #artBG {
@@ -175,7 +196,7 @@ body {
 
 #artOutline {
 	z-index: 3;
-	filter: contrast(50%) brightness(1.67);
+	filter: contrast(50%) brightness(var(--art-outline-brightness));
 	-webkit-mask-image: conic-gradient(black 0deg var(--currentProgressAngle), transparent var(--currentProgressAngle));
 }
 
@@ -186,17 +207,30 @@ body {
 
 #art {
 	top: var(--art-outline-size);
-	left: var(--art-outline-size);
 	width: var(--art-size);
 	height: var(--art-size);
 	border-radius: var(--art-border-radius);
 	z-index: 4;
 }
+.left #art {
+	left: var(--art-outline-size);
+}
+.right #art {
+	right: var(--art-outline-size);
+}
 
+#titleString {
+	padding-bottom: 2px;
+}
 #titleString, #artistString, #albumString {
 	line-height: var(--details-line-height);
-	padding-bottom: 2px;
 	filter: var(--effects);
+}
+.left #titleString, .left #artistString, .left #albumString {
+	padding-left: 4px;
+}
+.right #titleString, .right #artistString, .right #albumString {
+	padding-right: 4px;
 }
 
 #title, #artist {
@@ -208,12 +242,10 @@ body {
 }
 
 #title {
-	align-items: flex-start;
-	line-height: var(--title-line-height);
+	line-height: var(--details-line-height);
 }
 #artist {
-	align-items: flex-end;
-	line-height: var(--artist-line-height);
+	line-height: var(--details-line-height);
 }
 
 #titleString {
@@ -255,21 +287,25 @@ body {
 	display: var(--show-scannable);
 	width: var(--scannable-width);
 	min-width: var(--scannable-width);
+	height: var(--scannable-height);
 	align-items: center;
 }
 
 #scannableActual {
 	display: block;
 	width: 100%;
-	height: 100%;
+	height: var(--scannable-height);
 	border-radius: var(--scannable-border-radius);
 	background-image: var(--workingAroundFunnyChromiumBugLolXD);
 	background-size: contain;
 	background-repeat: no-repeat;
 }
 
-#scannableWrapper, #artWrapper {
+.left #scannableWrapper, .left #artWrapper {
 	margin-right: var(--element-spacing);
+}
+.right #scannableWrapper, .right #artWrapper {
+	margin-left: var(--element-spacing);
 }
 
 .showBoxShadow {
@@ -279,7 +315,7 @@ body {
 #scannableActual:after {
 	background-image: var(--scannable-gradient-actual);
 	width: 100%;
-	height: 100%;
+	height: var(--scannable-height);
 	display: block;
 	content: "";
 	border-radius: var(--scannable-border-radius);
@@ -294,12 +330,13 @@ body {
 
 #albumString:before {
 	content: "from ";
-	font-weight: calc(var(--artist-font-weight) / 2);
-	font-size: calc(var(--artist-font-size) / 1.1);
 	margin-right: 2px;
 }
 .isSingle:after {
 	content: " (Single)";
+}
+#albumString:before, .isSingle:after {
 	font-weight: calc(var(--artist-font-weight) / 2);
 	font-size: calc(var(--artist-font-size) / 1.1);
+	line-height: 0px;	
 }

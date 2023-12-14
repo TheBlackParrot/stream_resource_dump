@@ -2732,13 +2732,21 @@
 							<input id="streamelementsJWTToken" type="password" value=""/>
 						</div>
 					</div>
+				</div>
+				<div class="part">
+					<h1>Spotify</h1>
 					<div class="setting">
 						<div class="settingCellLabel">
 							<span class="settingInfo">Spotify app client ID</span>
 						</div>
 						<div class="settingCell">
-							<input id="spotifyClientID" type="password" value=""/>
-							<div class="button" id="connectSpotifyButton"><i class="fab fa-spotify"></i> Connect to Spotify</div>
+							<input id="spotifyClientID" type="password" value=""/><br/><br/>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell centerSetting">
+							<div class="button" id="clearSpotifyButton"><i class="fas fa-trash-alt"></i> Clear Cached Tokens</div> <div class="button" id="connectSpotifyButton"><i class="fab fa-spotify"></i> Connect to Spotify</div>
 						</div>
 					</div>
 				</div>
@@ -3350,6 +3358,17 @@
 					<h1>Layout</h1>
 					<div class="setting">
 						<div class="settingCell">
+							<input id="spotify_useRTL" type="checkbox"/> <span class="settingInfo">Use right-aligned layout</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="spotify_flipDetails" type="checkbox"/> <span class="settingInfo">Flip vertical order of song details</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
 							<input checked id="spotify_hideOnPause" type="checkbox"/> <span class="settingInfo">Hide overlay if music is paused</span>
 						</div>
 					</div>
@@ -3375,6 +3394,14 @@
 							<input type="number" id="spotify_elementSpacing" min="0" max="200" step="1" value="12"/>px
 						</div>
 					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Line height</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_lineHeight" min="0" max="999" step="1" value="24"/>px
+						</div>
+					</div>
 				</div>
 				<div class="part">
 					<h1>Scannables</h1>
@@ -3383,9 +3410,18 @@
 							<input checked id="spotify_enableScannable" type="checkbox" data-dependent="spotify_enableScannable"/> <span class="settingInfo">Display a scannable code linking directly to the currently playing track</span>
 						</div>
 					</div>
+					<hr/>
 					<div class="setting">
 						<div class="settingCell" data-dependent="spotify_enableScannable">
 							<input id="spotify_scannableUseBlack" type="checkbox"/> <span class="settingInfo">Use black foreground color</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel" data-dependent="spotify_enableScannable">
+							<span class="settingInfo">Height</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_scannableHeight" min="0" max="256" step="1" value="52"/>px
 						</div>
 					</div>
 					<div class="setting">
@@ -3475,7 +3511,7 @@
 							<span class="settingInfo">Border radius</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="spotify_artBorderRadius" min="0" max="64" step="1" value="6"/>px
+							<input type="number" id="spotify_artBorderRadius" min="0" max="64" step="1" value="8"/>px
 						</div>
 					</div>
 					<hr/>
@@ -3495,6 +3531,14 @@
 						</div>
 						<div class="settingCell">
 							<input type="number" id="spotify_artOutlineSize" min="1" max="64" step="1" value="2"/>px
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableArtOutline">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Outline brightness</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_artOutlineBrightness" min="0" max="500" step="1" value="175"/>%
 						</div>
 					</div>
 				</div>
@@ -3543,14 +3587,6 @@
 					</div>
 					<div class="setting">
 						<div class="settingCellLabel">
-							<span class="settingInfo">Line height</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="spotify_titleLineHeight" min="0" max="999" step="1" value="28"/>px
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
 							<span class="settingInfo">Transform</span>
 						</div>
 						<div class="settingCell">
@@ -3564,10 +3600,29 @@
 					</div>
 				</div>
 				<div class="part">
-					<h1>Artist</h1>
+					<h1>Secondary Metadata</h1>
 					<div class="setting">
 						<div class="settingCell">
-							<input checked id="spotify_artistColorReflectsArtColor" type="checkbox"/> <span class="settingInfo">Artist color reflects album art/cover art color</span>
+							<input checked id="spotify_enableArtistAlbumCycle" type="checkbox" data-dependent="spotify_enableArtistAlbumCycle"/> <span class="settingInfo">Show album metadata along with artist metadata</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableArtistAlbumCycle">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Switch every</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_artistAlbumCycleDelay" min="0" max="60" step="0.5" value="10"/>seconds
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableArtistAlbumCycle">
+						<div class="settingCell">
+							<input checked id="spotify_showSingleIfSingle" type="checkbox"/> <span class="settingInfo">Mention if the track an album is on is a single</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="spotify_artistColorReflectsArtColor" type="checkbox"/> <span class="settingInfo">Secondary metadata color reflects album art/cover art color</span>
 						</div>
 					</div>
 					<div class="setting">
@@ -3619,14 +3674,6 @@
 					</div>
 					<div class="setting">
 						<div class="settingCellLabel">
-							<span class="settingInfo">Line height</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="spotify_artistLineHeight" min="0" max="999" step="1" value="24"/>px
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
 							<span class="settingInfo">Transform</span>
 						</div>
 						<div class="settingCell">
@@ -3641,7 +3688,7 @@
 					<hr/>
 					<div class="setting">
 						<div class="settingCell">
-							<input checked id="spotify_artistGradient" type="checkbox"/> <span class="settingInfo">Apply a gradient to the artist display</span>
+							<input checked id="spotify_artistGradient" type="checkbox"/> <span class="settingInfo">Apply a gradient to the secondary metadata display</span>
 						</div>
 					</div>
 					<div class="setting">
@@ -3776,7 +3823,7 @@
 							<span class="settingInfo">Refresh interval</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="spotify_refreshInterval" min="1" max="30" step="0.5" value="5"/>seconds
+							<input type="number" id="spotify_refreshInterval" min="1" max="30" step="0.5" value="15"/>seconds
 						</div>
 					</div>
 					<div class="setting" data-dependent="spotify_enableArtOutlineProgress">
@@ -3784,7 +3831,7 @@
 							<span class="settingInfo">Song progress interval</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="spotify_progressInterval" min="0.1" max="10" step="0.1" value="0.5"/>seconds
+							<input type="number" id="spotify_progressInterval" min="0.1" max="10" step="0.1" value="1"/>seconds
 						</div>
 					</div>
 					<hr/>
@@ -3815,20 +3862,6 @@
 						</div>
 						<div class="settingCell">
 							<input type="number" id="spotify_marqueeSpeed" min="1" max="9999" step="1" value="20"/>px / second
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCell">
-							<input checked id="spotify_enableArtistAlbumCycle" type="checkbox" data-dependent="spotify_enableArtistAlbumCycle"/> <span class="settingInfo">Show album metadata along with artist metadata</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="spotify_enableArtistAlbumCycle">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Switch every</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="spotify_artistAlbumCycleDelay" min="0" max="60" step="0.5" value="10"/>seconds
 						</div>
 					</div>
 				</div>

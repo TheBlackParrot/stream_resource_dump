@@ -480,13 +480,11 @@ const defaultConfig = {
 	"spotify_titleFontSize": "19",
 	"spotify_titleFontWeight": "900",
 	"spotify_titleAdditionalFontWeight": "0.2",
-	"spotify_titleLineHeight": "28",
 	"spotify_titleTransform": "none",
 	"spotify_artistFontFamily": "Manrope",
 	"spotify_artistFontSize": "12",
 	"spotify_artistFontWeight": "900",
 	"spotify_artistAdditionalFontWeight": "0",
-	"spotify_artistLineHeight": "24",
 	"spotify_artistTransform": "none",
 	"spotify_enableOutlineEffects": "true",
 	"spotify_outlineColor": "#000000FF",
@@ -502,8 +500,8 @@ const defaultConfig = {
 	"spotify_boxShadowYOffset": "8",
 	"spotify_boxShadowBlurRadius": "9",
 	"spotify_boxShadowBlurInset": "-5",
-	"spotify_refreshInterval": "5",
-	"spotify_progressInterval": "0.5",
+	"spotify_refreshInterval": "15",
+	"spotify_progressInterval": "1",
 	"spotify_enableMarquee": "true",
 	"spotify_marqueeDelay": "7",
 	"spotify_marqueeGap": "100",
@@ -540,7 +538,7 @@ const defaultConfig = {
 	"bigNoNoWords": "faggot\nhermie\nmongol\nmongoloid\nnigga\nnigger\nraghead\nretard\nretarded\nshemale\ntrannie\ntranny\ntransexual\ntranssexual\nphaggot",
 	"bigNoNoWordsWordSpecific": "fag\nnig\nrape\ntard\nphag\nmong",
 	"spotify_hideOnPause": "true",
-	"spotify_artBorderRadius": "6",
+	"spotify_artBorderRadius": "8",
 	"spotify_scannableBorderRadius": "8",
 	"spotify_scannableGradientAngle": "170",
 	"spotify_scannableGradientColorStart": "#FFFFFFFF",
@@ -600,7 +598,13 @@ const defaultConfig = {
 	"internationalNameSize": "75",
 	"internationalNameWeightScaling": "50",
 	"internationalNameSaturation": "33",
-	"panel_primaryColor": "#cbadffff"
+	"panel_primaryColor": "#cbadffff",
+	"spotify_scannableHeight": "52",
+	"spotify_lineHeight": "24",
+	"spotify_useRTL": "false",
+	"spotify_flipDetails": "false",
+	"spotify_artOutlineBrightness": "175",
+	"spotify_showSingleIfSingle": "true"
 };
 // i typed out the bigNoNoWords so you don't have to, i'm sorry :(
 // it's gotta know what to remove
