@@ -724,3 +724,9 @@ img.emoji {
 	left: 0;
 	padding: 0;
 }
+
+.botBadge { display: var(--displayBotBadges); }
+.affiliateBadge { display: var(--displayAffiliateBadges); }
+.sevenTVBadge { display: var(--display7TVBadges); }
+.ffzBadge { display: var(--displayFFZBadges); }
+.bttvBadge { display: var(--displayBTTVBadges); }

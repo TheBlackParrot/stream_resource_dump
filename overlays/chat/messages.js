@@ -4,7 +4,7 @@ var md = window.markdownit({html: true})
 			  'list', 'reference', 'heading', 'lheading', 'paragraph',
 			  'newline', 'escape', 'autolink']);
 
-function prepareMessage(tags, message, self, forceHighlight) {
+async function prepareMessage(tags, message, self, forceHighlight) {
 	if(self || message === null) {
 		return;
 	}
@@ -16,98 +16,85 @@ function prepareMessage(tags, message, self, forceHighlight) {
 
 	console.log(tags);
 
-	let usernameTagActual;
-	if("username" in tags) {
-		usernameTagActual = tags['username'];
-	} else if("login" in tags) {
-		usernameTagActual = tags['login'].toLowerCase();
+	let userData = await twitchUsers.getUser(tags['user-id']);
+	if(userData === null) {
+		console.log("we're going too fast wtf");
+		await delay(500);
+		return prepareMessage(tags, message, self, forceHighlight);
 	}
-	if(hideAccounts.indexOf(usernameTagActual) !== -1) {
+
+	if(hideAccounts.indexOf(userData.username) !== -1) {
 		return;
 	}
-	if(localStorage.getItem("setting_autoHideAllKnownBots") === "true" && isUserBot(usernameTagActual)) {
+	if(localStorage.getItem("setting_autoHideAllKnownBots") === "true" && userData.bot) {
 		return;
 	}
 
 	let highlighted = (forceHighlight ? true : false);
 	if('msg-id' in tags) {
-		if(tags['msg-id'] === "highlighted-message") {
+		if(tags['msg-id'] === "highlighted-message" || tags['msg-id'] === "announcement") {
 			highlighted = true;
 		}
 	}
 
-	let moderator = false;
-	if('badges' in tags) {
-		if(tags.badges) {
-			let roles = Object.keys(tags.badges);
-			if(roles.indexOf("broadcaster") !== -1 || roles.indexOf("moderator") !== -1) {
-				moderator = true;
+	if(userData.moderator === null) {
+		userData.moderator = false;
+		if('badges' in tags) {
+			if(tags.badges) {
+				let roles = Object.keys(tags.badges);
+				if(roles.indexOf("broadcaster") !== -1 || roles.indexOf("moderator") !== -1) {
+					userData.moderator = true;
+				}
 			}
 		}
 	}
+
+	userData.entitlements.twitch.badges.list = tags['badges'];
+	userData.entitlements.twitch.badges.info = tags['badge-info'];
+	userData.entitlements.twitch.color = tags['color'];
 
 	let isOverlayMessage = false;
 	if('is-overlay-message' in tags) {
 		isOverlayMessage = tags['is-overlay-message'];
 	}
 
-	getTwitchUserInfo(tags['user-id'], function(userData) {
-		let outObject = {
-			message: message,
-			isOverlayMessage: isOverlayMessage,
-			type: tags['message-type'],
-			highlighted: highlighted,
-			emotes: tags['emotes'],
-			uuid: tags['id'],
-			parseCheermotes: ('bits' in tags),
-			user: {
-				id: tags['user-id'],
-				name: tags['display-name'],
-				username: usernameTagActual,
-				badges: {
-					list: tags['badges'],
-					info: tags['badge-info']
-				},
-				color: tags['color'],
-				moderator: moderator,
-				avatar: userData.profile_image_url,
-				broadcasterType: userData.broadcaster_type,
-				createdAt: new Date(userData.created_at).getTime(),
-				bot: isUserBot(usernameTagActual)
+	let outObject = {
+		message: message,
+		isOverlayMessage: isOverlayMessage,
+		type: tags['message-type'],
+		highlighted: highlighted,
+		emotes: tags['emotes'],
+		uuid: tags['id'],
+		parseCheermotes: ('bits' in tags),
+		user: userData
+	};
+
+	switch(outObject.type) {
+		case "resub":
+			if(localStorage.getItem("setting_enableEventTagsSubs") === "true") {
+				outObject.extraInfo = localStorage.getItem("setting_eventTagsResubFormat")
+					.replaceAll("%amount", tags['msg-param-cumulative-months'])
+					.replaceAll("%tier", subTiers[tags['msg-param-sub-plan']]);
 			}
-		};
+			break;
 
-		if(localStorage.getItem("setting_chatNameUsesProminentColor") === "true") {
-			if(canShowPFP(outObject)) {
-				outObject.user.color = userData.profile_image_url_color;
+		case "subscription":
+			if(localStorage.getItem("setting_enableEventTagsSubs") === "true") {
+				outObject.extraInfo = localStorage.getItem("setting_eventTagsNewSubFormat").replaceAll("%tier", subTiers[tags['msg-param-sub-plan']]);
 			}
-		}
+			break;
 
-		switch(outObject.type) {
-			case "resub":
-				if(localStorage.getItem("setting_enableEventTagsSubs") === "true") {
-					outObject.extraInfo = localStorage.getItem("setting_eventTagsResubFormat")
-						.replaceAll("%amount", tags['msg-param-cumulative-months'])
-						.replaceAll("%tier", subTiers[tags['msg-param-sub-plan']]);
-				}
-				break;
+		case "cheer":
+		case "chat":
+			if("bits" in tags && localStorage.getItem("setting_enableEventTagsBits") === "true") {
+				outObject.extraInfo = localStorage.getItem("setting_eventTagsCheerFormat").replaceAll("%amount", parseInt(tags['bits']).toLocaleString());
+			}
+			break;
+	}
 
-			case "subscription":
-				if(localStorage.getItem("setting_enableEventTagsSubs") === "true") {
-					outObject.extraInfo = localStorage.getItem("setting_eventTagsNewSubFormat").replaceAll("%tier", subTiers[tags['msg-param-sub-plan']]);
-				}
-				break;
+	userData.entitlements.overlay.prominentColor = await userData.getProminentColor(); // fuck it we ball
 
-			case "cheer":
-			case "chat":
-				if("bits" in tags && localStorage.getItem("setting_enableEventTagsBits") === "true") {
-					outObject.extraInfo = localStorage.getItem("setting_eventTagsCheerFormat").replaceAll("%amount", parseInt(tags['bits']).toLocaleString());
-				}
-				break;
-		}
-
-		parseMessage(outObject);
-	});	
+	parseMessage(outObject);
 }
 
 const chatFuncs = {
@@ -496,9 +483,9 @@ const chatFuncs = {
 		rootCSS().setProperty(`--pfpShape${data.user.id}`, val);
 	},
 
-	refreshpfp: function(data, args) {
-		sessionStorage.removeItem(`cache_twitch${data.user.id}`);
-		getTwitchUserInfo(data.user.id);
+	refreshpfp: async function(data, args) {
+		//sessionStorage.removeItem(`cache_twitch${data.user.id}`);
+		await twitchUsers.getUser(data.user.id);
 	},
 
 	refreshemotes: function(data, args) {
@@ -509,7 +496,7 @@ const chatFuncs = {
 
 		console.log("refreshing external emotes...");
 
-		chatEmotes = {};
+		chatEmotes = new GlobalEmoteSet();
 		getGlobalChannelEmotes(broadcasterData);
 	},
 
@@ -653,8 +640,7 @@ function getRootElement(data) {
 		// [userBlock, badgeBlock, flagBlock, pronounsBlock, pfpBlock, nameBlock];
 		let elementChecks = [userBlockElements[2], userBlockElements[1], userBlockElements[4], userBlockElements[3]];
 		//                   flags,                badges,               pfp,                  pronouns
-		for(let i in elementChecks) {
-			let testAgainst = elementChecks[i];
+		for(let testAgainst of elementChecks) {
 			if(widthTest(rootElement, userBlock)) {
 				testAgainst.hide();
 			}
@@ -669,22 +655,23 @@ function getRootElement(data) {
 
 function renderBadgeBlock(data, rootElement, userBlock) {
 	let badgeBlock = $('<div class="badges" style="display: none;"></div>');
+	let badges = data.user.entitlements.twitch.badges;
 
 	if(localStorage.getItem("setting_enableTwitchBadges") === "true" && !data.isOverlayMessage) {
-		if(localStorage.getItem("setting_enableTwitchSubscriberBadges") === "true" && localStorage.getItem(`setting_enableTwitchFounderBadges`) === "false" && data.user.badges.list) {
-			if("founder" in data.user.badges.list) {
+		if(localStorage.getItem("setting_enableTwitchSubscriberBadges") === "true" && localStorage.getItem(`setting_enableTwitchFounderBadges`) === "false" && badges.list) {
+			if("founder" in badges.list) {
 				let monthPoss = [1, 1, 2, 3, 3, 3, 6, 6, 6, 9, 9, 9];
-				let founderInt = parseInt(data.user.badges.info.founder);
+				let founderInt = parseInt(badges.info.founder);
 				if(founderInt > monthPoss.length) {
 					founderInt -= founderInt % 6;
 				}
 
-				data.user.badges.list["subscriber"] = founderInt.toString();			
+				badges.list["subscriber"] = founderInt.toString();			
 			}
 		}
 
 		let useLQImages = (localStorage.getItem("setting_useLowQualityImages") === "true");
-		for(let badgeType in data.user.badges.list) {
+		for(let badgeType in badges.list) {
 			let showBadge = true;
 			let foundBadge = false;
 			let addGradient = false;
@@ -715,13 +702,12 @@ function renderBadgeBlock(data, rootElement, userBlock) {
 				continue;
 			}
 
-			let badgeData = getBadgeData(badgeType, data.user.badges.list[badgeType]);
+			let badgeData = getBadgeData(badgeType, badges.list[badgeType]);
 			let url;
 			if(typeof badgeData === "undefined") {
 				// this should only trigger on channels that have founders badges off, and do not have custom sub badges set
 				// twitch ID's these differently compared to custom sub badges
-				for(let i in twitchBadges) {
-					let bdg = twitchBadges[i];
+				for(let bdg of twitchBadges) {
 					if(bdg.set_id === "subscriber") {
 						if(useLQImages) {
 							url = bdg.versions[0].image_url_1x;
@@ -760,7 +746,31 @@ function renderBadgeBlock(data, rootElement, userBlock) {
 		}
 	}
 
-	checkForExternalBadges(data, badgeBlock, rootElement, userBlock);
+	const entitlements = data.user.entitlements;
+
+	if(entitlements.overlay.badges.length) {
+		for(let i in entitlements.overlay.badges) {
+			let badge = entitlements.overlay.badges[i];
+
+			let badgeElem = $(`<span class="badgeWrap normal_badge badgeGradient ${badge.type}Badge"></span>`);
+			if(localStorage.getItem("setting_useLowQualityImages") === "true") {
+				badgeElem.css("background-image", `url('${badge.urls.low}')`);
+			} else {
+				badgeElem.css("background-image", `url('${badge.urls.high}')`);
+			}
+
+			if("color" in badge) {
+				badgeElem.css("background-color", badge.color);
+			}
+
+			badgeBlock.prepend(badgeElem);
+			if(badgeElem.is(":visible")) {
+				badgeBlock.show();
+			}
+		}	
+	}
+
+	renderExternalBadges(data.user, badgeBlock);
 
 	return badgeBlock;
 }
@@ -773,8 +783,7 @@ function renderFlagBlock(data) {
 		let flags = localStorage.getItem(`flags_${data.user.id}`).split(",");
 
 		if(flags.length) {
-			for(let flagIdx in flags) {
-				let flag = flags[flagIdx];
+			for(let flag of flags) {
 				if(!flag) {
 					continue;
 				}
@@ -794,12 +803,10 @@ function renderPronounsBlock(data) {
 	let pronounsBlock = $('<div class="pronouns" style="display: none;"></div>');
 
 	if(localStorage.getItem("setting_enablePronouns") === "true" && !data.isOverlayMessage) {
-		getUserPronouns(data.user.username, function(fetched) {
-			if(fetched.pronoun_id !== "NONE") {
-				pronounsBlock.addClass(`pronouns_${fetched.pronoun_id}`);
-				pronounsBlock.show();
-			}
-		});
+		if(data.user.entitlements.pronouns.value !== null) {
+			pronounsBlock.addClass(`pronouns_${data.user.entitlements.pronouns.value}`);
+			pronounsBlock.show();
+		}
 	}
 
 	return pronounsBlock;
@@ -839,46 +846,48 @@ function canShowPFP(data) {
 		}
 	}
 
-	if(!("list" in data.user.badges)) {
+	let badges = data.user.entitlements.twitch.badges;
+
+	if(!("list" in badges)) {
 		return false;
 	}
-	if(typeof data.user.badges.list !== "object" || data.user.badges.list === null) {
+	if(typeof badges.list !== "object" || badges.list === null) {
 		return false;
 	}
 
-	if(localStorage.getItem("setting_avatarAllowedModerators") === "true" && ("broadcaster" in data.user.badges.list || "moderator" in data.user.badges.list)) {
+	if(localStorage.getItem("setting_avatarAllowedModerators") === "true" && ("broadcaster" in badges.list || "moderator" in badges.list)) {
 		return true;
-	} else if(localStorage.getItem("setting_avatarAllowedVIPs") === "true" && "vip" in data.user.badges.list) {
+	} else if(localStorage.getItem("setting_avatarAllowedVIPs") === "true" && "vip" in badges.list) {
 		return true;
-	} else if(localStorage.getItem("setting_avatarAllowedSubscribers") === "true" && ("subscriber" in data.user.badges.list || "founder" in data.user.badges.list)) {
+	} else if(localStorage.getItem("setting_avatarAllowedSubscribers") === "true" && ("subscriber" in badges.list || "founder" in badges.list)) {
 		return true;
-	} else if(localStorage.getItem("setting_avatarAllowedTurbo") === "true" && "turbo" in data.user.badges.list) {
+	} else if(localStorage.getItem("setting_avatarAllowedTurbo") === "true" && "turbo" in badges.list) {
 		return true;
-	} else if(localStorage.getItem("setting_avatarAllowedPrime") === "true" && "premium" in data.user.badges.list) {
+	} else if(localStorage.getItem("setting_avatarAllowedPrime") === "true" && "premium" in badges.list) {
 		return true;
-	} else if(localStorage.getItem("setting_avatarAllowedArtist") === "true" && "artist-badge" in data.user.badges.list) {
+	} else if(localStorage.getItem("setting_avatarAllowedArtist") === "true" && "artist-badge" in badges.list) {
 		return true;
 	} else if(localStorage.getItem("setting_avatarAllowedPartner") === "true" && "broadcasterType" in data.user) {
 		if(data.user.broadcasterType === "partner" || data.user.broadcasterType === "ambassador") {
 			// i have no idea if ambassadors are a valid field for this but im including it just in case
 			return true;
 		}
-	} else if(localStorage.getItem("setting_avatarAllowedStaff") === "true" && ("staff" in data.user.badges.list || "admin" in data.user.badges.list || "global_mod" in data.user.badges.list)) {
+	} else if(localStorage.getItem("setting_avatarAllowedStaff") === "true" && ("staff" in badges.list || "admin" in badges.list || "global_mod" in badges.list)) {
 		return true;
-	} else if(localStorage.getItem("setting_avatarAllowedIncludeBits") === "true" && ("bits" in data.user.badges.list || "bits-leader" in data.user.badges.list)) {
-		if("bits-leader" in data.user.badges.list) {
+	} else if(localStorage.getItem("setting_avatarAllowedIncludeBits") === "true" && ("bits" in badges.list || "bits-leader" in badges.list)) {
+		if("bits-leader" in badges.list) {
 			return true;
-		} else if("bits" in data.user.badges.list) {
-			let bitAmount = parseInt(data.user.badges.list.bits);
+		} else if("bits" in badges.list) {
+			let bitAmount = parseInt(badges.list.bits);
 			if(bitAmount >= parseInt(localStorage.getItem("setting_avatarAllowedBitsMinimum"))) {
 				return true;
 			}
 		}
-	} else if(localStorage.getItem("setting_avatarAllowedIncludeGifts") === "true" && ("sub-gifter" in data.user.badges.list || "sub-gift-leader" in data.user.badges.list)) {
-		if("sub-gift-leader" in data.user.badges.list) {
+	} else if(localStorage.getItem("setting_avatarAllowedIncludeGifts") === "true" && ("sub-gifter" in badges.list || "sub-gift-leader" in badges.list)) {
+		if("sub-gift-leader" in badges.list) {
 			return true;
-		} else if("sub-gifter" in data.user.badges.list) {
-			let giftAmount = parseInt(data.user.badges.list['sub-gifter']);
+		} else if("sub-gifter" in badges.list) {
+			let giftAmount = parseInt(badges.list['sub-gifter']);
 			if(giftAmount >= parseInt(localStorage.getItem("setting_avatarAllowedGiftsMinimum"))) {
 				return true;
 			}
@@ -895,11 +904,8 @@ function renderAvatarBlock(data) {
 		return pfpBlock;
 	}
 
-	let pfpURL = "";
-
-	let uID = data.user.id;
-	if(data.user.id < 0) {
-		uID = broadcasterData.id;
+	if(!data.user.avatar) {
+		return pfpBlock;
 	}
 
 	pfpBlock.attr("src", data.user.avatar);
@@ -935,8 +941,18 @@ function initUserBlockCustomizations(data, elements) {
 	let customizationOK = (localStorage.getItem("setting_allowUserCustomizations") === "true");
 
 	if(!localStorage.getItem(`color_${data.user.id}`)) {
-		let col = data.user.color;
-		if(!col) { col = "var(--defaultNameColor)"; }
+		let col = data.user.entitlements.twitch.color;
+		if(!col) {
+			if(localStorage.getItem("setting_chatNameUsesProminentColorAsFallback") === "true") {
+				col = data.user.entitlements.overlay.prominentColor;
+			} else {
+				col = "var(--defaultNameColor)";
+			}
+		}
+
+		if(localStorage.getItem("setting_chatNameUsesProminentColor") === "true") {
+			col = data.user.entitlements.overlay.prominentColor;
+		}
 
 		localStorage.setItem(`color_${data.user.id}`, col);
 	}
@@ -963,7 +979,19 @@ function initUserBlockCustomizations(data, elements) {
 	let usesCustomColor = true;
 	if(localStorage.getItem(`color2_${data.user.id}`) === "var(--defaultNameColorSecondary)" || !customizationOK) {
 		// (user hasn't set custom colors, double check twitch colors are up to date)
-		let col = data.user.color;
+		let col;
+		if(localStorage.getItem("setting_chatNameUsesProminentColor") === "true") {
+			col = data.user.entitlements.overlay.prominentColor;
+		} else {
+			col = data.user.entitlements.twitch.color;
+		}
+
+		if(!col) {
+			if(localStorage.getItem("setting_chatNameUsesProminentColorAsFallback") === "true") {
+				col = data.user.entitlements.overlay.prominentColor;
+			}
+		}
+
 		if(col) {
 			if(localStorage.getItem("setting_ensureNameColorsAreBrightEnough") === "true") {
 				localStorage.setItem(`color_${data.user.id}`, ensureSafeColor(col));
@@ -1109,8 +1137,9 @@ function renderNameBlock(data) {
 	// username = all latin
 	// name = anything
 	let internationalNameBlock = null;
+	let name = data.user.username;
 	if(localStorage.getItem(`usename_${data.user.id}`) === "name") {
-		let name = data.user.name;
+		name = data.user.displayName;
 		let nameTest = name.replace(/[\x00-\xFF]/ug, "");
 
 		if(nameTest.length) {
@@ -1118,7 +1147,7 @@ function renderNameBlock(data) {
 		}
 	}
 
-	let nameBlock = $(`<div class="name" data-userid="${data.user.id}"><span class="displayName">${data.user[localStorage.getItem(`usename_${data.user.id}`)]}</span></div>`);
+	let nameBlock = $(`<div class="name" data-userid="${data.user.id}"><span class="displayName">${name}</span></div>`);
 	if(internationalNameBlock !== null) {
 		nameBlock.append(internationalNameBlock);
 	}
@@ -1158,10 +1187,8 @@ function renderUserBlock(data, rootElement, overallWrapper, messageWrapper) {
 		});
 	}
 
-	if(localStorage.getItem(`use7tvpaint_${data.user.id}`) === "yes" && !data.isOverlayMessage && data.user.id in sevenTVUsers) {
-		if("paint" in sevenTVUsers[data.user.id]) {
-			set7TVPaint(nameBlock, sevenTVUsers[data.user.id].paint, data.user.id);
-		}
+	if(localStorage.getItem(`use7tvpaint_${data.user.id}`) === "yes" && !data.isOverlayMessage && data.user.entitlements.sevenTV.paint) {
+		set7TVPaint(nameBlock, data.user.entitlements.sevenTV.paint, data.user.id);
 	}
 
 	return [userBlock, badgeBlock, flagBlock, pronounsBlock, pfpBlock, nameBlock];
@@ -1252,8 +1279,7 @@ function renderMessageBlock(data, rootElement) {
 		//console.log(` 3: ${originalMessage}`);
 
 		let externalPostRemoval = [];
-		for(let charIdx in checkExternalEmotes) {
-			let char = checkExternalEmotes[charIdx];
+		for(let char of checkExternalEmotes) {
 			if(char !== "") {
 				externalPostRemoval.push(char);
 			}
@@ -1271,8 +1297,15 @@ function renderMessageBlock(data, rootElement) {
 		let eprww = [];
 		for(let wordIdx in eprw) {
 			let word = eprw[wordIdx].trim();
-			if(word.length > 0 && !(word in chatEmotes)) {
-				eprww.push(eprw[wordIdx]);
+
+			if(word.length > 0) {
+				if(!(word in chatEmotes)) {
+					eprww.push(eprw[wordIdx]);
+				} else {
+					if(!chatEmotes[word].enabled) {
+						eprww.push(eprw[wordIdx]);
+					}
+				}
 			}
 		}
 		//console.log(` 5: ${eprww} (${eprww.length})`);
@@ -1311,28 +1344,32 @@ function renderMessageBlock(data, rootElement) {
 				let externalEmote = chatEmotes[word];
 				let modifiers = [];
 
-				if("modifiers" in externalEmote) {
-					modifiers = externalEmote.modifiers;
-				}
-
-				let classes = ["emote"];
-				if("zeroWidth" in externalEmote) {
-					if(externalEmote.zeroWidth && lastWordWasEmote) {
-						classes.push("zeroWidthEmote");
-					}
-				}
-
-				words[wordIdx] = `<span class="${classes.join(" ")}" style="background-image: url('${externalEmote.url}');"${modifiers.length ? `data-emotemods="${modifiers.join(" ")}"` : ""}><img src="${externalEmote.url}"/></span>`;
-
-				if(lastWordWasEmote) {
-					if(externalEmote.zeroWidth) {
-						let tempEmote = $(words[wordIdx - 1]).append(words[wordIdx]);
-						words[wordIdx - 1] = tempEmote.prop('outerHTML');
-						words[wordIdx] = "";
-						lastWordWasEmote = false;
-					}
+				if(!externalEmote.enabled) {
+					lastWordWasEmote = false;
 				} else {
-					lastWordWasEmote = true;
+					if("modifiers" in externalEmote) {
+						modifiers = externalEmote.modifiers;
+					}
+
+					let classes = ["emote"];
+					if(externalEmote.isZeroWidth) {
+						if(lastWordWasEmote) {
+							classes.push("zeroWidthEmote");
+						}
+					}
+
+					words[wordIdx] = `<span class="${classes.join(" ")}" style="background-image: url('${externalEmote.url}');"${modifiers.length ? `data-emotemods="${modifiers.join(" ")}"` : ""}><img src="${externalEmote.url}"/></span>`;
+
+					if(lastWordWasEmote) {
+						if(externalEmote.isZeroWidth) {
+							let tempEmote = $(words[wordIdx - 1]).append(words[wordIdx]);
+							words[wordIdx - 1] = tempEmote.prop('outerHTML');
+							words[wordIdx] = "";
+							lastWordWasEmote = false;
+						}
+					} else {
+						lastWordWasEmote = true;
+					}
 				}
 			} else {
 				lastWordWasEmote = false;
@@ -1345,8 +1382,7 @@ function renderMessageBlock(data, rootElement) {
 			if(data.parseCheermotes && localStorage.getItem("setting_chatShowCheermotes") === "true") {
 				messageBlock.addClass("highlighted");
 
-				for(let cheermoteIdx in cheermotePrefixes) {
-					let prefix = cheermotePrefixes[cheermoteIdx];
+				for(let prefix of cheermotePrefixes) {
 					if(word.toLowerCase().substring(0, prefix.length) === prefix) {
 						let amount = parseInt(word.substring(prefix.length));
 						if(isNaN(amount)) {
@@ -1358,8 +1394,7 @@ function renderMessageBlock(data, rootElement) {
 
 						let tiers = Object.keys(cheermote).sort(function(a, b) { return a - b; }).reverse();
 						let reachedTier = 1;
-						for(let tierIdx in tiers) {
-							let tier = tiers[tierIdx];
+						for(let tier of tiers) {
 							if(amount >= tier) {
 								reachedTier = tier;
 								break;
@@ -1389,10 +1424,21 @@ function renderMessageBlock(data, rootElement) {
 		messageBlock.html(words.join(" ").replaceAll("</span> <span", "</span><span"));
 
 		if(data.type === "action") {
-			let col = data.user.color;
-			if(!col) {
-				col = "var(--defaultNameColor)";
+			let col;
+			if(localStorage.getItem("setting_chatNameUsesProminentColor") === "true") {
+				col = data.user.entitlements.overlay.prominentColor;
+			} else {
+				col = data.user.color;
 			}
+
+			if(!col) {
+				if(localStorage.getItem("setting_chatNameUsesProminentColorAsFallback") === "true") {
+					col = data.user.entitlements.overlay.prominentColor;
+				} else {
+					col = "var(--defaultNameColor)";
+				}
+			}
+
 			messageBlock.addClass("actionMessage");
 			messageBlock.css("background-image", `linear-gradient(170deg, #fff -50%, ${col} 150%)`);
 		}
@@ -1441,9 +1487,7 @@ function renderMessageBlock(data, rootElement) {
 					continue;
 				}
 
-				for(let i in emoteMods) {
-					let mod = emoteMods[i];
-
+				for(let mod of emoteMods) {
 					if(mod === "Hidden") {
 						continue;
 					}
@@ -1647,232 +1691,92 @@ function parseMessage(data) {
 	}
 }
 
-var externalBadgeCache = {};
+function render7TVBadges(user, badgeBlock) {
+	const entitlements = user.entitlements;
 
-function getFFZBadges(data, callback) {
-	let id = data.user.id;
-	console.log(`getting FFZ badges for ${data.user.username}...`);
-	if(localStorage.getItem("setting_enableFFZ") === "false" || localStorage.getItem("setting_enableFFZBadges") === "false") {
-		console.log("FFZ is disabled");
-		if(typeof callback === "function") {
-			return callback(data, {});
-		}
-		return;
-	}
+	if(entitlements.sevenTV.badges.length) {
+		for(let i in entitlements.sevenTV.badges) {
+			let badge = sevenTVEntitlements.getBadge(entitlements.sevenTV.badges[i]);
 
-	if(!(id in externalBadgeCache)) {
-		externalBadgeCache[id] = createBadgeCacheObject(data);
-	}
-
-	externalBadgeCache[id].ffz = {
-		expires: Date.now() + 3600000,
-		badges: []
-	};
-
-	if(id === -1 || id === "-1") {
-		return;
-	}
-
-	let useLQImages = (localStorage.getItem("setting_useLowQualityImages") === "true");
-	$.ajax({
-		type: "GET",
-		url: `https://api.frankerfacez.com/v1/user/id/${id}`,
-
-		success: function(response) {
-			console.log(response);
-
-			if(!("status" in response)) {
-				let badges = response.badges;
-				for(let i in badges) {
-					let badge = badges[i];
-					let badgeURL;
-					if(useLQImages) {
-						badgeURL = badge.urls[1];
-					} else {
-						badgeURL = badge.urls[4 in badge.urls ? 4 : 1];
-					}
-
-					if(badge.name === "bot") {
-						// doing my own bot tracking, no idea what ffz is doing so we just skip it
-						continue;
-					}
-
-					externalBadgeCache[id].ffz.badges.push({
-						img: badgeURL,
-						color: badge.color
-					});
-				}
+			let badgeElem = $(`<span class="badgeWrap normal_badge badgeGradient sevenTVBadge" data-badgeid="${badge.id}"></span>`);
+			if(localStorage.getItem("setting_useLowQualityImages") === "true") {
+				badgeElem.css("background-image", `url('${badge.urls.low}')`);
+			} else {
+				badgeElem.css("background-image", `url('${badge.urls.high}')`);
 			}
 
-			if(typeof callback === "function") {
-				callback(data, response);
-			}
-		},
+			badgeBlock.append(badgeElem);
 
-		error: function(xhr, status, err) {
-			if(typeof callback === "function") {
-				callback(data, {});
+			if(badgeElem.is(":visible")) {
+				badgeBlock.show();
 			}
 		}
-	})	
+	}	
 }
 
-var sevenTVCosmetics = {};
-var sevenTVBadges = [];
-var sevenTVPaints = [];
-var sevenTVUsers = {};
+function renderFFZBadges(user, badgeBlock) {
+	const entitlements = user.entitlements;
 
-function initBadgeCacheObject(data, outObject) {
-	let useLQImages = (localStorage.getItem("setting_useLowQualityImages") === "true");
-	for(let i in sevenTVBadges) {
-		let stvBadge = sevenTVBadges[i];
-		if(stvBadge.users.indexOf(data.user.id) !== -1) {
-			outObject.seventv.badges.push({
-				img: stvBadge.urls[useLQImages ? 0 : stvBadge.urls.length-1][1]
-			});
+	if(entitlements.ffz.badges.length) {
+		for(let i in entitlements.ffz.badges) {
+			let badge = entitlements.ffz.badges[i];
+
+			let badgeElem = $(`<span class="badgeWrap normal_badge badgeGradient ffzBadge"></span>`);
+			if(localStorage.getItem("setting_useLowQualityImages") === "true") {
+				badgeElem.css("background-image", `url('${badge.urls.low}')`);
+			} else {
+				badgeElem.css("background-image", `url('${badge.urls.high}')`);
+			}
+
+			if("color" in badge) {
+				badgeElem.css("background-color", badge.color);
+			}
+
+			badgeBlock.append(badgeElem);
+
+			if(badgeElem.is(":visible")) {
+				badgeBlock.show();
+			}
 		}
 	}
-
-	if(data.user.broadcasterType === "affiliate" && localStorage.getItem("setting_enableAffiliateBadges") === "true") {
-		outObject.overlay.badges.push({
-			img: "icons/seedling.png",
-			color: "var(--affiliateBadgeColor)"
-		});
-	}
-
-	if(data.user.bot && localStorage.getItem("setting_enableBotBadges") === "true") {
-		outObject.overlay.badges.push({
-			img: "icons/gear.png",
-			color: "var(--botBadgeColor)"
-		});
-	}
-
-	outObject.hasFullyUpdated = true;
-	return outObject;
 }
 
-function createBadgeCacheObject(data) {
-	let outObject = {
-		hasFullyUpdated: false,
+function renderBTTVBadges(user, badgeBlock) {
+	const entitlements = user.entitlements;
 
-		ffz: {
-			expires: null,
-			badges: []
-		},
-		bttv: {
-			expires: null,
-			badges: []
-		},
-		seventv: {
-			expires: null,
-			badges: []
-		},
-		overlay: {
-			expires: Infinity,
-			badges: []
-		}
-	};
+	if(entitlements.bttv.badge) {
+		let badge = entitlements.bttv.badge;
 
-	if(!("user" in data)) {
-		return outObject;
-	} else {
-		outObject = initBadgeCacheObject(data, outObject);
-	}
-
-	return outObject;
-}
-
-function checkForExternalBadges(data, badgeBlock, rootElement, userBlock) {
-	console.log(data);
-	let id = data.user.id;
-
-	if(id === -1 || id === "-1") {
-		return;
-	}
-
-	if(!(id in externalBadgeCache)) {
-		console.log(`external badges not cached for ${data.user.username}`);
-
-		externalBadgeCache[id] = createBadgeCacheObject(data);
-
-		getFFZBadges(data, function(data, response) {
-			console.log(`got external badges for ${data.user.username}`);
-			checkIfExternalBadgesDone(data, badgeBlock, rootElement, userBlock);
-		});
-	} else {
-		if(!externalBadgeCache[id].hasFullyUpdated) {
-			initBadgeCacheObject(data, externalBadgeCache[id]);
-		}
-
-		if(Date.now() > externalBadgeCache[id].ffz.expires) {
-			getFFZBadges(data, function(data, response) {
-				checkIfExternalBadgesDone(data, badgeBlock, rootElement, userBlock);
-			});
+		let badgeElem = $(`<span class="badgeWrap normal_badge badgeGradient bttvBadge"></span>`);
+		if(localStorage.getItem("setting_useLowQualityImages") === "true") {
+			badgeElem.css("background-image", `url('${badge.low}')`);
 		} else {
-			renderExternalBadges(data, badgeBlock, rootElement, userBlock);
+			badgeElem.css("background-image", `url('${badge.high}')`);
+		}
+
+		badgeBlock.append(badgeElem);
+		if(badgeElem.is(":visible")) {
+			badgeBlock.show();
 		}
 	}
 }
 
-function renderExternalBadges(data, badgeBlock, rootElement, userBlock) {
+function renderExternalBadges(user, badgeBlock) {
 	if(!badgeBlock) {
 		console.log("no badge block?");
 		return;
 	}
 
-	let id = data.user.id;
-
-	for(let service in externalBadgeCache[id]) {
-		let cacheData = externalBadgeCache[id][service];
-
-		for(let i in cacheData.badges) {
-			let badge = cacheData.badges[i];
-
-			let badgeElem = $(`<span class="badgeWrap normal_badge badgeGradient"></span>`);
-			badgeElem.css("background-image", `url('${badge.img}')`);
-			if("color" in badge) {
-				badgeElem.css("background-color", badge.color);
-			}
-
-			badgeBlock.show();
-			if(service === "overlay") {
-				badgeBlock.prepend(badgeElem);
-			} else {
-				badgeBlock.append(badgeElem);
-			}
-		}
-	}
-}
-
-function checkIfExternalBadgesDone(data, badgeBlock, rootElement, userBlock) {
-	let id = data.user.id;
-	let okToRender = true;
-
-	for(let service in externalBadgeCache[id]) {
-		let cacheData = externalBadgeCache[id][service];
-
-		if(cacheData.expires === null || service === "overlay") {
-			continue;
-		}
-
-		if(Date.now() > cacheData.expires) {
-			okToRender = false;
-			break;
-		}
-	}
-
-	if(okToRender) {
-		renderExternalBadges(data, badgeBlock, rootElement, userBlock);
-	}
-}
-
-function bttvBadge(data, userData) {
-	if(!("data" in data)) {
-		console.log("no data");
+	if(parseInt(user.id) === -1) {
 		return;
 	}
-	data = data.data; // sigh
 
+	render7TVBadges(user, badgeBlock);
+	renderFFZBadges(user, badgeBlock);
+	renderBTTVBadges(user, badgeBlock);
+}
+
+async function bttvBadge(data, userData) {
 	console.log(`getting bttv badge data for ${data.name}...`);
 
 	if(!("badge" in data)) {
@@ -1888,63 +1792,44 @@ function bttvBadge(data, userData) {
 		return;
 	}
 
-	let id = parseInt(data.providerId);
+	console.log(data);
 
-	if(!(id in externalBadgeCache)) {
-		externalBadgeCache[id] = createBadgeCacheObject({
-			user: {
-				id: id,
-				broadcasterType: userData.broadcaster_type,
-				bot: isUserBot(userData.login)
-			}
-		});
+	let user = await twitchUsers.getUser(data.providerId);
+
+	if(user.entitlements.bttv.badge !== null) {
+		return;
 	}
 
-	externalBadgeCache[id].bttv.badges = [{
-		img: data.badge.url
-	}];	
+	user.entitlements.bttv.badge = {
+		high: data.badge.url,
+		low: data.badge.url
+	};
+
+	renderBTTVBadges(user, $(`.chatBlock[data-userid="${user.id}"] .badges`));
 }
 
 function updateBTTVEmote(data) {
-	let newEmote = data.emote;
-	let id = newEmote.id;
-
-	for(let name in chatEmotes) {
-		let oldEmote = chatEmotes[name];
-
-		if(oldEmote.service === "bttv" && oldEmote.id === id) {
-			console.log(`renamed ${name} to ${newEmote.code}`);
-
-			chatEmotes[newEmote.code] = oldEmote;
-			delete chatEmotes[name];
-			break;
-		}
-	}
+	let newEmote = data.emote
+	chatEmotes.updateEmote(newEmote.id, newEmote.code);
 }
 
 function deleteBTTVEmote(data) {
-	let id = data.emoteId;
-
-	for(let name in chatEmotes) {
-		let oldEmote = chatEmotes[name];
-
-		if(oldEmote.service === "bttv" && oldEmote.id === id) {
-			console.log(`deleted ${name}`);
-			delete chatEmotes[name];
-			break;
-		}
-	}	
+	chatEmotes.deleteEmote(data.emoteId)
 }
 
 function addBTTVEmote(data) {
 	let emote = data.emote;
-	
-	let useLQImages = (localStorage.getItem("setting_useLowQualityImages") === "true");
-	chatEmotes[emote.code] = {
+
+	chatEmotes.addEmote(new Emote({
 		service: "bttv",
-		url: `https://cdn.betterttv.net/emote/${emote.id}/${useLQImages ? "1" : "3"}x.${emote.imageType}`,
-		id: emote.id
-	}
+		urls: {
+			high: `https://cdn.betterttv.net/emote/${emote.id}/3x.${emote.imageType}`,
+			low: `https://cdn.betterttv.net/emote/${emote.id}/1x.${emote.imageType}`
+		},
+		emoteID: emote.id,
+		emoteName: emote.code,
+		modifiers: (emote.modifier ? ["Hidden"] : [])
+	}));
 
 	console.log(`added emote ${emote.code}`);
 }
@@ -1972,16 +1857,14 @@ function startBTTVWebsocket() {
 		}		
 	}
 
-	bttvWS.addEventListener("message", function(msg) {
+	bttvWS.addEventListener("message", async function(msg) {
 		let data = JSON.parse(msg.data);
 		console.log(data);
 
 		switch(data.name) {
 			case "lookup_user":
 				if(localStorage.getItem("setting_enableBTTVBadges") === "true") {
-					getTwitchUserInfo(data.data.providerId, function(userData) {
-						bttvBadge(data, userData);
-					});
+					await bttvBadge(data.data);
 				}
 				break;
 
@@ -2026,7 +1909,7 @@ function startBTTVWebsocket() {
 
 			bttvWS.send(JSON.stringify(msg));
 		};
-		waitForBroadcasterData();
+		setTimeout(waitForBroadcasterData, 1000);
 	});
 
 	bttvWS.addEventListener("close", function() {
@@ -2064,104 +1947,69 @@ function start7TVWebsocket() {
 	}
 
 	const dispatchFuncs = {
-		"entitlement.create": function(data) {
+		"entitlement.create": async function(data) {
 			if(data.kind !== "BADGE" && data.kind !== "PAINT") {
 				return;
 			}
 
-			let userData;
+			let user;
 			for(const connection of data.user.connections) {
 				if(connection.platform !== "TWITCH") {
 					continue;
 				}
 
-				userData = connection;
+				user = await twitchUsers.getUser(connection.id);
 				break;
 			}
 
-			if(!userData) {
+			if(!user) {
 				return;
 			}
-			userData.id = parseInt(userData.id);
 
 			switch(data.kind) {
 				case "BADGE":
-					let size = "3x";
-					if(localStorage.getItem("setting_useLowQualityImages") === "true") {
-						size = "1x";
-					}
-
-					if(!(userData.id in externalBadgeCache)) {
-						externalBadgeCache[parseInt(userData.id)] = createBadgeCacheObject({});
-					}
-
-					var foundRefID = false;
-					for(const currentBadge of externalBadgeCache[parseInt(userData.id)].seventv.badges) {
-						if(currentBadge.ref_id === data.ref_id) {
-							foundRefID = true;
-						}
-					}
-					if(!foundRefID) {
-						externalBadgeCache[parseInt(userData.id)].seventv.badges.push({
-							ref_id: data.ref_id,
-							img: `https://cdn.7tv.app/badge/${data.ref_id}/${size}`
-						});
+					if(user.entitlements.sevenTV.badges.indexOf(data.ref_id) === -1) {
+						user.entitlements.sevenTV.badges.push(data.ref_id);
+						render7TVBadges(user, $(`.chatBlock[data-userid="${user.id}"] .badges`));
 					}
 					break;
 
 				case "PAINT":
-					if(sevenTVPaints[data.ref_id].users.indexOf(userData.id) === -1) {
-						sevenTVPaints[data.ref_id].users.push(userData.id);
-					}
-					if(!(userData.id in sevenTVUsers)) {
-						sevenTVUsers[userData.id] = {};
-					}
-
-					sevenTVUsers[userData.id].paint = data.ref_id;
+					user.entitlements.sevenTV.paint = data.ref_id;
+					set7TVPaint($(`.name[data-userid="${user.id}"]`), data.ref_id, user.id);
 					break;
 			}
 		},
 
-		"entitlement.delete": function(data) {
+		"entitlement.delete": async function(data) {
 			if(data.kind !== "BADGE" && data.kind !== "PAINT") {
 				return;
 			}
 
-			let userData;
+			let user;
 			for(const connection of data.user.connections) {
 				if(connection.platform !== "TWITCH") {
 					continue;
 				}
 
-				userData = connection;
+				user = await twitchUsers.getUser(connection.id);
 				break;
 			}
 
-			if(!userData) {
+			if(!user) {
 				return;
 			}
-			userData.id = parseInt(userData.id);
 
 			switch(data.kind) {
 				case "BADGE":
-					if(!(userData.id in externalBadgeCache)) {
-						return;
-					}
-
-					externalBadgeCache[userData.id].seventv.badges = externalBadgeCache[userData.id].seventv.badges.filter(function(badge) { 
-						return badge.ref_id !== data.ref_id;
+					user.entitlements.sevenTV.badges = user.entitlements.sevenTV.badges.filter(function(badge) { 
+						return badge.id !== data.ref_id;
 					});
 					break;
 
 				case "PAINT":
-					sevenTVPaints[data.ref_id].users = sevenTVPaints[data.ref_id].users.filter(function(u) { return u !== userData.id; });
-
-					if(!(userData.id in sevenTVUsers)) {
-						sevenTVUsers[userData.id] = {paint: null};
-					} else {
-						if(sevenTVUsers[userData.id].paint === data.ref_id) {
-							sevenTVUsers[userData.id].paint = null;
-						}
+					if(user.entitlements.sevenTV.paint === data.ref_id) {
+						user.entitlements.sevenTV.paint = null;
 					}
 					break;
 			}
@@ -2172,9 +2020,7 @@ function start7TVWebsocket() {
 				return;
 			}
 
-			data.data.users = [];
-
-			sevenTVPaints[data.id] = data.data;
+			sevenTVEntitlements.createPaint(data.id, data.data);
 		}
 	};
 

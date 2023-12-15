@@ -240,6 +240,11 @@
 							<input id="chatNameUsesProminentColor" type="checkbox"/> <span class="settingInfo">Use the prominent color of the chatter's avatar over default name colors</span>
 						</div>
 					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="chatNameUsesProminentColorAsFallback" type="checkbox"/> <span class="settingInfo">Use the prominent color of the chatter's avatar as a fallback for not setting a color</span>
+						</div>
+					</div>
 					<hr/>
 					<div class="setting">
 						<div class="settingCell">
@@ -2001,6 +2006,11 @@
 					<div class="setting" data-dependent="twitchBadges">
 						<div class="settingCell">
 							<input checked id="enableTwitchHypeTrainBadges" type="checkbox"/> <span class="settingInfo">Hype Train badges</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="twitchBadges">
+						<div class="settingCell">
+							<input checked id="enableTwitchEventBadges" type="checkbox"/> <span class="settingInfo">Event-based badges</span>
 						</div>
 					</div>
 					<hr/>

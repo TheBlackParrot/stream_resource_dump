@@ -11,11 +11,12 @@
 
 	--overlayOutlineSize: 1px;
 	--overlayOutlineSizeNegative: -1px;
+	--overlayOutlineBlurRadius: 0px;
 	--overlayOutlineColor: #000000;
-	--originalOutlineStuff: drop-shadow(var(--overlayOutlineSizeNegative) var(--overlayOutlineSizeNegative) 0px var(--overlayOutlineColor))
-							drop-shadow(var(--overlayOutlineSize) var(--overlayOutlineSizeNegative) 0px var(--overlayOutlineColor))
-							drop-shadow(var(--overlayOutlineSizeNegative) var(--overlayOutlineSize) 0px var(--overlayOutlineColor))
-							drop-shadow(var(--overlayOutlineSize) var(--overlayOutlineSize) 0px var(--overlayOutlineColor));
+	--originalOutlineStuff: drop-shadow(var(--overlayOutlineSizeNegative) var(--overlayOutlineSizeNegative) var(--overlayOutlineBlurRadius) var(--overlayOutlineColor))
+							drop-shadow(var(--overlayOutlineSize) var(--overlayOutlineSizeNegative) var(--overlayOutlineBlurRadius) var(--overlayOutlineColor))
+							drop-shadow(var(--overlayOutlineSizeNegative) var(--overlayOutlineSize) var(--overlayOutlineBlurRadius) var(--overlayOutlineColor))
+							drop-shadow(var(--overlayOutlineSize) var(--overlayOutlineSize) var(--overlayOutlineBlurRadius) var(--overlayOutlineColor));
 	--outlineStuff: var(--originalOutlineStuff);
 
 	--effectFilters: var(--outlineStuff) var(--shadowStuff);
@@ -224,4 +225,10 @@
 	--messageOffsetVertical: 0px;
 	--userInfoOffsetVertical: 0px;
 	--userInfoOffsetHorizontal: 0px;
+
+	--display7TVBadges: initial;
+	--displayFFZBadges: initial;
+	--displayBTTVBadges: initial;
+	--displayAffiliateBadges: initial;
+	--displayBotBadges: initial;
 }

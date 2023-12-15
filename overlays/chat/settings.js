@@ -105,7 +105,9 @@ var hideAccounts = [];
 var refreshExternalStuffTimeout;
 
 function refreshExternalStuff() {
-	chatEmotes = (localStorage.getItem("setting_chatShowCommonEmotes") === "true" ? Object.create(commonEmotes) : {});
+	if(!chatEmotes) {
+		initEmoteSet();
+	}
 	getGlobalChannelEmotes(broadcasterData);
 }
 
@@ -328,6 +330,20 @@ var subTiers = {
 	"3000": "Tier 3"
 };
 
+function checkIfBadgesVisible() {
+	$(".badges").each(function(rootIdx) {
+		let rootElem = $(this);
+
+		rootElem.children(".badgeWrap").each(function(badgeIdx) {
+			let badgeElem = $(this);
+
+			if(badgeElem.is(":visible")) {
+				rootElem.show();
+			}
+		});
+	});
+}
+
 const settingUpdaters = {
 	chatHideAccounts: function(value) {
 		hideAccounts = [];
@@ -337,14 +353,100 @@ const settingUpdaters = {
 	},
 
 	enable7TV: function(value) {
-		sevenTVCosmetics = {};
-		sevenTVBadges = [];
-		sevenTVPaints = [];
-		sevenTVUsers = {};
+		if(value === "true") {
+			if(localStorage.getItem("setting_enable7TVBadges") === "true") {
+				rootCSS().setProperty("--display7TVBadges", "initial");
+			} else {
+				rootCSS().setProperty("--display7TVBadges", "none");
+			}
+		} else {
+			rootCSS().setProperty("--display7TVBadges", "none");
+		}
+
+		checkIfBadgesVisible();
 	},
 	enableBTTV: function(value) {
+		if(value === "true") {
+			if(localStorage.getItem("setting_enableBTTVBadges") === "true") {
+				rootCSS().setProperty("--displayBTTVBadges", "initial");
+			} else {
+				rootCSS().setProperty("--displayBTTVBadges", "none");
+			}
+		} else {
+			rootCSS().setProperty("--displayBTTVBadges", "none");
+		}
+
+		checkIfBadgesVisible();
 	},
 	enableFFZ: function(value) {
+		if(value === "true") {
+			if(localStorage.getItem("setting_enableFFZBadges") === "true") {
+				rootCSS().setProperty("--displayFFZBadges", "initial");
+			} else {
+				rootCSS().setProperty("--displayFFZBadges", "none");
+			}
+		} else {
+			rootCSS().setProperty("--displayFFZBadges", "none");
+		}
+
+		checkIfBadgesVisible();
+	},
+	enable7TVBadges: function(value) {
+		if(value === "true") {
+			if(localStorage.getItem("setting_enable7TV") === "true") {
+				rootCSS().setProperty("--display7TVBadges", "initial");
+			} else {
+				rootCSS().setProperty("--display7TVBadges", "none");
+			}
+		} else {
+			rootCSS().setProperty("--display7TVBadges", "none");
+		}
+
+		checkIfBadgesVisible();
+	},
+	enableBTTVBadges: function(value) {
+		if(value === "true") {
+			if(localStorage.getItem("setting_enableBTTV") === "true") {
+				rootCSS().setProperty("--displayBTTVBadges", "initial");
+			} else {
+				rootCSS().setProperty("--displayBTTVBadges", "none");
+			}
+		} else {
+			rootCSS().setProperty("--displayBTTVBadges", "none");
+		}
+
+		checkIfBadgesVisible();
+	},
+	enableFFZBadges: function(value) {
+		if(value === "true") {
+			if(localStorage.getItem("setting_enableFFZ") === "true") {
+				rootCSS().setProperty("--displayFFZBadges", "initial");
+			} else {
+				rootCSS().setProperty("--displayFFZBadges", "none");
+			}
+		} else {
+			rootCSS().setProperty("--displayFFZBadges", "none");
+		}
+
+		checkIfBadgesVisible();
+	},
+	enableBotBadges: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--displayBotBadges", "initial");
+		} else {
+			rootCSS().setProperty("--displayBotBadges", "none");
+		}
+
+		checkIfBadgesVisible();
+	},
+	enableAffiliateBadges: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--displayAffiliateBadges", "initial");
+		} else {
+			rootCSS().setProperty("--displayAffiliateBadges", "none");
+		}
+
+		checkIfBadgesVisible();
 	},
 
 	chatBackgroundColor: function(value) {
@@ -500,6 +602,7 @@ const settingUpdaters = {
 	overlayOutlineSize: function(value) {
 		rootCSS().setProperty("--overlayOutlineSize", `${value}px`);
 		rootCSS().setProperty("--overlayOutlineSizeNegative", `-${value}px`);
+		rootCSS().setProperty("--overlayOutlineBlurRadius", `${parseFloat(value)-1}px`);
 	},
 
 	pronounsAeAer: function(value) { rootCSS().setProperty("--pronouns_aeaer", `"${value}"`); },

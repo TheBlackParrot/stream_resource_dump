@@ -25,9 +25,11 @@ var broadcasterData = {};
 var channelData = {};
 var streamData = {"started_at": new Date().toISOString()};
 var twitchBadges = [];
-var chatEmotes = (localStorage.getItem("setting_chatShowCommonEmotes") === "true" ? Object.create(commonEmotes) : {});
 var cheermotes = {};
 var twitchHelixReachable = false;
+
+var chatEmotes;
+initEmoteSet();
 
 function setTwitchHelixReachable(state) {
 	twitchHelixReachable = state;
@@ -54,14 +56,16 @@ function getStuffReady() {
 		}, function(badgeResponse) {
 			console.log("got global chat badges");
 
-			let subBlock = -1;
-			for(let i in badgeResponse.data) {
-				if(badgeResponse.data[i].set_id === "subscriber") {
-					subBlock = i;
+			let subBadge = {};
+			for(const badge of badgeResponse.data) {
+				if(badge.set_id !== "subscriber") {
+					twitchBadges.push(badge);
+				} else {
+					subBadge = badge;
 				}
-
-				twitchBadges.push(badgeResponse.data[i]);
 			}
+
+			let channelHasSubBadges = false;
 
 			callTwitch({
 				"endpoint": "chat/badges",
@@ -70,29 +74,15 @@ function getStuffReady() {
 				}
 			}, function(channelBadgeResponse) {
 				console.log("got channel chat badges");
-				for(let i in channelBadgeResponse.data) {
-					let badge = channelBadgeResponse.data[i];
-
+				for(const badge of channelBadgeResponse.data) {
 					if(badge.set_id === "subscriber") {
-						for(let j in badge.versions) {
-							let badgeData = badge.versions[j];
-							let foundOldBadge = false;
-
-							for(let k in twitchBadges[subBlock].versions) {
-								let oldBadgeData = twitchBadges[subBlock].versions[k];
-
-								if(oldBadgeData.id === badgeData.id) {
-									twitchBadges[subBlock].versions[k] = badgeData;
-									foundOldBadge = true;
-								}
-							}
-							if(!foundOldBadge) {
-								twitchBadges[subBlock].versions.push(badge.versions[j]);
-							}
-						}
-					} else {
-						twitchBadges.push(badge);
+						channelHasSubBadges = true;
 					}
+					twitchBadges.push(badge);
+				}
+
+				if(!channelHasSubBadges) {
+					twitchBadges.push(subBadge);
 				}
 			});
 		});
@@ -105,15 +95,12 @@ function getStuffReady() {
 			}
 		}, function(cheermoteResponse) {
 			console.log("got cheermotes");
-			for(let i in cheermoteResponse.data) {
-				let mote = cheermoteResponse.data[i];
+			for(let mote of cheermoteResponse.data) {
 				mote.prefix = mote.prefix.toLowerCase();
 				
 				cheermotes[mote.prefix] = {};
 
-				for(let j in mote.tiers) {
-					let tier = mote.tiers[j];
-
+				for(let tier of mote.tiers) {
 					let animHighestRes = 0;
 					let animHighestResImage = null;
 					let staticHighestRes = 0;
@@ -145,8 +132,6 @@ function getStuffReady() {
 				}
 			}
 		});
-
-		//getGlobalChannelEmotes(broadcasterData);
 
 		console.log("getting channel information...");
 		callTwitch({
@@ -192,15 +177,14 @@ function getGlobalChannelEmotes(broadcasterData) {
 	}
 
 	let count = 0;
-	let checkIfDone = function() {
+	const checkIfDone = function() {
 		count++;
 		if(count >= 3) {
 			getExternalChannelEmotes(broadcasterData);
 		}
 	}
 
-	let useLQImages = (localStorage.getItem("setting_useLowQualityImages") === "true");
-	if(localStorage.getItem("setting_enable7TVGlobalEmotes") === "true" && localStorage.getItem("setting_enable7TV") === "true") {
+	if(localStorage.getItem("setting_enable7TV") === "true") {
 		console.log("getting 7tv global emotes...");
 		$.ajax({
 			type: "GET",
@@ -211,14 +195,27 @@ function getGlobalChannelEmotes(broadcasterData) {
 				systemMessage("*Fetched global 7TV emotes*");
 				console.log(data);
 
-				for(let i in data.emotes) {
-					let emote = data.emotes[i];
-					let urls = emote.data.host.files;
-					chatEmotes[emote.name] = {
+				if(!("emotes" in data)) {
+					systemMessage("*Unable to fetch global 7TV emotes - this specific error is 7TV's fault as they didn't actually give us any emotes to parse. Great service you got here, guys.*");
+					checkIfDone();
+					return;
+				}
+
+				for(const emote of data.emotes) {
+					const emoteData = emote.data;
+					const urls = emoteData.host.files;
+
+					chatEmotes.addEmote(new Emote({
 						service: "7tv",
-						url: `https:${emote.data.host.url}/${urls[(useLQImages ? 0 : urls.length-1)].name}`,
-						zeroWidth: (emote.data.flags & 256 === 256)
-					}
+						urls: {
+							high: `https:${emoteData.host.url}/${urls[urls.length-1].name}`,
+							low: `https:${emoteData.host.url}/${urls[0].name}`
+						},
+						emoteID: emoteData.id,
+						emoteName: emote.name || emoteData.name,
+						isZeroWidth: (emoteData.flags & 256 === 256),
+						global: true
+					}));
 				}
 
 				checkIfDone();
@@ -235,7 +232,7 @@ function getGlobalChannelEmotes(broadcasterData) {
 		checkIfDone();
 	}
 
-	if(localStorage.getItem("setting_enableBTTVGlobalEmotes") === "true" && localStorage.getItem("setting_enableBTTV") === "true") {
+	if(localStorage.getItem("setting_enableBTTV") === "true") {
 		console.log("getting bttv global emotes...");
 		$.ajax({
 			type: "GET",
@@ -246,17 +243,18 @@ function getGlobalChannelEmotes(broadcasterData) {
 				systemMessage("*Fetched global BetterTTV emotes*");
 				console.log(data);
 
-				for(let idx in data) {
-					let emote = data[idx];
-					chatEmotes[emote.code] = {
+				for(const emote of data) {
+					chatEmotes.addEmote(new Emote({
 						service: "bttv",
-						url: `https://cdn.betterttv.net/emote/${emote.id}/${useLQImages ? 1 : 3}x.${emote.imageType}`,
-						id: emote.id
-					}
-
-					if(emote.modifier) {
-						chatEmotes[emote.code].modifiers = ["Hidden"];
-					}
+						urls: {
+							high: `https://cdn.betterttv.net/emote/${emote.id}/3x.${emote.imageType}`,
+							low: `https://cdn.betterttv.net/emote/${emote.id}/1x.${emote.imageType}`
+						},
+						emoteID: emote.id,
+						emoteName: emote.code,
+						modifiers: (emote.modifier ? ["Hidden"] : []),
+						global: true
+					}));
 				}
 
 				checkIfDone();
@@ -273,7 +271,7 @@ function getGlobalChannelEmotes(broadcasterData) {
 		checkIfDone();
 	}
 
-	if(localStorage.getItem("setting_enableFFZGlobalEmotes") === "true" && localStorage.getItem("setting_enableFFZ") === "true") {
+	if(localStorage.getItem("setting_enableFFZ") === "true") {
 		console.log("getting ffz global emotes...");
 		$.ajax({
 			type: "GET",
@@ -285,30 +283,20 @@ function getGlobalChannelEmotes(broadcasterData) {
 
 				console.log(data);
 
-				for(let setIdx in data.sets) {
-					/*if(data.sets[setIdx].title === "Subwoofer Emote Effects") {
-						continue;
-					}*/
-
-					let emotes = data.sets[setIdx].emoticons;
-
-					for(let idx in emotes) {
-						let emote = emotes[idx];
-						let url;
-						if(useLQImages) {
-							url = emote.urls[1];
-						} else {
-							url = emote.urls[4] || emote.urls[1];
-						}
-
-						chatEmotes[emote.name] = {
+				for(const setIdx of data.default_sets) {
+					const emotes = data.sets[setIdx].emoticons;
+					for(const emote of emotes) {
+						chatEmotes.addEmote(new Emote({
 							service: "ffz",
-							url: url
-						}
-
-						if(emote.modifier) {
-							chatEmotes[emote.name].modifiers = parseFFZModifiers(emote.modifier_flags);
-						}
+							urls: {
+								high: (emote.urls[4] || emote.urls[1]),
+								low: emote.urls[1]
+							},
+							emoteID: emote.id,
+							emoteName: emote.name,
+							modifiers: (emote.modifier ? parseFFZModifiers(emote.modifier_flags) : []),
+							global: true
+						}));
 					}
 				}
 
@@ -334,7 +322,7 @@ function getExternalChannelEmotes(broadcasterData) {
 	}
 
 	let useLQImages = (localStorage.getItem("setting_useLowQualityImages") === "true");
-	if(localStorage.getItem("setting_enable7TVChannelEmotes") === "true" && localStorage.getItem("setting_enable7TV") === "true") {
+	if(localStorage.getItem("setting_enable7TV") === "true") {
 		console.log("getting 7tv channel emotes...");
 		$.ajax({
 			type: "GET",
@@ -351,18 +339,25 @@ function getExternalChannelEmotes(broadcasterData) {
 				}
 
 				if(!("emotes" in data.emote_set)) {
-					systemMessage("*Unable to fetch channel's 7TV emotes, required JS object isn't present?*");
+					systemMessage("*Unable to fetch channel's 7TV emotes, emotes aren't in the emote set (this is 7TV's fault)*");
 					return;
 				}
 
-				for(let i in data.emote_set.emotes) {
-					let emote = data.emote_set.emotes[i];
-					let urls = emote.data.host.files;
-					chatEmotes[emote.name] = {
+				for(const emote of data.emote_set.emotes) {
+					const emoteData = emote.data;
+					const urls = emoteData.host.files;
+
+					chatEmotes.addEmote(new Emote({
 						service: "7tv",
-						url: `https:${emote.data.host.url}/${urls[(useLQImages ? 0 : urls.length-1)].name}`,
-						zeroWidth: ((emote.data.flags & 256) === 256)
-					};
+						urls: {
+							high: `https:${emoteData.host.url}/${urls[urls.length-1].name}`,
+							low: `https:${emoteData.host.url}/${urls[0].name}`
+						},
+						emoteID: emoteData.id,
+						emoteName: emote.name || emoteData.name,
+						isZeroWidth: (emoteData.flags & 256 === 256),
+						global: false
+					}));
 				}
 			},
 
@@ -375,7 +370,7 @@ function getExternalChannelEmotes(broadcasterData) {
 		console.log("skipping 7tv channel emotes, not enabled");
 	}
 
-	if(localStorage.getItem("setting_enableBTTVChannelEmotes") === "true" && localStorage.getItem("setting_enableBTTV") === "true") {
+	if(localStorage.getItem("setting_enableBTTV") === "true") {
 		console.log("getting bttv channel emotes...");
 		$.ajax({
 			type: "GET",
@@ -385,21 +380,19 @@ function getExternalChannelEmotes(broadcasterData) {
 				console.log("got bttv emotes");
 				systemMessage("*Fetched channel's BetterTTV emotes*");
 
-				for(let idx in data.sharedEmotes) {
-					let emote = data.sharedEmotes[idx];
-					chatEmotes[emote.code] = {
+				let mergedSets = Object.assign(data.sharedEmotes, data.channelEmotes);
+				for(const emote of mergedSets) {
+					chatEmotes.addEmote(new Emote({
 						service: "bttv",
-						url: `https://cdn.betterttv.net/emote/${emote.id}/${useLQImages ? 1 : 3}x.${emote.imageType}`,
-						id: emote.id
-					}
-				}
-				for(let idx in data.channelEmotes) {
-					let emote = data.channelEmotes[idx];
-					chatEmotes[emote.code] = {
-						service: "bttv",
-						url: `https://cdn.betterttv.net/emote/${emote.id}/${useLQImages ? 1 : 3}x.${emote.imageType}`,
-						id: emote.id
-					}
+						urls: {
+							high: `https://cdn.betterttv.net/emote/${emote.id}/3x.${emote.imageType}`,
+							low: `https://cdn.betterttv.net/emote/${emote.id}/1x.${emote.imageType}`
+						},
+						emoteID: emote.id,
+						emoteName: emote.code,
+						modifiers: (emote.modifier ? ["Hidden"] : []),
+						global: false
+					}));
 				}
 			},
 
@@ -412,7 +405,7 @@ function getExternalChannelEmotes(broadcasterData) {
 		console.log("skipping bttv channel emotes, not enabled");
 	}
 
-	if(localStorage.getItem("setting_enableFFZChannelEmotes") === "true" && localStorage.getItem("setting_enableFFZ") === "true") {
+	if(localStorage.getItem("setting_enableFFZ") === "true") {
 		console.log("getting ffz channel emotes...");
 		$.ajax({
 			type: "GET",
@@ -423,21 +416,19 @@ function getExternalChannelEmotes(broadcasterData) {
 				systemMessage("*Fetched channel's FrankerFaceZ emotes*");
 
 				for(let setIdx in data.sets) {
-					let emotes = data.sets[setIdx].emoticons;
-
-					for(let idx in emotes) {
-						let emote = emotes[idx];
-						let url;
-						if(useLQImages) {
-							url = emote.urls[1];
-						} else {
-							url = emote.urls[4] || emote.urls[1];
-						}
-
-						chatEmotes[emote.name] = {
+					const emotes = data.sets[setIdx].emoticons;
+					for(const emote of emotes) {
+						chatEmotes.addEmote(new Emote({
 							service: "ffz",
-							url: url
-						}
+							urls: {
+								high: (emote.urls[4] || emote.urls[1]),
+								low: emote.urls[1]
+							},
+							emoteID: emote.id,
+							emoteName: emote.name,
+							modifiers: (emote.modifier ? parseFFZModifiers(emote.modifier_flags) : []),
+							global: false
+						}));
 					}
 				}
 			},
@@ -496,20 +487,20 @@ function postToTwitchEventChannel(event, data) {
 }
 
 const twitchEventFuncs = {
-	message: function(data) {
-		prepareMessage(data.tags, data.message, data.self, false);
+	message: async function(data) {
+		await prepareMessage(data.tags, data.message, data.self, false);
 	},
 
-	cheer: function(data) {
-		prepareMessage(data.tags, data.message, false, true);
+	cheer: async function(data) {
+		await prepareMessage(data.tags, data.message, false, true);
 	},
 
-	subscription: function(data) {
-		prepareMessage(data.tags, data.message, false, true);
+	subscription: async function(data) {
+		await prepareMessage(data.tags, data.message, false, true);
 	},
 
-	resub: function(data) {
-		prepareMessage(data.tags, data.message, false, true);
+	resub: async function(data) {
+		await prepareMessage(data.tags, data.message, false, true);
 	},
 
 	ban: function(data) {
@@ -540,6 +531,10 @@ const twitchEventFuncs = {
 	clearchat: function(data) {
 		$("#wrapper").empty();
 		lastUser = "-1";
+	},
+
+	announcement: async function(data) {
+		await prepareMessage(data.tags, data.message, false, false);
 	},
 
 	AccessTokenRefreshed: function(data) {

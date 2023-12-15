@@ -166,6 +166,19 @@ client.on("clearchat", function(channel) {
 	postToTwitchEventChannel("clearchat");
 });
 
+client.on("usernotice", function(msgid, channel, tags, msg) {
+	if(tags['msg-id'] !== "announcement") {
+		return;
+	}
+
+	postToTwitchEventChannel("announcement", {
+		channel: channel,
+		username: tags['username'],
+		tags: tags,
+		message: msg
+	});
+});
+
 client.on("raw_message", (messageCloned, message) => {
 	if(localStorage.getItem("setting_debugRawMessages") === "false") {
 		return;

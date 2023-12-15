@@ -55,7 +55,51 @@ function callTwitch(data, callback) {
 	})	
 }
 
-function systemMessage(msg) {
+const delay = ms => new Promise(res => setTimeout(res, ms));
+
+async function callTwitchAsync(data) {
+	if(!allowedToProceed) {
+		console.log("No Client ID or Secret is set.");
+		return;
+	}
+
+	var url = new URL(`https://api.twitch.tv/helix/${data.endpoint}`);
+	if("args" in data) {
+		url.search = new URLSearchParams(data.args).toString();
+	}
+
+	const fetchResponse = await fetch(url, {
+		method: "GET",
+		cache: "no-cache",
+		headers: {
+			"Authorization": `Bearer ${localStorage.getItem("twitch_accessToken")}`,
+			"Client-Id": twitchClientId
+		}
+	});
+
+	switch(fetchResponse.status) {
+		case 200:
+			setTwitchHelixReachable(true);
+			break;
+
+		case 401:
+			console.log("token unauthorized");
+			systemMessage("Twitch authentication token error, fetching a new one...");
+
+			if(Date.now() < lastAsk) {
+				postToTwitchEventChannel("RefreshAuthenticationToken");
+				lastAsk = Date.now();
+			}
+
+			await delay(5000);
+			return await callTwitchAsync(data);
+			break;
+	}
+
+	return await fetchResponse.json();
+}
+
+async function systemMessage(msg) {
 	let tagsObject = {
 		"username": "<system>",
 		"display-name": `Chat Overlay (r${overlayRevision})`,
@@ -67,7 +111,7 @@ function systemMessage(msg) {
 		"color": "#ffffff"
 	}
 
-	prepareMessage(tagsObject, msg, false, false);
+	await prepareMessage(tagsObject, msg, false, false);
 }
 
 function formatTime(val) {
@@ -104,11 +148,11 @@ function parseFFZModifiers(value) {
 }
 
 function set7TVPaint(nameBlock, paintID, userID) {
-	if(!(paintID in sevenTVPaints)) {
+	if(!(paintID in sevenTVEntitlements)) {
 		return;
 	}
 
-	const paint = sevenTVPaints[paintID];
+	const paint = sevenTVEntitlements[paintID].data;
 	let css = "";
 	let bgColor = parse7TVColor(paint.color);
 
@@ -152,85 +196,6 @@ function set7TVPaint(nameBlock, paintID, userID) {
 	nameBlock.children().css("background-image", css).css("background-size", "contain");
 	nameBlock.children(".displayName").css("filter", `var(--nameEffects${userID})${shadows}`);
 	nameBlock.children(".internationalName").css("filter", `var(--nameEffects${userID})${shadows} saturate(var(--internationalNameSaturation))`);
-}
-
-function getTwitchUserInfo(id, callback) {
-	if(typeof id === "undefined") {
-		return;
-	}
-	if(id === "undefined") {
-		return;
-	}
-	if(!("id" in broadcasterData)) {
-		return;
-	}
-
-	if(id === "-1") {
-		id = broadcasterData.id;
-	}
-
-	if(!sessionStorage.getItem(`cache_twitch${id}`)) {
-		console.log(`info for ${id} not cached`);
-
-		callTwitch({
-			"endpoint": "users",
-			"args": {
-				"id": id
-			}
-		}, function(rawUserResponse) {
-			if("data" in rawUserResponse) {
-				if(rawUserResponse.data.length) {
-					if(localStorage.getItem("setting_chatNameUsesProminentColor") === "true") {
-						Vibrant.from(rawUserResponse.data[0].profile_image_url).maxDimension(120).maxColorCount(80).getPalette().then(function(swatches) {
-							console.log(swatches);
-
-							let wantedSwatch = swatches["Vibrant"];
-							if(wantedSwatch._population === 0) {
-								let maxPop = 0;
-
-								for(let i in swatches) {
-									let swatch = swatches[i];
-
-									if(!swatch._population) {
-										continue;
-									}
-
-									if(swatch._population > maxPop) {
-										wantedSwatch = swatch;
-									}
-								}
-							}
-
-							rawUserResponse.data[0].profile_image_url_color = wantedSwatch.getHex();
-							sessionStorage.setItem(`cache_twitch${id}`, JSON.stringify(rawUserResponse.data[0]));
-
-							if(typeof callback === "function") {
-								callback(rawUserResponse.data[0]);
-							}
-						});
-					} else {
-						sessionStorage.setItem(`cache_twitch${id}`, JSON.stringify(rawUserResponse.data[0]));
-
-						if(typeof callback === "function") {
-							callback(rawUserResponse.data[0]);
-						}
-					}
-				} else {
-					if(typeof callback === "function") {
-						return callback(null);
-					}
-				}
-			} else {
-				if(typeof callback === "function") {
-					return callback(null);
-				}
-			}
-		});
-	} else {
-		if(typeof callback === "function") {
-			return callback(JSON.parse(sessionStorage.getItem(`cache_twitch${id}`)));
-		}
-	}
 }
 
 function getUserPronouns(username, callback) {
@@ -492,4 +457,24 @@ function isStringSafe(data) {
 	}
 
 	return true;
+}
+
+function initEmoteSet() {
+	chatEmotes = new GlobalEmoteSet();
+
+	if(localStorage.getItem("setting_chatShowCommonEmotes") === "true") {
+		for(let emoteName in commonEmotes) {
+			let emote = commonEmotes[emoteName];
+
+			chatEmotes.addEmote(new Emote({
+				service: "default",
+				emoteName: emoteName,
+				urls: {
+					high: emote.url,
+					low: emote.url
+				},
+				global: true
+			}));
+		}
+	}
 }

@@ -1,4 +1,4 @@
-const overlayRevision = 34;
+const overlayRevision = 35;
 const overlayRevisionTimestamp = 1701910291177;
 
 const enums = {
@@ -67,14 +67,14 @@ const twitchBadgeTypes = {
 		is_solid: false
 	},
 	charity: {
-		badges: ["glhf-pledge", "bits-charity"],
+		badges: ["glhf-pledge", "bits-charity", "gold-pixel-heart"],
 		setting: "enableTwitchCharityBadges",
 		is_solid: false
 	},
 	convention: {
 		badges: ["glitchcon2020", "twitchcon2017", "twitchcon2018", "twitchconAmsterdam2020", "twitchconEU2019", 
 				 "twitchconEU2022", "twitchconEU2023", "twitchconNA2019", "twitchconNA2020", "twitchconNA2022",
-				 "superultracombo-2023"],
+				 "superultracombo-2023", "twitchconNA2023"],
 		setting: "enableTwitchConBadges",
 		is_solid: false
 	},
@@ -99,7 +99,7 @@ const twitchBadgeTypes = {
 		is_solid: false
 	},
 	prime: {
-		badges: ["premium"],
+		badges: ["premium", "samusoffer_beta"],
 		setting: "enableTwitchPrimeGamingBadges",
 		is_solid: true
 	},
@@ -116,6 +116,11 @@ const twitchBadgeTypes = {
 	turbo: {
 		badges: ["turbo"],
 		setting: "enableTwitchTurboBadges",
+		is_solid: true
+	},
+	event: {
+		badges: ["rplace-2023", "twitch-recap-2023"],
+		setting: "enableTwitchEventBadges",
 		is_solid: true
 	}
 };
@@ -666,3 +671,6 @@ var characterDevolveMap = {
 	"ё":"е",
 	"Ё":"Е",
 };
+
+const twitchUsers = new UserSet();
+const sevenTVEntitlements = new SevenTVEntitlements();

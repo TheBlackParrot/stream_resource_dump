@@ -107,7 +107,8 @@ const nonPublicSettings = [
 	"spotify_artistAlbumCycleDelay",
 	"clock_overrideHeader",
 	"clock_overrideHeaderString",
-	"clock_use12Hour"
+	"clock_use12Hour",
+	"enableTwitchEventBadges"
 ];
 
 const defaultConfig = {
@@ -604,7 +605,9 @@ const defaultConfig = {
 	"spotify_useRTL": "false",
 	"spotify_flipDetails": "false",
 	"spotify_artOutlineBrightness": "175",
-	"spotify_showSingleIfSingle": "true"
+	"spotify_showSingleIfSingle": "true",
+	"enableTwitchEventBadges": "true",
+	"chatNameUsesProminentColorAsFallback": "true"
 };
 // i typed out the bigNoNoWords so you don't have to, i'm sorry :(
 // it's gotta know what to remove
