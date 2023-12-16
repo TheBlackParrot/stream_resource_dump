@@ -1225,21 +1225,6 @@ const settingUpdaters = {
 		rootCSS().setProperty("--currentMessageOutTranslateFunctionEnd", `var(--messageOutTranslate${which}dFunctionEnd)`);
 	},
 
-	chatNameUsesProminentColor: function(value, oldValue) {
-		if(value === oldValue || oldValue === undefined) {
-			return;
-		}
-
-		console.log("clearing twitch API cache...");
-
-		for(let key in sessionStorage) {
-			if(key.substring(0, 12) === "cache_twitch") {
-				sessionStorage.removeItem(key);
-				console.log(`cleared ${key}`);
-			}
-		}
-	},
-
 	avatarsBGBorder: function(value) {
 		if(value === "true") {
 			rootCSS().setProperty("--avatarsBGBorderSize", "var(--avatarsBGBorderSizeActual)");
@@ -1399,6 +1384,23 @@ const settingUpdaters = {
 	chatMessageOutlinesStyle: function(value) {
 		rootCSS().setProperty("--messageOutlineStyle", value);
 	},
+
+	enableBadgeBorder: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--badgeBorderSize", "var(--badgeBorderSizeActual)");
+		} else {
+			rootCSS().setProperty("--badgeBorderSize", "0px");
+		}		
+	},
+	badgeBorderSize: function(value) {
+		rootCSS().setProperty("--badgeBorderSizeActual", `${value}px`);
+	},
+	badgeBorderColor: function(value) {
+		rootCSS().setProperty("--badgeBorderColor", value);
+	},
+	badgeBorderStyle: function(value) {
+		rootCSS().setProperty("--badgeBorderStyle", value);
+	}
 };
 settingUpdaters["chatHideAccounts"](localStorage.getItem("setting_chatHideAccounts"));
 

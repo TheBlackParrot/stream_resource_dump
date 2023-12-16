@@ -1,4 +1,70 @@
 {
+	"1702689377060": {
+		"updates": {
+			"chat": {
+				"revision": 35,
+				"notes": [
+					[
+						"began work on migrating various data objects to classes",
+						["emotes, user data, and external cosmetics/badges are fully migrated at this point"]
+					],
+					[
+						"began work on turning callback-hell functions into asynchronous functions"
+					],
+					[
+						"changed the way sub badge fetching was being executed"
+					],
+					[
+						"condensed some internal for loops"
+					],
+					[
+						"user data cache is no longer stored in SessionStorage, as it'll now only execute data fetches when it sees users for the first time",
+						["was kinda pointless since most overlay use is just 1 session anyways"]
+					],
+					[
+						"badges from external services and badges added by the overlay itself can now be instantly toggled"
+					],
+					[
+						"updated some of the badge categories with some of the newer badges that've been released",
+						["also added an \"Event-based\" category (for the r/place and recap badges only right now)"]
+					],
+					[
+						"added support for chat announcements",
+						["for now they'll just mimic highlighted messages, may look into announcement formatting in the future"]
+					],
+					[
+						"moved settings to toggle external emotes out of the data fetching functions",
+						["it now determines if emotes are \"enabled\" through a custom getter in the new emote class when messages are being parsed"]
+					],
+					[
+						"smoothed outline shadows out if outline size exceeds 1px"
+					],
+					[
+						"added a setting to use the prominent avatar color as a name color fallback instead of the defined default"
+					],
+					[
+						"added the ability to add borders to badges"
+					],
+					[
+						"avatars and pronouns now update on all previous message blocks after using either of the refresh commands"
+					],
+					[
+						"de-broadcaster'd the test messages"
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 32,
+				"notes": [
+					[
+						"(update only contains new settings)"
+					]
+				]
+			}
+		}
+	},
+
 	"1702521029531": {
 		"updates": {
 			"spotify": {

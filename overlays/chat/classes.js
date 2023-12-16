@@ -141,8 +141,10 @@ class User {
 		}
 
 		if(this.id !== "-1") {
-			this.#setPronouns();
+			this.setPronouns();
 			this.#setFFZBadges();
+		} else {
+			this.entitlements.pronouns.value = "any";
 		}
 	}
 
@@ -188,7 +190,7 @@ class User {
 		});
 	}
 
-	async #setPronouns() {
+	async setPronouns() {
 		const fetchResponse = await fetch(`https://pronouns.alejo.io/api/users/${this.username}`);
 
 		if(!fetchResponse.ok) {
@@ -200,12 +202,16 @@ class User {
 		console.log(data);
 
 		if(data.length) {
+			let oldValue = this.entitlements.pronouns.value;
 			this.entitlements.pronouns.value = data[0].pronoun_id;
-			this.#updatePronounBlocks();
+			this.#updatePronounBlocks(oldValue);
 		}
 	}
 
-	#updatePronounBlocks() {
+	#updatePronounBlocks(oldValue) {
+		if(oldValue) {
+			$(`.chatBlock[data-userid="${this.id}"] .pronouns`).removeClass(`pronouns_${oldValue}`);
+		}
 		$(`.chatBlock[data-userid="${this.id}"] .pronouns`).addClass(`pronouns_${this.entitlements.pronouns.value}`).show();
 	}
 
@@ -234,6 +240,23 @@ class User {
 
 		renderFFZBadges(this, $(`.chatBlock[data-userid="${this.id}"] .badges`));
 	}
+
+	async updateAvatar() {
+		let response = await callTwitchAsync({
+			endpoint: "users",
+			args: {
+				id: this.id
+			}
+		});
+		let userDataRaw = response.data[0];
+
+		let oldAvatar = this.avatar.substring(0);
+		this.avatar = userDataRaw.profile_image_url;
+
+		$(`.pfp[src="${oldAvatar}"]`).fadeOut(250, function() {
+			$(`.pfp[src="${oldAvatar}"]`).attr("src", userDataRaw.profile_image_url).fadeIn(250);
+		});
+	}
 }
 
 class UserSet {
@@ -261,10 +284,10 @@ class UserSet {
 		} else {
 			userDataRaw = {
 				display_name: `Chat Overlay (r${overlayRevision})`,
-				username: "<system>",
-				avatar: null,
-				broadcasterType: null,
-				created: Date.now()
+				login: "<system>",
+				profile_image_url: `twemoji/svg/${(0x1f300 + Math.ceil(Math.random() * 8)).toString(16)}.svg`,
+				broadcaster_type: null,
+				created_at: Date.now()
 			}
 		}
 

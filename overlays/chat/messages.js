@@ -447,9 +447,8 @@ const chatFuncs = {
 		});
 	},
 
-	refreshpronouns: function(data, callback) {
-		sessionStorage.removeItem(`cache_pronouns${data.user.username}`);
-		getUserPronouns(data.user.username);
+	refreshpronouns: async function(data, callback) {
+		await data.user.setPronouns();
 	},
 
 	showpfp: function(data, args) {
@@ -484,12 +483,10 @@ const chatFuncs = {
 	},
 
 	refreshpfp: async function(data, args) {
-		//sessionStorage.removeItem(`cache_twitch${data.user.id}`);
-		await twitchUsers.getUser(data.user.id);
+		await data.user.updateAvatar();
 	},
 
 	refreshemotes: function(data, args) {
-		//getExternalChannelEmotes(broadcasterData);
 		if(!data.user.moderator) {
 			return;
 		}
@@ -813,7 +810,14 @@ function renderPronounsBlock(data) {
 }
 
 function canShowPFP(data) {
-	if(parseInt(data.user.id) === -1) {
+	console.log(data);
+	if(data.isOverlayMessage) {
+		if("isTestMessage" in data) {
+			if(data.isTestMessage) {
+				return true;
+			}
+		}
+
 		return false;
 	}
 

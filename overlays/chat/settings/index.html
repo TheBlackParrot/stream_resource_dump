@@ -1901,6 +1901,45 @@
 							</select>
 						</div>
 					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="enableBadgeBorder" type="checkbox" data-dependent="enableBadgeBorder"/> <span class="settingInfo">Enable borders around individual badges</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="enableBadgeBorder">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Color</span>
+						</div>
+						<div class="settingCell">
+							<input id="badgeBorderColor" type="text" data-coloris value="#FFFFFF50"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="enableBadgeBorder">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="badgeBorderSize" min="0" max="8" step="1" value="1"/>px
+						</div>
+					</div>
+					<div class="setting" data-dependent="enableBadgeBorder">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Style</span>
+						</div>
+						<div class="settingCell">
+							<select id="badgeBorderStyle">
+								<option value="dashed">Dashed</option>
+								<option value="dotted">Dotted</option>
+								<option value="double">Double</option>
+								<option value="groove">Groove</option>
+								<option value="inset">Inset</option>
+								<option value="outset">Outset</option>
+								<option value="ridge">Ridge</option>
+								<option selected value="solid">Solid</option>
+							</select>
+						</div>
+					</div>
 				</div>
 				<div class="part">
 					<h1>Layout</h1>

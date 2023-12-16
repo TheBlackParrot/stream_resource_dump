@@ -223,7 +223,7 @@ const defaultConfig = {
 	"badgeBorderRadius": "4",
 	"badgeSpacing": "2",
 	"badgeSize": "26",
-	"chatNameFontWeightExtra": "0.9",
+	"chatNameFontWeightExtra": "1.2",
 	"chatNameUsesGradient": "true",
 	"chatDefaultNameColorSecondary": "#FFFFFF",
 	"chatNameGradientAngle": "170",
@@ -607,7 +607,11 @@ const defaultConfig = {
 	"spotify_artOutlineBrightness": "175",
 	"spotify_showSingleIfSingle": "true",
 	"enableTwitchEventBadges": "true",
-	"chatNameUsesProminentColorAsFallback": "true"
+	"chatNameUsesProminentColorAsFallback": "true",
+	"enableBadgeBorder": "false",
+	"badgeBorderColor": "#ffffff50",
+	"badgeBorderSize": "1",
+	"badgeBorderStyle": "solid"
 };
 // i typed out the bigNoNoWords so you don't have to, i'm sorry :(
 // it's gotta know what to remove

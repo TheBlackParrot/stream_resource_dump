@@ -165,6 +165,12 @@
 	--badgeGradientEnd: 100%;
 	--badgeGradientBlendMode: screen;
 
+	--badgeBorderColor: #ffffff50;
+	--badgeBorderSize: 0px;
+	--badgeBorderSizeActual: 1px;
+	--badgeBorderStyle: solid;
+	--badgeBorder: none;
+
 	--affiliateBadgeColor: #2d3540;
 	--botBadgeColor: #555b59;
 

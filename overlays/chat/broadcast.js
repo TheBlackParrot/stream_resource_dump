@@ -40,7 +40,8 @@ settingsFuncs = {
 				25: ['199-203']
 			},
 			"id": `system-${Date.now()}`,
-			"color": `#${r}${g}${b}`
+			"color": `#${r}${g}${b}`,
+			"is-test-message": true
 		}
 
 		prepareMessage(tagsObject, "Hello there! This is a *fake message* so that you can see what your *chat settings* look like! **Have fun!** AaBbCcDd EeFfGgHh IiJjKkLl MmNnOoPp QqRrSsTt UuVvWwXx YyZz 0123456789 Also, look! Emotes! Kappa PogChamp catJAM ~~sarcastic text~~", false, false);

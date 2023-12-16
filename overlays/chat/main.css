@@ -114,10 +114,16 @@ body {
 	margin-right: var(--badgeSpacing);
 	background-position: center;
 	background-size: contain;
+	background-origin: border-box;
 }
 
 .sub_badge { border-radius: var(--subBadgeBorderRadius); }
-.normal_badge { border-radius: var(--badgeBorderRadius); }
+.normal_badge {
+	border-radius: var(--badgeBorderRadius);
+	border-color: var(--badgeBorderColor);
+	border-width: var(--badgeBorderSize);
+	border-style: var(--badgeBorderStyle);
+}
 
 .badgeGradient:after {
 	background-image: linear-gradient(var(--badgeGradientAngle), var(--badgeGradientColorStart) var(--badgeGradientStart), var(--badgeGradientColorEnd) var(--badgeGradientEnd));

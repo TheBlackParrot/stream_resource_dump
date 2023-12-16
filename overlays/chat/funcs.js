@@ -198,32 +198,6 @@ function set7TVPaint(nameBlock, paintID, userID) {
 	nameBlock.children(".internationalName").css("filter", `var(--nameEffects${userID})${shadows} saturate(var(--internationalNameSaturation))`);
 }
 
-function getUserPronouns(username, callback) {
-	if(username === "<overlay>") {
-		username = broadcasterData.login;
-	}
-
-	if(!sessionStorage.getItem(`cache_pronouns${username}`)) {
-		console.log(`pronouns for ${username} not cached`);
-
-		let resp = $.get(`https://pronouns.alejo.io/api/users/${username}`, function(pnData) {
-			let fetched = { pronoun_id: "NONE" };
-			if(pnData.length) {
-				fetched = pnData[0];
-			}
-
-			sessionStorage.setItem(`cache_pronouns${username}`, JSON.stringify(fetched));
-			if(typeof callback === "function") {
-				return callback(fetched);
-			}
-		});
-	} else {
-		if(typeof callback === "function") {
-			return callback(JSON.parse(sessionStorage.getItem(`cache_pronouns${username}`)));
-		}
-	}
-}
-
 function linearInterpolate(a, b, val) {
 	return a + (b - a) * val;
 };
@@ -329,77 +303,51 @@ function randomInt(min, max) {
 }
 
 var knownBots = [];
-function getKnownBotsList(callback) {
+async function getKnownBotsList() {
 	console.log("getting known bots list...");
 
-	if(sessionStorage.getItem("cache_lastGrabbedKnownBots") === null) {
-		console.log("known bot list hasn't been cached recently");
+	if(sessionStorage.getItem("cache_knownBots") === null) {
+		console.log("known bot list hasn't been cached");
 
-		$.ajax({
-			type: "GET",
-			url: "https://api.twitchinsights.net/v1/bots/all",
-
-			error: function(data) {
-				console.log("couldn't fetch known bot list, trying previous cache...");
-
-				knownBots = JSON.parse(localStorage.getItem("cache_knownBots"));
-				if(knownBots === null) {
-					console.log("never fetched a known bot list successfully before. Welp.");
-					knownBots = [];
-				}
-
-				if(typeof callback === "function") {
-					callback(knownBots);
-				}
-			},
-
-			statusCode: {
-				200: function(data) {
-					console.log("fetched known bot list");
-
-					if(!data) {
-						if(typeof callback === "function") {
-							callback([]);
-						}
-						return;
-					}
-					if(!("bots" in data)) {
-						if(typeof callback === "function") {
-							callback([]);
-						}
-						return;
-					}
-
-					if(data) {
-						// seems like twitch insights is caching, some other account ID? wtf
-						// names work though
-						knownBots = [];
-						for(let i in data.bots) {
-							let botInfo = data.bots[i];
-							knownBots.push(botInfo[0]);
-						}
-
-						sessionStorage.setItem("cache_lastGrabbedKnownBots", Date.now());
-						localStorage.setItem("cache_knownBots", JSON.stringify(knownBots));
-
-						if(typeof callback === "function") {
-							callback(knownBots);
-						}
-					}
-				}
-			}
+		var url = new URL('https://api.twitchinsights.net/v1/bots/all');
+		const fetchResponse = await fetch(url, {
+			method: "GET",
+			cache: "no-cache"
 		});
+
+		if(!fetchResponse.ok) {
+			console.log("couldn't fetch known bot list :(");
+			return [];
+		}
+
+		let data = await fetchResponse.json();
+		console.log("fetched known bot list");
+
+		if(!data) {
+			return [];
+		}
+		if(!("bots" in data)) {
+			return [];
+		}
+
+		// seems like twitch insights is caching, some other account ID? wtf
+		// names work though
+		knownBots = [];
+		for(const bot of data.bots) {
+			knownBots.push(bot[0]);
+		}
+
+		sessionStorage.setItem("cache_knownBots", JSON.stringify(knownBots));
+		return knownBots;
 	} else {
 		console.log("using cached known bot list");
 
 		knownBots = JSON.parse(localStorage.getItem("cache_knownBots"));
 		if(knownBots === null) {
 			console.log("last known bot cache was empty? uh");
-			knownBots = [];
+			return [];
 		}
-		if(typeof callback === "function") {
-			callback(knownBots);
-		}
+		return knownBots;
 	}
 }
 
