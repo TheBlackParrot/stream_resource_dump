@@ -24,7 +24,7 @@ $.get("fonts.json", function(data) {
 var broadcasterData = {};
 var channelData = {};
 var streamData = {"started_at": new Date().toISOString()};
-var twitchBadges = [];
+var twitchBadges = {};
 var cheermotes = {};
 var twitchHelixReachable = false;
 
@@ -36,138 +36,122 @@ function setTwitchHelixReachable(state) {
 	postToSettingsChannel("TwitchHelixStatus", state);
 }
 
-function getStuffReady() {
+async function getStuffReady() {
 	console.log(`getting broadcaster information for ${broadcasterName}...`);
-
-	callTwitch({
+	const rawUserResponse = await callTwitchAsync({
 		"endpoint": "users",
 		"args": {
 			"login": broadcasterName
 		}
-	}, function(rawUserResponse) {
-		broadcasterData = rawUserResponse.data[0];
-		console.log(`got broadcaster information for ${broadcasterData.display_name} (${broadcasterData.id})`);
-		console.log("getting chat badges...");
-
-		refreshExternalStuff();
-
-		callTwitch({
-			"endpoint": "chat/badges/global"
-		}, function(badgeResponse) {
-			console.log("got global chat badges");
-
-			let subBadge = {};
-			for(const badge of badgeResponse.data) {
-				if(badge.set_id !== "subscriber") {
-					twitchBadges.push(badge);
-				} else {
-					subBadge = badge;
-				}
-			}
-
-			let channelHasSubBadges = false;
-
-			callTwitch({
-				"endpoint": "chat/badges",
-				"args": {
-					"broadcaster_id": broadcasterData.id
-				}
-			}, function(channelBadgeResponse) {
-				console.log("got channel chat badges");
-				for(const badge of channelBadgeResponse.data) {
-					if(badge.set_id === "subscriber") {
-						channelHasSubBadges = true;
-					}
-					twitchBadges.push(badge);
-				}
-
-				if(!channelHasSubBadges) {
-					twitchBadges.push(subBadge);
-				}
-			});
-		});
-
-		console.log("getting cheermotes...");
-		callTwitch({
-			"endpoint": "bits/cheermotes",
-			"args": {
-				"broadcaster_id": broadcasterData.id
-			}
-		}, function(cheermoteResponse) {
-			console.log("got cheermotes");
-			for(let mote of cheermoteResponse.data) {
-				mote.prefix = mote.prefix.toLowerCase();
-				
-				cheermotes[mote.prefix] = {};
-
-				for(let tier of mote.tiers) {
-					let animHighestRes = 0;
-					let animHighestResImage = null;
-					let staticHighestRes = 0;
-					let staticHighestResImage = null;
-
-					for(let k in tier.images.dark.animated) {
-						let image = tier.images.dark.animated[k];
-						if(k > animHighestRes) {
-							animHighestRes = k;
-							animHighestResImage = image;
-						}
-					}
-
-					for(let k in tier.images.dark.static) {
-						let image = tier.images.dark.static[k];
-						if(k > staticHighestRes) {
-							staticHighestRes = k;
-							staticHighestResImage = image;
-						}
-					}
-
-					cheermotes[mote.prefix][tier.min_bits] = {
-						color: tier.color,
-						images: {
-							animated: animHighestResImage,
-							static: staticHighestResImage,
-						}
-					};
-				}
-			}
-		});
-
-		console.log("getting channel information...");
-		callTwitch({
-			"endpoint": "channels",
-			"args": {
-				"broadcaster_id": broadcasterData.id
-			}
-		}, function(channelResponse) {
-			console.log("got channel information");
-			channelData = channelResponse.data[0];
-			systemMessage(`Showing chat for **#${broadcasterData.login}**${broadcasterData.login === broadcasterName.display_name ? "" : ` *(a.k.a. ${broadcasterData.display_name})*`}`);
-
-			getTwitchStreamData();
-		});
 	});
+	broadcasterData = rawUserResponse.data[0];
+	console.log(`got broadcaster information for ${broadcasterData.display_name} (${broadcasterData.id})`);
+
+	console.log("getting global chat badges...");
+	refreshExternalStuff();
+	const badgeResponse = await callTwitchAsync({
+		"endpoint": "chat/badges/global"
+	});
+	for(const badgeSet of badgeResponse.data) {
+		twitchBadges[badgeSet.set_id] = badgeSet;
+	}
+	console.log("got global chat badges");
+
+	console.log("getting channel chat badges...");
+	const channelBadgeResponse = await callTwitchAsync({
+		"endpoint": "chat/badges",
+		"args": {
+			"broadcaster_id": broadcasterData.id
+		}		
+	});
+	console.log(channelBadgeResponse);
+	for(const badgeSet of channelBadgeResponse.data) {
+		if(localStorage.getItem(`setting_enableCustomBadges_${badgeSet.set_id}`) === "true") {
+			twitchBadges[badgeSet.set_id] = badgeSet;
+			twitchBadgeTypes[badgeSet.set_id].is_solid = false;
+		}
+	}
+	console.log("got channel chat badges");
+
+	console.log("getting cheermotes...");
+	const cheermoteResponse = await callTwitchAsync({
+		"endpoint": "bits/cheermotes",
+		"args": {
+			"broadcaster_id": broadcasterData.id
+		}		
+	});
+	for(let mote of cheermoteResponse.data) {
+		mote.prefix = mote.prefix.toLowerCase();
+		
+		cheermotes[mote.prefix] = {};
+
+		for(let tier of mote.tiers) {
+			let animHighestRes = 0;
+			let animHighestResImage = null;
+			let staticHighestRes = 0;
+			let staticHighestResImage = null;
+
+			for(let k in tier.images.dark.animated) {
+				let image = tier.images.dark.animated[k];
+				if(k > animHighestRes) {
+					animHighestRes = k;
+					animHighestResImage = image;
+				}
+			}
+
+			for(let k in tier.images.dark.static) {
+				let image = tier.images.dark.static[k];
+				if(k > staticHighestRes) {
+					staticHighestRes = k;
+					staticHighestResImage = image;
+				}
+			}
+
+			cheermotes[mote.prefix][tier.min_bits] = {
+				color: tier.color,
+				images: {
+					animated: animHighestResImage,
+					static: staticHighestResImage,
+				}
+			};
+		}
+	}
+	console.log("got cheermotes");
+
+	console.log("getting channel information...");
+	const channelResponse = await callTwitchAsync({
+		"endpoint": "channels",
+		"args": {
+			"broadcaster_id": broadcasterData.id
+		}
+	});
+	channelData = channelResponse.data[0];
+	systemMessage(`Showing chat for **#${broadcasterData.login}**${broadcasterData.login === broadcasterName.display_name ? "" : ` *(a.k.a. ${broadcasterData.display_name})*`}`);
+	console.log("got channel information");
+
+	getTwitchStreamData();
 }
 
 var streamDataTimeout;
-function getTwitchStreamData() {
+async function getTwitchStreamData() {
 	clearTimeout(streamDataTimeout);
 
-	callTwitch({
+	console.log("getting stream information...");
+	const streamResponse = await callTwitchAsync({
 		"endpoint": "streams",
 		"args": {
 			"user_id": broadcasterData.id
 		}
-	}, function(streamResponse) {
-		console.log("got stream information");
-		console.log(streamResponse);
-		if(streamResponse.data.length) {
-			streamData = streamResponse.data[0];
-		} else {
-			console.log("stream is not live, checking again in 30 seconds");
-			streamDataTimeout = setTimeout(getTwitchStreamData, 30000);
-		}
 	});
+
+	console.log(streamResponse);
+	if(streamResponse.data.length) {
+		streamData = streamResponse.data[0];
+	} else {
+		console.log("stream is not live, checking again in 30 seconds");
+		streamDataTimeout = setTimeout(getTwitchStreamData, 30000);
+	}
+	console.log("got stream information");
 }
 
 function getGlobalChannelEmotes(broadcasterData) {
@@ -449,8 +433,8 @@ function getBadgeData(badgeType, badgeID) {
 		return;
 	}
 
-	for(let setIdx in twitchBadges) {
-		let setData = twitchBadges[setIdx];
+	for(const setName in twitchBadges) {
+		let setData = twitchBadges[setName];
 
 		if(setData.set_id === badgeType) {
 			for(let badgeIdx in setData.versions) {
@@ -539,20 +523,7 @@ const twitchEventFuncs = {
 
 	AccessTokenRefreshed: function(data) {
 		lastAsk = Infinity;
-
 		systemMessage("Twitch authentication token refreshed!");
-
-		callTwitchQueue = callTwitchQueue.filter(function(queueObj) {
-			if(typeof queueObj.callback === "function") {
-				if("data" in queueObj) {
-					callTwitch(queueObj.data, queueObj.callback);
-				} else {
-					queueObj.callback();
-				}
-			}
-
-			return false;
-		});
 	}
 }
 

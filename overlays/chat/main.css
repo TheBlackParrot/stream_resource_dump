@@ -527,11 +527,13 @@ img.emoji {
 }
 
 .isBigEmoteMode {
-	font-size: 0pt !important;
+	font-size: var(--bigEmoteSize) !important;
 	letter-spacing: 0px !important;
 	line-height: 1em !important;
 	margin-top: var(--bigEmoteMarginVertical);
 	margin-bottom: var(--bigEmoteMarginVertical);
+	display: inline-flex;
+	align-items: center;
 }
 
 .left .bsrInfo, .left .bsrStats {

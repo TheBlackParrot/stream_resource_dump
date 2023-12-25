@@ -1,5 +1,5 @@
-const overlayRevision = 35;
-const overlayRevisionTimestamp = 1701910291177;
+const overlayRevision = 36;
+const overlayRevisionTimestamp = 1703516161056;
 
 const enums = {
 	weight: {
@@ -35,7 +35,7 @@ const entityMap = {
 	'=': '&#x3D;'
 };
 
-const twitchBadgeTypes = {
+var twitchBadgeTypes = {
 	role: {
 		badges: ["artist-badge", "broadcaster", "extension", "moderator", "vip"],
 		setting: "enableTwitchRoleBadges",
@@ -111,7 +111,7 @@ const twitchBadgeTypes = {
 	subscriber: {
 		badges: ["subscriber"],
 		setting: "enableTwitchSubscriberBadges",
-		is_solid: false
+		is_solid: true
 	},
 	turbo: {
 		badges: ["turbo"],
@@ -674,3 +674,5 @@ var characterDevolveMap = {
 
 const twitchUsers = new UserSet();
 const sevenTVEntitlements = new SevenTVEntitlements();
+
+const defaultSubBadgeLengths = [1, 1, 2, 3, 6, 9, 12];

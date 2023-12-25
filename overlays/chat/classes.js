@@ -94,7 +94,7 @@ class User {
 		this.entitlements = {
 			twitch: {
 				badges: {
-					list: [],
+					list: {},
 					info: []
 				},
 				color: opts.color || null
@@ -146,6 +146,10 @@ class User {
 		} else {
 			this.entitlements.pronouns.value = "any";
 		}
+	}
+
+	setSevenTVPaint(ref_id) {
+		this.entitlements.sevenTV.paint = ref_id;
 	}
 
 	getProminentColor() {
@@ -257,6 +261,79 @@ class User {
 			$(`.pfp[src="${oldAvatar}"]`).attr("src", userDataRaw.profile_image_url).fadeIn(250);
 		});
 	}
+
+	get avatarEnabled() {
+		if(!localStorage.getItem(`showpfp_${this.id}`)) {
+			localStorage.setItem(`showpfp_${this.id}`, "yes");
+		}
+
+		if(localStorage.getItem(`showpfp_${this.id}`) === "no") {
+			return false;
+		}
+		if(localStorage.getItem("setting_hideDefaultAvatars") === "true" && this.avatar.indexOf("user-default-pictures") !== -1) {
+			return false;
+		}
+		if(localStorage.getItem("setting_avatarAllowedEveryone") === "true") {
+			return true;
+		}
+
+		if(localStorage.getItem("setting_avatarAllowedIncludeTotalMessages") === "true") {
+			let count = parseInt(localStorage.getItem(`msgCount_${broadcasterData.id}_${this.id}`));
+			let maxCount = parseInt(localStorage.getItem("setting_avatarAllowedMessageThreshold"));
+
+			if(count > maxCount) {
+				return true;
+			}
+		}
+
+		if(localStorage.getItem("setting_avatarAllowedAffiliates") === "true" && this.broadcasterType === "affiliate") {
+			return true;
+		}
+
+		let badges = this.entitlements.twitch.badges;
+
+		if(typeof badges.list !== "object" || badges.list === null) {
+			return false;
+		}
+
+		if(localStorage.getItem("setting_avatarAllowedModerators") === "true" && ("broadcaster" in badges.list || "moderator" in badges.list)) {
+			return true;
+		} else if(localStorage.getItem("setting_avatarAllowedVIPs") === "true" && "vip" in badges.list) {
+			return true;
+		} else if(localStorage.getItem("setting_avatarAllowedSubscribers") === "true" && ("subscriber" in badges.list || "founder" in badges.list)) {
+			return true;
+		} else if(localStorage.getItem("setting_avatarAllowedTurbo") === "true" && "turbo" in badges.list) {
+			return true;
+		} else if(localStorage.getItem("setting_avatarAllowedPrime") === "true" && "premium" in badges.list) {
+			return true;
+		} else if(localStorage.getItem("setting_avatarAllowedArtist") === "true" && "artist-badge" in badges.list) {
+			return true;
+		} else if(localStorage.getItem("setting_avatarAllowedPartner") === "true" && (this.broadcasterType === "partner" || this.broadcasterType === "ambassador")) {
+			return true;
+		} else if(localStorage.getItem("setting_avatarAllowedStaff") === "true" && ("staff" in badges.list || "admin" in badges.list || "global_mod" in badges.list)) {
+			return true;
+		} else if(localStorage.getItem("setting_avatarAllowedIncludeBits") === "true" && ("bits" in badges.list || "bits-leader" in badges.list)) {
+			if("bits-leader" in badges.list) {
+				return true;
+			} else if("bits" in badges.list) {
+				let bitAmount = parseInt(badges.list.bits);
+				if(bitAmount >= parseInt(localStorage.getItem("setting_avatarAllowedBitsMinimum"))) {
+					return true;
+				}
+			}
+		} else if(localStorage.getItem("setting_avatarAllowedIncludeGifts") === "true" && ("sub-gifter" in badges.list || "sub-gift-leader" in badges.list)) {
+			if("sub-gift-leader" in badges.list) {
+				return true;
+			} else if("sub-gifter" in badges.list) {
+				let giftAmount = parseInt(badges.list['sub-gifter']);
+				if(giftAmount >= parseInt(localStorage.getItem("setting_avatarAllowedGiftsMinimum"))) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
 }
 
 class UserSet {
@@ -269,6 +346,8 @@ class UserSet {
 		} else {
 			this[id] = null;
 		}
+
+		console.log(`creating new user object for ${id}`);
 
 		let userDataRaw;
 		if(id !== "-1") {
@@ -291,7 +370,7 @@ class UserSet {
 			}
 		}
 
-		this[id] = await new User({
+		this[id] = new User({
 			id: id,
 			name: (userDataRaw.display_name || userDataRaw.login),
 			username: userDataRaw.login,
@@ -299,8 +378,6 @@ class UserSet {
 			broadcasterType: userDataRaw.broadcaster_type,
 			created: userDataRaw.created_at
 		});
-
-		console.log(`creating new user object for ${id}`);
 
 		return this[id];
 	}

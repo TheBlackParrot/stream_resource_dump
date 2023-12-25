@@ -108,7 +108,9 @@ const nonPublicSettings = [
 	"clock_overrideHeader",
 	"clock_overrideHeaderString",
 	"clock_use12Hour",
-	"enableTwitchEventBadges"
+	"enableTwitchEventBadges",
+	"enableCustomBadges_subscriber",
+	"enableCustomBadges_bits"
 ];
 
 const defaultConfig = {
@@ -595,7 +597,7 @@ const defaultConfig = {
 	"clock_meridiemFontWeightExtra": "0.5",
 	"clock_meridiemLetterSpacing": "1",
 	"clock_padHour": "true",
-	"internationalNameMargin": "7",
+	"internationalNameMargin": "12",
 	"internationalNameSize": "75",
 	"internationalNameWeightScaling": "50",
 	"internationalNameSaturation": "33",
@@ -611,7 +613,10 @@ const defaultConfig = {
 	"enableBadgeBorder": "false",
 	"badgeBorderColor": "#ffffff50",
 	"badgeBorderSize": "1",
-	"badgeBorderStyle": "solid"
+	"badgeBorderStyle": "solid",
+	"hideCustomRewardMessages": "false",
+	"enableCustomBadges_subscriber": "true",
+	"enableCustomBadges_bits": "true"
 };
 // i typed out the bigNoNoWords so you don't have to, i'm sorry :(
 // it's gotta know what to remove

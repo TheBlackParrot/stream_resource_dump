@@ -17,6 +17,7 @@ async function prepareMessage(tags, message, self, forceHighlight) {
 	console.log(tags);
 
 	let userData = await twitchUsers.getUser(tags['user-id']);
+	console.log(userData);
 	if(userData === null) {
 		console.log("we're going too fast wtf");
 		await delay(500);
@@ -27,6 +28,10 @@ async function prepareMessage(tags, message, self, forceHighlight) {
 		return;
 	}
 	if(localStorage.getItem("setting_autoHideAllKnownBots") === "true" && userData.bot) {
+		return;
+	}
+
+	if(localStorage.getItem("setting_hideCustomRewardMessages") === "true" && "custom-reward-id" in tags) {
 		return;
 	}
 
@@ -584,8 +589,7 @@ function renderAvatarBGBlock(data, rootElement) {
 	let avatarBGWrapperElement = $('<div class="avatarBGWrapper"></div>');
 	let avatarBGElement = $(`<div class="avatarBG" style="background-image: url('${data.user.avatar}');"/>`);
 
-	let showPFP = canShowPFP(data);
-	if(showPFP && localStorage.getItem("setting_enableAvatarsAsBackground") === "true") {
+	if(data.user.avatarEnabled && localStorage.getItem("setting_enableAvatarsAsBackground") === "true") {
 		avatarBGWrapperElement.append(avatarBGElement);
 
 		if(localStorage.getItem("setting_avatarsBGAnimateAppearance") === "true") {
@@ -704,16 +708,22 @@ function renderBadgeBlock(data, rootElement, userBlock) {
 			if(typeof badgeData === "undefined") {
 				// this should only trigger on channels that have founders badges off, and do not have custom sub badges set
 				// twitch ID's these differently compared to custom sub badges
-				for(let bdg of twitchBadges) {
-					if(bdg.set_id === "subscriber") {
-						if(useLQImages) {
-							url = bdg.versions[0].image_url_1x;
-						} else {
-							url = bdg.versions[0].image_url_4x;
-							if(typeof url === "undefined") {
-								url = bdg.versions[0].image_url_1x;
-							}
-						}
+				const monthInt = parseInt(badges.info.subscriber);
+				var chosenDefaultLength = 0;
+				for(const lengthIdx in defaultSubBadgeLengths) {
+					if(monthInt >= defaultSubBadgeLengths[lengthIdx]) {
+						chosenDefaultLength = lengthIdx;
+					} else {
+						break;
+					}
+				}
+
+				if(useLQImages) {
+					url = twitchBadges["subscriber"].versions[chosenDefaultLength].image_url_1x;
+				} else {
+					url = twitchBadges["subscriber"].versions[chosenDefaultLength].image_url_4x;
+					if(typeof url === "undefined") {
+						url = twitchBadges["subscriber"].versions[chosenDefaultLength].image_url_1x;
 					}
 				}
 			} else {
@@ -809,98 +819,6 @@ function renderPronounsBlock(data) {
 	return pronounsBlock;
 }
 
-function canShowPFP(data) {
-	console.log(data);
-	if(data.isOverlayMessage) {
-		if("isTestMessage" in data) {
-			if(data.isTestMessage) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	if(!localStorage.getItem(`showpfp_${data.user.id}`)) {
-		localStorage.setItem(`showpfp_${data.user.id}`, "yes");
-	}
-
-	if(localStorage.getItem(`showpfp_${data.user.id}`) === "no") {
-		return false;
-	}
-	if(localStorage.getItem("setting_hideDefaultAvatars") === "true" && data.user.avatar.indexOf("user-default-pictures") !== -1) {
-		return false;
-	}
-	if(localStorage.getItem("setting_avatarAllowedEveryone") === "true") {
-		return true;
-	}
-
-	if(localStorage.getItem("setting_avatarAllowedIncludeTotalMessages") === "true") {
-		let count = parseInt(localStorage.getItem(`msgCount_${broadcasterData.id}_${data.user.id}`));
-		let maxCount = parseInt(localStorage.getItem("setting_avatarAllowedMessageThreshold"));
-
-		if(count > maxCount) {
-			return true;
-		}
-	}
-
-	if(localStorage.getItem("setting_avatarAllowedAffiliates") === "true" && "broadcasterType" in data.user) {
-		if(data.user.broadcasterType === "affiliate") {
-			return true;
-		}
-	}
-
-	let badges = data.user.entitlements.twitch.badges;
-
-	if(!("list" in badges)) {
-		return false;
-	}
-	if(typeof badges.list !== "object" || badges.list === null) {
-		return false;
-	}
-
-	if(localStorage.getItem("setting_avatarAllowedModerators") === "true" && ("broadcaster" in badges.list || "moderator" in badges.list)) {
-		return true;
-	} else if(localStorage.getItem("setting_avatarAllowedVIPs") === "true" && "vip" in badges.list) {
-		return true;
-	} else if(localStorage.getItem("setting_avatarAllowedSubscribers") === "true" && ("subscriber" in badges.list || "founder" in badges.list)) {
-		return true;
-	} else if(localStorage.getItem("setting_avatarAllowedTurbo") === "true" && "turbo" in badges.list) {
-		return true;
-	} else if(localStorage.getItem("setting_avatarAllowedPrime") === "true" && "premium" in badges.list) {
-		return true;
-	} else if(localStorage.getItem("setting_avatarAllowedArtist") === "true" && "artist-badge" in badges.list) {
-		return true;
-	} else if(localStorage.getItem("setting_avatarAllowedPartner") === "true" && "broadcasterType" in data.user) {
-		if(data.user.broadcasterType === "partner" || data.user.broadcasterType === "ambassador") {
-			// i have no idea if ambassadors are a valid field for this but im including it just in case
-			return true;
-		}
-	} else if(localStorage.getItem("setting_avatarAllowedStaff") === "true" && ("staff" in badges.list || "admin" in badges.list || "global_mod" in badges.list)) {
-		return true;
-	} else if(localStorage.getItem("setting_avatarAllowedIncludeBits") === "true" && ("bits" in badges.list || "bits-leader" in badges.list)) {
-		if("bits-leader" in badges.list) {
-			return true;
-		} else if("bits" in badges.list) {
-			let bitAmount = parseInt(badges.list.bits);
-			if(bitAmount >= parseInt(localStorage.getItem("setting_avatarAllowedBitsMinimum"))) {
-				return true;
-			}
-		}
-	} else if(localStorage.getItem("setting_avatarAllowedIncludeGifts") === "true" && ("sub-gifter" in badges.list || "sub-gift-leader" in badges.list)) {
-		if("sub-gift-leader" in badges.list) {
-			return true;
-		} else if("sub-gifter" in badges.list) {
-			let giftAmount = parseInt(badges.list['sub-gifter']);
-			if(giftAmount >= parseInt(localStorage.getItem("setting_avatarAllowedGiftsMinimum"))) {
-				return true;
-			}
-		}
-	}
-
-	return false;
-}
-
 function renderAvatarBlock(data) {
 	let pfpBlock = $('<img class="pfp" src="" style="display: none;"/>');
 
@@ -918,9 +836,7 @@ function renderAvatarBlock(data) {
 	rootCSS().setProperty(`--pfpShape${data.user.id}`, localStorage.getItem(`pfpShape_${data.user.id}`));
 	pfpBlock.css("border-radius", `var(--pfpShape${data.user.id})`);
 
-	let showPFP = canShowPFP(data);
-
-	if(showPFP) {
+	if(data.user.avatarEnabled) {
 		pfpBlock.show();
 		
 		if(localStorage.getItem("setting_enableAvatarsAsBackground") === "true") {
@@ -1293,9 +1209,12 @@ function renderMessageBlock(data, rootElement) {
 		if(localStorage.getItem("setting_useNewerEmojiRegex") === "true") {
 			re = new RegExp("\\p{RGI_Emoji}+", "vg");
 		} else {
+			//re = new RegExp("[\\p{Extended_Pictographic}\?\!\.]", "ug");
 			re = new RegExp("\\p{Extended_Pictographic}", "ug");
 		}
 		externalPostRemoval = externalPostRemoval.join("").replace(re, '');
+
+		//console.log(` 5: ${externalPostRemoval}`);
 
 		let eprw = externalPostRemoval.split(" ");
 		let eprww = [];
@@ -1312,7 +1231,7 @@ function renderMessageBlock(data, rootElement) {
 				}
 			}
 		}
-		//console.log(` 5: ${eprww} (${eprww.length})`);
+		//console.log(` 6: ${eprww} (${eprww.length})`);
 
 		let parsedMessage = [];
 
@@ -1327,7 +1246,7 @@ function renderMessageBlock(data, rootElement) {
 				parsedMessage.push(originalMessage[charIdx]);
 			}
 		}
-		//console.log(` 6: ${parsedMessage}`);
+		//console.log(` 7: ${parsedMessage}`);
 
 		let stuff;
 		if(localStorage.getItem("setting_chatParseMarkdown") === "true") {
@@ -1335,7 +1254,7 @@ function renderMessageBlock(data, rootElement) {
 		} else {
 			stuff = parsedMessage.join("");
 		}
-		//console.log(` 7: ${stuff}`);
+		//console.log(` 8: ${stuff}`);
 
 		let words = stuff.split(" ");
 
@@ -1415,7 +1334,7 @@ function renderMessageBlock(data, rootElement) {
 			}
 		}
 
-		//console.log(` 8: ${words}`);
+		//console.log(` 9: ${words}`);
 
 		words = words.map(function(word) {
 			if(!isWordSafe(word)) {
@@ -1468,6 +1387,15 @@ function renderMessageBlock(data, rootElement) {
 				}
 				count++;
 			});
+
+			/*let htmlStuff = messageBlock.html().split(">").map(function(part) {
+				if(part[0] === "<") {
+					return part;
+				}
+				return part.trim().substring(0, 3);
+			});
+			console.log(htmlStuff);
+			messageBlock.html(htmlStuff.join(">"));*/
 		}
 
 		let emoteChildren = messageBlock.children(".emote");
@@ -1711,7 +1639,7 @@ function render7TVBadges(user, badgeBlock) {
 
 			badgeBlock.append(badgeElem);
 
-			if(badgeElem.is(":visible")) {
+			if(!badgeElem.is(":visible")) {
 				badgeBlock.show();
 			}
 		}
@@ -1967,7 +1895,9 @@ function start7TVWebsocket() {
 			}
 
 			if(!user) {
-				return;
+				console.log("we're going too fast wtf");
+				await delay(500);
+				return dispatchFuncs["entitlement.create"](data);
 			}
 
 			switch(data.kind) {
@@ -1979,7 +1909,8 @@ function start7TVWebsocket() {
 					break;
 
 				case "PAINT":
-					user.entitlements.sevenTV.paint = data.ref_id;
+					user.setSevenTVPaint(data.ref_id);
+					console.log(user);
 					set7TVPaint($(`.name[data-userid="${user.id}"]`), data.ref_id, user.id);
 					break;
 			}
@@ -2001,7 +1932,9 @@ function start7TVWebsocket() {
 			}
 
 			if(!user) {
-				return;
+				console.log("we're going too fast wtf");
+				await delay(500);
+				return dispatchFuncs["entitlement.delete"](data);
 			}
 
 			switch(data.kind) {
@@ -2013,7 +1946,7 @@ function start7TVWebsocket() {
 
 				case "PAINT":
 					if(user.entitlements.sevenTV.paint === data.ref_id) {
-						user.entitlements.sevenTV.paint = null;
+						user.setSevenTVPaint(null);
 					}
 					break;
 			}

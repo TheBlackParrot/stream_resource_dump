@@ -1,4 +1,61 @@
 {
+	"1703516161056": {
+		"updates": {
+			"chat": {
+				"revision": 36,
+				"notes": [
+					[
+						"migrated audio fetching functions to async equivalents"
+					],
+					[
+						"migrated calls to twitch's helix API to async equivalents"
+					],
+					[
+						"moved avatar permission checking into the user class as a getter function"
+					],
+					[
+						"added support for custom bit badges",
+						["i meant to add in support for this forever ago but never got around to it, woops"]
+					],
+					[
+						"custom sub and bit badges can now be toggled"
+					],
+					[
+						"internal badge list is now an object instead of an array",
+						["twitch sends this out as an array still and i have, no idea why"]
+					],
+					[
+						"messages that have a custom channel point redemption attached to them can now be hidden"
+					],
+					[
+						"properly support default sub badge variants"
+					],
+					[
+						"fixed 7TV paints and badges failing to apply if the user is still being initialized"
+					],
+					[
+						"fixed 7TV badges not showing up if the user has no other badges"
+					],
+					[
+						"adjusted default margin on international names"
+					],
+					[
+						"removed delay on applying settings when the overlay loads up"
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 33,
+				"notes": [
+					[
+						"(update only contains new settings)"
+					]
+				]
+			}
+		}
+	},
+
 	"1702689377060": {
 		"updates": {
 			"chat": {

@@ -330,7 +330,7 @@
 							<span class="settingInfo">Margin</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="internationalNameMargin" min="-99" max="99" step="0.5" value="7"/>px
+							<input type="number" id="internationalNameMargin" min="-99" max="99" step="0.5" value="12"/>px
 						</div>
 					</div>
 					<div class="setting">
@@ -1492,6 +1492,12 @@
 					<hr/>
 					<div class="setting">
 						<div class="settingCell">
+							<input id="hideCustomRewardMessages" type="checkbox"/> <span class="settingInfo">Hide messages attached to custom channel point redemptions</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
 							<input checked id="autoHideAllKnownBots" type="checkbox"/> <span class="settingInfo">Automatically hide known bot accounts</span>
 						</div>
 					</div>
@@ -2050,6 +2056,17 @@
 					<div class="setting" data-dependent="twitchBadges">
 						<div class="settingCell">
 							<input checked id="enableTwitchEventBadges" type="checkbox"/> <span class="settingInfo">Event-based badges</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting" data-dependent="twitchBadges">
+						<div class="settingCell">
+							<input checked id="enableCustomBadges_subscriber" type="checkbox"/> <span class="settingInfo">Enable broadcaster's custom Channel Subscriber badges</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="twitchBadges">
+						<div class="settingCell">
+							<input checked id="enableCustomBadges_bits" type="checkbox"/> <span class="settingInfo">Enable broadcaster's custom Cheering/bits badges</span>
 						</div>
 					</div>
 					<hr/>

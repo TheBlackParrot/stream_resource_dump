@@ -6,7 +6,7 @@ var soundList = [
 ];
 var sounds = {};
 
-function loadSound(which) {
+async function loadSound(which) {
 	if(soundList.indexOf(which) === -1) {
 		console.log(`${which} not in allowed list`);
 		return;
@@ -18,36 +18,19 @@ function loadSound(which) {
 	}
 	sound.buffers = [];
 
-	for(let i in sound.urls) {
-		let url = sound.urls[i];
-		let request = new XMLHttpRequest();
-		request.open("GET", url, true);
-		request.responseType = "arraybuffer";
-
+	for(const url of sound.urls) {
 		console.log(`loading sound ${url}`);
-
-		request.onload = function() {
-			context.decodeAudioData(request.response, function(buffer) {
-				if(!buffer) {
-					console.log(`error decoding ${url}`);
-					return;
-				}
-
-				console.log(`loaded sound ${url}`);
-
-				sound.buffers.push(buffer);
-			});
-
-			request.onerror = function() {
-				console.log(`Could not load sound from ${url}`);        
-			};
-		};
-
-		request.onerror = function(event) {
-			systemMessage(`Could not load sound from ${url}, please check the DevTools console for more information.`);
+		const response = await fetch(url);
+		
+		buffer = await context.decodeAudioData(await response.arrayBuffer());
+		if(!buffer) {
+			console.log(`error decoding ${url}`);
+			return;
 		}
 
-		request.send();
+		console.log(`loaded sound ${url}`);
+
+		sound.buffers.push(buffer);
 	}
 }
 

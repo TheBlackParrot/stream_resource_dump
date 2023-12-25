@@ -1,0 +1,16 @@
+#!/bin/sh
+FRAMERATE=20
+START_FRAME=56
+IN_FILENAME="clap_%04d.png"
+OUT_SIZES=(112 56 28)
+
+for OUT_SIZE in "${OUT_SIZES[@]}"
+do
+	ffmpeg -hide_banner \
+		-v warning \
+		-framerate $FRAMERATE \
+		-start_number $START_FRAME \
+		-i $IN_FILENAME \
+		-filter_complex "[0:v] scale=$OUT_SIZE:-1:flags=lanczos,split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse" \
+		-y "$1_out_$OUT_SIZE.gif"
+done

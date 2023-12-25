@@ -1,0 +1,15 @@
+#!/bin/sh
+
+xfreerdp \
+	-v 192.168.122.235:3389 \
+	-u TheBlackParrot \
+	-w 1600 -h 900 \
+	--dynamic-resolution \
+	--enable-decorations \
+	--audio-mode sound:sys:alsa \
+	--enable-fonts \
+	--enable-aero \
+	--enable-window-drag \
+	--enable-menu-anims \
+	--enable-clipboard \
+	--enable-home-drive
