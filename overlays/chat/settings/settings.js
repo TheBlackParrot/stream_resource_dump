@@ -127,7 +127,7 @@ function loadSettings() {
 			let storedVal = localStorage.getItem(`setting_${setting}`);
 
 			if(storedVal !== null) {
-				console.log(`loaded ${setting}: ${storedVal}`);
+				//console.log(`loaded ${setting}: ${storedVal}`);
 				switch(element.attr("type")) {
 					case "checkbox":
 						element.prop("checked", storedVal === "true").trigger("change");

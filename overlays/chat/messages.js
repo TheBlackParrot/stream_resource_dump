@@ -35,13 +35,6 @@ async function prepareMessage(tags, message, self, forceHighlight) {
 		return;
 	}
 
-	let highlighted = (forceHighlight ? true : false);
-	if('msg-id' in tags) {
-		if(tags['msg-id'] === "highlighted-message" || tags['msg-id'] === "announcement") {
-			highlighted = true;
-		}
-	}
-
 	if(userData.moderator === null) {
 		userData.moderator = false;
 		if('badges' in tags) {
@@ -67,12 +60,40 @@ async function prepareMessage(tags, message, self, forceHighlight) {
 		message: message,
 		isOverlayMessage: isOverlayMessage,
 		type: tags['message-type'],
-		highlighted: highlighted,
+		highlighted: false,
 		emotes: tags['emotes'],
 		uuid: tags['id'],
 		parseCheermotes: ('bits' in tags),
 		user: userData
 	};
+
+	outObject.highlighted = (forceHighlight ? true : false);
+	if('msg-id' in tags) {
+		switch(tags['msg-id']) {
+			case "highlighted-message":
+				outObject.highlighted = true;
+				break;
+
+			case "viewermilestone":
+				if(localStorage.getItem("setting_enableEventTagsWatchStreaks") === "true") {
+					outObject.extraInfo = localStorage.getItem("setting_eventTagsWatchStreakFormat")
+						.replaceAll("%amount", `<div class="watchStreakIcon"></div> ${parseInt(tags['msg-param-value']).toLocaleString()}`)
+						.replaceAll("%reward", `<div class="pointRedeemIcon"></div> +${parseInt(tags['msg-param-copoReward']).toLocaleString()}`);
+				}
+				break;
+		}
+	}
+
+	if("custom-reward-id" in tags) {
+		if(tags["custom-reward-id"] in channelPointRedeems && localStorage.getItem("setting_enableEventTagsChannelPoints") === "true") {
+			outObject.redeem = tags["custom-reward-id"];
+			const redeemData = channelPointRedeems[tags["custom-reward-id"]];
+
+			outObject.extraInfo = localStorage.getItem("setting_eventTagsChannelPointFormat")
+				.replaceAll("%amount", `<div class="pointRedeemIcon"></div> ${redeemData.cost.toLocaleString()}`)
+				.replaceAll("%name", redeemData.name);
+		}
+	}
 
 	switch(outObject.type) {
 		case "resub":
@@ -99,7 +120,12 @@ async function prepareMessage(tags, message, self, forceHighlight) {
 
 	userData.entitlements.overlay.prominentColor = await userData.getProminentColor(); // fuck it we ball
 
-	parseMessage(outObject);
+	let parseDelay = 0;
+	if(!isOverlayMessage) {
+		parseDelay = (parseFloat(localStorage.getItem("setting_delayChat")) * 1000) || 0;
+	}
+
+	setTimeout(function() { parseMessage(outObject); }, parseDelay);
 }
 
 const chatFuncs = {
@@ -616,7 +642,15 @@ function getRootElement(data) {
 	combinedCount++;
 	lastUser = data.user.id;
 
+	const cornerAlignment = localStorage.getItem("setting_chatCornerAlignment").split(",");
 	let rootElement = $(`<div class="chatBlock slideIn" data-rootIdx="${combinedCount}" data-userID="${data.user.id}"></div>`);
+	if(localStorage.getItem("setting_alternateCornerAlignment") === "true") {
+		const order = [cornerAlignment[1], (cornerAlignment[1] === "left" ? "right" : "left")];
+		rootElement.addClass(order[combinedCount % 2]);
+	} else {
+		rootElement.addClass(cornerAlignment[1]);
+	}
+
 	let overallWrapper = $(`<div class="overallWrapper"></div>`);
 	rootElement.append(overallWrapper);
 
@@ -1497,6 +1531,12 @@ function parseMessage(data) {
 
 	console.log(data);
 
+	if(deleteMessages.indexOf(data.uuid) !== -1) {
+		deleteMessages.splice(deleteMessages.indexOf(data.uuid), 1);
+		console.log("message was removed, not rendering");
+		return;
+	}
+
 	if(localStorage.getItem("setting_debugFreezeChat") === "true" || data.message === null) {
 		return;
 	}
@@ -1727,6 +1767,11 @@ async function bttvBadge(data, userData) {
 	console.log(data);
 
 	let user = await twitchUsers.getUser(data.providerId);
+
+	if(user === null) {
+		await delay(500);
+		return bttvBadge(data, userData);
+	}
 
 	if(user.entitlements.bttv.badge !== null) {
 		return;

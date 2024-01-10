@@ -543,25 +543,36 @@ const settingUpdaters = {
 	},
 
 	chatCornerAlignment: function(value) {
-		/*$("#wrapper").css("top", "");
-		$("#wrapper").css("bottom", "");
-		$("#wrapper").css("left", "");
-		$("#wrapper").css("right", "");*/
-
 		let pos = value.split(",");
+
 		if(pos[0] === "top") {
 			$("#wrapper").removeClass("bottom").addClass("top");
 		} else {
 			$("#wrapper").removeClass("top").addClass("bottom");
 		}
 
-		if(pos[1] === "left") {
-			$("#wrapper").removeClass("right").addClass("left");
-			rootCSS().setProperty("--bsrInfoDirection", "ltr");
+		$(".chatBlock").removeClass("left").removeClass("right")
+
+		if(localStorage.getItem("setting_alternateCornerAlignment") === "true") {
+			const order = [pos[1], (pos[1] === "left" ? "right" : "left")];
+
+			$(".chatBlock").each(function() {
+				let idx = parseInt($(this).attr("data-rootidx"));
+				$(this).addClass(order[idx % 2]);
+			});
 		} else {
-			$("#wrapper").removeClass("left").addClass("right");
-			rootCSS().setProperty("--bsrInfoDirection", "rtl");
+			if(pos[1] === "left") {
+				$(".chatBlock").addClass("left");
+				rootCSS().setProperty("--bsrInfoDirection", "ltr");
+			} else {
+				$(".chatBlock").addClass("right");
+				rootCSS().setProperty("--bsrInfoDirection", "rtl");
+			}
 		}
+	},
+
+	alternateCornerAlignment: function(value) {
+		settingUpdaters.chatCornerAlignment(localStorage.getItem("setting_chatCornerAlignment"));
 	},
 
 	chatMessageLineHeight: function(value) {

@@ -20,7 +20,7 @@
 	<link rel="stylesheet" type="text/css" href="fancyselect.min.css"/>
 	<script src="fancyselect.min.js"></script>
 
-	<link rel="stylesheet" type="text/css" href="fontawesome-free-5.15.4-web/css/all.min.css">
+	<link rel="stylesheet" type="text/css" href="fontawesome-free-6.5.1-web/css/all.min.css">
 	<link rel="stylesheet" type="text/css" href="main.css">
 
 	<script type="text/javascript" src="jquery-3.6.0.min.js"></script>
@@ -282,7 +282,7 @@
 							<span class="settingInfo">Size</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="chatNameFontSize" min="4" max="64" step="0.25" value="16"/>pt
+							<input type="number" id="chatNameFontSize" min="4" max="64" step="0.25" value="15"/>pt
 						</div>
 					</div>
 					<div class="setting">
@@ -298,7 +298,7 @@
 							<span class="settingInfo">Additional weight</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="chatNameFontWeightExtra" min="0" max="8" step="0.1" value="1.2"/>px
+							<input type="number" id="chatNameFontWeightExtra" min="0" max="8" step="0.1" value="1.15"/>px
 						</div>
 					</div>
 					<div class="setting">
@@ -306,7 +306,7 @@
 							<span class="settingInfo">Letter spacing</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="chatNameLetterSpacing" min="-12" max="12" step="0.2" value="1"/>px
+							<input type="number" id="chatNameLetterSpacing" min="-12" max="12" step="0.2" value="0.8"/>px
 						</div>
 					</div>
 					<div class="setting">
@@ -403,7 +403,7 @@
 							<span class="settingInfo">Bottom margin</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="chatMessageUserInfoBottomMargin" min="0" max="64" step="1" value="3"/>px
+							<input type="number" id="chatMessageUserInfoBottomMargin" min="0" max="64" step="1" value="1"/>px
 						</div>
 					</div>
 					<div class="setting">
@@ -419,7 +419,7 @@
 							<span class="settingInfo">Element spacing</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="chatMessageUserInfoElementSpacing" min="0" max="64" step="0.5" value="12"/>px
+							<input type="number" id="chatMessageUserInfoElementSpacing" min="0" max="64" step="0.5" value="11"/>px
 						</div>
 					</div>
 					<hr/>
@@ -535,7 +535,7 @@
 							<span class="settingInfo">Fading amount</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="chatMessageUserColorAmount" min="0" max="100" step="0.5" value="10"/>%
+							<input type="number" id="chatMessageUserColorAmount" min="0" max="100" step="0.5" value="17.5"/>%
 						</div>
 					</div>
 					<hr/>
@@ -561,7 +561,7 @@
 							<span class="settingInfo">Weight</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="chatMessageFontWeight" min="100" max="900" step="25" value="700"/>
+							<input type="number" id="chatMessageFontWeight" min="100" max="900" step="25" value="600"/>
 						</div>
 					</div>
 					<div class="setting">
@@ -598,7 +598,7 @@
 							<span class="settingInfo">Line height</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="chatMessageLineHeight" min="16" max="64" step="0.5" value="26"/>px
+							<input type="number" id="chatMessageLineHeight" min="16" max="64" step="0.5" value="25"/>px
 						</div>
 					</div>
 					<hr/>
@@ -768,7 +768,7 @@
 							<span class="settingInfo">Size</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="eventTagsFontSize" min="4" max="64" step="0.25" value="13"/>pt
+							<input type="number" id="eventTagsFontSize" min="4" max="64" step="0.25" value="12"/>pt
 						</div>
 					</div>
 					<div class="setting">
@@ -784,7 +784,7 @@
 							<span class="settingInfo">Additional weight</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="eventTagsFontWeightExtra" min="0" max="4" step="0.05" value="0.75"/>px
+							<input type="number" id="eventTagsFontWeightExtra" min="0" max="4" step="0.05" value="0.6"/>px
 						</div>
 					</div>
 					<div class="setting">
@@ -792,7 +792,7 @@
 							<span class="settingInfo">Letter spacing</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="eventTagsLetterSpacing" min="-12" max="12" step="0.2" value="0"/>px
+							<input type="number" id="eventTagsLetterSpacing" min="-12" max="12" step="0.2" value="0.4"/>px
 						</div>
 					</div>
 					<div class="setting">
@@ -813,7 +813,7 @@
 							<span class="settingInfo">Line height</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="eventTagsLineHeight" min="16" max="64" step="0.5" value="26"/>px
+							<input type="number" id="eventTagsLineHeight" min="16" max="64" step="0.5" value="28"/>px
 						</div>
 					</div>
 				</div>
@@ -837,7 +837,7 @@
 						<div class="settingCell">
 							<input id="messageBlockDirection" type="checkbox"/> <span class="settingInfo">Reverse the order of messages within message blocks</span>
 						</div>
-					</div>					
+					</div>
 					<hr/>
 					<div class="setting">
 						<div class="settingCellLabel">
@@ -850,6 +850,11 @@
 								<option selected value="bottom,left">Bottom-left</option>
 								<option value="bottom,right">Bottom-right</option>
 							</select>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="alternateCornerAlignment" type="checkbox"/> <span class="settingInfo">Alternate the horizontal corner alignment</span>
 						</div>
 					</div>
 					<div class="setting">
@@ -902,7 +907,7 @@
 							<span class="settingInfo">Block spacing</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="chatBlockSpacing" min="0" max="128" step="1" value="16"/>px
+							<input type="number" id="chatBlockSpacing" min="0" max="128" step="1" value="10"/>px
 						</div>
 					</div>
 					<div class="setting">
@@ -937,7 +942,7 @@
 							<span class="settingInfo">Duration</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="animationsInDuration" min="0.01" max="5" step="0.01" value="0.5"/>seconds
+							<input type="number" id="animationsInDuration" min="0.01" max="5" step="0.01" value="0.33"/>seconds
 						</div>
 					</div>
 					<div class="setting" data-dependent="animationsIn">
@@ -978,7 +983,7 @@
 								<option value="EaseOut">EaseOut</option>
 								<option value="EaseOutSine">EaseOutSine</option>
 								<option value="EaseOutQuad">EaseOutQuad</option>
-								<option value="EaseOutCubic">EaseOutCubic</option>
+								<option selected value="EaseOutCubic">EaseOutCubic</option>
 								<option value="EaseOutQuart">EaseOutQuart</option>
 								<option value="EaseOutQuint">EaseOutQuint</option>
 								<option value="EaseOutExpo">EaseOutExpo</option>
@@ -987,7 +992,7 @@
 								<option value="EaseInOut">EaseInOut</option>
 								<option value="EaseInOutSine">EaseInOutSine</option>
 								<option value="EaseInOutQuad">EaseInOutQuad</option>
-								<option selected value="EaseInOutCubic">EaseInOutCubic</option>
+								<option value="EaseInOutCubic">EaseInOutCubic</option>
 								<option value="EaseInOutQuart">EaseInOutQuart</option>
 								<option value="EaseInOutQuint">EaseInOutQuint</option>
 								<option value="EaseInOutExpo">EaseInOutExpo</option>
@@ -1022,7 +1027,7 @@
 							<span class="settingInfo">Blur amount</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="messageInBlurStart" min="0" max="50" step="1" value="4"/>px<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="messageInBlurEnd" min="0" max="50" step="1" value="0"/>px
+							<input type="number" id="messageInBlurStart" min="0" max="50" step="1" value="0"/>px<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="messageInBlurEnd" min="0" max="50" step="1" value="0"/>px
 						</div>
 					</div>
 					<hr/>
@@ -1045,10 +1050,10 @@
 						</div>
 						<div class="settingCell forceColumn">
 							<div>
-								X: <input type="number" id="messageInScaleXStart" min="0" max="500" step="1" value="90"/>%<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="messageInScaleXEnd" min="0" max="500" step="1" value="100"/>%
+								X: <input type="number" id="messageInScaleXStart" min="0" max="500" step="1" value="100"/>%<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="messageInScaleXEnd" min="0" max="500" step="1" value="100"/>%
 							</div>
 							<div>
-								Y: <input type="number" id="messageInScaleYStart" min="0" max="500" step="1" value="90"/>%<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="messageInScaleYEnd" min="0" max="500" step="1" value="100"/>%
+								Y: <input type="number" id="messageInScaleYStart" min="0" max="500" step="1" value="100"/>%<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="messageInScaleYEnd" min="0" max="500" step="1" value="100"/>%
 							</div>
 						</div>
 					</div>
@@ -1491,6 +1496,15 @@
 					</div>
 					<hr/>
 					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Delay showing messages</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="delayChat" min="0" max="30" step="0.5" value="2"/>seconds
+						</div>
+					</div>					
+					<hr/>
+					<div class="setting">
 						<div class="settingCell">
 							<input id="hideCustomRewardMessages" type="checkbox"/> <span class="settingInfo">Hide messages attached to custom channel point redemptions</span>
 						</div>
@@ -1596,11 +1610,39 @@
 							<input id="eventTagsCheerFormat" type="text" value="cheered %amount bits"/>
 						</div>
 					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="enableEventTagsChannelPoints" type="checkbox" data-dependent="eventTagsChannelPoints"/> <span class="settingInfo">Tag messages with channel point redemptions</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="eventTagsChannelPoints">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Redemption format</span>
+						</div>
+						<div class="settingCell">
+							<input id="eventTagsChannelPointFormat" type="text" value="%name (%amount)"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="enableEventTagsWatchStreaks" type="checkbox" data-dependent="eventTagsWatchStreaks"/> <span class="settingInfo">Tag messages with watch streak notices</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="eventTagsWatchStreaks">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Notice format</span>
+						</div>
+						<div class="settingCell">
+							<input id="eventTagsWatchStreakFormat" type="text" value="watched %amount streams in a row (%reward)"/>
+						</div>
+					</div>
 					<hr/>
 					<div class="setting">
 						<div class="settingCell smol">
 							Use <tt>%amount</tt> in fields with varying amounts to show the amount of said event<br/>
-							Use <tt>%tier</tt> in subscription/resubscription fields to show the subscription plan name
+							Use <tt>%tier</tt> in subscription/resubscription fields to show the subscription plan name<br/>
+							Use <tt>%name</tt> in the point redemption field to show the name of the redemption<br/>
+							Use <tt>%reward</tt> to show the channel point reward if points are being given to the viewer
 						</div>
 					</div>
 					<hr/>
@@ -1821,7 +1863,7 @@
 							<span class="settingInfo">Extra spacing</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="flagsSpacing" min="-32" max="32" step="1" value="1"/>px
+							<input type="number" id="flagsSpacing" min="-32" max="32" step="1" value="-5"/>px
 						</div>
 					</div>
 				</div>
@@ -1954,7 +1996,7 @@
 							<span class="settingInfo">Size</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="badgeSize" min="0" max="64" step="1" value="28"/>px
+							<input type="number" id="badgeSize" min="0" max="64" step="1" value="24"/>px
 						</div>
 					</div>
 					<div class="setting" data-dependent="twitchBadges">
@@ -1962,7 +2004,7 @@
 							<span class="settingInfo">Extra spacing</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="badgeSpacing" min="-32" max="32" step="1" value="2"/>px
+							<input type="number" id="badgeSpacing" min="-32" max="32" step="1" value="1"/>px
 						</div>
 					</div>
 				</div>
@@ -2102,7 +2144,7 @@
 							<span class="settingInfo">Size</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="avatarSize" min="16" max="80" step="0.5" value="34"/>px
+							<input type="number" id="avatarSize" min="16" max="80" step="0.5" value="32"/>px
 						</div>
 					</div>
 					<div class="setting" data-dependent="avatars">
@@ -2111,8 +2153,8 @@
 						</div>
 						<div class="settingCell">
 							<select id="avatarShape">
-								<option value="circle">Circle</option>
-								<option selected value="squircle">Squircle</option>
+								<option selected value="circle">Circle</option>
+								<option value="squircle">Squircle</option>
 								<option value="square">Square</option>
 							</select>
 						</div>
@@ -2501,7 +2543,7 @@
 							<span class="settingInfo">Size</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="pronounsFontSize" min="4" max="64" step="0.25" value="12"/>pt
+							<input type="number" id="pronounsFontSize" min="4" max="64" step="0.25" value="11"/>pt
 						</div>
 					</div>
 					<div class="setting">
@@ -2756,7 +2798,16 @@
 			</div>
 			<div class="section" data-content="auth" data-sensitive="true">
 				<div class="part">
-					<h1>Twitch API Tokens</h1>
+					<h1>Twitch</h1>
+					<div class="setting settingOnlyText">
+						<p><strong>Manually authorizing access will open up the following data scopes:</strong></p>
+						<ol>
+							<li>Reading cheering/bit leaderboards (<tt>bits:read</tt>)</li>
+							<li>Reading advertisement scheduling data (<tt>channel:read:ads</tt>)</li>
+							<li>Reading data on custom Channel Point redeems (<tt>channel:read:redemptions</tt>)</li>
+						</ol>
+						<p><em>The channel you authorize with must also match the account your API keys are tied to for these scopes to be available. You cannot read this data from accounts other than your own.</em></p>
+					</div>
 					<div class="setting">
 						<div class="settingCellLabel">
 							<span class="settingInfo">App client ID</span>
@@ -2775,8 +2826,38 @@
 					</div>
 					<hr/>
 					<div class="setting">
+						<div class="settingCell centerSetting">
+							<div class="button" id="clearTwitchButton"><i class="fas fa-trash-alt"></i> Clear Cached Tokens</div> <div class="button" id="connectTwitchButton"><i class="fab fa-twitch"></i> Connect to Twitch</div>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
 						<div class="settingCell smol">
-							These tokens are available in your <a href="https://dev.twitch.tv/console/apps">Twitch Developer Console</a>
+							These API keys are available in your <a href="https://dev.twitch.tv/console/apps">Twitch Developer Console</a>
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Spotify</h1>
+					<div class="setting settingOnlyText">
+						<p><strong>Manually authorizing access will open up the following data scopes:</strong></p>
+						<ol>
+							<li>Reading the state of the currently active Spotify instance (<tt>user-read-playback-state</tt>)</li>
+							<li>Reading the metadata of the currently playing song (<tt>user-read-currently-playing</tt>)</li>
+						</ol>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">App client ID</span>
+						</div>
+						<div class="settingCell">
+							<input id="spotifyClientID" type="password" value=""/><br/><br/>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell centerSetting">
+							<div class="button" id="clearSpotifyButton"><i class="fas fa-trash-alt"></i> Clear Cached Tokens</div> <div class="button" id="connectSpotifyButton"><i class="fab fa-spotify"></i> Connect to Spotify</div>
 						</div>
 					</div>
 				</div>
@@ -2796,23 +2877,6 @@
 						</div>
 						<div class="settingCell">
 							<input id="streamelementsJWTToken" type="password" value=""/>
-						</div>
-					</div>
-				</div>
-				<div class="part">
-					<h1>Spotify</h1>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Spotify app client ID</span>
-						</div>
-						<div class="settingCell">
-							<input id="spotifyClientID" type="password" value=""/><br/><br/>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCell centerSetting">
-							<div class="button" id="clearSpotifyButton"><i class="fas fa-trash-alt"></i> Clear Cached Tokens</div> <div class="button" id="connectSpotifyButton"><i class="fab fa-spotify"></i> Connect to Spotify</div>
 						</div>
 					</div>
 				</div>
@@ -2840,6 +2904,11 @@
 						<p>This is the settings panel for my streaming overlays, make sure this and any other part of the overlay suite is loaded in OBS!</p>
 						<p>If anything seems wrong or is malfunctioning, make sure you refresh the cache on all overlay sources (it's in the properties for each source).</p>
 						<p>Links to all public overlays and for more information on them are available at <a href="https://theblackparrot.me/overlays">https://theblackparrot.me/overlays/</a></p>
+					</div>
+					<div class="setting">
+						<div class="settingCell centerSetting">
+							<div class="button" id="ohFuckOhShit"><i class="fas fa-dumpster-fire"></i> Press this button if the panel keeps reloading</div>
+						</div>
 					</div>
 				</div>
 				<div class="part">
@@ -3379,6 +3448,11 @@
 							<input id="twitchChannel" type="text" value=""/>
 						</div>
 					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="channelIsOwn" type="checkbox"/> <span class="settingInfo">Channel connected to is your own Twitch account</span>
+						</div>
+					</div>
 				</div>
 				<div class="part">
 					<h1>OBS</h1>
@@ -3479,15 +3553,45 @@
 					<hr/>
 					<div class="setting">
 						<div class="settingCell" data-dependent="spotify_enableScannable">
-							<input id="spotify_scannableUseBlack" type="checkbox"/> <span class="settingInfo">Use black foreground color</span>
+							<input id="spotify_scannableUseBlack" type="checkbox"/> <span class="settingInfo">Use lighter album art color for the background color</span>
 						</div>
 					</div>
+					<div class="setting">
+						<div class="settingCell" data-dependent="spotify_enableScannable">
+							<input id="spotify_scannableFGDark" type="checkbox"/> <span class="settingInfo">Use black foreground color</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell" data-dependent="spotify_enableScannable">
+							<input id="spotify_scannableUsesCustomBGColor" type="checkbox"/> <span class="settingInfo">Force a custom background color</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableScannable">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Background color</span>
+						</div>
+						<div class="settingCell">
+							<input id="spotify_scannableCustomBGColor" type="text" data-coloris value="#333333FF"/>
+						</div>
+					</div>
+					<!--
+					<div class="setting" data-dependent="spotify_enableScannable">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Foreground color</span>
+						</div>
+						<div class="settingCell">
+							<input id="spotify_scannableFGColor" type="text" data-coloris value="#FFFFFFFF"/>
+						</div>
+					</div>
+					-->
+					<hr/>
 					<div class="setting">
 						<div class="settingCellLabel" data-dependent="spotify_enableScannable">
 							<span class="settingInfo">Height</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="spotify_scannableHeight" min="0" max="256" step="1" value="52"/>px
+							<input type="number" id="spotify_scannableHeight" min="0" max="256" step="1" value="48"/>px
 						</div>
 					</div>
 					<div class="setting">
@@ -3577,13 +3681,13 @@
 							<span class="settingInfo">Border radius</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="spotify_artBorderRadius" min="0" max="64" step="1" value="8"/>px
+							<input type="number" id="spotify_artBorderRadius" min="0" max="64" step="1" value="4"/>px
 						</div>
 					</div>
 					<hr/>
 					<div class="setting">
 						<div class="settingCell">
-							<input checked id="spotify_enableArtOutline" type="checkbox" data-dependent="spotify_enableArtOutline"/> <span class="settingInfo">Display an outline around the album art/cover art</span>
+							<input checked id="spotify_enableArtOutline" type="checkbox" data-dependent="spotify_enableArtOutline"/> <span class="settingInfo">Display an outline around the album/cover art</span>
 						</div>
 					</div>
 					<div class="setting">
@@ -3604,7 +3708,82 @@
 							<span class="settingInfo">Outline brightness</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="spotify_artOutlineBrightness" min="0" max="500" step="1" value="175"/>%
+							<input type="number" id="spotify_artOutlineBrightness" min="0" max="500" step="1" value="155"/>%
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Background Effect</h1>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="spotify_enableArtBackground" type="checkbox" data-dependent="spotify_enableArtBackground"/> <span class="settingInfo">Display album/cover art underneath overlay content</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting" data-dependent="spotify_enableArtBackground">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Horizontal offset</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_artBackgroundHorizontalOffset" min="-200" max="200" step="0.5" value="-33"/>%
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableArtBackground">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Vertical offset</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_artBackgroundVerticalOffset" min="-200" max="200" step="0.5" value="-12.5"/>%
+						</div>
+					</div>
+					<hr/>
+					<div class="setting" data-dependent="spotify_enableArtBackground">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Mask width</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_artBackgroundMaskWidth" min="0" max="500" step="1" value="75"/>%
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableArtBackground">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Mask height</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_artBackgroundMaskHeight" min="0" max="500" step="1" value="100"/>%
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableArtBackground">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Mask range</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_artBackgroundMaskStart" min="-500" max="500" step="1" value="25"/>%<i class="fas fa-long-arrow-alt-right"></i><input type="number" id="spotify_artBackgroundMaskEnd" min="-500" max="500" step="1" value="100"/>%
+						</div>
+					</div>
+					<hr/>
+					<div class="setting" data-dependent="spotify_enableArtBackground">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Opacity</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_artBackgroundOpacity" min="0" max="100" step="0.5" value="75"/>%
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableArtBackground">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Blur amount</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_artBackgroundBlurAmount" min="0" max="100" step="1" value="12"/>px
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableArtBackground">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Fade in duration</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_artBackgroundFadeInDuration" min="0" max="15" step="0.5" value="4"/>seconds
 						</div>
 					</div>
 				</div>
@@ -3846,7 +4025,7 @@
 							<span class="settingInfo">Color</span>
 						</div>
 						<div class="settingCell">
-							<input id="spotify_boxShadowColor" type="text" data-coloris value="#000000FF"/>
+							<input id="spotify_boxShadowColor" type="text" data-coloris value="#000000DD"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="spotify_enableBoxShadowEffects">
@@ -3892,6 +4071,15 @@
 							<input type="number" id="spotify_refreshInterval" min="1" max="30" step="0.5" value="15"/>seconds
 						</div>
 					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">New song refresh delay</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_waitCheck" min="0" max="3" step="0.05" value="0.5"/>seconds
+						</div>
+					</div>
+					<hr/>
 					<div class="setting" data-dependent="spotify_enableArtOutlineProgress">
 						<div class="settingCellLabel">
 							<span class="settingInfo">Song progress interval</span>
@@ -3934,7 +4122,63 @@
 			</div>
 			<div class="section" data-content="clock">
 				<div class="part">
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="clock_showLocalTime" type="checkbox"/> <span class="settingInfo">Show local/system time</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="clock_showStreamUptime" type="checkbox"/> <span class="settingInfo">Show stream uptime</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="clock_showAdTimer" type="checkbox"/> <span class="settingInfo">Show time to next ad break</span>
+						</div>
+					</div>
+				</div>
+				<div class="part">
 					<h1>Layout</h1>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="clock_condenseClocks" type="checkbox" data-dependent="clock_condenseClocks"/> <span class="settingInfo">Fade between each enabled clock</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="clock_condenseClocks">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Switch every</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clock_showClocksFor" min="1" max="30" step="0.5" value="7"/>seconds
+						</div>
+					</div>
+					<div class="setting" data-dependent="clock_condenseClocks">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Fade duration</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clock_fadeDuration" min="1" max="10" step="0.05" value="0.15"/>seconds
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Line spacing</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clock_elementSpacing" min="0" max="200" step="1" value="4"/>px
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Element width</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clock_elementWidth" min="0" max="9999" step="1" value="192"/>px
+						</div>
+					</div>
+					<hr/>
 					<div class="setting">
 						<div class="settingCellLabel">
 							<span class="settingInfo">Horizontal margin</span>
@@ -3951,12 +4195,17 @@
 							<input type="number" id="clock_overlayMarginVertical" min="0" max="200" step="1" value="8"/>px
 						</div>
 					</div>
+					<hr/>
 					<div class="setting">
 						<div class="settingCellLabel">
-							<span class="settingInfo">Element spacing</span>
+							<span class="settingInfo">Horizontal alignment</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="clock_elementSpacing" min="0" max="200" step="1" value="4"/>px
+							<select id="clock_elementJustify">
+								<option value="start">Left</option>
+								<option selected value="center">Center</option>
+								<option value="end">Right</option>
+							</select>
 						</div>
 					</div>
 				</div>
@@ -3969,23 +4218,45 @@
 					</div>
 					<div class="setting">
 						<div class="settingCell">
-							<input checked id="clock_padHour" type="checkbox"/> <span class="settingInfo">Pad hour with a leading zero</span>
+							<input checked id="clock_padHour" type="checkbox"/> <span class="settingInfo">Pad leading value with a leading zero</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="clock_ignoreHour" type="checkbox"/> <span class="settingInfo">Hide the hour on timers if the time doesn't exceed 60 minutes</span>
 						</div>
 					</div>
 				</div>
 				<div class="part">
-					<h1>Header</h1>
+					<h1>Headers</h1>
 					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Local clock header</span>
+						</div>
 						<div class="settingCell">
-							<input id="clock_overrideHeader" type="checkbox" data-dependent="clock_overrideHeader"/> <span class="settingInfo">Override text displayed in the header</span>
+							<input id="clock_localTimeHeaderString" type="text" value="%zi / GMT%zo"/>
 						</div>
 					</div>
-					<div class="setting" data-dependent="clock_overrideHeader">
+					<div class="setting">
 						<div class="settingCellLabel">
-							<span class="settingInfo">Text to display</span>
+							<span class="settingInfo">Stream uptime header</span>
 						</div>
 						<div class="settingCell">
-							<input id="clock_overrideHeaderString" type="text" value=""/>
+							<input id="clock_streamUptimeHeaderString" type="text" value="Uptime"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Ad timer header</span>
+						</div>
+						<div class="settingCell">
+							<input id="clock_nextAdHeaderString" type="text" value="Next Ad In"/>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell smol">
+							Use <tt>%zn</tt> for the full timezone name, <tt>%zi</tt> for initials, and <tt>%zo</tt> for the offset relative to GMT.
 						</div>
 					</div>
 					<hr/>
@@ -4042,6 +4313,19 @@
 						</div>
 						<div class="settingCell">
 							<input type="number" id="clock_headerLetterSpacing" min="-12" max="12" step="0.2" value="0"/>px
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Transform</span>
+						</div>
+						<div class="settingCell">
+							<select id="clock_headerTransform">
+								<option value="capitalize">Capitalize</option>
+								<option value="lowercase">Lowercase</option>
+								<option selected value="uppercase">Uppercase</option>
+								<option value="none">Do not transform</option>
+							</select>
 						</div>
 					</div>
 				</div>
@@ -4283,6 +4567,7 @@
 	<script type="text/javascript" src="broadcast.js"></script>
 	<script type="text/javascript" src="updates.js"></script>
 
+	<script type="text/javascript" src="connections/oauth.js"></script>
 	<script type="text/javascript" src="connections/twitch.js"></script>
 	<script type="text/javascript" src="connections/obs.js"></script>
 	<script type="text/javascript" src="connections/bsplus.js"></script>

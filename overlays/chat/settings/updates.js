@@ -3,7 +3,8 @@ const properOverlayNames = {
 	"settings": "Settings Panel",
 	"chat": "Twitch Chat Overlay",
 	"clock": "Clock Overlay",
-	"bsvas": "Beat Saber VOD Audio System"
+	"bsvas": "Beat Saber VOD Audio System",
+	"text": "Text Rotation Overlay"
 };
 
 var mostRecentUpdate = 0;
@@ -14,8 +15,10 @@ $.get(`./changelog.json?sigh=${Date.now()}`, function(data) {
 	for(let timestamp in data) {
 		timestamp = parseInt(timestamp);
 
-		if(timestamp > mostRecentUpdate) {
-			mostRecentUpdate = timestamp;
+		if(timestamp !== 9999999999999) {
+			if(timestamp > mostRecentUpdate) {
+				mostRecentUpdate = timestamp;
+			}
 		}
 
 		let updates = data[timestamp].updates;
@@ -23,7 +26,12 @@ $.get(`./changelog.json?sigh=${Date.now()}`, function(data) {
 
 		let rootElement = $(`<div class="part" data-timestamp="${timestamp}"></div>`);
 
-		let headerElement = $(`<h1></h1>`).text(`${dateObj.getDate()} ${months[dateObj.getMonth()]} ${dateObj.getFullYear()}, ${dateObj.toLocaleTimeString()}`);
+		let headerElement = $(`<h1></h1>`);
+		if(timestamp === 9999999999999) {
+			headerElement.text("(next update)");
+		} else {
+			headerElement.text(`${dateObj.getDate()} ${months[dateObj.getMonth()]} ${dateObj.getFullYear()}, ${dateObj.toLocaleTimeString()}`);
+		}
 		rootElement.append(headerElement);
 
 		for(const which in updates) {

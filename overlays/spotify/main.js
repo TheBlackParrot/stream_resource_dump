@@ -69,10 +69,11 @@ const spotifyFuncs = {
 
 					setTimeout(function() {
 						$("#art, #artBG, #artOutline").fadeIn(timespans.large);
+						$("#bgWrapper .artContainer").fadeIn(parseFloat(localStorage.getItem("setting_spotify_artBackgroundFadeInDuration")) * 1000);
 					}, timespans.medium);
 
 					setTimeout(function() {
-						$("#scannable, #scannableActual").fadeIn(timespans.large);
+						$("#scannableShadow").fadeIn(timespans.large);
 					}, timespans.large);
 				}
 			}
@@ -89,11 +90,11 @@ const spotifyFuncs = {
 					}, timespans.small);
 
 					setTimeout(function() {
-						$("#art, #artBG, #artOutline").fadeOut(timespans.medium);
+						$("#art, #artBG, #artOutline, #bgWrapper .artContainer").fadeOut(timespans.medium);
 					}, timespans.medium);
 
 					setTimeout(function() {
-						$("#scannable, #scannableActual").fadeOut(timespans.medium);
+						$("#scannableShadow").fadeOut(timespans.medium);
 					}, timespans.large);
 				}
 			}
@@ -135,8 +136,6 @@ const spotifyFuncs = {
 				$("#albumString").hide();
 				$("#artistString").show();
 
-				updateMarquee();
-
 				localStorage.setItem("art_darkColor", data.colors.dark);
 				localStorage.setItem("art_lightColor", data.colors.light);
 				$(":root").get(0).style.setProperty("--colorDark", `${data.colors.dark}`);
@@ -152,30 +151,39 @@ const spotifyFuncs = {
 							cycleAlbumArtist("album");
 						}, parseInt(localStorage.getItem("setting_spotify_artistAlbumCycleDelay")) * 1000);
 					}
+					updateMarquee();
 				}, timespans.small);
 			});
 		}, timespans.small);
 
 		setTimeout(function() {
-			$("#art, #artBG, #artOutline").fadeOut(timespans.medium, function() {
-				$("#art, #artBG, #artOutline").attr("src", data.art);
+			$("#art, #artBG, #artOutline, #bgWrapper .artContainer").fadeOut(timespans.medium, function() {
+				$("#art").attr("src", data.art);
+				rootCSS().setProperty("--art-url", `url('${data.art}')`);
 
 				$("#art").on("load", function() {
 					$("#art, #artBG, #artOutline").fadeIn(timespans.large);
+					$("#bgWrapper .artContainer").fadeIn(parseFloat(localStorage.getItem("setting_spotify_artBackgroundFadeInDuration")) * 1000);
 				});
 			});
 		}, timespans.medium);
 
 		setTimeout(function() {
-			$("#scannable, #scannableActual").fadeOut(timespans.medium, function() {
-				let scannableImage = data.scannable[(localStorage.getItem("setting_spotify_scannableUseBlack") === "true" ? "black" : "white")];
+			$("#scannableShadow").fadeOut(timespans.medium, function() {
+				let scannableBackgroundColor = "#333333";
+				if(localStorage.getItem("setting_spotify_scannableUsesCustomBGColor") === "true") {
+					scannableBackgroundColor = localStorage.getItem("setting_spotify_scannableCustomBGColor");
+				} else {
+					scannableBackgroundColor = (localStorage.getItem("setting_spotify_scannableUseBlack") === "true" ? data.colors.light : data.colors.dark);
+				}
+
+				let scannableImage = `https://scannables.scdn.co/uri/plain/jpeg/000000/white/640/${data.uri}`;
 
 				$("#scannable").attr("src", scannableImage);
-				//$("#scannableActual").css("background-image", `url(${scannableImage})`);
-				//document.getElementById("scannableActual").style.backgroundImage = `url('${scannableImage}')`;
 				rootCSS().setProperty("--workingAroundFunnyChromiumBugLolXD", `url('${scannableImage}')`);
 				$("#scannable").on("load", function() {
-					$("#scannable, #scannableActual").fadeIn(timespans.large);
+					rootCSS().setProperty("--scannable-background-color", scannableBackgroundColor);
+					$("#scannableShadow").fadeIn(timespans.large);
 				});
 			});
 		}, timespans.large)

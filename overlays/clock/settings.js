@@ -111,12 +111,6 @@ const settingUpdaters = {
 	secondsLetterSpacing: function(value) {
 		rootCSS().setProperty("--secondsLetterSpacing", `${value}px`);
 	},
-	overrideHeader: function(value) {
-		setTZ();
-	},
-	overrideHeaderString: function(value) {
-		setTZ();
-	},
 	headerColor: function(value) {
 		rootCSS().setProperty("--timezoneColorActual", value);
 	},
@@ -158,6 +152,101 @@ const settingUpdaters = {
 	},
 	meridiemLetterSpacing: function(value) {
 		rootCSS().setProperty("--meridiemLetterSpacing", `${value}px`);
+	},
+
+	elementWidth: function(value) {
+		rootCSS().setProperty("--elementWidth", `${value}px`);
+	},
+	elementJustify: function(value) {
+		rootCSS().setProperty("--elementJustify", value);
+	},
+	headerTransform: function(value) {
+		rootCSS().setProperty("--headerTransform", value);
+	},
+	showLocalTime: function(value) {
+		if(localStorage.getItem("setting_clock_condenseClocks") === "false") {
+			if(value === "true") {
+				$("#localTime").show();
+				$("#localTime").children().show();
+			} else {
+				$("#localTime").hide();
+				$("#localTime").children().hide();
+			}
+		}
+
+		clocksEnabled.localTime = (value === "true");
+	},
+	showStreamUptime: function(value) {
+		if(localStorage.getItem("setting_clock_condenseClocks") === "false") {
+			if(value === "true") {
+				$("#streamUptime").show();
+				$("#streamUptime").children().show();
+			} else {
+				$("#streamUptime").hide();
+				$("#streamUptime").children().hide();
+			}
+		}
+
+		clocksEnabled.streamUptime = (value === "true");
+	},
+	showAdTimer: function(value) {
+		if(localStorage.getItem("setting_clock_condenseClocks") === "false") {
+			if(value === "true") {
+				$("#nextAd").show();
+				$("#nextAd").children().show();
+			} else {
+				$("#nextAd").hide();
+				$("#nextAd").children().hide();
+			}
+		}
+
+		clocksEnabled.nextAd = (value === "true");
+	},
+	condenseClocks: function(value) {
+		if(value === "true") {
+			$(".clockElement").removeClass("activeClock").hide();
+			currentClock = -1;
+			switchClock();
+		} else {
+			$(".clockElement .head").removeClass("slideIn").removeClass("slideOut");
+			$(".clockElement .value").removeClass("slideIn").removeClass("slideOut");
+
+			if(localStorage.getItem("setting_clock_showLocalTime") === "true") {
+				$("#localTime").show();
+				$("#localTime").children().show();
+			} else {
+				$("#localTime").hide();
+				$("#localTime").children().hide();
+			}
+
+			if(localStorage.getItem("setting_clock_showStreamUptime") === "true") {
+				$("#streamUptime").show();
+				$("#streamUptime").children().show();
+			} else {
+				$("#streamUptime").hide();
+				$("#streamUptime").children().hide();
+			}
+
+			if(localStorage.getItem("setting_clock_showAdTimer") === "true") {
+				$("#nextAd").show();
+				$("#nextAd").children().show();
+			} else {
+				$("#nextAd").hide();
+				$("#nextAd").children().hide();
+			}
+		}
+	},
+	localTimeHeaderString: function(value) {
+		setTZ();
+	},
+	streamUptimeHeaderString: function(value) {
+		setTZ();
+	},
+	nextAdHeaderString: function(value) {
+		setTZ();
+	},
+	fadeDuration: function(value) {
+		rootCSS().setProperty("--animationDuration", `${value}s`);
 	}
 };
 

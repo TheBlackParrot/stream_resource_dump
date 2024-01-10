@@ -108,6 +108,9 @@ broadcastFuncs = {
 		postToChannel("settingsKeysSpotify", settingsKeysSpotify);
 		
 		if($('.row[data-tab="spotify"]').is(":visible")) {
+			if(isSpotifyReady) {
+				updateTrack();
+			}
 			return;
 		}
 
@@ -131,6 +134,8 @@ broadcastFuncs = {
 		if($('.row[data-tab="clock"]').is(":visible")) {
 			return;
 		}
+
+		console.log(message);
 
 		console.log("Clock overlay is active");
 		changeStatusCircle("ClockOverlayStatus", "green", `loaded (r${message.data.version})`);

@@ -738,3 +738,16 @@ img.emoji {
 .sevenTVBadge { display: var(--display7TVBadges); }
 .ffzBadge { display: var(--displayFFZBadges); }
 .bttvBadge { display: var(--displayBTTVBadges); }
+
+.pointRedeemIcon, .watchStreakIcon {
+	display: inline-block;
+	height: 1.25em;
+	width: 1.25em;
+	vertical-align: sub; /* yeah idk either */
+	background-color: var(--eventTagsColor);
+	-webkit-mask-size: cover;
+	-webkit-mask-repeat: no-repeat;
+}
+
+.pointRedeemIcon { -webkit-mask-image: url("icons/points.svg"); }
+.watchStreakIcon { -webkit-mask-image: url("icons/eye.svg"); }

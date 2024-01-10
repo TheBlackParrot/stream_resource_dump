@@ -3,9 +3,24 @@ var lastAsk = Infinity;
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
 async function callTwitchAsync(data) {
-	if(!allowedToProceed) {
-		console.log("No Client ID or Secret is set.");
-		return;
+	var token = localStorage.getItem("twitch_accessToken");
+	if(data.oauth && broadcasterData) {
+		token = localStorage.getItem("twitch_oauthAccessToken");
+	}
+
+	if(!twitchClientId) {
+		return {};
+	}
+
+	if(!token && data.oauth) {
+		return {};
+	}
+
+	if(data.oauth) {
+		if(localStorage.getItem("setting_channelIsOwn") === "false") {
+			console.log("cannot fetch data requiring an oauth token from other channels");
+			return {};
+		}
 	}
 
 	var url = new URL(`https://api.twitch.tv/helix/${data.endpoint}`);
@@ -17,7 +32,7 @@ async function callTwitchAsync(data) {
 		method: "GET",
 		cache: "no-cache",
 		headers: {
-			"Authorization": `Bearer ${localStorage.getItem("twitch_accessToken")}`,
+			"Authorization": `Bearer ${token}`,
 			"Client-Id": twitchClientId
 		}
 	});
@@ -31,9 +46,13 @@ async function callTwitchAsync(data) {
 			console.log("token unauthorized");
 			systemMessage("Twitch authentication token error, fetching a new one...");
 
-			if(Date.now() < lastAsk) {
-				postToTwitchEventChannel("RefreshAuthenticationToken");
-				lastAsk = Date.now();
+			if(data.oauth) {
+				postToTwitchEventChannel("RefreshOAuthToken");
+			} else {
+				if(Date.now() < lastAsk) {
+					postToTwitchEventChannel("RefreshAuthenticationToken");
+					lastAsk = Date.now();
+				}
 			}
 
 			await delay(5000);
@@ -287,7 +306,7 @@ async function getKnownBotsList() {
 	} else {
 		console.log("using cached known bot list");
 
-		knownBots = JSON.parse(localStorage.getItem("cache_knownBots"));
+		knownBots = JSON.parse(sessionStorage.getItem("cache_knownBots"));
 		if(knownBots === null) {
 			console.log("last known bot cache was empty? uh");
 			return [];

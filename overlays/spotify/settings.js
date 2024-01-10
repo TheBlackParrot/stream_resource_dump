@@ -1,4 +1,4 @@
-const overlayRevision = 8;
+const overlayRevision = 9;
 const overlayRevisionTimestamp = 1702506483275;
 
 const settingsChannel = new BroadcastChannel("settings_overlay");
@@ -199,18 +199,47 @@ const settingUpdaters = {
 		rootCSS().setProperty("--artist-gradient-angle", `${value}deg`);
 	},
 
+	scannableUsesCustomBGColor: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--scannable-background-color", localStorage.getItem("setting_spotify_scannableCustomBGColor"));
+		} else {
+			if(currentSong.uri === null) {
+				return;
+			}
+
+			if(localStorage.getItem("setting_spotify_scannableUseBlack") === "true") {
+				rootCSS().setProperty("--scannable-background-color", currentSong.colors.light);
+			} else {
+				rootCSS().setProperty("--scannable-background-color", currentSong.colors.dark);
+			}			
+		}
+	},
+
 	scannableUseBlack: function(value) {
-		if(!("scannable" in currentSong)) {
+		if(currentSong.uri === null) {
+			return;
+		}
+		if(localStorage.getItem("setting_spotify_scannableUsesCustomBGColor") === "true") {
 			return;
 		}
 
 		if(value === "true") {
-			$("#scannable").attr("src", currentSong.scannable.black);
-			rootCSS().setProperty("--workingAroundFunnyChromiumBugLolXD", `url('${currentSong.scannable.black}')`);
+			rootCSS().setProperty("--scannable-background-color", currentSong.colors.light);
 		} else {
-			$("#scannable").attr("src", currentSong.scannable.white);
-			rootCSS().setProperty("--workingAroundFunnyChromiumBugLolXD", `url('${currentSong.scannable.white}')`);
+			rootCSS().setProperty("--scannable-background-color", currentSong.colors.dark);
 		}
+	},
+
+	scannableCustomBGColor: function(value) {
+		if(localStorage.getItem("setting_spotify_scannableUsesCustomBGColor") === "false") {
+			return;
+		}
+
+		rootCSS().setProperty("--scannable-background-color", value);
+	},
+
+	scannableFGColor: function(value) {
+		rootCSS().setProperty("--scannable-foreground-color", value);
 	},
 
 	artistColorReflectsArtColorDarker: function(value) {
@@ -335,6 +364,48 @@ const settingUpdaters = {
 				$("#albumString").addClass("isSingle");
 			}
 		}
+	},
+
+	scannableFGDark: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--scannable-mix-mode", 'multiply');
+			rootCSS().setProperty("--scannable-filters", 'invert(1)');
+		} else {
+			rootCSS().setProperty("--scannable-mix-mode", 'screen');
+			rootCSS().setProperty("--scannable-filters", 'unset');
+		}
+	},
+
+	enableArtBackground: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--show-background-art", 'block');
+		} else {
+			rootCSS().setProperty("--show-background-art", 'none');
+		}
+	},
+	artBackgroundHorizontalOffset: function(value) {
+		rootCSS().setProperty("--background-art-horizontal-offset", `${value}%`);
+	},
+	artBackgroundVerticalOffset: function(value) {
+		rootCSS().setProperty("--background-art-vertical-offset", `${value}%`);
+	},
+	artBackgroundMaskWidth: function(value) {
+		rootCSS().setProperty("--background-art-mask-width", `${value}%`);
+	},
+	artBackgroundMaskHeight: function(value) {
+		rootCSS().setProperty("--background-art-mask-height", `${value}%`);
+	},
+	artBackgroundMaskStart: function(value) {
+		rootCSS().setProperty("--background-art-start-at", `${value}%`);
+	},
+	artBackgroundMaskEnd: function(value) {
+		rootCSS().setProperty("--background-art-end-at", `${value}%`);
+	},
+	artBackgroundBlurAmount: function(value) {
+		rootCSS().setProperty("--background-art-blur-amount", `${value}px`);
+	},
+	artBackgroundOpacity: function(value) {
+		rootCSS().setProperty("--background-art-opacity", `${value}%`);
 	}
 };
 
@@ -350,6 +421,7 @@ function updateSetting(which, value, oldValue) {
 		settingUpdaters[setting](value, oldValue);
 
 		updateMarquee();
+		rootCSS().setProperty("--background-art-height", `${$("#wrapper").outerHeight(true)}px`);
 	}
 }
 window.addEventListener("storage", function(event) {

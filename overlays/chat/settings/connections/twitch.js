@@ -166,12 +166,13 @@ client.on("clearchat", function(channel) {
 	postToTwitchEventChannel("clearchat");
 });
 
+const newNotices = ['announcement', 'viewermilestone'];
 client.on("usernotice", function(msgid, channel, tags, msg) {
-	if(tags['msg-id'] !== "announcement") {
+	if(newNotices.indexOf(tags['msg-id']) === -1) {
 		return;
 	}
 
-	postToTwitchEventChannel("announcement", {
+	postToTwitchEventChannel(tags['msg-id'], {
 		channel: channel,
 		username: tags['username'],
 		tags: tags,
@@ -199,7 +200,9 @@ client.on("disconnected", function() {
 });
 
 var gettingAccessToken = false;
+var gettingOAuthAccessToken = false;
 var lastRefresh = 0;
+var lastOAuthRefresh = 0;
 const twitchFuncs = {
 	RefreshAuthenticationToken: function() {
 		if(!allowedToProceed) {
@@ -249,6 +252,24 @@ const twitchFuncs = {
 				gettingAccessToken = false;
 			}
 		});
+	},
+
+	RefreshOAuthToken: function() {
+		if(gettingOAuthAccessToken) {
+			console.log("already fetching a token, hold your horses!!!");
+			return;
+		}
+
+		if(Date.now() - lastOAuthRefresh < 10000) {
+			// this is a very hacky way to stop refresh spam but w/e
+			console.log("already fetched a token within the last 10 seconds, chill");
+			return;
+		}
+
+		gettingAccessToken = true;
+		console.log("refreshing oauth access token...");
+
+		regenTwitchCodes();
 	}
 };
 
@@ -260,6 +281,46 @@ twitchEventChannel.onmessage = function(message) {
 		twitchFuncs[message.event](message);
 	}
 };
+
+$("#connectTwitchButton").on("mouseup", function(e) {
+	e.preventDefault();
+	sessionStorage.setItem("_oauth_service", "twitch");
+	regenTwitchCodes();
+});
+
+$("#clearTwitchButton").on("mouseup", function(e) {
+	e.preventDefault();
+
+	if($(this).text() === "Are you sure?") {
+		localStorage.removeItem("twitch_oauthRefreshToken");
+		localStorage.removeItem("twitch_oauthAccessToken");
+
+		addNotification("Cached Twitch OAuth tokens have been cleared, please reconnect to Twitch.", {duration: 10});
+		changeButtonText($(this), "Clear Cached Tokens", true);
+	}
+
+	changeButtonText($(this), "Are you sure?", false);
+	var elem = $(this); // augh
+	resetTimeout = setTimeout(function() {
+		changeButtonText(elem, "Clear Cached Tokens", true);
+	}, 5000);
+});
+
+var isTwitchOAuthReady = false;
+function onTwitchReady() {
+	if(oauthCode) {
+		window.history.replaceState({}, document.title, window.location.pathname);
+	}
+
+	isTwitchOAuthReady = true;
+
+	addNotification("Successfully connected to Twitch (OAuth)", {bgColor: "var(--notif-color-success)", duration: 5});
+	//changeStatusCircle("SpotifyStatus", "green", `connected`);
+}
+
+if(localStorage.getItem('twitch_oauthRefreshToken')) {
+	regenTwitchCodes();
+}
 
 /*
 let testData = [

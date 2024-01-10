@@ -1,5 +1,5 @@
-const overlayRevision = 1;
-const overlayRevisionTimestamp = 1701910291177;
+const overlayRevision = 3;
+const overlayRevisionTimestamp = 1703848762628;
 
 const settingsEventChannel = new BroadcastChannel("settings_overlay");
 
@@ -30,6 +30,8 @@ broadcastFuncs = {
 		for(const setting of message.data) {
 			updateSetting(`setting_${setting}`, localStorage.getItem(`setting_${setting}`));
 		}
+
+		onTwitchReady();
 	}
 }
 
@@ -42,4 +44,41 @@ settingsEventChannel.onmessage = function(message) {
 	}
 };
 
-postToSettingsEventChannel("ClockOverlayExists");
+postToSettingsEventChannel("ClockOverlayExists", {version: overlayRevision});
+
+async function onTwitchReady() {
+	currentClock = -1;
+	switchClock();
+	
+	await getBroadcasterData();
+	await getTwitchStreamData();
+	await adTimer();
+}
+
+const twitchEventChannel = new BroadcastChannel("twitch_chat");
+function postToTwitchEventChannel(event, data) {
+	let message = {
+		event: event
+	};
+	if(data) {
+		message.data = data;
+	}
+
+	console.log(message);
+	twitchEventChannel.postMessage(message);
+}
+
+const twitchFuncs = {
+	OAuthTokenRefreshed: function() {
+		adTimer();
+	}
+}
+
+twitchEventChannel.onmessage = function(message) {
+	message = message.data;
+
+	if(message.event in twitchFuncs) {
+		console.log(message);
+		twitchFuncs[message.event](message);
+	}
+};

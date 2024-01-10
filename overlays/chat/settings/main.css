@@ -771,14 +771,26 @@ input[type="range"]::-webkit-slider-runnable-track {
 #connectSpotifyButton {
 	background-color: #1DB954;
 }
+#connectTwitchButton {
+	background-color: #9146FF;
+}
 
 ol li, .part h2 {
 	margin-bottom: 12px;
 }
 
 ol li:before {
-	content: "• ";
-	color: var(--settings-header-color);
+	content: " ";
+	background-color: var(--settings-header-color);
+	line-height: 0px;
+	padding: 0px;
+	margin: 0px;
+	margin-right: 0.5em;
+	vertical-align: super;
+	height: 3px;
+	width: 16px;
+	display: inline-flex;
+	align-items: center;
 }
 
 ol li ol {
@@ -794,6 +806,7 @@ ol li ol {
 
 ol li ol li:before {
 	content: "";
+	display: none;
 }
 
 .newUpdates {

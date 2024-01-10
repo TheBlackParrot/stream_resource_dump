@@ -33,6 +33,7 @@
 	--timezoneLetterSpacing: 0px;
 	--timezoneColorActual: #A695FF;
 	--timezoneColor: var(--timezoneColorActual);
+	--headerTransform: uppercase;
 
 	--clockFont: "Manrope";
 	--clockFontSize: 27pt;
@@ -56,7 +57,44 @@
 	--meridiemFontWeight: 900;
 	--meridiemLetterSpacing: 1px;
 	--meridiemAddWeight: 0.5px;
+
+	--elementWidth: 147px;
+	--elementJustify: center;
+
+	--animationDuration: 0.5s;
 }
+
+@keyframes slideIn {
+	0% {
+		transform: translateX(30px);
+		opacity: 0;
+	}
+	100% {
+		transform: translateX(0px);
+		opacity: 1;
+	}
+}
+
+@keyframes slideOut {
+	0% {
+		transform: translateX(0px);
+		opacity: 1;
+	}
+	100% {
+		transform: translateX(30px);
+		opacity: 0;
+	}
+}
+
+.slideIn, .slideOut {
+	animation-duration: var(--animationDuration);
+	animation-direction: forwards;
+	animation-fill-mode: forwards;
+	animation-iteration-count: 1;	
+}
+
+.slideIn { animation-name: slideIn; }
+.slideOut { animation-name: slideOut; }
 
 body {
 	background-color: #333;
@@ -67,14 +105,22 @@ body {
 	left: 0px;
 	top: 0px;
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	padding-top: var(--verticalMargin);
 	padding-bottom: var(--verticalMargin);
 	padding-left: var(--horizontalMargin);
 	padding-right: var(--horizontalMargin);
+	align-items: var(--elementJustify);
 }
 
-#timezone, #clock {
+.clockElement {
+	width: var(--elementWidth);
+	align-items: var(--elementJustify);
+	display: flex;
+	flex-direction: column;
+}
+
+.head, .value {
 	padding-top: var(--verticalSpacing);
 	padding-bottom: var(--verticalSpacing);
 	padding-left: 4px;
@@ -83,7 +129,7 @@ body {
 	text-align: center;
 }
 
-#timezone {
+.head {
 	font-family: var(--timezoneFont);
 	font-size: var(--timezoneFontSize);
 	font-style: var(--timezoneFontStyle);
@@ -93,9 +139,10 @@ body {
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 	letter-spacing: var(--timezoneLetterSpacing);
+	text-transform: var(--headerTransform);
 }
 
-#clock {
+.value {
 	font-family: var(--clockFont);
 	font-size: var(--clockFontSize);
 	letter-spacing: var(--clockLetterSpacing);
@@ -111,10 +158,10 @@ body {
 	align-items: baseline;
 }
 
-#seconds:before {
+.second:before {
 	content: ":";
 }
-#seconds {
+.second {
 	font-variant-numeric: tabular-nums;
 	font-family: var(--secondsFont);
 	font-size: var(--secondsFontSize);
@@ -123,7 +170,7 @@ body {
 	letter-spacing: var(--secondsLetterSpacing);
 	-webkit-text-stroke: var(--secondsAddWeight) transparent;
 }
-#meridiem {
+.meridiem {
 	font-family: var(--meridiemFont);
 	font-size: var(--meridiemFontSize);
 	letter-spacing: var(--meridiemLetterSpacing);

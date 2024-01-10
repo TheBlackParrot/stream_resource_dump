@@ -1,4 +1,174 @@
 {
+	"1704855184206": {
+		"updates": {
+			"chat": {
+				"revision": 38,
+				"notes": [
+					[
+						"added a setting to alternate horizontal alignment of message blocks"
+					],
+					[
+						"lowered some default values on settings to condense the overlay a bit"
+					],
+					[
+						"simplified some of the default block appear/decay animations"
+					],
+					[
+						"added support for watch streak messages",
+ 						["holy crap twitch PLEASE update your IRC docs"]
+					],
+					[
+						"chat messages can now be delayed (for automatic moderation purposes/etc)",
+						["i have this defaulted to 2 seconds, should hardly be noticeable"]
+					]
+				]
+			},
+
+			"clock": {
+				"revision": 3,
+				"notes": [
+					[
+						"fixed minutes not being padded with a leading zero if the setting to pad the leading value is off and hours are present"
+					],
+					[
+						"changed the way the clock switches shown values, should fix cases where it fails to continue its loop"
+					],
+					[
+						"increased default clock width to accommodate the 12-hour format"
+					],
+					[
+						"fixed clock disappearing if the settings panel is refreshed"
+					]
+				]				
+			},
+
+			"settings": {
+				"revision": 35,
+				"notes": [
+					[
+						"forced timestamp of 9999999999999 to show \"(in progress)\" for its patch notes header",
+						["this timestamp is in the year 2280, it will never be hit. this also only ever shows on the dev path, so."]
+					],
+					[
+						"updated font awesome from 5.15 to 6.5"
+					]
+				]
+			},
+
+			"spotify": {
+				"revision": 9,
+				"notes": [
+					[
+						"added a setting to force background color on scannables"
+					],
+					[
+						"scannable URLs are now generated on the overlay side",
+						["...why did i even make the settings panel do this wtf"]
+					],
+					[
+						"changed the way scannables are being rendered",
+						["it'll no longer have to fetch a new scannable image any time colors change"]
+					],
+					[
+						"reworded the setting to switch the foreground scannable color to denote switching between automatic light/dark background colors"
+					],
+					[
+						"if song data has been fetched before, it's now sent out immediately upon the overlay announcing its presence"
+					],
+					[
+						"art outlines now blur a slightly zoomed in cover art rather than just showing it directly",
+						["cover art with borders made the outlines look ugly and it's been bothering me"]
+					],
+					[
+						"cover art can now be used as a background for the overlay"
+					],
+					[
+						"fixed marquee scrolling on title text if it's too long on the initial load"
+					],
+					[
+						"adjusted some default settings"
+					]
+				]
+			}
+		}
+	},
+
+	"1703848762628": {
+		"updates": {
+			"chat": {
+				"revision": 37,
+				"notes": [
+					[
+						"channel point reward redemptions can now be shown as an event tag if the redemption has text associated with it"
+					],
+					[
+						"fixed incorrect cache location of the known bots list data"
+					],
+					[
+						"fixed BTTV badges failing to render if user object hasn't completely initialized yet"
+					]
+				]
+			},
+
+			"clock": {
+				"revision": 2,
+				"notes": [
+					[
+						"can now show local time, stream uptime, and ad countdown"
+					],
+					[
+						"overall element width can now be forced",
+						["useful if more than 1 time value is shown"]
+					],
+					[
+						"alignment of text can now be changed"
+					],
+					[
+						"clock header cases can now be forced"
+					],
+					[
+						"fixed 12am showing as 0am on 12-hour formats"
+					],
+					[
+						"switched out the header text override setting for a string variable",
+						["use %zi to show timezone initials, %zo to show timezone offset relative to GMT, and %zn to show the full timezone name in any of the clock/timer headers"]
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 34,
+				"notes": [
+					[
+						"added authorization code grant flow auth to twitch to allow for additional data scopes",
+						[
+							"some new functionality may not work without connecting to twitch in this way, everything up to this point should remain unchanged as none of it requires this authentication flow",
+							"there's also a related setting in the Connections tab that you must manually enable to allow for these additional data points to work. i'm forcing these to give nothing back initially as the API tokens have to be owned by the same account you're trying to access, otherwise they don't work",
+							"i've also run into an issue (once) where sometimes things just catastrophically break and the panel continuously reloads because of a token error? i've added a button to the about panel in case things happen (it should be fine though, i think)"
+						]
+					],
+					[
+						"clarified what data scopes are being obtained and for what reasons in the authentication tab",
+						["i love transparency, transparency is great"]
+					],
+					[
+						"re-organized the authentication tab a bit"
+					],
+					[
+						"made the bullet points in list elements dashes"
+					],
+					[
+						"fixed some issues with new setup initialization"
+					],
+					[
+						"un-hardcoded a delay on fetching data for new spotify songs playing",
+						["this was added in to ensure a new song is playing after the currently playing one finishes so the quicker refresh doesn't misfire, was hardcoded at 500ms"]
+					]
+				]
+			}
+		}
+	},
+	
 	"1703516161056": {
 		"updates": {
 			"chat": {

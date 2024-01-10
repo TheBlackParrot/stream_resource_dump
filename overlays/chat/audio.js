@@ -117,6 +117,11 @@ function initSoundMetadata() {
 }
 
 function setVolume(which, volume) {
+	if(!(which in sounds)) {
+		// uhhh
+		return;
+	}
+	
 	sounds[which].gainNode.gain.value = parseInt(volume) / 100;
 }
 

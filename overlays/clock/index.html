@@ -11,16 +11,35 @@
 
 <body>
 	<div id="wrapper">
-		<div id="timezone">...</div>
-		<div id="clock">
-			<span id="clockMain">00:00</span>
-			<span id="seconds">00</span>
-			<span id="meridiem"></span>
+		<div class="clockElement activeClock" id="localTime">
+			<div class="head">Local Time</div>
+			<div class="value">
+				<span class="main">00:00</span>
+				<span class="second">00</span>
+				<span class="meridiem"></span>
+			</div>
+		</div>
+
+		<div class="clockElement" id="streamUptime" style="display: none;">
+			<div class="head">Uptime</div>
+			<div class="value">
+				<span class="main">00:00</span>
+				<span class="second">00</span>
+			</div>
+		</div>
+
+		<div class="clockElement" id="nextAd" style="display: none;">
+			<div class="head">Next Ad In</div>
+			<div class="value">
+				<span class="main">00:00</span>
+				<span class="second">00</span>
+			</div>
 		</div>
 	</div>
 
 	<script type="text/javascript" src="broadcast.js"></script>
 	<script type="text/javascript" src="settings.js"></script>
+	<script type="text/javascript" src="twitch.js"></script>
 	<script type="text/javascript" src="main.js"></script>
 </body>
 

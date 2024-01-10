@@ -31,6 +31,8 @@ var twitchHelixReachable = false;
 var chatEmotes;
 initEmoteSet();
 
+var channelPointRedeems = {};
+
 function setTwitchHelixReachable(state) {
 	twitchHelixReachable = state;
 	postToSettingsChannel("TwitchHelixStatus", state);
@@ -128,6 +130,34 @@ async function getStuffReady() {
 	channelData = channelResponse.data[0];
 	systemMessage(`Showing chat for **#${broadcasterData.login}**${broadcasterData.login === broadcasterName.display_name ? "" : ` *(a.k.a. ${broadcasterData.display_name})*`}`);
 	console.log("got channel information");
+
+	console.log("getting channel point redeems...");
+
+	const redeemResponse = await callTwitchAsync({
+		endpoint: "channel_points/custom_rewards",
+		oauth: true,
+		args: {
+			broadcaster_id: broadcasterData.id
+		}
+	});
+	if("data" in redeemResponse) {
+		console.log(redeemResponse.data);
+
+		if(redeemResponse.data.length) {
+			for(const redeemData of redeemResponse.data) {
+				channelPointRedeems[redeemData.id] = {
+					color: redeemData.background_color,
+					cost: parseInt(redeemData.cost),
+					image: (redeemData.image === null ? redeemData.default_image : redeemData.image),
+					enabled: redeemData.is_enabled,
+					name: redeemData.title
+				};
+			}
+		}
+
+		console.log("got channel point redeems");
+		systemMessage(`Found ${Object.keys(channelPointRedeems).length} channel point redeems`);
+	}
 
 	getTwitchStreamData();
 }
@@ -470,6 +500,7 @@ function postToTwitchEventChannel(event, data) {
 	twitchEventChannel.postMessage(message);
 }
 
+var deleteMessages = [];
 const twitchEventFuncs = {
 	message: async function(data) {
 		await prepareMessage(data.tags, data.message, data.self, false);
@@ -497,6 +528,8 @@ const twitchEventFuncs = {
 		let id = data.tags['target-msg-id'];
 		let elem = $(`.effectWrapper[data-msguuid="${id}"]`);
 
+		deleteMessages.push(id);
+
 		if(elem.parent().children(".effectWrapper").length === 1) {
 			$(`.chatBlock[data-rootidx="${elem.attr("data-rootidx")}"]`).remove();
 		} else {
@@ -518,7 +551,11 @@ const twitchEventFuncs = {
 	},
 
 	announcement: async function(data) {
-		await prepareMessage(data.tags, data.message, false, false);
+		await prepareMessage(data.tags, data.message, false, true);
+	},
+
+	viewermilestone: async function(data) {
+		await prepareMessage(data.tags, data.message, false, true);
 	},
 
 	AccessTokenRefreshed: function(data) {

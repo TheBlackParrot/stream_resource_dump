@@ -16,20 +16,33 @@
 
 	<div id="wrapper" class="left">
 		<div id="scannableWrapper">
-			<span id="scannableActual" class="showBoxShadow"></span>
-			<img id="scannable" src=""/>
+			<div id="scannableShadow" class="showBoxShadow">
+				<div id="scannableWrapperInside">
+					<div id="scannableBackground"></div>
+					<div id="scannableForeground"></div>
+					<img id="scannable" src=""/>
+				</div>
+			</div>
 		</div>
 
 		<div id="artWrapper">
 			<div id="artDoppleganger"></div>
-			<img id="artOutline" src=""/>
-			<img id="artBG" class="showBoxShadow" src=""/>
+			<div id="artOutline">
+				<div class="artContainer"></div>
+			</div>
+			<div id="artBG">
+				<div class="artContainer"></div>
+			</div>
 			<img id="art" src=""/>
 		</div>
 
 		<div id="detailsWrapper">
 			<div id="title"><span id="titleString"></span></div>
 			<div id="artist"><span id="artistString" style="display: none;"></span><span class="" id="albumString" style="display: none;"></span></div>
+		</div>
+
+		<div id="bgWrapper">
+			<div class="artContainer"></div>
 		</div>
 	</div>
 
