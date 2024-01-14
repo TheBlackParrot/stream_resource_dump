@@ -8,6 +8,7 @@ const properOverlayNames = {
 };
 
 var mostRecentUpdate = 0;
+var lastSettingReset = parseInt(localStorage.getItem("_lastSettingReset")) || 0;
 
 $.get(`./changelog.json?sigh=${Date.now()}`, function(data) {
 	console.log(data);
@@ -63,6 +64,18 @@ $.get(`./changelog.json?sigh=${Date.now()}`, function(data) {
 		}
 
 		$("#updatesSection").append(rootElement);
+
+		if("reset" in data[timestamp]) {
+			const resetData = data[timestamp].reset;
+			if(resetData.check > lastSettingReset) {
+				localStorage.setItem("_lastSettingReset", resetData.check);
+
+				for(const setting of resetData.settings) {
+					console.log(`reset setting_${setting} to defaults (${defaultConfig[setting]}) due to update`);
+					localStorage.setItem(`setting_${setting}`, defaultConfig[setting]);
+				}
+			}
+		}
 	}
 
 	let lastClickedUpdateTab = parseInt(localStorage.getItem("_lastClickedUpdateTab"));

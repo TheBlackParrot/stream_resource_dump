@@ -1,5 +1,5 @@
-const overlayRevision = 9;
-const overlayRevisionTimestamp = 1702506483275;
+const overlayRevision = 10;
+const overlayRevisionTimestamp = 1705268268367;
 
 const settingsChannel = new BroadcastChannel("settings_overlay");
 
@@ -335,8 +335,10 @@ const settingUpdaters = {
 	useRTL: function(value) {
 		if(value === "true") {
 			$("#wrapper").removeClass("left").addClass("right");
+			rootCSS().setProperty("--background-art-mask-side", "100%");
 		} else {
 			$("#wrapper").removeClass("right").addClass("left");
+			rootCSS().setProperty("--background-art-mask-side", "0%");
 		}
 	},
 
@@ -383,12 +385,6 @@ const settingUpdaters = {
 			rootCSS().setProperty("--show-background-art", 'none');
 		}
 	},
-	artBackgroundHorizontalOffset: function(value) {
-		rootCSS().setProperty("--background-art-horizontal-offset", `${value}%`);
-	},
-	artBackgroundVerticalOffset: function(value) {
-		rootCSS().setProperty("--background-art-vertical-offset", `${value}%`);
-	},
 	artBackgroundMaskWidth: function(value) {
 		rootCSS().setProperty("--background-art-mask-width", `${value}%`);
 	},
@@ -406,6 +402,15 @@ const settingUpdaters = {
 	},
 	artBackgroundOpacity: function(value) {
 		rootCSS().setProperty("--background-art-opacity", `${value}%`);
+	},
+	enableArtBackgroundMask: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--background-art-mask-actual", "var(--background-art-mask)");
+			rootCSS().setProperty("--wrapper-padding-bottom", "calc(var(--wrapper-margin) * 2)");
+		} else {
+			rootCSS().setProperty("--background-art-mask-actual", "none");
+			rootCSS().setProperty("--wrapper-padding-bottom", "var(--wrapper-margin)");
+		}
 	}
 };
 
@@ -422,6 +427,7 @@ function updateSetting(which, value, oldValue) {
 
 		updateMarquee();
 		rootCSS().setProperty("--background-art-height", `${$("#wrapper").outerHeight(true)}px`);
+		rootCSS().setProperty("--background-art-size", `${$('#artBGWrap .artContainer').width()}px`);
 	}
 }
 window.addEventListener("storage", function(event) {

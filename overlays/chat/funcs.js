@@ -111,8 +111,8 @@ function parseFFZModifiers(value) {
 	return out;
 }
 
-function set7TVPaint(nameBlock, paintID, userID) {
-	if(!(paintID in sevenTVEntitlements)) {
+function set7TVPaint(nameBlock, paintID, userID, force) {
+	if(!(paintID in sevenTVEntitlements) && !force) {
 		return;
 	}
 
@@ -136,7 +136,8 @@ function set7TVPaint(nameBlock, paintID, userID) {
 
 		let angle = `${paint.angle}deg`
 		if(paint.function === "RADIAL_GRADIENT") {
-			angle = `${paint.shape} at ${paint.angle}%`;
+			//angle = `${paint.shape} at ${paint.angle}%`;
+			angle = `${paint.shape} at center`;
 		}
 
 		css = `${func}(${angle}, ${stops.join(",")})`;

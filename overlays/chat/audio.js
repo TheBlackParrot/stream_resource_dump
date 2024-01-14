@@ -135,7 +135,7 @@ for(let i = 0; i < context.sampleRate; i++) {
 	noiseData[i] = Math.random() / 20;
 }
 
-const noise = new AudioBufferSourceNode(context, {
+var noise = new AudioBufferSourceNode(context, {
 	buffer: noiseBuffer,
 	loop: true
 });
@@ -146,6 +146,7 @@ const noiseLowPassFilter = new BiquadFilterNode(context, {
 });
 
 const noiseGain = context.createGain();
+noiseGain.gain.value = 0;
 
 noise.connect(noiseGain).connect(noiseLowPassFilter).connect(context.destination);
 noise.start();

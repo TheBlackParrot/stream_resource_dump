@@ -136,10 +136,18 @@ const spotifyFuncs = {
 				$("#albumString").hide();
 				$("#artistString").show();
 
-				localStorage.setItem("art_darkColor", data.colors.dark);
-				localStorage.setItem("art_lightColor", data.colors.light);
-				$(":root").get(0).style.setProperty("--colorDark", `${data.colors.dark}`);
-				$(":root").get(0).style.setProperty("--colorLight", `${data.colors.light}`);
+				let darkColor = data.colors.dark;
+				let lightColor = data.colors.light;
+
+				if(localStorage.getItem("setting_spotify_ensureColorIsBrightEnough") === "true") {
+					darkColor = ensureSafeColor(darkColor);
+					lightColor = ensureSafeColor(lightColor);
+				}
+
+				localStorage.setItem("art_darkColor", darkColor);
+				localStorage.setItem("art_lightColor", lightColor);
+				$(":root").get(0).style.setProperty("--colorDark", darkColor);
+				$(":root").get(0).style.setProperty("--colorLight", lightColor);
 
 				$("#detailsWrapper").removeClass("fadeOut").addClass("fadeIn");
 

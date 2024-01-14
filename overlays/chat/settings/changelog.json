@@ -1,4 +1,86 @@
 {
+	"1705268268367": {
+		"updates": {
+			"chat": {
+				"revision": 39,
+				"notes": [
+					[
+						"fixed user info culling always triggering on right-aligned layouts, also simplified the width check function"
+					],
+					[
+						"fixed radial gradient 7tv paints (usually) only showing half the paint"
+					],
+					[
+						"announcements can now be tagged messages"
+					],
+					[
+						"fixed abyss falloff on avatar background blur effects"
+					],
+					[
+						"never added a default value for avatar background blurring, woops"
+					],
+					[
+						"adjusted default amount of padding on avatar backgrounds"
+					],
+					[
+						"removed outline/shadow effects on avatar background effects",
+						["tried for a while to get these to show up again after the new changes were made to no avail, sorry"]
+					],
+					[
+						"removed setting for avatar background magnification, as it's now automatic"
+					],
+					[
+						"adjusted more default settings (sorry weh)"
+					],
+					[
+						"fixed CEF-audio-bug-workaround-noise playing even if it's disabled when the overlay loads"
+					]
+				]
+			},
+
+			"spotify": {
+				"revision": 10,
+				"notes": [
+					[
+						"re-did how cover art background offsets were being calculated",
+						["abysses were appearing on the outer edges of the background element if the blurring amount got too high, the width and height will now auto-adjust dependent on blur amount"]
+					],
+					[
+						"removed background effect offset settings",
+						["they were there to address the abyss issue but this is now auto-fixed so it's not needed anymore"]
+					],
+					[
+						"added a setting to toggle the gradient mask on the background"
+					],
+					[
+						"added a setting to ensure automatic colors are between set brightness levels"
+					],
+					[
+						"added placeholder cover art when no song data is present"
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 36,
+				"notes": [
+					[
+						"added the ability to reset specific settings values on settings panel updates",
+						["this'll only be used if i'm changing the way the values function, things won't be reset if it just \"looks better\""]
+					]
+				]
+			}
+		},
+		"reset": {
+			"check": 1,
+			"settings": [
+				"avatarsBGVerticalPadding",
+				"avatarsBGHorizontalPadding",
+				"avatarsBGBlurAmount"
+			]
+		}
+	},
+
 	"1704855184206": {
 		"updates": {
 			"chat": {

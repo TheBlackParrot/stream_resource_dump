@@ -1092,8 +1092,20 @@ const settingUpdaters = {
 	enableConstantNoiseToFixCEFBeingWeird: function(value) {
 		if(value === "true") {
 			noiseGain.gain.value = parseInt(localStorage.getItem("setting_noiseVolume")) / 100;
+			try {
+				noise.stop();
+				noise = new AudioBufferSourceNode(context, {
+					buffer: noiseBuffer,
+					loop: true
+				});
+				noise.connect(noiseGain).connect(noiseLowPassFilter).connect(context.destination);
+				noise.start();
+			} catch {}
 		} else {
 			noiseGain.gain.value = 0;
+			try {
+				noise.stop();
+			} catch {}
 		}
 	},
 	noiseVolume: function(value) {
@@ -1126,9 +1138,6 @@ const settingUpdaters = {
 	avatarsBGBorderRadius: function(value) {
 		rootCSS().setProperty("--avatarsBGBorderRadius", `${value}px`);
 	},
-	avatarsBGMagnification: function(value) {
-		rootCSS().setProperty("--avatarsBGMagnification", `${value}%`);
-	},
 	avatarsBGStartOpacity: function(value) {
 		rootCSS().setProperty("--avatarsBGStartOpacity", value/100);
 	},
@@ -1144,20 +1153,6 @@ const settingUpdaters = {
 	avatarsBGFadeAngle: function(value) {
 		rootCSS().setProperty("--avatarsBGFadeAngle", `${value}deg`);
 		rootCSS().setProperty("--avatarsBGFadeAngleNegative", `-${value}deg`);
-	},
-	enableAvatarsBGShadow: function(value) {
-		if(value === "true") {
-			rootCSS().setProperty("--shadowStuffAvatarBG", "var(--originalShadowStuff)");
-		} else {
-			rootCSS().setProperty("--shadowStuffAvatarBG", "drop-shadow(0px 0px 0px transparent)");
-		}
-	},
-	enableAvatarsBGOutline: function(value) {
-		if(value === "true") {
-			rootCSS().setProperty("--outlineStuffAvatarBG", "var(--originalOutlineStuff)");
-		} else {
-			rootCSS().setProperty("--outlineStuffAvatarBG", "drop-shadow(0px 0px 0px transparent)");
-		}
 	},
 	avatarsBGBlurAmount: function(value) {
 		rootCSS().setProperty("--avatarsBGBlurAmount", `${value}px`);

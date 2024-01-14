@@ -403,7 +403,7 @@
 							<span class="settingInfo">Bottom margin</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="chatMessageUserInfoBottomMargin" min="0" max="64" step="1" value="1"/>px
+							<input type="number" id="chatMessageUserInfoBottomMargin" min="0" max="64" step="1" value="0"/>px
 						</div>
 					</div>
 					<div class="setting">
@@ -598,7 +598,7 @@
 							<span class="settingInfo">Line height</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="chatMessageLineHeight" min="16" max="64" step="0.5" value="25"/>px
+							<input type="number" id="chatMessageLineHeight" min="16" max="64" step="0.5" value="24"/>px
 						</div>
 					</div>
 					<hr/>
@@ -1636,6 +1636,19 @@
 							<input id="eventTagsWatchStreakFormat" type="text" value="watched %amount streams in a row (%reward)"/>
 						</div>
 					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="enableEventTagsAnnouncements" type="checkbox" data-dependent="enableEventTagsAnnouncements"/> <span class="settingInfo">Tag announcement messages</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="enableEventTagsAnnouncements">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Tag string</span>
+						</div>
+						<div class="settingCell">
+							<input id="eventTagsAnnouncementFormat" type="text" value="announcement"/>
+						</div>
+					</div>
 					<hr/>
 					<div class="setting">
 						<div class="settingCell smol">
@@ -1996,7 +2009,7 @@
 							<span class="settingInfo">Size</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="badgeSize" min="0" max="64" step="1" value="24"/>px
+							<input type="number" id="badgeSize" min="0" max="64" step="1" value="22"/>px
 						</div>
 					</div>
 					<div class="setting" data-dependent="twitchBadges">
@@ -2173,7 +2186,7 @@
 							<span class="settingInfo">Size</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="avatarsBGSize" min="0" max="999" step="1" value="380"/>px
+							<input type="number" id="avatarsBGSize" min="0" max="999" step="1" value="400"/>px
 						</div>
 					</div>
 					<div class="setting" data-dependent="avatarsBG">
@@ -2181,7 +2194,7 @@
 							<span class="settingInfo">Horizontal padding</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="avatarsBGHorizontalPadding" min="0" max="99" step="1" value="8"/>px
+							<input type="number" id="avatarsBGHorizontalPadding" min="0" max="99" step="1" value="5"/>px
 						</div>
 					</div>
 					<div class="setting" data-dependent="avatarsBG">
@@ -2189,7 +2202,7 @@
 							<span class="settingInfo">Vertical padding</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="avatarsBGVerticalPadding" min="0" max="99" step="1" value="12"/>px
+							<input type="number" id="avatarsBGVerticalPadding" min="0" max="99" step="1" value="5"/>px
 						</div>
 					</div>
 					<hr/>
@@ -2199,14 +2212,6 @@
 						</div>
 						<div class="settingCell">
 							<input type="number" id="avatarsBGBorderRadius" min="0" max="99" step="0.5" value="8"/>px
-						</div>
-					</div>
-					<div class="setting" data-dependent="avatarsBG">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Magnification</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="avatarsBGMagnification" min="100" max="400" step="1" value="140"/>%
 						</div>
 					</div>
 					<hr/>
@@ -2233,7 +2238,7 @@
 							<span class="settingInfo">Fade angle</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="avatarsBGFadeAngle" min="0" max="360" step="1" value="135"/>deg
+							<input type="number" id="avatarsBGFadeAngle" min="0" max="360" step="1" value="155"/>deg
 						</div>
 					</div>
 					<hr/>
@@ -2277,21 +2282,11 @@
 					</div>
 					<hr/>
 					<div class="setting" data-dependent="avatarsBG">
-						<div class="settingCell">
-							<input id="enableAvatarsBGOutline" type="checkbox"/> <span class="settingInfo">Draw outlines underneath opaque image content</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="avatarsBG">
-						<div class="settingCell">
-							<input checked id="enableAvatarsBGShadow" type="checkbox"/> <span class="settingInfo">Draw shadows underneath opaque image content</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="avatarsBG">
 						<div class="settingCellLabel">
 							<span class="settingInfo">Blur amount</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="avatarsBGBlurAmount" min="0" max="24" step="1" value="0"/>px
+							<input type="number" id="avatarsBGBlurAmount" min="0" max="24" step="1" value="6"/>px
 						</div>
 					</div>
 					<hr/>
@@ -3720,29 +3715,17 @@
 						</div>
 					</div>
 					<hr/>
-					<div class="setting" data-dependent="spotify_enableArtBackground">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Horizontal offset</span>
-						</div>
+					<div class="setting">
 						<div class="settingCell">
-							<input type="number" id="spotify_artBackgroundHorizontalOffset" min="-200" max="200" step="0.5" value="-33"/>%
+							<input checked id="spotify_enableArtBackgroundMask" type="checkbox"/> <span class="settingInfo">Add a gradient mask to the album/cover art</span>
 						</div>
 					</div>
-					<div class="setting" data-dependent="spotify_enableArtBackground">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Vertical offset</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="spotify_artBackgroundVerticalOffset" min="-200" max="200" step="0.5" value="-12.5"/>%
-						</div>
-					</div>
-					<hr/>
 					<div class="setting" data-dependent="spotify_enableArtBackground">
 						<div class="settingCellLabel">
 							<span class="settingInfo">Mask width</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="spotify_artBackgroundMaskWidth" min="0" max="500" step="1" value="75"/>%
+							<input type="number" id="spotify_artBackgroundMaskWidth" min="0" max="500" step="1" value="100"/>%
 						</div>
 					</div>
 					<div class="setting" data-dependent="spotify_enableArtBackground">
@@ -3877,10 +3860,32 @@
 					</div>
 					<div class="setting">
 						<div class="settingCellLabel">
-							<span class="settingInfo">Color</span>
+							<span class="settingInfo">Default color</span>
 						</div>
 						<div class="settingCell">
 							<input id="spotify_artistColor" type="text" data-coloris value="#AAAAAAFF"/>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="spotify_ensureColorIsBrightEnough" type="checkbox" data-dependent="spotify_ensureColorIsBrightEnough"/> <span class="settingInfo">Ensure secondary color is between a set brightness level</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_ensureColorIsBrightEnough">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Minimum</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_colorMinBrightness" min="0" max="100" step="1" value="30"/>%
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_ensureColorIsBrightEnough">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Maximum</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_colorMaxBrightness" min="0" max="100" step="1" value="100"/>%
 						</div>
 					</div>
 					<hr/>

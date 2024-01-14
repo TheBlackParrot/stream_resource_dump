@@ -50,7 +50,7 @@
 	--userInfoOutlineSizeActual: 1px;
 	--userInfoOutlineStyle: solid;
 	--userInfoOutline: none;
-	--userInfoBottomMargin: 4px;
+	--userInfoBottomMargin: 0px;
 
 	--messageColor: rgba(255, 255, 255, 1);
 	--messageFont: "Manrope";
@@ -134,21 +134,16 @@
 	--avatarBorderRadius: 10px;
 
 	--avatarsBGSize: 150px;
-	--avatarsBGHorizontalPadding: 8px;
-	--avatarsBGVerticalPadding: 8px;
+	--avatarsBGHorizontalPadding: 5px;
+	--avatarsBGVerticalPadding: 5px;
 	--avatarsBGBorderRadius: 8px;
-	--avatarsBGMagnification: 125%;
 	--avatarsBGStartOpacity: 1;
 	--avatarsBGEndOpacity: 0;
 	--avatarsBGStartFadeAt: -50%;
 	--avatarsBGEndFadeAt: 50%;
 	--avatarsBGFadeAngle: 110deg;
-	--avatarsBGFadeAngleNegative: -110deg; /* oh for fuck's sake */
-	--outlineStuffAvatarBG: drop-shadow(0px 0px 0px transparent);
-	--shadowStuffAvatarBG: var(--originalShadowStuff);
-	--avatarsBGEffects: var(--outlineStuffAvatarBG) var(--shadowStuffAvatarBG);
 	--avatarsBGBlurAmount: 0px;
-	--avatarsBGBorderColor: #ffffff20;
+	--avatarsBGBorderColor: #ffffff40;
 	--avatarsBGBorderSize: 0px;
 	--avatarsBGBorderSizeActual: 1px;
 	--avatarsBGBorderStyle: solid;
@@ -156,7 +151,7 @@
 
 	--badgeBorderRadius: 4px;
 	--subBadgeBorderRadius: var(--badgeBorderRadius);
-	--badgeSize: 28px;
+	--badgeSize: 22px;
 	--badgeGradientDisplay: none;
 	--badgeGradientColorStart: #555555ff;
 	--badgeGradientColorEnd: #000000ff;

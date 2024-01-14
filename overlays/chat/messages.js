@@ -81,6 +81,12 @@ async function prepareMessage(tags, message, self, forceHighlight) {
 						.replaceAll("%reward", `<div class="pointRedeemIcon"></div> +${parseInt(tags['msg-param-copoReward']).toLocaleString()}`);
 				}
 				break;
+
+			case "announcement":
+				if(localStorage.getItem("setting_enableEventTagsAnnouncements") === "true") {
+					outObject.extraInfo = localStorage.getItem("setting_eventTagsAnnouncementFormat");
+				}
+				break;
 		}
 	}
 
@@ -600,15 +606,14 @@ const chatFuncs = {
 function widthTest(rootElement, userBlock) {
 	$("#testWrapper").append(rootElement);
 
-	let padding = (parseInt(rootCSS().getPropertyValue("--chatBlockPaddingHorizontal")) * 2) + (parseInt(rootCSS().getPropertyValue("--chatBlockIndividualPaddingHorizontal")) * 2);
-	let parentWidth = $("#wrapper").width() - padding;
 	let elementWidth = userBlock.width();
-	let elementLeft = userBlock.position().left;
-
-	//console.log(elementWidth, elementLeft);
-	//console.log(parentWidth - (elementWidth + elementLeft));
-
-	return parentWidth - (elementWidth + elementLeft) < 0;
+	let parentWidth = $("#wrapper").innerWidth();
+	
+	if(elementWidth > parentWidth) {
+		return true;
+	} else {
+		return false;
+	}
 }
 
 function renderAvatarBGBlock(data, rootElement) {
@@ -616,7 +621,7 @@ function renderAvatarBGBlock(data, rootElement) {
 	let avatarBGElement = $(`<div class="avatarBG" style="background-image: url('${data.user.avatar}');"/>`);
 
 	if(data.user.avatarEnabled && localStorage.getItem("setting_enableAvatarsAsBackground") === "true") {
-		avatarBGWrapperElement.append(avatarBGElement);
+		avatarBGWrapperElement.append(avatarBGElement).css("display", "block");
 
 		if(localStorage.getItem("setting_avatarsBGAnimateAppearance") === "true") {
 			avatarBGElement.addClass("zoomAvatarBGOut");
