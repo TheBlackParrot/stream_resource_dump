@@ -1,4 +1,68 @@
 {
+	"1706459562699": {
+		"updates": {
+			"bs": {
+				"revision": 1,
+				"notes": [
+					[
+						"new beat saber overlay is ready enough for public use yippee",
+						["https://theblackparrot.me/overlays/bs"]
+					]
+				]
+			},
+
+			"bsvas": {
+				"revision": 2,
+				"notes": [
+					[
+						"updated to work with new data schemas"
+					]
+				]
+			},
+
+			"spotify": {
+				"revision": 11,
+				"notes": [
+					[
+						"added a setting to automatically determine scannable foreground color based on the background color's brightness"
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 37,
+				"notes": [
+					[
+						"fixed variable/setting resets still triggering on dev timestamps"
+					],
+					[
+						"fixed some setting elements rendering way wider than they needed to be",
+						["horizontal scrolling shouldn't be an issue now yw"]
+					],
+					[
+						"enforced a minimum width of 500px on the main part of the panel"
+					],
+					[
+						"fixed arrows having too much padding on the left"
+					],
+					[
+						"normalized setting measurement element margins"
+					],
+					[
+						"almost completely restructured the data schemas and flow of beat saber plus data"
+					],
+					[
+						"added icons for beat saber related overlays"
+					],
+					[
+						"removed alpha values from default color values if the default was fully opaque",
+						["the color picker polyfill i'm using removes it if it's not transparent at all, which caused some reset button issues"]
+					]
+				]
+			}
+		}
+	},
+
 	"1705268268367": {
 		"updates": {
 			"chat": {

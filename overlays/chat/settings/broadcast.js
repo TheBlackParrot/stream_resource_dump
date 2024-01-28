@@ -40,7 +40,7 @@ broadcastFuncs = {
 		if(!$(".extraHR").length) {
 			$("#rows").append($('<hr class="extraHR"/>'));
 		}
-		$("#rows").append('<div class="row extraRow" data-tab="bsvodaudio"><i class="fas fa-wrench"></i>BS VOD Audio</div>');
+		$("#rows").append('<div class="row extraRow" data-tab="bsvodaudio"><i class="icon bs"></i>BS VOD Audio</div>');
 
 		changeStatusCircle("BSPlusStatus", "red", "disconnected");
 		changeStatusCircle("OBSStatus", "red", "disconnected");
@@ -87,8 +87,32 @@ broadcastFuncs = {
 
 	BSStatsOverlayExists: function(data) {
 		changeStatusCircle("BSPlusStatus", "red", "disconnected");
-		changeStatusCircle("BSStatsOverlayStatus", "green", "loaded");
-		startBSPlusWebsocket();
+		changeStatusCircle("BSStatsOverlayStatus", "green", `loaded (r${data.data.version})`);
+
+		let settingsKeys = Object.keys(defaultConfig);
+		let settingsKeysBS = settingsKeys.filter((key) => key.substr(0, 3) === "bs_");
+		postToChannel("settingsKeysBS", settingsKeysBS);
+
+		if(!$(".extraHR").length) {
+			$("#rows").append($('<hr class="extraHR"/>'));
+		}
+
+		if(!$('.row[data-tab="bsinfo"]').is(":visible")) {
+			startBSPlusWebsocket();
+			$("#rows").append('<div class="row extraRow" data-tab="bsinfo"><i class="icon bs"></i>Beat Saber Overlay</div>');
+		}
+
+		if(currentBSSong !== null) {
+			postToBSPlusEventChannel({
+				type: "map",
+				data: currentBSSong
+			});
+
+			postToBSPlusEventChannel({
+				type: "state",
+				data: currentBSState
+			});
+		}
 	},
 
 	GoalTrackingOverlayExists: function(data) {

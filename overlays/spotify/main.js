@@ -42,6 +42,34 @@ function updateMarquee() {
 	}
 }
 
+function determineScannableFGColor(data) {
+	if(currentSong.uri === null) {
+		return;
+	}
+	
+	let scannableBackgroundColor = "#333333";
+	let usingBlack = (localStorage.getItem("setting_spotify_scannableUseBlack") === "true");
+
+	if(localStorage.getItem("setting_spotify_scannableUsesCustomBGColor") === "true") {
+		scannableBackgroundColor = localStorage.getItem("setting_spotify_scannableCustomBGColor");
+	} else {
+		scannableBackgroundColor = (usingBlack ? data.colors.light : data.colors.dark);
+	}
+
+	if(localStorage.getItem("setting_spotify_useInvertedFGIfNeeded") === "true") {
+		let brightness = (getYIQ(scannableBackgroundColor) / 255) * 100;
+		let maxBrightness = parseInt(localStorage.getItem("setting_spotify_invertFGThreshold"));
+
+		if(brightness > maxBrightness) {
+			settingUpdaters["scannableFGDark"]("true");
+		} else {
+			settingUpdaters["scannableFGDark"]("false");
+		}
+	}
+
+	rootCSS().setProperty("--scannable-background-color", scannableBackgroundColor);
+}
+
 const spotifyFuncs = {
 	trackData: function(data) {
 		elapsed = data.elapsed;
@@ -178,19 +206,12 @@ const spotifyFuncs = {
 
 		setTimeout(function() {
 			$("#scannableShadow").fadeOut(timespans.medium, function() {
-				let scannableBackgroundColor = "#333333";
-				if(localStorage.getItem("setting_spotify_scannableUsesCustomBGColor") === "true") {
-					scannableBackgroundColor = localStorage.getItem("setting_spotify_scannableCustomBGColor");
-				} else {
-					scannableBackgroundColor = (localStorage.getItem("setting_spotify_scannableUseBlack") === "true" ? data.colors.light : data.colors.dark);
-				}
-
 				let scannableImage = `https://scannables.scdn.co/uri/plain/jpeg/000000/white/640/${data.uri}`;
 
 				$("#scannable").attr("src", scannableImage);
 				rootCSS().setProperty("--workingAroundFunnyChromiumBugLolXD", `url('${scannableImage}')`);
 				$("#scannable").on("load", function() {
-					rootCSS().setProperty("--scannable-background-color", scannableBackgroundColor);
+					determineScannableFGColor(data);
 					$("#scannableShadow").fadeIn(timespans.large);
 				});
 			});

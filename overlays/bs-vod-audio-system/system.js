@@ -11,7 +11,6 @@ if(localStorage.getItem("bsvodaudio_unsafeHashes")) { db.unsafe = JSON.parse(loc
 function syncRemoteDatabases() {
 	if(localStorage.getItem("setting_bsvodaudio_syncRemoteDBs") !== "true") {
 		console.log("Not syncing remote databases, disabled in settings");
-		startWebsocket();
 		return;
 	}
 
@@ -83,10 +82,10 @@ bsplusEventChannel.onmessage = function(message) {
 var gameState = "Menu";
 var mapInfo;
 var eventFuncs = {
-	"gameState": async function(data) {
-		gameState = data.gameStateChanged;
+	"scene": async function(data) {
+		gameState = data.data;
 
-		if(data.gameStateChanged === "Menu") {
+		if(gameState === "Menu") {
 			if(localStorage.getItem("setting_bsvodaudio_muteOnMenu") === "true") {
 				console.log("Muting VOD audio, in menu");
 				postToOBSEventChannel("toggleVODAudio", false);
@@ -97,15 +96,16 @@ var eventFuncs = {
 		}
 	},
 
-	"mapInfo": async function(data) {
-		let map = mapInfo = data.mapInfoChanged;
+	"map": async function(data) {
+		let map = mapInfo = data.data;
 		map.isVODSafe = 0;
-		map.hash = map.level_id.replace("custom_level_", "").toLowerCase();
 
 		console.log(`Song is "${map.name}${(map.sub_name == "" ? "" : " " + map.sub_name)}" by ${map.artist}, mapped by ${map.mapper}`);
 
 		let allow = true;
 		let found = "";
+
+		map.hash = map.hash.toLowerCase();
 
 		if(map.hash.indexOf("wip") !== -1) {
 			console.log(`${map.hash} is a WIP map, muting VOD audio`);
@@ -183,7 +183,7 @@ var eventFuncs = {
 		$(":root").get(0).style.setProperty("--currentTitle", `"${map.name}${(map.sub_name == "" ? "" : " " + map.sub_name)}"`);
 		$(":root").get(0).style.setProperty("--currentArtist", `"${map.artist}"`);
 		$(":root").get(0).style.setProperty("--currentMapper", `"${map.mapper}"`);
-		$(":root").get(0).style.setProperty("--currentBSR", `"${map.BSRKey}"`); // this is currently blank as of BS+ v6.0.8
+		$(":root").get(0).style.setProperty("--currentBSR", `"${map.BSRKey}"`);
 		$(":root").get(0).style.setProperty("--currentArt", `url(data:image/jpeg;base64,${map.coverRaw.trim()})`);
 
 		postToOBSEventChannel("toggleVODAudio", allow);
@@ -191,8 +191,8 @@ var eventFuncs = {
 }
 
 async function processMessage(data) {
-	if(data._event in eventFuncs) {
-		eventFuncs[data._event](data);
+	if(data.type in eventFuncs) {
+		eventFuncs[data.type](data);
 	}
 }
 

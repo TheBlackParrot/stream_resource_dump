@@ -4,7 +4,8 @@ const properOverlayNames = {
 	"chat": "Twitch Chat Overlay",
 	"clock": "Clock Overlay",
 	"bsvas": "Beat Saber VOD Audio System",
-	"text": "Text Rotation Overlay"
+	"text": "Text Rotation Overlay",
+	"bs": "Beat Saber Overlay"
 };
 
 var mostRecentUpdate = 0;
@@ -65,7 +66,7 @@ $.get(`./changelog.json?sigh=${Date.now()}`, function(data) {
 
 		$("#updatesSection").append(rootElement);
 
-		if("reset" in data[timestamp]) {
+		if("reset" in data[timestamp] && timestamp !== 9999999999999) {
 			const resetData = data[timestamp].reset;
 			if(resetData.check > lastSettingReset) {
 				localStorage.setItem("_lastSettingReset", resetData.check);

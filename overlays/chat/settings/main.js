@@ -10,8 +10,8 @@ function changeStatusCircle(which, status, msg) {
 
 $("#sensitive .section").show();
 
-const overlayRevision = 36;
-const overlayRevisionTimestamp = 1705268268367;
+const overlayRevision = 37;
+const overlayRevisionTimestamp = 1706459562699;
 $("#revision").text(`revision ${overlayRevision}`);
 
 function resetEverything() {
@@ -103,7 +103,7 @@ function setRow(which, bypassSensitiveCheck) {
 	$(".active").removeClass("active");
 	row.addClass("active");
 
-	$("#settings .section").hide();
+	$("#settings .section").removeClass("activeSection");
 
 	if(section.attr("data-sensitive") === "true" && !bypassSensitiveCheck) {
 		$("#settings").hide();
@@ -111,7 +111,7 @@ function setRow(which, bypassSensitiveCheck) {
 	} else {
 		$("#sensitive").hide();
 		$("#settings").show();
-		section.show();
+		section.addClass("activeSection");
 	}
 
 	if(which in scrollTops) {

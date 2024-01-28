@@ -217,6 +217,17 @@ body {
 	-webkit-mask-size: contain;
 	-webkit-mask-position: center;
 	-webkit-mask-repeat: no-repeat;
+	height: var(--sidebar-icon-width);
+	width: var(--sidebar-icon-width);
+	margin-right: var(--sidebar-icon-margin);
+	display: inline-block;
+	text-align: center;
+}
+
+#sidebar .bs {
+	-webkit-mask-image: url('icons/bs-notes.png');
+	height: 60%;
+	vertical-align: middle;
 }
 
 h1 .icon {
@@ -238,14 +249,14 @@ h1 .icon {
 }
 #sidebar .active:hover { filter: none; }
 
+#sidebar .row:hover .icon {
+	background-color: #fff;
+}
+
 .active {
 	color: var(--sidebar-active-row-text-color) !important;
 	background-color: var(--sidebar-active-row-bg-color) !important;
 	background-image: var(--sidebar-active-row-bg-gradient) !important;
-}
-
-.section {
-	display: none;
 }
 
 .active .icon {
@@ -267,9 +278,14 @@ h1 .icon {
 }
 
 .section {
+	display: none;
 	margin: var(--wrapper-padding);
-	min-width: -webkit-fill-available;
-	width: fit-content;
+	width: -webkit-fill-available;
+	flex-direction: column;
+	min-width: 500px;
+}
+.activeSection {
+	display: flex;
 }
 
 .part {
@@ -309,7 +325,6 @@ border-bottom: 1px solid #ffffff99;
 .setting {
 	display: flex;
 	margin-bottom: var(--settings-padding);
-	white-space: nowrap;
 	align-items: center;
 }
 
@@ -324,7 +339,7 @@ border-bottom: 1px solid #ffffff99;
 	text-align: right;
 	margin-right: calc(var(--settings-padding) / 1.5);
 	padding-right: calc(var(--settings-padding) / 1.5);
-	width: calc(350px - var(--settings-padding));
+	width: calc(380px - var(--settings-padding));
 	border-right: 1px solid var(--primary-color-brighter-desat);
 	line-height: var(--input-height);
 	height: var(--input-height);
@@ -343,7 +358,7 @@ border-bottom: 1px solid #ffffff99;
 }
 
 .settingInfo {
-	line-height: 1em;
+	line-height: var(--input-height);
 }
 
 input, select, textarea {
@@ -437,6 +452,7 @@ textarea {
 	display: flex;
 	flex-grow: 1;
 	align-items: center;
+	align-self: center;
 }
 
 #sensitive .part {
@@ -545,9 +561,6 @@ a {
 	opacity: 0.67;
 }
 
-.clr-field {
-	margin-right: calc(var(--settings-padding) / 2);
-}
 .clr-field button {
 	border-radius: var(--input-border-radius);
 	border: 1px solid #fff;
@@ -613,8 +626,8 @@ strong {
 	height: 0px;
 	line-height: 0px;
 	vertical-align: middle;
-	margin-left: 14px;
-	margin-right: 14px;
+	margin-left: calc(var(--settings-padding) / 2);
+	margin-right: calc(var(--settings-padding) / 2);
 	color: var(--sidebar-active-row-bg-color);
 }
 
@@ -715,7 +728,7 @@ input[type="range"]::-webkit-slider-runnable-track {
 }
 
 .settingCell .button {
-	margin-right: calc(var(--settings-padding) / 2);
+	margin-right: calc(var(--settings-padding) / 3);
 }
 .settingCell .button:last-child {
 	margin-right: 0px;
@@ -830,4 +843,9 @@ ol li ol li:before {
 	color: #fff;
 	text-shadow: 0px 0px 8px rgba(255, 255, 255, 0.5);
 	filter: none;
+}
+
+.settingCellMeasurement {
+	margin-left: calc(var(--settings-padding) / 10);
+	margin-right: calc(var(--settings-padding) / 10);
 }

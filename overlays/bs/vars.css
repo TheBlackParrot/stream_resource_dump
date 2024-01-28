@@ -1,0 +1,145 @@
+:root {
+	--currentProgressAngle: 0deg;
+
+	--colorExpertPlus: #A695FF;
+	--colorExpert: #FF95A6;
+	--colorHard: #FFB74D;
+	--colorNormal: #00EEFF;
+	--colorEasy: #81C784;
+
+	--currentDiffColor: var(--colorHard);
+
+	--diffIconURL: url("icons/Standard.svg");
+
+	--colorDark: #000000;
+	--colorLight: #A695FF;
+
+	--overlayHeight: 56px;
+	--overlayMarginVertical: 12px;
+	--overlayMarginHorizontal: 12px;
+	--overlayLineHeight: 22px;
+
+	--elementSpacing: 12px;
+	--verticalSpacing: 2px;
+
+	--primaryFontSize: 12pt;
+	--primaryFontWeight: 900;
+
+	--miscInfoWidth: 120px;
+	--miscInfoFontSize: 14pt;
+	--miscInfoVerticalAlignment: column;
+	--miscInfoColor: #FFFFFFFF;
+	--miscInfoFontFamily: "Manrope";
+	--miscInfoFontStyle: normal;
+
+	--timeFontSize: 12pt;
+
+	--hitMissFontFamily: "Manrope";
+	--hitMissFontStyle: normal;
+	--hitMissFontWeight: 900;
+	--hitMissFontSize: 12pt;
+	--hitMissWidth: 100px;
+	--hitMissVerticalAlignment: column;
+	--hitMissColor: #FFFFFFFF;
+	--hitIconColor: #33AA55FF;
+	--missIconColor: #DD1133FF;
+	--FCIconColor: #DDAA00FF;
+	
+	--accColor: #FFFFFFFF;
+	--accFontFamily: "Manrope";
+	--accFontStyle: normal;
+	--accFontAdditionalWeight: 0px;
+	--accWidth: 120px;
+	--accFontSize: 27pt;
+	--accCharacterSpacing: -1px;
+	--accFontWeight: 900;
+	--accVerticalAlignment: column;
+
+	--comboColor: #FFFFFFFF;
+	--comboFontFamily: "Manrope";
+	--comboFontStyle: normal;
+	--comboFontSize: 12pt;
+	--comboFontWeight: 900;
+
+	--metadataLineHeight: 24px;
+	--fixWeirdMetadataAlignmentIssue: 1px;
+	--metadataVerticalAlignment: column;
+
+	--titleFontSize: 19pt;
+	--titleFontWeight: 900;
+	--titleAdditionalWeight: 0.2px;
+	--titleFontFamily: "Manrope";
+	--titleTransform: none;
+	--titleColor: #FFFFFFFF;
+	--titleFontStyle: normal;
+
+	--secondaryFontFamily: "Manrope";
+	--secondaryAdditionalWeight: 0px;
+	--secondaryTransform: none;
+	--secondaryFontStyle: normal;
+	--secondaryColorStatic: "#AAAAAAFF";
+	--secondaryColor: var(--colorLight);
+	--secondaryFontSize: 12pt;
+	--secondaryFontWeight: 700;
+
+	--art-size: 52px;
+	--art-outline-size: 2px;
+	--art-outline-brightness: 155%;
+	--art-url: url('./placeholder.png');
+	--show-art: block;
+	--show-art-outline: block;
+	--art-border-radius: 4px;
+
+	--background-art-height: 80px;
+	--background-art-mask-width: 75%;
+	--background-art-mask-height: 105%;
+	--background-art-start-at: 25%;
+	--background-art-end-at: 100%;
+	--background-art-blur-amount: 12px;
+	--background-art-horizontal-offset: -33%;
+	--background-art-vertical-offset: -12.5%;
+	--background-art-opacity: 75%;
+	--show-background-art: none;
+	--background-art-size: 900px;
+	--background-art-mask-side: 0%;
+	--background-art-mask: -webkit-radial-gradient(var(--background-art-mask-side) 0%, var(--background-art-mask-width) var(--background-art-mask-height), rgba(0, 0, 0, 1) var(--background-art-start-at), rgba(0, 0, 0, 0) var(--background-art-end-at));
+	--background-art-mask-actual: var(--background-art-mask);
+
+	--wrapper-padding-bottom: calc(var(--overlayMarginVertical) * 4);
+
+	--box-shadow-effects-offset-x: 0px;
+	--box-shadow-effects-offset-y: 8px;
+	--box-shadow-effects-blur-radius: 9px;
+	--box-shadow-effects-inset: -5px;
+	--box-shadow-effects-color: #000000FF;
+
+	--box-shadow-effects: var(--box-shadow-effects-offset-x) var(--box-shadow-effects-offset-y) var(--box-shadow-effects-blur-radius) var(--box-shadow-effects-inset) var(--box-shadow-effects-color);
+	--box-shadow-effects-actual: var(--box-shadow-effects);
+
+	--animation-duration: 0.5s;
+	--fadeInDurationLong: 5s;
+
+	--outline-effects-size: 1px;
+	--outline-effects-size-negative: -1px;
+	--outline-effects-color: #000000;
+
+	--outline-effects:	drop-shadow(var(--outline-effects-size-negative) var(--outline-effects-size-negative) 0px var(--outline-effects-color))
+						drop-shadow(var(--outline-effects-size) var(--outline-effects-size-negative) 0px var(--outline-effects-color))
+						drop-shadow(var(--outline-effects-size-negative) var(--outline-effects-size) 0px var(--outline-effects-color))
+						drop-shadow(var(--outline-effects-size) var(--outline-effects-size) 0px var(--outline-effects-color));
+	--outline-effects-actual: var(--outline-effects);
+
+	--shadow-effects-offset-x: 0px;
+	--shadow-effects-offset-y: 1px;
+	--shadow-effects-blur-radius: 2px;
+	--shadow-effects-color: #000000FF;
+
+	--shadow-effects: drop-shadow(var(--shadow-effects-offset-x) var(--shadow-effects-offset-y) var(--shadow-effects-blur-radius) var(--shadow-effects-color));
+	--shadow-effects-actual: var(--shadow-effects);
+
+	--effects: var(--outline-effects-actual) var(--shadow-effects-actual);
+
+	--desaturateAmount: 100%;
+	--desaturateFadeInDuration: 2s;
+	--desaturateFadeOutDuration: 0.5s;
+}

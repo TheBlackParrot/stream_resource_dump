@@ -1,5 +1,5 @@
-const overlayRevision = 10;
-const overlayRevisionTimestamp = 1705268268367;
+const overlayRevision = 11;
+const overlayRevisionTimestamp = 1706459562699;
 
 const settingsChannel = new BroadcastChannel("settings_overlay");
 
@@ -213,6 +213,8 @@ const settingUpdaters = {
 				rootCSS().setProperty("--scannable-background-color", currentSong.colors.dark);
 			}			
 		}
+
+		determineScannableFGColor(currentSong);
 	},
 
 	scannableUseBlack: function(value) {
@@ -228,6 +230,8 @@ const settingUpdaters = {
 		} else {
 			rootCSS().setProperty("--scannable-background-color", currentSong.colors.dark);
 		}
+
+		determineScannableFGColor(currentSong);
 	},
 
 	scannableCustomBGColor: function(value) {
@@ -236,10 +240,13 @@ const settingUpdaters = {
 		}
 
 		rootCSS().setProperty("--scannable-background-color", value);
+
+		determineScannableFGColor(currentSong);
 	},
 
 	scannableFGColor: function(value) {
 		rootCSS().setProperty("--scannable-foreground-color", value);
+		determineScannableFGColor(currentSong);
 	},
 
 	artistColorReflectsArtColorDarker: function(value) {
@@ -411,6 +418,19 @@ const settingUpdaters = {
 			rootCSS().setProperty("--background-art-mask-actual", "none");
 			rootCSS().setProperty("--wrapper-padding-bottom", "var(--wrapper-margin)");
 		}
+	},
+	useInvertedFGIfNeeded: function(value) {
+		if(value === "true") {
+			determineScannableFGColor(currentSong);
+		} else {
+			settingUpdaters["scannableFGDark"](localStorage.getItem("setting_spotify_scannableFGDark"));
+		}
+	},
+	invertFGThreshold: function(value) {
+		if(localStorage.getItem("setting_spotify_useInvertedFGIfNeeded") === "false") {
+			return;
+		}
+		determineScannableFGColor(currentSong);
 	}
 };
 

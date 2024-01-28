@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" type="text/css" href="reset.css">
+	<link rel="stylesheet" type="text/css" href="vars.css">
+	<link rel="stylesheet" type="text/css" href="main.css">
+
+	<link rel="stylesheet" type="text/css" href="fontawesome-free-6.5.1-web/css/all.min.css">
+
+	<script type="text/javascript" src="jquery-3.6.0.min.js"></script>
+	<script type="text/javascript" src="jquery.marquee.min.js"></script>
+	<script type="text/javascript" src="vibrant.min.js"></script>
+</head>
+
+<body>
+	<div id="wrapper">
+		<div class="cell" id="miscInfoCell">
+			<div id="diffWrap" style="display: none;">
+				<div id="diffIcon"></div>
+				<span id="diff"></span>
+			</div>
+
+			<div id="codeWrap">
+				<span>!bsr </span><span id="bsrCode">1ad3b</span>
+			</div>
+
+			<div id="timeWrap">
+				<i class="fas fa-clock fa-fw"></i>
+				<span id="time">1:23</span>
+				<span id="duration">4:56</span>
+			</div>
+		</div>
+
+		<div class="cell" id="artCell">
+			<div id="artWrapper">
+				<div id="artOutline">
+					<div class="artContainer"></div>
+				</div>
+				<div id="artBG">
+					<div class="artContainer"></div>
+				</div>
+				<img id="art" src="placeholder.png"/>
+			</div>
+		</div>
+
+		<div class="cell" id="metadataCell">
+			<div id="title">
+				<span id="titleString"></span>
+			</div>
+			<div id="secondary">
+				<div id="artist"></div>
+				<div id="mapperContainer">
+					<img id="mapperAvatar"/>
+					<div id="mapper"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="cell" id="hitMissCell">
+			<div id="hitCell">
+				<i class="fa-fw fas fa-check"></i>
+				<span id="hitValue">0</span>
+			</div>
+
+			<div id="FCCell">
+				<i class="fa-fw fas fa-star"></i>
+				<span>FC</span>
+			</div>
+
+			<div id="missCell">
+				<i class="fa-fw fas fa-times"></i>
+				<span id="missValue">0</span>
+			</div>
+		</div>
+
+		<div class="cell" id="accCell">
+			<div id="comboWrap">
+				<i class="fa-fw fas fa-link"></i>
+				<span id="combo">0</span>
+			</div>
+
+			<div id="accWrap">
+				<span id="acc">97.81</span><span id="accPerc">%</span>
+			</div>
+		</div>
+
+		<div id="bgWrapper">
+			<div id="artBGWrap">
+				<div class="artContainer"></div>
+			</div>
+		</div>
+
+		<img id="artDoppleganger" src="placeholder.png"/>
+	</div>
+
+	<script type="text/javascript" src="funcs.js"></script>
+	<script type="text/javascript" src="settings.js"></script>
+	<script type="text/javascript" src="main.js"></script>
+	<script type="text/javascript" src="broadcast.js"></script>
+</body>
+
+</html>
