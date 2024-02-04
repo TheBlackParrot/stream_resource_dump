@@ -163,6 +163,12 @@ const chatFuncs = {
 		console.log(`set 2nd color for ${data.user.username} to #${color}`)
 		localStorage.setItem(`color2_${data.user.id}`, `#${color}`);
 		rootCSS().setProperty(`--nameColorSecondary${data.user.id}`, `#${color}`);
+
+		if(localStorage.getItem("setting_chatDefaultNameColorForced") !== "true") {
+			if(localStorage.getItem("setting_allowUserCustomizations") === "true") {
+				$(`.name[data-userid="${data.user.id}"]`).children().css("background-image", `linear-gradient(var(--nameAngle${data.user.id}), var(--nameColorSecondary${data.user.id}) 0%, transparent 75%)`);
+			}
+		}
 	},
 
 	namefont: function(data, args) {
@@ -364,7 +370,6 @@ const chatFuncs = {
 		chatFuncs["nameshadow"](data, [args[18]]);
 
 		data.message = "New chat settings have applied!"
-		parseMessage(data);
 	},
 
 	flags: function(data, args) {
@@ -389,7 +394,7 @@ const chatFuncs = {
 	},
 	flag: function(data, args) { chatFuncs["flags"](data, args); },
 
-	bsr: function(data, args, msgElement) {
+	bsr: async function(data, args, msgElement) {
 		if(localStorage.getItem("setting_cmdEnableBSR") !== "true") {
 			return;
 		}
@@ -423,65 +428,77 @@ const chatFuncs = {
 
 		msgElement.append(infoElement);
 
-		$.get(`https://api.beatsaver.com/maps/id/${args[0]}`, function(mapData) {
-			console.log(mapData);
+		const mapResponse = await fetch(`https://api.beatsaver.com/maps/id/${args[0]}`);
 
-			if(funnyBeatSaberMapsToRequestToEverySingleStreamerOnTwitchEverIBetEverySingleOneOfThemWillEnjoyThem.indexOf(mapData.id) !== -1) {
-				infoElement.addClass("STREAMER_CAN_YOU_PLAY_REALITY_CHECK_ITS_MY_FAVORITE_MAP");
+		if(!mapResponse.ok) {
+			return;
+		}
+
+		const mapData = await mapResponse.json();
+		console.log(mapData);
+
+		if(funnyBeatSaberMapsToRequestToEverySingleStreamerOnTwitchEverIBetEverySingleOneOfThemWillEnjoyThem.indexOf(mapData.id) !== -1) {
+			infoElement.addClass("STREAMER_CAN_YOU_PLAY_REALITY_CHECK_ITS_MY_FAVORITE_MAP");
+		}
+
+		const uploaderResponse = await fetch(`https://api.beatsaver.com/users/id/${mapData.uploader.id}`);
+
+		if(!uploaderResponse.ok) {
+			return;
+		}
+
+		const uploaderData = await uploaderResponse.json();
+		console.log(uploaderData);
+
+		let canShowArt = (mapData.ranked || mapData.qualified || mapData.uploader.verifiedMapper || "curatedAt" in mapData);
+
+		let canShowInfo = canShowArt;
+		if(!canShowInfo) {
+			if("firstUpload" in uploaderData.stats) {
+				let firstUploadTimestamp = new Date(uploaderData.stats.firstUpload).getTime();
+				if(Date.now() - firstUploadTimestamp > (10518984*1000)) {
+					canShowInfo = true;
+				}
 			}
+		}
 
-			$.get(`https://api.beatsaver.com/users/id/${mapData.uploader.id}`, function(uploaderData) {
-				let canShowArt = (mapData.ranked || mapData.qualified || mapData.uploader.verifiedMapper || "curatedAt" in mapData);
+		if(!canShowInfo) {
+			infoElement.html(`<i class="fas fa-times"></i> <span class="loadingMsg">could not show information for ${mapData.id}, BeatSaver account is too new</span>`);
+			return;
+		}
 
-				let canShowInfo = canShowArt;
-				if(!canShowInfo) {
-					if("firstUpload" in uploaderData.stats) {
-						let firstUploadTimestamp = new Date(uploaderData.stats.firstUpload).getTime();
-						if(Date.now() - firstUploadTimestamp > (10518984*1000)) {
-							canShowInfo = true;
-						}
-					}
-				}
+		infoElement.removeClass("loading");
 
-				if(!canShowInfo) {
-					infoElement.html(`<i class="fas fa-times"></i> <span class="loadingMsg">could not show information for ${mapData.id}, BeatSaver account is too new</span>`);
-					return;
-				}
+		for(const toCheck of ["songName", "songAuthorName", "songSubName", "levelAuthorName"]) {
+			if(!isStringSafe(mapData.metadata[toCheck])) {
+				mapData.metadata[toCheck] = "[REDACTED]";
+			}
+		}
 
-				infoElement.removeClass("loading");
+		let artElement = $(`<div class="bsrArt"></div>`);
+		if(canShowArt) {
+			let e = $(`<img src="${mapData.versions[0].coverURL}"/>`);
+			artElement.append(e);
+		}
 
-				for(const toCheck of ["songName", "songAuthorName", "songSubName", "levelAuthorName"]) {
-					if(!isStringSafe(mapData.metadata[toCheck])) {
-						mapData.metadata[toCheck] = "[REDACTED]";
-					}
-				}
+		let metadataElement = $(`<div class="bsrMapInfo"></div>`);
+		let titleElement = $(`<div class="songTitle">${mapData.metadata.songName}${mapData.metadata.songSubName === "" ? "" : ` - ${mapData.metadata.songSubName}`}</div>`);
+		let artistElement = $(`<div class="songArtist">${mapData.metadata.songAuthorName}</div>`);
+		let mapperElement = $(`<div class="mapper">${mapData.metadata.levelAuthorName}</div>`);
+		metadataElement.append(titleElement).append(artistElement).append(mapperElement);
 
-				let artElement = $(`<div class="bsrArt"></div>`);
-				if(canShowArt) {
-					let e = $(`<img src="${mapData.versions[0].coverURL}"/>`);
-					artElement.append(e);
-				}
+		let extraDataElement = $(`<div class="bsrExtraInfo"></div>`);
+		let idElement = $(`<div class="bsrCode">${mapData.id}</div>`);
+		let statsElement = $(`<div class="bsrStats"></div>`);
+		statsElement.append($(`<span class="songTime"><i class="fas fa-clock"></i> ${formatTime(mapData.metadata.duration)}</span>`));
+		statsElement.append($(`<span class="songRating"><i class="fas fa-thumbs-up"></i> ${mapData.stats.upvotes.toLocaleString()} <i class="fas fa-thumbs-down"></i> ${mapData.stats.downvotes.toLocaleString()}</span>`));
+		extraDataElement.append(idElement).append(statsElement);
 
-				let metadataElement = $(`<div class="bsrMapInfo"></div>`);
-				let titleElement = $(`<div class="songTitle">${mapData.metadata.songName}${mapData.metadata.songSubName === "" ? "" : ` - ${mapData.metadata.songSubName}`}</div>`);
-				let artistElement = $(`<div class="songArtist">${mapData.metadata.songAuthorName}</div>`);
-				let mapperElement = $(`<div class="mapper">${mapData.metadata.levelAuthorName}</div>`);
-				metadataElement.append(titleElement).append(artistElement).append(mapperElement);
-
-				let extraDataElement = $(`<div class="bsrExtraInfo"></div>`);
-				let idElement = $(`<div class="bsrCode">${mapData.id}</div>`);
-				let statsElement = $(`<div class="bsrStats"></div>`);
-				statsElement.append($(`<span class="songTime"><i class="fas fa-clock"></i> ${formatTime(mapData.metadata.duration)}</span>`));
-				statsElement.append($(`<span class="songRating"><i class="fas fa-thumbs-up"></i> ${mapData.stats.upvotes.toLocaleString()} <i class="fas fa-thumbs-down"></i> ${mapData.stats.downvotes.toLocaleString()}</span>`));
-				extraDataElement.append(idElement).append(statsElement);
-
-				infoElement.empty();
-				if(canShowArt) {
-					infoElement.append(artElement);
-				}
-				infoElement.append(metadataElement).append(extraDataElement);
-			});
-		});
+		infoElement.empty();
+		if(canShowArt) {
+			infoElement.append(artElement);
+		}
+		infoElement.append(metadataElement).append(extraDataElement);
 	},
 
 	refreshpronouns: async function(data, callback) {
@@ -589,6 +606,34 @@ const chatFuncs = {
 		localStorage.setItem(`pn_${data.user.id}_expiry`, "0");
 		localStorage.removeItem(`usename_${data.user.id}`);
 		localStorage.removeItem(`use7tvpaint_${data.user.id}`);
+
+		rootCSS().removeProperty(`--pfpShape${data.user.id}`);
+		rootCSS().removeProperty(`--nameColor${data.user.id}`);
+		rootCSS().removeProperty(`--nameColorSecondary${data.user.id}`);
+		rootCSS().removeProperty(`--nameAngle${data.user.id}`);
+		rootCSS().removeProperty(`--nameSize${data.user.id}`);
+		rootCSS().removeProperty(`--nameSpacing${data.user.id}`);
+		rootCSS().removeProperty(`--nameWeight${data.user.id}`);
+		rootCSS().removeProperty(`--nameStyle${data.user.id}`);
+		rootCSS().removeProperty(`--nameTransform${data.user.id}`);
+		rootCSS().removeProperty(`--nameVariant${data.user.id}`);
+		rootCSS().removeProperty(`--nameShadow${data.user.id}`);
+		rootCSS().removeProperty(`--nameOutline${data.user.id}`);
+		rootCSS().removeProperty(`--nameEffects${data.user.id}`);
+		rootCSS().removeProperty(`--chatMessageColor${data.user.id}`);
+		rootCSS().removeProperty(`--msgSize${data.user.id}`);
+		rootCSS().removeProperty(`--nameFont${data.user.id}`);
+		rootCSS().removeProperty(`--msgFont${data.user.id}`);
+		rootCSS().removeProperty(`--msgWeight${data.user.id}`);
+		rootCSS().removeProperty(`--msgSpacing${data.user.id}`);
+
+		initUserSettingValues(data);
+
+		data.message = "Chat settings have been reset!"
+
+		$(`.name[data-userid="${data.user.id}"]`).children().css("background-image", "var(--nameBackground)");
+		$(`.chatBlock[data-userid="${data.user.id}"] .message`).attr("style", "");
+		$(`.chatBlock[data-userid="${data.user.id}"] .pfp`).attr("style", "");
 	},
 
 	overlayversion: function(data, args) {
@@ -892,11 +937,7 @@ function renderAvatarBlock(data) {
 	return pfpBlock;
 }
 
-function initUserBlockCustomizations(data, elements) {
-	if(data.isOverlayMessage) {
-		return;
-	}
-
+function initUserSettingValues(data) {
 	let customizationOK = (localStorage.getItem("setting_allowUserCustomizations") === "true");
 
 	if(!localStorage.getItem(`color_${data.user.id}`)) {
@@ -933,6 +974,33 @@ function initUserBlockCustomizations(data, elements) {
 		if(!localStorage.getItem(`msgsize_${data.user.id}`)) { localStorage.setItem(`msgsize_${data.user.id}`, "var(--messageFontSize)"); }
 		if(!localStorage.getItem(`msgspacing_${data.user.id}`)) { localStorage.setItem(`msgspacing_${data.user.id}`, "var(--messageLetterSpacing)"); }
 		if(!localStorage.getItem(`msgweight_${data.user.id}`)) { localStorage.setItem(`msgweight_${data.user.id}`, "var(--messageFontWeight)"); }
+
+		if(!data.isOverlayMessage) {
+			rootCSS().setProperty(`--nameSize${data.user.id}`, localStorage.getItem(`namesize_${data.user.id}`));
+			if(localStorage.getItem("setting_chatNameFontSize") !== "16") {
+				let scale = parseFloat(localStorage.getItem("setting_chatNameFontSize")) / 16;
+				if(localStorage.getItem(`namesize_${data.user.id}`) !== "var(--nameFontSize)") {
+					rootCSS().setProperty(`--nameSize${data.user.id}`, `calc(${localStorage.getItem(`namesize_${data.user.id}`)} * ${scale})`);
+				}
+			}
+
+			rootCSS().setProperty(`--nameSpacing${data.user.id}`, localStorage.getItem(`namespacing_${data.user.id}`));
+			if(localStorage.getItem("setting_chatNameLetterSpacing") !== "1") {
+				let scale = parseFloat(localStorage.getItem("setting_chatNameLetterSpacing"));
+				if(localStorage.getItem(`namespacing_${data.user.id}`) !== "var(--nameLetterSpacing)") {
+					rootCSS().setProperty(`--nameSpacing${data.user.id}`, `calc(${localStorage.getItem(`namespacing_${data.user.id}`)} * ${scale})`);
+				}
+			}
+
+			rootCSS().setProperty(`--nameFont${data.user.id}`, localStorage.getItem(`namefont_${data.user.id}`));
+			rootCSS().setProperty(`--nameWeight${data.user.id}`, localStorage.getItem(`nameweight_${data.user.id}`));
+			rootCSS().setProperty(`--nameStyle${data.user.id}`, localStorage.getItem(`namestyle_${data.user.id}`));
+			rootCSS().setProperty(`--nameTransform${data.user.id}`, localStorage.getItem(`nametransform_${data.user.id}`));
+			rootCSS().setProperty(`--nameVariant${data.user.id}`, localStorage.getItem(`namevariant_${data.user.id}`));
+			rootCSS().setProperty(`--nameShadow${data.user.id}`, localStorage.getItem(`nameshadow_${data.user.id}`) === "yes" ? `var(--shadowStuff)` : "");
+			rootCSS().setProperty(`--nameOutline${data.user.id}`, localStorage.getItem(`nameoutline_${data.user.id}`) === "yes" ? `var(--outlineStuff)` : "");
+			rootCSS().setProperty(`--nameEffects${data.user.id}`, `var(--nameOutline${data.user.id})var(--nameShadow${data.user.id})`);
+		}
 	}
 
 	let usesCustomColor = true;
@@ -969,6 +1037,17 @@ function initUserBlockCustomizations(data, elements) {
 	} else {
 		rootCSS().setProperty(`--nameAngle${data.user.id}`, "var(--nameGradientAngle)");
 	}
+
+	return usesCustomColor;
+}
+
+function initUserBlockCustomizations(data, elements) {
+	if(data.isOverlayMessage) {
+		return;
+	}
+
+	let customizationOK = (localStorage.getItem("setting_allowUserCustomizations") === "true");
+	let usesCustomColor = initUserSettingValues(data);
 
 	let allNameElements = elements.nameBlock.children();
 	let displayNameElement = elements.nameBlock.children(".displayName");
@@ -1049,31 +1128,6 @@ function initUserBlockCustomizations(data, elements) {
 	}
 
 	if(customizationOK && !data.isOverlayMessage) {
-		rootCSS().setProperty(`--nameSize${data.user.id}`, localStorage.getItem(`namesize_${data.user.id}`));
-		if(localStorage.getItem("setting_chatNameFontSize") !== "16") {
-			let scale = parseFloat(localStorage.getItem("setting_chatNameFontSize")) / 16;
-			if(localStorage.getItem(`namesize_${data.user.id}`) !== "var(--nameFontSize)") {
-				rootCSS().setProperty(`--nameSize${data.user.id}`, `calc(${localStorage.getItem(`namesize_${data.user.id}`)} * ${scale})`);
-			}
-		}
-
-		rootCSS().setProperty(`--nameSpacing${data.user.id}`, localStorage.getItem(`namespacing_${data.user.id}`));
-		if(localStorage.getItem("setting_chatNameLetterSpacing") !== "1") {
-			let scale = parseFloat(localStorage.getItem("setting_chatNameLetterSpacing"));
-			if(localStorage.getItem(`namespacing_${data.user.id}`) !== "var(--nameLetterSpacing)") {
-				rootCSS().setProperty(`--nameSpacing${data.user.id}`, `calc(${localStorage.getItem(`namespacing_${data.user.id}`)} * ${scale})`);
-			}
-		}
-
-		rootCSS().setProperty(`--nameFont${data.user.id}`, localStorage.getItem(`namefont_${data.user.id}`));
-		rootCSS().setProperty(`--nameWeight${data.user.id}`, localStorage.getItem(`nameweight_${data.user.id}`));
-		rootCSS().setProperty(`--nameStyle${data.user.id}`, localStorage.getItem(`namestyle_${data.user.id}`));
-		rootCSS().setProperty(`--nameTransform${data.user.id}`, localStorage.getItem(`nametransform_${data.user.id}`));
-		rootCSS().setProperty(`--nameVariant${data.user.id}`, localStorage.getItem(`namevariant_${data.user.id}`));
-		rootCSS().setProperty(`--nameShadow${data.user.id}`, localStorage.getItem(`nameshadow_${data.user.id}`) === "yes" ? `var(--shadowStuff)` : "");
-		rootCSS().setProperty(`--nameOutline${data.user.id}`, localStorage.getItem(`nameoutline_${data.user.id}`) === "yes" ? `var(--outlineStuff)` : "");
-		rootCSS().setProperty(`--nameEffects${data.user.id}`, `var(--nameOutline${data.user.id})var(--nameShadow${data.user.id})`);
-
 		elements.nameBlock.css("font-family", `var(--nameFont${data.user.id})`);
 		elements.nameBlock.css("font-weight", `var(--nameWeight${data.user.id})`);
 		elements.nameBlock.css("font-size", `var(--nameSize${data.user.id})`);
@@ -1900,9 +1954,36 @@ function startBTTVWebsocket() {
 	});
 }
 
-// TODO: i really just need to make these classes frick
 var sevenTVWS;
-//var sevenTVSessionID;
+function subscribe7TV(type, objectID) {
+	let conditions = {};
+
+	if(objectID) {
+		conditions = {
+			object_id: objectID
+		};
+	} else {
+		conditions = {
+			ctx: 'channel',
+			id: broadcasterData.id,
+			platform: 'TWITCH'	
+		};
+	}
+
+	let msg = {
+		op: 35,
+		d: {
+			type: type,
+			condition: conditions
+		}
+	};
+
+	if(sevenTVWS) {
+		if(sevenTVWS.readyState === 1) {
+			sevenTVWS.send(JSON.stringify(msg));
+		}
+	}
+}
 function start7TVWebsocket() {
 	console.log("Starting connection to 7TV...");
 	if(localStorage.getItem("setting_enable7TV") === "false") {
@@ -1911,22 +1992,6 @@ function start7TVWebsocket() {
 	}
 
 	sevenTVWS = new WebSocket('wss://events.7tv.io/v3');
-
-	let subscribe = function(type) {
-		let msg = {
-			op: 35,
-			d: {
-				type: type,
-				condition: {
-					ctx: 'channel',
-					id: broadcasterData.id,
-					platform: 'TWITCH'
-				}
-			}
-		};
-
-		sevenTVWS.send(JSON.stringify(msg));
-	}
 
 	const dispatchFuncs = {
 		"entitlement.create": async function(data) {
@@ -2008,12 +2073,44 @@ function start7TVWebsocket() {
 			}
 
 			sevenTVEntitlements.createPaint(data.id, data.data);
+		},
+
+		"emote_set.update": function(data) {
+			if("pushed" in data) {
+				for(const objectData of data.pushed) {
+					const emoteData = objectData.value.data;
+					const urls = emoteData.host.files;
+
+					chatEmotes.addEmote(new Emote({
+						service: "7tv",
+						urls: {
+							high: `https:${emoteData.host.url}/${urls[urls.length-1].name}`,
+							low: `https:${emoteData.host.url}/${urls[0].name}`
+						},
+						emoteID: emoteData.id,
+						emoteName: emoteData.name,
+						isZeroWidth: (emoteData.flags & 256 === 256),
+						global: false
+					}));
+				}
+			}
+			if("pulled" in data) {
+				for(const objectData of data.pulled) {
+					console.log(objectData);
+					const emoteData = objectData.old_value;
+					chatEmotes.deleteEmote(emoteData.id);
+				}
+			}
 		}
 	};
 
 	let dispatch = function(data) {
 		if(data.type in dispatchFuncs) {
-			dispatchFuncs[data.type](data.body.object)
+			if(data.type === "emote_set.update") {
+				dispatchFuncs[data.type](data.body)
+			} else {
+				dispatchFuncs[data.type](data.body.object)
+			}
 		}
 	}
 
@@ -2070,8 +2167,11 @@ function start7TVWebsocket() {
 				subscribe("entitlement.*");
 			}*/
 
-			subscribe("cosmetic.*");
-			subscribe("entitlement.*");
+			subscribe7TV("cosmetic.*");
+			subscribe7TV("entitlement.*");
+			if(sevenTVEmoteSetID) {
+				subscribe7TV("emote_set.*", sevenTVEmoteSetID);
+			}
 		};
 		waitForBroadcasterData();
 	});

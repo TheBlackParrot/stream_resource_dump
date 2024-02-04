@@ -1,4 +1,27 @@
 {
+	"1707000315317": {
+		"updates": {
+			"chat": {
+				"revision": 40,
+				"notes": [
+					[
+						"7TV emote sets now automatically update",
+						["!refreshemotes should no longer be required for anything but FFZ emotes now"]
+					],
+					[
+						"moved some leftover jquery get calls in the !bsr command over to the fetch API"
+					],
+					[
+						"fixed user customizable name colors not applying on previously sent messages with default settings once changed"
+					],
+					[
+						"fixed resetting user customizable chat settings not appearing to do anything"
+					]
+				]
+			},
+		}
+	},
+
 	"1706459562699": {
 		"updates": {
 			"bs": {

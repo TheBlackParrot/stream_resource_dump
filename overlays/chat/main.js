@@ -329,6 +329,7 @@ function getGlobalChannelEmotes(broadcasterData) {
 	}
 }
 
+var sevenTVEmoteSetID;
 function getExternalChannelEmotes(broadcasterData) {
 	if(!allowedToProceed) {
 		console.log("No Client ID or Secret is set.");
@@ -356,6 +357,9 @@ function getExternalChannelEmotes(broadcasterData) {
 					systemMessage("*Unable to fetch channel's 7TV emotes, emotes aren't in the emote set (this is 7TV's fault)*");
 					return;
 				}
+
+				sevenTVEmoteSetID = data.emote_set.id;
+				subscribe7TV("emote_set.*", sevenTVEmoteSetID);
 
 				for(const emote of data.emote_set.emotes) {
 					const emoteData = emote.data;
