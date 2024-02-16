@@ -1,5 +1,8 @@
+$.ajaxSetup({ timeout: parseInt(localStorage.getItem("setting_ajaxTimeout")) * 1000 || 7000 });
+
 var currentSong = {
-	uri: null
+	uri: null,
+	labels: []
 };
 var updateTrackTO;
 var elapsed = 0;
@@ -59,6 +62,8 @@ function determineScannableFGColor(data) {
 	if(localStorage.getItem("setting_spotify_useInvertedFGIfNeeded") === "true") {
 		let brightness = (getYIQ(scannableBackgroundColor) / 255) * 100;
 		let maxBrightness = parseInt(localStorage.getItem("setting_spotify_invertFGThreshold"));
+
+		console.log(`scannable brightness: ${brightness}, max: ${maxBrightness}`);
 
 		if(brightness > maxBrightness) {
 			settingUpdaters["scannableFGDark"]("true");
@@ -133,6 +138,9 @@ const spotifyFuncs = {
 			return;
 		}
 
+		if(localStorage.getItem("setting_spotify_enableScannable") === "true") { $("#scannableWrapper").show(); }
+		if(localStorage.getItem("setting_spotify_enableArt") === "true") { $("#artWrapper").show(); }
+
 		currentSong = data;
 		clearTimeout(albumArtistCycleTO);
 
@@ -161,7 +169,11 @@ const spotifyFuncs = {
 					}
 				}
 
-				$("#albumString").hide();
+				if(data.labels.length) {
+					$("#labelString").text(data.labels.join(", "));
+				}
+
+				$("#forceLeft").hide();
 				$("#artistString").show();
 
 				let darkColor = data.colors.dark;
@@ -194,25 +206,62 @@ const spotifyFuncs = {
 
 		setTimeout(function() {
 			$("#art, #artBG, #artOutline, #bgWrapper .artContainer").fadeOut(timespans.medium, function() {
-				$("#art").attr("src", data.art);
+				$("#art, #artLoader").attr("src", data.art);
 				rootCSS().setProperty("--art-url", `url('${data.art}')`);
 
-				$("#art").on("load", function() {
-					$("#art, #artBG, #artOutline").fadeIn(timespans.large);
-					$("#bgWrapper .artContainer").fadeIn(parseFloat(localStorage.getItem("setting_spotify_artBackgroundFadeInDuration")) * 1000);
+				$("#artLoader").one({
+					load: function() {
+						$("#art, #artBG, #artOutline").fadeIn(timespans.large);
+						$("#bgWrapper .artContainer").fadeIn(parseFloat(localStorage.getItem("setting_spotify_artBackgroundFadeInDuration")) * 1000);
+					},
+					error: function() {
+						$("#art, #artLoader").attr("src", "placeholder.png");
+						rootCSS().setProperty("--art-url", `url('placeholder.png')`);
+					}
 				});
 			});
 		}, timespans.medium);
 
-		setTimeout(function() {
-			$("#scannableShadow").fadeOut(timespans.medium, function() {
-				let scannableImage = `https://scannables.scdn.co/uri/plain/jpeg/000000/white/640/${data.uri}`;
+		setTimeout(async function() {
+			$("#scannableShadow").fadeOut(timespans.medium, async function() {
+				let scannableImage = `https://scannables.scdn.co/uri/plain/svg/000000/white/400/${data.uri}`;
 
-				$("#scannable").attr("src", scannableImage);
-				rootCSS().setProperty("--workingAroundFunnyChromiumBugLolXD", `url('${scannableImage}')`);
-				$("#scannable").on("load", function() {
-					determineScannableFGColor(data);
-					$("#scannableShadow").fadeIn(timespans.large);
+				const controller = new AbortController();
+				const timedOutID = setTimeout(() => controller.abort(), parseInt(localStorage.getItem("setting_ajaxTimeout")) * 1000);
+
+				var response;
+				try {
+					response = await fetch(scannableImage, { signal: controller.signal });
+				} catch(err) {
+					console.log("failed to fetch scannable");
+					$("#scannableWrapper").hide();
+					return;
+				}
+
+				if(!response.ok) {
+					$("#scannableWrapper").hide();
+					return;					
+				}
+
+				var initialSVG = await response.text();
+				let parser = new DOMParser();
+				let svgDOM = parser.parseFromString(initialSVG, "image/svg+xml");
+				svgDOM.getElementsByTagName("rect")[0].style.fill = "transparent";
+
+				const serializer = new XMLSerializer();
+				const svg = btoa(serializer.serializeToString(svgDOM));
+
+				$("#scannable")[0].setAttribute("src", `data:image/svg+xml;base64,${svg}`);
+				rootCSS().setProperty("--scannable-image", `url('data:image/svg+xml;base64,${svg}')`);
+
+				$("#scannable").one({
+					load: function() {
+						determineScannableFGColor(data);
+						$("#scannableShadow").fadeIn(timespans.large);
+					},
+					error: function() {
+						$("#scannableWrapper").hide();
+					}
 				});
 			});
 		}, timespans.large)
@@ -255,12 +304,17 @@ function cycleAlbumArtist(which) {
 	let fadeDuration = (localStorage.getItem("setting_spotify_enableAnimations") === "true" ? 250 : 0)
 
 	if(which === "artist") {
-		$("#albumString").fadeOut(fadeDuration, function() {
+		$("#forceLeft").fadeOut(fadeDuration, function() {
 			$("#artistString").fadeIn(fadeDuration);
 		});
 	} else {
 		$("#artistString").fadeOut(fadeDuration, function() {
-			$("#albumString").fadeIn(fadeDuration);
+			$("#forceLeft").fadeIn(fadeDuration);
+			if(localStorage.getItem("setting_spotify_showLabel") === "true" && currentSong.labels.length) {
+				$("#labelString").show();
+			} else {
+				$("#labelString").hide();
+			}
 		});		
 	}
 

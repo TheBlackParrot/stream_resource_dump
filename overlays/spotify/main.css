@@ -258,14 +258,14 @@ body {
 #titleString {
 	padding-bottom: 2px;
 }
-#titleString, #artistString, #albumString {
+#titleString, #artistString, #albumString, #labelString {
 	line-height: var(--details-line-height);
 	filter: var(--effects);
 }
-.left #titleString, .left #artistString, .left #albumString {
+.left #titleString, .left #forceLeft, .left #artistString {
 	padding-left: 4px;
 }
-.right #titleString, .right #artistString, .right #albumString {
+.right #titleString, .right #forceLeft, .right #artistString {
 	padding-right: 4px;
 }
 
@@ -300,7 +300,7 @@ body {
 	background-image: var(--artist-gradient);
 }
 
-#artistString, #albumString, #albumString:before, .isSingle:after {
+#artistString, #albumString, #albumString:before, .isSingle:after, #labelString, #labelString:before {
 	font-family: var(--artist-font-family);
 	font-size: var(--artist-font-size);
 	font-weight: var(--artist-font-weight);
@@ -333,7 +333,7 @@ body {
 	position: absolute;
 	z-index: 1;
 	background-color: var(--scannable-background-color);
-    border-radius: var(--scannable-border-radius);
+	border-radius: var(--scannable-border-radius);
 }
 
 .left #scannableWrapper, .left #artWrapper {
@@ -362,11 +362,9 @@ body {
 	height: var(--scannable-height);
 	position: absolute;
 	z-index: 2;
-	background-image: var(--workingAroundFunnyChromiumBugLolXD);
-    background-size: cover;
-    mix-blend-mode: var(--scannable-mix-mode);
-    filter: var(--scannable-filters);
-    border-radius: var(--scannable-border-radius);
+	background-image: var(--scannable-image);
+	background-size: cover;
+	filter: var(--scannable-filters);
 }
 
 #scannable {
@@ -378,8 +376,6 @@ body {
 }
 
 #scannableWrapperInside {
-	border-radius: var(--scannable-border-radius);
-	clip-path: content-box;
 	height: 100%;
 	width: 100%;
 }
@@ -394,10 +390,14 @@ body {
 	content: "from ";
 	margin-right: 2px;
 }
+#labelString:before {
+	content: "via ";
+	margin-right: 2px;
+}
 .isSingle:after {
 	content: " (Single)";
 }
-#albumString:before, .isSingle:after {
+#albumString:before, .isSingle:after, #labelString:before {
 	font-weight: calc(var(--artist-font-weight) / 2);
 	font-size: calc(var(--artist-font-size) / 1.15);
 	line-height: 0px;	
@@ -437,4 +437,15 @@ body {
 .right #artBGWrap .artContainer {
 	right: calc(var(--background-art-blur-amount) * 8 * -1);
 	left:  unset;
+}
+
+#scannableDoppleganger, #artLoader {
+	position: fixed;
+	top: -2000px;
+	left: -2000px;
+}
+
+#forceLeft {
+	direction: ltr;
+	display: none;
 }

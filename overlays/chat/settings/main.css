@@ -104,6 +104,11 @@
 	--notif-color-warning: #ffee33a0;
 
 	--header-shadow: drop-shadow(0px 1px 2px #000);
+
+	--panel-minimum-width: 500px;
+
+	--collapse-button-height: 300px;
+	--collapse-button-gradient-side: -50%;
 }
 ::-webkit-scrollbar { 
 	width: var(--scrollbar-width);
@@ -170,6 +175,30 @@ body {
 	color: var(--font-color);
 	background-color: #191919;
 	font-weight: var(--font-weight);
+}
+
+#collapseSidebar {
+	position: fixed;
+	top: calc(50vh - (var(--collapse-button-height) / 2));
+	left: var(--sidebar-width);
+	height: var(--collapse-button-height);
+	width: var(--wrapper-padding);
+	z-index: 5;
+	line-height: var(--collapse-button-height);
+	text-align: center;
+	font-size: 16pt;
+	font-weight: 900;
+	color: var(--primary-color-bright);
+	background-image: radial-gradient(ellipse at var(--collapse-button-gradient-side) 50%, transparent -50%, transparent 50%);
+	filter: var(--header-shadow);
+	transition: .5s;
+	opacity: 0.2;
+}
+#collapseSidebar:hover {
+	color: #fff;
+	background-image: radial-gradient(ellipse at var(--collapse-button-gradient-side) 50%, var(--primary-color) -30%, transparent 57.5%);
+	transition: .5s;
+	opacity: 1;
 }
 
 #sidebar {
@@ -282,7 +311,7 @@ h1 .icon {
 	margin: var(--wrapper-padding);
 	width: -webkit-fill-available;
 	flex-direction: column;
-	min-width: 500px;
+	min-width: var(--panel-minimum-width);
 }
 .activeSection {
 	display: flex;
@@ -340,7 +369,7 @@ border-bottom: 1px solid #ffffff99;
 	margin-right: calc(var(--settings-padding) / 1.5);
 	padding-right: calc(var(--settings-padding) / 1.5);
 	width: calc(380px - var(--settings-padding));
-	border-right: 1px solid var(--primary-color-brighter-desat);
+	border-right: 2px solid var(--primary-color-brighter-desat);
 	line-height: var(--input-height);
 	height: var(--input-height);
 }
@@ -848,4 +877,8 @@ ol li ol li:before {
 .settingCellMeasurement {
 	margin-left: calc(var(--settings-padding) / 10);
 	margin-right: calc(var(--settings-padding) / 10);
+}
+
+.section[data-content="about"] .settingCellLabel .fa-solid, .section[data-content="about"] .settingCellLabel .fa-brands {
+	margin-right: 0.15em;
 }

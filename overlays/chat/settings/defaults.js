@@ -394,7 +394,7 @@ const defaultConfig = {
 	"enableConstantNoiseToFixCEFBeingWeird": "false",
 	"noiseLowpassHz": "400",
 	"noiseVolume": "5",
-	"ajaxTimeout": "7",
+	"ajaxTimeout": "4",
 	"sound_newMsg_CustomURLs": "",
 	"avatarAllowedIncludeTotalMessages": "false",
 	"avatarAllowedMessageThreshold": "200",
@@ -764,7 +764,19 @@ const defaultConfig = {
 	"bs_desaturateOnPause": "true",
 	"bs_desaturateAmount": "100",
 	"bs_desaturateFadeInDuration": "0.5",
-	"bs_desaturateFadeOutDuration": "2"
+	"bs_desaturateFadeOutDuration": "2",
+	"bs_hideOnMenu": "true",
+	"panel_minWidth": "500",
+	"bs_miscInfoAlignment": "center",
+	"bs_metadataAlignment": "start",
+	"bs_hitMissAlignment": "left",
+	"bs_accAlignment": "center",
+	"bs_miscInfoFontWeight": "900",
+	"bs_hitMissFontAdditionalWeight": "0",
+	"bs_secondaryGradient": "true",
+	"bs_secondaryGradientColor": "#FFFFFF",
+	"bs_secondaryGradientAngle": "170",
+	"spotify_showLabel": "false"
 };
 // i typed out the bigNoNoWords so you don't have to, i'm sorry :(
 // it's gotta know what to remove

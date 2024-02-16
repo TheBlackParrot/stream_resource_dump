@@ -13,6 +13,8 @@
 </head>
 <body>
 	<div id="testBar"></div>
+	<img id="scannable" src=""/>
+	<img id="artLoader" src="placeholder.png"/>
 
 	<div id="wrapper" class="left">
 		<div id="scannableWrapper">
@@ -20,7 +22,6 @@
 				<div id="scannableWrapperInside">
 					<div id="scannableBackground"></div>
 					<div id="scannableForeground"></div>
-					<img id="scannable" src=""/>
 				</div>
 			</div>
 		</div>
@@ -38,7 +39,13 @@
 
 		<div id="detailsWrapper">
 			<div id="title"><span id="titleString"></span></div>
-			<div id="artist"><span id="artistString" style="display: none;"></span><span class="" id="albumString" style="display: none;"></span></div>
+			<div id="artist">
+				<span id="artistString" style="display: none;"></span>
+				<span id="forceLeft">
+					<span class="" id="albumString"></span>
+					<span id="labelString"></span>
+				</span>
+			</div>
 		</div>
 
 		<div id="bgWrapper">

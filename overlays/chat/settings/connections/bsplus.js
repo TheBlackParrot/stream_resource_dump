@@ -47,6 +47,12 @@ const BSPlusMessageHandlers = {
 			dark: localStorage.getItem("setting_bs_artistColor")
 		};
 
+		for(const which of ["name", "artist", "mapper"]) {
+			if(!currentBSSong[which]) {
+				currentBSSong[which] = `(${which} was left blank)`
+			}
+		}
+
 		if(currentBSSong.hash.indexOf("wip") === -1 && currentBSSong.hash.length === 40) {
 			let cacheData = sessionStorage.getItem(`_bs_cache_${currentBSSong.hash}`);
 			let bsData = null;

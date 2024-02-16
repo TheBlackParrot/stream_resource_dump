@@ -40,7 +40,7 @@ const oauthParams = new URLSearchParams(window.location.search);
 const oauthCode = oauthParams.get('code');
 const oauthState = oauthParams.get('state');
 
-function regenSpotifyCodes() {
+async function regenSpotifyCodes() {
 	let spotifyClientID = localStorage.getItem("setting_spotifyClientID");
 
 	if(!spotifyClientID) {
@@ -57,28 +57,25 @@ function regenSpotifyCodes() {
 			client_id: spotifyClientID
 		});
 
-		const response = fetch('https://accounts.spotify.com/api/token', {
+		const response = await fetch('https://accounts.spotify.com/api/token', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded'
 			},
 			body: body
-		}).then(response => {
-			if(!response.ok) {
-				throw new Error('HTTP status ' + response.status);
-				localStorage.removeItem("spotify_refreshToken");
-				regenSpotifyCodes();
-			}
-
-			return response.json();
-		}).then(data => {
-			localStorage.setItem('spotify_accessToken', data.access_token);
-			localStorage.setItem('spotify_refreshToken', data.refresh_token);
-			onSpotifyReady();
-		}).catch(error => {
-			console.error('Error:', error);
-			localStorage.removeItem("spotify_refreshToken");
 		});
+
+		if(!response.ok) {
+			throw new Error('HTTP status ' + response.status);
+			localStorage.removeItem("spotify_refreshToken");
+			return regenSpotifyCodes();
+		}
+
+		const data = await response.json();
+
+		localStorage.setItem('spotify_accessToken', data.access_token);
+		localStorage.setItem('spotify_refreshToken', data.refresh_token);
+		onSpotifyReady();
 	} else {
 		generateCodeChallenge(spotifyCodeVerifier).then(codeChallenge => {
 			let state = getRandomString(16);
@@ -100,7 +97,7 @@ function regenSpotifyCodes() {
 	}
 }
 
-function setSpotifyTokens() {
+async function setSpotifyTokens() {
 	let codeVerifier = localStorage.getItem('spotify_codeVerifier');
 	let spotifyClientID = localStorage.getItem("setting_spotifyClientID");
 
@@ -112,29 +109,28 @@ function setSpotifyTokens() {
 		code_verifier: codeVerifier
 	});
 
-	const response = fetch('https://accounts.spotify.com/api/token', {
+	const response = await fetch('https://accounts.spotify.com/api/token', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/x-www-form-urlencoded'
 		},
 		body: body
-	}).then(response => {
-		if(!response.ok) {
-			throw new Error('HTTP status ' + response.status);
-			regenSpotifyCodes();
-		}
-
-		return response.json();
-	}).then(data => {
-		localStorage.setItem('spotify_accessToken', data.access_token);
-		localStorage.setItem('spotify_refreshToken', data.refresh_token);
-		onSpotifyReady();
-	}).catch(error => {
-		console.error('Error:', error);
 	});
+
+	if(!response.ok) {
+		throw new Error('HTTP status ' + response.status);
+		await regenSpotifyCodes();
+		return;
+	}
+
+	const data = await response.json();
+
+	localStorage.setItem('spotify_accessToken', data.access_token);
+	localStorage.setItem('spotify_refreshToken', data.refresh_token);
+	onSpotifyReady();
 }
 
-function regenTwitchCodes() {
+async function regenTwitchCodes() {
 	const twitchClientID = localStorage.getItem("setting_twitchClientID");
 	const twitchClientSecret = localStorage.getItem("setting_twitchClientSecret");
 
@@ -154,34 +150,31 @@ function regenTwitchCodes() {
 			refresh_token: refreshToken
 		});
 
-		const response = fetch('https://id.twitch.tv/oauth2/token', {
+		const response = await fetch('https://id.twitch.tv/oauth2/token', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded'
 			},
 			body: body
-		}).then(response => {
-			if(!response.ok) {
-				console.log("twitch oauth refresh token was bad");
-				throw new Error('HTTP status ' + response.status);
-				localStorage.removeItem("twitch_oauthRefreshToken");
-				regenTwitchCodes();
-			}
-			console.log("twitch oauth refresh token was good");
-
-			postToTwitchEventChannel("OAuthTokenRefreshed");
-			lastOAuthRefresh = Date.now();
-
-			return response.json();
-		}).then(data => {
-			localStorage.setItem('twitch_oauthAccessToken', data.access_token);
-			localStorage.setItem('twitch_oauthRefreshToken', data.refresh_token);
-			onTwitchReady();
-		}).catch(error => {
-			console.log("twitch oauth refresh token was real bad");
-			console.error('Error:', error);
-			localStorage.removeItem("twitch_oauthRefreshToken");
 		});
+
+		if(!response.ok) {
+			console.log("twitch oauth refresh token was bad");
+			throw new Error('HTTP status ' + response.status);
+			localStorage.removeItem("twitch_oauthRefreshToken");
+			return regenTwitchCodes();
+		}
+		console.log("twitch oauth refresh token was good");
+
+		const data = await response.json();
+
+		localStorage.setItem('twitch_oauthAccessToken', data.access_token);
+		localStorage.setItem('twitch_oauthRefreshToken', data.refresh_token);
+
+		postToTwitchEventChannel("OAuthTokenRefreshed");
+		lastOAuthRefresh = Date.now();
+
+		onTwitchReady();
 	} else {
 		let state = getRandomString(16);
 		sessionStorage.setItem("_oauth_state", state);
@@ -229,7 +222,7 @@ async function setTwitchTokens() {
 	if(!response.ok) {
 		console.log("couldn't get twitch tokens");
 		throw new Error('HTTP status ' + response.status);
-		regenTwitchCodes();
+		await regenTwitchCodes();
 		return;
 	}
 

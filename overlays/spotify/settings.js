@@ -1,5 +1,5 @@
-const overlayRevision = 11;
-const overlayRevisionTimestamp = 1706459562699;
+const overlayRevision = 12;
+const overlayRevisionTimestamp = 1708126522507;
 
 const settingsChannel = new BroadcastChannel("settings_overlay");
 
@@ -187,9 +187,11 @@ const settingUpdaters = {
 		if(value === "true") {
 			$("#artistString").addClass("artistStringGradient");
 			$("#albumString").addClass("artistStringGradient");
+			$("#labelString").addClass("artistStringGradient");
 		} else {
 			$("#artistString").removeClass("artistStringGradient");
 			$("#albumString").removeClass("artistStringGradient");
+			$("#labelString").removeClass("artistStringGradient");
 		}
 	},
 	artistGradientColor: function(value) {
@@ -309,7 +311,7 @@ const settingUpdaters = {
 			return;
 		}
 
-		$("#albumString").hide();
+		$("#forceLeft").hide();
 		$("#artistString").show();
 
 		if(value === "true") {
@@ -431,6 +433,17 @@ const settingUpdaters = {
 			return;
 		}
 		determineScannableFGColor(currentSong);
+	},
+	showLabel: function(value) {
+		if(value === "true") {
+			if($("#albumString").is(":visible") && currentSong.labels.length) {
+				$("#labelString").show();
+			} else {
+				$("#labelString").hide();
+			}
+		} else {
+			$("#labelString").hide();
+		}
 	}
 };
 

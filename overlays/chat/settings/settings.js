@@ -62,6 +62,10 @@ const settingUpdaters = {
 		rootCSS().setProperty("--primary-color-dark", interpolateColor("#000000ff", interpolateColor("#808080ff", value, 33), 25));
 		rootCSS().setProperty("--primary-color-darkest", interpolateColor("#000000ff", interpolateColor("#808080ff", value, 50), 15));
 		rootCSS().setProperty("--primary-color-darkester", interpolateColor("#000000ff", interpolateColor("#808080ff", value, 50), 6));
+	},
+
+	minWidth: function(value) {
+		rootCSS().setProperty("--panel-minimum-width", `${value}px`);
 	}
 };
 
@@ -141,7 +145,7 @@ function loadSettings() {
 						element.val(storedVal);
 				}
 
-				if(setting === "panel_primaryColor") {
+				if(setting.substring(0, 6) === "panel_") {
 					updateSetting(`setting_${setting}`, storedVal);
 				}
 

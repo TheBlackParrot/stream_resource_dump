@@ -1,4 +1,126 @@
 {
+	"1708126522507": {
+		"updates": {
+			"spotify": {
+				"revision": 12,
+				"notes": [
+					[
+						"attempted to fix scannables sometimes failing to appear",
+						["i wasn't able to replicate the bug i was running into on stream in my dev environment, but i'm hoping moving the on load trigger's DOM element outside of the scannable wrapper will fix this"]
+					],
+					[
+						"scannables should now auto-hide on load failure"
+					],
+					[
+						"cover art should now show the placeholder cover on load failure"
+					],
+					[
+						"fixed state fetching triggering a new vibrant call on cover art every time it fetched player state",
+						["didn't catch this issue initially until i did some deeper digging for other things, woops. i think this was loading from cache at least. i hope."]
+					],
+					[
+						"vibrant failing to fetch cover art no longer stops the fetch timer",
+						["this will also force both light/dark colors to the default background color"]
+					],
+					[
+						"cover art is now shrunk on a canvas element equal to double of the set art size and base64-encoded to avoid duplicate GET requests on cover art fetching"
+					],
+					[
+						"switched from jpeg scannables to (modified) svg scannables",
+						["i don't... think spotify mentions the svg format anywhere? found this out through a stackoverflow question"]
+					],
+					[
+						"removed some css formatting on scannables since they're actually transparent now",
+						["based SVG format"]
+					],
+					[
+						"fixed duplicate scannable fetching, as loading in CSS and DOM elements are separate",
+						["it now just base64 encodes a single fetch response and uses that in both CSS and the DOM element"]
+					],
+					[
+						"state fetching now properly handles HTTP status code 204 if no active spotify instances are available"
+					],
+					[
+						"song publishers/labels can now be shown alongside album information (fetched via MusicBrainz)",
+						["it has been 6 years since spotify said \"yeah! sure! we'll get around to adding this in our API!\" so clearly they're not adding it (https://github.com/spotify/web-api/issues/779#issuecomment-413182817)"]
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 39,
+				"notes": [
+					[
+						"oauth token code flows were made asynchronous",
+						["i wasn't yet in the async mindset when initially coding all of that, a lot of promise catching was simplified"]
+					],
+					[
+						"increased setting label and input divider width to 2px"
+					],
+					[
+						"added user agent string to the bottom of the about panel"
+					],
+					[
+						"the out-of-date warning notification now lasts 2 minutes instead of 10 seconds"
+					],
+					[
+						"clicking notifications now dismisses them"
+					],
+					[
+						"decreased default remote data fetching timeout from 7 seconds to 4 seconds"
+					]
+				]
+			}
+		}
+	},
+
+	"1707634360347": {
+		"updates": {
+			"bs": {
+				"revision": 2,
+				"notes": [
+					[
+						"added placeholder data for map metadata fields left blank by mappers"
+					],
+					[
+						"hiding the overlay when not playing a map can now be toggled"
+					],
+					[
+						"default font now properly loads (my bad)"
+					],
+					[
+						"added horizontal alignment settings to relevant parts of the overlay"
+					],
+					[
+						"added some additional font settings to some portions of the overlay"
+					],
+					[
+						"removed outside margins on elements"
+					],
+					[
+						"forgot a box shadow class on cover art for initial view of the overlay"
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 38,
+				"notes": [
+					[
+						"minimum width settings can now be changed in the about tab"
+					],
+					[
+						"the sidebar can now be collapsed to save some horizontal space"
+					],
+					[
+						"removed permanent invite link to my discord as it's no longer valid",
+						["if i still need to be reached via discord, simply shoot me a message request"]
+					]
+				]
+			}
+		}
+	},
+
 	"1707000315317": {
 		"updates": {
 			"chat": {
@@ -18,7 +140,7 @@
 						"fixed resetting user customizable chat settings not appearing to do anything"
 					]
 				]
-			},
+			}
 		}
 	},
 

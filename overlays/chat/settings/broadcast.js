@@ -171,6 +171,7 @@ broadcastFuncs = {
 	}
 };
 
+var isSpotifyReady = false;
 function checkToSendSpotifyData() {
 	if(isSpotifyReady) {
 		updateTrack();

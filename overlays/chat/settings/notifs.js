@@ -33,4 +33,9 @@ $("body").on("click", ".notifClose", function(e) {
 
 	let parentElement = $(this).parent();
 	parentElement.remove();
-})
+});
+
+$("body").on("click", ".notif", function(e) {
+	e.preventDefault();
+	$(this).remove();
+});

@@ -70,6 +70,9 @@
 				</div>
 			</div>
 		</div>
+		<div id="collapseSidebar">
+			<i class="fa-solid fa-angle-left"></i>
+		</div>
 		<div id="settings">
 			<div class="section" data-content="appearance">
 				<div class="part">
@@ -1456,7 +1459,7 @@
 							<span class="settingInfo">Remote data fetching timeout</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="ajaxTimeout" min="3" max="99" step="1" value="7"/><span class="settingCellMeasurement">seconds</span>
+							<input type="number" id="ajaxTimeout" min="2" max="99" step="1" value="4"/><span class="settingCellMeasurement">seconds</span>
 						</div>
 					</div>
 				</div>
@@ -2910,7 +2913,7 @@
 					<h1>Where to find me</h1>
 					<div class="setting">
 						<div class="settingCellLabel">
-							<strong>Bluesky</strong>
+							<strong><i class="fa-solid fa-user-group"></i> Bluesky</strong>
 						</div>
 						<div class="settingCell">
 							<tt>@theblackparrot.me</tt>
@@ -2918,32 +2921,7 @@
 					</div>
 					<div class="setting">
 						<div class="settingCellLabel">
-							<strong>Discord</strong>
-						</div>
-						<div class="settingCell" style="line-height: var(--settings-text-line-height); display: inline-block;">
-							<tt>@theblackparrot</tt><br/>
-							<tt>discord.gg/PS95E9sYhJ</tt>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<strong>Github</strong>
-						</div>
-						<div class="settingCell">
-							<tt>TheBlackParrot</tt>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<strong>Ko-fi</strong>
-						</div>
-						<div class="settingCell">
-							<tt>septilateral</tt>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<strong>Telegram</strong>
+							<strong><i class="fa-brands fa-discord"></i> Discord</strong>
 						</div>
 						<div class="settingCell">
 							<tt>@theblackparrot</tt>
@@ -2951,7 +2929,31 @@
 					</div>
 					<div class="setting">
 						<div class="settingCellLabel">
-							<strong>Twitch</strong>
+							<strong><i class="fa-brands fa-github"></i> Github</strong>
+						</div>
+						<div class="settingCell">
+							<tt>TheBlackParrot</tt>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<strong><i class="fa-solid fa-mug-hot"></i> Ko-fi</strong>
+						</div>
+						<div class="settingCell">
+							<tt>septilateral</tt>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<strong><i class="fa-brands fa-telegram"></i> Telegram</strong>
+						</div>
+						<div class="settingCell">
+							<tt>@theblackparrot</tt>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<strong><i class="fa-brands fa-twitch"></i> Twitch</strong>
 						</div>
 						<div class="settingCell">
 							<tt>theblackparrot</tt>
@@ -3084,6 +3086,15 @@
 							<input id="panel_primaryColor" type="text" data-coloris value="#cbadffff"/>
 						</div>
 					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Minimum width</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="panel_minWidth" min="100" max="4096" step="1" value="500"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>					
 				</div>
 				<div class="part">
 					<h1>Backups</h1>
@@ -3125,6 +3136,12 @@
 						<div class="settingCell centerSetting">
 							<div class="button" id="exportNonCriticalSettingsButton"><i class="fas fa-download"></i> Export Non-Critical Settings</div><div class="button" id="exportAllSettingsButton"><i class="fas fa-download"></i> Export ALL Settings</div><div class="button" id="importSettingsButton"><i class="fas fa-upload"></i> Import Settings</div>
 						</div>
+					</div>
+				</div>
+				<div class="part">
+					<hr/>
+					<div class="setting smol">
+						<span id="UAString"></span>
 					</div>
 				</div>
 			</div>
@@ -3865,6 +3882,11 @@
 							<input checked id="spotify_showSingleIfSingle" type="checkbox"/> <span class="settingInfo">Mention if the track an album is on is a single</span>
 						</div>
 					</div>
+					<div class="setting" data-dependent="spotify_enableArtistAlbumCycle">
+						<div class="settingCell">
+							<input id="spotify_showLabel" type="checkbox"/> <span class="settingInfo">Show label/publisher information after album information (if available)</span>
+						</div>
+					</div>
 					<hr/>
 					<div class="setting">
 						<div class="settingCell">
@@ -4565,6 +4587,12 @@
 				<div class="part">
 					<h1>Layout</h1>
 					<div class="setting">
+						<div class="settingCell">
+							<input checked id="bs_hideOnMenu" type="checkbox"/> <span class="settingInfo">Hide overlay if not playing a map</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
 						<div class="settingCellLabel">
 							<span class="settingInfo">Height</span>
 						</div>
@@ -4627,6 +4655,18 @@
 							<input id="bs_flipMiscInfoDetails" type="checkbox"/> <span class="settingInfo">Flip vertical order of miscellaneous information</span>
 						</div>
 					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Horizontal alignment</span>
+						</div>
+						<div class="settingCell">
+							<select id="bs_miscInfoAlignment">
+								<option value="left">Left</option>
+								<option selected value="center">Center</option>
+								<option value="right">Right</option>
+							</select>
+						</div>
+					</div>
 					<hr/>
 					<div class="setting">
 						<div class="settingCellLabel">
@@ -4643,6 +4683,14 @@
 						<div class="settingCell">
 							<input id="bs_miscInfoFontFamily" type="text" value="Manrope"/>
 							<input id="bs_miscInfoFontItalic" type="checkbox"/> <span class="settingInfo">Italic</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Font weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_miscInfoFontWeight" min="100" max="900" step="100" value="900"/>
 						</div>
 					</div>
 					<div class="setting">
@@ -4869,6 +4917,18 @@
 							<input id="bs_flipMetadataDetails" type="checkbox"/> <span class="settingInfo">Flip vertical order of song details</span>
 						</div>
 					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Horizontal alignment</span>
+						</div>
+						<div class="settingCell">
+							<select id="bs_metadataAlignment">
+								<option selected value="start">Left</option>
+								<option value="center">Center</option>
+								<option value="end">Right</option>
+							</select>
+						</div>
+					</div>
 					<hr/>
 					<div class="setting">
 						<div class="settingCell">
@@ -5056,6 +5116,28 @@
 							</select>
 						</div>
 					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="bs_secondaryGradient" type="checkbox"/> <span class="settingInfo">Apply a gradient to the song metadata display</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Gradient color</span>
+						</div>
+						<div class="settingCell">
+							<input id="bs_secondaryGradientColor" type="text" data-coloris value="#FFFFFFFF"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Gradient angle</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_secondaryGradientAngle" min="0" max="360" step="1" value="170"/><span class="settingCellMeasurement">deg</span>
+						</div>
+					</div>
 				</div>
 				<div class="part">
 					<h1>Hit / Miss Stats</h1>
@@ -5071,6 +5153,18 @@
 					<div class="setting">
 						<div class="settingCell">
 							<input id="bs_flipHitMissDetails" type="checkbox"/> <span class="settingInfo">Flip vertical order of hit / miss stats</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Horizontal alignment</span>
+						</div>
+						<div class="settingCell">
+							<select id="bs_hitMissAlignment">
+								<option selected value="left">Left</option>
+								<option value="center">Center</option>
+								<option value="right">Right</option>
+							</select>
 						</div>
 					</div>
 					<hr/>
@@ -5105,6 +5199,14 @@
 						</div>
 						<div class="settingCell">
 							<input type="number" id="bs_hitMissFontWeight" min="0" max="900" step="100" value="900"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Additional font weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_hitMissFontAdditionalWeight" min="0" max="20" step="0.1" value="0"/><span class="settingCellMeasurement">px</span>
 						</div>
 					</div>
 					<hr/>
@@ -5147,6 +5249,18 @@
 					<div class="setting">
 						<div class="settingCell">
 							<input id="bs_flipAccDetails" type="checkbox"/> <span class="settingInfo">Flip vertical order of accuracy / combo</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Horizontal alignment</span>
+						</div>
+						<div class="settingCell">
+							<select id="bs_accAlignment">
+								<option value="left">Left</option>
+								<option selected value="center">Center</option>
+								<option value="right">Right</option>
+							</select>
 						</div>
 					</div>
 					<hr/>
@@ -5245,6 +5359,14 @@
 						</div>
 						<div class="settingCell">
 							<input type="number" id="bs_comboFontWeight" min="0" max="900" step="100" value="900"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Additional font weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_comboFontAdditionalWeight" min="0" max="20" step="0.1" value="0"/><span class="settingCellMeasurement">px</span>
 						</div>
 					</div>
 				</div>

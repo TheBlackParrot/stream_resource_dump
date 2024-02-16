@@ -10,8 +10,8 @@ function changeStatusCircle(which, status, msg) {
 
 $("#sensitive .section").show();
 
-const overlayRevision = 37;
-const overlayRevisionTimestamp = 1706459562699;
+const overlayRevision = 39;
+const overlayRevisionTimestamp = 1708126522507;
 $("#revision").text(`revision ${overlayRevision}`);
 
 function resetEverything() {
@@ -206,7 +206,7 @@ $("input, select, textarea").on("change", function(e) {
 		}
 	}
 
-	if(setting === "panel_primaryColor") {
+	if(setting.substring(0, 6) === "panel_") {
 		updateSetting(`setting_${setting}`, value);
 	}
 });
@@ -313,12 +313,31 @@ $("#clearSpotifyButton").on("mouseup", function(e) {
 	}, 5000);
 });
 
+var sidebarWidth = "210px";
+$("#collapseSidebar").on("mouseup", function(e) {
+	$(this).css("transition", "0s");
+
+	if($("#sidebar").is(":visible")) {
+		$("#sidebar").hide();
+		rootCSS().setProperty("--sidebar-width", "0px");
+		$(this).css("transition", ".5s");
+		$("#collapseSidebar i").removeClass("fa-angle-left").addClass("fa-angle-right");
+	} else {
+		rootCSS().setProperty("--sidebar-width", sidebarWidth);
+		$("#sidebar").show();
+		$(this).css("transition", ".5s");
+		$("#collapseSidebar i").removeClass("fa-angle-right").addClass("fa-angle-left");
+	}
+});
+
 $.get(`version.json?sigh=${Date.now()}`, function(data) {
 	if(overlayRevision !== data.revision) {
 		$("#updateString").html('<i class="fas fa-times"></i> Out of date!');
-		addNotification(`Overlay settings panel is out of date! (You are running r${overlayRevision}, server reports r${data.revision})`, {bgColor: "var(--notif-color-warning)", textColor: "#000", duration: 10});
+		addNotification(`Overlay settings panel is out of date! (You are running r${overlayRevision}, server reports r${data.revision})`, {bgColor: "var(--notif-color-warning)", textColor: "#000", duration: 120});
 	} else {
 		$("#updateString").html('<i class="fas fa-check"></i> Up to date');
 		addNotification("Overlay settings panel is up to date!", {bgColor: "var(--notif-color-success)", duration: 10});
 	}
 });
+
+$("#UAString").text(window.navigator.userAgent);
