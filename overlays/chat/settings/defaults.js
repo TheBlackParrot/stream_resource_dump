@@ -542,7 +542,7 @@ const defaultConfig = {
 	"bigNoNoWordsWordSpecific": "fag\nnig\nrape\ntard\nphag\nmong",
 	"spotify_hideOnPause": "true",
 	"spotify_artBorderRadius": "4",
-	"spotify_scannableBorderRadius": "8",
+	"spotify_scannableBorderRadius": "16",
 	"spotify_scannableGradientAngle": "170",
 	"spotify_scannableGradientColorStart": "#FFFFFF",
 	"spotify_scannableGradientPercentStart": "10",
@@ -655,7 +655,7 @@ const defaultConfig = {
 	"enableEventTagsAnnouncements": "true",
 	"eventTagsAnnouncementFormat": "announcement",
 	"avatarsBGBlurAmount": "6",
-	"spotify_invertFGThreshold": "59",
+	"spotify_invertFGThreshold": "56",
 	"spotify_useInvertedFGIfNeeded": "true",
 	"bs_easyDiffName": "Easy",
 	"bs_normalDiffName": "Normal",
@@ -776,7 +776,14 @@ const defaultConfig = {
 	"bs_secondaryGradient": "true",
 	"bs_secondaryGradientColor": "#FFFFFF",
 	"bs_secondaryGradientAngle": "170",
-	"spotify_showLabel": "false"
+	"spotify_showLabel": "false",
+	"spotify_showYear": "false",
+	"spotify_enableScannableOutlines": "false",
+	"spotify_scannableOutlinesColor": "#FFFFFF40",
+	"spotify_scannableOutlinesSize": "1",
+	"spotify_scannableOutlinesStyle": "solid",
+	"spotify_renderArtLower": "false",
+	"bs_comboFontAdditionalWeight": "0"
 };
 // i typed out the bigNoNoWords so you don't have to, i'm sorry :(
 // it's gotta know what to remove

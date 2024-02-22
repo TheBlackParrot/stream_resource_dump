@@ -80,15 +80,16 @@ body {
 .cell {
 	display: flex;
 	flex-direction: column;
-	margin-right: var(--elementSpacing);
+	padding-left: calc(var(--elementSpacing) / 2);
+	padding-right: calc(var(--elementSpacing) / 2);
 	font-size: var(--primaryFontSize);
 	align-self: center;
 }
 
 #miscInfoCell {
 	min-width: var(--miscInfoWidth);
-	font-weight: var(--primaryFontWeight);
-	text-align: center;
+	font-weight: var(--miscInfoFontWeight);
+	text-align: var(--miscInfoAlignment);
 	font-size: var(--miscInfoFontSize);
 	font-variant: tabular-nums;
 	flex-direction: var(--miscInfoVerticalAlignment);
@@ -148,12 +149,17 @@ body {
 #metadataCell {
 	flex-grow: 1;
 	line-height: var(--metadataLineHeight);
-	padding-left: 6px;
 	position: relative;
-	left: -6px;
 	top: var(--fixWeirdMetadataAlignmentIssue); /* wtf */
 	align-self: stretch;
 	flex-direction: var(--metadataVerticalAlignment);
+}
+#title, #secondary {
+	width: 100%;
+	white-space: nowrap;
+	flex-grow: 1;
+	display: inline-flex;
+	align-items: center;
 }
 #title {
 	font-family: var(--titleFontFamily);
@@ -165,6 +171,8 @@ body {
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 	-webkit-text-stroke: var(--titleAdditionalWeight) transparent;
+	justify-content: var(--titleAlignment);
+	overflow-x: clip;
 }
 #titleString {
 	padding-bottom: 2px;
@@ -175,35 +183,33 @@ body {
 	font-weight: var(--secondaryFontWeight);
 	text-transform: var(--secondaryTransform);
 	font-style: var(--secondaryFontStyle);
-	padding-left: 6px;
 	position: relative;
-	left: -6px;
-}
-#title, #secondary {
-	width: 100%;
-	white-space: nowrap;
-	overflow-x: clip;
-	flex-grow: 1;
-	display: inline-flex;
-	align-items: center;
+	justify-content: var(--metadataAlignment);
 }
 
 #hitMissCell {
 	min-width: var(--hitMissWidth);
 	font-weight: var(--hitMissFontWeight);
 	flex-direction: var(--hitMissVerticalAlignment);
-	color: var(--hitMissColor);
 	font-family: var(--hitMissFontFamily);
 	font-style: var(--hitMissFontStyle);
 	font-size: var(--hitMissFontSize);
+	text-align: var(--hitMissAlignment);
 }
 #missCell {
 	display: none;
 }
 
+#hitCell span, #FCCell span, #missCell span {
+	background-color: var(--hitMissColor);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-webkit-text-stroke: var(--hitMissFontAdditionalWeight) transparent;	
+}
+
 #accCell {
 	min-width: var(--accWidth);
-	text-align: center;
+	text-align: var(--accAlignment);
 	font-weight: var(--primaryFontWeight);
 	overflow-x: visible;
 	flex-direction: var(--accVerticalAlignment);
@@ -232,10 +238,13 @@ body {
 	font-size: var(--comboFontSize);
 }
 #combo {
-	color: var(--comboColor);
 	font-family: var(--comboFontFamily);
 	font-style: var(--comboFontStyle);
 	font-weight: var(--comboFontWeight);
+	background-color: var(--comboColor);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-webkit-text-stroke: var(--comboFontAdditionalWeight) transparent;	
 }
 
 #artOutline, #artBG {
@@ -300,7 +309,7 @@ body {
 	width: 100%;
 	height: var(--background-art-height);
 	position: absolute;
-	top: 0;
+	top: var(--background-art-offset);
 	left: 0;
 	z-index: -1;
 }
@@ -339,7 +348,7 @@ body {
 
 #artist, #mapper {
 	display: inline-flex;
-	background-image: linear-gradient(170deg, #FFF 20%, var(--secondaryColor) 100%);
+	background-image: var(--secondaryGradientActual);
 	-webkit-text-stroke: var(--secondaryAdditionalWeight) transparent;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
@@ -390,6 +399,11 @@ body {
 	top: -100vh;
 }
 
-#wrapper .cell:last-child {
-	margin-right: 0px;
+/* uncomment after OBS updates CEF to a recent chrome version
+:nth-child(1 of div.cell) {
+	padding-left: 0px;
 }
+.cell:last-child {
+	padding-right: 0px;
+}
+*/

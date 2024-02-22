@@ -75,7 +75,8 @@ var persistentData = {
 	},
 	labels: [],
 	isrc: null,
-	art: null
+	art: null,
+	year: null
 };
 async function updateTrack() {
 	const defaultUpdateDelay = parseFloat(localStorage.getItem("setting_spotify_refreshInterval")) * 1000;
@@ -101,7 +102,8 @@ async function updateTrack() {
 
 					labels: [],
 					isrc: null,
-					art: await compressImage(art)
+					art: await compressImage(art),
+					year: null
 				};
 
 				if(persistentData.art !== "placeholder.png") {
@@ -128,6 +130,9 @@ async function updateTrack() {
 						}
 						persistentData.colors.dark = `#${colors.dark[0].map(function(x) { return Math.floor(x).toString(16).padStart(2, "0"); }).join("")}`;
 						persistentData.colors.light = `#${colors.light[0].map(function(x) { return Math.floor(x).toString(16).padStart(2, "0"); }).join("")}`;
+						
+						localStorage.setItem("art_darkColor", persistentData.colors.dark);
+						localStorage.setItem("art_lightColor", persistentData.colors.light);
 					} catch(err) {
 						throw err;
 					}
@@ -163,10 +168,12 @@ async function updateTrack() {
 							let oldestDate = Infinity;
 
 							for(const check of releases) {
-								let timestamp = new Date(check.getElementsByTagName("date")[0]);
-								if(timestamp < oldestDate) {
+								let timestamp = new Date(check.getElementsByTagName("date")[0].innerHTML);
+								if(timestamp.getTime() < oldestDate) {
 									oldestDate = timestamp;
 									release = check;
+									persistentData.year = timestamp.getUTCFullYear();
+									console.log(`year should be ${persistentData.year}`);
 								}
 							}
 
@@ -209,7 +216,8 @@ async function updateTrack() {
 				artists: artists,
 				album: {
 					name: response.item.album.name,
-					type: (response.item.album.total_tracks > 2 ? "album" : "single")
+					type: (response.item.album.total_tracks > 2 ? "album" : "single"),
+					released: (persistentData.year ? persistentData.year : new Date(response.item.album.release_date).getUTCFullYear())
 				},
 				art: persistentData.art,
 				artURL: art,
@@ -219,7 +227,7 @@ async function updateTrack() {
 				duration: response.item.duration_ms,
 				isPlaying: response.is_playing,
 				isrc: persistentData.isrc,
-				labels: persistentData.labels,
+				labels: persistentData.labels
 			};
 
 			// ignore response.item.album.album_type, spotify will always fill this in with "single"

@@ -111,6 +111,9 @@ const spotifyFuncs = {
 				}
 			}
 			wasPreviouslyPlaying = true;
+
+			localStorage.setItem("art_darkColor", data.colors.dark);
+			localStorage.setItem("art_lightColor", data.colors.light);
 		} else {
 			if(wasPreviouslyPlaying) {
 				stopTimers();
@@ -156,6 +159,10 @@ const spotifyFuncs = {
 				$("#titleString").text(data.title);
 				$("#artistString").text(data.artists.join(", "));
 				$("#albumString").text(data.album.name);
+				if(data.labels.length) {
+					$("#labelString").text(data.labels.join(", "));
+				}
+				$("#yearString").text(data.album.released);
 
 				$(":root").get(0).style.setProperty("--currentProgressAngle", '0deg');
 				prevPerc = -1;
@@ -169,10 +176,6 @@ const spotifyFuncs = {
 					}
 				}
 
-				if(data.labels.length) {
-					$("#labelString").text(data.labels.join(", "));
-				}
-
 				$("#forceLeft").hide();
 				$("#artistString").show();
 
@@ -184,8 +187,6 @@ const spotifyFuncs = {
 					lightColor = ensureSafeColor(lightColor);
 				}
 
-				localStorage.setItem("art_darkColor", darkColor);
-				localStorage.setItem("art_lightColor", lightColor);
 				$(":root").get(0).style.setProperty("--colorDark", darkColor);
 				$(":root").get(0).style.setProperty("--colorLight", lightColor);
 
@@ -310,10 +311,17 @@ function cycleAlbumArtist(which) {
 	} else {
 		$("#artistString").fadeOut(fadeDuration, function() {
 			$("#forceLeft").fadeIn(fadeDuration);
+
 			if(localStorage.getItem("setting_spotify_showLabel") === "true" && currentSong.labels.length) {
 				$("#labelString").show();
 			} else {
 				$("#labelString").hide();
+			}
+
+			if(localStorage.getItem("setting_spotify_showYear") === "true") {
+				$("#yearString").show();
+			} else {
+				$("#yearString").hide();
 			}
 		});		
 	}

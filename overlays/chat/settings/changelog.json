@@ -1,4 +1,80 @@
 {
+	"1708575471393": {
+		"updates": {
+			"bs": {
+				"revision": 3,
+				"notes": [
+					[
+						"added a setting to draw the background below the actual overlay"
+					],
+					[
+						"fixed additional weight on the combo counter not loading on new sessions"
+					],
+					[
+						"made pause state logic make more sense, also made sure the pause effect doesn't \"stick\" if turning it off while the game is paused"
+					],
+					[
+						"fixed secondary metadata triggering fade animations any time a game scene change happened, regardless if it needed to refresh it or not"
+					]
+				]
+			},
+
+			"spotify": {
+				"revision": 13,
+				"notes": [
+					[
+						"reverted change of multiple border-radius CSS declarations on scannable elements",
+						["in-browser these declarations weren't necessary, but in OBS this was adding a bit of a brighter halo around corners of the scannable"]
+					],
+					[
+						"moved shadow class further into the DOM on scannables"
+					],
+					[
+						"fixed musicbrainz release sorting not actually doing anything",
+						["most of the time (not all the time) it was sorted by oldest release first direct from the API, didn't catch this until flipping songs back and forth"]
+					],
+					[
+						"release year can now be shown alongside album information",
+						["musicbrainz data will override spotify's information if it's present, spotify's information sometimes pertains to when the song was put on the platform and not it's actual release date"]
+					],
+					[
+						"moved automatic dark/light color variable setters to the settings panel"
+					],
+					[
+						"borders can now be rendered on scannables"
+					],
+					[
+						"fixed art outline backgrounds being misaligned on the right-aligned layout"
+					],
+					[
+						"added a setting to draw the background below the actual overlay"
+					],
+					[
+						"couple of default settings were changed"
+					],
+					[
+						"colors following cover art now update when playing a track after pausing"
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 40,
+				"notes": [
+					[
+						"fixed duplicate rows being added for non-chat overlay settings if the sidebar was collapsed"
+					],
+					[
+						"fixed non-chat settings being sent to the chat overlay's settings handler"
+					],
+					[
+						"fixed duplicate BS+ connections triggering on reload of beat saber related overlays while in a disconnected state"
+					]
+				]
+			}
+		}
+	},
+
 	"1708126522507": {
 		"updates": {
 			"spotify": {

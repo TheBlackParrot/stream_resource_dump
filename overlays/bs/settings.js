@@ -1,5 +1,5 @@
-const overlayRevision = 1;
-const overlayRevisionTimestamp = 1706459562699;
+const overlayRevision = 3;
+const overlayRevisionTimestamp = 1708575471393;
 
 const settingsChannel = new BroadcastChannel("settings_overlay");
 
@@ -64,7 +64,8 @@ const settingUpdaters = {
 	expertPlusDiffColor: function(value) { rootCSS().setProperty("--colorExpertPlus", value); },
 
 	elementOrder: function(value) {
-		$(".cell").hide();
+		/* remove `.attr("style", "")` after OBS updates CEF to a recent chrome version */
+		$(".cell").attr("style", "").hide();
 		value = value.toLowerCase();
 
 		const wanted = value.split(",").map((v) => v.trim());
@@ -88,6 +89,10 @@ const settingUpdaters = {
 				$(`#${foundElement}`).show();
 			}
 		}
+
+		/* remove after OBS updates CEF to a recent chrome version */
+		$(".cell:first").css("padding-left", "0px");
+		$(".cell:last").css("padding-right", "0px");
 	},
 	elementSpacing: function(value) {
 		rootCSS().setProperty("--elementSpacing", `${value}px`);
@@ -486,6 +491,57 @@ const settingUpdaters = {
 	},
 	desaturateFadeOutDuration: function(value) {
 		rootCSS().setProperty("--desaturateFadeOutDuration", `${value}s`);
+	},
+	hideOnMenu: function(value) {
+		toggleOverlay(value === "false");
+	},
+
+	miscInfoAlignment: function(value) {
+		rootCSS().setProperty("--miscInfoAlignment", value);
+		updateMarquee();
+	},
+	metadataAlignment: function(value) {
+		rootCSS().setProperty("--metadataAlignment", value);
+		updateMarquee();
+	},
+	hitMissAlignment: function(value) {
+		rootCSS().setProperty("--hitMissAlignment", value);
+		updateMarquee();
+	},
+	accAlignment: function(value) {
+		rootCSS().setProperty("--accAlignment", value);
+		updateMarquee();
+	},
+
+	miscInfoFontWeight: function(value) {
+		rootCSS().setProperty("--miscInfoFontWeight", value);
+	},
+	hitMissFontAdditionalWeight: function(value) {
+		rootCSS().setProperty("--hitMissFontAdditionalWeight", `${value}px`);
+	},
+	comboFontAdditionalWeight: function(value) {
+		rootCSS().setProperty("--comboFontAdditionalWeight", `${value}px`);
+	},
+	secondaryGradient: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--secondaryGradientActual", `var(--secondaryGradient)`);
+		} else {
+			rootCSS().setProperty("--secondaryGradientActual", `var(--secondaryColor)`);
+		}
+	},
+	secondaryGradientColor: function(value) {
+		rootCSS().setProperty("--secondaryGradientColor", value);
+	},
+	secondaryGradientAngle: function(value) {
+		rootCSS().setProperty("--secondaryGradientAngle", `${value}deg`);
+	},
+
+	renderArtLower: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--background-art-offset", "var(--background-art-height)");
+		} else {
+			rootCSS().setProperty("--background-art-offset", "0px");
+		}
 	}
 };
 

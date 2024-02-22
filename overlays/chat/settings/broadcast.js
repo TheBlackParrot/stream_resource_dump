@@ -37,10 +37,7 @@ broadcastFuncs = {
 		console.log("BS VOD Audio overlay is active");
 		changeStatusCircle("BSVASStatus", "green", "loaded");
 
-		if(!$(".extraHR").length) {
-			$("#rows").append($('<hr class="extraHR"/>'));
-		}
-		$("#rows").append('<div class="row extraRow" data-tab="bsvodaudio"><i class="icon bs"></i>BS VOD Audio</div>');
+		addExtraRow("bsvodaudio", "BS VOD Audio", "icon bs");
 
 		changeStatusCircle("BSPlusStatus", "red", "disconnected");
 		changeStatusCircle("OBSStatus", "red", "disconnected");
@@ -60,7 +57,11 @@ broadcastFuncs = {
 		}
 
 		let settingsKeys = Object.keys(defaultConfig);
-		let settingsKeysExclude = settingsKeys.filter((key) => key.substr(0, 8) !== "spotify_");
+		const excludes = ["spotify", "bs", "obs", "bsvodaudio", "bsplus", "clock", "panel"];
+		let settingsKeysExclude = settingsKeys.filter(function(key) {
+			const parts = key.split("_");
+			return excludes.indexOf(parts[0]) === -1;
+		});
 		postToChannel("settingsKeys", settingsKeysExclude);
 	},
 
@@ -93,14 +94,8 @@ broadcastFuncs = {
 		let settingsKeysBS = settingsKeys.filter((key) => key.substr(0, 3) === "bs_");
 		postToChannel("settingsKeysBS", settingsKeysBS);
 
-		if(!$(".extraHR").length) {
-			$("#rows").append($('<hr class="extraHR"/>'));
-		}
-
-		if(!$('.row[data-tab="bsinfo"]').is(":visible")) {
-			startBSPlusWebsocket();
-			$("#rows").append('<div class="row extraRow" data-tab="bsinfo"><i class="icon bs"></i>Beat Saber Overlay</div>');
-		}
+		addExtraRow("bsinfo", "Beat Saber Overlay", "icon bs");
+		startBSPlusWebsocket();
 
 		if(currentBSSong !== null) {
 			postToBSPlusEventChannel({
@@ -130,22 +125,12 @@ broadcastFuncs = {
 		let settingsKeys = Object.keys(defaultConfig);
 		let settingsKeysSpotify = settingsKeys.filter((key) => key.substr(0, 8) === "spotify_");
 		postToChannel("settingsKeysSpotify", settingsKeysSpotify);
-		
-		if($('.row[data-tab="spotify"]').is(":visible")) {
-			if(isSpotifyReady) {
-				updateTrack();
-			}
-			return;
-		}
 
 		data = data.data;
 		console.log("Spotify overlay is active");
 		changeStatusCircle("SpotifyOverlayStatus", "green", `loaded (r${data.version})`);
 
-		if(!$(".extraHR").length) {
-			$("#rows").append($('<hr class="extraHR"/>'));
-		}
-		$("#rows").append('<div class="row extraRow" data-tab="spotify"><i class="fab fa-spotify"></i>Now Playing</div>');
+		addExtraRow("spotify", "Now Playing", "fab fa-spotify");
 
 		checkToSendSpotifyData();
 	},
@@ -155,19 +140,10 @@ broadcastFuncs = {
 		let settingsKeysExclude = settingsKeys.filter((key) => key.substr(0, 6) === "clock_");
 		postToChannel("settingsKeysClock", settingsKeysExclude);
 
-		if($('.row[data-tab="clock"]').is(":visible")) {
-			return;
-		}
-
-		console.log(message);
-
 		console.log("Clock overlay is active");
 		changeStatusCircle("ClockOverlayStatus", "green", `loaded (r${message.data.version})`);
 
-		if(!$(".extraHR").length) {
-			$("#rows").append($('<hr class="extraHR"/>'));
-		}
-		$("#rows").append('<div class="row extraRow" data-tab="clock"><i class="fas fa-clock"></i>Clock</div>');
+		addExtraRow("clock", "Clock", "fas fa-clock");
 	}
 };
 

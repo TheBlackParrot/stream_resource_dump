@@ -135,6 +135,13 @@
 	--scannable-mix-mode: screen;
 	--scannable-filters: unset;
 
+	--scannable-outline-style: solid;
+	--scannable-outline-size: 1px;
+	--scannable-outline-color: #FFFFFF20;
+	--scannable-outline: var(--scannable-outline-size) var(--scannable-outline-style) var(--scannable-outline-color);
+	--scannable-outline-actual: var(--scannable-outline);
+	--scannable-outline-offset: calc(var(--scannable-outline-size) * 2);
+
 	--animation-duration: 0.5s;
 
 	--background-art-height: 80px;
@@ -151,6 +158,7 @@
 	--background-art-mask-side: 0%;
 	--background-art-mask: -webkit-radial-gradient(var(--background-art-mask-side) 0%, var(--background-art-mask-width) var(--background-art-mask-height), rgba(0, 0, 0, 1) var(--background-art-start-at), rgba(0, 0, 0, 0) var(--background-art-end-at));;
 	--background-art-mask-actual: var(--background-art-mask);
+	--background-art-offset: 0px;
 
 	--wrapper-padding-bottom: calc(var(--wrapper-margin) * 2);
 }
@@ -196,6 +204,7 @@ body {
 	position: absolute;
 	display: var(--show-art-outline);
 	overflow: hidden;
+	direction: ltr;
 }
 #art {
 	position: relative;
@@ -258,7 +267,7 @@ body {
 #titleString {
 	padding-bottom: 2px;
 }
-#titleString, #artistString, #albumString, #labelString {
+#titleString, #artistString, #albumString, #labelString, #yearString {
 	line-height: var(--details-line-height);
 	filter: var(--effects);
 }
@@ -300,7 +309,7 @@ body {
 	background-image: var(--artist-gradient);
 }
 
-#artistString, #albumString, #albumString:before, .isSingle:after, #labelString, #labelString:before {
+#artistString, #albumString, #albumString:before, .isSingle:after, #labelString, #labelString:before, #yearString {
 	font-family: var(--artist-font-family);
 	font-size: var(--artist-font-size);
 	font-weight: var(--artist-font-weight);
@@ -321,9 +330,11 @@ body {
 
 #scannableWrapper {
 	display: var(--show-scannable);
-	width: var(--scannable-width);
-	min-width: var(--scannable-width);
-	height: var(--scannable-height);
+	width: calc(var(--scannable-width) + var(--scannable-outline-offset));
+	min-width: calc(var(--scannable-width) + var(--scannable-outline-offset));
+	height: calc(var(--scannable-height) + var(--scannable-outline-offset));
+	border-radius: var(--scannable-border-radius);
+	padding: var(--scannable-outline-size);
 }
 
 #scannableBackground {
@@ -334,6 +345,7 @@ body {
 	z-index: 1;
 	background-color: var(--scannable-background-color);
 	border-radius: var(--scannable-border-radius);
+	border: var(--scannable-outline-actual);
 }
 
 .left #scannableWrapper, .left #artWrapper {
@@ -349,13 +361,34 @@ body {
 
 #scannableBackground:after {
 	background-image: var(--scannable-gradient-actual);
-	width: 100%;
-	height: var(--scannable-height);
+	width: calc(var(--scannable-width) + var(--scannable-outline-offset));
+	height: calc(var(--scannable-height) + var(--scannable-outline-offset));
 	display: block;
 	content: "";
 	mix-blend-mode: var(--scannable-gradient-blend-mode);
 	border-radius: var(--scannable-border-radius);
+	position: relative;
+	top: calc(var(--scannable-outline-offset) / -2);
 }
+.left #scannableBackground:after { left: calc(var(--scannable-outline-offset) / -2); }
+.right #scannableBackground:after { right: calc(var(--scannable-outline-offset) / -2); }
+
+/* // waiting for CEF to update
+#scannableForeground {
+	width: var(--scannable-width);
+	height: var(--scannable-height);
+	position: absolute;
+	z-index: 2;
+	mask-image: var(--scannable-image);
+	mask-size: 100%;
+	mask-repeat: no-repeat;
+	mask-position: center;
+	filter: var(--scannable-filters);
+	border: var(--scannable-outline-actual);
+	border-color: transparent !important;
+	background: #fff; // <-- un-hardcode
+}
+*/
 
 #scannableForeground {
 	width: var(--scannable-width);
@@ -364,7 +397,10 @@ body {
 	z-index: 2;
 	background-image: var(--scannable-image);
 	background-size: cover;
+	background-repeat: no-repeat;
 	filter: var(--scannable-filters);
+	border: var(--scannable-outline-actual);
+	border-color: transparent !important;
 }
 
 #scannable {
@@ -378,6 +414,7 @@ body {
 #scannableWrapperInside {
 	height: 100%;
 	width: 100%;
+	border-radius: var(--scannable-border-radius);
 }
 
 #scannableShadow {
@@ -407,7 +444,7 @@ body {
 	width: 100%;
 	height: var(--background-art-height);
 	position: absolute;
-	top: 0;
+	top: var(--background-art-offset);
 	left: 0;
 }
 
@@ -449,3 +486,6 @@ body {
 	direction: ltr;
 	display: none;
 }
+
+#yearString:before { content: "["; }
+#yearString:after { content: "]"; }

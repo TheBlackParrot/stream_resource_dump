@@ -1,5 +1,5 @@
-const overlayRevision = 12;
-const overlayRevisionTimestamp = 1708126522507;
+const overlayRevision = 13;
+const overlayRevisionTimestamp = 1708575471393;
 
 const settingsChannel = new BroadcastChannel("settings_overlay");
 
@@ -188,10 +188,12 @@ const settingUpdaters = {
 			$("#artistString").addClass("artistStringGradient");
 			$("#albumString").addClass("artistStringGradient");
 			$("#labelString").addClass("artistStringGradient");
+			$("#yearString").addClass("artistStringGradient");
 		} else {
 			$("#artistString").removeClass("artistStringGradient");
 			$("#albumString").removeClass("artistStringGradient");
 			$("#labelString").removeClass("artistStringGradient");
+			$("#yearString").removeClass("artistStringGradient");
 		}
 	},
 	artistGradientColor: function(value) {
@@ -434,6 +436,7 @@ const settingUpdaters = {
 		}
 		determineScannableFGColor(currentSong);
 	},
+
 	showLabel: function(value) {
 		if(value === "true") {
 			if($("#albumString").is(":visible") && currentSong.labels.length) {
@@ -443,6 +446,44 @@ const settingUpdaters = {
 			}
 		} else {
 			$("#labelString").hide();
+		}
+	},
+	showYear: function(value) {
+		if(value === "true") {
+			if($("#albumString").is(":visible")) {
+				$("#yearString").show();
+			} else {
+				$("#yearString").hide();
+			}
+		} else {
+			$("#yearString").hide();
+		}
+	},
+
+	enableScannableOutlines: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--scannable-outline-actual", "var(--scannable-outline)");
+			rootCSS().setProperty("--scannable-outline-offset", "calc(var(--scannable-outline-size) * 2)");
+		} else {
+			rootCSS().setProperty("--scannable-outline-actual", "0px");
+			rootCSS().setProperty("--scannable-outline-offset", "0px");
+		}
+	},
+	scannableOutlinesColor: function(value) {
+		rootCSS().setProperty("--scannable-outline-color", value);
+	},
+	scannableOutlinesSize: function(value) {
+		rootCSS().setProperty("--scannable-outline-size", `${value}px`);
+	},
+	scannableOutlinesStyle: function(value) {
+		rootCSS().setProperty("--scannable-outline-style", value);
+	},
+
+	renderArtLower: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--background-art-offset", "var(--background-art-height)");
+		} else {
+			rootCSS().setProperty("--background-art-offset", "0px");
 		}
 	}
 };

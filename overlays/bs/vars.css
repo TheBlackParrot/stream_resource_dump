@@ -31,6 +31,8 @@
 	--miscInfoColor: #FFFFFFFF;
 	--miscInfoFontFamily: "Manrope";
 	--miscInfoFontStyle: normal;
+	--miscInfoAlignment: center;
+	--miscInfoFontWeight: 900;
 
 	--timeFontSize: 12pt;
 
@@ -44,6 +46,8 @@
 	--hitIconColor: #33AA55FF;
 	--missIconColor: #DD1133FF;
 	--FCIconColor: #DDAA00FF;
+	--hitMissAlignment: left;
+	--hitMissFontAdditionalWeight: 0px;
 	
 	--accColor: #FFFFFFFF;
 	--accFontFamily: "Manrope";
@@ -54,16 +58,19 @@
 	--accCharacterSpacing: -1px;
 	--accFontWeight: 900;
 	--accVerticalAlignment: column;
+	--accAlignment: center;
 
 	--comboColor: #FFFFFFFF;
 	--comboFontFamily: "Manrope";
 	--comboFontStyle: normal;
 	--comboFontSize: 12pt;
 	--comboFontWeight: 900;
+	--comboFontAdditionalWeight: 0px;
 
 	--metadataLineHeight: 24px;
 	--fixWeirdMetadataAlignmentIssue: 1px;
 	--metadataVerticalAlignment: column;
+	--metadataAlignment: start;
 
 	--titleFontSize: 19pt;
 	--titleFontWeight: 900;
@@ -72,6 +79,7 @@
 	--titleTransform: none;
 	--titleColor: #FFFFFFFF;
 	--titleFontStyle: normal;
+	--titleAlignment: var(--metadataAlignment);
 
 	--secondaryFontFamily: "Manrope";
 	--secondaryAdditionalWeight: 0px;
@@ -81,6 +89,10 @@
 	--secondaryColor: var(--colorLight);
 	--secondaryFontSize: 12pt;
 	--secondaryFontWeight: 700;
+	--secondaryGradientColor: "#FFFFFF";
+	--secondaryGradientAngle: 170deg;
+	--secondaryGradient: linear-gradient(var(--secondaryGradientAngle), var(--secondaryGradientColor) 20%, var(--secondaryColor) 100%);
+	--secondaryGradientActual: var(--secondaryGradient);
 
 	--art-size: 52px;
 	--art-outline-size: 2px;
@@ -104,6 +116,7 @@
 	--background-art-mask-side: 0%;
 	--background-art-mask: -webkit-radial-gradient(var(--background-art-mask-side) 0%, var(--background-art-mask-width) var(--background-art-mask-height), rgba(0, 0, 0, 1) var(--background-art-start-at), rgba(0, 0, 0, 0) var(--background-art-end-at));
 	--background-art-mask-actual: var(--background-art-mask);
+	--background-art-offset: 0px;
 
 	--wrapper-padding-bottom: calc(var(--overlayMarginVertical) * 4);
 

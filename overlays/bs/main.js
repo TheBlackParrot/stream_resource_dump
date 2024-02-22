@@ -21,16 +21,16 @@ function getHTTP(url, callback) {
 }
 
 function togglePause(state) {
-	if(state) {
-		console.log("PAUSED");
-		if(localStorage.getItem("setting_bs_desaturateOnPause") === "true") {
+	if(localStorage.getItem("setting_bs_desaturateOnPause") === "true") {
+		if(state) {
+			console.log("PAUSED");
 			$("body").addClass("pause");
+		} else {
+			console.log("RESUMED");
+			$("body").removeClass("pause");
 		}
 	} else {
-		console.log("PAUSED");
-		if(localStorage.getItem("setting_bs_desaturateOnPause") === "true") {
-			$("body").removeClass("pause");
-		}		
+		$("body").removeClass("pause");
 	}
 
 	isPaused = state;
@@ -111,13 +111,46 @@ function updateMarquee() {
 				duplicated: true,
 				gap: parseInt(localStorage.getItem("setting_bs_marqueeGap"))
 			});
+			rootCSS().setProperty("--titleAlignment", "start");
+		} else {
+			rootCSS().setProperty("--titleAlignment", "var(--metadataAlignment)");
 		}
+	} else {
+		rootCSS().setProperty("--titleAlignment", "var(--metadataAlignment)");
 	}
 }
 
+function toggleOverlay(show) {
+	if(localStorage.getItem("setting_bs_hideOnMenu") === "false") {
+		show = true;
+	}
+
+	if(show) {
+		$("#miscInfoCell, #hitMissCell, #accCell").removeClass("fadeOut").addClass("fadeIn");
+		$("#bgWrapper").removeClass("fadeOut").addClass("fadeInLong");
+		$("#title").removeClass("slideOut").addClass("slideIn");
+
+		setTimeout(function() {
+			$("#secondary").removeClass("slideOut").addClass("slideIn");
+			$("#artWrapper").removeClass("fadeOut").addClass("fadeIn");
+		}, 100);
+	} else {
+		$("#miscInfoCell, #hitMissCell, #accCell").removeClass("fadeIn").addClass("fadeOut");
+		$("#bgWrapper").removeClass("fadeInLong").addClass("fadeOut");
+		$("#title").removeClass("slideIn").addClass("slideOut");
+
+		setTimeout(function() {
+			$("#secondary").removeClass("slideIn").addClass("slideOut");
+			$("#artWrapper").removeClass("fadeIn").addClass("fadeOut");
+		}, 100);
+	}
+}
+
+currentState = {};
 const eventFuncs = {
 	"state": function(data) {
 		elapsed = Math.floor(data.elapsed);
+		currentState = data;
 
 		if(previousState !== data.state) {
 			previousState = data.state;
@@ -139,28 +172,12 @@ const eventFuncs = {
 		timerFunction();
 
 		if(data.state === "stopped") {
-			$("#miscInfoCell, #hitMissCell, #accCell").removeClass("fadeIn").addClass("fadeOut");
-			$("#bgWrapper").removeClass("fadeInLong").addClass("fadeOut");
-
-			$("#title").removeClass("slideIn").addClass("slideOut");
-			setTimeout(function() {
-				$("#secondary").removeClass("slideIn").addClass("slideOut");
-				$("#artWrapper").removeClass("fadeIn").addClass("fadeOut");
-			}, 100);
+			toggleOverlay(false);
 		}
 	},
 
 	"map": function(map) {
-		$("#miscInfoCell, #hitMissCell, #accCell").removeClass("fadeOut").addClass("fadeIn");
-
-		$("#title").removeClass("slideOut").addClass("slideIn");
-		setTimeout(function() {
-			$("#secondary").removeClass("slideOut").addClass("slideIn");
-			$("#secondary").one("animationend", function() {
-				$(this).removeClass("slideIn");
-			})
-		}, 100);
-
+		toggleOverlay(true);
 		activeMap = map;
 
 		switchSecondary(true);

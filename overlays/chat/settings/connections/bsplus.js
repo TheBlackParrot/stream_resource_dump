@@ -176,6 +176,7 @@ const BSPlusMessageHandlers = {
 var bsplusInit = false;
 var bsplus_ws;
 var stateInterval;
+var bsplusTimeout;
 function startBSPlusWebsocket() {
 	if(bsplusInit) {
 		return;
@@ -235,7 +236,9 @@ function startBSPlusWebsocket() {
 
 		console.log(`Connection to BS+ websocket ${url} failed, retrying in 20 seconds...`);
 		changeStatusCircle("BSPlusStatus", "red", "disconnected");
-		setTimeout(startBSPlusWebsocket, 20000);
+
+		clearTimeout(bsplusTimeout);
+		bsplusTimeout = setTimeout(startBSPlusWebsocket, 20000);
 
 		addNotification("Disconnected from Beat Saber Plus", {bgColor: "var(--notif-color-fail)", duration: 5});
 

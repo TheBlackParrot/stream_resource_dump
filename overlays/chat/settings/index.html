@@ -3576,7 +3576,7 @@
 							<span class="settingInfo">Border radius</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="spotify_scannableBorderRadius" min="0" max="64" step="1" value="8"/><span class="settingCellMeasurement">px</span>
+							<input type="number" id="spotify_scannableBorderRadius" min="0" max="64" step="1" value="16"/><span class="settingCellMeasurement">px</span>
 						</div>
 					</div>
 					<hr/>
@@ -3600,7 +3600,7 @@
 							<span class="settingInfo">Invert threshold</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="spotify_invertFGThreshold" min="0" max="100" step="1" value="59"/><span class="settingCellMeasurement">%</span>
+							<input type="number" id="spotify_invertFGThreshold" min="0" max="100" step="1" value="56"/><span class="settingCellMeasurement">%</span>
 						</div>
 					</div>
 					<div class="setting">
@@ -3690,6 +3690,44 @@
 							</select>
 						</div>
 					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="spotify_enableScannableOutlines" type="checkbox" data-dependent="spotify_enableScannableOutlines"/> <span class="settingInfo">Enable outlines around scannables</span>
+						</div>
+					</div>
+					<div class="setting disabled" data-dependent="spotify_enableScannableOutlines">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Color</span>
+						</div>
+						<div class="settingCell">
+							<input id="spotify_scannableOutlinesColor" type="text" data-coloris value="#FFFFFF40"/>
+						</div>
+					</div>
+					<div class="setting disabled" data-dependent="spotify_enableScannableOutlines">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_scannableOutlinesSize" min="0" max="8" step="1" value="1"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting disabled" data-dependent="spotify_enableScannableOutlines">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Style</span>
+						</div>
+						<div class="settingCell">
+							<select id="spotify_scannableOutlinesStyle">
+								<option value="dashed">Dashed</option>
+								<option value="dotted">Dotted</option>
+								<option value="double">Double</option>
+								<option value="groove">Groove</option>
+								<option value="inset">Inset</option>
+								<option value="outset">Outset</option>
+								<option value="ridge">Ridge</option>
+								<option selected value="solid">Solid</option>
+							</select>
+						</div>
+					</div>
 				</div>
 				<div class="part">
 					<h1>Cover Art</h1>
@@ -3747,6 +3785,11 @@
 					<div class="setting">
 						<div class="settingCell">
 							<input id="spotify_enableArtBackground" type="checkbox" data-dependent="spotify_enableArtBackground"/> <span class="settingInfo">Display album/cover art underneath overlay content</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableArtBackground">
+						<div class="settingCell">
+							<input id="spotify_renderArtLower" type="checkbox"/> <span class="settingInfo">Separate the background and overlay content</span>
 						</div>
 					</div>
 					<hr/>
@@ -3885,6 +3928,11 @@
 					<div class="setting" data-dependent="spotify_enableArtistAlbumCycle">
 						<div class="settingCell">
 							<input id="spotify_showLabel" type="checkbox"/> <span class="settingInfo">Show label/publisher information after album information (if available)</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableArtistAlbumCycle">
+						<div class="settingCell">
+							<input id="spotify_showYear" type="checkbox"/> <span class="settingInfo">Show release year after album information</span>
 						</div>
 					</div>
 					<hr/>
@@ -4852,6 +4900,11 @@
 					<div class="setting">
 						<div class="settingCell">
 							<input id="bs_enableArtBackground" type="checkbox" data-dependent="bs_enableArtBackground"/> <span class="settingInfo">Display album/cover art underneath overlay content</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="bs_enableArtBackground">
+						<div class="settingCell">
+							<input id="bs_renderArtLower" type="checkbox"/> <span class="settingInfo">Separate the background and overlay content</span>
 						</div>
 					</div>
 					<hr/>

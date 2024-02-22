@@ -10,8 +10,8 @@ function changeStatusCircle(which, status, msg) {
 
 $("#sensitive .section").show();
 
-const overlayRevision = 39;
-const overlayRevisionTimestamp = 1708126522507;
+const overlayRevision = 40;
+const overlayRevisionTimestamp = 1708575471393;
 $("#revision").text(`revision ${overlayRevision}`);
 
 function resetEverything() {
@@ -131,6 +131,21 @@ function setRow(which, bypassSensitiveCheck) {
 	}
 }
 setRow("about");
+
+function addExtraRow(code, name, icon, callback) {
+	if($(`.extraRow[data-tab="${code}"]`).length) {
+		return;
+	}
+
+	if(!$(".extraHR").length) {
+		$("#rows").append($('<hr class="extraHR"/>'));
+	}
+	$("#rows").append(`<div class="row extraRow" data-tab="${code}"><i class="${icon}"></i>${name}</div>`);
+
+	if(typeof callback === "function") {
+		callback();
+	}
+}
 
 $("body").on("click", ".row", function(e) {
 	e.preventDefault();
