@@ -113,7 +113,11 @@ const nonPublicSettings = [
 	"enableCustomBadges_bits",
 	"channelIsOwn",
 	"enableEventTagsWatchStreaks",
-	"delayChat"
+	"delayChat",
+	"datapuller_port",
+	"beatSaberDataMod",
+	"bs_forceBeatSaverData",
+	"bs_maxCollaborators"
 ];
 
 const defaultConfig = {
@@ -191,22 +195,7 @@ const defaultConfig = {
 	"overlayShadowBlurRadius": "2",
 	"overlayOutlineColor": "#000000",
 	"overlayOutlineSize": "1",
-	"pronounsAeAer": "Ae / Aer",
-	"pronounsAny": "Any",
-	"pronounsEEm": "E / Em",
-	"pronounsFaeFaer": "Fae / Faer",
-	"pronounsHeHim": "He / Him",
-	"pronounsHeShe": "He / She",
-	"pronounsHeThem": "He / They",
-	"pronounsItIts": "It / Its",
-	"pronounsOther": "Other",
-	"pronounsPerPer": "Per / Per",
-	"pronounsSheHer": "She / Her",
-	"pronounsSheThem": "She / They",
-	"pronounsTheyThem": "They / Them",
-	"pronounsVeVer": "Ve / Ver",
-	"pronounsXeXem": "Xe / Xem",
-	"pronounsZieHir": "Zie / Hir",
+	"pronounsSeparator": " / ",
 	"enableTwitchBadges": "true",
 	"enableTwitchRoleBadges": "true",
 	"enableTwitchGameBadges": "true",
@@ -783,7 +772,11 @@ const defaultConfig = {
 	"spotify_scannableOutlinesSize": "1",
 	"spotify_scannableOutlinesStyle": "solid",
 	"spotify_renderArtLower": "false",
-	"bs_comboFontAdditionalWeight": "0"
+	"bs_comboFontAdditionalWeight": "0",
+	"datapuller_port": "2946",
+	"beatSaberDataMod": "bsplus",
+	"bs_forceBeatSaverData": "false",
+	"bs_maxCollaborators": "5"
 };
 // i typed out the bigNoNoWords so you don't have to, i'm sorry :(
 // it's gotta know what to remove

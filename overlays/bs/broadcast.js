@@ -1,6 +1,6 @@
-const bsplusEventChannel = new BroadcastChannel("bsplus");
+const bsEventChannel = new BroadcastChannel("bs");
 
-function postToBSPlusEventChannel(event, data) {
+function postToBSEventChannel(event, data) {
 	let message = {
 		event: event
 	};
@@ -9,10 +9,10 @@ function postToBSPlusEventChannel(event, data) {
 	}
 
 	console.log(message);
-	bsplusEventChannel.postMessage(message);
+	bsEventChannel.postMessage(message);
 }
 
-bsplusEventChannel.onmessage = function(message) {
+bsEventChannel.onmessage = function(message) {
 	console.log(message);
 	data = message.data;
 

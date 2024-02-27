@@ -2480,6 +2480,14 @@
 							<input checked id="enablePronouns" type="checkbox" data-dependent="pronouns"/> <span class="settingInfo">Display pronouns</span>
 						</div>
 					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Separator</span>
+						</div>
+						<div class="settingCell">
+							<input id="pronounsSeparator" type="text" value=" / "/>
+						</div>
+					</div>
 				</div>
 				<div class="part">
 					<h1>Appearance</h1>
@@ -2579,138 +2587,6 @@
 								<option selected value="uppercase">Uppercase</option>
 								<option value="none">Do not transform</option>
 							</select>
-						</div>
-					</div>
-				</div>
-				<div class="part">
-					<h1>Mapping</h1>
-					<p>Display fetched pronouns as:</p>
-					<div class="setting" data-dependent="pronouns">
-						<div class="settingCellLabel">
-							<span class="settingInfo">aeaer</span>
-						</div>
-						<div class="settingCell">
-							<input id="pronounsAeAer" type="text" value="Ae / Aer"/>
-						</div>
-					</div>
-					<div class="setting" data-dependent="pronouns">
-						<div class="settingCellLabel">
-							<span class="settingInfo">any</span>
-						</div>
-						<div class="settingCell">
-							<input id="pronounsAny" type="text" value="Any"/>
-						</div>
-					</div>
-					<div class="setting" data-dependent="pronouns">
-						<div class="settingCellLabel">
-							<span class="settingInfo">eem</span>
-						</div>
-						<div class="settingCell">
-							<input id="pronounsEEm" type="text" value="E / Em"/>
-						</div>
-					</div>
-					<div class="setting" data-dependent="pronouns">
-						<div class="settingCellLabel">
-							<span class="settingInfo">faefaer</span>
-						</div>
-						<div class="settingCell">
-							<input id="pronounsFaeFaer" type="text" value="Fae / Faer"/>
-						</div>
-					</div>
-					<div class="setting" data-dependent="pronouns">
-						<div class="settingCellLabel">
-							<span class="settingInfo">hehim</span>
-						</div>
-						<div class="settingCell">
-							<input id="pronounsHeHim" type="text" value="He / Him"/>
-						</div>
-					</div>
-					<div class="setting" data-dependent="pronouns">
-						<div class="settingCellLabel">
-							<span class="settingInfo">heshe</span>
-						</div>
-						<div class="settingCell">
-							<input id="pronounsHeShe" type="text" value="He / She"/>
-						</div>
-					</div>
-					<div class="setting" data-dependent="pronouns">
-						<div class="settingCellLabel">
-							<span class="settingInfo">hethem</span>
-						</div>
-						<div class="settingCell">
-							<input id="pronounsHeThem" type="text" value="He / They"/>
-						</div>
-					</div>
-					<div class="setting" data-dependent="pronouns">
-						<div class="settingCellLabel">
-							<span class="settingInfo">itits</span>
-						</div>
-						<div class="settingCell">
-							<input id="pronounsItIts" type="text" value="It / Its"/>
-						</div>
-					</div>
-					<div class="setting" data-dependent="pronouns">
-						<div class="settingCellLabel">
-							<span class="settingInfo">other</span>
-						</div>
-						<div class="settingCell">
-							<input id="pronounsOther" type="text" value="Other"/>
-						</div>
-					</div>
-					<div class="setting" data-dependent="pronouns">
-						<div class="settingCellLabel">
-							<span class="settingInfo">perper</span>
-						</div>
-						<div class="settingCell">
-							<input id="pronounsPerPer" type="text" value="Per / Per"/>
-						</div>
-					</div>
-					<div class="setting" data-dependent="pronouns">
-						<div class="settingCellLabel">
-							<span class="settingInfo">sheher</span>
-						</div>
-						<div class="settingCell">
-							<input id="pronounsSheHer" type="text" value="She / Her"/>
-						</div>
-					</div>
-					<div class="setting" data-dependent="pronouns">
-						<div class="settingCellLabel">
-							<span class="settingInfo">shethem</span>
-						</div>
-						<div class="settingCell">
-							<input id="pronounsSheThem" type="text" value="She / They"/>
-						</div>
-					</div>
-					<div class="setting" data-dependent="pronouns">
-						<div class="settingCellLabel">
-							<span class="settingInfo">theythem</span>
-						</div>
-						<div class="settingCell">
-							<input id="pronounsTheyThem" type="text" value="They / Them"/>
-						</div>
-					</div>
-					<div class="setting" data-dependent="pronouns">
-						<div class="settingCellLabel">
-							<span class="settingInfo">vever</span>
-						</div>
-						<div class="settingCell">
-							<input id="pronounsVeVer" type="text" value="Ve / Ver"/>
-						</div>
-					</div>
-					<div class="setting" data-dependent="pronouns">
-						<div class="settingCellLabel">
-							<span class="settingInfo">xexem</span>
-						</div>
-						<div class="settingCell">
-							<input id="pronounsXeXem" type="text" value="Xe / Xem"/>
-						</div>
-					</div>
-					<div class="setting" data-dependent="pronouns">
-						<div class="settingCellLabel">
-							<span class="settingInfo">ziehir</span>
-						</div>
-						<div class="settingCell">
-							<input id="pronounsZieHir" type="text" value="Zie / Hir"/>
 						</div>
 					</div>
 				</div>
@@ -3019,6 +2895,19 @@
 						</div>
 					</div>
 					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<strong>Beat Saber DataPuller</strong>
+						</div>
+						<div class="settingCell multipleStatusIndicators">
+							<div class="statusPart">
+								<div class="statusCircle grayCircle" id="BSDataPullerLiveDataStatus"></div> <div class="statusMessage grayMessage">LiveData inactive</div>
+							</div>
+							<div class="statusPart">
+								<div class="statusCircle grayCircle" id="BSDataPullerMapDataStatus"></div> <div class="statusMessage grayMessage">MapData inactive</div>
+							</div>
+						</div>
+					</div>
 					<div class="setting">
 						<div class="settingCellLabel">
 							<strong>Beat Saber Plus</strong>
@@ -3486,21 +3375,39 @@
 					</div>
 				</div>
 				<div class="part">
-					<h1>Beat Saber Plus</h1>
+					<h1>Beat Saber</h1>
 					<div class="setting">
 						<div class="settingCellLabel">
-							<span class="settingInfo">IP address</span>
+							<span class="settingInfo">Beat Saber Plus port</span>
 						</div>
 						<div class="settingCell">
-							<input id="bsplus_ip" type="text" value="127.0.0.1"/>
+							<input type="number" id="bsplus_port" min="1" max="65536" step="1" value="2947"/>
 						</div>
 					</div>
 					<div class="setting">
 						<div class="settingCellLabel">
-							<span class="settingInfo">Port</span>
+							<span class="settingInfo">DataPuller port</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="bsplus_port" min="1" max="65536" step="1" value="2947"/>
+							<input type="number" id="datapuller_port" min="1" max="65536" step="1" value="2946"/>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Use data from</span>
+						</div>
+						<div class="settingCell">
+							<select id="beatSaberDataMod">
+								<option selected value="bsplus">Beat Saber Plus</option>
+								<option value="datapuller">DataPuller</option>
+							</select>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell smol">
+							The settings panel will need to be reloaded after switching which data mod is being used for Beat Saber-related overlays. You can do this by right-clicking the settings panel and clicking Refresh in the menu that pops up.
 						</div>
 					</div>
 				</div>
@@ -5122,6 +5029,19 @@
 							<input type="number" id="bs_artistMapperCycleDelay" min="0" max="60" step="0.5" value="10"/><span class="settingCellMeasurement">seconds</span>
 						</div>
 					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="bs_forceBeatSaverData" type="checkbox" data-dependent="useBeatSaver"/> <span class="settingInfo">Use BeatSaver's provided mapper and collaborator data rather than mapper data stored internally</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="useBeatSaver">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Maximum collaborators</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_maxCollaborators" min="1" max="20" step="1" value="5"/><span class="settingCellMeasurement">users</span>
+						</div>
+					</div>
 					<hr/>
 					<div class="setting">
 						<div class="settingCellLabel">
@@ -5598,7 +5518,9 @@
 	<script type="text/javascript" src="connections/oauth.js"></script>
 	<script type="text/javascript" src="connections/twitch.js"></script>
 	<script type="text/javascript" src="connections/obs.js"></script>
+	<script type="text/javascript" src="connections/beatsaber.js"></script>
 	<script type="text/javascript" src="connections/bsplus.js"></script>
+	<script type="text/javascript" src="connections/bs_datapuller.js"></script>
 	<script type="text/javascript" src="connections/streamlabs.js"></script>
 	<script type="text/javascript" src="connections/streamelements.js"></script>
 	<script type="text/javascript" src="connections/spotify.js"></script>

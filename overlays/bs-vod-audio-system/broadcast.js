@@ -1,3 +1,6 @@
+const overlayRevision = 3;
+const overlayRevisionTimestamp = 1708687629182;
+
 const broadcastChannel = new BroadcastChannel("settings_overlay");
 
 function postToChannel(event, data) {
@@ -20,7 +23,7 @@ broadcastFuncs = {
 	},
 
 	settingsOverlayLoaded: function(message) {
-		postToChannel("BSVodAudioExists");
+		postToChannel("BSVodAudioExists", {version: overlayRevision});
 	}
 }
 

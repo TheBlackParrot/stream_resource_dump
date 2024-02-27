@@ -882,3 +882,15 @@ ol li ol li:before {
 .section[data-content="about"] .settingCellLabel .fa-solid, .section[data-content="about"] .settingCellLabel .fa-brands {
 	margin-right: 0.15em;
 }
+
+.multipleStatusIndicators {
+	white-space: normal;
+	display: block;
+}
+.multipleStatusIndicators .statusPart {
+	display: flex;
+	margin-bottom: calc(var(--settings-padding) / 2);
+}
+.multipleStatusIndicators .statusPart:last-child {
+	margin-bottom: 0px;
+}

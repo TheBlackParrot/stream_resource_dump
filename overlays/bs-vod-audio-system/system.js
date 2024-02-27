@@ -58,7 +58,7 @@ function syncRemoteDatabases() {
 syncRemoteDatabases();
 
 const obsEventChannel = new BroadcastChannel("obs");
-const bsplusEventChannel = new BroadcastChannel("bsplus");
+const bsEventChannel = new BroadcastChannel("bs");
 
 function postToOBSEventChannel(event, data) {
 	let message = {
@@ -72,7 +72,7 @@ function postToOBSEventChannel(event, data) {
 	obsEventChannel.postMessage(message);
 }
 
-bsplusEventChannel.onmessage = function(message) {
+bsEventChannel.onmessage = function(message) {
 	console.log(message);
 	data = message.data;
 
@@ -100,25 +100,23 @@ var eventFuncs = {
 		let map = mapInfo = data.data;
 		map.isVODSafe = 0;
 
-		console.log(`Song is "${map.name}${(map.sub_name == "" ? "" : " " + map.sub_name)}" by ${map.artist}, mapped by ${map.mapper}`);
+		console.log(`Song is "${map.song.title}${(map.song.subtitle == "" ? "" : " " + map.song.subtitle)}" by ${map.song.artist}, mapped by ${map.map.author}`);
 
 		let allow = true;
 		let found = "";
 
-		map.hash = map.hash.toLowerCase();
-
-		if(map.hash.indexOf("wip") !== -1) {
-			console.log(`${map.hash} is a WIP map, muting VOD audio`);
+		if(map.map.hash.indexOf("wip") !== -1) {
+			console.log(`${map.map.hash} is a WIP map, muting VOD audio`);
 			map.isVODSafe = 2;
 			allow = false;
 			found = "local";
 		} else {
-			if(db.safe.indexOf(map.hash) !== -1) {
-				console.log(`${map.hash} is marked safe, unmuting VOD audio`);
+			if(db.safe.indexOf(map.map.hash) !== -1) {
+				console.log(`${map.map.hash} is marked safe, unmuting VOD audio`);
 				map.isVODSafe = 1;
 				found = "local";
-			} else if(db.unsafe.indexOf(map.hash) !== -1) {
-				console.log(`${map.hash} is marked unsafe, muting VOD audio`);
+			} else if(db.unsafe.indexOf(map.map.hash) !== -1) {
+				console.log(`${map.map.hash} is marked unsafe, muting VOD audio`);
 				map.isVODSafe = 2;
 				allow = false;
 				found = "local";
@@ -129,29 +127,29 @@ var eventFuncs = {
 					for(let url in remoteDB) {
 						let rDB = remoteDB[url];
 
-						if(rDB.safe.indexOf(map.hash) !== -1) {
+						if(rDB.safe.indexOf(map.map.hash) !== -1) {
 							presentInRemote = true;
 
 							if(found !== "") {
 								if(localStorage.getItem("setting_bsvodaudio_muteOnConflict") === "true" && map.isVODSafe == 2) {
-									console.log(`${map.hash} conflict found in ${url} with ${found}, leaving marked as unsafe`);
+									console.log(`${map.map.hash} conflict found in ${url} with ${found}, leaving marked as unsafe`);
 								} else {
-									console.log(`${map.hash} conflict found in ${url} with ${found}, preferring lowest index array`);
+									console.log(`${map.map.hash} conflict found in ${url} with ${found}, preferring lowest index array`);
 									map.isVODSafe = 1;
 								}
 							} else {
-								console.log(`${map.hash} is marked safe in ${url}, unmuting VOD audio`);
+								console.log(`${map.map.hash} is marked safe in ${url}, unmuting VOD audio`);
 								map.isVODSafe = 1;
 							}
 
 							found = url;
-						} else if(rDB.unsafe.indexOf(map.hash) !== -1) {
+						} else if(rDB.unsafe.indexOf(map.map.hash) !== -1) {
 							presentInRemote = true;
 
-							console.log(`${map.hash} is marked unsafe in ${url}, muting VOD audio`);
+							console.log(`${map.map.hash} is marked unsafe in ${url}, muting VOD audio`);
 
 							if(found !== "") {
-								console.log(`${map.hash} conflict found in ${url} with ${found}`);
+								console.log(`${map.map.hash} conflict found in ${url} with ${found}`);
 							}
 
 							map.isVODSafe = 2;
@@ -163,10 +161,10 @@ var eventFuncs = {
 
 				if(!presentInRemote) {
 					if(localStorage.getItem("setting_bsvodaudio_muteOnUnknown")) {
-						console.log(`${map.hash} is unknown, muting VOD audio out of caution`);
+						console.log(`${map.map.hash} is unknown, muting VOD audio out of caution`);
 						allow = false;
 					} else {
-						console.log(`${map.hash} is unknown, letting VOD audio remain`);
+						console.log(`${map.map.hash} is unknown, letting VOD audio remain`);
 						allow = true;
 					}
 				}
@@ -179,12 +177,12 @@ var eventFuncs = {
 		}
 		checkAudioState();
 
-		$(":root").get(0).style.setProperty("--currentHash", `"${map.hash}"`);
-		$(":root").get(0).style.setProperty("--currentTitle", `"${map.name}${(map.sub_name == "" ? "" : " " + map.sub_name)}"`);
-		$(":root").get(0).style.setProperty("--currentArtist", `"${map.artist}"`);
-		$(":root").get(0).style.setProperty("--currentMapper", `"${map.mapper}"`);
-		$(":root").get(0).style.setProperty("--currentBSR", `"${map.BSRKey}"`);
-		$(":root").get(0).style.setProperty("--currentArt", `url(data:image/jpeg;base64,${map.coverRaw.trim()})`);
+		$(":root").get(0).style.setProperty("--currentHash", `"${map.map.hash}"`);
+		$(":root").get(0).style.setProperty("--currentTitle", `"${map.song.title}${(map.song.subtitle == "" ? "" : " " + map.song.subtitle)}"`);
+		$(":root").get(0).style.setProperty("--currentArtist", `"${map.song.artist}"`);
+		$(":root").get(0).style.setProperty("--currentMapper", `"${map.map.author}"`);
+		$(":root").get(0).style.setProperty("--currentBSR", `"${map.map.bsr}"`);
+		$(":root").get(0).style.setProperty("--currentArt", `url(data:image/jpeg;base64,${map.cover.raw.trim()})`);
 
 		postToOBSEventChannel("toggleVODAudio", allow);
 	}

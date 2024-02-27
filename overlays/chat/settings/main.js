@@ -1,6 +1,7 @@
 $.ajaxSetup({ timeout: parseInt(localStorage.getItem("setting_ajaxTimeout")) * 1000 || 7000 });
 
 function changeStatusCircle(which, status, msg) {
+	console.log(`${which}: ${status} - ${msg}`)
 	let circleWhich = $(`#${which}`);
 	let msgWhich = circleWhich.parent().children(".statusMessage");
 
@@ -10,8 +11,8 @@ function changeStatusCircle(which, status, msg) {
 
 $("#sensitive .section").show();
 
-const overlayRevision = 40;
-const overlayRevisionTimestamp = 1708575471393;
+const overlayRevision = 42;
+const overlayRevisionTimestamp = 1708687629182;
 $("#revision").text(`revision ${overlayRevision}`);
 
 function resetEverything() {
@@ -354,5 +355,21 @@ $.get(`version.json?sigh=${Date.now()}`, function(data) {
 		addNotification("Overlay settings panel is up to date!", {bgColor: "var(--notif-color-success)", duration: 10});
 	}
 });
+
+function connectBeatSaber() {
+	switch(localStorage.getItem("setting_beatSaberDataMod")) {
+		case "bsplus":
+			changeStatusCircle("BSPlusStatus", "red", "disconnected");
+			startBSPlusWebsocket();
+			break;
+
+		case "datapuller":
+			changeStatusCircle("BSDataPullerMapDataStatus", "red", "MapData disconnected");
+			startDataPullerMapInfoWebsocket();
+			changeStatusCircle("BSDataPullerLiveDataStatus", "red", "LiveData disconnected");
+			startDataPullerLiveDataWebsocket();
+			break;
+	}
+}
 
 $("#UAString").text(window.navigator.userAgent);

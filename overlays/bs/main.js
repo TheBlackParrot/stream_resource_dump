@@ -46,16 +46,20 @@ var activeMap = {};
 function setArt() {
 	let artData;
 
-	if(!("coverRaw" in activeMap)) {
-		artData = "placeholder.png";
+	if(!("cover" in activeMap)) {
+		return;
+	}
+
+	if(localStorage.getItem("setting_beatSaberDataMod") === "datapuller") {
+		artData = activeMap.cover.url;
 	} else {
 		if(localStorage.getItem("setting_bs_useRemoteArtURL") === "true") {
-			artData = activeMap.remoteCover;
-			if(activeMap.hash.toLowerCase().indexOf("wip") !== -1) {
-				artData = `data:image/jpg;base64,${activeMap.coverRaw}`;
+			artData = activeMap.cover.url;
+			if(activeMap.map.hash.toLowerCase().indexOf("wip") !== -1) {
+				artData = `data:image/jpg;base64,${activeMap.cover.url}`;
 			}
 		} else {
-			artData = `data:image/jpg;base64,${activeMap.coverRaw}`;
+			artData = `data:image/jpg;base64,${activeMap.cover.raw}`;
 		}
 	}
 
@@ -67,20 +71,18 @@ function setArt() {
 		$("#bgWrapper").removeClass("fadeOut").addClass("fadeInLong");
 	});
 
-	if("coverColors" in activeMap) {
-		let darkColor = activeMap.coverColors.dark;
-		let lightColor = activeMap.coverColors.light;
+	let darkColor = activeMap.cover.colors.dark;
+	let lightColor = activeMap.cover.colors.light;
 
-		if(localStorage.getItem("setting_bs_ensureColorIsBrightEnough") === "true") {
-			darkColor = ensureSafeColor(darkColor);
-			lightColor = ensureSafeColor(lightColor);
-		}
-
-		localStorage.setItem("art_darkColor", darkColor);
-		localStorage.setItem("art_lightColor", lightColor);
-		$(":root").get(0).style.setProperty("--colorDark", darkColor);
-		$(":root").get(0).style.setProperty("--colorLight", lightColor);
+	if(localStorage.getItem("setting_bs_ensureColorIsBrightEnough") === "true") {
+		darkColor = ensureSafeColor(darkColor);
+		lightColor = ensureSafeColor(lightColor);
 	}
+
+	localStorage.setItem("art_darkColor", darkColor);
+	localStorage.setItem("art_lightColor", lightColor);
+	$(":root").get(0).style.setProperty("--colorDark", darkColor);
+	$(":root").get(0).style.setProperty("--colorLight", lightColor);
 }
 
 function updateMarquee() {
@@ -186,26 +188,43 @@ const eventFuncs = {
 
 		setArt();
 
-		$(":root").get(0).style.setProperty("--diffIconURL", `url("icons/${map.characteristic}.svg")`);
-		$(":root").get(0).style.setProperty("--currentDiffColor", `var(--color${map.difficulty})`);
+		$(":root").get(0).style.setProperty("--diffIconURL", `url("icons/${map.map.characteristic}.svg")`);
+		$(":root").get(0).style.setProperty("--currentDiffColor", `var(--color${map.map.difficulty})`);
 		setDiff();
 
-		songLength = Math.ceil(map.duration/1000);
+		songLength = Math.ceil(map.song.duration/1000);
 		$("#duration").text(formatTime(songLength));
 
-		$("#titleString").text(map.name + (map.sub_name !== "" ? ` - ${map.sub_name}` : ""));
+		$("#titleString").text(map.song.title + (map.song.subtitle !== "" ? ` - ${map.song.subtitle}` : ""));
 
 		updateMarquee();
 
-		$("#artist").text(map.artist);
-		$("#mapper").text(map.mapper);
-		$("#bsrCode").text(map.BSRKey);
+		$("#artist").text(map.song.artist);
+		$("#bsrCode").text(map.map.bsr);
 
-		$("#mapperAvatar").hide();
-		if("uploader" in map) {
-			if(map.uploader.verifiedMapper) {
-				$("#mapperAvatar").show().attr("src", map.uploader.avatar);
+		$("#mapperContainer").empty();
+		if(localStorage.getItem("setting_bs_forceBeatSaverData") === "true") {
+			if(map.map.uploaders.length) {
+				for(const mapper of map.map.uploaders) {
+					let mapperElement = $(`<div class="mapper showComma"></div>`);
+					if(mapper.avatar) {
+						mapperElement.append($(`<img class="mapperAvatar" src="${mapper.avatar}"/>`))
+					}
+					mapperElement.append(mapper.name);
+					$("#mapperContainer").append(mapperElement);				
+				}
+				$(".mapper:last-child").removeClass("showComma");
+			} else {
+				// fallback to internal data, probably a base game map
+				$("#mapperContainer").append($(`<div class="mapper">${map.map.author}</div>`));
 			}
+		} else {
+			let mapperElement = $(`<div class="mapper"></div>`);
+			if(map.map.uploaders[0].avatar) {
+				mapperElement.append($(`<img class="mapperAvatar" src="${map.map.uploaders[0].avatar}"/>`))
+			}
+			mapperElement.append(map.map.author);
+			$("#mapperContainer").append(mapperElement);
 		}
 
 		$("#combo").text(0);
@@ -242,10 +261,12 @@ function switchSecondary(force) {
 }
 
 setInterval(function() {
-	if(activeMap.BSRKey === "") {
-		$("#codeWrap").hide();
-		$("#diffWrap").show();
-		return;
+	if("map" in activeMap) {
+		if(activeMap.map.bsr === "") {
+			$("#codeWrap").hide();
+			$("#diffWrap").show();
+			return;
+		}
 	}
 
 	if($("#codeWrap").is(":visible")) {

@@ -1,4 +1,4 @@
-const overlayRevision = 3;
+const overlayRevision = 4;
 const overlayRevisionTimestamp = 1708575471393;
 
 const settingsChannel = new BroadcastChannel("settings_overlay");
@@ -32,7 +32,10 @@ const diffMap = {
 };
 
 function setDiff() {
-	$("#diff").text(diffMap[activeMap.difficulty]);
+	if(!("map" in activeMap)) {
+		return;
+	}
+	$("#diff").text(diffMap[activeMap.map.difficulty]);
 }
 
 const settingUpdaters = {

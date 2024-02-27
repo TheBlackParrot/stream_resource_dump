@@ -29,20 +29,21 @@ $("#reloadEmotesButton").on("mouseup", function(e) {
 });
 
 broadcastFuncs = {
-	BSVodAudioExists: function(message) {
+	BSVodAudioExists: function(data) {
+		data = data.data;
+		console.log(data);
 		if($('.row[data-tab="bsvodaudio"]').is(":visible")) {
 			return;
 		}
 
 		console.log("BS VOD Audio overlay is active");
-		changeStatusCircle("BSVASStatus", "green", "loaded");
+		changeStatusCircle("BSVASStatus", "green", `loaded (r${data.version})`);
 
 		addExtraRow("bsvodaudio", "BS VOD Audio", "icon bs");
 
-		changeStatusCircle("BSPlusStatus", "red", "disconnected");
 		changeStatusCircle("OBSStatus", "red", "disconnected");
 
-		startBSPlusWebsocket();
+		connectBeatSaber();
 		connectOBS();
 	},
 
@@ -87,7 +88,6 @@ broadcastFuncs = {
 	},
 
 	BSStatsOverlayExists: function(data) {
-		changeStatusCircle("BSPlusStatus", "red", "disconnected");
 		changeStatusCircle("BSStatsOverlayStatus", "green", `loaded (r${data.data.version})`);
 
 		let settingsKeys = Object.keys(defaultConfig);
@@ -95,15 +95,15 @@ broadcastFuncs = {
 		postToChannel("settingsKeysBS", settingsKeysBS);
 
 		addExtraRow("bsinfo", "Beat Saber Overlay", "icon bs");
-		startBSPlusWebsocket();
+		connectBeatSaber();
 
 		if(currentBSSong !== null) {
-			postToBSPlusEventChannel({
+			postToBSEventChannel({
 				type: "map",
 				data: currentBSSong
 			});
 
-			postToBSPlusEventChannel({
+			postToBSEventChannel({
 				type: "state",
 				data: currentBSState
 			});

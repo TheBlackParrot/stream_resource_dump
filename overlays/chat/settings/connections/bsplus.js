@@ -1,17 +1,3 @@
-const bsplusEventChannel = new BroadcastChannel("bsplus");
-var currentBSSong = null;
-var currentBSState = {
-	state: "stopped",
-	elapsed: 0,
-	timestamp: Date.now(),
-	acc: 1,
-	combo: 0,
-	hits: 0,
-	misses: 0,
-	score: 0,
-	scene: "Menu"
-};
-
 var _bs_oldCombo = 0;
 var _bs_hits = 0;
 function setHits(combo) {
@@ -28,90 +14,62 @@ function setHits(combo) {
 	_bs_oldCombo = combo;
 }
 
-function postToBSPlusEventChannel(data) {
-	console.log(data);
-	if(data) {
-		bsplusEventChannel.postMessage(data);
-	}
-}
+/*
+		currentBSSong = {
+			song: {
+				title: data.SongName,
+				subtitle: data.SongSubName,
+				artist: data.SongAuthor,
+				duration: data.Duration * 1000
+			},
+			map: {
+				characteristic: data.MapType,
+				difficulty: data.Difficulty,
+				hash: data.Hash.toLowerCase(),
+				author: data.Mapper,
+				bsr: null,
+				uploader: {}
+			},
+			cover: {
+				colors: {},
+				raw: "placeholder.png",
+				url: data.CoverImage
+			}
+		};
+*/
 
 const BSPlusMessageHandlers = {
 	"mapInfo": async function(data) {
 		_bs_hits = 0;
 		_bs_oldCombo = 0;
 
-		currentBSSong = data.mapInfoChanged;
-		currentBSSong.hash = currentBSSong.level_id.replace("custom_level_", "");
-		currentBSSong.coverColors = {
-			light: localStorage.getItem("setting_bs_artistColor"),
-			dark: localStorage.getItem("setting_bs_artistColor")
+		data = data.mapInfoChanged;
+
+		currentBSSong = {
+			song: {
+				title: data.name,
+				subtitle: data.sub_name,
+				artist: data.artist,
+				duration: data.duration
+			},
+			map: {
+				characteristic: data.characteristic,
+				difficulty: data.difficulty,
+				hash: data.level_id.replace("custom_level_", "").toLowerCase(),
+				author: data.mapper,
+				bsr: null,
+				uploaders: []
+			},
+			cover: {
+				colors: {},
+				raw: data.coverRaw,
+				url: null
+			}
 		};
 
-		for(const which of ["name", "artist", "mapper"]) {
-			if(!currentBSSong[which]) {
-				currentBSSong[which] = `(${which} was left blank)`
-			}
-		}
+		oldHash = null;
 
-		if(currentBSSong.hash.indexOf("wip") === -1 && currentBSSong.hash.length === 40) {
-			let cacheData = sessionStorage.getItem(`_bs_cache_${currentBSSong.hash}`);
-			let bsData = null;
-
-			if(cacheData !== null) {
-				bsData = JSON.parse(cacheData);
-			} else {
-				let response = await fetch(`https://api.beatsaver.com/maps/hash/${currentBSSong.hash}`);
-				if(response.ok) {
-					bsData = await response.json();
-					sessionStorage.setItem(`_bs_cache_${currentBSSong.hash}`, JSON.stringify(bsData));
-				}
-			}
-
-			if(bsData !== null) {
-				console.log(bsData);
-				currentBSSong.BSRKey = bsData.id;
-				currentBSSong.uploader = bsData.uploader;
-				currentBSSong.remoteCover = bsData.versions[0].coverURL;
-			}
-
-			let art;
-			let swatches;
-			if(localStorage.getItem("setting_bs_useRemoteArtURL") === "true") {
-				art = currentBSSong.remoteCover;
-				swatches = await Vibrant.from(art).getSwatches();
-			} else {
-				art = currentBSSong.coverRaw
-				$("#bsplusImageContainer").attr("src", `data:image/jpg;base64,${art}`);
-				swatches = await Vibrant.from($("#bsplusImageContainer")[0]).getSwatches();
-			}
-
-			let colors = {
-				light: [],
-				dark: []
-			};
-			const checks = {
-				light: ["LightVibrant", "Vibrant", "LightMuted", "Muted"],
-				dark: ["DarkVibrant", "DarkMuted", "Muted", "Vibrant"]
-			};
-
-			for(let shade in checks) {
-				for(let i in checks[shade]) {
-					let check = checks[shade][i];
-					if(check in swatches) {
-						if(swatches[check] !== null) {
-							colors[shade].push(swatches[check].getRgb());
-						}
-					}
-				}
-			}
-			currentBSSong.coverColors.dark = `#${colors.dark[0].map(function(x) { return Math.floor(x).toString(16).padStart(2, "0"); }).join("")}`;
-			currentBSSong.coverColors.light = `#${colors.light[0].map(function(x) { return Math.floor(x).toString(16).padStart(2, "0"); }).join("")}`;
-		}
-
-		postToBSPlusEventChannel({
-			type: "map",
-			data: currentBSSong
-		});
+		await updateBeatSaberMapData();
 	},
 
 	"score": function(data) {
@@ -124,7 +82,7 @@ const BSPlusMessageHandlers = {
 		currentBSState.score = data.scoreEvent.score;
 		currentBSState.timestamp = Date.now();
 
-		postToBSPlusEventChannel({
+		postToBSEventChannel({
 			type: "state",
 			data: currentBSState
 		});
@@ -135,7 +93,7 @@ const BSPlusMessageHandlers = {
 		currentBSState.elapsed = data.pauseTime;
 		currentBSState.timestamp = Date.now();
 
-		postToBSPlusEventChannel({
+		postToBSEventChannel({
 			type: "state",
 			data: currentBSState
 		});
@@ -146,7 +104,7 @@ const BSPlusMessageHandlers = {
 		currentBSState.elapsed = data.resumeTime;
 		currentBSState.timestamp = Date.now();
 
-		postToBSPlusEventChannel({
+		postToBSEventChannel({
 			type: "state",
 			data: currentBSState
 		});
@@ -161,12 +119,12 @@ const BSPlusMessageHandlers = {
 
 		currentBSState.scene = data.gameStateChanged;
 
-		postToBSPlusEventChannel({
+		postToBSEventChannel({
 			type: "state",
 			data: currentBSState
 		});
 
-		postToBSPlusEventChannel({
+		postToBSEventChannel({
 			type: "scene",
 			data: currentBSState.scene
 		});
@@ -185,7 +143,7 @@ function startBSPlusWebsocket() {
 	bsplusInit = true;
 
 	console.log("Starting connection to BS+...");
-	let url = `ws://${localStorage.getItem("setting_bsplus_ip")}:${localStorage.getItem("setting_bsplus_port")}/socket`;
+	let url = `ws://127.0.0.1:${localStorage.getItem("setting_bsplus_port")}/socket`;
 
 	bsplus_ws = new WebSocket(url);
 	bsplus_ws.hasSeenFirstMessage = false;
@@ -204,7 +162,7 @@ function startBSPlusWebsocket() {
 				if(currentBSState.state === "playing" && Date.now() - currentBSState.timestamp >= 500) {
 					currentBSState.elapsed++;
 
-					postToBSPlusEventChannel({
+					postToBSEventChannel({
 						type: "state",
 						data: currentBSState
 					});
@@ -216,7 +174,7 @@ function startBSPlusWebsocket() {
 			if(data._event in BSPlusMessageHandlers) {
 				BSPlusMessageHandlers[data._event](data);
 			} else {
-				postToBSPlusEventChannel({
+				postToBSEventChannel({
 					type: "unknown",
 					data: data
 				});

@@ -1,4 +1,79 @@
 {
+	"9999999999999": {
+		"updates": {
+			"bs": {
+				"revision": 4,
+				"notes": [
+					[
+						"rewrote some stuff to use the new normalized data schema"
+					],
+					[
+						"mapper metadata from BeatSaver can now be shown over internal mapper metadata"
+					],
+					[
+						"added support for BeatSaver map collaborators",
+						["(for now this is making 2 API calls to BeatSaver, as the maps/hash endpoint doesn't contain collaborator metadata yet)"]
+					]
+				]
+			},
+
+			"bsvas": {
+				"revision": 3,
+				"notes": [
+					[
+						"rewrote some stuff to use the new normalized data schema"
+					],
+					[
+						"revision data is now internally tracked (woops)"
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 42,
+				"notes": [
+					[
+						"removed IP settings for external beat saber connections and forced IP settings to localhost",
+						[
+							"none of the mods that expose websocket connections support websockets over SSL, meaning only localhost and anything in 127.0.0.0/8 are the only valid settings",
+							"if in the future someone needs a setting to force a wss connection via their own ws->wss proxy, shoot me a message and i'll add a setting when the need comes"
+						]
+					],
+					[
+						"incoming data from the datapuller beat saber mod can now be used instead of incoming data from bs+'s song overlay module for beat saber related overlays",
+						["both are normalized to a new internal schema, using datapuller won't offer any new features. it is simply an alternative"]
+					]
+				]
+			}
+		}
+	},
+
+	"1708687629182": {
+		"updates": {
+			"chat": {
+				"revision": 41,
+				"notes": [
+					[
+						"updated pronouns to use alejo's new API",
+						["if you haven't looked in a while, you can now set the secondary pronoun manually"]
+					],
+					[
+						"removed old pronoun classes"
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 41,
+				"notes": [
+					[
+						"deprecated settings for pronoun tags specifically and added a setting to change the separator instead"
+					]
+				]
+			}
+		}
+	},
+
 	"1708575471393": {
 		"updates": {
 			"bs": {

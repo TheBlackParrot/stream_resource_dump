@@ -780,7 +780,11 @@ var customGreetingSounds = {
 	"nebelmonsterchen": "Hello_-_Adele_Sound_effect.ogg",
 	"silvereagledev": "bird_up.ogg",
 	"latinfoxy": "fox_hehehe.ogg",
-	"gabrielhtx": "scout_circles.ogg"
+	"gabrielhtx": "scout_circles.ogg",
+	"dancepunkdragon": "sega_credit.ogg",
+	"tormgart": "gnomed.ogg",
+	"benny8oo8oo": "Benny_Moan.ogg",
+	"empoleonics": "pocha.ogg"
 };
 var greetingSoundAmount = 11;
 
