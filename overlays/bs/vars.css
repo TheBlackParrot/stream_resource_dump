@@ -155,4 +155,8 @@
 	--desaturateAmount: 100%;
 	--desaturateFadeInDuration: 2s;
 	--desaturateFadeOutDuration: 0.5s;
+
+	--cssScrollAmount: 0px;
+	--cssScrollDelay: 7s;
+	--cssScrollDuration: 1s;
 }

@@ -63,12 +63,21 @@ function startDataPullerMapInfoWebsocket() {
 				hash: (data.Hash ? data.Hash.toLowerCase() : null),
 				author: data.Mapper,
 				bsr: null,
-				uploaders: []
+				uploaders: [],
+				pack: null
 			},
 			cover: {
-				colors: {},
-				raw: "placeholder.png",
-				url: (data.CoverImage ? data.CoverImage : "placeholder.png")
+				colors: {
+					light: localStorage.getItem("setting_bs_artistColor"),
+					dark: localStorage.getItem("setting_bs_artistColor")
+				},
+				internal: {
+					image: null,
+				},
+				external: {
+					image: null,
+					url: data.CoverImage
+				}
 			}
 		};
 

@@ -182,7 +182,11 @@ var eventFuncs = {
 		$(":root").get(0).style.setProperty("--currentArtist", `"${map.song.artist}"`);
 		$(":root").get(0).style.setProperty("--currentMapper", `"${map.map.author}"`);
 		$(":root").get(0).style.setProperty("--currentBSR", `"${map.map.bsr}"`);
-		$(":root").get(0).style.setProperty("--currentArt", `url(data:image/jpeg;base64,${map.cover.raw.trim()})`);
+		if(map.cover.internal.image === null) {
+			$(":root").get(0).style.setProperty("--currentArt", `url(data:image/jpeg;base64,${map.cover.external.image})`);
+		} else {
+			$(":root").get(0).style.setProperty("--currentArt", `url(data:image/jpeg;base64,${map.cover.internal.image})`);
+		}
 
 		postToOBSEventChannel("toggleVODAudio", allow);
 	}

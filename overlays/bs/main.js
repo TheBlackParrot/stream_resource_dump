@@ -36,7 +36,6 @@ function togglePause(state) {
 	isPaused = state;
 }
 
-var secondaryTimer;
 var songLength = 1;
 var currentScene = "Menu";
 var oldScene;
@@ -50,17 +49,17 @@ function setArt() {
 		return;
 	}
 
-	if(localStorage.getItem("setting_beatSaberDataMod") === "datapuller") {
-		artData = activeMap.cover.url;
-	} else {
-		if(localStorage.getItem("setting_bs_useRemoteArtURL") === "true") {
-			artData = activeMap.cover.url;
-			if(activeMap.map.hash.toLowerCase().indexOf("wip") !== -1) {
-				artData = `data:image/jpg;base64,${activeMap.cover.url}`;
-			}
-		} else {
-			artData = `data:image/jpg;base64,${activeMap.cover.raw}`;
+	if(localStorage.getItem("setting_bs_useRemoteArtURL") === "true" || localStorage.getItem("setting_beatSaberDataMod") === "datapuller") {
+		artData = activeMap.cover.external.image;
+		if(activeMap.cover.external.image === null && activeMap.cover.internal.image !== null) {
+			artData = activeMap.cover.internal.image;
 		}
+	} else {
+		artData = activeMap.cover.internal.image;
+	}
+
+	if(artData === null) {
+		artData = 'placeholder.png';
 	}
 
 	rootCSS().setProperty("--art-url", `url('${artData}')`);
@@ -122,6 +121,39 @@ function updateMarquee() {
 	}
 }
 
+function updateSecondaryMarquee() {
+	let childElement = ($("#mapperContainer").is(":visible") ? $("#mapperContainer") : $("#artist"));
+	let parentElement = childElement.parent();
+	let childWidth = childElement.width();
+	let parentWidth = parentElement.width();
+
+	parentElement.children().removeClass("cssScroll");
+	parentElement.removeClass("cssScrollClippingWorkaround").removeClass("slideIn");
+
+	if(localStorage.getItem("setting_bs_enableMarquee") === "false") {
+		secondaryTimer = setTimeout(switchSecondary, parseInt(localStorage.getItem("setting_bs_artistMapperCycleDelay")) * 1000);
+		return;
+	}
+
+	if(childWidth > parentWidth) {
+		console.log(`${childWidth} > ${parentWidth}`);
+
+		const extra = childWidth - parentWidth;
+		const speed = extra / (parseInt(localStorage.getItem("setting_bs_marqueeSpeed")) * 2);
+		rootCSS().setProperty("--cssScrollAmount", `-${extra}px`);
+		rootCSS().setProperty("--cssScrollDuration", `${speed}s`);
+
+		console.log(`amount: ${extra}px, speed: ${speed}s`);
+
+		childElement.addClass("cssScroll");
+		parentElement.addClass("cssScrollClippingWorkaround");
+		secondaryTimer = setTimeout(switchSecondary, (parseInt(localStorage.getItem("setting_bs_artistMapperCycleDelay")) * 1333) + (speed * 1000)); // yeah idk either
+	} else {
+		console.log(`${childWidth} < ${parentWidth}`);
+		secondaryTimer = setTimeout(switchSecondary, parseInt(localStorage.getItem("setting_bs_artistMapperCycleDelay")) * 1000);
+	}
+}
+
 function toggleOverlay(show) {
 	if(localStorage.getItem("setting_bs_hideOnMenu") === "false") {
 		show = true;
@@ -133,7 +165,7 @@ function toggleOverlay(show) {
 		$("#title").removeClass("slideOut").addClass("slideIn");
 
 		setTimeout(function() {
-			$("#secondary").removeClass("slideOut").addClass("slideIn");
+			$("#secondaryWrap").addClass("slideIn").removeClass("slideOut");
 			$("#artWrapper").removeClass("fadeOut").addClass("fadeIn");
 		}, 100);
 	} else {
@@ -142,7 +174,7 @@ function toggleOverlay(show) {
 		$("#title").removeClass("slideIn").addClass("slideOut");
 
 		setTimeout(function() {
-			$("#secondary").removeClass("slideIn").addClass("slideOut");
+			$("#secondaryWrap").addClass("slideOut").removeClass("slideIn");
 			$("#artWrapper").removeClass("fadeIn").addClass("fadeOut");
 		}, 100);
 	}
@@ -183,8 +215,6 @@ const eventFuncs = {
 		activeMap = map;
 
 		switchSecondary(true);
-		clearInterval(secondaryTimer);
-		secondaryTimer = setInterval(switchSecondary, parseInt(localStorage.getItem("setting_bs_artistMapperCycleDelay")) * 1000);
 
 		setArt();
 
@@ -200,7 +230,12 @@ const eventFuncs = {
 		updateMarquee();
 
 		$("#artist").text(map.song.artist);
-		$("#bsrCode").text(map.map.bsr);
+		if(!map.map.bsr) {
+			$("#codeWrap").hide();
+			$("#diffWrap").show();
+		} else {
+			$("#bsrCode").text(map.map.bsr);
+		}
 
 		$("#mapperContainer").empty();
 		if(localStorage.getItem("setting_bs_forceBeatSaverData") === "true") {
@@ -220,12 +255,20 @@ const eventFuncs = {
 			}
 		} else {
 			let mapperElement = $(`<div class="mapper"></div>`);
-			if(map.map.uploaders[0].avatar) {
-				mapperElement.append($(`<img class="mapperAvatar" src="${map.map.uploaders[0].avatar}"/>`))
+			if(map.map.uploaders.length) {
+				if(map.map.uploaders[0].avatar) {
+					mapperElement.append($(`<img class="mapperAvatar" src="${map.map.uploaders[0].avatar}"/>`))
+				}
 			}
 			mapperElement.append(map.map.author);
 			$("#mapperContainer").append(mapperElement);
 		}
+
+		if(map.map.pack) {
+			$("#mapperContainer").append($(`<div class="basePack">${map.map.pack}</div>`));
+		}
+
+		updateSecondaryMarquee();
 
 		$("#combo").text(0);
 		$("#hitValue").text(0);
@@ -242,27 +285,36 @@ function processMessage(data) {
 	}
 }
 
+var secondaryTimer;
 function switchSecondary(force) {
+	clearTimeout(secondaryTimer);
+
 	if(force) {
 		$("#mapperContainer").hide();
 		$("#artist").show();
+
+		updateSecondaryMarquee();
 		return;
 	}
 
-	if($("#artist").is(":visible")) {
-		$("#artist").fadeOut(250, function() {
-			$("#mapperContainer").fadeIn(250);
-		})
-	} else {
-		$("#mapperContainer").fadeOut(250, function() {
-			$("#artist").fadeIn(250);
-		})
+	if(localStorage.getItem("setting_bs_enableArtistMapperCycle") === "true") {
+		if($("#artist").is(":visible")) {
+			$("#artist").fadeOut(250, function() {
+				$("#mapperContainer").fadeIn(250);
+				updateSecondaryMarquee();
+			})
+		} else {
+			$("#mapperContainer").fadeOut(250, function() {
+				$("#artist").fadeIn(250);
+				updateSecondaryMarquee();
+			})
+		}
 	}
 }
 
 setInterval(function() {
 	if("map" in activeMap) {
-		if(activeMap.map.bsr === "") {
+		if(!activeMap.map.bsr) {
 			$("#codeWrap").hide();
 			$("#diffWrap").show();
 			return;

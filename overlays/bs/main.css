@@ -54,6 +54,38 @@
 	animation-duration: var(--fadeInDurationLong);
 }
 
+@keyframes scroll {
+	0% {
+		transform: translateX(0px);
+	}
+	100% {
+		transform: translateX(var(--cssScrollAmount));
+	}
+}
+
+@keyframes clippingWorkaround {
+	0% {
+		overflow-x: initial;
+	}
+	0.001% {
+		overflow-x: clip;
+	}
+	100% {
+		overflow-x: clip;
+	}
+}
+
+.cssScroll, .cssScrollClippingWorkaround {
+	animation-delay: var(--cssScrollDelay);
+	animation-duration: var(--cssScrollDuration);
+	animation-direction: forwards;
+	animation-fill-mode: forwards;
+	animation-iteration-count: 1;
+	animation-timing-function: linear;
+}
+.cssScroll { animation-name: scroll; }
+.cssScrollClippingWorkaround { animation-name: clippingWorkaround; }
+
 body {
 	background: #333;
 	color: #fff;
@@ -61,8 +93,11 @@ body {
 	transition: var(--desaturateFadeOutDuration);
 }
 
-#diffWrap, #codeWrap, #timeWrap, #title, #artist, .mapper, #mapperContainer:before, #hitMissCell, #accCell {
+#diffWrap, #codeWrap, #timeWrap, #title, #artist, .mapper, #mapperContainer:before, .basePack, #hitMissCell, #accCell {
 	filter:	var(--effects);
+}
+#diffWrap, #title, #artist, .mapper, .basePack {
+	font-variant: none;
 }
 
 #wrapper {
@@ -346,7 +381,7 @@ body {
 .fa-times { background-image: linear-gradient(170deg, #FFF 20%, var(--missIconColor) 100%); -webkit-text-stroke: 1.67px transparent; }
 .fa-link { background-image: linear-gradient(170deg, #FFF 20%, #868C8F 100%); -webkit-text-stroke: 0.5px transparent; }
 
-#artist, .mapper {
+#artist, .mapper, .basePack {
 	display: inline-flex;
 	background-image: var(--secondaryGradientActual);
 	-webkit-text-stroke: var(--secondaryAdditionalWeight) transparent;
@@ -354,12 +389,15 @@ body {
 	-webkit-text-fill-color: transparent;
 	align-items: baseline;
 }
-#mapperContainer {
+.mapper:last-child, #artist {
+	padding-right: 4px;
+}
+#mapperContainer, .basePack {
 	height: var(--metadataLineHeight); /* wtf */
 	display: flex;
 	align-items: baseline;
 }
-#mapperContainer:before, .showComma:after {
+#mapperContainer:before, .showComma:after, .basePack:before {
 	display: inline-flex;
 	background-color: var(--secondaryColor);
 	-webkit-background-clip: text;
@@ -376,6 +414,11 @@ body {
 	content: ", ";
 	margin-left: 0.167em;
 	margin-right: 0.333em;
+}
+.basePack:before {
+	content: "from ";
+	margin-left: 0.333em;
+	margin-right: 0.5em;
 }
 
 .mapperAvatar {

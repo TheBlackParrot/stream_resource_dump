@@ -1,35 +1,3 @@
-async function compressImage(url) {
-	let size = parseInt(localStorage.getItem("setting_spotify_artSize")) * 2;
-	console.log(`compressing image ${url} to ${size}x${size}`);
-
-	const controller = new AbortController();
-	const timedOutID = setTimeout(() => controller.abort(), parseInt(localStorage.getItem("setting_ajaxTimeout")) * 1000);
-
-	var response;
-	try {
-		response = await fetch(url, { signal: controller.signal });
-	} catch(err) {
-		console.log("failed to fetch image");
-		return "placeholder.png";
-	}
-
-	if(!response.ok) {
-		console.log("failed to fetch image");
-		return "placeholder.png";
-	}
-
-	const blob = await response.blob();
-	const bitmap = await createImageBitmap(blob);
-
-	let canvas = document.createElement('canvas');
-	let ctx = canvas.getContext('2d');
-
-	canvas.height = canvas.width = size;
-
-	ctx.drawImage(bitmap, 0, 0, size, size);
-	return canvas.toDataURL("image/jpeg", 0.8);
-}
-
 async function getState() {
 	let accessToken = localStorage.getItem("spotify_accessToken");
 
@@ -83,6 +51,20 @@ async function updateTrack() {
 
 	getState().then(async function(response) {
 		if(response.item !== null) {
+			const delay = parseFloat(localStorage.getItem("setting_spotify_waitCheck") * 1000) + (response.item.duration_ms - response.progress_ms);
+
+			if(response.item.duration_ms - response.progress_ms < defaultUpdateDelay && delay !== lastUpdateDelay) {
+				console.log(`triggering early state fetching (${delay}ms remains)`);
+				clearTimeout(updateTrackTO);
+				updateTrackTO = setTimeout(updateTrack, delay);
+			} else {
+				console.log(`not triggering early state fetching (${delay}ms remains)`);
+				clearTimeout(updateTrackTO);
+				updateTrackTO = setTimeout(updateTrack, defaultUpdateDelay);
+			}
+
+			lastUpdateDelay = delay;
+			
 			currentSong = response.item;
 
 			let artists = [];
@@ -102,7 +84,7 @@ async function updateTrack() {
 
 					labels: [],
 					isrc: null,
-					art: await compressImage(art),
+					art: await compressImage(art, parseInt(localStorage.getItem("setting_spotify_artSize")) * 2, 0.8),
 					year: null
 				};
 
@@ -168,12 +150,15 @@ async function updateTrack() {
 							let oldestDate = Infinity;
 
 							for(const check of releases) {
-								let timestamp = new Date(check.getElementsByTagName("date")[0].innerHTML);
-								if(timestamp.getTime() < oldestDate) {
-									oldestDate = timestamp;
-									release = check;
-									persistentData.year = timestamp.getUTCFullYear();
-									console.log(`year should be ${persistentData.year}`);
+								let dates = check.getElementsByTagName("date");
+								if(dates.length) {
+									let timestamp = new Date(dates[0].innerHTML);
+									if(timestamp.getTime() < oldestDate) {
+										oldestDate = timestamp;
+										release = check;
+										persistentData.year = timestamp.getUTCFullYear();
+										console.log(`year should be ${persistentData.year}`);
+									}
 								}
 							}
 
@@ -232,20 +217,6 @@ async function updateTrack() {
 
 			// ignore response.item.album.album_type, spotify will always fill this in with "single"
 			postToSpotifyEventChannel({event: "trackData", data: trackData});
-
-			const delay = parseFloat(localStorage.getItem("setting_spotify_waitCheck") * 1000) + (response.item.duration_ms - response.progress_ms);
-
-			if(response.item.duration_ms - response.progress_ms < defaultUpdateDelay && delay !== lastUpdateDelay) {
-				console.log(`triggering early state fetching (${delay}ms remains)`);
-				clearTimeout(updateTrackTO);
-				updateTrackTO = setTimeout(updateTrack, delay);
-			} else {
-				console.log(`not triggering early state fetching (${delay}ms remains)`);
-				clearTimeout(updateTrackTO);
-				updateTrackTO = setTimeout(updateTrack, defaultUpdateDelay);
-			}
-
-			lastUpdateDelay = delay;
 		} else {
 			clearTimeout(updateTrackTO);
 			updateTrackTO = setTimeout(updateTrack, defaultUpdateDelay);

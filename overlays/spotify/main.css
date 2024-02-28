@@ -51,7 +51,48 @@
 .slideIn { animation-name: slideIn; }
 .slideOut { animation-name: slideOut; }
 
+@keyframes scroll {
+	0% {
+		transform: translateX(0px);
+	}
+	100% {
+		transform: translateX(var(--cssScrollAmount));
+	}
+}
+@keyframes scrollReverse {
+	0% {
+		transform: translateX(calc(var(--cssScrollAmount) * -1));
+	}
+	100% {
+		transform: translateX(0px);
+	}
+}
+
+@keyframes clippingWorkaround {
+	0% {
+		overflow-x: initial;
+	}
+	0.001% {
+		overflow-x: clip;
+	}
+	100% {
+		overflow-x: clip;
+	}
+}
+
+.cssScroll, .cssScrollClippingWorkaround {
+	animation-delay: var(--cssScrollDelay);
+	animation-duration: var(--cssScrollDuration);
+	animation-direction: forwards;
+	animation-fill-mode: both;
+	animation-iteration-count: 1;
+	animation-timing-function: linear;
+}
+.cssScroll { animation-name: var(--scroll-direction); }
+.cssScrollClippingWorkaround { animation-name: clippingWorkaround; }
+
 :root {
+	--scroll-direction: scroll;
 	--outline-effects-size: 1px;
 	--outline-effects-size-negative: -1px;
 	--outline-effects-color: #000000;
@@ -161,6 +202,10 @@
 	--background-art-offset: 0px;
 
 	--wrapper-padding-bottom: calc(var(--wrapper-margin) * 2);
+
+	--cssScrollAmount: 0px;
+	--cssScrollDelay: 7s;
+	--cssScrollDuration: 1s;
 }
 
 body {
@@ -267,15 +312,35 @@ body {
 #titleString {
 	padding-bottom: 2px;
 }
+#artistString {
+	width: max-content;
+}
+.left #artistStringActual {
+	padding-right: 6px;
+}
+.right #artistStringActual {
+	padding-left: 6px;
+}
 #titleString, #artistString, #albumString, #labelString, #yearString {
 	line-height: var(--details-line-height);
 	filter: var(--effects);
+	font-variant: none;
 }
-.left #titleString, .left #forceLeft, .left #artistString {
+.left #titleString, .left #extraString, .left #artistString {
 	padding-left: 4px;
 }
-.right #titleString, .right #forceLeft, .right #artistString {
+.right #titleString, .right #extraString, .right #artistString {
 	padding-right: 4px;
+}
+#extraString {
+	direction: ltr;
+	display: inline-flex;
+}
+.left #extraString div {
+	padding-right: 4px;
+}
+.right #extraString div {
+	padding-left: 4px;
 }
 
 #title, #artist {
@@ -427,6 +492,9 @@ body {
 	content: "from ";
 	margin-right: 2px;
 }
+.right #albumString:before {
+	padding-left: 4px;
+}
 #labelString:before {
 	content: "via ";
 	margin-right: 2px;
@@ -482,10 +550,19 @@ body {
 	left: -2000px;
 }
 
-#forceLeft {
-	direction: ltr;
+#extraStringWrapper {
 	display: none;
+}
+.left #extraString span:last-child {
+	padding-right: 8px;
+}
+.right #extraString span:first-child {
+	padding-left: 8px;
 }
 
 #yearString:before { content: "["; }
 #yearString:after { content: "]"; }
+
+#dumbFixerUpperContainer {
+	width: inherit;
+}

@@ -1,5 +1,5 @@
 {
-	"9999999999999": {
+	"1709145558201": {
 		"updates": {
 			"bs": {
 				"revision": 4,
@@ -13,6 +13,23 @@
 					[
 						"added support for BeatSaver map collaborators",
 						["(for now this is making 2 API calls to BeatSaver, as the maps/hash endpoint doesn't contain collaborator metadata yet)"]
+					],
+					[
+						"avatars will no longer show for suspended BeatSaver users regardless of user verification status, map rank status, or map curation status"
+					],
+					[
+						"cover images fetched from BeatSaver are now resized to double the cover art size and cached locally while an active session lasts"
+					],
+					[
+						"on base game maps, the mapper field now includes which pack the map is from",
+						["DataPuller does not expose any information i can use to show this, so (for now?) this is only for BS+"]
+					],
+					[
+						"secondary metadata now scrolls if its width extends beyond the parent container's bounds"
+					],
+					[
+						"forced removal of font variants on textual parts of the overlay",
+						["::DROPOUT::'s third colon character appeared to be misaligned while testing and it bothered me. see what i mean?"]
 					]
 				]
 			},
@@ -25,6 +42,26 @@
 					],
 					[
 						"revision data is now internally tracked (woops)"
+					]
+				]
+			},
+
+			"spotify": {
+				"revision": 14,
+				"notes": [
+					[
+						"secondary metadata now scrolls if its width extends beyond the parent container's bounds",
+						["this is actually really rough at the moment and i'll probably just end up re-doing the markup/layout later on. my head hurts"]
+					],
+					[
+						"musicbrainz release data that doesn't contain a date string is now skipped when determining which release to use for extraneous data",
+						["to whomever contributed a release to Porter Robinson's \"Unfold\" without a release date: wtf >:("]
+					],
+					[
+						"forced removal of font variants on textual parts of the overlay"
+					],
+					[
+						"moved state fetching timer retriggering towards the beginning of the state response callback function to prevent hangups if something within said callback function throws an error"
 					]
 				]
 			},

@@ -12,7 +12,7 @@ function changeStatusCircle(which, status, msg) {
 $("#sensitive .section").show();
 
 const overlayRevision = 42;
-const overlayRevisionTimestamp = 1708687629182;
+const overlayRevisionTimestamp = 1709145558201;
 $("#revision").text(`revision ${overlayRevision}`);
 
 function resetEverything() {
@@ -356,20 +356,35 @@ $.get(`version.json?sigh=${Date.now()}`, function(data) {
 	}
 });
 
-function connectBeatSaber() {
-	switch(localStorage.getItem("setting_beatSaberDataMod")) {
-		case "bsplus":
-			changeStatusCircle("BSPlusStatus", "red", "disconnected");
-			startBSPlusWebsocket();
-			break;
+async function compressImage(url, size, quality) {
+	console.log(`compressing image ${url} to ${size}x${size}`);
 
-		case "datapuller":
-			changeStatusCircle("BSDataPullerMapDataStatus", "red", "MapData disconnected");
-			startDataPullerMapInfoWebsocket();
-			changeStatusCircle("BSDataPullerLiveDataStatus", "red", "LiveData disconnected");
-			startDataPullerLiveDataWebsocket();
-			break;
+	const controller = new AbortController();
+	const timedOutID = setTimeout(() => controller.abort(), parseInt(localStorage.getItem("setting_ajaxTimeout")) * 1000);
+
+	var response;
+	try {
+		response = await fetch(url, { signal: controller.signal });
+	} catch(err) {
+		console.log("failed to fetch image");
+		return "placeholder.png";
 	}
+
+	if(!response.ok) {
+		console.log("failed to fetch image");
+		return "placeholder.png";
+	}
+
+	const blob = await response.blob();
+	const bitmap = await createImageBitmap(blob);
+
+	let canvas = document.createElement('canvas');
+	let ctx = canvas.getContext('2d');
+
+	canvas.height = canvas.width = size;
+
+	ctx.drawImage(bitmap, 0, 0, size, size);
+	return canvas.toDataURL("image/jpeg", quality);
 }
 
 $("#UAString").text(window.navigator.userAgent);

@@ -1,5 +1,5 @@
-const overlayRevision = 13;
-const overlayRevisionTimestamp = 1708575471393;
+const overlayRevision = 14;
+const overlayRevisionTimestamp = 1709145558201;
 
 const settingsChannel = new BroadcastChannel("settings_overlay");
 
@@ -313,7 +313,7 @@ const settingUpdaters = {
 			return;
 		}
 
-		$("#forceLeft").hide();
+		$("#extraStringWrapper").hide();
 		$("#artistString").show();
 
 		if(value === "true") {
@@ -347,9 +347,11 @@ const settingUpdaters = {
 		if(value === "true") {
 			$("#wrapper").removeClass("left").addClass("right");
 			rootCSS().setProperty("--background-art-mask-side", "100%");
+			rootCSS().setProperty("--scroll-direction", "scrollReverse");
 		} else {
 			$("#wrapper").removeClass("right").addClass("left");
 			rootCSS().setProperty("--background-art-mask-side", "0%");
+			rootCSS().setProperty("--scroll-direction", "scroll");
 		}
 	},
 

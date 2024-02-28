@@ -1,5 +1,5 @@
 const overlayRevision = 4;
-const overlayRevisionTimestamp = 1708575471393;
+const overlayRevisionTimestamp = 1709145558201;
 
 const settingsChannel = new BroadcastChannel("settings_overlay");
 
@@ -292,11 +292,6 @@ const settingUpdaters = {
 	},
 	enableArtistMapperCycle: function(value) {
 		switchSecondary(true);
-		clearInterval(secondaryTimer);
-
-		if(value === "true") {
-			secondaryTimer = setInterval(switchSecondary, parseInt(localStorage.getItem("setting_bs_artistMapperCycleDelay")) * 1000);
-		}
 	},
 
 	miscInfoWidth: function(value) {

@@ -14,30 +14,6 @@ function setHits(combo) {
 	_bs_oldCombo = combo;
 }
 
-/*
-		currentBSSong = {
-			song: {
-				title: data.SongName,
-				subtitle: data.SongSubName,
-				artist: data.SongAuthor,
-				duration: data.Duration * 1000
-			},
-			map: {
-				characteristic: data.MapType,
-				difficulty: data.Difficulty,
-				hash: data.Hash.toLowerCase(),
-				author: data.Mapper,
-				bsr: null,
-				uploader: {}
-			},
-			cover: {
-				colors: {},
-				raw: "placeholder.png",
-				url: data.CoverImage
-			}
-		};
-*/
-
 const BSPlusMessageHandlers = {
 	"mapInfo": async function(data) {
 		_bs_hits = 0;
@@ -58,12 +34,21 @@ const BSPlusMessageHandlers = {
 				hash: data.level_id.replace("custom_level_", "").toLowerCase(),
 				author: data.mapper,
 				bsr: null,
-				uploaders: []
+				uploaders: [],
+				pack: null
 			},
 			cover: {
-				colors: {},
-				raw: data.coverRaw,
-				url: null
+				colors: {
+					light: localStorage.getItem("setting_bs_artistColor"),
+					dark: localStorage.getItem("setting_bs_artistColor")
+				},
+				internal: {
+					image: `data:image/jpeg;base64,${data.coverRaw}`
+				},
+				external: {
+					image: null,
+					url: null
+				}
 			}
 		};
 
