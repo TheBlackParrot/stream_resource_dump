@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "gameMusicVolume": 0.5,
+  "failAudioEffectVolume": 0.0,
+  "goodCutVolume": 0.7,
+  "badCutVolume": 0.4,
+  "bombCutVolume": 0.8,
+  "beforeCutVolume": 1.0,
+  "playBadCutSoundOnMiss": true,
+  "menuMusicVolume": 0.3,
+  "menuMusicPitch": 1.0,
+  "songPreviewVolume": 0.3,
+  "highScoreVolume": 0.3,
+  "fireworksVolume": 0.0,
+  "clickVolume": 0.7
+}

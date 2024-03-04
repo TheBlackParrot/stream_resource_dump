@@ -2,6 +2,7 @@ Unless otherwise noted with a URL, these mods should be found in BeatMods's repo
 Naluluna mods are available through her own mod manager.
 
 AdBlocker
+AudioLink
 BeatmapInformation
  - https://github.com/denpadokei/BeatmapInformation
 BeatSaberPlus
@@ -13,6 +14,8 @@ BetterSongList (iPixelGalaxy's fork)
  - https://github.com/iPixelGalaxy/BeatSaber_BetterSongList
 BetterSongSearch
 BetterSort.LastPlayed
+BSExtraColorPresets
+ - https://github.com/DJDavid98/BSExtraColorPresets
 BSIndexHapticFix
  - https://github.com/hardcpp/BSIndexHapticFix
 BSNightcore
@@ -26,11 +29,13 @@ CustomPlatforms
 EasyOffset
 EnvironmentHider
  - https://github.com/Redageddon/EnvironmentHider
+GottaGoFast
 Heck
 HitScoreVisualizer
  - https://github.com/ErisApps/HitScoreVisualizer
 HitsoundTweaks
 ImageFactory
+LocalLeaderboard
 LookupID
 MappingExtensions
 MemoryMinimizer
@@ -55,6 +60,8 @@ PauseMusic
  - https://github.com/Futuremappermydud/PauseMusic
 PlayFirst
 PlaylistManager
+PrioritySetter
+ - https://github.com/Arimodu/PrioritySetter (Light, AboveNormal)
 ReeSabers
  - https://www.beatleader.xyz/supporting-project/link
 SaberFactory

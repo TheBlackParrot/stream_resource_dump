@@ -1,0 +1,178 @@
+{
+  "enabled": true,
+  "coloredVanillaHud": true,
+  "noSkewVanillaHud": true,
+  "comboVisible": false,
+  "comboAnchor": "(ORIGINAL)",
+  "comboOffset": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "scoreVisible": true,
+  "scoreAnchor": "(ROOT)",
+  "scoreOffset": {
+    "x": 0.0,
+    "y": 2.0,
+    "z": -5.0
+  },
+  "multiplierVisible": false,
+  "multiplierAnchor": "(ORIGINAL)",
+  "multiplierOffset": {
+    "x": 0.0,
+    "y": 0.0,
+    "z": 0.0
+  },
+  "timeVisible": true,
+  "timeAnchor": "EnergyPanel",
+  "timeOffset": {
+    "x": 1.25,
+    "y": -0.06999999,
+    "z": 0.0
+  },
+  "energyVisible": true,
+  "energyAnchor": "(ORIGINAL)",
+  "energyOffset": {
+    "x": -0.65,
+    "y": -0.06999999,
+    "z": 0.0
+  },
+  "leftPanelBGAlpha": 0.0,
+  "rightPanelBGAlpha": 0.0,
+  "accuracyCounter": false,
+  "accuracyCounterAnchor": "(ROOT)",
+  "accuracyCounterOffset": {
+    "x": 0.0,
+    "y": 0.5000001,
+    "z": -2.0
+  },
+  "fixedColorForLowAccuracy": false,
+  "colorForLowAccuracy": {
+    "r": 0.5,
+    "g": 0.5,
+    "b": 0.5,
+    "a": 1.0
+  },
+  "accuracyCounterGlowOnPB": false,
+  "accuracyCounterShowRank": false,
+  "progressCounter": false,
+  "progressCounterAnchor": "EnergyPanel",
+  "progressCounterOffset": {
+    "x": 0.0,
+    "y": -0.7,
+    "z": -0.05
+  },
+  "showFailedPoint": true,
+  "saveSongPlayHistory": true,
+  "notesCounter": false,
+  "notesCounterAnchor": "EnergyPanel",
+  "notesCounterOffset": {
+    "x": 1.1,
+    "y": -0.7,
+    "z": -0.05
+  },
+  "notesCounterShowNotesCut": false,
+  "ppCounter": false,
+  "ppCounterAnchor": "RightPanel",
+  "ppCounterOffset": {
+    "x": 0.0,
+    "y": 0.1,
+    "z": 0.0
+  },
+  "showAccuracyColor": true,
+  "showAccuracyOnNonRanked": false,
+  "hidePPCounterOnNonRanked": false,
+  "ppSource": 0,
+  "activityCounter": false,
+  "activityCounterAnchor": "LeftPanel",
+  "activityCounterOffset": {
+    "x": 0.0,
+    "y": -0.8,
+    "z": 0.0
+  },
+  "activityCounterPulsoidApiUrl": "",
+  "colorForScore": [
+    {
+      "color": {
+        "r": 0,
+        "g": 255,
+        "b": 255,
+        "a": 255
+      },
+      "score": 0.9
+    },
+    {
+      "color": {
+        "r": 0,
+        "g": 255,
+        "b": 0,
+        "a": 255
+      },
+      "score": 0.8
+    },
+    {
+      "color": {
+        "r": 255,
+        "g": 235,
+        "b": 4,
+        "a": 255
+      },
+      "score": 0.65
+    },
+    {
+      "color": {
+        "r": 255,
+        "g": 128,
+        "b": 0,
+        "a": 255
+      },
+      "score": 0.5
+    },
+    {
+      "color": {
+        "r": 255,
+        "g": 0,
+        "b": 0,
+        "a": 255
+      },
+      "score": 0.35
+    },
+    {
+      "color": {
+        "r": 255,
+        "g": 0,
+        "b": 0,
+        "a": 255
+      },
+      "score": 0.2
+    },
+    {
+      "color": {
+        "r": 255,
+        "g": 0,
+        "b": 0,
+        "a": 255
+      },
+      "score": 0.0
+    }
+  ],
+  "glowColorForNotesCounter": {
+    "r": 0.0,
+    "g": 1.0,
+    "b": 1.0,
+    "a": 1.0
+  },
+  "glowColorForBuiltinCombo": {
+    "r": 0.0,
+    "g": 1.0,
+    "b": 1.0,
+    "a": 1.0
+  },
+  "glowColorForBuiltinMultiplier": {
+    "r": 0.0,
+    "g": 1.0,
+    "b": 1.0,
+    "a": 1.0
+  },
+  "uiLayer": 5
+}
