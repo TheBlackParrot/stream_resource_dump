@@ -391,3 +391,54 @@ function initEmoteSet() {
 		}
 	}
 }
+
+async function compressImage(url, size, quality) {
+	console.log(`compressing image ${url} to ${size}x${size}`);
+
+	const controller = new AbortController();
+	const timedOutID = setTimeout(() => controller.abort(), parseInt(localStorage.getItem("setting_ajaxTimeout")) * 1000);
+
+	var response;
+	try {
+		response = await fetch(url, { signal: controller.signal });
+	} catch(err) {
+		console.log("failed to fetch image");
+		return null;
+	}
+
+	if(!response.ok) {
+		console.log("failed to fetch image");
+		return null;
+	}
+
+	const blob = await response.blob();
+	return await compressBlob(blob, size, quality);
+}
+
+async function compressBlob(blob, size, quality) {
+	const bitmap = await createImageBitmap(blob);
+
+	let canvas = document.createElement('canvas');
+	let ctx = canvas.getContext('2d');
+
+	canvas.height = canvas.width = size;
+
+	ctx.drawImage(bitmap, 0, 0, size, size);
+	return canvas.toDataURL("image/jpeg", quality);
+}
+
+async function getCachedResponse(cacheObject, url) {
+	const cacheStorage = await caches.open(cacheObject);
+	var cachedResponse = await cacheStorage.match(url);
+
+	if(!cachedResponse) {
+		await cacheStorage.add(url);
+		cachedResponse = await cacheStorage.match(url);
+
+		if(!cachedResponse.ok) { return false; }
+	} else {
+		if(!cachedResponse.ok) { return false; }
+	}
+
+	return cachedResponse;
+}

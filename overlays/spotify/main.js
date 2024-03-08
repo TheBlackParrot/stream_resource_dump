@@ -94,10 +94,10 @@ const spotifyFuncs = {
 				if(localStorage.getItem("setting_spotify_hideOnPause") === "true") {
 					updateMarquee();
 
-					$("#detailsWrapper").removeClass("fadeOut").addClass("fadeIn");
-					$("#title").removeClass("slideOut").addClass("slideIn");
+					$("#detailsWrapper").addClass("fadeIn").removeClass("fadeOut");
+					$("#title").addClass("slideIn").removeClass("slideOut");
 					setTimeout(function() {
-						$("#artist").removeClass("slideOut").addClass("slideIn");
+						$("#artist").addClass("slideIn").removeClass("slideOut");
 					}, timespans.small);
 
 					setTimeout(function() {
@@ -119,10 +119,10 @@ const spotifyFuncs = {
 				stopTimers();
 
 				if(localStorage.getItem("setting_spotify_hideOnPause") === "true") {
-					$("#detailsWrapper").removeClass("fadeIn").addClass("fadeOut");
-					$("#title").removeClass("slideIn").addClass("slideOut");
+					$("#detailsWrapper").addClass("fadeOut").removeClass("fadeIn");
+					$("#title").addClass("slideOut").removeClass("slideIn");
 					setTimeout(function() {
-						$("#artist").removeClass("slideIn").addClass("slideOut");
+						$("#artist").addClass("slideOut").removeClass("slideIn");
 					}, timespans.small);
 
 					setTimeout(function() {
@@ -141,6 +141,8 @@ const spotifyFuncs = {
 			return;
 		}
 
+		$("#artist").show(); // wtf
+
 		if(localStorage.getItem("setting_spotify_enableScannable") === "true") { $("#scannableWrapper").show(); }
 		if(localStorage.getItem("setting_spotify_enableArt") === "true") { $("#artWrapper").show(); }
 
@@ -149,16 +151,16 @@ const spotifyFuncs = {
 
 		stopTimers();
 
-		$("#detailsWrapper").removeClass("fadeIn").addClass("fadeOut");
+		$("#detailsWrapper").addClass("fadeOut").removeClass("fadeIn");
 
-		$("#title").removeClass("slideIn").addClass("slideOut");
+		$("#title").addClass("slideOut").removeClass("slideIn");
 		console.log("got here 1");
 		setTimeout(function() {
-			$("#artist").removeClass("slideIn").addClass("slideOut");
+			$("#artist").addClass("slideOut").removeClass("slideIn");
 
 			$("#artist").one("animationend", function() {
 				$("#titleString").text(data.title);
-				$("#artistStringActual").text(data.artists.join(", "));
+				$("#artistString").text(data.artists.join(", "));
 				$("#albumString").text(data.album.name);
 				if(data.labels.length) {
 					$("#labelString").text(data.labels.join(", "));
@@ -179,7 +181,7 @@ const spotifyFuncs = {
 				console.log("got here 2");
 
 				$("#extraStringWrapper").hide();
-				$("#artistString").show();
+				$("#artist").show();
 
 				console.log("got here 3");
 
@@ -196,11 +198,11 @@ const spotifyFuncs = {
 
 				console.log("got here 4");
 
-				$("#detailsWrapper").removeClass("fadeOut").addClass("fadeIn");
+				$("#detailsWrapper").addClass("fadeIn").removeClass("fadeOut");
 
-				$("#title").removeClass("slideOut").addClass("slideIn");
+				$("#title").addClass("slideIn").removeClass("slideOut");
 				setTimeout(function() {
-					$("#artist").removeClass("slideOut").addClass("slideIn");
+					$("#artist").addClass("slideIn").removeClass("slideOut");
 					if(localStorage.getItem("setting_spotify_enableArtistAlbumCycle") === "true") {
 						albumArtistCycleTO = setTimeout(function() {
 							cycleAlbumArtist("album");
@@ -313,7 +315,7 @@ function updateSecondaryMarquee() {
 		nextCycle = (currentCycle === "artist" ? "album" : "artist");
 	}
 
-	let childElement = ($("#artistString").is(":visible") ? $("#artistString") : $("#extraString"));
+	let childElement = ($("#artist").is(":visible") ? $("#artist") : $("#extraString"));
 	let parentElement = childElement.parent().parent();
 	let childWidth = childElement.width();
 	let parentWidth = parentElement.width();
@@ -354,11 +356,11 @@ function cycleAlbumArtist(which) {
 
 	if(which === "artist") {
 		$("#extraStringWrapper").fadeOut(fadeDuration, function() {
-			$("#artistString").fadeIn(fadeDuration);
+			$("#artist").fadeIn(fadeDuration);
 			updateSecondaryMarquee();
 		});
 	} else {
-		$("#artistString").fadeOut(fadeDuration, function() {
+		$("#artist").fadeOut(fadeDuration, function() {
 			$("#extraStringWrapper").fadeIn(fadeDuration);
 
 			if(localStorage.getItem("setting_spotify_showLabel") === "true" && currentSong.labels.length) {
@@ -388,3 +390,7 @@ spotifyChannel.onmessage = function(message) {
 		spotifyFuncs[message.event](message.data);
 	}
 };
+
+$("body").on("animationend", ".slideIn", function() {
+	$(this).removeClass("slideIn");
+});

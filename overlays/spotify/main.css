@@ -234,8 +234,6 @@ body {
 	overflow-x: hidden;
 	width: 100%;
 	position: relative;
-	top: 2px;
-	align-items: center;
 	align-self: stretch;
 }
 .left #detailsWrapper {
@@ -243,6 +241,13 @@ body {
 }
 .right #detailsWrapper {
 	right: -4px;
+}
+
+.left #artistString {
+	padding-right: 6px;
+}
+.right #artistString {
+	padding-left: 6px;
 }
 
 #artOutline, #artBG {
@@ -310,26 +315,19 @@ body {
 }
 
 #titleString {
-	padding-bottom: 2px;
+	line-height: calc(var(--details-line-height) + 6px);
 }
-#artistString {
-	width: max-content;
-}
-.left #artistStringActual {
-	padding-right: 6px;
-}
-.right #artistStringActual {
-	padding-left: 6px;
-}
-#titleString, #artistString, #albumString, #labelString, #yearString {
+#artist, #albumString, #labelString, #yearString {
 	line-height: var(--details-line-height);
+}
+#titleString, #artist, #albumString, #labelString, #yearString {
 	filter: var(--effects);
 	font-variant: none;
 }
-.left #titleString, .left #extraString, .left #artistString {
+.left #titleString, .left #extraString, .left #artist {
 	padding-left: 4px;
 }
-.right #titleString, .right #extraString, .right #artistString {
+.right #titleString, .right #extraString, .right #artist {
 	padding-right: 4px;
 }
 #extraString {
@@ -339,16 +337,26 @@ body {
 .left #extraString div {
 	padding-right: 4px;
 }
+.left #extraString div:last-child {
+	padding-right: 6px;
+}
 .right #extraString div {
 	padding-left: 4px;
 }
+.right #extraString div:first-child {
+	padding-left: 6px;
+}
+#artist, #extraStringWrapper {
+	padding-bottom: 1px;
+}
 
-#title, #artist {
+#title, #secondary {
 	width: 100%;
 	white-space: nowrap;
 	overflow-x: clip;
 	flex-grow: 1;
 	display: inline-flex;
+	align-items: start;
 }
 
 #title {
@@ -374,7 +382,7 @@ body {
 	background-image: var(--artist-gradient);
 }
 
-#artistString, #albumString, #albumString:before, .isSingle:after, #labelString, #labelString:before, #yearString {
+#artist, #albumString, #albumString:before, .isSingle:after, #labelString, #labelString:before, #yearString {
 	font-family: var(--artist-font-family);
 	font-size: var(--artist-font-size);
 	font-weight: var(--artist-font-weight);

@@ -776,7 +776,8 @@ const defaultConfig = {
 	"datapuller_port": "2946",
 	"beatSaberDataMod": "bsplus",
 	"bs_forceBeatSaverData": "false",
-	"bs_maxCollaborators": "5"
+	"bs_maxCollaborators": "5",
+	"bs_renderArtLower": "false"
 };
 // i typed out the bigNoNoWords so you don't have to, i'm sorry :(
 // it's gotta know what to remove

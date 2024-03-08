@@ -39,7 +39,8 @@ const mapPacks = {
 	"Queen DLC Pack":["anotheronebitesthedust","bohemianrhapsody","crazylittlethingcalledlove","dontstopmenow","iwantitall","killerqueen","onevision","somebodytolove","stonecoldcrazy","wearethechampions","wewillrockyou"],
 	"Linkin Park x Mike Shinoda DLC Pack":["alreadyover","crawling","fightingmyself","inmyhead","lost","morethevictim","numbencore","rememberthename"],
 	"The Rolling Stones DLC Pack":["angry","bitemyheadoff","cantyouhearmeknocking","gimmeshelter","icantgetnosatisfaction","livebythesword","messitup","paintitblack","startmeup","sympathyforthedevil","wholewideworld"],
-	"OST Vol. 6":["heavyweight","liftoff","powerofthesaberblade","tempokatana","cathedral"]
+	"OST Vol. 6":["heavyweight","liftoff","powerofthesaberblade","tempokatana","cathedral"],
+	"Daft Punk DLC Pack": ["aroundtheworld", "aroundtheworldharderbetterfasterstronger", "dafunkdaftendirekt", "getlucky", "harderbetterfasterstronger", "loseyourselftodance", "onemoretime", "primetimeofyourlifebrainwasherrollinalivelive2007", "technologic", "veridisquo"]
 };
 
 const bsEventChannel = new BroadcastChannel("bs");

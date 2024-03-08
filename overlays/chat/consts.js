@@ -1,5 +1,5 @@
-const overlayRevision = 40;
-const overlayRevisionTimestamp = 1707000315317;
+const overlayRevision = 42;
+const overlayRevisionTimestamp = 1709870431919;
 
 const enums = {
 	weight: {
@@ -676,3 +676,15 @@ const twitchUsers = new UserSet();
 const sevenTVEntitlements = new SevenTVEntitlements();
 
 const defaultSubBadgeLengths = [1, 1, 2, 3, 6, 9, 12];
+
+var pronounTags = {};
+async function setPronounTags() {
+	const response = await fetch("https://api.pronouns.alejo.io/v1/pronouns");
+	if(!response.ok) {
+		return;
+	}
+
+	pronounTags = await response.json();
+	console.log("successfully grabbed available pronoun tags");
+}
+setPronounTags();

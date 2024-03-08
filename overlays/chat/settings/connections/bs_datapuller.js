@@ -60,7 +60,7 @@ function startDataPullerMapInfoWebsocket() {
 			map: {
 				characteristic: data.MapType,
 				difficulty: data.Difficulty,
-				hash: (data.Hash ? data.Hash.toLowerCase() : null),
+				hash: (data.Hash ? data.Hash.toLowerCase() : (data.LevelID.toLowerCase() || null)),
 				author: data.Mapper,
 				bsr: null,
 				uploaders: [],
@@ -72,7 +72,7 @@ function startDataPullerMapInfoWebsocket() {
 					dark: localStorage.getItem("setting_bs_artistColor")
 				},
 				internal: {
-					image: null,
+					image: data.CoverImage || null,
 				},
 				external: {
 					image: null,

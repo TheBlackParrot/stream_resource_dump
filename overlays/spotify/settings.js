@@ -1,5 +1,5 @@
-const overlayRevision = 14;
-const overlayRevisionTimestamp = 1709145558201;
+const overlayRevision = 15;
+const overlayRevisionTimestamp = 1709870431919;
 
 const settingsChannel = new BroadcastChannel("settings_overlay");
 
@@ -185,12 +185,12 @@ const settingUpdaters = {
 
 	artistGradient: function(value) {
 		if(value === "true") {
-			$("#artistString").addClass("artistStringGradient");
+			$("#artist").addClass("artistStringGradient");
 			$("#albumString").addClass("artistStringGradient");
 			$("#labelString").addClass("artistStringGradient");
 			$("#yearString").addClass("artistStringGradient");
 		} else {
-			$("#artistString").removeClass("artistStringGradient");
+			$("#artist").removeClass("artistStringGradient");
 			$("#albumString").removeClass("artistStringGradient");
 			$("#labelString").removeClass("artistStringGradient");
 			$("#yearString").removeClass("artistStringGradient");

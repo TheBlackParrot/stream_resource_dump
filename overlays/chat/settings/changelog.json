@@ -1,4 +1,46 @@
 {
+	"1709870431919": {
+		"updates": {
+			"bs": {
+				"revision": 5,
+				"notes": [
+					[
+						"updated datapuller support to use the new internal cover art and level id fields"
+					],
+					[
+						"added the new level ID's from the Daft Punk pack to the OST/DLC list"
+					]
+				]
+			},
+
+			"chat": {
+				"revision": 42,
+				"notes": [
+					[
+						"avatars are now cached locally using the CacheStorage API",
+						["looking into a way i can get emotes to use this too, it's a little... more complicated"]
+					],
+					[
+						"functions that fetch emote data are now asynchronous",
+						["they were still using jquery ajax calls, meant to get around to updating that and never did woops"]
+					],
+					[
+						"version checking function was made asynchronous"
+					]
+				]
+			},
+
+			"spotify": {
+				"revision": 15,
+				"notes": [
+					[
+						"fixed various minor aesthetic issues with the previous update"
+					]
+				]
+			}
+		}
+	},
+
 	"1709145558201": {
 		"updates": {
 			"bs": {

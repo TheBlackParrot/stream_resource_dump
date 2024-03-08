@@ -87,6 +87,7 @@ class User {
 		this.username = opts.username;
 		this.moderator = opts.moderator || null;
 		this.avatar = opts.avatar;
+		this.avatarImage = null;
 		this.broadcasterType = opts.broadcasterType;
 		this.created = new Date(opts.created).getTime();
 		this.bot = isUserBot(opts.username);
@@ -115,7 +116,9 @@ class User {
 				checkedForProminentColor: false
 			},
 			pronouns: {
-				value: null
+				primary: null,
+				secondary: null,
+				string: null
 			}
 		};
 
@@ -143,8 +146,6 @@ class User {
 		if(this.id !== "-1") {
 			this.setPronouns();
 			this.#setFFZBadges();
-		} else {
-			this.entitlements.pronouns.value = "any";
 		}
 	}
 
@@ -167,7 +168,7 @@ class User {
 				return;
 			}
 
-			Vibrant.from(argh.avatar).maxDimension(120).maxColorCount(80).getPalette().then(function(swatches) {
+			Vibrant.from(argh.avatarImage).maxColorCount(80).getPalette().then(function(swatches) {
 				console.log(swatches);
 
 				let wantedSwatch = swatches["Vibrant"];
@@ -195,28 +196,44 @@ class User {
 	}
 
 	async setPronouns() {
-		const fetchResponse = await fetch(`https://pronouns.alejo.io/api/users/${this.username}`);
+		const fetchResponse = await fetch(`https://api.pronouns.alejo.io/v1/users/${this.username}`);
 
 		if(!fetchResponse.ok) {
+			console.log(`failed to fetch pronouns for ${this.username}`);
 			return;
 		}
 
 		const data = await fetchResponse.json();
-
+		console.log(`fetched pronouns for ${this.username}`);
 		console.log(data);
 
-		if(data.length) {
-			let oldValue = this.entitlements.pronouns.value;
-			this.entitlements.pronouns.value = data[0].pronoun_id;
-			this.#updatePronounBlocks(oldValue);
-		}
+		this.entitlements.pronouns.primary = data.pronoun_id;
+		this.entitlements.pronouns.secondary = data.alt_pronoun_id;
+		this.entitlements.pronouns.string = this.pronounString();
+		this.updatePronounBlocks();
 	}
 
-	#updatePronounBlocks(oldValue) {
-		if(oldValue) {
-			$(`.chatBlock[data-userid="${this.id}"] .pronouns`).removeClass(`pronouns_${oldValue}`);
+	pronounString() {
+		let tags = this.entitlements.pronouns;
+		if(tags.primary === null) {
+			return null;
 		}
-		$(`.chatBlock[data-userid="${this.id}"] .pronouns`).addClass(`pronouns_${this.entitlements.pronouns.value}`).show();
+
+		let separator = localStorage.getItem("setting_pronounsSeparator");
+		if(!separator) {
+			separator = " / ";
+		}
+
+		if(pronounTags[tags.primary].singular) {
+			return pronounTags[tags.primary].subject;
+		}
+		return [pronounTags[tags.primary].subject, (tags.secondary ? pronounTags[tags.secondary].subject : pronounTags[tags.primary].object)].join(separator);
+	}
+
+	updatePronounBlocks() {
+		if(this.entitlements.pronouns.primary !== null) {
+			$(`.chatBlock[data-userid="${this.id}"] .pronouns`).text(this.entitlements.pronouns.string).show();
+		}
 	}
 
 	async #setFFZBadges() {
@@ -246,19 +263,43 @@ class User {
 	}
 
 	async updateAvatar() {
-		let response = await callTwitchAsync({
-			endpoint: "users",
-			args: {
-				id: this.id
+		let argh = this;
+
+		return new Promise(async function(resolve, reject) {
+			if(parseInt(argh.id) === -1) {
+				resolve(null);
+				return;
 			}
-		});
-		let userDataRaw = response.data[0];
 
-		let oldAvatar = this.avatar.substring(0);
-		this.avatar = userDataRaw.profile_image_url;
+			if(argh.avatarImage !== null) {
+				resolve(argh.avatarImage);
+				return;
+			}
 
-		$(`.pfp[src="${oldAvatar}"]`).fadeOut(250, function() {
-			$(`.pfp[src="${oldAvatar}"]`).attr("src", userDataRaw.profile_image_url).fadeIn(250);
+			var cachedResponse = await getCachedResponse("avatarCache", argh.avatar);
+			var blob;
+
+			if(cachedResponse) {
+				blob = await cachedResponse.blob();
+			} else {
+				resolve(null);
+				return;
+			}
+
+			if(blob) {
+				argh.avatarImage = await compressBlob(blob, parseInt(localStorage.getItem("setting_avatarSize")) * 2, 80);
+			} else {
+				resolve(null);
+				return;				
+			}
+
+			if(argh.avatarEnabled) {
+				$(`.chatBlock[data-userid="${argh.id}"] .pfp`).fadeOut(250, function() {
+					$(argh).attr("src", argh.avatarImage).fadeIn(250);
+				});
+			}
+
+			resolve(argh.avatarImage);
 		});
 	}
 
@@ -380,6 +421,18 @@ class UserSet {
 		});
 
 		return this[id];
+	}
+
+	refreshPronounStrings() {
+		for(const idx in this) {
+			if(idx === -1) {
+				continue;
+			}
+
+			const user = this[idx];
+			user.entitlements.pronouns.string = user.pronounString();
+			user.updatePronounBlocks();
+		}
 	}
 }
 

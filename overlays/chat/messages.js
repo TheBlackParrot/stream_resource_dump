@@ -124,7 +124,10 @@ async function prepareMessage(tags, message, self, forceHighlight) {
 			break;
 	}
 
-	userData.entitlements.overlay.prominentColor = await userData.getProminentColor(); // fuck it we ball
+	if(userData.avatarImage === null && userData.id !== -1) {
+		userData.avatarImage = await userData.updateAvatar();
+		userData.entitlements.overlay.prominentColor = await userData.getProminentColor();
+	}
 
 	let parseDelay = 0;
 	if(!isOverlayMessage) {
@@ -537,6 +540,8 @@ const chatFuncs = {
 	},
 
 	refreshpfp: async function(data, args) {
+		sessionStorage.deleteItem(`_twitch_cache_avatar_${data.user.id}`);
+		sessionStorage.deleteItem(`_twitch_cache_avatarURL_${data.user.id}`);
 		await data.user.updateAvatar();
 	},
 
@@ -663,7 +668,7 @@ function widthTest(rootElement, userBlock) {
 
 function renderAvatarBGBlock(data, rootElement) {
 	let avatarBGWrapperElement = $('<div class="avatarBGWrapper"></div>');
-	let avatarBGElement = $(`<div class="avatarBG" style="background-image: url('${data.user.avatar}');"/>`);
+	let avatarBGElement = $(`<div class="avatarBG" style="background-image: url('${data.user.avatarImage}');"/>`);
 
 	if(data.user.avatarEnabled && localStorage.getItem("setting_enableAvatarsAsBackground") === "true") {
 		avatarBGWrapperElement.append(avatarBGElement).css("display", "block");
@@ -894,9 +899,8 @@ function renderPronounsBlock(data) {
 	let pronounsBlock = $('<div class="pronouns" style="display: none;"></div>');
 
 	if(localStorage.getItem("setting_enablePronouns") === "true" && !data.isOverlayMessage) {
-		if(data.user.entitlements.pronouns.value !== null) {
-			pronounsBlock.addClass(`pronouns_${data.user.entitlements.pronouns.value}`);
-			pronounsBlock.show();
+		if(data.user.entitlements.pronouns.string !== null) {
+			pronounsBlock.text(data.user.entitlements.pronouns.string).show();
 		}
 	}
 
@@ -914,7 +918,7 @@ function renderAvatarBlock(data) {
 		return pfpBlock;
 	}
 
-	pfpBlock.attr("src", data.user.avatar);
+	pfpBlock.attr("src", data.user.avatarImage);
 
 	if(!localStorage.getItem(`pfpShape_${data.user.id}`)) { localStorage.setItem(`pfpShape_${data.user.id}`, "var(--avatarBorderRadius)"); }
 	rootCSS().setProperty(`--pfpShape${data.user.id}`, localStorage.getItem(`pfpShape_${data.user.id}`));
@@ -924,7 +928,7 @@ function renderAvatarBlock(data) {
 		pfpBlock.show();
 		
 		if(localStorage.getItem("setting_enableAvatarsAsBackground") === "true") {
-			let avatarBGElement = $(`<div class="avatarBG" style="background-image: url('${data.user.avatar}');"/>`);
+			let avatarBGElement = $(`<div class="avatarBG" style="background-image: url('${data.user.avatarImage}');"/>`);
 
 			if(localStorage.getItem("setting_avatarsBGAnimateAppearance") === "true") {
 				avatarBGElement.addClass("zoomAvatarBGOut");
