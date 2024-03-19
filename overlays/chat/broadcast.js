@@ -70,6 +70,13 @@ settingsFuncs = {
 	refreshEmotes: function(message) {
 		chatEmotes = {};
 		refreshExternalStuff();
+	},
+
+	clearAvatars: function(message) {
+		for(const userID in twitchUsers) {
+			twitchUsers[userID].avatar = null;
+			twitchUsers[userID].avatarImage = null;
+		}
 	}
 }
 

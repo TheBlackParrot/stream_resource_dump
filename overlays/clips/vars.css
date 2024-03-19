@@ -1,0 +1,70 @@
+:root {
+	--streamerFont: "Manrope";
+	--streamerFontSize: 24pt;
+	--streamerFontWeight: 900;
+	--streamerLineHeight: 60px;
+	--streamerAdditionalWeight: 0px;
+	--streamerColor: #CBADFF;
+	--streamerGradientColor: #FFFFFF;
+	--streamerGradientAngle: 170deg;
+	--streamerGradient: linear-gradient(var(--streamerGradientAngle), var(--streamerGradientColor) 20%, var(--streamerColor) 100%);
+	--streamerGradientActual: var(--streamerGradient);
+	--streamerMarginBottom: 8px;
+
+	--titleFont: "Manrope";
+	--titleFontSize: 20pt;
+	--titleFontWeight: 900;
+	--titleLineHeight: 40px;
+	--titleAdditionalWeight: 0px;
+	--titleColor: #999999;
+	--titleGradientColor: #FFFFFF;
+	--titleGradientAngle: 170deg;
+	--titleGradient: linear-gradient(var(--titleGradientAngle), var(--titleGradientColor) 20%, var(--titleColor) 100%);
+	--titleGradientActual: var(--titleGradient);
+
+	--detailsFont: "Manrope";
+	--detailsFontSize: 14pt;
+	--detailsFontWeight: 900;
+	--detailsLineHeight: 22px;
+
+	--minorDetailsFont: "Manrope";
+	--minorDetailsFontSize: 12pt;
+	--minorDetailsFontWeight: 900;
+	--minorDetailsLineHeight: 22px;
+
+	--videoWidth: 640px;
+	--videoHeight: 360px;
+
+	--overlayMargin: 16px;
+	--overlayVerticalSpacing: 8px;
+	--overlayHorizontalSpacing: 0px;
+
+	--box-shadow-effects-offset-x: 0px;
+	--box-shadow-effects-offset-y: 8px;
+	--box-shadow-effects-blur-radius: 9px;
+	--box-shadow-effects-inset: -5px;
+	--box-shadow-effects-color: #000000FF;
+
+	--box-shadow-effects: var(--box-shadow-effects-offset-x) var(--box-shadow-effects-offset-y) var(--box-shadow-effects-blur-radius) var(--box-shadow-effects-inset) var(--box-shadow-effects-color);
+	--box-shadow-effects-actual: var(--box-shadow-effects);
+
+	--outline-effects-size: 1px;
+	--outline-effects-size-negative: -1px;
+	--outline-effects-color: #000000;
+
+	--outline-effects:	drop-shadow(var(--outline-effects-size-negative) var(--outline-effects-size-negative) 0px var(--outline-effects-color))
+						drop-shadow(var(--outline-effects-size) var(--outline-effects-size-negative) 0px var(--outline-effects-color))
+						drop-shadow(var(--outline-effects-size-negative) var(--outline-effects-size) 0px var(--outline-effects-color))
+						drop-shadow(var(--outline-effects-size) var(--outline-effects-size) 0px var(--outline-effects-color));
+	--outline-effects-actual: var(--outline-effects);
+
+	--shadow-effects-offset-x: 0px;
+	--shadow-effects-offset-y: 1px;
+	--shadow-effects-blur-radius: 2px;
+	--shadow-effects-color: #000000FF;
+
+	--shadow-effects: drop-shadow(var(--shadow-effects-offset-x) var(--shadow-effects-offset-y) var(--shadow-effects-blur-radius) var(--shadow-effects-color));
+	--shadow-effects-actual: var(--shadow-effects);
+
+	--effects: var(--outline-effects-actual) var(--shadow-effects-actual);
+}

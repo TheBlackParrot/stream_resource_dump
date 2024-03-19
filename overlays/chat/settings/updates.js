@@ -5,7 +5,8 @@ const properOverlayNames = {
 	"clock": "Clock Overlay",
 	"bsvas": "Beat Saber VOD Audio System",
 	"text": "Text Rotation Overlay",
-	"bs": "Beat Saber Overlay"
+	"bs": "Beat Saber Overlay",
+	"clips": "Twitch Clip Overlay"
 };
 
 var mostRecentUpdate = 0;

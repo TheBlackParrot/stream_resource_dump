@@ -1,8 +1,9 @@
 $.ajaxSetup({ timeout: parseInt(localStorage.getItem("setting_ajaxTimeout")) * 1000 || 7000 });
+caches.delete("avatarCache"); // old
 
 var allowedToProceed = true;
 
-const twitchClientId = localStorage.getItem(`setting_twitchClientID`)
+const twitchClientId = localStorage.getItem(`setting_twitchClientID`);
 const twitchClientSecret = localStorage.getItem(`setting_twitchClientSecret`);
 const broadcasterName = localStorage.getItem(`setting_twitchChannel`);
 
@@ -307,8 +308,7 @@ async function getExternalChannelEmotes(broadcasterData) {
 			console.log("got bttv emotes");
 			systemMessage("*Fetched channel's BetterTTV emotes*");
 
-			let mergedSets = Object.assign(data.sharedEmotes, data.channelEmotes);
-			for(const emote of mergedSets) {
+			let addEmoteFunction = function(emote) {
 				chatEmotes.addEmote(new Emote({
 					service: "bttv",
 					urls: {
@@ -319,8 +319,11 @@ async function getExternalChannelEmotes(broadcasterData) {
 					emoteName: emote.code,
 					modifiers: (emote.modifier ? ["Hidden"] : []),
 					global: false
-				}));
-			}			
+				}));				
+			}
+
+			for(const emote of data.sharedEmotes) { addEmoteFunction(emote); }
+			for(const emote of data.channelEmotes) { addEmoteFunction(emote); }
 		} else {
 			console.log("could not fetch bttv channel emotes");
 			systemMessage("*Unable to fetch channel's BetterTTV emotes*");			
@@ -344,8 +347,8 @@ async function getExternalChannelEmotes(broadcasterData) {
 					chatEmotes.addEmote(new Emote({
 						service: "ffz",
 						urls: {
-							high: (emote.urls[4] || emote.urls[1]),
-							low: emote.urls[1]
+							high: ("animated" in emote ? (emote.animated[4] || emote.animated[1]) : (emote.urls[4] || emote.urls[1])),
+							low: ("animated" in emote ? emote.animated[1] : emote.urls[1])
 						},
 						emoteID: emote.id,
 						emoteName: emote.name,
@@ -380,9 +383,12 @@ async function getExternalChannelEmotes(broadcasterData) {
 				isOK = false;
 			}
 
-			if(!("emotes" in data.emote_set)) {
-				systemMessage("*Unable to fetch channel's 7TV emotes, emotes aren't in the emote set (this is 7TV's fault)*");
-				isOK = false;
+			if(isOK) {
+				// for fucks sake
+				if(!("emotes" in data.emote_set)) {
+					systemMessage("*Unable to fetch channel's 7TV emotes, emotes aren't in the emote set (this is 7TV's fault)*");
+					isOK = false;
+				}
 			}
 
 			if(isOK) {

@@ -125,8 +125,7 @@ async function prepareMessage(tags, message, self, forceHighlight) {
 	}
 
 	if(userData.avatarImage === null && userData.id !== -1) {
-		userData.avatarImage = await userData.updateAvatar();
-		userData.entitlements.overlay.prominentColor = await userData.getProminentColor();
+		await userData.cacheAvatar();
 	}
 
 	let parseDelay = 0;
@@ -134,7 +133,7 @@ async function prepareMessage(tags, message, self, forceHighlight) {
 		parseDelay = (parseFloat(localStorage.getItem("setting_delayChat")) * 1000) || 0;
 	}
 
-	setTimeout(function() { parseMessage(outObject); }, parseDelay);
+	setTimeout(async function() { await parseMessage(outObject); }, parseDelay);
 }
 
 const chatFuncs = {
@@ -540,9 +539,7 @@ const chatFuncs = {
 	},
 
 	refreshpfp: async function(data, args) {
-		sessionStorage.deleteItem(`_twitch_cache_avatar_${data.user.id}`);
-		sessionStorage.deleteItem(`_twitch_cache_avatarURL_${data.user.id}`);
-		await data.user.updateAvatar();
+		await data.user.refreshCachedAvatar();
 	},
 
 	refreshemotes: function(data, args) {
@@ -669,9 +666,10 @@ function widthTest(rootElement, userBlock) {
 function renderAvatarBGBlock(data, rootElement) {
 	let avatarBGWrapperElement = $('<div class="avatarBGWrapper"></div>');
 	let avatarBGElement = $(`<div class="avatarBG" style="background-image: url('${data.user.avatarImage}');"/>`);
+	avatarBGWrapperElement.append(avatarBGElement)
 
 	if(data.user.avatarEnabled && localStorage.getItem("setting_enableAvatarsAsBackground") === "true") {
-		avatarBGWrapperElement.append(avatarBGElement).css("display", "block");
+		avatarBGWrapperElement.css("display", "block");
 
 		if(localStorage.getItem("setting_avatarsBGAnimateAppearance") === "true") {
 			avatarBGElement.addClass("zoomAvatarBGOut");
@@ -794,7 +792,13 @@ function renderBadgeBlock(data, rootElement, userBlock) {
 
 			let badgeData = getBadgeData(badgeType, badges.list[badgeType]);
 			let url;
-			if(typeof badgeData === "undefined") {
+
+			if(!badgeData) {
+				// uh, wtf
+				continue;
+			}
+			
+			if(typeof badgeData === "undefined" && badges.info) {
 				// this should only trigger on channels that have founders badges off, and do not have custom sub badges set
 				// twitch ID's these differently compared to custom sub badges
 				const monthInt = parseInt(badges.info.subscriber);
@@ -926,14 +930,6 @@ function renderAvatarBlock(data) {
 
 	if(data.user.avatarEnabled) {
 		pfpBlock.show();
-		
-		if(localStorage.getItem("setting_enableAvatarsAsBackground") === "true") {
-			let avatarBGElement = $(`<div class="avatarBG" style="background-image: url('${data.user.avatarImage}');"/>`);
-
-			if(localStorage.getItem("setting_avatarsBGAnimateAppearance") === "true") {
-				avatarBGElement.addClass("zoomAvatarBGOut");
-			}
-		}
 	} else {
 		pfpBlock.hide();
 	}
@@ -1260,7 +1256,26 @@ function initMessageBlockCustomizations(data, elements) {
 	}
 }
 
-function renderMessageBlock(data, rootElement) {
+twitchEmoteCache = {};
+async function cacheEmote(url) {
+	if(url in twitchEmoteCache) {
+		return twitchEmoteCache[url];
+	}
+
+	const cacheStorage = await caches.open("emoteCache");
+
+	var cachedResponse = await cacheStorage.match(url);
+	if(!cachedResponse) {
+		await cacheStorage.add(url);
+		cachedResponse = await cacheStorage.match(url);
+	}
+
+	const blob = await cachedResponse.blob();
+	twitchEmoteCache[url] = URL.createObjectURL(blob);
+	return twitchEmoteCache[url];
+}
+
+async function renderMessageBlock(data, rootElement) {
 	let messageBlock = $('<div class="message"></div>');
 
 	initMessageBlockCustomizations(data, {
@@ -1277,6 +1292,9 @@ function renderMessageBlock(data, rootElement) {
 
 		if(data.emotes) {
 			for(let emoteID in data.emotes) {
+				const emoteURL = `https://static-cdn.jtvnw.net/emoticons/v2/${emoteID}/default/dark/${useLQImages ? "1.0" : "3.0"}`;
+				const emoteObject = await cacheEmote(emoteURL);
+
 				for(let i in data.emotes[emoteID]) {
 					let spots = data.emotes[emoteID][i].split("-");
 					let startAt = parseInt(spots[0]);
@@ -1287,8 +1305,7 @@ function renderMessageBlock(data, rootElement) {
 						checkExternalEmotes[charIdx] = "";
 					}
 
-					let emoteURL = `https://static-cdn.jtvnw.net/emoticons/v2/${emoteID}/default/dark/${useLQImages ? "1.0" : "3.0"}`;
-					originalMessage[startAt] = `<span class="emote" style="background-image: url('${emoteURL}');"><img src="${emoteURL}"/></span>`;
+					originalMessage[startAt] = `<span class="emote" style="background-image: url('${emoteObject}');"><img src="${emoteObject}"/></span>`;
 				}
 			}
 		}
@@ -1378,7 +1395,8 @@ function renderMessageBlock(data, rootElement) {
 						}
 					}
 
-					words[wordIdx] = `<span class="${classes.join(" ")}" style="background-image: url('${externalEmote.url}');"${modifiers.length ? `data-emotemods="${modifiers.join(" ")}"` : ""}><img src="${externalEmote.url}"/></span>`;
+					emoteObject = await externalEmote.url;
+					words[wordIdx] = `<span class="${classes.join(" ")}" style="background-image: url('${emoteObject}');"${modifiers.length ? `data-emotemods="${modifiers.join(" ")}"` : ""}><img src="${emoteObject}"/></span>`;
 
 					if(lastWordWasEmote) {
 						if(externalEmote.isZeroWidth) {
@@ -1586,7 +1604,7 @@ function renderEventTagBlock(data, wrapperElement) {
 
 var messageDecayTimeouts = {};
 
-function parseMessage(data) {
+async function parseMessage(data) {
 	if(!allowedToProceed) {
 		console.log("No Client ID or Secret is set.");
 		return;
@@ -1641,7 +1659,7 @@ function parseMessage(data) {
 
 	let eventTagBlock = renderEventTagBlock(data, wrapperElement);
 
-	let messageBlock = renderMessageBlock(data, rootElement);
+	let messageBlock = await renderMessageBlock(data, rootElement);
 	wrapperElement.append(messageBlock);
 
 	messageWrapper.append(wrapperElement);
@@ -1724,6 +1742,21 @@ function parseMessage(data) {
 	if(doSound) {
 		playSound("newMsg");
 	}
+
+	/*const emoteBlocks = messageBlock.find(".emote img").toArray();
+	for(const block of emoteBlocks) {
+		if("src" in block.dataset) {
+			block.onload = function() {
+				if(this.src.substr(0, 4) === "blob") {
+					console.log(`revoking blob object, we're done (${this.src})`);
+					URL.revokeObjectURL(this.src);
+				}
+			}
+			setTimeout(function() {
+				block.src = block.dataset.src;
+			}, 33); // sigh
+		}
+	}*/
 }
 
 function render7TVBadges(user, badgeBlock) {

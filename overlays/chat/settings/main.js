@@ -11,8 +11,8 @@ function changeStatusCircle(which, status, msg) {
 
 $("#sensitive .section").show();
 
-const overlayRevision = 42;
-const overlayRevisionTimestamp = 1709145558201;
+const overlayRevision = 44;
+const overlayRevisionTimestamp = 1710491263894;
 $("#revision").text(`revision ${overlayRevision}`);
 
 function resetEverything() {
@@ -133,24 +133,34 @@ function setRow(which, bypassSensitiveCheck) {
 }
 setRow("about");
 
-function addExtraRow(code, name, icon, callback) {
-	if($(`.extraRow[data-tab="${code}"]`).length) {
+function showExtraRow(name) {
+	if($(`.extraRow[data-tab="${name}"]`).is(":visible")) {
 		return;
 	}
 
-	if(!$(".extraHR").length) {
-		$("#rows").append($('<hr class="extraHR"/>'));
+	if(!$(".extraHR").is(":visible")) {
+		$(".extraHR").show();
 	}
-	$("#rows").append(`<div class="row extraRow" data-tab="${code}"><i class="${icon}"></i>${name}</div>`);
-
-	if(typeof callback === "function") {
-		callback();
-	}
+	$(`.extraRow[data-tab="${name}"]`).show();
 }
 
 $("body").on("click", ".row", function(e) {
 	e.preventDefault();
 	setRow($(this).attr("data-tab"));
+});
+
+$("body").on("click", ".rowCollapsable", function(e) {
+	e.preventDefault();
+	const entries = $(`.rowEntries[data-tab="${$(this).attr("data-tab")}"]`);
+	if(entries.is(":visible")) {
+		entries.hide();
+		$(this).removeClass("isCollapsed");
+		$(this).children(".treeIcon").addClass("fa-angle-right").removeClass("fa-angle-down");
+	} else {
+		entries.show();
+		$(this).addClass("isCollapsed");
+		$(this).children(".treeIcon").addClass("fa-angle-down").removeClass("fa-angle-right");
+	}
 });
 
 $('input[type="range"]').on("update", function(e) {

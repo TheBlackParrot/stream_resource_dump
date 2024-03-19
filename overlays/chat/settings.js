@@ -616,23 +616,6 @@ const settingUpdaters = {
 		rootCSS().setProperty("--overlayOutlineBlurRadius", `${parseFloat(value)-1}px`);
 	},
 
-	pronounsAeAer: function(value) { rootCSS().setProperty("--pronouns_aeaer", `"${value}"`); },
-	pronounsAny: function(value) { rootCSS().setProperty("--pronouns_any", `"${value}"`); },
-	pronounsEEm: function(value) { rootCSS().setProperty("--pronouns_eem", `"${value}"`); },
-	pronounsFaeFaer: function(value) { rootCSS().setProperty("--pronouns_faefaer", `"${value}"`); },
-	pronounsHeHim: function(value) { rootCSS().setProperty("--pronouns_hehim", `"${value}"`); },
-	pronounsHeShe: function(value) { rootCSS().setProperty("--pronouns_heshe", `"${value}"`); },
-	pronounsHeThem: function(value) { rootCSS().setProperty("--pronouns_hethem", `"${value}"`); },
-	pronounsItIts: function(value) { rootCSS().setProperty("--pronouns_itits", `"${value}"`); },
-	pronounsOther: function(value) { rootCSS().setProperty("--pronouns_other", `"${value}"`); },
-	pronounsPerPer: function(value) { rootCSS().setProperty("--pronouns_perper", `"${value}"`); },
-	pronounsSheHer: function(value) { rootCSS().setProperty("--pronouns_sheher", `"${value}"`); },
-	pronounsSheThem: function(value) { rootCSS().setProperty("--pronouns_shethem", `"${value}"`); },
-	pronounsTheyThem: function(value) { rootCSS().setProperty("--pronouns_theythem", `"${value}"`); },
-	pronounsVeVer: function(value) { rootCSS().setProperty("--pronouns_vever", `"${value}"`); },
-	pronounsXeXem: function(value) { rootCSS().setProperty("--pronouns_xexem", `"${value}"`); },
-	pronounsZieHir: function(value) { rootCSS().setProperty("--pronouns_ziehir", `"${value}"`); },
-
 	badgeBorderRadius: function(value) {
 		rootCSS().setProperty("--badgeBorderRadius", `${value}px`);
 	},
@@ -1406,9 +1389,37 @@ const settingUpdaters = {
 	},
 	badgeBorderStyle: function(value) {
 		rootCSS().setProperty("--badgeBorderStyle", value);
+	},
+	pronounsSeparator: function(value) {
+		twitchUsers.refreshPronounStrings();
+	},
+	enableAvatarsAsBackground: function(value) {
+		checkAvatarPermissions();
 	}
 };
 settingUpdaters["chatHideAccounts"](localStorage.getItem("setting_chatHideAccounts"));
+
+function checkAvatarPermissions() {
+	for(const id in twitchUsers) {
+		if(id === -1) {
+			continue;
+		}
+
+		const user = twitchUsers[id];
+
+		if(user.avatarEnabled) {
+			$(`.chatBlock[data-userid="${id}"] .pfp`).show();
+			if(localStorage.getItem("setting_enableAvatarsAsBackground") === "true") {
+				$(`.chatBlock[data-userid="${id}"] .avatarBGWrapper`).show();
+			} else {
+				$(`.chatBlock[data-userid="${id}"] .avatarBGWrapper`).hide();
+			}
+		} else {
+			$(`.chatBlock[data-userid="${id}"] .pfp`).hide();
+			$(`.chatBlock[data-userid="${id}"] .avatarBGWrapper`).hide();
+		}
+	}
+}
 
 function updateSetting(which, value, oldValue) {
 	if(which.indexOf("setting_") === -1) {
@@ -1420,6 +1431,10 @@ function updateSetting(which, value, oldValue) {
 	if(setting in settingUpdaters) {
 		console.log(`setting ${setting} updated`);
 		settingUpdaters[setting](value, oldValue);
+	}
+
+	if(setting.indexOf("avatarAllowed") !== -1) {
+		checkAvatarPermissions();
 	}
 }
 window.addEventListener("storage", function(event) {

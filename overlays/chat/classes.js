@@ -65,7 +65,32 @@ class Emote {
 	}
 
 	get url() {
-		return this.urls[(localStorage.getItem("setting_useLowQualityImages") === "true" ? "low" : "high")];
+		const argh = this;
+		const url = this.urls[(localStorage.getItem("setting_useLowQualityImages") === "true" ? "low" : "high")];
+
+		return new Promise(async function(resolve, reject) {
+			if(argh.cacheObject) {
+				resolve(argh.cacheObject);
+				return;
+			}
+
+			if(argh.service === "bttv" || argh.service === "7tv") {
+				resolve(url);
+				return;
+			}
+
+			const cacheStorage = await caches.open("emoteCache");
+
+			var cachedResponse = await cacheStorage.match(url);
+			if(!cachedResponse) {
+				await cacheStorage.add(url);
+				cachedResponse = await cacheStorage.match(url);
+			}
+
+			const blob = await cachedResponse.blob();
+			argh.cacheObject = URL.createObjectURL(blob);
+			resolve(argh.cacheObject);
+		});
 	}
 
 	get enabled() {
@@ -153,11 +178,12 @@ class User {
 		this.entitlements.sevenTV.paint = ref_id;
 	}
 
-	getProminentColor() {
-		// calling this in a very specific spot in messages.js because i can't await in a constructor, grrr
-		let argh = this;
+	async refreshProminentColor() {
+		var argh = this;
+		const cacheStorage = await caches.open("avatarCache-v2");
+		var response = await cacheStorage.match(this.avatar);
 
-		return new Promise(function(resolve, reject) {
+		return new Promise(async function(resolve, reject) {
 			if(parseInt(argh.id) === -1) {
 				resolve("var(--defaultNameColor)");
 				return;
@@ -168,7 +194,14 @@ class User {
 				return;
 			}
 
-			Vibrant.from(argh.avatarImage).maxColorCount(80).getPalette().then(function(swatches) {
+			// hacky workaround as vibrant doesn't support loading from blob objects
+			const blob = await response.blob();
+			const bitmap = await createImageBitmap(blob);
+			let canvas = document.createElement('canvas');
+			let ctx = canvas.getContext('2d');
+			ctx.drawImage(bitmap, 0, 0);
+
+			Vibrant.from(canvas.toDataURL("image/png")).maxColorCount(80).getPalette().then(function(swatches) {
 				console.log(swatches);
 
 				let wantedSwatch = swatches["Vibrant"];
@@ -186,7 +219,8 @@ class User {
 					}
 				}
 
-				resolve(wantedSwatch.getHex());
+				argh.entitlements.overlay.prominentColor = wantedSwatch.getHex();
+				resolve(argh.entitlements.overlay.prominentColor);
 			}).catch(function() {
 				resolve("var(--defaultNameColor)");
 			});
@@ -262,45 +296,92 @@ class User {
 		renderFFZBadges(this, $(`.chatBlock[data-userid="${this.id}"] .badges`));
 	}
 
-	async updateAvatar() {
-		let argh = this;
+	async refreshCachedAvatar() {
+		const cacheStorage = await caches.open("avatarCache-v2");
+		await cacheStorage.delete(this.avatar);
+		if(this.avatarImage) {
+			URL.revokeObjectURL(this.avatarImage);
+		}
 
-		return new Promise(async function(resolve, reject) {
-			if(parseInt(argh.id) === -1) {
-				resolve(null);
-				return;
+		// in case the URL for the user's avatar also changes
+		const response = await callTwitchAsync({
+			endpoint: "users",
+			args: {
+				id: this.id
 			}
-
-			if(argh.avatarImage !== null) {
-				resolve(argh.avatarImage);
-				return;
-			}
-
-			var cachedResponse = await getCachedResponse("avatarCache", argh.avatar);
-			var blob;
-
-			if(cachedResponse) {
-				blob = await cachedResponse.blob();
-			} else {
-				resolve(null);
-				return;
-			}
-
-			if(blob) {
-				argh.avatarImage = await compressBlob(blob, parseInt(localStorage.getItem("setting_avatarSize")) * 2, 80);
-			} else {
-				resolve(null);
-				return;				
-			}
-
-			if(argh.avatarEnabled) {
-				$(`.chatBlock[data-userid="${argh.id}"] .pfp`).fadeOut(250, function() {
-					$(argh).attr("src", argh.avatarImage).fadeIn(250);
-				});
-			}
-
-			resolve(argh.avatarImage);
 		});
+
+		let data = response.data[0];
+		this.avatar = data.profile_image_url;
+
+		const success = await this.cacheAvatar();
+		if(success) {
+			let argh = this;
+			$(`.chatBlock[data-userid="${argh.id}"] .pfp`).fadeOut(250, function() {
+				$(this).attr("src", argh.avatarImage).fadeIn(250);
+			});
+		}
+	}
+
+	async cacheAvatar() {
+		if(!this.avatar) {
+			console.log(`avatar field on ${this.id} was empty, re-fetching`);
+			const response = await callTwitchAsync({
+				endpoint: "users",
+				args: {
+					id: this.id
+				}
+			});
+
+			let data = response.data[0];
+			this.avatar = data.profile_image_url;
+		}
+
+		const cacheStorage = await caches.open("avatarCache-v2");
+		var cachedResponse = await cacheStorage.match(this.avatar);
+
+		if(!cachedResponse) {
+			console.log(`caching avatar for ${this.username}`);
+
+			const blob = await fetchBlob(this.avatar);
+			if(!blob) {
+				return false;
+			}
+			const size = parseInt(localStorage.getItem("setting_avatarSize")) * 2;
+			const compressed = await compressAvatarBlob(blob, size, 0.8, false);
+			const response = new Response(compressed.data, {
+				headers: {
+					'Content-Type': compressed.type,
+					'X-Cache-Timestamp': Date.now(),
+					'X-Cache-Image-Size': size
+				}
+			});
+			await cacheStorage.put(this.avatar, response);
+
+			this.avatarImage = URL.createObjectURL(compressed.data);
+			await this.refreshProminentColor();
+		} else {
+			if(!cachedResponse.ok) { return false; }
+
+			const timestamp = parseInt(cachedResponse.headers.get("X-Cache-Timestamp"));
+			const size = parseInt(localStorage.getItem("setting_avatarSize")) * 2;
+			const oldSize = parseInt(cachedResponse.headers.get("X-Cache-Image-Size"));
+
+			if(Date.now() - timestamp > 604800000 || size !== oldSize) {
+				// 1 week, refetch
+				console.log(`cached avatar for ${this.username} is stale, re-fetching...`);
+				cacheStorage.delete(this.avatar);
+				URL.revokeObjectURL(this.avatarImage);
+				return await this.cacheAvatar();
+			} else {
+				const blob = await cachedResponse.blob();
+				this.avatarImage = URL.createObjectURL(blob);
+			}
+
+			await this.refreshProminentColor();
+		}
+
+		return true;
 	}
 
 	get avatarEnabled() {
@@ -402,10 +483,11 @@ class UserSet {
 			userDataRaw = response.data[0];
 			console.log(userDataRaw);
 		} else {
+			// profile_image_url: `twemoji/svg/${(0x1f300 + Math.ceil(Math.random() * 8)).toString(16)}.svg`,
 			userDataRaw = {
 				display_name: `Chat Overlay (r${overlayRevision})`,
 				login: "<system>",
-				profile_image_url: `twemoji/svg/${(0x1f300 + Math.ceil(Math.random() * 8)).toString(16)}.svg`,
+				profile_image_url: `icons/1f9e9.png`,
 				broadcaster_type: null,
 				created_at: Date.now()
 			}

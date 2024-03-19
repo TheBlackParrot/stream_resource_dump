@@ -1,6 +1,6 @@
 @keyframes userInfoInKF {
 	0% {
-		transform: translate3d(0px, 20px, 0px);
+		transform: translate3d(0px, 10px, 0px);
 	}
 
 	100% {
@@ -141,7 +141,6 @@
 	animation-iteration-count: 1;
 	animation-timing-function: var(--animationsInTimingFunc);
 	transform-origin: var(--animationsInOriginPoint);
-	animation-delay: 0.25s;
 }
 .slideOut {
 	animation-name: messageOutKF;

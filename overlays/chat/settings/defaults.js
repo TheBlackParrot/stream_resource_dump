@@ -117,7 +117,14 @@ const nonPublicSettings = [
 	"datapuller_port",
 	"beatSaberDataMod",
 	"bs_forceBeatSaverData",
-	"bs_maxCollaborators"
+	"bs_maxCollaborators",
+	"clips_durationPreferenceMin",
+	"clips_durationPreferenceMax",
+	"clips_onlyFetchFeatured",
+	"clips_showDelay",
+	"clips_hideCutoff",
+	"clips_listSize",
+	"clips_useRandom"
 ];
 
 const defaultConfig = {
@@ -777,7 +784,18 @@ const defaultConfig = {
 	"beatSaberDataMod": "bsplus",
 	"bs_forceBeatSaverData": "false",
 	"bs_maxCollaborators": "5",
-	"bs_renderArtLower": "false"
+	"bs_renderArtLower": "false",
+	"clips_durationPreferenceMin": "10",
+	"clips_durationPreferenceMax": "30",
+	"clips_onlyFetchFeatured": "true",
+	"clips_showDelay": "2.5",
+	"clips_hideCutoff": "1.5",
+	"clips_listSize": "20",
+	"clips_useRandom": "true",
+	"clips_videoHeight": "360",
+	"clips_enableAnimations": "true",
+	"clips_triggerCommand": "!clip"
+
 };
 // i typed out the bigNoNoWords so you don't have to, i'm sorry :(
 // it's gotta know what to remove

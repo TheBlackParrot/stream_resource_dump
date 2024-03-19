@@ -1,4 +1,99 @@
 {
+	"9999999999999": {
+		"updates": {
+			"clips": {
+				"revision": 1,
+				"notes": [
+					[
+						"new overlay for clips since others bother me in various ways"
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 44,
+				"notes": [
+					[
+						"(update only contains new settings)"
+					]
+				]
+			}
+		}
+	},
+
+	"1710491263894": {
+		"updates": {
+			"chat": {
+				"revision": 43,
+				"notes": [
+					[
+						"improved avatar caching, processed image data is now what's cached over raw responses",
+						["this is moreso to cut down on network requests while i'm working on the overlay, as i forcibly disable caching. some things (like static images) really need to continue being cached though"]
+					],
+					[
+						"fixed emotes failing to fetch if broadcaster has a 7TV account but does not have an active emote set"
+					],
+					[
+						"fixed !refreshpfp not refreshing the user's avatar correctly"
+					],
+					[
+						"set the overlay system's avatar to a static image",
+						["for some reason createImageBitmap fails on SVG blobs, but not URLs pointing to SVG files??? what"]
+					],
+					[
+						"fixed private BTTV channel emotes overwriting public emotes added to the channel"
+					],
+					[
+						"fixed users that only have 1 bit badges sometimes failing to have any messages appear"
+					],
+					[
+						"avatars that are PNGs now remain cached as a PNG internally"
+					],
+					[
+						"avatar display permissions now reflect changes on previously sent messages"
+					],
+					[
+						"avatar background effect toggle now reflects the setting's state on previously sent messages"
+					],
+					[
+						"removed an extra avatar background element being created that was never actually used"
+					],
+					[
+						"removed animation delay on in-animations for message blocks as it's now pretty much waiting on data to be received before actually rendering things to the DOM now"
+					],
+					[
+						"FFZ and twitch emotes are now cached internally"
+					],
+					[
+						"fixed animated FFZ emotes not animating"
+					],
+					[
+						"cached avatars now expire after a week, or if the current avatar size setting doesn't match up with the cached avatar size"
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 43,
+				"notes": [
+					[
+						"each primary section of the sidebar is now a collapsable submenu",
+						["for those of you who don't use the chat overlay but use other pieces of the overlay suite, this should make things a bit cleaner for y'all :)"]
+					],
+					[
+						"reordered some sections within setting pages"
+					],
+					[
+						"added a button to clear cached avatars in the chat's avatars tab"
+					],
+					[
+						"added a button to clear cached emotes in the chat's emotes tab"
+					]
+				]
+			}
+		}
+	},
+
 	"1709870431919": {
 		"updates": {
 			"bs": {

@@ -392,9 +392,7 @@ function initEmoteSet() {
 	}
 }
 
-async function compressImage(url, size, quality) {
-	console.log(`compressing image ${url} to ${size}x${size}`);
-
+async function fetchBlob(url) {
 	const controller = new AbortController();
 	const timedOutID = setTimeout(() => controller.abort(), parseInt(localStorage.getItem("setting_ajaxTimeout")) * 1000);
 
@@ -402,43 +400,43 @@ async function compressImage(url, size, quality) {
 	try {
 		response = await fetch(url, { signal: controller.signal });
 	} catch(err) {
-		console.log("failed to fetch image");
+		console.log(`failed to fetch ${url}`);
 		return null;
 	}
 
 	if(!response.ok) {
-		console.log("failed to fetch image");
+		console.log(`failed to fetch ${url}, response was not ok`);
 		return null;
 	}
 
+	const type = response.headers.get("Content-Type");
 	const blob = await response.blob();
-	return await compressBlob(blob, size, quality);
+
+	return {type: type, blob: blob};
 }
 
-async function compressBlob(blob, size, quality) {
-	const bitmap = await createImageBitmap(blob);
+async function compressAvatarBlob(blob, size, quality, encode) {
+	const bitmap = await createImageBitmap(blob.blob);
 
 	let canvas = document.createElement('canvas');
 	let ctx = canvas.getContext('2d');
-
+	
 	canvas.height = canvas.width = size;
-
 	ctx.drawImage(bitmap, 0, 0, size, size);
-	return canvas.toDataURL("image/jpeg", quality);
-}
 
-async function getCachedResponse(cacheObject, url) {
-	const cacheStorage = await caches.open(cacheObject);
-	var cachedResponse = await cacheStorage.match(url);
-
-	if(!cachedResponse) {
-		await cacheStorage.add(url);
-		cachedResponse = await cacheStorage.match(url);
-
-		if(!cachedResponse.ok) { return false; }
+	if(encode) {
+		if(blob.type !== "image/png") {
+			return {data: canvas.toDataURL("image/jpeg", quality), type: "image/jpeg"};
+		} else {
+			return {data: canvas.toDataURL("image/png"), type: "image/png"};
+		}
 	} else {
-		if(!cachedResponse.ok) { return false; }
+		if(blob.type !== "image/png") {
+			const newBlob = await new Promise(resolve => canvas.toBlob(resolve, "image/jpeg", quality));
+			return {data: newBlob, type: "image/jpeg"};
+		} else {
+			const newBlob = await new Promise(resolve => canvas.toBlob(resolve, "image/png"));
+			return {data: newBlob, type: "image/png"};
+		}
 	}
-
-	return cachedResponse;
 }

@@ -36,22 +36,75 @@
 			<div id="rows">
 				<div class="row" data-tab="about"><i class="fas fa-heart"></i>About</div>
 				<div class="row" data-tab="updates"><i class="fas fa-star"></i>Updates <span class="newUpdates"></span></div>
+				
 				<hr/>
+
 				<div class="row" data-tab="auth"><i class="fas fa-user-shield"></i>Authentication</div>
 				<div class="row" data-tab="connections"><i class="fas fa-plug"></i>Connections</div>
-				<hr/>
-				<div class="row" data-tab="appearance"><i class="fas fa-palette"></i>Appearance</div>
-				<div class="row" data-tab="effects"><i class="fas fa-magic"></i>Effects</div>
-				<div class="row" data-tab="function"><i class="fas fa-cogs"></i>Function</div>
-				<div class="row" data-tab="sounds"><i class="fas fa-volume-up"></i>Sounds</div>
-				<hr/>
-				<div class="row" data-tab="avatars"><i class="fas fa-image"></i>Avatars</div>
-				<div class="row" data-tab="badges"><i class="fas fa-square"></i>Badges</div>
-				<div class="row" data-tab="emotes"><i class="fas fa-grin-squint-tears"></i>Emotes</div>
-				<div class="row" data-tab="flags"><i class="fas fa-flag"></i>Flags</div>
-				<div class="row" data-tab="pronouns"><i class="fas fa-user"></i>Pronouns</div>
-				<hr/>
-				<div class="row" data-tab="external"><i class="fas fa-cubes"></i>External Services</div>
+
+				<hr class="extraHR"/>
+
+				<div class="rowCollapsable extraRow" data-tab="bsinfo"><i class="fas fa-angle-right treeIcon"></i> <i class="icon bs"></i>BS Overlay</div>
+				<div class="rowEntries" data-tab="bsinfo">
+					<div class="row" data-tab="bsinfo_layout"><i class="fas fa-table-cells-large"></i>Layout</div>
+					<hr/>
+					<div class="row" data-tab="bsinfo_acc"><i class="fas fa-bullseye"></i>Accuracy Cell</div>
+					<div class="row" data-tab="bsinfo_art"><i class="fas fa-image"></i>Cover Art Cell</div>
+					<div class="row" data-tab="bsinfo_hitmiss"><i class="fas fa-xmark"></i>Hit / Miss Cell</div>
+					<div class="row" data-tab="bsinfo_misc"><i class="fas fa-circle-info"></i>Miscellaneous Info Cell</div>
+					<div class="row" data-tab="bsinfo_metadata"><i class="fas fa-compact-disc"></i>Song Metadata Cell</div>
+					<hr/>
+					<div class="row" data-tab="bsinfo_effects"><i class="fas fa-magic"></i>Effects</div>
+				</div>
+
+				<div class="row extraRow" data-tab="bsvodaudio"><i class="icon bs"></i>BS VOD Audio</div>
+
+				<div class="rowCollapsable extraRow" data-tab="chat"><i class="fas fa-angle-right treeIcon"></i> <i class="fas fa-comments"></i>Chat</div>
+				<div class="rowEntries" data-tab="chat">
+					<div class="row" data-tab="appearance"><i class="fas fa-palette"></i>Appearance</div>
+					<div class="row" data-tab="effects"><i class="fas fa-magic"></i>Effects</div>
+					<div class="row" data-tab="function"><i class="fas fa-cogs"></i>Function</div>
+					<div class="row" data-tab="sounds"><i class="fas fa-volume-up"></i>Sounds</div>
+					<hr/>
+					<div class="row" data-tab="avatars"><i class="fas fa-image"></i>Avatars</div>
+					<div class="row" data-tab="badges"><i class="fas fa-square"></i>Badges</div>
+					<div class="row" data-tab="emotes"><i class="fas fa-grin-squint-tears"></i>Emotes</div>
+					<div class="row" data-tab="flags"><i class="fas fa-flag"></i>Flags</div>
+					<div class="row" data-tab="pronouns"><i class="fas fa-user"></i>Pronouns</div>
+					<hr/>
+					<div class="row" data-tab="external"><i class="fas fa-cubes"></i>External Services</div>
+				</div>
+
+				<div class="rowCollapsable extraRow" data-tab="clips"><i class="fas fa-angle-right treeIcon"></i> <i class="fas fa-clapperboard"></i>Twitch Clips</div>
+				<div class="rowEntries" data-tab="clips">
+					<div class="row" data-tab="clips_appearance"><i class="fas fa-palette"></i>Appearance</div>
+					<div class="row" data-tab="clips_layout"><i class="fas fa-table-cells-large"></i>Layout</div>
+					<hr/>
+					<div class="row" data-tab="clips_function"><i class="fas fa-cogs"></i>Function</div>
+					<hr/>
+					<div class="row" data-tab="clips_effects"><i class="fas fa-magic"></i>Effects</div>
+				</div>
+
+				<div class="rowCollapsable extraRow" data-tab="clock"><i class="fas fa-angle-right treeIcon"></i> <i class="fas fa-clock"></i>Clock</div>
+				<div class="rowEntries" data-tab="clock">
+					<div class="row" data-tab="clock_layout"><i class="fas fa-table-cells-large"></i>Layout</div>
+					<hr/>
+					<div class="row" data-tab="clock_headers"><i class="fas fa-bookmark"></i>Headers</div>
+					<div class="row" data-tab="clock_clock"><i class="fas fa-clock"></i>Values</div>
+					<hr/>
+					<div class="row" data-tab="clock_effects"><i class="fas fa-magic"></i>Effects</div>
+				</div>
+
+				<div class="rowCollapsable extraRow" data-tab="spotify"><i class="fas fa-angle-right treeIcon"></i> <i class="fab fa-spotify"></i>Now Playing</div>
+				<div class="rowEntries" data-tab="spotify">
+					<div class="row" data-tab="spotify_layout"><i class="fas fa-table-cells-large"></i>Layout</div>
+					<hr/>
+					<div class="row" data-tab="spotify_art"><i class="fas fa-image"></i>Cover Art</div>
+					<div class="row" data-tab="spotify_metadata"><i class="fas fa-compact-disc"></i>Metadata</div>
+					<div class="row" data-tab="spotify_scannables"><i class="fas fa-barcode"></i>Scannables</div>
+					<hr/>
+					<div class="row" data-tab="spotify_effects"><i class="fas fa-magic"></i>Effects</div>
+				</div>
 			</div>
 			<div id="sideButtons">
 				<div class="button" id="sendTestButton"><i class="fas fa-comment-dots"></i> Test Message</div>
@@ -2472,6 +2525,16 @@
 						</div>
 					</div>
 				</div>
+				<div class="part">
+					<hr/>
+					<div class="setting">
+						<div class="settingCell centerSetting">
+							<div class="button" id="clearAvatarCacheButton">
+								<i class="fa-solid fa-trash-can"></i> Clear Cached Avatars
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 			<div class="section" data-content="pronouns">
 				<div class="part">
@@ -2864,6 +2927,14 @@
 					</div>
 					<div class="setting">
 						<div class="settingCellLabel">
+							<strong>Twitch Clip Overlay</strong>
+						</div>
+						<div class="settingCell">
+							<div class="statusCircle grayCircle" id="ClipsOverlayStatus"></div> <div class="statusMessage grayMessage">inactive</div>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
 							<strong>Clock Overlay</strong>
 						</div>
 						<div class="settingCell">
@@ -3125,6 +3196,16 @@
 					<div class="setting" data-dependent="cheermotes">
 						<div class="settingCell">
 							<input checked id="chatShowCheermotesAnimated" type="checkbox"/> <span class="settingInfo">Use the animated versions of Cheermotes</span>
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<hr/>
+					<div class="setting">
+						<div class="settingCell centerSetting">
+							<div class="button" id="clearEmoteCacheButton">
+								<i class="fa-solid fa-trash-can"></i> Clear Cached Emotes
+							</div>
 						</div>
 					</div>
 				</div>
@@ -3412,7 +3493,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="section" data-content="spotify">
+			<div class="section" data-content="spotify_layout">
 				<div class="part">
 					<h1>Layout</h1>
 					<div class="setting">
@@ -3463,179 +3544,67 @@
 					</div>
 				</div>
 				<div class="part">
-					<h1>Scannables</h1>
-					<div class="setting">
+					<h1>Timers</h1>
+					<div class="setting" data-dependent="spotify_enableArtOutlineProgress">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Song progress interval</span>
+						</div>
 						<div class="settingCell">
-							<input checked id="spotify_enableScannable" type="checkbox" data-dependent="spotify_enableScannable"/> <span class="settingInfo">Display a scannable code linking directly to the currently playing track</span>
+							<input type="number" id="spotify_progressInterval" min="0.1" max="10" step="0.1" value="1"/><span class="settingCellMeasurement">seconds</span>
 						</div>
 					</div>
 					<hr/>
 					<div class="setting">
-						<div class="settingCellLabel" data-dependent="spotify_enableScannable">
-							<span class="settingInfo">Height</span>
+						<div class="settingCellLabel">
+							<span class="settingInfo">Refresh interval</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="spotify_scannableHeight" min="0" max="256" step="1" value="48"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel" data-dependent="spotify_enableScannable">
-							<span class="settingInfo">Border radius</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="spotify_scannableBorderRadius" min="0" max="64" step="1" value="16"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCell" data-dependent="spotify_enableScannable">
-							<input id="spotify_scannableUseBlack" type="checkbox"/> <span class="settingInfo">Use lighter album art color for the background color</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCell" data-dependent="spotify_enableScannable">
-							<input id="spotify_scannableFGDark" type="checkbox"/> <span class="settingInfo">Use black foreground color</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCell" data-dependent="spotify_enableScannable">
-							<input checked id="spotify_useInvertedFGIfNeeded" type="checkbox"/> <span class="settingInfo">Automatically determine foreground color</span>
+							<input type="number" id="spotify_refreshInterval" min="1" max="30" step="0.5" value="15"/><span class="settingCellMeasurement">seconds</span>
 						</div>
 					</div>
 					<div class="setting">
 						<div class="settingCellLabel">
-							<span class="settingInfo">Invert threshold</span>
+							<span class="settingInfo">New song refresh delay</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="spotify_invertFGThreshold" min="0" max="100" step="1" value="56"/><span class="settingCellMeasurement">%</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCell smol">
-							(0% is equivalent to full black, 100% is equivalent to full white)
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCell" data-dependent="spotify_enableScannable">
-							<input id="spotify_scannableUsesCustomBGColor" type="checkbox"/> <span class="settingInfo">Force a custom background color</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="spotify_enableScannable">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Background color</span>
-						</div>
-						<div class="settingCell">
-							<input id="spotify_scannableCustomBGColor" type="text" data-coloris value="#333333FF"/>
-						</div>
-					</div>
-					<!--
-					<div class="setting" data-dependent="spotify_enableScannable">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Foreground color</span>
-						</div>
-						<div class="settingCell">
-							<input id="spotify_scannableFGColor" type="text" data-coloris value="#FFFFFFFF"/>
-						</div>
-					</div>
-					-->
-					<hr/>
-					<div class="setting">
-						<div class="settingCell">
-							<input checked id="spotify_enableScannableGradient" type="checkbox" data-dependent="spotify_enableScannableGradient"/> <span class="settingInfo">Apply a gradient to scannables</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="spotify_enableScannableGradient">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Colors</span>
-						</div>
-						<div class="settingCell">
-							<input id="spotify_scannableGradientColorStart" type="text" data-coloris value="#FFFFFFFF"/><i class="fas fa-long-arrow-alt-right"></i><input id="spotify_scannableGradientColorEnd" type="text" data-coloris value="#333333FF"/>
-						</div>
-					</div>
-					<div class="setting" data-dependent="spotify_enableScannableGradient">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Angle</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="spotify_scannableGradientAngle" min="-360" max="360" step="1" value="170"/><span class="settingCellMeasurement">deg</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="spotify_enableScannableGradient">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Gradient runs from</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="spotify_scannableGradientPercentStart" min="-300" max="300" step="1" value="10"/><span class="settingCellMeasurement">%</span><i class="fas fa-long-arrow-alt-right"></i><input type="number" id="spotify_scannableGradientPercentEnd" min="-300" max="300" step="1" value="80"/><span class="settingCellMeasurement">%</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="spotify_enableScannableGradient">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Blending mode</span>
-						</div>
-						<div class="settingCell">
-							<select id="spotify_scannableGradientBlendMode">
-								<option value="normal">Normal</option>
-								<option value="overlay">Overlay</option>
-								<option value="multiply">Multiply</option>
-								<option value="screen">Screen</option>
-								<option value="darken">Darken</option>
-								<option value="lighten">Lighten</option>
-								<option value="color-dodge">Color dodge</option>
-								<option value="color-burn">Color burn</option>
-								<option value="hard-light">Hard light</option>
-								<option selected value="soft-light">Soft light</option>
-								<option value="difference">Difference</option>
-								<option value="exclusion">Exclusion</option>
-								<option value="hue">Hue</option>
-								<option value="saturation">Saturation</option>
-								<option value="color">Color</option>
-								<option value="luminosity">Luminosity</option>
-								<option value="plus-lighter">Plus lighter</option>
-								<!-- plus-darker is missing as of Vivaldi 6.2.3105.45, going to assume the same goes for OBS's CEF -->
-								<!--<option value="plus-darker">Plus darker</option>-->
-							</select>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCell">
-							<input id="spotify_enableScannableOutlines" type="checkbox" data-dependent="spotify_enableScannableOutlines"/> <span class="settingInfo">Enable outlines around scannables</span>
-						</div>
-					</div>
-					<div class="setting disabled" data-dependent="spotify_enableScannableOutlines">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Color</span>
-						</div>
-						<div class="settingCell">
-							<input id="spotify_scannableOutlinesColor" type="text" data-coloris value="#FFFFFF40"/>
-						</div>
-					</div>
-					<div class="setting disabled" data-dependent="spotify_enableScannableOutlines">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Size</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="spotify_scannableOutlinesSize" min="0" max="8" step="1" value="1"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<div class="setting disabled" data-dependent="spotify_enableScannableOutlines">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Style</span>
-						</div>
-						<div class="settingCell">
-							<select id="spotify_scannableOutlinesStyle">
-								<option value="dashed">Dashed</option>
-								<option value="dotted">Dotted</option>
-								<option value="double">Double</option>
-								<option value="groove">Groove</option>
-								<option value="inset">Inset</option>
-								<option value="outset">Outset</option>
-								<option value="ridge">Ridge</option>
-								<option selected value="solid">Solid</option>
-							</select>
+							<input type="number" id="spotify_waitCheck" min="0" max="3" step="0.05" value="0.5"/><span class="settingCellMeasurement">seconds</span>
 						</div>
 					</div>
 				</div>
+				<div class="part">
+					<h1>Marquee</h1>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="spotify_enableMarquee" type="checkbox" data-dependent="spotify_enableMarquee"/> <span class="settingInfo">Scroll the title if it extends outside the boundaries of the page/source</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableMarquee">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Delay between scroll loops</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_marqueeDelay" min="0" max="30" step="0.5" value="7"/><span class="settingCellMeasurement">seconds</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableMarquee">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Gap between scroll loops</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_marqueeGap" min="0" max="9999" step="1" value="100"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableMarquee">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Scroll speed</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_marqueeSpeed" min="1" max="9999" step="1" value="20"/><span class="settingCellMeasurement">px / second</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section" data-content="spotify_art">
 				<div class="part">
 					<h1>Cover Art</h1>
 					<div class="setting">
@@ -3755,6 +3724,8 @@
 						</div>
 					</div>
 				</div>
+			</div>
+			<div class="section" data-content="spotify_metadata">
 				<div class="part">
 					<h1>Title</h1>
 					<div class="setting">
@@ -3953,6 +3924,184 @@
 						</div>
 					</div>
 				</div>
+			</div>
+			<div class="section" data-content="spotify_scannables">
+				<div class="part">
+					<h1>Scannables</h1>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="spotify_enableScannable" type="checkbox" data-dependent="spotify_enableScannable"/> <span class="settingInfo">Display a scannable code linking directly to the currently playing track</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel" data-dependent="spotify_enableScannable">
+							<span class="settingInfo">Height</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_scannableHeight" min="0" max="256" step="1" value="48"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel" data-dependent="spotify_enableScannable">
+							<span class="settingInfo">Border radius</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_scannableBorderRadius" min="0" max="64" step="1" value="16"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell" data-dependent="spotify_enableScannable">
+							<input id="spotify_scannableUseBlack" type="checkbox"/> <span class="settingInfo">Use lighter album art color for the background color</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell" data-dependent="spotify_enableScannable">
+							<input id="spotify_scannableFGDark" type="checkbox"/> <span class="settingInfo">Use black foreground color</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell" data-dependent="spotify_enableScannable">
+							<input checked id="spotify_useInvertedFGIfNeeded" type="checkbox"/> <span class="settingInfo">Automatically determine foreground color</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Invert threshold</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_invertFGThreshold" min="0" max="100" step="1" value="56"/><span class="settingCellMeasurement">%</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell smol">
+							(0% is equivalent to full black, 100% is equivalent to full white)
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell" data-dependent="spotify_enableScannable">
+							<input id="spotify_scannableUsesCustomBGColor" type="checkbox"/> <span class="settingInfo">Force a custom background color</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableScannable">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Background color</span>
+						</div>
+						<div class="settingCell">
+							<input id="spotify_scannableCustomBGColor" type="text" data-coloris value="#333333FF"/>
+						</div>
+					</div>
+					<!--
+					<div class="setting" data-dependent="spotify_enableScannable">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Foreground color</span>
+						</div>
+						<div class="settingCell">
+							<input id="spotify_scannableFGColor" type="text" data-coloris value="#FFFFFFFF"/>
+						</div>
+					</div>
+					-->
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="spotify_enableScannableGradient" type="checkbox" data-dependent="spotify_enableScannableGradient"/> <span class="settingInfo">Apply a gradient to scannables</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableScannableGradient">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Colors</span>
+						</div>
+						<div class="settingCell">
+							<input id="spotify_scannableGradientColorStart" type="text" data-coloris value="#FFFFFFFF"/><i class="fas fa-long-arrow-alt-right"></i><input id="spotify_scannableGradientColorEnd" type="text" data-coloris value="#333333FF"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableScannableGradient">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Angle</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_scannableGradientAngle" min="-360" max="360" step="1" value="170"/><span class="settingCellMeasurement">deg</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableScannableGradient">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Gradient runs from</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_scannableGradientPercentStart" min="-300" max="300" step="1" value="10"/><span class="settingCellMeasurement">%</span><i class="fas fa-long-arrow-alt-right"></i><input type="number" id="spotify_scannableGradientPercentEnd" min="-300" max="300" step="1" value="80"/><span class="settingCellMeasurement">%</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableScannableGradient">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Blending mode</span>
+						</div>
+						<div class="settingCell">
+							<select id="spotify_scannableGradientBlendMode">
+								<option value="normal">Normal</option>
+								<option value="overlay">Overlay</option>
+								<option value="multiply">Multiply</option>
+								<option value="screen">Screen</option>
+								<option value="darken">Darken</option>
+								<option value="lighten">Lighten</option>
+								<option value="color-dodge">Color dodge</option>
+								<option value="color-burn">Color burn</option>
+								<option value="hard-light">Hard light</option>
+								<option selected value="soft-light">Soft light</option>
+								<option value="difference">Difference</option>
+								<option value="exclusion">Exclusion</option>
+								<option value="hue">Hue</option>
+								<option value="saturation">Saturation</option>
+								<option value="color">Color</option>
+								<option value="luminosity">Luminosity</option>
+								<option value="plus-lighter">Plus lighter</option>
+								<!-- plus-darker is missing as of Vivaldi 6.2.3105.45, going to assume the same goes for OBS's CEF -->
+								<!--<option value="plus-darker">Plus darker</option>-->
+							</select>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="spotify_enableScannableOutlines" type="checkbox" data-dependent="spotify_enableScannableOutlines"/> <span class="settingInfo">Enable outlines around scannables</span>
+						</div>
+					</div>
+					<div class="setting disabled" data-dependent="spotify_enableScannableOutlines">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Color</span>
+						</div>
+						<div class="settingCell">
+							<input id="spotify_scannableOutlinesColor" type="text" data-coloris value="#FFFFFF40"/>
+						</div>
+					</div>
+					<div class="setting disabled" data-dependent="spotify_enableScannableOutlines">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_scannableOutlinesSize" min="0" max="8" step="1" value="1"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting disabled" data-dependent="spotify_enableScannableOutlines">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Style</span>
+						</div>
+						<div class="settingCell">
+							<select id="spotify_scannableOutlinesStyle">
+								<option value="dashed">Dashed</option>
+								<option value="dotted">Dotted</option>
+								<option value="double">Double</option>
+								<option value="groove">Groove</option>
+								<option value="inset">Inset</option>
+								<option value="outset">Outset</option>
+								<option value="ridge">Ridge</option>
+								<option selected value="solid">Solid</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section" data-content="spotify_effects">
 				<div class="part">
 					<h1>Filters</h1>
 					<div class="setting">
@@ -4061,67 +4210,10 @@
 						</div>
 					</div>
 				</div>
-				<div class="part">
-					<h1>Function</h1>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Refresh interval</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="spotify_refreshInterval" min="1" max="30" step="0.5" value="15"/><span class="settingCellMeasurement">seconds</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">New song refresh delay</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="spotify_waitCheck" min="0" max="3" step="0.05" value="0.5"/><span class="settingCellMeasurement">seconds</span>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting" data-dependent="spotify_enableArtOutlineProgress">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Song progress interval</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="spotify_progressInterval" min="0.1" max="10" step="0.1" value="1"/><span class="settingCellMeasurement">seconds</span>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCell">
-							<input checked id="spotify_enableMarquee" type="checkbox" data-dependent="spotify_enableMarquee"/> <span class="settingInfo">Scroll the title if it extends outside the boundaries of the page/source</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="spotify_enableMarquee">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Delay between scroll loops</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="spotify_marqueeDelay" min="0" max="30" step="0.5" value="7"/><span class="settingCellMeasurement">seconds</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="spotify_enableMarquee">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Gap between scroll loops</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="spotify_marqueeGap" min="0" max="9999" step="1" value="100"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="spotify_enableMarquee">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Scroll speed</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="spotify_marqueeSpeed" min="1" max="9999" step="1" value="20"/><span class="settingCellMeasurement">px / second</span>
-						</div>
-					</div>
-				</div>
 			</div>
-			<div class="section" data-content="clock">
+			<div class="section" data-content="clock_layout">
 				<div class="part">
+					<h1>Display</h1>
 					<div class="setting">
 						<div class="settingCell">
 							<input checked id="clock_showLocalTime" type="checkbox"/> <span class="settingInfo">Show local/system time</span>
@@ -4135,6 +4227,22 @@
 					<div class="setting">
 						<div class="settingCell">
 							<input id="clock_showAdTimer" type="checkbox"/> <span class="settingInfo">Show time to next ad break</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="clock_use12Hour" type="checkbox" data-dependent="clock_use12Hour"/> <span class="settingInfo">Use 12-hour time format</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="clock_padHour" type="checkbox"/> <span class="settingInfo">Pad leading value with a leading zero</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="clock_ignoreHour" type="checkbox"/> <span class="settingInfo">Hide the hour on timers if the time doesn't exceed 60 minutes</span>
 						</div>
 					</div>
 				</div>
@@ -4209,24 +4317,8 @@
 						</div>
 					</div>
 				</div>
-				<div class="part">
-					<h1>Function</h1>
-					<div class="setting">
-						<div class="settingCell">
-							<input id="clock_use12Hour" type="checkbox" data-dependent="clock_use12Hour"/> <span class="settingInfo">Use 12-hour time format</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCell">
-							<input checked id="clock_padHour" type="checkbox"/> <span class="settingInfo">Pad leading value with a leading zero</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCell">
-							<input checked id="clock_ignoreHour" type="checkbox"/> <span class="settingInfo">Hide the hour on timers if the time doesn't exceed 60 minutes</span>
-						</div>
-					</div>
-				</div>
+			</div>
+			<div class="section" data-content="clock_headers">
 				<div class="part">
 					<h1>Headers</h1>
 					<div class="setting">
@@ -4329,6 +4421,8 @@
 						</div>
 					</div>
 				</div>
+			</div>
+			<div class="section" data-content="clock_clock">
 				<div class="part">
 					<h1>Clock</h1>
 					<div class="setting">
@@ -4473,6 +4567,8 @@
 						</div>
 					</div>
 				</div>
+			</div>
+			<div class="section" data-content="clock_effects">
 				<div class="part">
 					<h1>Filters</h1>
 					<div class="setting">
@@ -4538,7 +4634,149 @@
 			</div>
 			<div class="section" id="updatesSection" data-content="updates">
 			</div>
-			<div class="section" data-content="bsinfo">
+			<div class="section" data-content="bsinfo_effects">
+				<div class="part">
+					<h1>Filters</h1>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="bs_enableShadowEffects" type="checkbox" data-dependent="bs_enableShadowEffects"/> <span class="settingInfo">Draw shadows underneath text content</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="bs_enableShadowEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Color</span>
+						</div>
+						<div class="settingCell">
+							<input id="bs_shadowColor" type="text" data-coloris value="#000000FF"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="bs_enableShadowEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">X offset</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_shadowXOffset" min="-32" max="32" step="0.25" value="0"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="bs_enableShadowEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Y offset</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_shadowYOffset" min="-32" max="32" step="0.25" value="1"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="bs_enableShadowEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Blur amount</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_shadowBlurRadius" min="0" max="32" step="0.25" value="2"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="bs_enableOutlineEffects" type="checkbox" data-dependent="bs_enableOutlineEffects"/> <span class="settingInfo">Draw outlines underneath text content</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="bs_enableOutlineEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Color</span>
+						</div>
+						<div class="settingCell">
+							<input id="bs_outlineColor" type="text" data-coloris value="#000000FF"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="bs_enableOutlineEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_outlineSize" min="0" max="3" step="1" value="1"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="bs_enableBoxShadowEffects" type="checkbox" data-dependent="bs_enableBoxShadowEffects"/> <span class="settingInfo">Draw box shadows underneath image content</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="bs_enableBoxShadowEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Color</span>
+						</div>
+						<div class="settingCell">
+							<input id="bs_boxShadowColor" type="text" data-coloris value="#000000DD"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="bs_enableBoxShadowEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">X offset</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_boxShadowXOffset" min="-32" max="32" step="0.25" value="0"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="bs_enableBoxShadowEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Y offset</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_boxShadowYOffset" min="-32" max="32" step="0.25" value="8"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="bs_enableBoxShadowEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Blur amount</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_boxShadowBlurRadius" min="0" max="32" step="0.25" value="9"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="bs_enableBoxShadowEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Blur inset amount</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_boxShadowBlurInset" min="-32" max="32" step="0.25" value="-5"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Effects</h1>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="bs_desaturateOnPause" type="checkbox" data-dependent="bs_desaturateOnPause"/> <span class="settingInfo">Desaturate the overlay when paused</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="bs_desaturateOnPause">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Desaturate amount</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_desaturateAmount" min="1" max="100" step="0.25" value="100"/><span class="settingCellMeasurement">%</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="bs_desaturateOnPause">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Pause fade transition</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_desaturateFadeInDuration" min="0" max="10" step="0.5" value="0.5"/><span class="settingCellMeasurement">s</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="bs_desaturateOnPause">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Resume fade transition</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_desaturateFadeOutDuration" min="0" max="10" step="0.5" value="2"/><span class="settingCellMeasurement">s</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section" data-content="bsinfo_layout">
 				<div class="part">
 					<h1>Layout</h1>
 					<div class="setting">
@@ -4594,8 +4832,367 @@
 						</div>
 					</div>
 				</div>
+			</div>
+			<div class="section" data-content="bsinfo_acc">
 				<div class="part">
-					<h1>Miscellaneous Info</h1>
+					<h1>Accuracy Cell</h1>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Width</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_accWidth" min="0" max="500" step="1" value="120"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>					
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="bs_flipAccDetails" type="checkbox"/> <span class="settingInfo">Flip vertical order of accuracy / combo</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Horizontal alignment</span>
+						</div>
+						<div class="settingCell">
+							<select id="bs_accAlignment">
+								<option value="left">Left</option>
+								<option selected value="center">Center</option>
+								<option value="right">Right</option>
+							</select>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="bs_animateAccChanges" type="checkbox" data-dependent="animateAcc"/> <span class="settingInfo">Animate accuracy changes</span>
+						</div>
+					</div>	
+					<div class="setting" data-dependent="animateAcc">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Interval</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_animateAccInterval" min="1" max="250" step="1" value="10"/><span class="settingCellMeasurement">ms</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Accuracy color</span>
+						</div>
+						<div class="settingCell">
+							<input id="bs_accColor" type="text" data-coloris value="#FFFFFFFF"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Accuracy font</span>
+						</div>
+						<div class="settingCell">
+							<input id="bs_accFontFamily" type="text" value="Manrope"/>
+							<input id="bs_accFontItalic" type="checkbox"/> <span class="settingInfo">Italic</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Accuracy size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_accFontSize" min="0" max="96" step="0.25" value="27"/><span class="settingCellMeasurement">pt</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Accuracy font weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_accFontWeight" min="0" max="900" step="100" value="900"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Additional accuracy weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_accFontAdditionalWeight" min="0" max="20" step="0.1" value="0"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Accuracy character spacing</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_accLetterSpacing" min="-20" max="20" step="0.1" value="-1"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Combo color</span>
+						</div>
+						<div class="settingCell">
+							<input id="bs_comboColor" type="text" data-coloris value="#FFFFFFFF"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Combo font</span>
+						</div>
+						<div class="settingCell">
+							<input id="bs_comboFontFamily" type="text" value="Manrope"/>
+							<input id="bs_comboFontItalic" type="checkbox"/> <span class="settingInfo">Italic</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Combo size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_comboFontSize" min="0" max="96" step="0.25" value="12"/><span class="settingCellMeasurement">pt</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Combo font weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_comboFontWeight" min="0" max="900" step="100" value="900"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Additional font weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_comboFontAdditionalWeight" min="0" max="20" step="0.1" value="0"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section" data-content="bsinfo_art">
+				<div class="part">
+					<h1>Cover Art Cell</h1>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="bs_useRemoteArtURL" type="checkbox"/> <span class="settingInfo">Use cover art from BeatSaver instead of the in-game texture</span>
+						</div>
+					</div>					
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_artSize" min="1" max="640" step="1" value="52"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Border radius</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_artBorderRadius" min="0" max="64" step="1" value="4"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="bs_enableArtOutline" type="checkbox" data-dependent="bs_enableArtOutline"/> <span class="settingInfo">Display an outline around the album/cover art</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="bs_enableArtOutlineProgress" type="checkbox" data-dependent="bs_enableArtOutlineProgress"/> <span class="settingInfo">Reflect current track progress with the outline</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="bs_enableArtOutline">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Outline size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_artOutlineSize" min="1" max="64" step="1" value="2"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="bs_enableArtOutline">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Outline brightness</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_artOutlineBrightness" min="0" max="500" step="1" value="155"/><span class="settingCellMeasurement">%</span>
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Background Effect</h1>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="bs_enableArtBackground" type="checkbox" data-dependent="bs_enableArtBackground"/> <span class="settingInfo">Display album/cover art underneath overlay content</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="bs_enableArtBackground">
+						<div class="settingCell">
+							<input id="bs_renderArtLower" type="checkbox"/> <span class="settingInfo">Separate the background and overlay content</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="bs_enableArtBackgroundMask" type="checkbox"/> <span class="settingInfo">Add a gradient mask to the album/cover art</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="bs_enableArtBackground">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Mask width</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_artBackgroundMaskWidth" min="0" max="500" step="1" value="80"/><span class="settingCellMeasurement">%</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="bs_enableArtBackground">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Mask height</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_artBackgroundMaskHeight" min="0" max="500" step="1" value="100"/><span class="settingCellMeasurement">%</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="bs_enableArtBackground">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Mask range</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_artBackgroundMaskStart" min="-500" max="500" step="1" value="25"/><span class="settingCellMeasurement">%</span><i class="fas fa-long-arrow-alt-right"></i><input type="number" id="bs_artBackgroundMaskEnd" min="-500" max="500" step="1" value="100"/><span class="settingCellMeasurement">%</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting" data-dependent="bs_enableArtBackground">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Opacity</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_artBackgroundOpacity" min="0" max="100" step="0.5" value="75"/><span class="settingCellMeasurement">%</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="bs_enableArtBackground">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Blur amount</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_artBackgroundBlurAmount" min="0" max="100" step="1" value="12"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="bs_enableArtBackground">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Fade in duration</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_artBackgroundFadeInDuration" min="0" max="15" step="0.5" value="5"/><span class="settingCellMeasurement">seconds</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section" data-content="bsinfo_hitmiss">
+				<div class="part">
+					<h1>Hit / Miss Cell</h1>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Width</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_hitMissWidth" min="0" max="500" step="1" value="100"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>					
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="bs_flipHitMissDetails" type="checkbox"/> <span class="settingInfo">Flip vertical order of hit / miss stats</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Horizontal alignment</span>
+						</div>
+						<div class="settingCell">
+							<select id="bs_hitMissAlignment">
+								<option selected value="left">Left</option>
+								<option value="center">Center</option>
+								<option value="right">Right</option>
+							</select>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Color</span>
+						</div>
+						<div class="settingCell">
+							<input id="bs_hitMissColor" type="text" data-coloris value="#FFFFFFFF"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Font</span>
+						</div>
+						<div class="settingCell">
+							<input id="bs_hitMissFontFamily" type="text" value="Manrope"/>
+							<input id="bs_hitMissFontItalic" type="checkbox"/> <span class="settingInfo">Italic</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Font size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_hitMissFontSize" min="0" max="96" step="0.25" value="12"/><span class="settingCellMeasurement">pt</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Font weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_hitMissFontWeight" min="0" max="900" step="100" value="900"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Additional font weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_hitMissFontAdditionalWeight" min="0" max="20" step="0.1" value="0"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Full combo icon color</span>
+						</div>
+						<div class="settingCell">
+							<input id="bs_FCIconColor" type="text" data-coloris value="#DDAA00FF"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Hit icon color</span>
+						</div>
+						<div class="settingCell">
+							<input id="bs_hitIconColor" type="text" data-coloris value="#33AA55FF"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Miss icon color</span>
+						</div>
+						<div class="settingCell">
+							<input id="bs_missIconColor" type="text" data-coloris value="#DD1133FF"/>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section" data-content="bsinfo_misc">
+				<div class="part">
+					<h1>Miscellaneous Info Cell</h1>
 					<div class="setting">
 						<div class="settingCellLabel">
 							<span class="settingInfo">Width</span>
@@ -4750,128 +5347,10 @@
 						</div>
 					</div>
 				</div>
+			</div>
+			<div class="section" data-content="bsinfo_metadata">
 				<div class="part">
-					<h1>Cover Art</h1>
-					<div class="setting">
-						<div class="settingCell">
-							<input id="bs_useRemoteArtURL" type="checkbox"/> <span class="settingInfo">Use cover art from BeatSaver instead of the in-game texture</span>
-						</div>
-					</div>					
-					<hr/>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Size</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="bs_artSize" min="1" max="640" step="1" value="52"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Border radius</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="bs_artBorderRadius" min="0" max="64" step="1" value="4"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCell">
-							<input checked id="bs_enableArtOutline" type="checkbox" data-dependent="bs_enableArtOutline"/> <span class="settingInfo">Display an outline around the album/cover art</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCell">
-							<input checked id="bs_enableArtOutlineProgress" type="checkbox" data-dependent="bs_enableArtOutlineProgress"/> <span class="settingInfo">Reflect current track progress with the outline</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="bs_enableArtOutline">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Outline size</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="bs_artOutlineSize" min="1" max="64" step="1" value="2"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="bs_enableArtOutline">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Outline brightness</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="bs_artOutlineBrightness" min="0" max="500" step="1" value="155"/><span class="settingCellMeasurement">%</span>
-						</div>
-					</div>
-				</div>
-				<div class="part">
-					<h1>Background Effect</h1>
-					<div class="setting">
-						<div class="settingCell">
-							<input id="bs_enableArtBackground" type="checkbox" data-dependent="bs_enableArtBackground"/> <span class="settingInfo">Display album/cover art underneath overlay content</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="bs_enableArtBackground">
-						<div class="settingCell">
-							<input id="bs_renderArtLower" type="checkbox"/> <span class="settingInfo">Separate the background and overlay content</span>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCell">
-							<input checked id="bs_enableArtBackgroundMask" type="checkbox"/> <span class="settingInfo">Add a gradient mask to the album/cover art</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="bs_enableArtBackground">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Mask width</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="bs_artBackgroundMaskWidth" min="0" max="500" step="1" value="80"/><span class="settingCellMeasurement">%</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="bs_enableArtBackground">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Mask height</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="bs_artBackgroundMaskHeight" min="0" max="500" step="1" value="100"/><span class="settingCellMeasurement">%</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="bs_enableArtBackground">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Mask range</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="bs_artBackgroundMaskStart" min="-500" max="500" step="1" value="25"/><span class="settingCellMeasurement">%</span><i class="fas fa-long-arrow-alt-right"></i><input type="number" id="bs_artBackgroundMaskEnd" min="-500" max="500" step="1" value="100"/><span class="settingCellMeasurement">%</span>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting" data-dependent="bs_enableArtBackground">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Opacity</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="bs_artBackgroundOpacity" min="0" max="100" step="0.5" value="75"/><span class="settingCellMeasurement">%</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="bs_enableArtBackground">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Blur amount</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="bs_artBackgroundBlurAmount" min="0" max="100" step="1" value="12"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="bs_enableArtBackground">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Fade in duration</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="bs_artBackgroundFadeInDuration" min="0" max="15" step="0.5" value="5"/><span class="settingCellMeasurement">seconds</span>
-						</div>
-					</div>
-				</div>
-				<div class="part">
-					<h1>Song Metadata</h1>
+					<h1>Alignment</h1>
 					<div class="setting">
 						<div class="settingCell">
 							<input id="bs_flipMetadataDetails" type="checkbox"/> <span class="settingInfo">Flip vertical order of song details</span>
@@ -4889,7 +5368,96 @@
 							</select>
 						</div>
 					</div>
+				</div>
+				<div class="part">
+					<h1>Title</h1>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Color</span>
+						</div>
+						<div class="settingCell">
+							<input id="bs_titleColor" type="text" data-coloris value="#FFFFFFFF"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Font</span>
+						</div>
+						<div class="settingCell">
+							<input id="bs_titleFontFamily" type="text" value="Manrope"/>
+							<input id="bs_titleFontItalic" type="checkbox"/> <span class="settingInfo">Italic</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Font size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_titleFontSize" min="6" max="96" step="0.5" value="19"/><span class="settingCellMeasurement">pt</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Font weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_titleFontWeight" min="100" max="900" step="100" value="900"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Additional font weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_titleAdditionalFontWeight" min="0" max="20" step="0.1" value="0.2"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Transform</span>
+						</div>
+						<div class="settingCell">
+							<select id="bs_titleTransform">
+								<option value="capitalize">Capitalize</option>
+								<option value="lowercase">Lowercase</option>
+								<option value="uppercase">Uppercase</option>
+								<option selected value="none">Do not transform</option>
+							</select>
+						</div>
+					</div>
 					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="bs_enableMarquee" type="checkbox" data-dependent="bs_enableMarquee"/> <span class="settingInfo">Scroll the title if it extends outside the boundaries of the page/source</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="bs_enableMarquee">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Delay between scroll loops</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_marqueeDelay" min="0" max="30" step="0.5" value="7"/><span class="settingCellMeasurement">seconds</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="bs_enableMarquee">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Gap between scroll loops</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_marqueeGap" min="0" max="9999" step="1" value="100"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="bs_enableMarquee">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Scroll speed</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_marqueeSpeed" min="1" max="9999" step="1" value="20"/><span class="settingCellMeasurement">px / second</span>
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Secondary Metadata</h1>
 					<div class="setting">
 						<div class="settingCell">
 							<input checked id="bs_artistColorReflectsArtColor" type="checkbox"/> <span class="settingInfo">Secondary metadata color reflects album art/cover art color</span>
@@ -4932,91 +5500,6 @@
 					</div>
 					<hr/>
 					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Title color</span>
-						</div>
-						<div class="settingCell">
-							<input id="bs_titleColor" type="text" data-coloris value="#FFFFFFFF"/>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Title font</span>
-						</div>
-						<div class="settingCell">
-							<input id="bs_titleFontFamily" type="text" value="Manrope"/>
-							<input id="bs_titleFontItalic" type="checkbox"/> <span class="settingInfo">Italic</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Title size</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="bs_titleFontSize" min="6" max="96" step="0.5" value="19"/><span class="settingCellMeasurement">pt</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Title weight</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="bs_titleFontWeight" min="100" max="900" step="100" value="900"/>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Additional title weight</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="bs_titleAdditionalFontWeight" min="0" max="20" step="0.1" value="0.2"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Transform title</span>
-						</div>
-						<div class="settingCell">
-							<select id="bs_titleTransform">
-								<option value="capitalize">Capitalize</option>
-								<option value="lowercase">Lowercase</option>
-								<option value="uppercase">Uppercase</option>
-								<option selected value="none">Do not transform</option>
-							</select>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCell">
-							<input checked id="bs_enableMarquee" type="checkbox" data-dependent="bs_enableMarquee"/> <span class="settingInfo">Scroll the title if it extends outside the boundaries of the page/source</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="bs_enableMarquee">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Delay between scroll loops</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="bs_marqueeDelay" min="0" max="30" step="0.5" value="7"/><span class="settingCellMeasurement">seconds</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="bs_enableMarquee">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Gap between scroll loops</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="bs_marqueeGap" min="0" max="9999" step="1" value="100"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="bs_enableMarquee">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Scroll speed</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="bs_marqueeSpeed" min="1" max="9999" step="1" value="20"/><span class="settingCellMeasurement">px / second</span>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
 						<div class="settingCell">
 							<input checked id="bs_enableArtistMapperCycle" type="checkbox" data-dependent="bs_enableArtistMapperCycle"/> <span class="settingInfo">Show mapper metadata along with artist metadata</span>
 						</div>
@@ -5045,7 +5528,7 @@
 					<hr/>
 					<div class="setting">
 						<div class="settingCellLabel">
-							<span class="settingInfo">Artist font</span>
+							<span class="settingInfo">Font</span>
 						</div>
 						<div class="settingCell">
 							<input id="bs_artistFontFamily" type="text" value="Manrope"/>
@@ -5054,7 +5537,7 @@
 					</div>
 					<div class="setting">
 						<div class="settingCellLabel">
-							<span class="settingInfo">Artist size</span>
+							<span class="settingInfo">Font size</span>
 						</div>
 						<div class="settingCell">
 							<input type="number" id="bs_artistFontSize" min="6" max="96" step="0.5" value="12"/><span class="settingCellMeasurement">pt</span>
@@ -5062,7 +5545,7 @@
 					</div>
 					<div class="setting">
 						<div class="settingCellLabel">
-							<span class="settingInfo">Artist weight</span>
+							<span class="settingInfo">Font weight</span>
 						</div>
 						<div class="settingCell">
 							<input type="number" id="bs_artistFontWeight" min="100" max="900" step="100" value="700"/>
@@ -5070,7 +5553,7 @@
 					</div>
 					<div class="setting">
 						<div class="settingCellLabel">
-							<span class="settingInfo">Additional artist weight</span>
+							<span class="settingInfo">Additional font weight</span>
 						</div>
 						<div class="settingCell">
 							<input type="number" id="bs_artistAdditionalFontWeight" min="0" max="20" step="0.1" value="0"/><span class="settingCellMeasurement">px</span>
@@ -5078,7 +5561,7 @@
 					</div>
 					<div class="setting">
 						<div class="settingCellLabel">
-							<span class="settingInfo">Transform artist</span>
+							<span class="settingInfo">Transform</span>
 						</div>
 						<div class="settingCell">
 							<select id="bs_artistTransform">
@@ -5092,7 +5575,7 @@
 					<hr/>
 					<div class="setting">
 						<div class="settingCell">
-							<input checked id="bs_secondaryGradient" type="checkbox"/> <span class="settingInfo">Apply a gradient to the song metadata display</span>
+							<input checked id="bs_secondaryGradient" type="checkbox"/> <span class="settingInfo">Apply a gradient to the secondary metadata values</span>
 						</div>
 					</div>
 					<div class="setting">
@@ -5112,374 +5595,104 @@
 						</div>
 					</div>
 				</div>
+			</div>
+			<div class="section" data-content="clips_appearance">
+			</div>
+			<div class="section" data-content="clips_function">
 				<div class="part">
-					<h1>Hit / Miss Stats</h1>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Width</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="bs_hitMissWidth" min="0" max="500" step="1" value="100"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>					
-					<hr/>
 					<div class="setting">
 						<div class="settingCell">
-							<input id="bs_flipHitMissDetails" type="checkbox"/> <span class="settingInfo">Flip vertical order of hit / miss stats</span>
+							<input checked id="clips_onlyFetchFeatured" type="checkbox"/> <span class="settingInfo">Only fetch streamer's featured clips</span>
 						</div>
 					</div>
 					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Horizontal alignment</span>
-						</div>
 						<div class="settingCell">
-							<select id="bs_hitMissAlignment">
-								<option selected value="left">Left</option>
-								<option value="center">Center</option>
-								<option value="right">Right</option>
-							</select>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Color</span>
-						</div>
-						<div class="settingCell">
-							<input id="bs_hitMissColor" type="text" data-coloris value="#FFFFFFFF"/>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Font</span>
-						</div>
-						<div class="settingCell">
-							<input id="bs_hitMissFontFamily" type="text" value="Manrope"/>
-							<input id="bs_hitMissFontItalic" type="checkbox"/> <span class="settingInfo">Italic</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Font size</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="bs_hitMissFontSize" min="0" max="96" step="0.25" value="12"/><span class="settingCellMeasurement">pt</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Font weight</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="bs_hitMissFontWeight" min="0" max="900" step="100" value="900"/>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Additional font weight</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="bs_hitMissFontAdditionalWeight" min="0" max="20" step="0.1" value="0"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Full combo icon color</span>
-						</div>
-						<div class="settingCell">
-							<input id="bs_FCIconColor" type="text" data-coloris value="#DDAA00FF"/>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Hit icon color</span>
-						</div>
-						<div class="settingCell">
-							<input id="bs_hitIconColor" type="text" data-coloris value="#33AA55FF"/>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Miss icon color</span>
-						</div>
-						<div class="settingCell">
-							<input id="bs_missIconColor" type="text" data-coloris value="#DD1133FF"/>
+							<input checked id="clips_useRandom" type="checkbox"/> <span class="settingInfo">Select a random clip by default, use the most popular clip otherwise</span>
 						</div>
 					</div>
 				</div>
 				<div class="part">
-					<h1>Accuracy Stats</h1>
 					<div class="setting">
 						<div class="settingCellLabel">
-							<span class="settingInfo">Width</span>
+							<span class="settingInfo">Trigger command</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="bs_accWidth" min="0" max="500" step="1" value="120"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>					
-					<hr/>
-					<div class="setting">
-						<div class="settingCell">
-							<input id="bs_flipAccDetails" type="checkbox"/> <span class="settingInfo">Flip vertical order of accuracy / combo</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Horizontal alignment</span>
-						</div>
-						<div class="settingCell">
-							<select id="bs_accAlignment">
-								<option value="left">Left</option>
-								<option selected value="center">Center</option>
-								<option value="right">Right</option>
-							</select>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCell">
-							<input id="bs_animateAccChanges" type="checkbox" data-dependent="animateAcc"/> <span class="settingInfo">Animate accuracy changes</span>
-						</div>
-					</div>	
-					<div class="setting" data-dependent="animateAcc">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Interval</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="bs_animateAccInterval" min="1" max="250" step="1" value="10"/><span class="settingCellMeasurement">ms</span>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Accuracy color</span>
-						</div>
-						<div class="settingCell">
-							<input id="bs_accColor" type="text" data-coloris value="#FFFFFFFF"/>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Accuracy font</span>
-						</div>
-						<div class="settingCell">
-							<input id="bs_accFontFamily" type="text" value="Manrope"/>
-							<input id="bs_accFontItalic" type="checkbox"/> <span class="settingInfo">Italic</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Accuracy size</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="bs_accFontSize" min="0" max="96" step="0.25" value="27"/><span class="settingCellMeasurement">pt</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Accuracy font weight</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="bs_accFontWeight" min="0" max="900" step="100" value="900"/>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Additional accuracy weight</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="bs_accFontAdditionalWeight" min="0" max="20" step="0.1" value="0"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Accuracy character spacing</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="bs_accLetterSpacing" min="-20" max="20" step="0.1" value="-1"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Combo color</span>
-						</div>
-						<div class="settingCell">
-							<input id="bs_comboColor" type="text" data-coloris value="#FFFFFFFF"/>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Combo font</span>
-						</div>
-						<div class="settingCell">
-							<input id="bs_comboFontFamily" type="text" value="Manrope"/>
-							<input id="bs_comboFontItalic" type="checkbox"/> <span class="settingInfo">Italic</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Combo size</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="bs_comboFontSize" min="0" max="96" step="0.25" value="12"/><span class="settingCellMeasurement">pt</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Combo font weight</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="bs_comboFontWeight" min="0" max="900" step="100" value="900"/>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Additional font weight</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="bs_comboFontAdditionalWeight" min="0" max="20" step="0.1" value="0"/><span class="settingCellMeasurement">px</span>
+							<input id="clips_triggerCommand" type="text" value="!clip"/>
 						</div>
 					</div>
 				</div>
 				<div class="part">
-					<h1>Filters</h1>
 					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Limit clip duration between</span>
+						</div>
 						<div class="settingCell">
-							<input checked id="bs_enableShadowEffects" type="checkbox" data-dependent="bs_enableShadowEffects"/> <span class="settingInfo">Draw shadows underneath text content</span>
+							<input type="number" id="clips_durationPreferenceMin" min="5" max="60" step="1" value="10"/><span class="settingCellMeasurement" style="margin-right: calc(var(--settings-padding) / 2);">and</span><input type="number" id="clips_durationPreferenceMax" min="5" max="60" step="1" value="30"/><span class="settingCellMeasurement">seconds</span>
 						</div>
 					</div>
-					<div class="setting" data-dependent="bs_enableShadowEffects">
+					<div class="setting">
 						<div class="settingCellLabel">
-							<span class="settingInfo">Color</span>
+							<span class="settingInfo">Amount of clips to fetch</span>
 						</div>
 						<div class="settingCell">
-							<input id="bs_shadowColor" type="text" data-coloris value="#000000FF"/>
-						</div>
-					</div>
-					<div class="setting" data-dependent="bs_enableShadowEffects">
-						<div class="settingCellLabel">
-							<span class="settingInfo">X offset</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="bs_shadowXOffset" min="-32" max="32" step="0.25" value="0"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="bs_enableShadowEffects">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Y offset</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="bs_shadowYOffset" min="-32" max="32" step="0.25" value="1"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="bs_enableShadowEffects">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Blur amount</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="bs_shadowBlurRadius" min="0" max="32" step="0.25" value="2"/><span class="settingCellMeasurement">px</span>
+							<input type="number" id="clips_listSize" min="1" max="100" step="1" value="20"/><span class="settingCellMeasurement">clips</span>
 						</div>
 					</div>
 					<hr/>
 					<div class="setting">
-						<div class="settingCell">
-							<input checked id="bs_enableOutlineEffects" type="checkbox" data-dependent="bs_enableOutlineEffects"/> <span class="settingInfo">Draw outlines underneath text content</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="bs_enableOutlineEffects">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Color</span>
-						</div>
-						<div class="settingCell">
-							<input id="bs_outlineColor" type="text" data-coloris value="#000000FF"/>
-						</div>
-					</div>
-					<div class="setting" data-dependent="bs_enableOutlineEffects">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Size</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="bs_outlineSize" min="0" max="3" step="1" value="1"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCell">
-							<input checked id="bs_enableBoxShadowEffects" type="checkbox" data-dependent="bs_enableBoxShadowEffects"/> <span class="settingInfo">Draw box shadows underneath image content</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="bs_enableBoxShadowEffects">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Color</span>
-						</div>
-						<div class="settingCell">
-							<input id="bs_boxShadowColor" type="text" data-coloris value="#000000DD"/>
-						</div>
-					</div>
-					<div class="setting" data-dependent="bs_enableBoxShadowEffects">
-						<div class="settingCellLabel">
-							<span class="settingInfo">X offset</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="bs_boxShadowXOffset" min="-32" max="32" step="0.25" value="0"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="bs_enableBoxShadowEffects">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Y offset</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="bs_boxShadowYOffset" min="-32" max="32" step="0.25" value="8"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="bs_enableBoxShadowEffects">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Blur amount</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="bs_boxShadowBlurRadius" min="0" max="32" step="0.25" value="9"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="bs_enableBoxShadowEffects">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Blur inset amount</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="bs_boxShadowBlurInset" min="-32" max="32" step="0.25" value="-5"/><span class="settingCellMeasurement">px</span>
+						<div class="settingCell smol">
+							Twitch forces sorting by view count on clips, so only the clips with the highest amount of views will be selected.
 						</div>
 					</div>
 				</div>
 				<div class="part">
-					<h1>Effects</h1>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Fade in delay</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clips_showDelay" min="0" max="10" step="0.1" value="2.5"/><span class="settingCellMeasurement">seconds</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Fade out earlier by</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clips_hideCutoff" min="0" max="10" step="0.1" value="1.5"/><span class="settingCellMeasurement">seconds</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell smol">
+							As Twitch provides no way to control its clip player (which this is using), I have to estimate when the clip actually ends. These settings are highly network-dependent, please adjust and test so they better fit your network latency and speeds.
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section" data-content="clips_layout">
+				<div class="part">
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Video height</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clips_videoHeight" min="300" max="1080" step="1" value="360"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell smol">
+							Video width will be forced to a 16:9 resolution, the width is determined from the height.
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section" data-content="clips_effects">
+				<div class="part">
 					<div class="setting">
 						<div class="settingCell">
-							<input checked id="bs_desaturateOnPause" type="checkbox" data-dependent="bs_desaturateOnPause"/> <span class="settingInfo">Desaturate the overlay when paused</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="bs_desaturateOnPause">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Desaturate amount</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="bs_desaturateAmount" min="1" max="100" step="0.25" value="100"/><span class="settingCellMeasurement">%</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="bs_desaturateOnPause">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Pause fade transition</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="bs_desaturateFadeInDuration" min="0" max="10" step="0.5" value="0.5"/><span class="settingCellMeasurement">s</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="bs_desaturateOnPause">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Resume fade transition</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="bs_desaturateFadeOutDuration" min="0" max="10" step="0.5" value="2"/><span class="settingCellMeasurement">s</span>
+							<input checked id="clips_enableAnimations" type="checkbox"/> <span class="settingInfo">Enable animations</span>
 						</div>
 					</div>
 				</div>

@@ -28,6 +28,24 @@ $("#reloadEmotesButton").on("mouseup", function(e) {
 	postToChannel("refreshEmotes");
 });
 
+$("#clearAvatarCacheButton").on("mouseup", function(e) {
+	e.preventDefault();
+	caches.delete("avatarCache-v2");
+
+	postToChannel("clearAvatars");
+
+	addNotification("Cached avatars have been cleared.", {duration: 5});
+});
+
+$("#clearEmoteCacheButton").on("mouseup", function(e) {
+	e.preventDefault();
+	caches.delete("emoteCache");
+
+	postToChannel("clearEmotes");
+
+	addNotification("Cached emotes have been cleared. You may need to refresh the chat overlay for fresh data to take precedence.", {duration: 8});
+});
+
 broadcastFuncs = {
 	BSVodAudioExists: function(data) {
 		data = data.data;
@@ -39,7 +57,7 @@ broadcastFuncs = {
 		console.log("BS VOD Audio overlay is active");
 		changeStatusCircle("BSVASStatus", "green", `loaded (r${data.version})`);
 
-		addExtraRow("bsvodaudio", "BS VOD Audio", "icon bs");
+		showExtraRow("bsvodaudio");
 
 		changeStatusCircle("OBSStatus", "red", "disconnected");
 
@@ -51,6 +69,8 @@ broadcastFuncs = {
 		data = data.data;
 		console.log("Chat overlay is active");
 		changeStatusCircle("ChatOverlayStatus", "green", `loaded (r${data.version})`);
+
+		showExtraRow("chat");
 
 		if(allowedToProceed && !isTwitchRunning) {
 			isTwitchRunning = true;
@@ -94,7 +114,7 @@ broadcastFuncs = {
 		let settingsKeysBS = settingsKeys.filter((key) => key.substr(0, 3) === "bs_");
 		postToChannel("settingsKeysBS", settingsKeysBS);
 
-		addExtraRow("bsinfo", "Beat Saber Overlay", "icon bs");
+		showExtraRow("bsinfo");
 		connectBeatSaber();
 
 		if(currentBSSong !== null) {
@@ -130,7 +150,7 @@ broadcastFuncs = {
 		console.log("Spotify overlay is active");
 		changeStatusCircle("SpotifyOverlayStatus", "green", `loaded (r${data.version})`);
 
-		addExtraRow("spotify", "Now Playing", "fab fa-spotify");
+		showExtraRow("spotify");
 
 		checkToSendSpotifyData();
 	},
@@ -143,7 +163,24 @@ broadcastFuncs = {
 		console.log("Clock overlay is active");
 		changeStatusCircle("ClockOverlayStatus", "green", `loaded (r${message.data.version})`);
 
-		addExtraRow("clock", "Clock", "fas fa-clock");
+		showExtraRow("clock");
+	},
+
+	ClipsOverlayExists: function(data) {
+		data = data.data;
+		console.log("Clips overlay is active");
+		changeStatusCircle("ClipsOverlayStatus", "green", `loaded (r${data.version})`);
+
+		showExtraRow("clips");
+
+		if(allowedToProceed && !isTwitchRunning) {
+			isTwitchRunning = true;
+			client.connect().catch(console.error);
+		}
+
+		let settingsKeys = Object.keys(defaultConfig);
+		let settingsKeysExclude = settingsKeys.filter((key) => key.substr(0, 6) === "clips_");
+		postToChannel("settingsKeysClips", settingsKeysExclude);
 	}
 };
 

@@ -1,0 +1,234 @@
+@keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+.fadeIn {
+	animation-name: fadeIn;
+	animation-duration: 0.67s;
+	animation-iteration-count: 1;
+	animation-fill-mode: forwards;
+	animation-timing-function: linear;
+}
+
+@keyframes fadeOut {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+.fadeOut {
+	animation-name: fadeOut;
+	animation-duration: 0.5s;
+	animation-iteration-count: 1;
+	animation-fill-mode: forwards;
+	animation-timing-function: linear;
+}
+
+@keyframes slideIn {
+	0% {
+		opacity: 0;
+		transform: translateX(30px);
+	}
+	100% {
+		opacity: 1;
+		transform: translateX(0px);
+	}
+}
+.slideIn {
+	animation-name: slideIn;
+	animation-duration: 0.5s;
+	animation-iteration-count: 1;
+	animation-fill-mode: forwards;
+}
+
+@keyframes slideOut {
+	0% {
+		opacity: 1;
+		transform: translateX(0px);
+	}
+	100% {
+		opacity: 0;
+		transform: translateX(30px);
+	}
+}
+.slideOut {
+	animation-name: slideOut;
+	animation-duration: 0.5s;
+	animation-iteration-count: 1;
+	animation-fill-mode: forwards;
+}
+
+body {
+	background: #333;
+	color: #fff;
+	font-family: "Manrope";
+	overflow-x: hidden;
+}
+
+#wrapper {
+	padding: var(--overlayMargin);
+	display: flex;
+	flex-direction: column;
+}
+
+#streamerWrap {
+	font-family: var(--streamerFont);
+	font-size: var(--streamerFontSize);
+	font-weight: var(--streamerFontWeight);
+	line-height: var(--streamerLineHeight);
+	height: var(--streamerLineHeight);
+	display: flex;
+	justify-content: center;
+	width: var(--videoWidth);
+	overflow: clip;
+	margin-bottom: var(--streamerMarginBottom);
+}
+#streamerName {
+	background-color: var(--streamerColor);
+	background-image: var(--streamerGradientActual);
+	-webkit-text-stroke: var(--streamerAdditionalWeight) transparent;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+#streamerAvatar {
+	border-radius: 100%;
+	width: 1.4em;
+	height: 1.4em;
+	display: inline-flex;
+	margin-right: 0.333em;
+	align-self: center;
+}
+
+#videoWrap {
+	/* mandated by twitch */
+	min-width: 400px;
+	min-height: 300px;
+
+	width: var(--videoWidth);
+	height: var(--videoHeight);
+	background: #000;
+
+	display: flex;
+	align-items: center;
+	align-content: center;
+	overflow-y: hidden;
+
+	box-shadow: var(--box-shadow-effects-actual);
+}
+
+#videoWrapOutline {
+	width: calc(var(--videoWidth) - 2px);
+	height: calc(var(--videoHeight) - 2px);
+
+	position: absolute;
+	z-index: 2;
+
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	mix-blend-mode: plus-lighter;
+}
+
+#videoWrap iframe {
+	width: 100%;
+	/* this is a guess */
+	height: calc(100% + 200px);
+}
+
+#detailsWrap {
+	display: flex;
+	flex-direction: column;
+	
+	margin-top: var(--overlayVerticalSpacing);
+	margin-bottom: var(--overlayVerticalSpacing);
+	margin-left: var(--overlayHorizontalSpacing);
+	margin-right: var(--overlayHorizontalSpacing);
+}
+
+.line {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+
+	filter: var(--effects);
+}
+#streamerTag, #streamerName, #streamerAvatar {
+	filter: var(--effects);
+}
+
+#clipTitleLine {
+	font-family: var(--titleFont);
+	font-size: var(--titleFontSize);
+	font-weight: var(--titleFontWeight);
+	line-height: var(--titleLineHeight);
+}
+#clipTitle {
+	background-color: var(--titleColor);
+	background-image: var(--titleGradientActual);
+	-webkit-text-stroke: var(--titleAdditionalWeight) transparent;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+#clipStreamerLine {
+	font-family: var(--detailsFont);
+	font-size: var(--detailsFontSize);
+	font-weight: var(--detailsFontWeight);
+	line-height: var(--detailsLineHeight);
+}
+
+#clipClipperLine {
+	font-family: var(--minorDetailsFont);
+	font-size: var(--minorDetailsFontSize);
+	font-weight: var(--minorDetailsFontWeight);
+	line-height: var(--minorDetailsLineHeight);
+}
+
+#gamePlayed:before, #clipperName:before, #clipperDate:before, #streamerTag, #streamerName:after {
+	display: inline-flex;
+}
+#gamePlayed:before, #clipperName:before, #clipperDate:before, #streamerName:after {
+	color: #bbb;
+}
+#clipStreamerLine div:before {
+	font-weight: calc(var(--detailsFontWeight) / 2);
+	font-size: calc(var(--detailsFontSize) / 1.15);
+}
+#clipClipperLine div:before {
+	font-weight: calc(var(--minorDetailsFontWeight) / 2);
+	font-size: calc(var(--minorDetailsFontSize) / 1.15);
+}
+#streamerAvatar:before {
+	font-weight: calc(var(--streamerFontWeight) / 2);
+	font-size: calc(var(--streamerFontSize) / 1.15);
+}
+
+#gamePlayed:before {
+	content: "playing";
+	margin-right: 0.333em;
+}
+#clipperName:before {
+	content: "clipped by";
+	margin-right: 0.333em;
+}
+#clipperDate:before {
+	content: "on";
+	margin-left: 0.333em;
+	margin-right: 0.333em;
+}
+#streamerTag {
+	color: #fff;
+	content: "Check out";
+	margin-right: 0.5em;
+}
+#streamerName:after {
+	content: "!";
+	background-color: #fff;
+	-webkit-text-stroke: var(--streamerAdditionalWeight) transparent;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
