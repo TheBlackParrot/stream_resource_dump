@@ -1,11 +1,15 @@
 {
-	"9999999999999": {
+	"1711420507592": {
 		"updates": {
 			"clips": {
 				"revision": 1,
 				"notes": [
 					[
-						"new overlay for clips since others bother me in various ways"
+						"new overlay for clips/shoutouts since others bother me in various ways",
+						[
+							"available at https://theblackparrot.me/overlays/clips",
+							"moderators can use '!clip [user] [optional: index starting from 0]' or '!clip [clip URL]' to show a clip on stream, like other shoutout overlays"
+						]
 					]
 				]
 			},

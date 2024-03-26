@@ -8,7 +8,7 @@
 }
 .fadeIn {
 	animation-name: fadeIn;
-	animation-duration: 0.67s;
+	animation-duration: var(--animationDurationLong);
 	animation-iteration-count: 1;
 	animation-fill-mode: forwards;
 	animation-timing-function: linear;
@@ -24,7 +24,7 @@
 }
 .fadeOut {
 	animation-name: fadeOut;
-	animation-duration: 0.5s;
+	animation-duration: var(--animationDurationLong);
 	animation-iteration-count: 1;
 	animation-fill-mode: forwards;
 	animation-timing-function: linear;
@@ -42,7 +42,7 @@
 }
 .slideIn {
 	animation-name: slideIn;
-	animation-duration: 0.5s;
+	animation-duration: var(--animationDurationMedium);
 	animation-iteration-count: 1;
 	animation-fill-mode: forwards;
 }
@@ -59,9 +59,14 @@
 }
 .slideOut {
 	animation-name: slideOut;
-	animation-duration: 0.5s;
+	animation-duration: var(--animationDurationMedium);
 	animation-iteration-count: 1;
 	animation-fill-mode: forwards;
+}
+
+@keyframes float {
+	from { transform: translateY(0px); }
+	to { transform: translateY(-5px); }
 }
 
 body {
@@ -80,6 +85,7 @@ body {
 #streamerWrap {
 	font-family: var(--streamerFont);
 	font-size: var(--streamerFontSize);
+	font-style: var(--streamerFontItalic);
 	font-weight: var(--streamerFontWeight);
 	line-height: var(--streamerLineHeight);
 	height: var(--streamerLineHeight);
@@ -87,7 +93,7 @@ body {
 	justify-content: center;
 	width: var(--videoWidth);
 	overflow: clip;
-	margin-bottom: var(--streamerMarginBottom);
+	margin-bottom: var(--overlayVerticalSpacing);
 }
 #streamerName {
 	background-color: var(--streamerColor);
@@ -123,30 +129,36 @@ body {
 }
 
 #videoWrapOutline {
-	width: calc(var(--videoWidth) - 2px);
-	height: calc(var(--videoHeight) - 2px);
+	width: calc(var(--videoWidth) - (var(--videoBorderSize) * 2));
+	height: calc(var(--videoHeight) - (var(--videoBorderSize) * 2));
 
 	position: absolute;
 	z-index: 2;
 
-	border: 1px solid rgba(255, 255, 255, 0.2);
-	mix-blend-mode: plus-lighter;
+	border: var(--videoBorderActual);
 }
 
-#videoWrap iframe {
+#videoWrap video {
 	width: 100%;
-	/* this is a guess */
-	height: calc(100% + 200px);
+	height: 100%;
+}
+
+#videoWrap, #videoWrap video, #videoWrapOutline {
+	border-radius: var(--videoBorderRadius);
 }
 
 #detailsWrap {
 	display: flex;
 	flex-direction: column;
+	width: var(--videoWidth);
+	align-items: var(--detailsAlignment);
 	
 	margin-top: var(--overlayVerticalSpacing);
 	margin-bottom: var(--overlayVerticalSpacing);
 	margin-left: var(--overlayHorizontalSpacing);
 	margin-right: var(--overlayHorizontalSpacing);
+
+	color: var(--detailsColor);
 }
 
 .line {
@@ -163,8 +175,10 @@ body {
 #clipTitleLine {
 	font-family: var(--titleFont);
 	font-size: var(--titleFontSize);
+	font-style: var(--titleFontItalic);
 	font-weight: var(--titleFontWeight);
 	line-height: var(--titleLineHeight);
+	margin-top: calc(var(--overlayVerticalSpacing) / 2);
 }
 #clipTitle {
 	background-color: var(--titleColor);
@@ -174,33 +188,23 @@ body {
 	-webkit-text-fill-color: transparent;
 }
 
-#clipStreamerLine {
+#clipStreamerLine, #clipClipperLine {
 	font-family: var(--detailsFont);
 	font-size: var(--detailsFontSize);
+	font-style: var(--detailsFontItalic);
 	font-weight: var(--detailsFontWeight);
 	line-height: var(--detailsLineHeight);
-}
-
-#clipClipperLine {
-	font-family: var(--minorDetailsFont);
-	font-size: var(--minorDetailsFontSize);
-	font-weight: var(--minorDetailsFontWeight);
-	line-height: var(--minorDetailsLineHeight);
 }
 
 #gamePlayed:before, #clipperName:before, #clipperDate:before, #streamerTag, #streamerName:after {
 	display: inline-flex;
 }
-#gamePlayed:before, #clipperName:before, #clipperDate:before, #streamerName:after {
-	color: #bbb;
+#gamePlayed:before, #clipperName:before, #clipperDate:before {
+	opacity: 0.67;
 }
-#clipStreamerLine div:before {
+#clipStreamerLine div:before, #clipClipperLine div:before {
 	font-weight: calc(var(--detailsFontWeight) / 2);
 	font-size: calc(var(--detailsFontSize) / 1.15);
-}
-#clipClipperLine div:before {
-	font-weight: calc(var(--minorDetailsFontWeight) / 2);
-	font-size: calc(var(--minorDetailsFontSize) / 1.15);
 }
 #streamerAvatar:before {
 	font-weight: calc(var(--streamerFontWeight) / 2);
@@ -231,4 +235,51 @@ body {
 	-webkit-text-stroke: var(--streamerAdditionalWeight) transparent;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
+}
+
+#streamerAvatarBGWrap {
+	position: absolute;
+	width: var(--videoWidth);
+	height: var(--streamerLineHeight);
+	overflow: hidden;
+	z-index: -1;
+	-webkit-mask-image: var(--backgroundMaskActual);
+	border-bottom: 1px solid #ffffff;
+}
+
+#streamerAvatarBG {
+	width: var(--backgroundSize);
+	height: var(--backgroundSize);
+	filter: blur(var(--backgroundBlurAmount));
+	background-size: cover;
+	background-image: var(--currentStreamerAvatar);
+	background-position: calc((var(--videoWidth) - var(--backgroundSize)) / 2) calc((var(--streamerLineHeight) - var(--backgroundSize)) / 2);
+}
+
+.float {
+	animation-name: float;
+	animation-direction: alternate;
+	animation-iteration-count: infinite;
+	animation-duration: var(--animationFloatDuration);
+	animation-fill-mode: both;
+	animation-timing-function: ease-in-out;	
+}
+
+#gameCoverBGWrap {
+	position: absolute;
+	width: var(--videoWidth);
+	height: calc(var(--streamerLineHeight) * 1.67);
+	overflow: hidden;
+	z-index: -1;
+	-webkit-mask-image: var(--backgroundMaskInvertedActual);
+	border-top: 1px solid #ffffff;
+}
+
+#gameCoverBG {
+	width: var(--backgroundFooterSize);
+	height: var(--backgroundFooterSize);
+	filter: blur(var(--backgroundFooterBlurAmount));
+	background-size: cover;
+	background-image: var(--currentGameCover);
+	background-position: calc((var(--videoWidth) - var(--backgroundFooterSize)) / 2) calc(var(--backgroundFooterSize) / 1.4);
 }

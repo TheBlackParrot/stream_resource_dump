@@ -1,7 +1,5 @@
-// extend the height of the iframe so that the important stuff resides outside the bounds of the parent wrapper
-// add a trap function to prevent any accidental API spam on callTwitch calls, check to see if an endpoint request is already in progress, and if it is, just return it
 const overlayRevision = 1;
-const overlayRevisionTimestamp = Date.now();
+const overlayRevisionTimestamp = 1711420507592;
 
 const settingsChannel = new BroadcastChannel("settings_overlay");
 
@@ -97,26 +95,37 @@ const twitchEventFuncs = {
 		}
 
 		const parts = data.message.split(" ");
+		var targetLogin = data.tags.username || data.tags.login;
+		var urlCheck = null;
 
-		if(parts.length <= 1) {
+		if(parts.length >= 2) {
+			try {
+				urlCheck = new URL(parts[1]);
+			} catch(err) {
+				// must be a name
+				targetLogin = parts[1].toLowerCase().replaceAll(/[^a-zA-Z0-9]/g, "").substr(0, 25);
+			}
+
+			if(urlCheck) {
+				await setClip(targetLogin, null, parts[1]);
+			} else {
+				var wantedClip = -1;
+				if(parts.length >= 3) {
+					wantedClip = parseInt(parts[2]);
+					if(isNaN(wantedClip)) {
+						wantedClip = -1;
+					}
+				}
+
+				if(parts[0] === localStorage.getItem("setting_clips_triggerCommand")) {
+					await setClip(targetLogin, wantedClip, null);
+				}
+			}
+
 			return;
 		}
 
-		const targetLogin = parts[1].toLowerCase().replaceAll(/[^a-zA-Z0-9]/g, "").substr(0, 25);
-
-		var wantedClip = -1;
-		if(parts.length >= 3) {
-			wantedClip = parseInt(parts[2]);
-			if(isNaN(wantedClip)) {
-				wantedClip = -1;
-			}
-		}
-
-		switch(parts[0]) {
-			case localStorage.getItem("setting_clips_triggerCommand"):
-				await setClip(targetLogin, wantedClip);
-				break;
-		}
+		await setClip(targetLogin, -1, null);
 	},
 
 	AccessTokenRefreshed: function(data) {

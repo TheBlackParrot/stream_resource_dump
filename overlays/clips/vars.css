@@ -1,5 +1,6 @@
 :root {
 	--streamerFont: "Manrope";
+	--streamerFontItalic: normal;
 	--streamerFontSize: 24pt;
 	--streamerFontWeight: 900;
 	--streamerLineHeight: 60px;
@@ -9,12 +10,12 @@
 	--streamerGradientAngle: 170deg;
 	--streamerGradient: linear-gradient(var(--streamerGradientAngle), var(--streamerGradientColor) 20%, var(--streamerColor) 100%);
 	--streamerGradientActual: var(--streamerGradient);
-	--streamerMarginBottom: 8px;
 
 	--titleFont: "Manrope";
-	--titleFontSize: 20pt;
+	--titleFontItalic: normal;
+	--titleFontSize: 18pt;
 	--titleFontWeight: 900;
-	--titleLineHeight: 40px;
+	--titleLineHeight: 32px;
 	--titleAdditionalWeight: 0px;
 	--titleColor: #999999;
 	--titleGradientColor: #FFFFFF;
@@ -22,27 +23,31 @@
 	--titleGradient: linear-gradient(var(--titleGradientAngle), var(--titleGradientColor) 20%, var(--titleColor) 100%);
 	--titleGradientActual: var(--titleGradient);
 
+	--detailsColor: #FFFFFF;
 	--detailsFont: "Manrope";
-	--detailsFontSize: 14pt;
+	--detailsFontItalic: normal;
+	--detailsFontSize: 12pt;
 	--detailsFontWeight: 900;
 	--detailsLineHeight: 22px;
-
-	--minorDetailsFont: "Manrope";
-	--minorDetailsFontSize: 12pt;
-	--minorDetailsFontWeight: 900;
-	--minorDetailsLineHeight: 22px;
+	--detailsAlignment: center;
 
 	--videoWidth: 640px;
 	--videoHeight: 360px;
+	--videoBorderRadius: 8px;
+	--videoBorderColor: #FFFFFF40;
+	--videoBorderSize: 1px;
+	--videoBorderStyle: solid;
+	--videoBorder: var(--videoBorderSize) var(--videoBorderStyle) var(--videoBorderColor);
+	--videoBorderActual: var(--videoBorder);
 
 	--overlayMargin: 16px;
-	--overlayVerticalSpacing: 8px;
+	--overlayVerticalSpacing: 12px;
 	--overlayHorizontalSpacing: 0px;
 
 	--box-shadow-effects-offset-x: 0px;
-	--box-shadow-effects-offset-y: 8px;
-	--box-shadow-effects-blur-radius: 9px;
-	--box-shadow-effects-inset: -5px;
+	--box-shadow-effects-offset-y: 12px;
+	--box-shadow-effects-blur-radius: 20px;
+	--box-shadow-effects-inset: -10px;
 	--box-shadow-effects-color: #000000FF;
 
 	--box-shadow-effects: var(--box-shadow-effects-offset-x) var(--box-shadow-effects-offset-y) var(--box-shadow-effects-blur-radius) var(--box-shadow-effects-inset) var(--box-shadow-effects-color);
@@ -67,4 +72,20 @@
 	--shadow-effects-actual: var(--shadow-effects);
 
 	--effects: var(--outline-effects-actual) var(--shadow-effects-actual);
+
+	--backgroundBlurAmount: 16px;
+	--backgroundFooterBlurAmount: 16px;
+	--backgroundBorderRadius: 8px;
+	--backgroundMask: -webkit-radial-gradient(50% 100%, 50% 100%, #ffffffff 20%, #ffffff00);
+	--backgroundMaskActual: var(--backgroundMask);
+	--backgroundMaskInverted: -webkit-radial-gradient(50% 0%, 50% 100%, #ffffffff 20%, #ffffff00);
+	--backgroundMaskInvertedActual: var(--backgroundMaskInverted);
+	--backgroundSize: calc(var(--videoWidth) + (var(--backgroundBlurAmount) * 16));
+	--backgroundFooterSize: calc(var(--videoWidth) + (var(--backgroundFooterBlurAmount) * 16));
+
+	--currentStreamerAvatar: none;
+
+	--animationDurationMedium: 0.5s;
+	--animationDurationLong: 0.67s;
+	--animationFloatDuration: 2s;
 }

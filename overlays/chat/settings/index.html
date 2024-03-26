@@ -5597,6 +5597,250 @@
 				</div>
 			</div>
 			<div class="section" data-content="clips_appearance">
+				<div class="part">
+					<h1>Streamer</h1>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Color</span>
+						</div>
+						<div class="settingCell">
+							<input id="clips_streamerColor" type="text" data-coloris value="#CBADFF"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Font</span>
+						</div>
+						<div class="settingCell">
+							<input id="clips_streamerFont" type="text" value="Manrope"/>
+							<input id="clips_streamerFontItalic" type="checkbox"/> <span class="settingInfo">Italic</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Font size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clips_streamerFontSize" min="0" max="96" step="0.25" value="24"/><span class="settingCellMeasurement">pt</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Font weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clips_streamerFontWeight" min="0" max="900" step="100" value="900"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Additional font weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clips_streamerFontAdditionalWeight" min="0" max="20" step="0.1" value="0"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="clips_streamerUsesGradient" type="checkbox" data-dependent="clips_streamerUsesGradient"/> <span class="settingInfo">Apply a gradient to the streamer's name</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="gradientPronouns">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Gradient color</span>
+						</div>
+						<div class="settingCell">
+							<input id="clips_streamerGradientColor" type="text" data-coloris value="#FFFFFF"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="gradientPronouns">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Gradient angle</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clips_streamerGradientAngle" min="0" max="360" step="1" value="170"/><span class="settingCellMeasurement">deg</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="clips_blurStreamerBG" type="checkbox" data-dependent="clips_blurStreamerBG"/> <span class="settingInfo">Show the streamer's avatar underneath text content</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="clips_blurStreamerBG">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Blur amount</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clips_blurStreamerBGAmount" min="0" max="99" step="1" value="16"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Video</h1>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Video border radius</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clips_videoRadius" min="0" max="64" step="1" value="8"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="clips_enableVideoBorder" type="checkbox" data-dependent="clips_enableVideoBorder"/> <span class="settingInfo">Enable borders around clip content</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="clips_enableVideoBorder">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Color</span>
+						</div>
+						<div class="settingCell">
+							<input id="clips_borderColor" type="text" data-coloris value="#FFFFFF50"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="clips_enableVideoBorder">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clips_borderSize" min="0" max="8" step="1" value="1"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="clips_enableVideoBorder">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Style</span>
+						</div>
+						<div class="settingCell">
+							<select id="clips_borderStyle">
+								<option value="dashed">Dashed</option>
+								<option value="dotted">Dotted</option>
+								<option value="double">Double</option>
+								<option value="groove">Groove</option>
+								<option value="inset">Inset</option>
+								<option value="outset">Outset</option>
+								<option value="ridge">Ridge</option>
+								<option selected value="solid">Solid</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Details</h1>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Title color</span>
+						</div>
+						<div class="settingCell">
+							<input id="clips_titleColor" type="text" data-coloris value="#999999"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Title font</span>
+						</div>
+						<div class="settingCell">
+							<input id="clips_titleFont" type="text" value="Manrope"/>
+							<input id="clips_titleFontItalic" type="checkbox"/> <span class="settingInfo">Italic</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Font size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clips_titleFontSize" min="0" max="96" step="0.25" value="18"/><span class="settingCellMeasurement">pt</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Font weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clips_titleFontWeight" min="0" max="900" step="100" value="900"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Additional font weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clips_titleFontAdditionalWeight" min="0" max="20" step="0.1" value="0"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="clips_titleUsesGradient" type="checkbox" data-dependent="clips_titleUsesGradient"/> <span class="settingInfo">Apply a gradient to the clip title</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="gradientPronouns">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Gradient color</span>
+						</div>
+						<div class="settingCell">
+							<input id="clips_titleGradientColor" type="text" data-coloris value="#FFFFFF"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="gradientPronouns">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Gradient angle</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clips_titleGradientAngle" min="0" max="360" step="1" value="170"/><span class="settingCellMeasurement">deg</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Details color</span>
+						</div>
+						<div class="settingCell">
+							<input id="clips_detailsColor" type="text" data-coloris value="#FFFFFF"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Details font</span>
+						</div>
+						<div class="settingCell">
+							<input id="clips_detailsFont" type="text" value="Manrope"/>
+							<input id="clips_detailsFontItalic" type="checkbox"/> <span class="settingInfo">Italic</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Font size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clips_detailsFontSize" min="0" max="96" step="0.25" value="12"/><span class="settingCellMeasurement">pt</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Font weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clips_detailsFontWeight" min="0" max="900" step="100" value="900"/>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="clips_blurDetailsBG" type="checkbox" data-dependent="clips_blurDetailsBG"/> <span class="settingInfo">Show the game's cover art underneath text content</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="clips_blurDetailsBG">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Blur amount</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clips_blurDetailsBGAmount" min="0" max="99" step="1" value="16"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+				</div>
 			</div>
 			<div class="section" data-content="clips_function">
 				<div class="part">
@@ -5607,11 +5851,10 @@
 					</div>
 					<div class="setting">
 						<div class="settingCell">
-							<input checked id="clips_useRandom" type="checkbox"/> <span class="settingInfo">Select a random clip by default, use the most popular clip otherwise</span>
+							<input checked id="clips_useRandom" type="checkbox"/> <span class="settingInfo">Select a random clip, use the most popular clip otherwise</span>
 						</div>
 					</div>
-				</div>
-				<div class="part">
+					<hr/>
 					<div class="setting">
 						<div class="settingCellLabel">
 							<span class="settingInfo">Trigger command</span>
@@ -5622,6 +5865,7 @@
 					</div>
 				</div>
 				<div class="part">
+					<h1>Clip Selection</h1>
 					<div class="setting">
 						<div class="settingCellLabel">
 							<span class="settingInfo">Limit clip duration between</span>
@@ -5638,34 +5882,24 @@
 							<input type="number" id="clips_listSize" min="1" max="100" step="1" value="20"/><span class="settingCellMeasurement">clips</span>
 						</div>
 					</div>
-					<hr/>
 					<div class="setting">
 						<div class="settingCell smol">
 							Twitch forces sorting by view count on clips, so only the clips with the highest amount of views will be selected.
 						</div>
 					</div>
-				</div>
-				<div class="part">
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Fade in delay</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="clips_showDelay" min="0" max="10" step="0.1" value="2.5"/><span class="settingCellMeasurement">seconds</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Fade out earlier by</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="clips_hideCutoff" min="0" max="10" step="0.1" value="1.5"/><span class="settingCellMeasurement">seconds</span>
-						</div>
-					</div>
 					<hr/>
 					<div class="setting">
-						<div class="settingCell smol">
-							As Twitch provides no way to control its clip player (which this is using), I have to estimate when the clip actually ends. These settings are highly network-dependent, please adjust and test so they better fit your network latency and speeds.
+						<div class="settingCellLabel">
+							<span class="settingInfo">Preferred video quality</span>
+						</div>
+						<div class="settingCell">
+							<select id="clips_preferredResolution">
+								<option value="160">160p</option>
+								<option value="360">360p</option>
+								<option selected value="480">480p</option>
+								<option value="720">720p</option>
+								<option value="1080">1080p</option>
+							</select>
 						</div>
 					</div>
 				</div>
@@ -5674,7 +5908,26 @@
 				<div class="part">
 					<div class="setting">
 						<div class="settingCellLabel">
-							<span class="settingInfo">Video height</span>
+							<span class="settingInfo">Overlay margin</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clips_overlayMargin" min="0" max="100" step="1" value="16"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Element spacing</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clips_elementSpacing" min="0" max="100" step="1" value="12"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Video</h1>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Height</span>
 						</div>
 						<div class="settingCell">
 							<input type="number" id="clips_videoHeight" min="300" max="1080" step="1" value="360"/><span class="settingCellMeasurement">px</span>
@@ -5687,12 +5940,141 @@
 						</div>
 					</div>
 				</div>
+				<div class="part">
+					<h1>Details</h1>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="clips_showDetails" type="checkbox" data-dependent="clips_showDetails"/> <span class="settingInfo">Show clip details</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="clips_showDetails">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Horizontal alignment</span>
+						</div>
+						<div class="settingCell">
+							<select id="clips_detailsAlignment">
+								<option value="start">Left</option>
+								<option selected value="center">Center</option>
+								<option value="end">Right</option>
+							</select>
+						</div>
+					</div>					
+				</div>
 			</div>
 			<div class="section" data-content="clips_effects">
 				<div class="part">
+					<h1>Animations</h1>
 					<div class="setting">
 						<div class="settingCell">
 							<input checked id="clips_enableAnimations" type="checkbox"/> <span class="settingInfo">Enable animations</span>
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Filters</h1>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="clips_enableShadowEffects" type="checkbox" data-dependent="clips_enableShadowEffects"/> <span class="settingInfo">Draw shadows underneath text content</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="clips_enableShadowEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Color</span>
+						</div>
+						<div class="settingCell">
+							<input id="clips_shadowColor" type="text" data-coloris value="#000000FF"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="clips_enableShadowEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">X offset</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clips_shadowXOffset" min="-32" max="32" step="0.25" value="0"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="clips_enableShadowEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Y offset</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clips_shadowYOffset" min="-32" max="32" step="0.25" value="1"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="clips_enableShadowEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Blur amount</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clips_shadowBlurRadius" min="0" max="32" step="0.25" value="2"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="clips_enableOutlineEffects" type="checkbox" data-dependent="clips_enableOutlineEffects"/> <span class="settingInfo">Draw outlines underneath text content</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="clips_enableOutlineEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Color</span>
+						</div>
+						<div class="settingCell">
+							<input id="clips_outlineColor" type="text" data-coloris value="#000000FF"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="clips_enableOutlineEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clips_outlineSize" min="0" max="3" step="1" value="1"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="clips_enableBoxShadowEffects" type="checkbox" data-dependent="clips_enableBoxShadowEffects"/> <span class="settingInfo">Draw box shadows underneath video container</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="clips_enableBoxShadowEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Color</span>
+						</div>
+						<div class="settingCell">
+							<input id="clips_boxShadowColor" type="text" data-coloris value="#000000DD"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="clips_enableBoxShadowEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">X offset</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clips_boxShadowXOffset" min="-32" max="32" step="0.25" value="0"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="clips_enableBoxShadowEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Y offset</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clips_boxShadowYOffset" min="-32" max="32" step="0.25" value="12"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="clips_enableBoxShadowEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Blur amount</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clips_boxShadowBlurRadius" min="0" max="32" step="0.25" value="20"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="clips_enableBoxShadowEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Blur inset amount</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clips_boxShadowBlurInset" min="-32" max="32" step="0.25" value="-10"/><span class="settingCellMeasurement">px</span>
 						</div>
 					</div>
 				</div>
