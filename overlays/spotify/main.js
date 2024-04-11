@@ -115,9 +115,9 @@ const spotifyFuncs = {
 			localStorage.setItem("art_darkColor", data.colors.dark);
 			localStorage.setItem("art_lightColor", data.colors.light);
 		} else {
-			if(wasPreviouslyPlaying) {
-				stopTimers();
+			stopTimers();
 
+			if(wasPreviouslyPlaying) {
 				if(localStorage.getItem("setting_spotify_hideOnPause") === "true") {
 					$("#detailsWrapper").addClass("fadeOut").removeClass("fadeIn");
 					$("#title").addClass("slideOut").removeClass("slideIn");
@@ -141,7 +141,7 @@ const spotifyFuncs = {
 			return;
 		}
 
-		$("#artist").show(); // wtf
+		cycleAlbumArtist("artist");
 
 		if(localStorage.getItem("setting_spotify_enableScannable") === "true") { $("#scannableWrapper").show(); }
 		if(localStorage.getItem("setting_spotify_enableArt") === "true") { $("#artWrapper").show(); }
@@ -154,11 +154,10 @@ const spotifyFuncs = {
 		$("#detailsWrapper").addClass("fadeOut").removeClass("fadeIn");
 
 		$("#title").addClass("slideOut").removeClass("slideIn");
-		console.log("got here 1");
 		setTimeout(function() {
-			$("#artist").addClass("slideOut").removeClass("slideIn");
+			$("#secondary").addClass("slideOut").removeClass("slideIn");
 
-			$("#artist").one("animationend", function() {
+			$("#secondary").one("animationend", function() {
 				$("#titleString").text(data.title);
 				$("#artistString").text(data.artists.join(", "));
 				$("#albumString").text(data.album.name);
@@ -178,12 +177,6 @@ const spotifyFuncs = {
 						$("#albumString").addClass("isSingle");
 					}
 				}
-				console.log("got here 2");
-
-				$("#extraStringWrapper").hide();
-				$("#artist").show();
-
-				console.log("got here 3");
 
 				let darkColor = data.colors.dark;
 				let lightColor = data.colors.light;
@@ -196,22 +189,21 @@ const spotifyFuncs = {
 				$(":root").get(0).style.setProperty("--colorDark", darkColor);
 				$(":root").get(0).style.setProperty("--colorLight", lightColor);
 
-				console.log("got here 4");
-
 				$("#detailsWrapper").addClass("fadeIn").removeClass("fadeOut");
-
 				$("#title").addClass("slideIn").removeClass("slideOut");
+				
 				setTimeout(function() {
-					$("#artist").addClass("slideIn").removeClass("slideOut");
-					if(localStorage.getItem("setting_spotify_enableArtistAlbumCycle") === "true") {
-						albumArtistCycleTO = setTimeout(function() {
-							cycleAlbumArtist("album");
-						}, parseInt(localStorage.getItem("setting_spotify_artistAlbumCycleDelay")) * 1000);
-					}
-					updateMarquee();
+					$("#secondary").removeClass("slideOut");
+					$("#secondary").addClass("slideIn");
 					updateSecondaryMarquee();
-					console.log("got here 5");
 				}, timespans.small);
+
+				if(localStorage.getItem("setting_spotify_enableArtistAlbumCycle") === "true") {
+					albumArtistCycleTO = setTimeout(function() {
+						cycleAlbumArtist("album");
+					}, parseFloat(localStorage.getItem("setting_spotify_artistAlbumCycleDelay")) * 1000);
+				}
+				updateMarquee();
 			});
 		}, timespans.small);
 
@@ -324,7 +316,7 @@ function updateSecondaryMarquee() {
 	parentElement.removeClass("cssScrollClippingWorkaround").removeClass("slideIn");
 
 	if(localStorage.getItem("setting_spotify_enableMarquee") === "false") {
-		albumArtistCycleTO = setTimeout(function() { cycleAlbumArtist(nextCycle) }, parseInt(localStorage.getItem("setting_spotify_artistAlbumCycleDelay")) * 1000);
+		albumArtistCycleTO = setTimeout(function() { cycleAlbumArtist(nextCycle) }, parseFloat(localStorage.getItem("setting_spotify_artistAlbumCycleDelay")) * 1000);
 		return;
 	}
 
@@ -340,10 +332,10 @@ function updateSecondaryMarquee() {
 
 		childElement.addClass("cssScroll");
 		parentElement.addClass("cssScrollClippingWorkaround");
-		albumArtistCycleTO = setTimeout(function() { cycleAlbumArtist(nextCycle) }, (parseInt(localStorage.getItem("setting_spotify_artistAlbumCycleDelay")) * 1333) + (speed * 1000)); // yeah idk either
+		albumArtistCycleTO = setTimeout(function() { cycleAlbumArtist(nextCycle) }, (parseFloat(localStorage.getItem("setting_spotify_artistAlbumCycleDelay")) * 1333) + (speed * 1000)); // yeah idk either
 	} else {
 		console.log(`${childWidth} < ${parentWidth}`);
-		albumArtistCycleTO = setTimeout(function() { cycleAlbumArtist(nextCycle) }, parseInt(localStorage.getItem("setting_spotify_artistAlbumCycleDelay")) * 1000);
+		albumArtistCycleTO = setTimeout(function() { cycleAlbumArtist(nextCycle) }, parseFloat(localStorage.getItem("setting_spotify_artistAlbumCycleDelay")) * 1000);
 	}
 }
 
@@ -390,7 +382,3 @@ spotifyChannel.onmessage = function(message) {
 		spotifyFuncs[message.event](message.data);
 	}
 };
-
-$("body").on("animationend", ".slideIn", function() {
-	$(this).removeClass("slideIn");
-});

@@ -17,7 +17,6 @@
 	--overlayHeight: 56px;
 	--overlayMarginVertical: 12px;
 	--overlayMarginHorizontal: 12px;
-	--overlayLineHeight: 22px;
 
 	--elementSpacing: 12px;
 	--verticalSpacing: 2px;
@@ -33,6 +32,7 @@
 	--miscInfoFontStyle: normal;
 	--miscInfoAlignment: center;
 	--miscInfoFontWeight: 900;
+	--miscInfoLineHeight: 22px;
 
 	--timeFontSize: 12pt;
 
@@ -48,6 +48,7 @@
 	--FCIconColor: #DDAA00FF;
 	--hitMissAlignment: left;
 	--hitMissFontAdditionalWeight: 0px;
+	--hitMissLineHeight: 22px;
 	
 	--accColor: #FFFFFFFF;
 	--accFontFamily: "Manrope";
@@ -59,6 +60,7 @@
 	--accFontWeight: 900;
 	--accVerticalAlignment: column;
 	--accAlignment: center;
+	--accLineHeight: 22px;
 
 	--comboColor: #FFFFFFFF;
 	--comboFontFamily: "Manrope";
@@ -71,6 +73,7 @@
 	--fixWeirdMetadataAlignmentIssue: 1px;
 	--metadataVerticalAlignment: column;
 	--metadataAlignment: start;
+	--metadataLineHeight: 22px;
 
 	--titleFontSize: 19pt;
 	--titleFontWeight: 900;

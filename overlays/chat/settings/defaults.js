@@ -124,7 +124,8 @@ const nonPublicSettings = [
 	"clips_listSize",
 	"clips_useRandom",
 	"clips_triggerCommand",
-	"clips_preferredResolution"
+	"clips_preferredResolution",
+	"clips_allowRaidersToUse"
 ];
 
 const defaultConfig = {
@@ -726,7 +727,7 @@ const defaultConfig = {
 	"bs_boxShadowYOffset": "8",
 	"bs_boxShadowBlurRadius": "9",
 	"bs_boxShadowBlurInset": "-5",
-	"bs_diffFontSize": "14",
+	"bs_diffFontSize": "15",
 	"bs_timeFontSize": "12",
 	"bs_miscInfoColor": "#FFFFFF",
 	"bs_miscInfoFontFamily": "Manrope",
@@ -843,7 +844,12 @@ const defaultConfig = {
 	"clips_blurStreamerBG": "true",
 	"clips_blurStreamerBGAmount": "16",
 	"clips_blurDetailsBG": "true",
-	"clips_blurDetailsBGAmount": "16"
+	"clips_blurDetailsBGAmount": "16",
+	"clips_allowRaidersToUse": "true",
+	"bs_metadataLineHeight": "26",
+	"bs_miscInfoLineHeight": "24",
+	"bs_hitMissLineHeight": "16",
+	"bs_accLineHeight": "21"
 };
 // i typed out the bigNoNoWords so you don't have to, i'm sorry :(
 // it's gotta know what to remove

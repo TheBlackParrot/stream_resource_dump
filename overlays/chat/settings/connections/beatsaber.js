@@ -51,6 +51,79 @@ function postToBSEventChannel(data) {
 	}
 }
 
+async function getCachedBeatSaverUserData(url) {
+	const cacheStorage = await caches.open("beatSaverCache");
+
+	var cachedResponse = await cacheStorage.match(url);
+	if(!cachedResponse) {
+		const newResponse = await fetch(url);
+		if(!newResponse.ok) {
+			return {};
+		}
+		var userData = await newResponse.text();
+		var userDataJSON = JSON.parse(userData);
+
+		cachedResponse = new Response(userData, {
+			headers: {
+				'Content-Type': "application/json",
+				'X-Cache-Timestamp': Date.now()
+			}
+		});
+		await cacheStorage.put(`https://api.beatsaver.com/users/id/${userDataJSON.id}`, cachedResponse);		
+	} else {
+		const cacheTimestamp = parseInt(cachedResponse.headers.get("X-Cache-Timestamp"));
+		if(Date.now() - cacheTimestamp > 2592000000) {
+			// 30 days has passed since last fetch, refetch
+			console.log(`cached user data for ${url} is stale, re-fetching...`);
+			cacheStorage.delete(url);
+			return await getCachedBeatSaverUserData(url);
+		}
+
+		return await cachedResponse.json();
+	}
+
+	cachedResponse = await cacheStorage.match(url);
+	return await cachedResponse.json();
+}
+
+async function getCachedMapData(url) {
+	const cacheStorage = await caches.open("beatSaverCache");
+
+	var cachedResponse = await cacheStorage.match(url);
+	if(!cachedResponse) {
+		const newResponse = await fetch(url);
+		if(!newResponse.ok) {
+			return {};
+		}
+		var mapData = await newResponse.json();
+
+		// getting more uploader data since the one in the maps endpoints aren't actually the full uploader response
+		mapData.uploader = await getCachedBeatSaverUserData(`https://api.beatsaver.com/users/id/${mapData.uploader.id}`);
+
+		cachedResponse = new Response(JSON.stringify(mapData), {
+			headers: {
+				'Content-Type': "application/json",
+				'X-Cache-Timestamp': Date.now()
+			}
+		});
+		await cacheStorage.put(`https://api.beatsaver.com/maps/hash/${mapData.versions[0].hash}`, await cachedResponse.clone());
+		await cacheStorage.put(`https://api.beatsaver.com/maps/id/${mapData.id}`, cachedResponse);
+	} else {
+		const cacheTimestamp = parseInt(cachedResponse.headers.get("X-Cache-Timestamp"));
+		if(Date.now() - cacheTimestamp > 7776000000) {
+			// 90 days has passed since last fetch, refetch
+			console.log(`cached map data for ${url} is stale, re-fetching...`);
+			cacheStorage.delete(url);
+			return await getCachedMapData(url);
+		}
+
+		return await cachedResponse.json();
+	}
+
+	cachedResponse = await cacheStorage.match(url);
+	return await cachedResponse.json();
+}
+
 var oldHash;
 async function updateBeatSaberMapData() {
 	const curHash = `${currentBSSong.map.hash}.${currentBSSong.song.title}`;
@@ -81,34 +154,10 @@ async function updateBeatSaberMapData() {
 			}
 		}
 	}
-	
-	let cacheData = sessionStorage.getItem(`_bs_cache_${currentBSSong.map.hash}`);
+
 	let bsData = null;
-
-	if(cacheData !== null) {
-		bsData = JSON.parse(cacheData);
-	} else {
-		if(currentBSSong.map.hash.indexOf("wip") === -1 && currentBSSong.map.hash.length === 40) {
-			const bsFetchController = new AbortController();
-			const bsFetchTimedOutID = setTimeout(() => bsFetchController.abort(), parseInt(localStorage.getItem("setting_ajaxTimeout")) * 1000);
-			var response = {ok: false};
-			try {
-				response = await fetch(`https://api.beatsaver.com/maps/hash/${currentBSSong.map.hash}`);
-			} catch(err) {
-				console.log("failed to fetch map data from beatsaver");
-			}
-
-			if(response.ok) {
-				bsData = await response.json();
-				if(!("collaborators" in bsData)) { // TEMP SOLUTION REMOVE LATER
-					let responseID = await fetch(`https://api.beatsaver.com/maps/id/${bsData.id}`);
-					if(responseID.ok) {
-						bsData = await responseID.json();
-					}
-				}
-				sessionStorage.setItem(`_bs_cache_${currentBSSong.map.hash}`, JSON.stringify(bsData));
-			}
-		}
+	if(currentBSSong.map.hash.indexOf("wip") === -1 && currentBSSong.map.hash.length === 40) {
+		bsData = await getCachedMapData(`https://api.beatsaver.com/maps/hash/${currentBSSong.map.hash}`);
 	}
 
 	if(bsData !== null) {

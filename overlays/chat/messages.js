@@ -348,7 +348,7 @@ const chatFuncs = {
 	chatsettings: function(data, args) {
 		if(args.length !== 19) {
 			console.log("args not correct length");
-			return;
+			return false;
 		}
 
 		chatFuncs["namecolor"](data, [args[0]]);
@@ -371,7 +371,8 @@ const chatFuncs = {
 		chatFuncs["use7tvpaint"](data, [args[17]]);
 		chatFuncs["nameshadow"](data, [args[18]]);
 
-		data.message = "New chat settings have applied!"
+		data.message = "New chat settings have applied!";
+		return true;
 	},
 
 	flags: function(data, args) {
@@ -430,42 +431,27 @@ const chatFuncs = {
 
 		msgElement.append(infoElement);
 
-		const mapResponse = await fetch(`https://api.beatsaver.com/maps/id/${args[0]}`);
-
-		if(!mapResponse.ok) {
-			return;
-		}
-
-		const mapData = await mapResponse.json();
+		const mapData = await getCachedMapData(`https://api.beatsaver.com/maps/id/${args[0].toLowerCase()}`);
 		console.log(mapData);
 
 		if(funnyBeatSaberMapsToRequestToEverySingleStreamerOnTwitchEverIBetEverySingleOneOfThemWillEnjoyThem.indexOf(mapData.id) !== -1) {
 			infoElement.addClass("STREAMER_CAN_YOU_PLAY_REALITY_CHECK_ITS_MY_FAVORITE_MAP");
 		}
 
-		const uploaderResponse = await fetch(`https://api.beatsaver.com/users/id/${mapData.uploader.id}`);
-
-		if(!uploaderResponse.ok) {
-			return;
-		}
-
-		const uploaderData = await uploaderResponse.json();
-		console.log(uploaderData);
-
 		let canShowArt = (mapData.ranked || mapData.qualified || mapData.uploader.verifiedMapper || "curatedAt" in mapData);
 
 		let canShowInfo = canShowArt;
 		if(!canShowInfo) {
-			if("firstUpload" in uploaderData.stats) {
-				let firstUploadTimestamp = new Date(uploaderData.stats.firstUpload).getTime();
-				if(Date.now() - firstUploadTimestamp > (10518984*1000)) {
+			if("firstUpload" in mapData.uploader.stats) {
+				let firstUploadTimestamp = new Date(mapData.uploader.stats.firstUpload).getTime();
+				if(Date.now() - firstUploadTimestamp > (15552000000)) {
 					canShowInfo = true;
 				}
 			}
 		}
 
 		if(!canShowInfo) {
-			infoElement.html(`<i class="fas fa-times"></i> <span class="loadingMsg">could not show information for ${mapData.id}, BeatSaver account is too new</span>`);
+			infoElement.html(`<i class="fas fa-times"></i> <span class="loadingMsg"><strong>(${args[0]})</strong> mapper's first published map is too recent, not showing map information</span>`);
 			return;
 		}
 

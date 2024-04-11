@@ -1,5 +1,5 @@
-const overlayRevision = 1;
-const overlayRevisionTimestamp = 1711420507592;
+const overlayRevision = 2;
+const overlayRevisionTimestamp = 1712812641277;
 
 const settingsChannel = new BroadcastChannel("settings_overlay");
 
@@ -77,27 +77,18 @@ const twitchEventFuncs = {
 		const message = data.message;
 		const self = data.self;
 
+		const parts = data.message.split(" ");
+		var urlCheck = null;
+
+		if(parts[0] !== localStorage.getItem("setting_clips_triggerCommand")) {
+			return;
+		}
+
 		if(self) {
 			return;
 		}
 
-		if("badges" in tags) {
-			const badges = tags.badges;
-			if(badges !== null) {
-				if(!("moderator" in badges || "broadcaster" in badges)) {
-					return;
-				}
-			} else {
-				return;
-			}
-		} else {
-			return;
-		}
-
-		const parts = data.message.split(" ");
 		var targetLogin = data.tags.username || data.tags.login;
-		var urlCheck = null;
-
 		if(parts.length >= 2) {
 			try {
 				urlCheck = new URL(parts[1]);
@@ -105,7 +96,24 @@ const twitchEventFuncs = {
 				// must be a name
 				targetLogin = parts[1].toLowerCase().replaceAll(/[^a-zA-Z0-9]/g, "").substr(0, 25);
 			}
+		}
 
+		if(allowedUsers.indexOf(targetLogin) === -1 || localStorage.getItem("setting_clips_allowRaidersToUse") === "false") {
+			if("badges" in tags) {
+				const badges = tags.badges;
+				if(badges !== null) {
+					if(!("moderator" in badges || "broadcaster" in badges)) {
+						return;
+					}
+				} else {
+					return;
+				}
+			} else {
+				return;
+			}
+		}
+
+		if(parts.length >= 2) {
 			if(urlCheck) {
 				await setClip(targetLogin, null, parts[1]);
 			} else {
@@ -116,16 +124,27 @@ const twitchEventFuncs = {
 						wantedClip = -1;
 					}
 				}
-
-				if(parts[0] === localStorage.getItem("setting_clips_triggerCommand")) {
-					await setClip(targetLogin, wantedClip, null);
-				}
+				await setClip(targetLogin, wantedClip, null);
 			}
 
 			return;
 		}
 
 		await setClip(targetLogin, -1, null);
+	},
+
+	raided: function(data) {
+		if(localStorage.getItem("setting_clips_allowRaidersToUse") === "false") {
+			return;
+		}
+		
+		const tags = data.tags;
+		const name = tags.username || tags.login;
+
+		if(allowedUsers.indexOf(name) !== -1) {
+			return;
+		}
+		allowedUsers.push(name.toLowerCase());
 	},
 
 	AccessTokenRefreshed: function(data) {

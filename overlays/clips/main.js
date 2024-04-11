@@ -4,6 +4,7 @@ const twitchClientSecret = localStorage.getItem(`setting_twitchClientSecret`);
 var clipQueue = [];
 var clipIsActive = false;
 var playedClips = {};
+var allowedUsers = [];
 
 function checkClipQueue() {
 	if(!clipQueue.length) {
@@ -94,6 +95,10 @@ function clipIsFinished() {
 }
 
 async function setClip(targetLogin, wantedClip, clipURL) {
+	if(allowedUsers.indexOf(targetLogin) !== -1) {
+		allowedUsers.splice(allowedUsers.indexOf(targetLogin), 1);
+	}
+	
 	if(clipIsActive) {
 		clipQueue.push([targetLogin, wantedClip, clipURL]);
 		return;

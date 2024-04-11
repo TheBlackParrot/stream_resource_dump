@@ -1,5 +1,5 @@
-const overlayRevision = 5;
-const overlayRevisionTimestamp = 1709870431919;
+const overlayRevision = 6;
+const overlayRevisionTimestamp = 1712812641277;
 
 const settingsChannel = new BroadcastChannel("settings_overlay");
 
@@ -540,6 +540,19 @@ const settingUpdaters = {
 		} else {
 			rootCSS().setProperty("--background-art-offset", "0px");
 		}
+	},
+
+	metadataLineHeight: function(value) {
+		rootCSS().setProperty("--metadataLineHeight", `${value}px`);
+	},
+	miscInfoLineHeight: function(value) {
+		rootCSS().setProperty("--miscInfoLineHeight", `${value}px`);
+	},
+	hitMissLineHeight: function(value) {
+		rootCSS().setProperty("--hitMissLineHeight", `${value}px`);
+	},
+	accLineHeight: function(value) {
+		rootCSS().setProperty("--accLineHeight", `${value}px`);
 	}
 };
 

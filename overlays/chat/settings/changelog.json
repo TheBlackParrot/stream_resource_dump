@@ -1,4 +1,95 @@
 {
+	"1712812641277": {
+		"updates": {
+			"bs": {
+				"revision": 6,
+				"notes": [
+					[
+						"fixed various alignment issues with some non-default settings"
+					],
+					[
+						"added settings to change line heights on each cell"
+					],
+					[
+						"duration's font size now scales properly with the elapsed time's font size"
+					],
+					[
+						"added in placeholder data for some DOM elements",
+						["should be a little easier to configure without opening the game now"]
+					]
+				]				
+			},
+
+			"chat": {
+				"revision": 44,
+				"notes": [
+					[
+						"data fetched for beat saber map info display now comes from a CacheStorage object if present, it will also write to said storage if not present"
+					],
+					[
+						"beatsaver account's first upload must be at least 180 days old for map information to display, up from ~120 days"
+					],
+					[
+						"better clarified the \"account is too new\" bsr error message to reflect what it's actually looking at"
+					],
+					[
+						"beat saber map info display should now reflect chat appearance settings"
+					],
+					[
+						"fixed chat settings changed messages not showing up",
+						["...i'm gonna go out on a limb here and assume this is an issue with OBS's CEF? i couldn't replicate the issue in my dev environment. idk, this solution is just ensuring a message gets rendered at the cost of applying settings twice now. /shrug"]
+					]
+				]
+			},
+
+			"clips": {
+				"revision": 2,
+				"notes": [
+					[
+						"streamers who raid in can now trigger the !clip command as if they had regular permission to do so one time"
+					]
+				]
+			},
+
+			"spotify": {
+				"revision": 16,
+				"notes": [
+					[
+						"fixed cover art track progress outlines still increasing to 100% even if spotify is paused"
+					],
+					[
+						"fixed artist info displaying alongside other secondary metadata if the other secondary metadata is visible when the overlay is transitioning to a new song",
+						["this took a lot longer to fix than it seems i promise"]
+					],
+					[
+						"removed some UI flow debugging lines"
+					],
+					[
+						"artist/album metadata switching intervals were wrongly being used as an integer rather than a float"
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 45,
+				"notes": [
+					[
+						"removed now-extraneous beatsaver API call to fetch map collaborator data",
+						["initially collaborator data wasn't available in the 'maps/hash' endpoint, hence having to fetch it through 'maps/id' instead. but it's there now, so"]
+					],
+					[
+						"beatsaver response data is now cached in a CacheStorage object rather than in SessionStorage",
+						["response data will be considered stale after 90 days"]
+					],
+					[
+						"added link to my patreon page in the about panel",
+						["i have bills to pay pls to help weh"]
+					]
+				]
+			}
+		}
+	},
+
 	"1711420507592": {
 		"updates": {
 			"clips": {

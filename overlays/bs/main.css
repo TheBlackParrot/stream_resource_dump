@@ -122,7 +122,9 @@ body {
 }
 
 #miscInfoCell {
+	width: var(--miscInfoWidth);
 	min-width: var(--miscInfoWidth);
+	max-width: var(--miscInfoWidth);
 	font-weight: var(--miscInfoFontWeight);
 	text-align: var(--miscInfoAlignment);
 	font-size: var(--miscInfoFontSize);
@@ -131,32 +133,32 @@ body {
 	color: var(--miscInfoColor);
 	font-family: var(--miscInfoFontFamily);
 	font-style: var(--miscInfoFontStyle);
+	line-height: var(--miscInfoLineHeight);
 }
 
-#codeWrap span:first-child, #duration {
+#codeWrap div:first-child, #duration {
 	background-image: linear-gradient(170deg, #FFF 20%, var(--secondaryColor) 100%);
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
-	line-height: var(--overlayLineHeight);
+	line-height: var(--miscInfoLineHeight);
 }
-#codeWrap span:first-child {
+#codeWrap div:first-child {
 	font-size: calc(var(--miscInfoFontSize) / 1.2);
+	margin-right: 0.3em;
 }
 #duration {
-	font-size: calc(var(--primaryFontSize) / 1.075);
-}
-
-#diff {
-	vertical-align: top;
+	font-size: calc(var(--miscInfoFontSize) / 1.5);
 }
 
 #diffIcon {
-	height: 1em;
-	width: 1em;
-	margin-right: 0.33em;
+	height: calc(var(--miscInfoLineHeight) - 2px);
+	width: calc(var(--miscInfoLineHeight) - 2px);
+	margin-right: 0.3em;
 	background-image: linear-gradient(170deg, #FFF 20%, var(--currentDiffColor) 100%);
+	background-repeat: no-repeat;
 	-webkit-mask-image: var(--diffIconURL);
-	display: inline-block;
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-position: center;
 }
 
 #duration, #time, #combo, #acc, #hitValue, #missValue {
@@ -169,6 +171,18 @@ body {
 #diffWrap, #codeWrap, #hitCell, #FCCell, #missCell, #comboWrap, #accWrap {
 	padding-top: var(--verticalSpacing);
 	padding-bottom: var(--verticalSpacing);
+}
+
+#diffWrap, #codeWrap {
+	line-height: var(--miscInfoLineHeight);
+	align-items: baseline;
+	justify-content: center;
+	display: flex;
+}
+
+#bsrCode, #diff {
+	line-height: var(--miscInfoLineHeight);
+	align-self: center;
 }
 
 #timeWrap {
@@ -230,6 +244,7 @@ body {
 	font-style: var(--hitMissFontStyle);
 	font-size: var(--hitMissFontSize);
 	text-align: var(--hitMissAlignment);
+	line-height: var(--hitMissLineHeight);
 }
 #missCell {
 	display: none;
@@ -248,6 +263,7 @@ body {
 	font-weight: var(--primaryFontWeight);
 	overflow-x: visible;
 	flex-direction: var(--accVerticalAlignment);
+	line-height: var(--accLineHeight);
 }
 #accWrap {
 	font-family: var(--accFontFamily);
@@ -260,17 +276,23 @@ body {
 	-webkit-text-fill-color: transparent;
 	-webkit-text-stroke: var(--accFontAdditionalWeight) transparent;
 	padding-bottom: 0px;
-}
-#acc {
-	line-height: var(--accLineHeight);
+	/* there's some weird vertical mis-alignment i literally cannot think of a solution for so i'm just doing it the hard way */
+	position: relative;
+	top: -1px;
 }
 #accPerc {
 	font-size: calc(var(--accFontSize) / 1.67);
 	margin-left: 0.1em;
 }
+#acc {
+	display: inline-block;
+	line-height: calc(var(--accLineHeight) + 3px);
+}
 
 #comboWrap {
 	font-size: var(--comboFontSize);
+	height: var(--accLineHeight);
+	line-height: 0px;
 }
 #combo {
 	font-family: var(--comboFontFamily);
@@ -449,6 +471,10 @@ body {
 	height: 0px;
 	position: fixed;
 	top: -100vh;
+}
+
+.fa-fw {
+	min-width: 1.3em;
 }
 
 /* uncomment after OBS updates CEF to a recent chrome version

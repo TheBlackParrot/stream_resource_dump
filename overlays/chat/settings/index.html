@@ -2884,6 +2884,14 @@
 					</div>
 					<div class="setting">
 						<div class="settingCellLabel">
+							<strong><i class="fa-brands fa-patreon"></i> Patreon</strong>
+						</div>
+						<div class="settingCell">
+							<tt>TheBlackParrot</tt>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
 							<strong><i class="fa-brands fa-telegram"></i> Telegram</strong>
 						</div>
 						<div class="settingCell">
@@ -4843,7 +4851,15 @@
 						<div class="settingCell">
 							<input type="number" id="bs_accWidth" min="0" max="500" step="1" value="120"/><span class="settingCellMeasurement">px</span>
 						</div>
-					</div>					
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Line height</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_accLineHeight" min="0" max="999" step="1" value="21"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
 					<hr/>
 					<div class="setting">
 						<div class="settingCell">
@@ -5102,7 +5118,15 @@
 						<div class="settingCell">
 							<input type="number" id="bs_hitMissWidth" min="0" max="500" step="1" value="100"/><span class="settingCellMeasurement">px</span>
 						</div>
-					</div>					
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Line height</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_hitMissLineHeight" min="0" max="999" step="1" value="16"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
 					<hr/>
 					<div class="setting">
 						<div class="settingCell">
@@ -5201,6 +5225,14 @@
 							<input type="number" id="bs_miscInfoWidth" min="0" max="500" step="1" value="120"/><span class="settingCellMeasurement">px</span>
 						</div>
 					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Line height</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_miscInfoLineHeight" min="0" max="999" step="1" value="24"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
 					<hr/>
 					<div class="setting">
 						<div class="settingCell">
@@ -5250,7 +5282,7 @@
 							<span class="settingInfo">Difficulty font size</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="bs_diffFontSize" min="0" max="96" step="0.25" value="14"/><span class="settingCellMeasurement">pt</span>
+							<input type="number" id="bs_diffFontSize" min="0" max="96" step="0.25" value="15"/><span class="settingCellMeasurement">pt</span>
 						</div>
 					</div>
 					<div class="setting">
@@ -5366,6 +5398,14 @@
 								<option value="center">Center</option>
 								<option value="end">Right</option>
 							</select>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Line height</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_metadataLineHeight" min="0" max="999" step="1" value="26"/><span class="settingCellMeasurement">px</span>
 						</div>
 					</div>
 				</div>
@@ -5852,6 +5892,12 @@
 					<div class="setting">
 						<div class="settingCell">
 							<input checked id="clips_useRandom" type="checkbox"/> <span class="settingInfo">Select a random clip, use the most popular clip otherwise</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="clips_allowRaidersToUse" type="checkbox"/> <span class="settingInfo">Allow streamers raiding in to play one clip on their own</span>
 						</div>
 					</div>
 					<hr/>

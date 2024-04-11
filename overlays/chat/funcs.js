@@ -440,3 +440,76 @@ async function compressAvatarBlob(blob, size, quality, encode) {
 		}
 	}
 }
+
+async function getCachedBeatSaverUserData(url) {
+	const cacheStorage = await caches.open("beatSaverCache");
+
+	var cachedResponse = await cacheStorage.match(url);
+	if(!cachedResponse) {
+		const newResponse = await fetch(url);
+		if(!newResponse.ok) {
+			return {};
+		}
+		var userData = await newResponse.text();
+		var userDataJSON = JSON.parse(userData);
+
+		cachedResponse = new Response(userData, {
+			headers: {
+				'Content-Type': "application/json",
+				'X-Cache-Timestamp': Date.now()
+			}
+		});
+		await cacheStorage.put(`https://api.beatsaver.com/users/id/${userDataJSON.id}`, cachedResponse);		
+	} else {
+		const cacheTimestamp = parseInt(cachedResponse.headers.get("X-Cache-Timestamp"));
+		if(Date.now() - cacheTimestamp > 2592000000) {
+			// 30 days has passed since last fetch, refetch
+			console.log(`cached user data for ${url} is stale, re-fetching...`);
+			cacheStorage.delete(url);
+			return await getCachedBeatSaverUserData(url);
+		}
+
+		return await cachedResponse.json();
+	}
+
+	cachedResponse = await cacheStorage.match(url);
+	return await cachedResponse.json();
+}
+
+async function getCachedMapData(url) {
+	const cacheStorage = await caches.open("beatSaverCache");
+
+	var cachedResponse = await cacheStorage.match(url);
+	if(!cachedResponse) {
+		const newResponse = await fetch(url);
+		if(!newResponse.ok) {
+			return {};
+		}
+		var mapData = await newResponse.json();
+
+		// getting more uploader data since the one in the maps endpoints aren't actually the full uploader response
+		mapData.uploader = await getCachedBeatSaverUserData(`https://api.beatsaver.com/users/id/${mapData.uploader.id}`);
+
+		cachedResponse = new Response(JSON.stringify(mapData), {
+			headers: {
+				'Content-Type': "application/json",
+				'X-Cache-Timestamp': Date.now()
+			}
+		});
+		await cacheStorage.put(`https://api.beatsaver.com/maps/hash/${mapData.versions[0].hash}`, await cachedResponse.clone());
+		await cacheStorage.put(`https://api.beatsaver.com/maps/id/${mapData.id}`, cachedResponse);
+	} else {
+		const cacheTimestamp = parseInt(cachedResponse.headers.get("X-Cache-Timestamp"));
+		if(Date.now() - cacheTimestamp > 7776000000) {
+			// 90 days has passed since last fetch, refetch
+			console.log(`cached map data for ${url} is stale, re-fetching...`);
+			cacheStorage.delete(url);
+			return await getCachedMapData(url);
+		}
+
+		return await cachedResponse.json();
+	}
+
+	cachedResponse = await cacheStorage.match(url);
+	return await cachedResponse.json();
+}
