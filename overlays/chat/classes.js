@@ -113,6 +113,7 @@ class User {
 		this.moderator = opts.moderator || null;
 		this.avatar = opts.avatar;
 		this.avatarImage = null;
+		this.avatarBroken = false;
 		this.broadcasterType = opts.broadcasterType;
 		this.created = new Date(opts.created).getTime();
 		this.bot = isUserBot(opts.username);
@@ -182,6 +183,13 @@ class User {
 		var argh = this;
 		const cacheStorage = await caches.open("avatarCache-v2");
 		var response = await cacheStorage.match(this.avatar);
+
+		if(!response.ok) {
+			this.avatarBroken = true;
+			return new Promise(async function(resolve, reject) {
+				resolve("var(--defaultNameColor)");
+			});
+		}
 
 		return new Promise(async function(resolve, reject) {
 			if(parseInt(argh.id) === -1) {
@@ -324,6 +332,10 @@ class User {
 	}
 
 	async cacheAvatar() {
+		if(this.avatarBroken) {
+			return false;
+		}
+
 		if(!this.avatar) {
 			console.log(`avatar field on ${this.id} was empty, re-fetching`);
 			const response = await callTwitchAsync({
@@ -345,6 +357,7 @@ class User {
 
 			const blob = await fetchBlob(this.avatar);
 			if(!blob) {
+				this.avatarBroken = true;
 				return false;
 			}
 			const size = parseInt(localStorage.getItem("setting_avatarSize")) * 2;
@@ -385,6 +398,14 @@ class User {
 	}
 
 	get avatarEnabled() {
+		if(this.avatarBroken) {
+			return false;
+		}
+
+		if(this.id === "-1") {
+			return false;
+		}
+
 		if(!localStorage.getItem(`showpfp_${this.id}`)) {
 			localStorage.setItem(`showpfp_${this.id}`, "yes");
 		}

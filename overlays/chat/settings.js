@@ -97,7 +97,9 @@ const settings = {
 		"feline_pride": "feline.png",
 		"salmacian": "salmacian.png",
 		"qvp": "qvp.png",
-		"villain": "qvp.png"
+		"villain": "qvp.png",
+		"ace": "asexual.svg",
+		"aegosexual": "aegosexual.png"
 	}
 };
 
@@ -517,16 +519,16 @@ const settingUpdaters = {
 
 	chatShadows: function(value) {
 		if(value === "true") {
-			rootCSS().setProperty("--shadowStuff", "var(--originalShadowStuff)");
+			rootCSS().setProperty("--shadowStuff", "url(#shadowEffect)");
 		} else {
-			rootCSS().setProperty("--shadowStuff", "drop-shadow(0px 0px 0px transparent)");
+			rootCSS().setProperty("--shadowStuff", "url(#blankEffect)");
 		}
 	},
 	chatOutlinesFilter: function(value) {
 		if(value === "true") {
-			rootCSS().setProperty("--outlineStuff", "var(--originalOutlineStuff)");
+			rootCSS().setProperty("--outlineStuff", "url(#outlineEffect)");
 		} else {
-			rootCSS().setProperty("--outlineStuff", "drop-shadow(0px 0px 0px transparent)");
+			rootCSS().setProperty("--outlineStuff", "url(#blankEffect)");
 		}
 	},
 
@@ -599,21 +601,37 @@ const settingUpdaters = {
 		rootCSS().setProperty("--overlayShadowColor", value);
 	},
 	overlayShadowXOffset: function(value) {
-		rootCSS().setProperty("--overlayShadowXOffset", `${value}px`);
+		$("feDropShadow").attr("dx", value);
 	},
 	overlayShadowYOffset: function(value) {
-		rootCSS().setProperty("--overlayShadowYOffset", `${value}px`);
+		$("feDropShadow").attr("dy", value);
 	},
 	overlayShadowBlurRadius: function(value) {
-		rootCSS().setProperty("--overlayShadowBlurRadius", `${value}px`);
+		$("feDropShadow").attr("stdDeviation", value);
 	},
 	overlayOutlineColor: function(value) {
 		rootCSS().setProperty("--overlayOutlineColor", value);
 	},
-	overlayOutlineSize: function(value) {
-		rootCSS().setProperty("--overlayOutlineSize", `${value}px`);
-		rootCSS().setProperty("--overlayOutlineSizeNegative", `-${value}px`);
-		rootCSS().setProperty("--overlayOutlineBlurRadius", `${parseFloat(value)-1}px`);
+	overlayOutlineDivisor: function(value) {
+		$("feConvolveMatrix").attr("divisor", value);
+	},
+	overlayOutlineOrder: function(value) {
+		value = parseInt(value);
+		let matrix;
+		if(value >= 3 && localStorage.getItem("setting_overlayOutlineStripCorners") === "true") {
+			matrix = getSmoothMatrix(value, parseFloat(localStorage.getItem("setting_overlayOutlineThreshold")));
+		} else {
+			matrix = new Array(Math.pow(value, 2)).fill(1);
+		}
+
+		$("feConvolveMatrix").attr("order", `${value},${value}`);
+		$("feConvolveMatrix").attr("kernelMatrix", matrix.join(" "));
+	},
+	overlayOutlineStripCorners: function() {
+		settingUpdaters.overlayOutlineOrder(localStorage.getItem("setting_overlayOutlineOrder"));
+	},
+	overlayOutlineThreshold: function() {
+		settingUpdaters.overlayOutlineOrder(localStorage.getItem("setting_overlayOutlineOrder"));
 	},
 
 	badgeBorderRadius: function(value) {

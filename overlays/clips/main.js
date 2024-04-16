@@ -66,6 +66,7 @@ function clipIsPlaying() {
 }
 
 function clipIsFinished() {
+	$("#loading").hide(); // shh you are in fact Not loading
 	const lines = $(".line");
 
 	if(localStorage.getItem("setting_clips_enableAnimations") === "true") {
@@ -92,6 +93,10 @@ function clipIsFinished() {
 		clipIsActive = false;
 		checkClipQueue();
 	}
+}
+
+function clipIsStalled() {
+	$("#loading").fadeIn(100);
 }
 
 async function setClip(targetLogin, wantedClip, clipURL) {
@@ -265,20 +270,32 @@ async function setClip(targetLogin, wantedClip, clipURL) {
 	}
 	console.log(game);
 
+	setMetadata(target, selectedClip, game);
+
 	const videoURLSources = getClipURLs(selectedClip.thumbnail_url);
 	console.log(videoURLSources);
 
 	$("video").remove();
 	
-	const video = $(`<video autoplay></video>`);
-	video[0].onplay = clipIsPlaying;
+	const video = $(`<video preload="auto"></video>`);
 	video[0].onended = clipIsFinished;
+	video[0].onstalled = clipIsStalled;
+	video[0].onwaiting = clipIsStalled;
+	video[0].onpause = clipIsStalled;
+	video[0].oncanplay = function() {
+		$("#loading").fadeOut(100);
+		video[0].play();
+	}
+	video[0].onplaying = function() {
+		$("#loading").fadeOut(100);
+	}
 	for(const videoURL of videoURLSources) {
 		video.append($(`<source src="${videoURL}"/>`));
 	}
 	$("#videoWrap").append(video);
 
-	setMetadata(target, selectedClip, game);
+	clipIsPlaying();
+	clipIsStalled();
 }
 
 const lux = luxon.DateTime;

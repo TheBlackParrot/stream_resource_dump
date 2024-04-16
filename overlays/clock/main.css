@@ -2,21 +2,10 @@
 	--colorDark: #000000;
 	--colorLight: #A695FF;
 
-	--shadowColor: rgba(0, 0, 0, 1);
-	--shadowXOffset: 0px;
-	--shadowYOffset: 1px;
-	--shadowBlurRadius: 2px;
-	--originalShadowStuff: drop-shadow(var(--shadowXOffset) var(--shadowYOffset) var(--shadowBlurRadius) var(--shadowColor));
-	--shadowStuff: var(--originalShadowStuff);
-
-	--outlineSize: 1px;
-	--outlineSizeNegative: -1px;
-	--outlineColor: #000000;
-	--originalOutlineStuff: drop-shadow(var(--outlineSizeNegative) var(--outlineSizeNegative) 0px var(--outlineColor))
-							drop-shadow(var(--outlineSize) var(--outlineSizeNegative) 0px var(--outlineColor))
-							drop-shadow(var(--outlineSizeNegative) var(--outlineSize) 0px var(--outlineColor))
-							drop-shadow(var(--outlineSize) var(--outlineSize) 0px var(--outlineColor));
-	--outlineStuff: var(--originalOutlineStuff);
+	--shadowStuff: url(#shadowEffect);
+	--overlayShadowColor: #000000;
+	--outlineStuff: url(#outlineEffect);
+	--overlayOutlineColor: #000000;
 
 	--effectFilters: var(--outlineStuff) var(--shadowStuff);
 
@@ -125,8 +114,8 @@ body {
 	padding-bottom: var(--verticalSpacing);
 	padding-left: 4px;
 	padding-right: 4px;
-	filter: var(--effectFilters);
 	text-align: center;
+	filter: var(--effectFilters);
 }
 
 .head {
@@ -179,4 +168,16 @@ body {
 	text-align: center;
 	white-space: break-spaces;
 	-webkit-text-stroke: var(--meridiemAddWeight) transparent;
+}
+
+#filterWrapper {
+	position: fixed;
+	top: -100vh;
+	left: -100vw;
+}
+.effectWrapper {
+	width: var(--elementWidth);
+	align-items: var(--elementJustify);
+	display: flex;
+	flex-direction: column;
 }

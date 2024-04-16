@@ -2,22 +2,10 @@
 	--overlayWidthActual: 700px;
 	--overlayWidth: 100%;
 
-	--overlayShadowColor: rgba(0, 0, 0, 1);
-	--overlayShadowXOffset: 0px;
-	--overlayShadowYOffset: 1px;
-	--overlayShadowBlurRadius: 2px;
-	--originalShadowStuff: drop-shadow(var(--overlayShadowXOffset) var(--overlayShadowYOffset) var(--overlayShadowBlurRadius) var(--overlayShadowColor));
-	--shadowStuff: var(--originalShadowStuff);
-
-	--overlayOutlineSize: 1px;
-	--overlayOutlineSizeNegative: -1px;
-	--overlayOutlineBlurRadius: 0px;
+	--shadowStuff: url(#shadowEffect);
+	--overlayShadowColor: #000000;
+	--outlineStuff: url(#outlineEffect);
 	--overlayOutlineColor: #000000;
-	--originalOutlineStuff: drop-shadow(var(--overlayOutlineSizeNegative) var(--overlayOutlineSizeNegative) var(--overlayOutlineBlurRadius) var(--overlayOutlineColor))
-							drop-shadow(var(--overlayOutlineSize) var(--overlayOutlineSizeNegative) var(--overlayOutlineBlurRadius) var(--overlayOutlineColor))
-							drop-shadow(var(--overlayOutlineSizeNegative) var(--overlayOutlineSize) var(--overlayOutlineBlurRadius) var(--overlayOutlineColor))
-							drop-shadow(var(--overlayOutlineSize) var(--overlayOutlineSize) var(--overlayOutlineBlurRadius) var(--overlayOutlineColor));
-	--outlineStuff: var(--originalOutlineStuff);
 
 	--effectFilters: var(--outlineStuff) var(--shadowStuff);
 

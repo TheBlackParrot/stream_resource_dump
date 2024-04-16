@@ -346,7 +346,7 @@ const chatFuncs = {
 	},
 
 	chatsettings: function(data, args) {
-		if(args.length !== 19) {
+		if(args.length < 18) {
 			console.log("args not correct length");
 			return false;
 		}
@@ -369,7 +369,6 @@ const chatFuncs = {
 		chatFuncs["useusername"](data, [args[15]]);
 		chatFuncs["pfpshape"](data, [args[16]]);
 		chatFuncs["use7tvpaint"](data, [args[17]]);
-		chatFuncs["nameshadow"](data, [args[18]]);
 
 		data.message = "New chat settings have applied!";
 		return true;
@@ -401,9 +400,11 @@ const chatFuncs = {
 		if(localStorage.getItem("setting_cmdEnableBSR") !== "true") {
 			return;
 		}
-		
-		if(channelData.game_id !== "503116") {
-			return;
+
+		if("game_id" in streamData) {
+			if(streamData.game_id !== "503116") {
+				return;
+			}
 		}
 
 		if(!args.length) {
@@ -433,6 +434,11 @@ const chatFuncs = {
 
 		const mapData = await getCachedMapData(`https://api.beatsaver.com/maps/id/${args[0].toLowerCase()}`);
 		console.log(mapData);
+
+		if(!Object.keys(mapData).length) {
+			infoElement.html(`<i class="fas fa-times"></i> <span class="loadingMsg"><strong>(${args[0]})</strong> no map with this key exists!</span>`);
+			return;			
+		}
 
 		if(funnyBeatSaberMapsToRequestToEverySingleStreamerOnTwitchEverIBetEverySingleOneOfThemWillEnjoyThem.indexOf(mapData.id) !== -1) {
 			infoElement.addClass("STREAMER_CAN_YOU_PLAY_REALITY_CHECK_ITS_MY_FAVORITE_MAP");
@@ -547,24 +553,6 @@ const chatFuncs = {
 		localStorage.setItem(`use7tvpaint_${data.user.id}`, which);
 	},
 
-	nameshadow: function(data, args) {
-		if(!args.length) { return; }
-		let show = (args[0] === "yes" ? "yes" : "no");
-
-		console.log(`name shadow for ${data.user.username} is now ${show}`);
-		localStorage.setItem(`nameshadow_${data.user.id}`, show);
-		rootCSS().setProperty(`--nameShadow${data.user.id}`, (show === "yes" ? "var(--shadowStuff)" : ""));
-	},
-
-	nameoutline: function(data, args) {
-		if(!args.length) { return; }
-		let show = (args[0] === "yes" ? "yes" : "no");
-
-		console.log(`name outline for ${data.user.username} is now ${show}`);
-		localStorage.setItem(`nameoutline_${data.user.id}`, show);
-		rootCSS().setProperty(`--nameOutline${data.user.id}`, (show === "yes" ? "var(--outlineStuff)" : ""));		
-	},
-
 	resetchat: function(data, args) {
 		localStorage.removeItem(`namesize_${data.user.id}`);
 		localStorage.removeItem(`nametransform_${data.user.id}`);
@@ -605,9 +593,6 @@ const chatFuncs = {
 		rootCSS().removeProperty(`--nameStyle${data.user.id}`);
 		rootCSS().removeProperty(`--nameTransform${data.user.id}`);
 		rootCSS().removeProperty(`--nameVariant${data.user.id}`);
-		rootCSS().removeProperty(`--nameShadow${data.user.id}`);
-		rootCSS().removeProperty(`--nameOutline${data.user.id}`);
-		rootCSS().removeProperty(`--nameEffects${data.user.id}`);
 		rootCSS().removeProperty(`--chatMessageColor${data.user.id}`);
 		rootCSS().removeProperty(`--msgSize${data.user.id}`);
 		rootCSS().removeProperty(`--nameFont${data.user.id}`);
@@ -983,9 +968,6 @@ function initUserSettingValues(data) {
 			rootCSS().setProperty(`--nameStyle${data.user.id}`, localStorage.getItem(`namestyle_${data.user.id}`));
 			rootCSS().setProperty(`--nameTransform${data.user.id}`, localStorage.getItem(`nametransform_${data.user.id}`));
 			rootCSS().setProperty(`--nameVariant${data.user.id}`, localStorage.getItem(`namevariant_${data.user.id}`));
-			rootCSS().setProperty(`--nameShadow${data.user.id}`, localStorage.getItem(`nameshadow_${data.user.id}`) === "yes" ? `var(--shadowStuff)` : "");
-			rootCSS().setProperty(`--nameOutline${data.user.id}`, localStorage.getItem(`nameoutline_${data.user.id}`) === "yes" ? `var(--outlineStuff)` : "");
-			rootCSS().setProperty(`--nameEffects${data.user.id}`, `var(--nameOutline${data.user.id})var(--nameShadow${data.user.id})`);
 		}
 	}
 
@@ -1121,8 +1103,6 @@ function initUserBlockCustomizations(data, elements) {
 		allNameElements.css("letter-spacing", `var(--nameSpacing${data.user.id})`);
 		allNameElements.css("text-transform", `var(--nameTransform${data.user.id})`);
 		allNameElements.css("font-variant", `var(--nameVariant${data.user.id})`);
-		displayNameElement.css("filter", `var(--nameEffects${data.user.id})`);
-		internationalNameElement.css("filter", `var(--nameEffects${data.user.id}) saturate(var(--internationalNameSaturation))`);
 
 		if(localStorage.getItem(`namestyle_${data.user.id}`) === "italic") {
 			allNameElements.css("padding-right", "4px");

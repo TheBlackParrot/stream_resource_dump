@@ -1,4 +1,134 @@
 {
+	"1713293906193": {
+		"updates": {
+			"all": {
+				"notes": [
+					[
+						"outline and shadow effects are now being done through SVG filters",
+						["these should be MUCH more performant over the way they were previously being done"]
+					],
+					[
+						"updated Luxon to version 3.4.4"
+					],
+					[
+						"updated jQuery to version 3.7.1"
+					],
+					[
+						"attempted to fix overlays sometimes failing to init properly due to scripts being executed out of order"
+					]
+				]
+			},
+
+			"bs": {
+				"revision": 7,
+				"notes": [
+					[
+						"(nothing specific to note)"
+					]
+				]				
+			},
+
+			"bsvas": {
+				"revision": 4,
+				"notes": [
+					[
+						"fixed version information not properly sending to the settings panel on initial load"
+					],
+					[
+						"migrated remote database syncing ajax calls over to fetch calls"
+					]
+				]				
+			},
+
+			"chat": {
+				"revision": 45,
+				"notes": [
+					[
+						"added some more maps to the goofy font filter for beat saber map requests"
+					],
+					[
+						"bsr map keys that don't exist will now show an error for map requests"
+					],
+					[
+						"added aegosexual flag to the flags command"
+					],
+					[
+						"swapped to jdecked's fork of twemoji (updated to version 15.1.0)"
+					],
+					[
+						"fixed bsr map information not showing up on the overlay if the category wasn't initially set to Beat Saber",
+						["i've also tweaked the conditional flow to allow !bsr to show up if streams are offline for debugging/configuration purposes"]
+					],
+					[
+						"fixed default bit badges sometimes only rendering part of the normal 28 available badge tiers",
+						["there's some... weird oddity on some channels? idk what's going on. was testing changes in Canadian_Dragon's channel and noticed the 3 custom bit badges were all just clones of some default bit badges (the 5000, 10000, and 25000 ones to be precise)"]
+					],
+					[
+						"fixed users with invalid/broken avatars rendering avatars at all",
+						["how does this even happen wtf did y'all do???"]
+					],
+					[
+						"fixed system messages rendering with avatars if everyone has avatars enabled"
+					],
+					[
+						"removed viewer settings to enable/disable shadow/outline effects",
+						["i'm seeing people disable these in order to make their names harder to read. no. stop that."]
+					]
+				]
+			},
+
+			"clips": {
+				"revision": 3,
+				"notes": [
+					[
+						"tweaked UI flow a little bit, should show details after API responses now"
+					],
+					[
+						"added a loading spinner if a buffer underflow occurs"
+					]
+				]
+			},
+
+			"clock": {
+				"revision": 4,
+				"notes": [
+					[
+						"manually set the timezone abbreviation for Philippine Standard Time",
+						["was being set to \"PST\" which causes confusion with Pacific Standard Time, Luxon has no code for the timezone either and simply returns \"GMT+8\", so, manual override time yippee"]
+					]
+				]
+			},
+
+			"spotify": {
+				"revision": 17,
+				"notes": [
+					[
+						"added placeholder data for text fields"
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 46,
+				"notes": [
+					[
+						"added a condensed \"all\" category for changelog entries if a change pertains to all overlays"
+					],
+					[
+						"changelog entires without a revision set in a category no longer shows \"(rundefined)\" as its revision"
+					],
+					[
+						"updated obs-websocket-js to version 5.0.5"
+					],
+					[
+						"decreased beatsaver stale cache time from 90 days to 7 days",
+						["not me forgetting vote counts are also in this data. nope. definitely did not forget about that"]
+					]
+				]
+			}
+		}
+	},
+
 	"1712812641277": {
 		"updates": {
 			"bs": {

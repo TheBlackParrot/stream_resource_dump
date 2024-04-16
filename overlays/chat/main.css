@@ -50,9 +50,11 @@ body {
 	margin-bottom: var(--chatBlockSpacing);
 	margin-top: 0px;	
 }
-.badges, .pronouns, .message, .pfp, .flags, .displayName, .internationalName, .extraInfo {
+/*.badges, .pronouns, .message, .pfp, .flags, .displayName, .internationalName, .extraInfo {
 	filter: var(--effectFilters);
-	backdrop-filter: opacity(0);
+}*/
+.userInfo, .message, .extraInfo {
+	filter: var(--effectFilters);
 }
 
 .overallWrapper {
@@ -201,6 +203,7 @@ body {
 	opacity: 0;
 	display: inline-block;
 	height: 1em;
+	backdrop-filter: opacity(0);
 }
 
 .message, .extraInfo {
@@ -279,7 +282,6 @@ tt, code, pre {
 	white-space: nowrap;
 	margin-bottom: 4px;
 	filter: var(--effectFilters);
-	backdrop-filter: opacity(0);
 	overflow: hidden;
 	display: flex;
 	flex-wrap: wrap;
@@ -628,7 +630,6 @@ img.emoji {
 	height: calc(100% + var(--avatarsBGVerticalPadding));
 	width: var(--avatarsBGSize);
 	position: absolute;
-	backdrop-filter: opacity(0);
 	z-index: 1;
 	top: calc(-0.5 * var(--avatarsBGVerticalPadding));
 }
@@ -678,7 +679,6 @@ img.emoji {
 	width: calc(var(--avatarsBGSize) + (var(--avatarsBGBlurAmount) * 6));
 	background-size: cover;
 	background-repeat: no-repeat;
-	backdrop-filter: opacity(0);
 	position: relative;
 	filter: blur(var(--avatarsBGBlurAmount));
 	top: calc((var(--avatarsBGSize) / -3) - (var(--avatarsBGBlurAmount) * 3));
@@ -773,3 +773,9 @@ img.emoji {
 
 .pointRedeemIcon { -webkit-mask-image: url("icons/points.svg"); }
 .watchStreakIcon { -webkit-mask-image: url("icons/eye.svg"); }
+
+#filterWrapper {
+	position: fixed;
+	top: -100vh;
+	left: -100vw;
+}

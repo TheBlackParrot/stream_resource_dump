@@ -9,16 +9,15 @@
 	<link rel="stylesheet" type="text/css" href="main.css">
 	<link rel="stylesheet" type="text/css" href="fonts.css">
 	<link rel="stylesheet" type="text/css" href="animations.css">
-	<link rel="stylesheet" type="text/css" href="pronouns.css">
 	<link rel="stylesheet" type="text/css" href="emoteMods.css">
 	<link rel="stylesheet" type="text/css" href="fontawesome-free-5.15.4-web/css/all.min.css">
 
-	<script type="text/javascript" src="jquery-3.6.0.min.js"></script>
-	<script type="text/javascript" src="jquery.waitforimages.min.js"></script>
-	<script type="text/javascript" src="markdown-it.min.js"></script>
-	<script type="text/javascript" src="twemoji.min.js"></script>
-	<script type="text/javascript" src="luxon.min.js"></script>
-	<script type="text/javascript" src="vibrant.min.js"></script>
+	<script defer type="text/javascript" src="jquery-3.7.1.min.js"></script>
+	<script defer type="text/javascript" src="jquery.waitforimages.min.js"></script>
+	<script defer type="text/javascript" src="markdown-it.min.js"></script>
+	<script defer type="text/javascript" src="twemoji.min.js"></script>
+	<script defer type="text/javascript" src="luxon.min.js"></script>
+	<script defer type="text/javascript" src="vibrant.min.js"></script>
 </head>
 <body>
 	<div id="maskWrapper">
@@ -29,14 +28,34 @@
 	<div id="testWrapper">
 	</div>
 
-	<script type="text/javascript" src="classes.js"></script>
-	<script type="text/javascript" src="consts.js"></script>
-	<script type="text/javascript" src="funcs.js"></script>
-	<script type="text/javascript" src="audio.js"></script>
-	<script type="text/javascript" src="broadcast.js"></script>
-	<script type="text/javascript" src="settings.js"></script>
-	<script type="text/javascript" src="main.js"></script>
-	<script type="text/javascript" src="messages.js"></script>
-	<script type="text/javascript" src="onloaded.js" defer></script>
+	<div id="filterWrapper">
+		<svg xmlns="http://www.w3.org/2000/svg">
+			<filter id="outlineEffect" color-interpolation-filters="sRGB">
+				<feConvolveMatrix in="SourceAlpha" result="OutlineAlpha" divisor="1" order="1,1" kernelMatrix="1"/>
+				<feFlood flood-color="var(--overlayOutlineColor)" result="OutlineColor" />
+				<feComposite in="OutlineColor" in2="OutlineAlpha" operator="in" result="Outline" />
+
+				<feMerge>
+					<feMergeNode in="Outline"/>
+					<feMergeNode in="SourceGraphic"/>
+				</feMerge>
+			</filter>
+
+			<filter id="shadowEffect" color-interpolation-filters="sRGB">
+				<feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="var(--overlayShadowColor)"/>
+			</filter>
+			<filter id="blankEffect"></filter>
+		</svg>
+	</div>
+
+	<script defer type="text/javascript" src="classes.js"></script>
+	<script defer type="text/javascript" src="consts.js"></script>
+	<script defer type="text/javascript" src="funcs.js"></script>
+	<script defer type="text/javascript" src="audio.js"></script>
+	<script defer type="text/javascript" src="broadcast.js"></script>
+	<script defer type="text/javascript" src="settings.js"></script>
+	<script defer type="text/javascript" src="main.js"></script>
+	<script defer type="text/javascript" src="messages.js"></script>
+	<script defer type="text/javascript" src="onloaded.js" defer></script>
 </body>
 </html>

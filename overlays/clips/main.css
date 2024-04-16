@@ -69,6 +69,11 @@
 	to { transform: translateY(-5px); }
 }
 
+@keyframes speen {
+	from { transform: rotate(0deg); }
+	to { transform: rotate(360deg); }
+}
+
 body {
 	background: #333;
 	color: #fff;
@@ -133,9 +138,41 @@ body {
 	height: calc(var(--videoHeight) - (var(--videoBorderSize) * 2));
 
 	position: absolute;
-	z-index: 2;
+	z-index: 3;
 
 	border: var(--videoBorderActual);
+}
+
+#loading {
+	width: var(--videoWidth);
+	height: var(--videoHeight);
+
+	position: absolute;
+	z-index: 2;
+
+	background-color: #00000080;
+	color: #fff;
+	display: flex;
+	align-items: center;
+	align-self: center;
+	justify-content: center;
+	justify-items: center;
+	backdrop-filter: blur(4px);
+}
+#spinner {
+	/* haha wtf */
+	width: 15%;
+	padding-bottom: 15%;
+
+	border-radius: 100%;
+	border: 1em solid #ffffff30;
+	border-bottom: 1em solid #fff;
+
+	animation-name: speen;
+	animation-iteration-count: infinite;
+	animation-duration: 1.5s;
+	animation-fill-mode: both;
+	animation-timing-function: linear;
 }
 
 #videoWrap video {
@@ -143,7 +180,7 @@ body {
 	height: 100%;
 }
 
-#videoWrap, #videoWrap video, #videoWrapOutline {
+#videoWrap, #videoWrap video, #videoWrapOutline, #loading {
 	border-radius: var(--videoBorderRadius);
 }
 
@@ -282,4 +319,10 @@ body {
 	background-size: cover;
 	background-image: var(--currentGameCover);
 	background-position: calc((var(--videoWidth) - var(--backgroundFooterSize)) / 2) calc(var(--backgroundFooterSize) / 1.4);
+}
+
+#filterWrapper {
+	position: fixed;
+	top: -100vh;
+	left: -100vw;
 }

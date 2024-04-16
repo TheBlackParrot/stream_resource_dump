@@ -39,6 +39,7 @@ function setTwitchHelixReachable(state) {
 	postToSettingsChannel("TwitchHelixStatus", state);
 }
 
+var notActuallyCustomBadges = [];
 async function getStuffReady() {
 	console.log(`getting broadcaster information for ${broadcasterName}...`);
 	const rawUserResponse = await callTwitchAsync({
@@ -58,6 +59,13 @@ async function getStuffReady() {
 	});
 	for(const badgeSet of badgeResponse.data) {
 		twitchBadges[badgeSet.set_id] = badgeSet;
+
+		// yeah i uh, don't know either
+		if(badgeSet.set_id === "bits") {
+			for(const version of badgeSet.versions) {
+				notActuallyCustomBadges.push(version.image_url_1x);
+			}
+		}
 	}
 	console.log("got global chat badges");
 
@@ -71,8 +79,19 @@ async function getStuffReady() {
 	console.log(channelBadgeResponse);
 	for(const badgeSet of channelBadgeResponse.data) {
 		if(localStorage.getItem(`setting_enableCustomBadges_${badgeSet.set_id}`) === "true") {
-			twitchBadges[badgeSet.set_id] = badgeSet;
-			twitchBadgeTypes[badgeSet.set_id].is_solid = false;
+			if(badgeSet.set_id === "bits") {
+				// see above
+				for(const version of badgeSet.versions) {
+					if(notActuallyCustomBadges.indexOf(version.image_url_1x) === -1) {
+						twitchBadgeTypes[badgeSet.set_id].is_solid = false;
+						twitchBadges[badgeSet.set_id] = badgeSet;
+						break;
+					}
+				}
+			} else {
+				twitchBadges[badgeSet.set_id] = badgeSet;
+				twitchBadgeTypes[badgeSet.set_id].is_solid = false;
+			}
 		}
 	}
 	console.log("got channel chat badges");

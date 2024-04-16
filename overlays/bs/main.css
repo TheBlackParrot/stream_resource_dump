@@ -477,6 +477,12 @@ body {
 	min-width: 1.3em;
 }
 
+#filterWrapper {
+	position: fixed;
+	top: -100vh;
+	left: -100vw;
+}
+
 /* uncomment after OBS updates CEF to a recent chrome version
 :nth-child(1 of div.cell) {
 	padding-left: 0px;

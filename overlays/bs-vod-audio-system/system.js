@@ -1,5 +1,3 @@
-$.ajaxSetup({ timeout: 10000 });
-
 var remoteDB = {};
 var db = {
 	safe: [],
@@ -8,7 +6,7 @@ var db = {
 if(localStorage.getItem("bsvodaudio_safeHashes")) { db.safe = JSON.parse(localStorage.getItem("bsvodaudio_safeHashes")); }
 if(localStorage.getItem("bsvodaudio_unsafeHashes")) { db.unsafe = JSON.parse(localStorage.getItem("bsvodaudio_unsafeHashes")); }
 
-function syncRemoteDatabases() {
+async function syncRemoteDatabases() {
 	if(localStorage.getItem("setting_bsvodaudio_syncRemoteDBs") !== "true") {
 		console.log("Not syncing remote databases, disabled in settings");
 		return;
@@ -16,43 +14,36 @@ function syncRemoteDatabases() {
 
 	let list = localStorage.getItem("setting_bsvodaudio_remoteDBURLs").split("\n");
 	for(let i in list) {
-		let dbURL = list[i].trim();
-		console.log(`grabbing remote database ${dbURL}...`);
-		$.ajax({
-			type: "GET",
-			dataType: "json",
+		let dbURLString = list[i].trim();
+		console.log(`grabbing remote database ${dbURLString}...`);
 
-			url: dbURL,
-			data: {
-				time: Date.now()
-			},
+		const dbURL = new URL(dbURLString);
+		dbURL.searchParams.append("time", Date.now());
 
-			success: function(response) {
-				console.log(`got remote database ${dbURL}`);
-				console.log(response);
+		const response = await fetch(dbURL);
+		if(!response.ok) {
+			console.log(`could not grab database from URL ${dbURL.href}`);
+			continue;
+		}
+		var data = await response.json();
+		console.log(data);
 
-				if(!("safe" in response)) {
-					console.log(`database from ${dbURL} does not have a safe list`);
-					response.safe = [];
-				}
-				if(!("unsafe" in response)) {
-					console.log(`database from ${dbURL} does not have an unsafe list`);
-					response.unsafe = [];
-				}
+		if(!("safe" in data)) {
+			console.log(`database from ${dbURL.href} does not have a safe list`);
+			data.safe = [];
+		}
+		if(!("unsafe" in data)) {
+			console.log(`database from ${dbURL.href} does not have an unsafe list`);
+			data.unsafe = [];
+		}
 
-				response.safe = response.safe.map(function(x) { return x.toLowerCase(); });
-				response.unsafe = response.unsafe.map(function(x) { return x.toLowerCase(); });
+		data.safe = data.safe.map(function(x) { return x.toLowerCase(); });
+		data.unsafe = data.unsafe.map(function(x) { return x.toLowerCase(); });
 
-				let count = response.safe.length + response.unsafe.length;
+		let count = data.safe.length + data.unsafe.length;
 
-				remoteDB[dbURL] = response;
-				console.log(`synced ${count.toLocaleString()} hashes with ${dbURL}`);
-			},
-
-			error: function(response) {
-				console.error(response);
-			}
-		});
+		remoteDB[dbURL.href] = data;
+		console.log(`synced ${count.toLocaleString()} hashes with ${dbURL.href}`);
 	}
 }
 syncRemoteDatabases();

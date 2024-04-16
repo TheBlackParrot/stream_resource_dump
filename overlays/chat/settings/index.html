@@ -23,12 +23,12 @@
 	<link rel="stylesheet" type="text/css" href="fontawesome-free-6.5.1-web/css/all.min.css">
 	<link rel="stylesheet" type="text/css" href="main.css">
 
-	<script type="text/javascript" src="jquery-3.6.0.min.js"></script>
-	<script type="text/javascript" src="socket.io.js"></script>
-	<script type="text/javascript" src="tmi.min.js"></script>
-	<script type="text/javascript" src="obs-ws-5.0.3.min.js"></script>
-	<script type="text/javascript" src="vibrant.min.js"></script>
-	<script type="text/javascript" src="forge.min.js"></script>
+	<script defer type="text/javascript" src="jquery-3.7.1.min.js"></script>
+	<script defer type="text/javascript" src="socket.io.js"></script>
+	<script defer type="text/javascript" src="tmi.min.js"></script>
+	<script defer type="text/javascript" src="obs-ws-5.0.5.min.js"></script>
+	<script defer type="text/javascript" src="vibrant.min.js"></script>
+	<script defer type="text/javascript" src="forge.min.js"></script>
 </head>
 <body>
 	<div id="wrapper">
@@ -1479,10 +1479,32 @@
 					</div>
 					<div class="setting" data-dependent="overlayOutlines">
 						<div class="settingCellLabel">
-							<span class="settingInfo">Size</span>
+							<span class="settingInfo">Matrix Size</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="overlayOutlineSize" min="0" max="3" step="1" value="1"/><span class="settingCellMeasurement">px</span>
+							<input type="number" id="overlayOutlineOrder" min="0" max="64" step="1" value="5"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="overlayOutlines">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Divisor</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="overlayOutlineDivisor" min="1" max="64" step="1" value="3"/>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting" data-dependent="overlayOutlines">
+						<div class="settingCell">
+							<input checked id="overlayOutlineStripCorners" type="checkbox"/> <span class="settingInfo">Smooth out corners of the outline matrix</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="overlayOutlines">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Distance threshold</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="overlayOutlineThreshold" min="0.01" max="0.99" step="0.01" value="0.2"/>
 						</div>
 					</div>
 				</div>
@@ -4165,10 +4187,32 @@
 					</div>
 					<div class="setting" data-dependent="spotify_enableOutlineEffects">
 						<div class="settingCellLabel">
-							<span class="settingInfo">Size</span>
+							<span class="settingInfo">Matrix Size</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="spotify_outlineSize" min="0" max="3" step="1" value="1"/><span class="settingCellMeasurement">px</span>
+							<input type="number" id="spotify_outlineOrder" min="0" max="64" step="1" value="5"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableOutlineEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Divisor</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_outlineDivisor" min="1" max="64" step="1" value="3"/>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting" data-dependent="spotify_enableOutlineEffects">
+						<div class="settingCell">
+							<input checked id="spotify_outlineStripCorners" type="checkbox"/> <span class="settingInfo">Smooth out corners of the outline matrix</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableOutlineEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Distance threshold</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_outlineThreshold" min="0.01" max="0.99" step="0.01" value="0.2"/>
 						</div>
 					</div>
 					<hr/>
@@ -4632,10 +4676,32 @@
 					</div>
 					<div class="setting" data-dependent="clock_enableOutlineEffects">
 						<div class="settingCellLabel">
-							<span class="settingInfo">Size</span>
+							<span class="settingInfo">Matrix Size</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="clock_outlineSize" min="0" max="3" step="1" value="1"/><span class="settingCellMeasurement">px</span>
+							<input type="number" id="clock_outlineOrder" min="0" max="64" step="1" value="5"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="clock_enableOutlineEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Divisor</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clock_outlineDivisor" min="1" max="64" step="1" value="3"/>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting" data-dependent="clock_enableOutlineEffects">
+						<div class="settingCell">
+							<input checked id="clock_outlineStripCorners" type="checkbox"/> <span class="settingInfo">Smooth out corners of the outline matrix</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="clock_enableOutlineEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Distance threshold</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clock_outlineThreshold" min="0.01" max="0.99" step="0.01" value="0.2"/>
 						</div>
 					</div>
 				</div>
@@ -4698,10 +4764,32 @@
 					</div>
 					<div class="setting" data-dependent="bs_enableOutlineEffects">
 						<div class="settingCellLabel">
-							<span class="settingInfo">Size</span>
+							<span class="settingInfo">Matrix Size</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="bs_outlineSize" min="0" max="3" step="1" value="1"/><span class="settingCellMeasurement">px</span>
+							<input type="number" id="bs_outlineOrder" min="0" max="64" step="1" value="5"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="bs_enableOutlineEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Divisor</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_outlineDivisor" min="1" max="64" step="1" value="3"/>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting" data-dependent="bs_enableOutlineEffects">
+						<div class="settingCell">
+							<input checked id="bs_outlineStripCorners" type="checkbox"/> <span class="settingInfo">Smooth out corners of the outline matrix</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="bs_enableOutlineEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Distance threshold</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_outlineThreshold" min="0.01" max="0.99" step="0.01" value="0.2"/>
 						</div>
 					</div>
 					<hr/>
@@ -6071,10 +6159,32 @@
 					</div>
 					<div class="setting" data-dependent="clips_enableOutlineEffects">
 						<div class="settingCellLabel">
-							<span class="settingInfo">Size</span>
+							<span class="settingInfo">Matrix Size</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="clips_outlineSize" min="0" max="3" step="1" value="1"/><span class="settingCellMeasurement">px</span>
+							<input type="number" id="clips_outlineOrder" min="0" max="64" step="1" value="5"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="clips_enableOutlineEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Divisor</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clips_outlineDivisor" min="1" max="64" step="1" value="3"/>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting" data-dependent="clips_enableOutlineEffects">
+						<div class="settingCell">
+							<input checked id="clips_outlineStripCorners" type="checkbox"/> <span class="settingInfo">Smooth out corners of the outline matrix</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="clips_enableOutlineEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Distance threshold</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="clips_outlineThreshold" min="0.01" max="0.99" step="0.01" value="0.2"/>
 						</div>
 					</div>
 					<hr/>
@@ -6148,22 +6258,22 @@
 
 	<img id="bsplusImageContainer" style="display: none;" src=""/>
 
-	<script type="text/javascript" src="notifs.js"></script>
-	<script type="text/javascript" src="defaults.js"></script>
-	<script type="text/javascript" src="main.js"></script>
-	<script type="text/javascript" src="settings.js"></script>
-	<script type="text/javascript" src="backups.js"></script>
-	<script type="text/javascript" src="broadcast.js"></script>
-	<script type="text/javascript" src="updates.js"></script>
+	<script defer type="text/javascript" src="notifs.js"></script>
+	<script defer type="text/javascript" src="defaults.js"></script>
+	<script defer type="text/javascript" src="main.js"></script>
+	<script defer type="text/javascript" src="settings.js"></script>
+	<script defer type="text/javascript" src="backups.js"></script>
+	<script defer type="text/javascript" src="broadcast.js"></script>
+	<script defer type="text/javascript" src="updates.js"></script>
 
-	<script type="text/javascript" src="connections/oauth.js"></script>
-	<script type="text/javascript" src="connections/twitch.js"></script>
-	<script type="text/javascript" src="connections/obs.js"></script>
-	<script type="text/javascript" src="connections/beatsaber.js"></script>
-	<script type="text/javascript" src="connections/bsplus.js"></script>
-	<script type="text/javascript" src="connections/bs_datapuller.js"></script>
-	<script type="text/javascript" src="connections/streamlabs.js"></script>
-	<script type="text/javascript" src="connections/streamelements.js"></script>
-	<script type="text/javascript" src="connections/spotify.js"></script>
+	<script defer type="text/javascript" src="connections/oauth.js"></script>
+	<script defer type="text/javascript" src="connections/twitch.js"></script>
+	<script defer type="text/javascript" src="connections/obs.js"></script>
+	<script defer type="text/javascript" src="connections/beatsaber.js"></script>
+	<script defer type="text/javascript" src="connections/bsplus.js"></script>
+	<script defer type="text/javascript" src="connections/bs_datapuller.js"></script>
+	<script defer type="text/javascript" src="connections/streamlabs.js"></script>
+	<script defer type="text/javascript" src="connections/streamelements.js"></script>
+	<script defer type="text/javascript" src="connections/spotify.js"></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
-const overlayRevision = 44;
-const overlayRevisionTimestamp = 1712812641277;
+const overlayRevision = 45;
+const overlayRevisionTimestamp = 1713293906193;
 
 const enums = {
 	weight: {
@@ -140,7 +140,8 @@ const commonEmotes = {
 twemoji.base = "twemoji/";
 
 const funnyBeatSaberMapsToRequestToEverySingleStreamerOnTwitchEverIBetEverySingleOneOfThemWillEnjoyThem = [
-	"25f", "d1cc", "b", "c32d", "922f", "871a", "10c9b", "1e99", "1eb9", "2a121", "24188", "46d4", "24b58", "557f", "1f89a", "335c", "e621", "2c2f4", "11cf8"
+	"25f", "d1cc", "b", "c32d", "922f", "871a", "10c9b", "1e99", "1eb9", "2a121", "24188", "46d4", "24b58", "557f", "1f89a", "335c", "e621", "2c2f4", "11cf8",
+	"21ef9", "ff9", "3b608", "cffd", "10dcc", "376da", "1f7c9", "108ee", "352b3", "352b7", "21d9", "4e8d", "148e9", "15af0", "20291", "11b28", "fd07", "1a524", "34b8c", "16a58", "6777", "1db5d"
 ];
 
 const animationFilterFunctions = {

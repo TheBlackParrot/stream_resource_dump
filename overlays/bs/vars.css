@@ -135,25 +135,12 @@
 	--animation-duration: 0.5s;
 	--fadeInDurationLong: 5s;
 
-	--outline-effects-size: 1px;
-	--outline-effects-size-negative: -1px;
-	--outline-effects-color: #000000;
+	--shadowStuff: url(#shadowEffect);
+	--overlayShadowColor: #000000;
+	--outlineStuff: url(#outlineEffect);
+	--overlayOutlineColor: #000000;
 
-	--outline-effects:	drop-shadow(var(--outline-effects-size-negative) var(--outline-effects-size-negative) 0px var(--outline-effects-color))
-						drop-shadow(var(--outline-effects-size) var(--outline-effects-size-negative) 0px var(--outline-effects-color))
-						drop-shadow(var(--outline-effects-size-negative) var(--outline-effects-size) 0px var(--outline-effects-color))
-						drop-shadow(var(--outline-effects-size) var(--outline-effects-size) 0px var(--outline-effects-color));
-	--outline-effects-actual: var(--outline-effects);
-
-	--shadow-effects-offset-x: 0px;
-	--shadow-effects-offset-y: 1px;
-	--shadow-effects-blur-radius: 2px;
-	--shadow-effects-color: #000000FF;
-
-	--shadow-effects: drop-shadow(var(--shadow-effects-offset-x) var(--shadow-effects-offset-y) var(--shadow-effects-blur-radius) var(--shadow-effects-color));
-	--shadow-effects-actual: var(--shadow-effects);
-
-	--effects: var(--outline-effects-actual) var(--shadow-effects-actual);
+	--effects: var(--outlineStuff) var(--shadowStuff);
 
 	--desaturateAmount: 100%;
 	--desaturateFadeInDuration: 2s;

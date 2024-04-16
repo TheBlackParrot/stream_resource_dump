@@ -8,8 +8,8 @@
 	<link rel="stylesheet" type="text/css" href="fonts.css">
 	<link rel="stylesheet" type="text/css" href="main.css">
 
-	<script type="text/javascript" src="jquery-3.6.0.min.js"></script>
-	<script type="text/javascript" src="jquery.marquee.min.js"></script>
+	<script defer type="text/javascript" src="jquery-3.7.1.min.js"></script>
+	<script defer type="text/javascript" src="jquery.marquee.min.js"></script>
 </head>
 <body>
 	<div id="testBar"></div>
@@ -39,18 +39,18 @@
 
 		<div id="detailsWrapper">
 			<div id="title">
-				<span id="titleString"></span>
+				<span id="titleString">Song Title</span>
 			</div>
 			<div id="secondaryWrap">
 				<div id="secondary">
 					<div id="artist">
-						<span id="artistString"></span>
+						<span id="artistString">Some Musician</span>
 					</div>
 					<div id="extraStringWrapper">
 						<div id="extraString">
-							<div class="" id="albumString"></div>
-							<div id="labelString"></div>
-							<div id="yearString"></div>
+							<div class="" id="albumString">Some Album</div>
+							<div id="labelString">Music Label</div>
+							<div id="yearString">2024</div>
 						</div>
 					</div>
 				</div>
@@ -64,8 +64,28 @@
 		</div>
 	</div>
 
-	<script type="text/javascript" src="main.js"></script>
-	<script type="text/javascript" src="funcs.js"></script>
-	<script type="text/javascript" src="settings.js"></script>
+	<div id="filterWrapper">
+		<svg xmlns="http://www.w3.org/2000/svg">
+			<filter id="outlineEffect" color-interpolation-filters="sRGB">
+				<feConvolveMatrix in="SourceAlpha" result="OutlineAlpha" divisor="1" order="1,1" kernelMatrix="1"/>
+				<feFlood flood-color="var(--overlayOutlineColor)" result="OutlineColor" />
+				<feComposite in="OutlineColor" in2="OutlineAlpha" operator="in" result="Outline" />
+
+				<feMerge>
+					<feMergeNode in="Outline"/>
+					<feMergeNode in="SourceGraphic"/>
+				</feMerge>
+			</filter>
+
+			<filter id="shadowEffect" color-interpolation-filters="sRGB">
+				<feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="var(--overlayShadowColor)"/>
+			</filter>
+			<filter id="blankEffect"></filter>
+		</svg>
+	</div>
+
+	<script defer type="text/javascript" src="main.js"></script>
+	<script defer type="text/javascript" src="funcs.js"></script>
+	<script defer type="text/javascript" src="settings.js"></script>
 </body>
 </html>

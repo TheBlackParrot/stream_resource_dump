@@ -1,5 +1,5 @@
-const overlayRevision = 16;
-const overlayRevisionTimestamp = 1712812641277;
+const overlayRevision = 17;
+const overlayRevisionTimestamp = 1713293906193;
 
 const settingsChannel = new BroadcastChannel("settings_overlay");
 
@@ -22,6 +22,34 @@ postToSettingsChannel("SpotifyOverlayExists", {
 
 function rootCSS() {
 	return document.querySelector("html").style;
+}
+
+function getSmoothMatrix(size, threshold) {
+	let matrix = [];
+	let center = Math.floor(size / 2);
+	let highest;
+
+	for(let x = 0; x < size; x++) {
+		let row = [];
+
+		for(let y = 0; y < size; y++) {
+			// distance formula we love the pythagorean theorem
+			let val = Math.sqrt(Math.pow(center - x, 2) + Math.pow(center - y, 2));
+
+			if(!highest) {
+				// the corners will always be the furthest away from the center, so get it now
+				highest = val;
+			}
+
+			// we need an inverted percentage of the highest distance as we *don't* want the corners taken into account for the matrix
+			// also threshold it
+			let perc = Math.abs((val / highest)-1);
+			row[y] = (perc > threshold ? 1 : 0);
+		}
+
+		matrix.push(row.join(" "));
+	}
+	return matrix;
 }
 
 const settingUpdaters = {
@@ -106,39 +134,55 @@ const settingUpdaters = {
 		rootCSS().setProperty("--artist-transform", value);
 	},
 
-	enableOutlineEffects: function(value) {
-		if(value === "true") {
-			rootCSS().setProperty("--outline-effects-actual", "var(--outline-effects)");
-		} else {
-			rootCSS().setProperty("--outline-effects-actual", "drop-shadow(0px 0px 0px transparent)");
-		}
-	},
-	outlineColor: function(value) {
-		rootCSS().setProperty("--outline-effects-color", value);
-	},
-	outlineSize: function(value) {
-		rootCSS().setProperty("--outline-effects-size", `${value}px`);
-		rootCSS().setProperty("--outline-effects-size-negative", `-${value}px`);
-	},
-
 	enableShadowEffects: function(value) {
 		if(value === "true") {
-			rootCSS().setProperty("--shadow-effects-actual", "var(--shadow-effects)");
+			rootCSS().setProperty("--shadowStuff", "url(#shadowEffect)");
 		} else {
-			rootCSS().setProperty("--shadow-effects-actual", "drop-shadow(0px 0px 0px transparent)");
+			rootCSS().setProperty("--shadowStuff", "url(#blankEffect)");
+		}
+	},
+	enableOutlineEffects: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--outlineStuff", "url(#outlineEffect)");
+		} else {
+			rootCSS().setProperty("--outlineStuff", "url(#blankEffect)");
 		}
 	},
 	shadowColor: function(value) {
-		rootCSS().setProperty("--shadow-effects-color", value);
+		rootCSS().setProperty("--overlayShadowColor", value);
 	},
 	shadowXOffset: function(value) {
-		rootCSS().setProperty("--shadow-effects-offset-x", `${value}px`);
+		$("feDropShadow").attr("dx", value);
 	},
 	shadowYOffset: function(value) {
-		rootCSS().setProperty("--shadow-effects-offset-y", `${value}px`);
+		$("feDropShadow").attr("dy", value);
 	},
 	shadowBlurRadius: function(value) {
-		rootCSS().setProperty("--shadow-effects-blur-radius", `${value}px`);
+		$("feDropShadow").attr("stdDeviation", value);
+	},
+	outlineColor: function(value) {
+		rootCSS().setProperty("--overlayOutlineColor", value);
+	},
+	outlineDivisor: function(value) {
+		$("feConvolveMatrix").attr("divisor", value);
+	},
+	outlineOrder: function(value) {
+		value = parseInt(value);
+		let matrix;
+		if(value >= 3 && localStorage.getItem("setting_spotify_outlineStripCorners") === "true") {
+			matrix = getSmoothMatrix(value, parseFloat(localStorage.getItem("setting_spotify_outlineThreshold")));
+		} else {
+			matrix = new Array(Math.pow(value, 2)).fill(1);
+		}
+
+		$("feConvolveMatrix").attr("order", `${value},${value}`);
+		$("feConvolveMatrix").attr("kernelMatrix", matrix.join(" "));
+	},
+	outlineStripCorners: function() {
+		settingUpdaters.outlineOrder(localStorage.getItem("setting_spotify_outlineOrder"));
+	},
+	overlayOutlineThreshold: function() {
+		settingUpdaters.overlayOutlineOrder(localStorage.getItem("setting_spotify_outlineOrder"));
 	},
 
 	enableBoxShadowEffects: function(value) {

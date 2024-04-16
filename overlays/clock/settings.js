@@ -2,6 +2,34 @@ function rootCSS() {
 	return document.querySelector("html").style;
 }
 
+function getSmoothMatrix(size, threshold) {
+	let matrix = [];
+	let center = Math.floor(size / 2);
+	let highest;
+
+	for(let x = 0; x < size; x++) {
+		let row = [];
+
+		for(let y = 0; y < size; y++) {
+			// distance formula we love the pythagorean theorem
+			let val = Math.sqrt(Math.pow(center - x, 2) + Math.pow(center - y, 2));
+
+			if(!highest) {
+				// the corners will always be the furthest away from the center, so get it now
+				highest = val;
+			}
+
+			// we need an inverted percentage of the highest distance as we *don't* want the corners taken into account for the matrix
+			// also threshold it
+			let perc = Math.abs((val / highest)-1);
+			row[y] = (perc > threshold ? 1 : 0);
+		}
+
+		matrix.push(row.join(" "));
+	}
+	return matrix;
+}
+
 const settingUpdaters = {
 	overlayMarginHorizontal: function(value) {
 		rootCSS().setProperty("--horizontalMargin", `${value}px`);
@@ -14,36 +42,53 @@ const settingUpdaters = {
 	},
 	enableShadowEffects: function(value) {
 		if(value === "true") {
-			rootCSS().setProperty("--shadowStuff", "var(--originalShadowStuff)");
+			rootCSS().setProperty("--shadowStuff", "url(#shadowEffect)");
 		} else {
-			rootCSS().setProperty("--shadowStuff", "opacity(1)");
+			rootCSS().setProperty("--shadowStuff", "url(#blankEffect)");
 		}
-	},
-	shadowColor: function(value) {
-		rootCSS().setProperty("--shadowColor", value);
-	},
-	shadowXOffset: function(value) {
-		rootCSS().setProperty("--shadowXOffset", `${value}px`);
-	},
-	shadowYOffset: function(value) {
-		rootCSS().setProperty("--shadowYOffset", `${value}px`);
-	},
-	shadowBlurRadius: function(value) {
-		rootCSS().setProperty("--shadowBlurRadius", `${value}px`);
 	},
 	enableOutlineEffects: function(value) {
 		if(value === "true") {
-			rootCSS().setProperty("--outlineStuff", "var(--originalOutlineStuff)");
+			rootCSS().setProperty("--outlineStuff", "url(#outlineEffect)");
 		} else {
-			rootCSS().setProperty("--outlineStuff", "opacity(1)");
+			rootCSS().setProperty("--outlineStuff", "url(#blankEffect)");
 		}
 	},
-	outlineColor: function(value) {
-		rootCSS().setProperty("--outlineColor", value);
+	shadowColor: function(value) {
+		rootCSS().setProperty("--overlayShadowColor", value);
 	},
-	outlineSize: function(value) {
-		rootCSS().setProperty("--outlineSize", `${value}px`);
-		rootCSS().setProperty("--outlineSizeNegative", `-${value}px`);
+	shadowXOffset: function(value) {
+		$("feDropShadow").attr("dx", value);
+	},
+	shadowYOffset: function(value) {
+		$("feDropShadow").attr("dy", value);
+	},
+	shadowBlurRadius: function(value) {
+		$("feDropShadow").attr("stdDeviation", value);
+	},
+	outlineColor: function(value) {
+		rootCSS().setProperty("--overlayOutlineColor", value);
+	},
+	outlineDivisor: function(value) {
+		$("feConvolveMatrix").attr("divisor", value);
+	},
+	outlineOrder: function(value) {
+		value = parseInt(value);
+		let matrix;
+		if(value >= 3 && localStorage.getItem("setting_clock_outlineStripCorners") === "true") {
+			matrix = getSmoothMatrix(value, parseFloat(localStorage.getItem("setting_clock_outlineThreshold")));
+		} else {
+			matrix = new Array(Math.pow(value, 2)).fill(1);
+		}
+
+		$("feConvolveMatrix").attr("order", `${value},${value}`);
+		$("feConvolveMatrix").attr("kernelMatrix", matrix.join(" "));
+	},
+	outlineStripCorners: function() {
+		settingUpdaters.outlineOrder(localStorage.getItem("setting_clock_outlineOrder"));
+	},
+	overlayOutlineThreshold: function() {
+		settingUpdaters.overlayOutlineOrder(localStorage.getItem("setting_clock_outlineOrder"));
 	},
 	headerFont: function(value) {
 		rootCSS().setProperty("--timezoneFont", value);
@@ -213,26 +258,26 @@ const settingUpdaters = {
 
 			if(localStorage.getItem("setting_clock_showLocalTime") === "true") {
 				$("#localTime").show();
-				$("#localTime").children().show();
+				$("#localTime .effectWrapper").children().show();
 			} else {
 				$("#localTime").hide();
-				$("#localTime").children().hide();
+				$("#localTime .effectWrapper").children().hide();
 			}
 
 			if(localStorage.getItem("setting_clock_showStreamUptime") === "true") {
 				$("#streamUptime").show();
-				$("#streamUptime").children().show();
+				$("#streamUptime .effectWrapper").children().show();
 			} else {
 				$("#streamUptime").hide();
-				$("#streamUptime").children().hide();
+				$("#streamUptime .effectWrapper").children().hide();
 			}
 
 			if(localStorage.getItem("setting_clock_showAdTimer") === "true") {
 				$("#nextAd").show();
-				$("#nextAd").children().show();
+				$("#nextAd .effectWrapper").children().show();
 			} else {
 				$("#nextAd").hide();
-				$("#nextAd").children().hide();
+				$("#nextAd .effectWrapper").children().hide();
 			}
 		}
 	},

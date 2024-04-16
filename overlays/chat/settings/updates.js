@@ -6,7 +6,8 @@ const properOverlayNames = {
 	"bsvas": "Beat Saber VOD Audio System",
 	"text": "Text Rotation Overlay",
 	"bs": "Beat Saber Overlay",
-	"clips": "Twitch Clip Overlay"
+	"clips": "Twitch Clip Overlay",
+	"all": "All Overlays"
 };
 
 var mostRecentUpdate = 0;
@@ -39,7 +40,13 @@ $.get(`./changelog.json?sigh=${Date.now()}`, function(data) {
 
 		for(const which in updates) {
 			let updateData = updates[which];
-			let updateElement = $(`<div class="setting settingOnlyText"><h2>${properOverlayNames[which]} <em>(r${updateData.revision})</em></h2></div>`);
+			
+			let updateElement = $(`<div class="setting settingOnlyText"></div>`);
+			let categoryElement = $(`<h2>${properOverlayNames[which]}</h2>`);
+			if("revision" in updateData) {
+				categoryElement.append(`<em> (r${updateData.revision})</em>`);
+			}
+			updateElement.append(categoryElement);
 
 			let mainListElement = $(`<ol></ol>`);
 			for(const note of updateData.notes) {

@@ -1,5 +1,5 @@
-const overlayRevision = 3;
-const overlayRevisionTimestamp = 1709145558201;
+const overlayRevision = 4;
+const overlayRevisionTimestamp = 1713293906193;
 
 const broadcastChannel = new BroadcastChannel("settings_overlay");
 
@@ -36,4 +36,4 @@ broadcastChannel.onmessage = function(message) {
 	}
 };
 
-postToChannel("BSVodAudioExists");
+postToChannel("BSVodAudioExists", {version: overlayRevision});

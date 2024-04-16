@@ -1,15 +1,32 @@
+const fixTZCodes = {
+	"Philippine Standard Time": "PHT"
+};
+
 function setTZ() {
 	const dt = luxon.DateTime.local();
 
 	const tz = {
 		name: dt.offsetNameLong.split(" "),
-		initials: "",
+		initials: dt.offsetNameShort,
 		prefix: "",
 		offset: dt.offset / 60
 	};
 
-	for(const word of tz.name) {
-		tz.initials += word[0].toUpperCase();
+	if(dt.offsetNameLong in fixTZCodes) {
+		tz.initials = fixTZCodes[dt.offsetNameLong];
+	} else {
+		if(!tz.initials) {
+			for(const word of tz.name) {
+				tz.initials += word[0].toUpperCase();
+			}
+		} else {
+			if(tz.initials.substr(0, 4) === "GMT-" || tz.initials.substr(0, 4) === "GMT+") {
+				tz.initials = "";
+				for(const word of tz.name) {
+					tz.initials += word[0].toUpperCase();
+				}
+			}
+		}
 	}
 
 	if(tz.offset < 0) { 
@@ -27,7 +44,7 @@ function setTZ() {
 	};
 
 	$(".head").each(function(item) {
-		const which = $(this).parent().attr("id");
+		const which = $(this).parent().parent().attr("id");
 		let text = localStorage.getItem(`setting_clock_${which}HeaderString`);
 
 		for(const replacer in replacers) {

@@ -110,8 +110,8 @@ async function getCachedMapData(url) {
 		await cacheStorage.put(`https://api.beatsaver.com/maps/id/${mapData.id}`, cachedResponse);
 	} else {
 		const cacheTimestamp = parseInt(cachedResponse.headers.get("X-Cache-Timestamp"));
-		if(Date.now() - cacheTimestamp > 7776000000) {
-			// 90 days has passed since last fetch, refetch
+		if(Date.now() - cacheTimestamp > 604800000) {
+			// 7 days has passed since last fetch, refetch
 			console.log(`cached map data for ${url} is stale, re-fetching...`);
 			cacheStorage.delete(url);
 			return await getCachedMapData(url);

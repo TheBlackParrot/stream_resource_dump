@@ -142,7 +142,7 @@
 		}
 	</style>
 
-	<script type="text/javascript" src="../jquery-3.6.0.min.js"></script>
+	<script type="text/javascript" src="../jquery-3.7.1.min.js"></script>
 </head>
 <body>
 	<div id="wrapper" class="bottom left" style="overflow: auto;">
@@ -300,11 +300,6 @@
 					<input type="checkbox" id="use7TVPaint"/>
 					<span class="inputName">Use 7TV Paint (if available)</span>
 				</div>
-
-				<div class="input">
-					<input type="checkbox" id="nameShadow"/>
-					<span class="inputName">Draw shadow underneath name</span>
-				</div>
 			</div>
 			<div class="section">
 				<div class="head">Message Settings</div>
@@ -365,7 +360,6 @@
 			"900": "Black"
 		};
 
-		// name color, name font, name size, italic name, name weight, name transform, name variant, name spacing, msg font, msg size, msg weight, msg spacing
 		var cmdData = [
 			"#BBBBBB",
 			"Manrope",
@@ -383,8 +377,7 @@
 			"170",
 			"yes",
 			"no",
-			"squircle",
-			"yes"
+			"squircle"
 		];
 
 		let userSettings = {
@@ -406,8 +399,7 @@
 			testName: "SampleUser69420",
 			nameWeight: 900,
 			msgWeight: 700,
-			use7TVPaint: "yes",
-			nameShadow: "yes"
+			use7TVPaint: "yes"
 		};
 
 		window.addEventListener("load", function(event) {
@@ -628,16 +620,6 @@
 
 		$("#use7TVPaint").on("change", function(e) {
 			updateCmdData(17, "use7TVPaint", ($("#use7TVPaint").is(":checked") ? "yes" : "no"));
-		});
-
-		$("#nameShadow").on("change", function(e) {
-			let cssVal = "";
-			if($("#nameShadow").is(":checked")) {
-				cssVal = "var(--outlineStuff) var(--shadowStuff)";
-			}
-
-			$(":root").get(0).style.setProperty(`--nameShadow`, cssVal);
-			updateCmdData(18, "nameShadow", ($("#nameShadow").is(":checked") ? "yes" : "no"));
 		});
 
 		function updateCmdData(idx, key, value) {
