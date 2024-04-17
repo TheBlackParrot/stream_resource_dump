@@ -1,5 +1,6 @@
 {
     "graphName": "Camera Control",
+    "graphIsActive": true,
     "nodes": [
         {
             "id": "108b9a75-85b1-44e8-856d-2ea794e50e97",
@@ -23,7 +24,7 @@
             "values": [
                 {
                     "key": "camera",
-                    "value": "10"
+                    "value": "11"
                 },
                 {
                     "key": "duration",
@@ -825,6 +826,69 @@
             ],
             "outputSocketIds": [],
             "headerColor": 0
+        },
+        {
+            "id": "360c9196-d903-436f-871d-1123df591cae",
+            "values": [
+                {
+                    "key": "dir",
+                    "value": "2"
+                },
+                {
+                    "key": "power",
+                    "value": "1.145836"
+                }
+            ],
+            "posX": 232.6658935546875,
+            "posY": 408.0001220703125,
+            "path": "Nodes/WindNode",
+            "inputSocketIds": [
+                "e56fda22-c62a-43ed-82d0-9e5e1e6a6815638481316853312188"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "c7f40fec-1c4b-41b3-81cd-8ab572fa6c09",
+            "values": [
+                {
+                    "key": "dir",
+                    "value": "2"
+                },
+                {
+                    "key": "power",
+                    "value": "3.354176"
+                }
+            ],
+            "posX": 325.99920654296877,
+            "posY": 11.33349609375,
+            "path": "Nodes/WindNode",
+            "inputSocketIds": [
+                "7b0ad7fb-b61d-4f18-bef9-fa1f8bbc3655638481317223193108"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "9e7605a4-3be7-4ba0-83a5-3b52d383ad72",
+            "values": [
+                {
+                    "key": "dir",
+                    "value": "4"
+                },
+                {
+                    "key": "power",
+                    "value": "1.979174"
+                }
+            ],
+            "posX": 59.332550048828128,
+            "posY": -1081.9998779296875,
+            "path": "Nodes/WindNode",
+            "inputSocketIds": [
+                "83f83ef1-79aa-4a80-acc0-55629899b6b3638481318235921727"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
         }
     ],
     "connections": [
@@ -1022,6 +1086,21 @@
             "id": "b068abc0-caa6-4dd9-a2dd-1ff023a811cc",
             "outputSocketId": "5daa9a90-a105-4ec5-abbf-9d3fe20d5036638363946759951242",
             "inputSocketId": "56d4cd76-d858-4833-9c6d-5840764d8e53638366363769913079"
+        },
+        {
+            "id": "cea10d58-f026-468f-82d5-7aa79e1e9d26",
+            "outputSocketId": "e31ceefb-8e82-4748-bab8-0576d4b9c2a9638272511636623061",
+            "inputSocketId": "e56fda22-c62a-43ed-82d0-9e5e1e6a6815638481316853312188"
+        },
+        {
+            "id": "07849575-76c9-40e0-9efb-058f1962dd6a",
+            "outputSocketId": "93a0dfcf-5aa9-4497-ad3c-705b49b5eda9638272511805584865",
+            "inputSocketId": "7b0ad7fb-b61d-4f18-bef9-fa1f8bbc3655638481317223193108"
+        },
+        {
+            "id": "ee98ba74-1670-49a3-9515-fffd5cb8003f",
+            "outputSocketId": "e21138a5-9e1d-4e71-9771-42f5403ffb45638272508077712163",
+            "inputSocketId": "83f83ef1-79aa-4a80-acc0-55629899b6b3638481318235921727"
         }
     ]
 }

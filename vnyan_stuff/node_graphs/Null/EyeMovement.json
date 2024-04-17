@@ -1,5 +1,6 @@
 {
     "graphName": "Eye Movement",
+    "graphIsActive": true,
     "nodes": [
         {
             "id": "7a48933e-24d7-4e1f-be41-df1ac590a728",

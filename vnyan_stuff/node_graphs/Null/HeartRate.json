@@ -1,5 +1,6 @@
 {
     "graphName": "Heart Rate",
+    "graphIsActive": true,
     "nodes": [
         {
             "id": "fb14ea75-0512-4dd5-b87a-b919b8950118",
@@ -455,7 +456,7 @@
                 },
                 {
                     "key": "value",
-                    "value": "130"
+                    "value": "90"
                 }
             ],
             "posX": -622.3333129882813,
@@ -468,19 +469,14 @@
             "headerColor": 0
         },
         {
-            "id": "70db2801-3444-44c9-82cb-cedc3eacb196",
-            "values": [
-                {
-                    "key": "triggerName",
-                    "value": ""
-                }
-            ],
-            "posX": -889.3330078125,
-            "posY": 267.3344421386719,
-            "path": "Nodes/TriggerNode",
+            "id": "be3e0185-001d-49f3-ab20-dea78ae39cdd",
+            "values": [],
+            "posX": -887.3338623046875,
+            "posY": 280.3341369628906,
+            "path": "Nodes/AppStartNode",
             "inputSocketIds": [],
             "outputSocketIds": [
-                "591c8689-0889-4f65-a758-765a68e612dd638275736274749632"
+                "3065a93d-62f0-4520-a17b-b26c446d47b6638489083270741934"
             ],
             "headerColor": 0
         }
@@ -577,13 +573,13 @@
             "inputSocketId": "4c9d2a10-d6ea-4d28-828a-bd996c96ea25638179214476424996"
         },
         {
-            "id": "89688ada-82db-4ccc-9cb9-08e935388af7",
-            "outputSocketId": "591c8689-0889-4f65-a758-765a68e612dd638275736274749632",
+            "id": "e363a810-6727-4be3-986b-5a61a4e3dfc8",
+            "outputSocketId": "3065a93d-62f0-4520-a17b-b26c446d47b6638489083270741934",
             "inputSocketId": "0b364045-23cd-430f-86c5-96ec45646d71638275736081519615"
         },
         {
-            "id": "dc85c091-7b61-4311-abb4-b4ef641a2a0b",
-            "outputSocketId": "591c8689-0889-4f65-a758-765a68e612dd638275736274749632",
+            "id": "eebdf05a-02b2-4ba7-b2ef-e3c1eba501b9",
+            "outputSocketId": "3065a93d-62f0-4520-a17b-b26c446d47b6638489083270741934",
             "inputSocketId": "0751cfba-1525-4cc7-bb08-854c15ba1309638177676170524806"
         }
     ]

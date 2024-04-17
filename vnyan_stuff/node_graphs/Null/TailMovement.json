@@ -1,5 +1,6 @@
 {
     "graphName": "Tail Movement",
+    "graphIsActive": true,
     "nodes": [
         {
             "id": "2180850d-d3f8-4910-858c-284edc1d46d5",

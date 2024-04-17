@@ -1,5 +1,6 @@
 {
     "graphName": "Ear Flicking",
+    "graphIsActive": true,
     "nodes": [
         {
             "id": "43411130-b694-48c4-b6b6-6d2922af85d1",
@@ -1534,7 +1535,7 @@
                 },
                 {
                     "key": "value",
-                    "value": "185"
+                    "value": "170"
                 }
             ],
             "posX": 510.66693115234377,

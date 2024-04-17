@@ -1,5 +1,6 @@
 {
     "graphName": "Drop Item",
+    "graphIsActive": true,
     "nodes": [
         {
             "id": "8ce35585-e75d-4c73-a98b-1e853db85248",
@@ -240,11 +241,11 @@
                 },
                 {
                     "key": "mass",
-                    "value": "0"
+                    "value": ""
                 },
                 {
                     "key": "drag",
-                    "value": "0"
+                    "value": ""
                 },
                 {
                     "key": "tag",
@@ -385,7 +386,7 @@
             "values": [
                 {
                     "key": "items",
-                    "value": "Top Hat"
+                    "value": "Cowboy Hat"
                 },
                 {
                     "key": "amount",
@@ -405,11 +406,11 @@
                 },
                 {
                     "key": "mass",
-                    "value": "0"
+                    "value": ""
                 },
                 {
                     "key": "drag",
-                    "value": "0"
+                    "value": ""
                 },
                 {
                     "key": "tag",
@@ -417,7 +418,7 @@
                 },
                 {
                     "key": "scale",
-                    "value": "1"
+                    "value": "1.375"
                 }
             ],
             "posX": 366.3333740234375,

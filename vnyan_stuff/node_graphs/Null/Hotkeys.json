@@ -1,5 +1,6 @@
 {
     "graphName": "Hotkeys",
+    "graphIsActive": true,
     "nodes": [
         {
             "id": "fa2e68fe-fcf1-4b14-8fcd-1013c3f90b68",
@@ -228,6 +229,44 @@
             ],
             "outputSocketIds": [],
             "headerColor": 0
+        },
+        {
+            "id": "f09c77e4-d6c8-487e-a738-ad2dfa7d0810",
+            "values": [
+                {
+                    "key": "hotkey",
+                    "value": "589"
+                }
+            ],
+            "posX": -165.33334350585938,
+            "posY": -263.33331298828127,
+            "path": "Nodes/HotkeyNode",
+            "inputSocketIds": [],
+            "outputSocketIds": [
+                "2f602ebe-c954-4779-b1eb-175119e8eaa2638481327752725746"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "17ee05aa-3eee-4ad3-8f74-a34e1448f5a3",
+            "values": [
+                {
+                    "key": "triggerName",
+                    "value": "ToggleMotionBlur"
+                },
+                {
+                    "key": "callTime",
+                    "value": "1"
+                }
+            ],
+            "posX": 91.0,
+            "posY": -272.0,
+            "path": "Nodes/CallTriggerNode",
+            "inputSocketIds": [
+                "5effc25d-c574-4266-8221-4750328a644a638481328573042148"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
         }
     ],
     "connections": [
@@ -260,6 +299,11 @@
             "id": "b197c537-9843-423e-809c-01b63154ab3d",
             "outputSocketId": "8f71a035-bd64-419b-b01c-3daa7539f9e1638366469197490255",
             "inputSocketId": "fedaecda-b126-498b-8bd5-620f147f65b3638366469336174834"
+        },
+        {
+            "id": "f12b4bca-c030-4a9a-8d5a-a495661767d3",
+            "outputSocketId": "2f602ebe-c954-4779-b1eb-175119e8eaa2638481327752725746",
+            "inputSocketId": "5effc25d-c574-4266-8221-4750328a644a638481328573042148"
         }
     ]
 }

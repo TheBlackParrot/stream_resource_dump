@@ -1,5 +1,6 @@
 {
     "graphName": "Lights",
+    "graphIsActive": true,
     "nodes": [
         {
             "id": "35779a91-d64c-4295-bce3-082bf8cebde8",
@@ -39,7 +40,7 @@
             "values": [
                 {
                     "key": "intensity",
-                    "value": "0.52"
+                    "value": "0.667"
                 },
                 {
                     "key": "color_r",

@@ -1,0 +1,348 @@
+{
+    "graphName": "Motion Blur",
+    "graphIsActive": true,
+    "nodes": [
+        {
+            "id": "fa563119-7a2d-4857-be1d-eb248e1f7f03",
+            "values": [],
+            "posX": -250.0,
+            "posY": 370.0,
+            "path": "Nodes/AppStartNode",
+            "inputSocketIds": [],
+            "outputSocketIds": [
+                "dcf75c5c-a410-42b1-b5b5-6d87eacd0629638481327913307236"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "628da5f0-0040-43ca-8b6e-2138f02dc12b",
+            "values": [
+                {
+                    "key": "angle",
+                    "value": "135"
+                },
+                {
+                    "key": "sample",
+                    "value": "12"
+                },
+                {
+                    "key": "active",
+                    "value": "1"
+                },
+                {
+                    "key": "toggle",
+                    "value": "0"
+                }
+            ],
+            "posX": 364.0,
+            "posY": 218.0,
+            "path": "Nodes/EffectMotionBlurNode",
+            "inputSocketIds": [
+                "306b9576-6c54-4a53-80db-ffb479c2d4fa638481327956537383"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "8be98d55-0be9-49fe-9ea9-e2fd3b0c2d01",
+            "values": [
+                {
+                    "key": "triggerName",
+                    "value": "MotionBlurOn"
+                }
+            ],
+            "posX": -170.0,
+            "posY": 111.0,
+            "path": "Nodes/TriggerNode",
+            "inputSocketIds": [],
+            "outputSocketIds": [
+                "9599caee-efb0-4397-b172-fc1e9ce4610a638481328130050315"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "6805e587-030d-4302-acfe-98bc23b66e7f",
+            "values": [
+                {
+                    "key": "angle",
+                    "value": "90"
+                },
+                {
+                    "key": "sample",
+                    "value": "8"
+                },
+                {
+                    "key": "active",
+                    "value": "0"
+                },
+                {
+                    "key": "toggle",
+                    "value": "0"
+                }
+            ],
+            "posX": 351.0,
+            "posY": -187.0,
+            "path": "Nodes/EffectMotionBlurNode",
+            "inputSocketIds": [
+                "460edbb1-dc54-4376-9a56-770870ddc8a3638481328230488731"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "9f8e2ece-6798-4d63-a729-928b01535065",
+            "values": [
+                {
+                    "key": "triggerName",
+                    "value": "MotionBlurOff"
+                }
+            ],
+            "posX": -168.0,
+            "posY": -259.0,
+            "path": "Nodes/TriggerNode",
+            "inputSocketIds": [],
+            "outputSocketIds": [
+                "5dc577ef-ba4e-4529-95a9-1d816e8bfd64638481328267296350"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "706281f0-5167-4846-9852-efdc51b5dec5",
+            "values": [],
+            "posX": 77.0,
+            "posY": 121.0,
+            "path": "Nodes/Ordered5Node",
+            "inputSocketIds": [
+                "bbd9117d-b08d-4824-9537-4f4b06b9a3b9638481328905983931"
+            ],
+            "outputSocketIds": [
+                "58b286ec-974d-42b8-89dd-1355c4ee080a638481328905983931",
+                "8acb828a-db81-4a3e-bcb3-e2eb053f523a638481328905983931",
+                "7ba8a26c-0caf-4a0a-bf64-e67c6075551f638481328905983931",
+                "054bd942-f1d2-4a61-b51a-fd04fe53128b638481328905983931",
+                "e6259ae4-952b-432c-8338-0f1f18118532638481328905983931"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "c34e4137-7ccc-409e-9d5a-e1618d1e7acb",
+            "values": [
+                {
+                    "key": "paramName",
+                    "value": "MotionBlur"
+                },
+                {
+                    "key": "value",
+                    "value": "true"
+                }
+            ],
+            "posX": 348.0,
+            "posY": 31.0,
+            "path": "Nodes/SetTextParamNode",
+            "inputSocketIds": [
+                "a22a70d1-6bff-4b8d-8a47-a984da0301ec638481329149395248"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "8c01f931-21c9-430d-901c-1121fa91271e",
+            "values": [],
+            "posX": 77.0,
+            "posY": -280.0,
+            "path": "Nodes/Ordered5Node",
+            "inputSocketIds": [
+                "6a7c0738-db81-44c6-87f9-56706278223e638481329357473240"
+            ],
+            "outputSocketIds": [
+                "485f8d95-5ca7-4fcd-bb41-5cebe968355a638481329357473240",
+                "dba7f28b-5678-4aa4-bfe1-b949153b0922638481329357473240",
+                "6658d50d-e7ef-45af-a477-669f2149c5fc638481329357473240",
+                "a5973db4-238b-4760-a6c4-c5a1ea00408e638481329357473240",
+                "9360d16a-c19e-404e-bd14-0c6c3dd463b8638481329357473240"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "5604fa0d-56d1-478f-aee8-5ee370591865",
+            "values": [
+                {
+                    "key": "paramName",
+                    "value": "MotionBlur"
+                },
+                {
+                    "key": "value",
+                    "value": "false"
+                }
+            ],
+            "posX": 335.0,
+            "posY": -375.0,
+            "path": "Nodes/SetTextParamNode",
+            "inputSocketIds": [
+                "b831f0f6-0576-47a0-a006-7ad2c0f878d6638481329441459248"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "f36ec782-50dc-4d12-ab8a-7fa73970e8f0",
+            "values": [
+                {
+                    "key": "triggerName",
+                    "value": "ToggleMotionBlur"
+                }
+            ],
+            "posX": 698.3333129882813,
+            "posY": 129.3333282470703,
+            "path": "Nodes/TriggerNode",
+            "inputSocketIds": [],
+            "outputSocketIds": [
+                "3fb1a53e-77ae-4a5b-9eed-951fa4fe8cf3638481329583241774"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "34098cbd-5135-4f5d-9d7b-c78ad3e9f10d",
+            "values": [
+                {
+                    "key": "value",
+                    "value": "<MotionBlur>"
+                },
+                {
+                    "key": "compare",
+                    "value": "true"
+                },
+                {
+                    "key": "type",
+                    "value": "0"
+                }
+            ],
+            "posX": 997.665771484375,
+            "posY": 144.3331298828125,
+            "path": "Nodes/CompareTextNode",
+            "inputSocketIds": [
+                "03dcca2b-044d-4d12-88dd-1299d52d67a4638481329734960794"
+            ],
+            "outputSocketIds": [
+                "d7ce62f5-960c-442e-b6fa-5fafd4afceae638481329734960794",
+                "32c1d3c5-5bfc-4ed8-b1e1-823d92328c30638481329734960794"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "03e8b335-5452-4701-897f-f111f80ecf0b",
+            "values": [
+                {
+                    "key": "triggerName",
+                    "value": "MotionBlurOn"
+                },
+                {
+                    "key": "callTime",
+                    "value": "1"
+                }
+            ],
+            "posX": 1285.9990234375,
+            "posY": 14.333122253417969,
+            "path": "Nodes/CallTriggerNode",
+            "inputSocketIds": [
+                "76885b2e-6055-49fa-a09f-3b2a78772c94638481329938533641"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "ec47e096-4477-41c0-a30c-ad0b39095866",
+            "values": [
+                {
+                    "key": "triggerName",
+                    "value": "MotionBlurOff"
+                },
+                {
+                    "key": "callTime",
+                    "value": "1"
+                }
+            ],
+            "posX": 1285.9990234375,
+            "posY": 185.99977111816407,
+            "path": "Nodes/CallTriggerNode",
+            "inputSocketIds": [
+                "ffeac5a8-d642-408b-999f-69f98f8fdac3638481329940957772"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "5c6e7ea6-50ff-43e3-b7ff-452b33595d76",
+            "values": [
+                {
+                    "key": "triggerName",
+                    "value": "MotionBlurOn"
+                },
+                {
+                    "key": "callTime",
+                    "value": "0"
+                }
+            ],
+            "posX": 9.33243179321289,
+            "posY": 374.3331298828125,
+            "path": "Nodes/CallTriggerNode",
+            "inputSocketIds": [
+                "c26852ca-5ddb-4fb6-8aba-ead5753e897e638481330324015602"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        }
+    ],
+    "connections": [
+        {
+            "id": "5da54272-8d43-4ffc-a93b-df56cc7c7bf5",
+            "outputSocketId": "9599caee-efb0-4397-b172-fc1e9ce4610a638481328130050315",
+            "inputSocketId": "bbd9117d-b08d-4824-9537-4f4b06b9a3b9638481328905983931"
+        },
+        {
+            "id": "80699756-0f80-4978-a089-dd281303bee3",
+            "outputSocketId": "58b286ec-974d-42b8-89dd-1355c4ee080a638481328905983931",
+            "inputSocketId": "306b9576-6c54-4a53-80db-ffb479c2d4fa638481327956537383"
+        },
+        {
+            "id": "ed00edb9-ac29-44d3-a46c-cc8cbe2dc10f",
+            "outputSocketId": "8acb828a-db81-4a3e-bcb3-e2eb053f523a638481328905983931",
+            "inputSocketId": "a22a70d1-6bff-4b8d-8a47-a984da0301ec638481329149395248"
+        },
+        {
+            "id": "998e9a35-b865-4653-b6b7-e7f6cde82841",
+            "outputSocketId": "5dc577ef-ba4e-4529-95a9-1d816e8bfd64638481328267296350",
+            "inputSocketId": "6a7c0738-db81-44c6-87f9-56706278223e638481329357473240"
+        },
+        {
+            "id": "b0fa1bfb-5c8b-4f9d-9fbd-674d97a69090",
+            "outputSocketId": "485f8d95-5ca7-4fcd-bb41-5cebe968355a638481329357473240",
+            "inputSocketId": "460edbb1-dc54-4376-9a56-770870ddc8a3638481328230488731"
+        },
+        {
+            "id": "b49f6d8e-693f-407b-ac71-6acd69ceef64",
+            "outputSocketId": "dba7f28b-5678-4aa4-bfe1-b949153b0922638481329357473240",
+            "inputSocketId": "b831f0f6-0576-47a0-a006-7ad2c0f878d6638481329441459248"
+        },
+        {
+            "id": "5b43d615-c2ea-421c-85ad-ae7c773c85c5",
+            "outputSocketId": "3fb1a53e-77ae-4a5b-9eed-951fa4fe8cf3638481329583241774",
+            "inputSocketId": "03dcca2b-044d-4d12-88dd-1299d52d67a4638481329734960794"
+        },
+        {
+            "id": "71f921dd-a095-40bf-b470-2f8597fb4385",
+            "outputSocketId": "d7ce62f5-960c-442e-b6fa-5fafd4afceae638481329734960794",
+            "inputSocketId": "ffeac5a8-d642-408b-999f-69f98f8fdac3638481329940957772"
+        },
+        {
+            "id": "fe227476-ce6c-4d78-8734-8ea926b14730",
+            "outputSocketId": "32c1d3c5-5bfc-4ed8-b1e1-823d92328c30638481329734960794",
+            "inputSocketId": "76885b2e-6055-49fa-a09f-3b2a78772c94638481329938533641"
+        },
+        {
+            "id": "a460474d-9749-4648-ba6c-e80c02f4e519",
+            "outputSocketId": "dcf75c5c-a410-42b1-b5b5-6d87eacd0629638481327913307236",
+            "inputSocketId": "c26852ca-5ddb-4fb6-8aba-ead5753e897e638481330324015602"
+        }
+    ]
+}
