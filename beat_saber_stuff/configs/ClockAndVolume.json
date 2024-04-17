@@ -1,0 +1,48 @@
+{
+  "Clock": {
+    "Enabled": true,
+    "ShowInGame": false,
+    "Format": "HH:mm",
+    "Culture": "",
+    "Font": "",
+    "Size": 16.0,
+    "Opacity": 1.0,
+    "Color": "#FFFFFF",
+    "Position": {
+      "x": 0.0,
+      "y": 3.0,
+      "z": 3.9
+    },
+    "Rotation": {
+      "x": 325.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "PositionGame": {
+      "x": 0.0,
+      "y": 3.0,
+      "z": 3.9
+    },
+    "RotationGame": {
+      "x": 325.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "Formats": [
+      "h:mm tt",
+      "h:mm:ss tt",
+      "HH:mm",
+      "HH:mm:ss",
+      "dddd",
+      "MMMM dd, yyyy | h:mm tt"
+    ]
+  },
+  "Volume": {
+    "GoodCuts": 1.0,
+    "BadCuts": 1.0,
+    "Music": 1.0,
+    "SongPreview": 1.0,
+    "MenuBackground": 1.0,
+    "Fireworks": 1.0
+  }
+}

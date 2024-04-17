@@ -1,0 +1,5627 @@
+{
+  "Enabled": true,
+  "HideFogRing": false,
+  "HideMenuGround": false,
+  "HideMenuNotes": false,
+  "HideMenuPileOfNotes": false,
+  "HideLogo": true,
+  "HideRedLine": true,
+  "HideBlueLine": true,
+  "Environments": [
+    {
+      "Name": "BigMirrorEnvironment",
+      "Enabled": true,
+      "Static": [
+        {
+          "Name": "Floor",
+          "Enabled": true
+        },
+        {
+          "Name": "BackColumns",
+          "Enabled": true
+        },
+        {
+          "Name": "Construction",
+          "Enabled": true
+        },
+        {
+          "Name": "PlayersPlace",
+          "Enabled": true
+        },
+        {
+          "Name": "NearBuildingLeft",
+          "Enabled": true
+        },
+        {
+          "Name": "NearBuildingRight",
+          "Enabled": true
+        }
+      ],
+      "Dynamic": [
+        {
+          "Name": "BasicGameHUD",
+          "Enabled": true
+        },
+        {
+          "Name": "Spectrograms",
+          "Enabled": true
+        },
+        {
+          "Name": "BigTrackLaneRings",
+          "Enabled": true
+        },
+        {
+          "Name": "BigSmokePS",
+          "Enabled": true
+        },
+        {
+          "Name": "DustPS",
+          "Enabled": true
+        }
+      ],
+      "Lights": [
+        {
+          "Name": "CoreLighting",
+          "Enabled": true
+        },
+        {
+          "Name": "LightWithIdManager",
+          "Enabled": true
+        },
+        {
+          "Name": "LightEffects",
+          "Enabled": true
+        },
+        {
+          "Name": "FrontLights",
+          "Enabled": true
+        },
+        {
+          "Name": "DoubleColorLaser",
+          "Enabled": true
+        },
+        {
+          "Name": "DoubleColorLaser (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "DoubleColorLaser (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "DoubleColorLaser (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "DoubleColorLaser (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "DoubleColorLaser (5)",
+          "Enabled": true
+        },
+        {
+          "Name": "DoubleColorLaser (6)",
+          "Enabled": true
+        },
+        {
+          "Name": "DoubleColorLaser (8)",
+          "Enabled": true
+        },
+        {
+          "Name": "DoubleColorLaser (7)",
+          "Enabled": true
+        },
+        {
+          "Name": "DoubleColorLaser (9)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "NeonTubeDirectionalL",
+          "Enabled": true
+        },
+        {
+          "Name": "NeonTubeDirectionalFL",
+          "Enabled": true
+        },
+        {
+          "Name": "NeonTubeDirectionalR",
+          "Enabled": true
+        },
+        {
+          "Name": "NeonTubeDirectionalFR",
+          "Enabled": true
+        },
+        {
+          "Name": "GradientBackground",
+          "Enabled": true
+        },
+        {
+          "Name": "BakedReflectionProbe",
+          "Enabled": true
+        },
+        {
+          "Name": "BSBakedLightingLightWithIds",
+          "Enabled": true
+        },
+        {
+          "Name": "FakeMirrorSettings",
+          "Enabled": true
+        },
+        {
+          "Name": "BakedReflectionProbeInstaller",
+          "Enabled": true
+        }
+      ]
+    },
+    {
+      "Name": "BillieEnvironment",
+      "Enabled": true,
+      "Static": [
+        {
+          "Name": "Mountains",
+          "Enabled": true
+        },
+        {
+          "Name": "PlayersPlace",
+          "Enabled": true
+        },
+        {
+          "Name": "LeftRail",
+          "Enabled": true
+        },
+        {
+          "Name": "RightRail",
+          "Enabled": true
+        },
+        {
+          "Name": "LeftFarRail1",
+          "Enabled": true
+        },
+        {
+          "Name": "LeftFarRail2",
+          "Enabled": true
+        },
+        {
+          "Name": "RightFarRail1",
+          "Enabled": true
+        },
+        {
+          "Name": "RightFarRail2",
+          "Enabled": true
+        },
+        {
+          "Name": "RailingFullBack",
+          "Enabled": true
+        },
+        {
+          "Name": "RailingFullFront",
+          "Enabled": true
+        },
+        {
+          "Name": "LastRailingCurve",
+          "Enabled": true
+        }
+      ],
+      "Dynamic": [
+        {
+          "Name": "Rain",
+          "Enabled": true
+        },
+        {
+          "Name": "WaterRainRipples",
+          "Enabled": true
+        },
+        {
+          "Name": "Waterfall",
+          "Enabled": true
+        },
+        {
+          "Name": "DayAndNight",
+          "Enabled": true
+        },
+        {
+          "Name": "Clouds",
+          "Enabled": true
+        },
+        {
+          "Name": "BigSmokePS",
+          "Enabled": true
+        }
+      ],
+      "Lights": [
+        {
+          "Name": "LightRailingSegment",
+          "Enabled": true
+        },
+        {
+          "Name": "LightRailingSegment (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "LightRailingSegment (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "LightRailingSegment (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "TunnelRotatingLasersPair (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "TunnelRotatingLasersPair (5)",
+          "Enabled": true
+        },
+        {
+          "Name": "TunnelRotatingLasersPair (6)",
+          "Enabled": true
+        },
+        {
+          "Name": "TunnelRotatingLasersPair (7)",
+          "Enabled": true
+        },
+        {
+          "Name": "TunnelRotatingLasersPair (8)",
+          "Enabled": true
+        },
+        {
+          "Name": "TunnelRotatingLasersPair (9)",
+          "Enabled": true
+        },
+        {
+          "Name": "TunnelRotatingLasersPair (10)",
+          "Enabled": true
+        },
+        {
+          "Name": "TunnelRotatingLasersPair (11)",
+          "Enabled": true
+        },
+        {
+          "Name": "TunnelRotatingLasersPair (12)",
+          "Enabled": true
+        },
+        {
+          "Name": "TunnelRotatingLasersPair (13)",
+          "Enabled": true
+        },
+        {
+          "Name": "TunnelRotatingLasersPair (14)",
+          "Enabled": true
+        },
+        {
+          "Name": "BottomPairLasers",
+          "Enabled": true
+        },
+        {
+          "Name": "BottomPairLasers (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "BottomPairLasers (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "BottomPairLasers (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "BottomPairLasers (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "BottomPairLasers (5)",
+          "Enabled": true
+        },
+        {
+          "Name": "BottomPairLasers (6)",
+          "Enabled": true
+        },
+        {
+          "Name": "BottomPairLasers (7)",
+          "Enabled": true
+        },
+        {
+          "Name": "BottomPairLasers (8)",
+          "Enabled": true
+        }
+      ]
+    },
+    {
+      "Name": "BTSEnvironment",
+      "Enabled": true,
+      "Static": [
+        {
+          "Name": "TrackMirror",
+          "Enabled": true
+        },
+        {
+          "Name": "Construction",
+          "Enabled": true
+        },
+        {
+          "Name": "PlayersPlace",
+          "Enabled": true
+        }
+      ],
+      "Dynamic": [
+        {
+          "Name": "MagicDoorSprite",
+          "Enabled": true
+        },
+        {
+          "Name": "NarrowGameHUD",
+          "Enabled": true
+        },
+        {
+          "Name": "DustPS",
+          "Enabled": true
+        },
+        {
+          "Name": "Clouds",
+          "Enabled": true
+        },
+        {
+          "Name": "StarHemisphere",
+          "Enabled": true
+        },
+        {
+          "Name": "PillarTrackLaneRingsR",
+          "Enabled": true
+        },
+        {
+          "Name": "PillarTrackLaneRingsR (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "PillarsMovementEffect",
+          "Enabled": true
+        },
+        {
+          "Name": "PillarPair",
+          "Enabled": true
+        },
+        {
+          "Name": "SmallPillarPair",
+          "Enabled": true
+        },
+        {
+          "Name": "PillarPair (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "SmallPillarPair (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "PillarPair (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "SmallPillarPair (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "PillarPair (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "SmallPillarPair (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "PillarPair (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "StarEmitterPS",
+          "Enabled": true
+        },
+        {
+          "Name": "BTSStarTextEffectEvent",
+          "Enabled": true
+        },
+        {
+          "Name": "BTSEnvironmentCharacterSpawner",
+          "Enabled": true
+        }
+      ],
+      "Lights": [
+        {
+          "Name": "LightWithIdManager",
+          "Enabled": true
+        },
+        {
+          "Name": "LightEffects",
+          "Enabled": true
+        },
+        {
+          "Name": "CoreLighting",
+          "Enabled": true
+        },
+        {
+          "Name": "GradientBackground",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineR",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineC",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineH",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineH (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "LaserL",
+          "Enabled": true
+        },
+        {
+          "Name": "LaserR",
+          "Enabled": true
+        },
+        {
+          "Name": "BottomGlow",
+          "Enabled": true
+        },
+        {
+          "Name": "SideLaser",
+          "Enabled": true
+        },
+        {
+          "Name": "BakedReflectionProbe",
+          "Enabled": true
+        },
+        {
+          "Name": "BSBakedLightingLightWithIds",
+          "Enabled": true
+        },
+        {
+          "Name": "FakeMirrorSettings",
+          "Enabled": true
+        },
+        {
+          "Name": "BakedReflectionProbeInstaller",
+          "Enabled": true
+        }
+      ]
+    },
+    {
+      "Name": "CrabRaveEnvironment",
+      "Enabled": true,
+      "Static": [
+        {
+          "Name": "NearBuildingRight",
+          "Enabled": true
+        },
+        {
+          "Name": "NearBuildingLeft",
+          "Enabled": true
+        },
+        {
+          "Name": "PlayersPlace",
+          "Enabled": true
+        },
+        {
+          "Name": "TrackMirror",
+          "Enabled": true
+        },
+        {
+          "Name": "VConstruction",
+          "Enabled": true
+        },
+        {
+          "Name": "FarBuildings",
+          "Enabled": true
+        },
+        {
+          "Name": "Construction",
+          "Enabled": true
+        }
+      ],
+      "Dynamic": [
+        {
+          "Name": "BasicGameHUD",
+          "Enabled": true
+        },
+        {
+          "Name": "MonstercatLogoL",
+          "Enabled": true
+        },
+        {
+          "Name": "MonstercatLogoR",
+          "Enabled": true
+        },
+        {
+          "Name": "Spectrograms",
+          "Enabled": true
+        },
+        {
+          "Name": "SmallTrackLaneRings",
+          "Enabled": true
+        },
+        {
+          "Name": "BigSmokePS",
+          "Enabled": true
+        },
+        {
+          "Name": "DustPS",
+          "Enabled": true
+        }
+      ],
+      "Lights": [
+        {
+          "Name": "CoreLighting",
+          "Enabled": true
+        },
+        {
+          "Name": "LightWithIdManager",
+          "Enabled": true
+        },
+        {
+          "Name": "LightEffects",
+          "Enabled": true
+        },
+        {
+          "Name": "FrontLights",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowTopLine (5)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowTopLine (6)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowTopLine (7)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowTopLine (8)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowTopLine (9)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowTopLine (10)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowTopLine (11)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineR",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineR (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "Laser (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "Laser (5)",
+          "Enabled": true
+        },
+        {
+          "Name": "Laser (7)",
+          "Enabled": true
+        },
+        {
+          "Name": "Laser (8)",
+          "Enabled": true
+        },
+        {
+          "Name": "Laser (9)",
+          "Enabled": true
+        },
+        {
+          "Name": "Laser (10)",
+          "Enabled": true
+        },
+        {
+          "Name": "Laser (11)",
+          "Enabled": true
+        },
+        {
+          "Name": "Laser (12)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "GradientBackground",
+          "Enabled": true
+        },
+        {
+          "Name": "BakedReflectionProbe",
+          "Enabled": true
+        },
+        {
+          "Name": "BSBakedLightingLightWithIds",
+          "Enabled": true
+        },
+        {
+          "Name": "FakeMirrorSettings",
+          "Enabled": true
+        },
+        {
+          "Name": "BakedReflectionProbeInstaller",
+          "Enabled": true
+        }
+      ]
+    },
+    {
+      "Name": "DefaultEnvironment",
+      "Enabled": true,
+      "Static": [
+        {
+          "Name": "PlayersPlace",
+          "Enabled": true
+        },
+        {
+          "Name": "TrackMirror",
+          "Enabled": true
+        },
+        {
+          "Name": "TrackConstruction",
+          "Enabled": true
+        },
+        {
+          "Name": "NearBuildingLeft (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "NearBuildingRight (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "NearBuildingLeft (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "NearBuildingRight (2)",
+          "Enabled": true
+        }
+      ],
+      "Dynamic": [
+        {
+          "Name": "BackColumns",
+          "Enabled": true
+        },
+        {
+          "Name": "BasicGameHUD",
+          "Enabled": true
+        },
+        {
+          "Name": "BigSmokePS",
+          "Enabled": true
+        },
+        {
+          "Name": "SmallTrackLaneRings",
+          "Enabled": true
+        },
+        {
+          "Name": "BigTrackLaneRings",
+          "Enabled": true
+        },
+        {
+          "Name": "Spectrograms",
+          "Enabled": true
+        },
+        {
+          "Name": "DustPS",
+          "Enabled": true
+        }
+      ],
+      "Lights": [
+        {
+          "Name": "GradientBackground",
+          "Enabled": true
+        },
+        {
+          "Name": "LightEffects",
+          "Enabled": true
+        },
+        {
+          "Name": "LightWithIdManager",
+          "Enabled": true
+        },
+        {
+          "Name": "CoreLighting",
+          "Enabled": true
+        },
+        {
+          "Name": "FrontLights",
+          "Enabled": true
+        },
+        {
+          "Name": "DoubleColorLaserR",
+          "Enabled": true
+        },
+        {
+          "Name": "DoubleColorLaserL",
+          "Enabled": true
+        },
+        {
+          "Name": "DoubleColorLaserR (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "DoubleColorLaserL (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "DoubleColorLaserR (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "DoubleColorLaserL (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "DoubleColorLaserR (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "DoubleColorLaserL (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "DoubleColorLaserR (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "DoubleColorLaserL (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "NeonTubeL",
+          "Enabled": true
+        },
+        {
+          "Name": "NeonTubeR",
+          "Enabled": true
+        }
+      ]
+    },
+    {
+      "Name": "DragonsEnvironment",
+      "Enabled": true,
+      "Static": [
+        {
+          "Name": "PlayersPlace",
+          "Enabled": true
+        },
+        {
+          "Name": "TrackMirror",
+          "Enabled": true
+        },
+        {
+          "Name": "TrackConstruction",
+          "Enabled": true
+        },
+        {
+          "Name": "HallConstruction",
+          "Enabled": true
+        },
+        {
+          "Name": "Underground",
+          "Enabled": true
+        }
+      ],
+      "Dynamic": [],
+      "Lights": [
+        {
+          "Name": "GlowLineL",
+          "Enabled": true
+        },
+        {
+          "Name": "BasicGameHUD",
+          "Enabled": true
+        },
+        {
+          "Name": "Spectrograms",
+          "Enabled": true
+        },
+        {
+          "Name": "PanelsTrackLaneRings",
+          "Enabled": true
+        },
+        {
+          "Name": "BigTrackLaneRings",
+          "Enabled": true
+        },
+        {
+          "Name": "BigSmokePS",
+          "Enabled": true
+        },
+        {
+          "Name": "DustPS",
+          "Enabled": true
+        },
+        {
+          "Name": "DragonsSidePSL",
+          "Enabled": true
+        },
+        {
+          "Name": "DragonsSidePSR",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineR",
+          "Enabled": true
+        },
+        {
+          "Name": "CoreLighting",
+          "Enabled": true
+        },
+        {
+          "Name": "LightEffects",
+          "Enabled": true
+        },
+        {
+          "Name": "LightWithIdManager",
+          "Enabled": true
+        },
+        {
+          "Name": "FrontLights",
+          "Enabled": true
+        },
+        {
+          "Name": "ConstructionGlowLine (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "ConstructionGlowLine (6)",
+          "Enabled": true
+        },
+        {
+          "Name": "ConstructionGlowLine (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "ConstructionGlowLine (5)",
+          "Enabled": true
+        },
+        {
+          "Name": "GradientBackground",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "BakedReflectionProbe",
+          "Enabled": true
+        },
+        {
+          "Name": "BSBakedLightingLightWithIds",
+          "Enabled": true
+        },
+        {
+          "Name": "FakeMirrorSettings",
+          "Enabled": true
+        },
+        {
+          "Name": "BakedReflectionProbeInstaller",
+          "Enabled": true
+        }
+      ]
+    },
+    {
+      "Name": "EDMEnvironment",
+      "Enabled": true,
+      "Static": [
+        {
+          "Name": "PlayersPlace",
+          "Enabled": true
+        }
+      ],
+      "Dynamic": [
+        {
+          "Name": "NarrowGameHUD",
+          "Enabled": true
+        }
+      ],
+      "Lights": [
+        {
+          "Name": "CoreLighting",
+          "Enabled": true
+        },
+        {
+          "Name": "LightEffects",
+          "Enabled": true
+        },
+        {
+          "Name": "LightColorGroupEffectManager",
+          "Enabled": true
+        },
+        {
+          "Name": "LightRotationGroupEffectManager",
+          "Enabled": true
+        },
+        {
+          "Name": "LightWithIdManager",
+          "Enabled": true
+        },
+        {
+          "Name": "TopCircle",
+          "Enabled": true
+        },
+        {
+          "Name": "CloseCircle",
+          "Enabled": true
+        },
+        {
+          "Name": "DistantCircle1",
+          "Enabled": true
+        },
+        {
+          "Name": "DistantCircle2",
+          "Enabled": true
+        },
+        {
+          "Name": "SingleSourceCircularLY",
+          "Enabled": true
+        },
+        {
+          "Name": "SingleSourceCircularRY",
+          "Enabled": true
+        },
+        {
+          "Name": "SingleSourceLaserUp",
+          "Enabled": true
+        },
+        {
+          "Name": "SingleSourceLaserLeftMid",
+          "Enabled": true
+        },
+        {
+          "Name": "SingleSourceLaserDown",
+          "Enabled": true
+        },
+        {
+          "Name": "SingleSourceLaserRightMid",
+          "Enabled": true
+        },
+        {
+          "Name": "SingleSourceLaserDown",
+          "Enabled": true
+        },
+        {
+          "Name": "Spectrograms",
+          "Enabled": true
+        },
+        {
+          "Name": "Spectrograms (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "Laser",
+          "Enabled": true
+        },
+        {
+          "Name": "Laser (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "Laser (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "Laser (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "Laser (4)",
+          "Enabled": true
+        }
+      ]
+    },
+    {
+      "Name": "FitBeatEnvironment",
+      "Enabled": true,
+      "Static": [
+        {
+          "Name": "PlayersPlace",
+          "Enabled": true
+        },
+        {
+          "Name": "TrackMirror",
+          "Enabled": true
+        },
+        {
+          "Name": "TrackConstruction",
+          "Enabled": true
+        }
+      ],
+      "Dynamic": [
+        {
+          "Name": "NarrowGameHUD",
+          "Enabled": true
+        },
+        {
+          "Name": "DustPS",
+          "Enabled": true
+        }
+      ],
+      "Lights": [
+        {
+          "Name": "Spectrograms",
+          "Enabled": true
+        },
+        {
+          "Name": "PanelsLightsTrackLaneRings",
+          "Enabled": true
+        },
+        {
+          "Name": "BigCenterLightsTrackLaneRings",
+          "Enabled": true
+        },
+        {
+          "Name": "BigSmokePS",
+          "Enabled": true
+        },
+        {
+          "Name": "CoreLighting",
+          "Enabled": true
+        },
+        {
+          "Name": "LightEffects",
+          "Enabled": true
+        },
+        {
+          "Name": "LightWithIdManager",
+          "Enabled": true
+        },
+        {
+          "Name": "FrontLights",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (5)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (6)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (7)",
+          "Enabled": true
+        },
+        {
+          "Name": "GradientBackground",
+          "Enabled": true
+        },
+        {
+          "Name": "BakedReflectionProbe",
+          "Enabled": true
+        },
+        {
+          "Name": "BSBakedLightingLightWithIds",
+          "Enabled": true
+        },
+        {
+          "Name": "FakeMirrorSettings",
+          "Enabled": true
+        },
+        {
+          "Name": "BakedReflectionProbeInstaller",
+          "Enabled": true
+        }
+      ]
+    },
+    {
+      "Name": "GagaEnvironment",
+      "Enabled": true,
+      "Static": [
+        {
+          "Name": "Runway",
+          "Enabled": true
+        },
+        {
+          "Name": "Construction",
+          "Enabled": true
+        },
+        {
+          "Name": "PlayersPlace",
+          "Enabled": true
+        },
+        {
+          "Name": "BackCube",
+          "Enabled": true
+        },
+        {
+          "Name": "TubeR",
+          "Enabled": true
+        },
+        {
+          "Name": "TubeL",
+          "Enabled": true
+        },
+        {
+          "Name": "TubeL (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "RunwayPillarLow (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "RunwayPillarLow (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "RunwayPillar",
+          "Enabled": true
+        },
+        {
+          "Name": "Tower",
+          "Enabled": true
+        },
+        {
+          "Name": "Tower (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "Tower (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "Tower (2)",
+          "Enabled": true
+        }
+      ],
+      "Dynamic": [
+        {
+          "Name": "Logo",
+          "Enabled": true
+        },
+        {
+          "Name": "NarrowGameHUD",
+          "Enabled": true
+        }
+      ],
+      "Lights": [
+        {
+          "Name": "FloorLightTilesGridEffect",
+          "Enabled": true
+        },
+        {
+          "Name": "TeslaTower1L",
+          "Enabled": true
+        },
+        {
+          "Name": "TeslaTower1R",
+          "Enabled": true
+        },
+        {
+          "Name": "TeslaTower2L",
+          "Enabled": true
+        },
+        {
+          "Name": "TeslaTower2R",
+          "Enabled": true
+        },
+        {
+          "Name": "TeslaTower3L",
+          "Enabled": true
+        },
+        {
+          "Name": "TeslaTower3R",
+          "Enabled": true
+        },
+        {
+          "Name": "SmokePSL",
+          "Enabled": true
+        },
+        {
+          "Name": "SmokePSR",
+          "Enabled": true
+        },
+        {
+          "Name": "StarSky",
+          "Enabled": true
+        },
+        {
+          "Name": "Aurora",
+          "Enabled": true
+        },
+        {
+          "Name": "CoreLighting",
+          "Enabled": true
+        },
+        {
+          "Name": "DirectionalLights",
+          "Enabled": true
+        },
+        {
+          "Name": "LightWithIdManager",
+          "Enabled": true
+        },
+        {
+          "Name": "LightEffects",
+          "Enabled": true
+        },
+        {
+          "Name": "GradientBackground",
+          "Enabled": true
+        },
+        {
+          "Name": "FrontLasers",
+          "Enabled": true
+        }
+      ]
+    },
+    {
+      "Name": "GlassDesertEnvironment",
+      "Enabled": true,
+      "Static": [
+        {
+          "Name": "Collider",
+          "Enabled": true
+        },
+        {
+          "Name": "PlayersPlace",
+          "Enabled": true
+        },
+        {
+          "Name": "TopLightMesh",
+          "Enabled": true
+        },
+        {
+          "Name": "Floor",
+          "Enabled": true
+        },
+        {
+          "Name": "SeparatorWall",
+          "Enabled": true
+        },
+        {
+          "Name": "SeparatorWall (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "SeparatorWall (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "SeparatorWall (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "SeparatorWall (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "SeparatorWall (5)",
+          "Enabled": true
+        },
+        {
+          "Name": "SeparatorWall (6)",
+          "Enabled": true
+        },
+        {
+          "Name": "SeparatorWall (7)",
+          "Enabled": true
+        },
+        {
+          "Name": "SeparatorWall (8)",
+          "Enabled": true
+        },
+        {
+          "Name": "SeparatorWall (9)",
+          "Enabled": true
+        },
+        {
+          "Name": "SeparatorWall (10)",
+          "Enabled": true
+        },
+        {
+          "Name": "SeparatorWall (11)",
+          "Enabled": true
+        },
+        {
+          "Name": "SeparatorWall (12)",
+          "Enabled": true
+        },
+        {
+          "Name": "SeparatorWall (13)",
+          "Enabled": true
+        },
+        {
+          "Name": "SeparatorWall (14)",
+          "Enabled": true
+        },
+        {
+          "Name": "SeparatorWall (15)",
+          "Enabled": true
+        }
+      ],
+      "Dynamic": [
+        {
+          "Name": "FlyingGameHUD",
+          "Enabled": true
+        },
+        {
+          "Name": "BigSmokePS",
+          "Enabled": true
+        },
+        {
+          "Name": "DustPS",
+          "Enabled": true
+        }
+      ],
+      "Lights": [
+        {
+          "Name": "CoreLighting",
+          "Enabled": true
+        },
+        {
+          "Name": "LightEffects",
+          "Enabled": true
+        },
+        {
+          "Name": "DownLaser (9)",
+          "Enabled": true
+        },
+        {
+          "Name": "DownLaser (12)",
+          "Enabled": true
+        },
+        {
+          "Name": "DownLaser (10)",
+          "Enabled": true
+        },
+        {
+          "Name": "DownLaser (11)",
+          "Enabled": true
+        },
+        {
+          "Name": "DownLaser (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "DownLaser (5)",
+          "Enabled": true
+        },
+        {
+          "Name": "DownLaser (6)",
+          "Enabled": true
+        },
+        {
+          "Name": "DownLaser (7)",
+          "Enabled": true
+        },
+        {
+          "Name": "TopLaser",
+          "Enabled": true
+        },
+        {
+          "Name": "TopLaser (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "TopLaser (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "TopLaser (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "TopLaser (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "TopLaser (5)",
+          "Enabled": true
+        },
+        {
+          "Name": "LightPillar (9)",
+          "Enabled": true
+        },
+        {
+          "Name": "LightPillar (19)",
+          "Enabled": true
+        },
+        {
+          "Name": "LightPillar (20)",
+          "Enabled": true
+        },
+        {
+          "Name": "LightPillar (21)",
+          "Enabled": true
+        },
+        {
+          "Name": "LightPillar (10)",
+          "Enabled": true
+        },
+        {
+          "Name": "LightPillar (23)",
+          "Enabled": true
+        },
+        {
+          "Name": "LightPillar (11)",
+          "Enabled": true
+        },
+        {
+          "Name": "LightPillar (24)",
+          "Enabled": true
+        },
+        {
+          "Name": "LightPillar (12)",
+          "Enabled": true
+        },
+        {
+          "Name": "LightPillar (25)",
+          "Enabled": true
+        },
+        {
+          "Name": "GradientBackground",
+          "Enabled": true
+        }
+      ]
+    },
+    {
+      "Name": "GreenDayEnvironment",
+      "Enabled": true,
+      "Static": [
+        {
+          "Name": "PlayersPlace",
+          "Enabled": true
+        },
+        {
+          "Name": "TrackMirror",
+          "Enabled": true
+        },
+        {
+          "Name": "TrackConstruction",
+          "Enabled": true
+        }
+      ],
+      "Dynamic": [
+        {
+          "Name": "NarrowGameHUD",
+          "Enabled": true
+        },
+        {
+          "Name": "Logo",
+          "Enabled": true
+        },
+        {
+          "Name": "BigSmokePS",
+          "Enabled": true
+        },
+        {
+          "Name": "LightLinesTrackLaneRings",
+          "Enabled": true
+        },
+        {
+          "Name": "DustPS",
+          "Enabled": true
+        }
+      ],
+      "Lights": [
+        {
+          "Name": "CoreLighting",
+          "Enabled": true
+        },
+        {
+          "Name": "LightWithIdManager",
+          "Enabled": true
+        },
+        {
+          "Name": "LightEffects",
+          "Enabled": true
+        },
+        {
+          "Name": "FrontLight",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineR",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (13)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (14)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (7)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (8)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (15)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (16)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (17)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (18)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (19)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (20)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (21)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (22)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (23)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (24)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (5)",
+          "Enabled": true
+        },
+        {
+          "Name": "GradientBackground",
+          "Enabled": true
+        },
+        {
+          "Name": "GreenDayCity",
+          "Enabled": true
+        },
+        {
+          "Name": "BakedReflectionProbe",
+          "Enabled": true
+        },
+        {
+          "Name": "BSBakedLightingLightWithIds",
+          "Enabled": true
+        },
+        {
+          "Name": "FakeMirrorSettings",
+          "Enabled": true
+        },
+        {
+          "Name": "BakedReflectionProbeInstaller",
+          "Enabled": true
+        }
+      ]
+    },
+    {
+      "Name": "GreenDayGrenadeEnvironment",
+      "Enabled": true,
+      "Static": [
+        {
+          "Name": "PlayersPlace",
+          "Enabled": true
+        },
+        {
+          "Name": "TrackMirror",
+          "Enabled": true
+        },
+        {
+          "Name": "TrackConstruction",
+          "Enabled": true
+        }
+      ],
+      "Dynamic": [
+        {
+          "Name": "NarrowGameHUD",
+          "Enabled": true
+        },
+        {
+          "Name": "Logo",
+          "Enabled": true
+        },
+        {
+          "Name": "BigSmokePS",
+          "Enabled": true
+        },
+        {
+          "Name": "LightLinesTrackLaneRings",
+          "Enabled": true
+        },
+        {
+          "Name": "DustPS",
+          "Enabled": true
+        }
+      ],
+      "Lights": [
+        {
+          "Name": "CoreLighting",
+          "Enabled": true
+        },
+        {
+          "Name": "LightWithIdManager",
+          "Enabled": true
+        },
+        {
+          "Name": "LightEffects",
+          "Enabled": true
+        },
+        {
+          "Name": "FrontLight",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineR",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (13)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (14)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (7)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (8)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (15)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (16)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (17)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (18)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (19)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (20)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (21)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (22)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (23)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (24)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (5)",
+          "Enabled": true
+        },
+        {
+          "Name": "GradientBackground",
+          "Enabled": true
+        },
+        {
+          "Name": "GreenDayCity",
+          "Enabled": true
+        },
+        {
+          "Name": "BakedReflectionProbe",
+          "Enabled": true
+        },
+        {
+          "Name": "BSBakedLightingLightWithIds",
+          "Enabled": true
+        },
+        {
+          "Name": "FakeMirrorSettings",
+          "Enabled": true
+        },
+        {
+          "Name": "BakedReflectionProbeInstaller",
+          "Enabled": true
+        }
+      ]
+    },
+    {
+      "Name": "HalloweenEnvironment",
+      "Enabled": true,
+      "Static": [
+        {
+          "Name": "PlayersPlace",
+          "Enabled": true
+        },
+        {
+          "Name": "Ground",
+          "Enabled": true
+        },
+        {
+          "Name": "Grave0",
+          "Enabled": true
+        },
+        {
+          "Name": "Grave0 (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "Grave1",
+          "Enabled": true
+        },
+        {
+          "Name": "Fence",
+          "Enabled": true
+        },
+        {
+          "Name": "Grave",
+          "Enabled": true
+        },
+        {
+          "Name": "Fence (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "Castle",
+          "Enabled": true
+        },
+        {
+          "Name": "Castle (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "Castle (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "Castle (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "Tree3",
+          "Enabled": true
+        },
+        {
+          "Name": "Tree3 (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "Tree3 (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "Tree3 (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "Tree2 (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "Tree2 (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "Tree2",
+          "Enabled": true
+        },
+        {
+          "Name": "Fence (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "Fence (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "Fence",
+          "Enabled": true
+        },
+        {
+          "Name": "Tree5",
+          "Enabled": true
+        },
+        {
+          "Name": "TombStone (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "TombStone (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "TombStone (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "TombStone (5)",
+          "Enabled": true
+        },
+        {
+          "Name": "TombStone (6)",
+          "Enabled": true
+        },
+        {
+          "Name": "TombStone (7)",
+          "Enabled": true
+        },
+        {
+          "Name": "TombStone (8)",
+          "Enabled": true
+        },
+        {
+          "Name": "TombStone (9)",
+          "Enabled": true
+        },
+        {
+          "Name": "TombStone (11)",
+          "Enabled": true
+        },
+        {
+          "Name": "TombStone (12)",
+          "Enabled": true
+        },
+        {
+          "Name": "TombStone (13)",
+          "Enabled": true
+        },
+        {
+          "Name": "TombStone (14)",
+          "Enabled": true
+        },
+        {
+          "Name": "TombStone (15)",
+          "Enabled": true
+        },
+        {
+          "Name": "TombStone (16)",
+          "Enabled": true
+        },
+        {
+          "Name": "TombStone (17)",
+          "Enabled": true
+        },
+        {
+          "Name": "TombStone (18)",
+          "Enabled": true
+        },
+        {
+          "Name": "TombStone (19)",
+          "Enabled": true
+        },
+        {
+          "Name": "TombStone (20)",
+          "Enabled": true
+        },
+        {
+          "Name": "TombStone (21)",
+          "Enabled": true
+        },
+        {
+          "Name": "TombStone (22)",
+          "Enabled": true
+        },
+        {
+          "Name": "TombStone (24)",
+          "Enabled": true
+        },
+        {
+          "Name": "Fence (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "Fence (5)",
+          "Enabled": true
+        },
+        {
+          "Name": "Fence (6)",
+          "Enabled": true
+        },
+        {
+          "Name": "Fence (7)",
+          "Enabled": true
+        },
+        {
+          "Name": "Fence (8)",
+          "Enabled": true
+        },
+        {
+          "Name": "Fence (9)",
+          "Enabled": true
+        },
+        {
+          "Name": "Fence (10)",
+          "Enabled": true
+        },
+        {
+          "Name": "Fence (11)",
+          "Enabled": true
+        },
+        {
+          "Name": "Fence (12)",
+          "Enabled": true
+        },
+        {
+          "Name": "Fence (13)",
+          "Enabled": true
+        },
+        {
+          "Name": "Fence (14)",
+          "Enabled": true
+        },
+        {
+          "Name": "Fence (15)",
+          "Enabled": true
+        },
+        {
+          "Name": "Fence (16)",
+          "Enabled": true
+        },
+        {
+          "Name": "Fence (17)",
+          "Enabled": true
+        },
+        {
+          "Name": "Fence (18)",
+          "Enabled": true
+        },
+        {
+          "Name": "Fence (19)",
+          "Enabled": true
+        },
+        {
+          "Name": "Fence (20)",
+          "Enabled": true
+        },
+        {
+          "Name": "Fence (21)",
+          "Enabled": true
+        },
+        {
+          "Name": "Fence (22)",
+          "Enabled": true
+        },
+        {
+          "Name": "Fence (23)",
+          "Enabled": true
+        },
+        {
+          "Name": "Grave0 (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "Grave1 (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "Grave",
+          "Enabled": true
+        },
+        {
+          "Name": "Fence (24)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (5)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (6)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (7)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (8)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (9)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (10)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (11)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (12)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (13)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (14)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (15)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (16)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (17)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (18)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (19)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (20)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (21)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (22)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (23)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (24)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (25)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (26)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (27)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (28)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (29)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (30)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (31)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (32)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (33)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (34)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (35)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (36)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (38)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (37)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (39)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (40)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (41)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (42)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (43)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (44)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (45)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (46)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (47)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (48)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (49)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (50)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (51)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (54)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (55)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (56)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (57)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (58)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (59)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (60)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (61)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (62)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (63)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (64)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (65)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (66)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (67)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (68)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (69)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (70)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (71)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (72)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (73)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (74)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (77)",
+          "Enabled": true
+        },
+        {
+          "Name": "Tree1 (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "Tree2 (1)",
+          "Enabled": true
+        }
+      ],
+      "Dynamic": [
+        {
+          "Name": "Bats",
+          "Enabled": true
+        },
+        {
+          "Name": "NarrowGameHUD",
+          "Enabled": true
+        },
+        {
+          "Name": "BigSmokePS",
+          "Enabled": true
+        },
+        {
+          "Name": "Crow (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "Crow (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "Crow",
+          "Enabled": true
+        },
+        {
+          "Name": "Crow (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "ZombieHand (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "ZombieHand (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "ZombieHand (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "ZombieHand (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "ZombieHand (5)",
+          "Enabled": true
+        },
+        {
+          "Name": "ZombieHand",
+          "Enabled": true
+        },
+        {
+          "Name": "ZombieHand (6)",
+          "Enabled": true
+        }
+      ],
+      "Lights": [
+        {
+          "Name": "CoreLighting",
+          "Enabled": true
+        },
+        {
+          "Name": "NeonTubeL (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "LightEffects",
+          "Enabled": true
+        },
+        {
+          "Name": "LightWithIdManager",
+          "Enabled": true
+        },
+        {
+          "Name": "NeonTubeR",
+          "Enabled": true
+        },
+        {
+          "Name": "NeonTubeL",
+          "Enabled": true
+        },
+        {
+          "Name": "NeonTubeR (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "GateLight",
+          "Enabled": true
+        },
+        {
+          "Name": "Moon",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (7)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (6)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (8)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (9)",
+          "Enabled": true
+        },
+        {
+          "Name": "NeonTubeC",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundFog",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (13)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (12)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (7)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (8)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (9)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (10)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (11)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (14)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (15)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (16)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (17)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (18)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (19)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (20)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (21)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (22)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (23)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (52)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (53)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (75)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (76)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (78)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (79)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (80)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (81)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (82)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (83)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (84)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (85)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (86)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (87)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (88)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (89)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (90)",
+          "Enabled": true
+        },
+        {
+          "Name": "GroundStone (91)",
+          "Enabled": true
+        }
+      ]
+    },
+    {
+      "Name": "InterscopeEnvironment",
+      "Enabled": true,
+      "Static": [
+        {
+          "Name": "LightmapLightsWithIds",
+          "Enabled": true
+        },
+        {
+          "Name": "BakedReflectionProbe",
+          "Enabled": true
+        },
+        {
+          "Name": "Logo",
+          "Enabled": true
+        },
+        {
+          "Name": "PlayersPlace",
+          "Enabled": true
+        },
+        {
+          "Name": "Floor",
+          "Enabled": true
+        },
+        {
+          "Name": "RearPillar",
+          "Enabled": true
+        },
+        {
+          "Name": "RearPillar (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "Pillar (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "Pillar (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "Pillar (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "Pillar (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "Pillar",
+          "Enabled": true
+        },
+        {
+          "Name": "Plane (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "Plane (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "Plane (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "Plane (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "Plane (5)",
+          "Enabled": true
+        },
+        {
+          "Name": "Plane (6)",
+          "Enabled": true
+        },
+        {
+          "Name": "RearPillar (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "RearPillar (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "RearPillar (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "RearPillar (5)",
+          "Enabled": true
+        }
+      ],
+      "Dynamic": [
+        {
+          "Name": "Spectrograms",
+          "Enabled": true
+        },
+        {
+          "Name": "BigSmokePS",
+          "Enabled": true
+        }
+      ],
+      "Lights": [
+        {
+          "Name": "DustPS",
+          "Enabled": true
+        },
+        {
+          "Name": "FrontLight",
+          "Enabled": true
+        },
+        {
+          "Name": "NarrowGameHUD",
+          "Enabled": true
+        },
+        {
+          "Name": "Car1",
+          "Enabled": true
+        },
+        {
+          "Name": "Car2",
+          "Enabled": true
+        },
+        {
+          "Name": "Car3",
+          "Enabled": true
+        },
+        {
+          "Name": "Car4",
+          "Enabled": true
+        },
+        {
+          "Name": "FarCar1",
+          "Enabled": true
+        },
+        {
+          "Name": "FarCar2",
+          "Enabled": true
+        },
+        {
+          "Name": "FarCar3",
+          "Enabled": true
+        },
+        {
+          "Name": "FarCar4",
+          "Enabled": true
+        },
+        {
+          "Name": "NeonTop",
+          "Enabled": true
+        },
+        {
+          "Name": "NeonTop (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "NeonTop (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "NeonTop (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "NeonTop (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "SinMoveLasersPair",
+          "Enabled": true
+        },
+        {
+          "Name": "SinMoveLasersPair (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "SinMoveLasersPair (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "SinMoveLasersPair (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "SinMoveLasersPair (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "SinMoveLasersPair (5)",
+          "Enabled": true
+        },
+        {
+          "Name": "SinMoveLasersPair (6)",
+          "Enabled": true
+        }
+      ]
+    },
+    {
+      "Name": "KaleidoscopeEnvironment",
+      "Enabled": true,
+      "Static": [],
+      "Dynamic": [
+        {
+          "Name": "PlayersPlace",
+          "Enabled": true
+        },
+        {
+          "Name": "SmallTrackLaneRings",
+          "Enabled": true
+        },
+        {
+          "Name": "DistantRings",
+          "Enabled": true
+        },
+        {
+          "Name": "DustPS",
+          "Enabled": true
+        }
+      ],
+      "Lights": [
+        {
+          "Name": "NarrowGameHUD",
+          "Enabled": true
+        },
+        {
+          "Name": "LightEffects",
+          "Enabled": true
+        },
+        {
+          "Name": "LightWithIdManager",
+          "Enabled": true
+        },
+        {
+          "Name": "CoreLighting",
+          "Enabled": true
+        },
+        {
+          "Name": "GradientBackground",
+          "Enabled": true
+        },
+        {
+          "Name": "TrackMirror",
+          "Enabled": true
+        },
+        {
+          "Name": "Construction",
+          "Enabled": true
+        },
+        {
+          "Name": "BakedReflectionProbe",
+          "Enabled": true
+        },
+        {
+          "Name": "BSBakedLightingLightWithIds",
+          "Enabled": true
+        },
+        {
+          "Name": "FakeMirrorSettings",
+          "Enabled": true
+        },
+        {
+          "Name": "BakedReflectionProbeInstaller",
+          "Enabled": true
+        }
+      ]
+    },
+    {
+      "Name": "KDAEnvironment",
+      "Enabled": true,
+      "Static": [
+        {
+          "Name": "TentacleLeft",
+          "Enabled": true
+        },
+        {
+          "Name": "TentacleRight",
+          "Enabled": true
+        },
+        {
+          "Name": "Construction",
+          "Enabled": true
+        },
+        {
+          "Name": "FloorMirror",
+          "Enabled": true
+        },
+        {
+          "Name": "PlayersPlace",
+          "Enabled": true
+        }
+      ],
+      "Dynamic": [
+        {
+          "Name": "BasicGameHUD",
+          "Enabled": true
+        },
+        {
+          "Name": "BigSmokePS",
+          "Enabled": true
+        },
+        {
+          "Name": "DustPS",
+          "Enabled": true
+        }
+      ],
+      "Lights": [
+        {
+          "Name": "LightWithIdManager",
+          "Enabled": true
+        },
+        {
+          "Name": "LightEffects",
+          "Enabled": true
+        },
+        {
+          "Name": "CoreLighting",
+          "Enabled": true
+        },
+        {
+          "Name": "FrontLights",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineLVisible",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineRVisible",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowTopLine",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowTopLine (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowTopLine (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowTopLine (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowTopLine (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineFarL",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineFarR",
+          "Enabled": true
+        },
+        {
+          "Name": "Laser (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "Laser (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "Laser (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "Laser (7)",
+          "Enabled": true
+        },
+        {
+          "Name": "Laser (8)",
+          "Enabled": true
+        },
+        {
+          "Name": "Laser (9)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (34)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (36)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (48)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (68)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (27)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (53)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (62)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (65)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (71)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (72)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (42)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (51)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (8)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (24)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (10)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (60)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (76)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (50)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (21)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (58)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (66)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (9)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (7)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (29)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (5)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (44)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (33)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (55)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (16)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (47)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (35)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (46)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (59)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (64)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (39)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (73)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (54)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (25)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (15)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (14)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (23)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (49)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (19)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (63)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (41)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (67)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (37)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (17)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (69)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (11)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (52)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (6)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (45)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (22)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (28)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (43)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (74)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (31)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (18)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (40)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (12)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (70)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (13)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (61)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (75)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (32)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (30)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (57)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (38)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (20)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLine (56)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (5)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (6)",
+          "Enabled": true
+        },
+        {
+          "Name": "BakedReflectionProbe",
+          "Enabled": true
+        },
+        {
+          "Name": "BSBakedLightingLightWithIds",
+          "Enabled": true
+        },
+        {
+          "Name": "FakeMirrorSettings",
+          "Enabled": true
+        },
+        {
+          "Name": "BakedReflectionProbeInstaller",
+          "Enabled": true
+        }
+      ]
+    },
+    {
+      "Name": "LinkinParkEnvironment",
+      "Enabled": true,
+      "Static": [
+        {
+          "Name": "TunnelRings",
+          "Enabled": true
+        },
+        {
+          "Name": "PlayersPlace",
+          "Enabled": true
+        },
+        {
+          "Name": "TrackMirror",
+          "Enabled": true
+        },
+        {
+          "Name": "TrackConstruction",
+          "Enabled": true
+        },
+        {
+          "Name": "LinkinParkSoldier",
+          "Enabled": true
+        },
+        {
+          "Name": "LinkinParkTextLogoR",
+          "Enabled": true
+        },
+        {
+          "Name": "LinkinParkTextLogoL",
+          "Enabled": true
+        },
+        {
+          "Name": "Tunnel",
+          "Enabled": true
+        },
+        {
+          "Name": "Tunnel (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "Tunnel (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "Tunnel (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "Tunnel (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "Tunnel (5)",
+          "Enabled": true
+        },
+        {
+          "Name": "Tunnel (6)",
+          "Enabled": true
+        },
+        {
+          "Name": "Tunnel (7)",
+          "Enabled": true
+        },
+        {
+          "Name": "Tunnel (8)",
+          "Enabled": true
+        },
+        {
+          "Name": "Tunnel (9)",
+          "Enabled": true
+        },
+        {
+          "Name": "Tunnel (10)",
+          "Enabled": true
+        }
+      ],
+      "Dynamic": [
+        {
+          "Name": "NarrowGameHUD",
+          "Enabled": true
+        },
+        {
+          "Name": "Spectrograms",
+          "Enabled": true
+        },
+        {
+          "Name": "DustPS",
+          "Enabled": true
+        },
+        {
+          "Name": "BigSmokePS",
+          "Enabled": true
+        }
+      ],
+      "Lights": [
+        {
+          "Name": "CoreLighting",
+          "Enabled": true
+        },
+        {
+          "Name": "LogoLight",
+          "Enabled": true
+        },
+        {
+          "Name": "Logo",
+          "Enabled": true
+        },
+        {
+          "Name": "LaserL",
+          "Enabled": true
+        },
+        {
+          "Name": "LaserL (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "LarerR",
+          "Enabled": true
+        },
+        {
+          "Name": "LarerR (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "LaserFloor (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "LaserFloor (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "LaserFloor (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "TunnelRotatingLasersPair",
+          "Enabled": true
+        },
+        {
+          "Name": "TunnelRotatingLasersPair (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "TunnelRotatingLasersPair (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "TunnelRotatingLasersPair (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "TunnelRotatingLasersPair (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "TunnelRotatingLasersPair (5)",
+          "Enabled": true
+        },
+        {
+          "Name": "TunnelRotatingLasersPair (6)",
+          "Enabled": true
+        },
+        {
+          "Name": "TunnelRotatingLasersPair (7)",
+          "Enabled": true
+        },
+        {
+          "Name": "TunnelRotatingLasersPair (8)",
+          "Enabled": true
+        },
+        {
+          "Name": "TunnelRotatingLasersPair (9)",
+          "Enabled": true
+        },
+        {
+          "Name": "TunnelRotatingLasersPair (10)",
+          "Enabled": true
+        },
+        {
+          "Name": "TunnelRotatingLasersPair (11)",
+          "Enabled": true
+        },
+        {
+          "Name": "TunnelRotatingLasersPair (12)",
+          "Enabled": true
+        },
+        {
+          "Name": "TunnelRotatingLasersPair (13)",
+          "Enabled": true
+        },
+        {
+          "Name": "TunnelRotatingLasersPair (14)",
+          "Enabled": true
+        },
+        {
+          "Name": "TunnelRotatingLasersPair (15)",
+          "Enabled": true
+        },
+        {
+          "Name": "TunnelRotatingLasersPair (16)",
+          "Enabled": true
+        },
+        {
+          "Name": "TunnelRotatingLasersPair (17)",
+          "Enabled": true
+        },
+        {
+          "Name": "LaserTop",
+          "Enabled": true
+        },
+        {
+          "Name": "LaserTop (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "LaserTop (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "LaserTop (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "LaserTop (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "LaserTop (5)",
+          "Enabled": true
+        },
+        {
+          "Name": "LaserTop (6)",
+          "Enabled": true
+        },
+        {
+          "Name": "LaserTop (7)",
+          "Enabled": true
+        }
+      ]
+    },
+    {
+      "Name": "LizzoEnvironment",
+      "Enabled": true,
+      "Static": [
+        {
+          "Name": "CloudsBackground",
+          "Enabled": true
+        },
+        {
+          "Name": "RunwayArch",
+          "Enabled": true
+        },
+        {
+          "Name": "BackgroundStructures",
+          "Enabled": true
+        },
+        {
+          "Name": "PlayersPlace",
+          "Enabled": true
+        },
+        {
+          "Name": "TrackMirror",
+          "Enabled": true
+        }
+      ],
+      "Dynamic": [],
+      "Lights": [
+        {
+          "Name": "LizzoHUDWrapper",
+          "Enabled": true
+        },
+        {
+          "Name": "BigSmokePS",
+          "Enabled": true
+        },
+        {
+          "Name": "DustPS",
+          "Enabled": true
+        },
+        {
+          "Name": "BalloonParticles",
+          "Enabled": true
+        },
+        {
+          "Name": "DanceFloor",
+          "Enabled": true
+        },
+        {
+          "Name": "SidewayLasersLeft",
+          "Enabled": true
+        },
+        {
+          "Name": "SidewayLasersRight",
+          "Enabled": true
+        },
+        {
+          "Name": "DanceFloorMirrored",
+          "Enabled": true
+        },
+        {
+          "Name": "RunwayLasers",
+          "Enabled": true
+        },
+        {
+          "Name": "Rainbow",
+          "Enabled": true
+        },
+        {
+          "Name": "SpotlightStructure",
+          "Enabled": true
+        },
+        {
+          "Name": "CloudLights",
+          "Enabled": true
+        },
+        {
+          "Name": "LetterStands",
+          "Enabled": true
+        },
+        {
+          "Name": "BehindRainbowSpotlights",
+          "Enabled": true
+        },
+        {
+          "Name": "StandLasersLeft",
+          "Enabled": true
+        },
+        {
+          "Name": "StandLasersRight",
+          "Enabled": true
+        },
+        {
+          "Name": "Static Batch Component Container",
+          "Enabled": true
+        }
+      ]
+    },
+    {
+      "Name": "MonstercatEnvironment",
+      "Enabled": true,
+      "Static": [
+        {
+          "Name": "NearBuildingRight",
+          "Enabled": true
+        },
+        {
+          "Name": "NearBuildingLeft",
+          "Enabled": true
+        },
+        {
+          "Name": "PlayersPlace",
+          "Enabled": true
+        },
+        {
+          "Name": "TrackMirror",
+          "Enabled": true
+        },
+        {
+          "Name": "VConstruction",
+          "Enabled": true
+        },
+        {
+          "Name": "FarBuildings",
+          "Enabled": true
+        },
+        {
+          "Name": "SpectrogramEnd",
+          "Enabled": true
+        },
+        {
+          "Name": "Construction",
+          "Enabled": true
+        }
+      ],
+      "Dynamic": [
+        {
+          "Name": "BasicGameHUD",
+          "Enabled": true
+        },
+        {
+          "Name": "MonstercatLogoL",
+          "Enabled": true
+        },
+        {
+          "Name": "MonstercatLogoR",
+          "Enabled": true
+        },
+        {
+          "Name": "Spectrograms",
+          "Enabled": true
+        },
+        {
+          "Name": "SmallTrackLaneRings",
+          "Enabled": true
+        },
+        {
+          "Name": "BigSmokePS",
+          "Enabled": true
+        },
+        {
+          "Name": "DustPS",
+          "Enabled": true
+        }
+      ],
+      "Lights": [
+        {
+          "Name": "CoreLighting",
+          "Enabled": true
+        },
+        {
+          "Name": "LightWithIdManager",
+          "Enabled": true
+        },
+        {
+          "Name": "LightEffects",
+          "Enabled": true
+        },
+        {
+          "Name": "FrontLights",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowTopLine (5)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowTopLine (6)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowTopLine (7)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowTopLine (8)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowTopLine (9)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowTopLine (10)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowTopLine (11)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineR",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineR (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "Laser (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "Laser (5)",
+          "Enabled": true
+        },
+        {
+          "Name": "Laser (7)",
+          "Enabled": true
+        },
+        {
+          "Name": "Laser (8)",
+          "Enabled": true
+        },
+        {
+          "Name": "Laser (9)",
+          "Enabled": true
+        },
+        {
+          "Name": "Laser (10)",
+          "Enabled": true
+        },
+        {
+          "Name": "Laser (11)",
+          "Enabled": true
+        },
+        {
+          "Name": "Laser (12)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "GradientBackground",
+          "Enabled": true
+        },
+        {
+          "Name": "BakedReflectionProbe",
+          "Enabled": true
+        },
+        {
+          "Name": "BSBakedLightingLightWithIds",
+          "Enabled": true
+        },
+        {
+          "Name": "FakeMirrorSettings",
+          "Enabled": true
+        },
+        {
+          "Name": "BakedReflectionProbeInstaller",
+          "Enabled": true
+        }
+      ]
+    },
+    {
+      "Name": "NiceEnvironment",
+      "Enabled": true,
+      "Static": [
+        {
+          "Name": "Floor",
+          "Enabled": true
+        },
+        {
+          "Name": "BackColumns",
+          "Enabled": true
+        },
+        {
+          "Name": "PlayersPlace",
+          "Enabled": true
+        },
+        {
+          "Name": "NearBuildingRight (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "NearBuildingLeft (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "NearBuildingLeft (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "NearBuildingRight (2)",
+          "Enabled": true
+        }
+      ],
+      "Dynamic": [
+        {
+          "Name": "SmallTrackLaneRings",
+          "Enabled": true
+        },
+        {
+          "Name": "BigTrackLaneRings",
+          "Enabled": true
+        },
+        {
+          "Name": "BigSmokePS",
+          "Enabled": true
+        },
+        {
+          "Name": "BasicGameHUD",
+          "Enabled": true
+        },
+        {
+          "Name": "Spectrograms",
+          "Enabled": true
+        },
+        {
+          "Name": "DustPS",
+          "Enabled": true
+        }
+      ],
+      "Lights": [
+        {
+          "Name": "LightWithIdManager",
+          "Enabled": true
+        },
+        {
+          "Name": "CoreLighting",
+          "Enabled": true
+        },
+        {
+          "Name": "LightEffects",
+          "Enabled": true
+        },
+        {
+          "Name": "FrontLights",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineR",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineFarL",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineFarR",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLaserLeft",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLaserRight",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLaserLeft (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLaserRight (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLaserLeft (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLaserRight (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLaserLeft (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLaserRight (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "DoubleColorLaser",
+          "Enabled": true
+        },
+        {
+          "Name": "DoubleColorLaser (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "DoubleColorLaser (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "DoubleColorLaser (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "DoubleColorLaser (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "DoubleColorLaser (5)",
+          "Enabled": true
+        },
+        {
+          "Name": "DoubleColorLaser (6)",
+          "Enabled": true
+        },
+        {
+          "Name": "DoubleColorLaser (7)",
+          "Enabled": true
+        },
+        {
+          "Name": "GradientBackground",
+          "Enabled": true
+        }
+      ]
+    },
+    {
+      "Name": "OriginsEnvironment",
+      "Enabled": true,
+      "Static": [
+        {
+          "Name": "Construction",
+          "Enabled": true
+        },
+        {
+          "Name": "TrackConstruction",
+          "Enabled": true
+        },
+        {
+          "Name": "PlayersPlace",
+          "Enabled": true
+        },
+        {
+          "Name": "TrackMirror",
+          "Enabled": true
+        }
+      ],
+      "Dynamic": [
+        {
+          "Name": "NarrowGameHUD",
+          "Enabled": true
+        },
+        {
+          "Name": "BigSmokePS",
+          "Enabled": true
+        },
+        {
+          "Name": "Spectrograms",
+          "Enabled": true
+        },
+        {
+          "Name": "DustPS",
+          "Enabled": true
+        }
+      ],
+      "Lights": [
+        {
+          "Name": "BigLightsTrackLaneRings",
+          "Enabled": true
+        },
+        {
+          "Name": "SidePSR",
+          "Enabled": true
+        },
+        {
+          "Name": "SidePSL",
+          "Enabled": true
+        },
+        {
+          "Name": "LightWithIdManager",
+          "Enabled": true
+        },
+        {
+          "Name": "CoreLighting",
+          "Enabled": true
+        },
+        {
+          "Name": "LightEffects",
+          "Enabled": true
+        },
+        {
+          "Name": "FrontLights",
+          "Enabled": true
+        },
+        {
+          "Name": "LightAreaL",
+          "Enabled": true
+        },
+        {
+          "Name": "LightAreaR",
+          "Enabled": true
+        },
+        {
+          "Name": "GradientBackground",
+          "Enabled": true
+        },
+        {
+          "Name": "NeonTube",
+          "Enabled": true
+        },
+        {
+          "Name": "NeonTube (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "Laser",
+          "Enabled": true
+        },
+        {
+          "Name": "Laser (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "Laser (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "Laser (3)",
+          "Enabled": true
+        }
+      ]
+    },
+    {
+      "Name": "PanicEnvironment",
+      "Enabled": true,
+      "Static": [
+        {
+          "Name": "BackColumns",
+          "Enabled": true
+        },
+        {
+          "Name": "PlayersPlace",
+          "Enabled": true
+        },
+        {
+          "Name": "Window",
+          "Enabled": true
+        },
+        {
+          "Name": "BottomCones",
+          "Enabled": true
+        },
+        {
+          "Name": "TopCones",
+          "Enabled": true
+        },
+        {
+          "Name": "TrackMirror",
+          "Enabled": true
+        },
+        {
+          "Name": "TrackConstruction",
+          "Enabled": true
+        }
+      ],
+      "Dynamic": [
+        {
+          "Name": "BasicGameHUD",
+          "Enabled": true
+        },
+        {
+          "Name": "Spectrograms",
+          "Enabled": true
+        },
+        {
+          "Name": "BigSmokePS",
+          "Enabled": true
+        },
+        {
+          "Name": "Panels4TrackLaneRings",
+          "Enabled": true
+        },
+        {
+          "Name": "DustPS",
+          "Enabled": true
+        }
+      ],
+      "Lights": [
+        {
+          "Name": "CoreLighting",
+          "Enabled": true
+        },
+        {
+          "Name": "ConstructionGlowLine (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "ConstructionGlowLine (5)",
+          "Enabled": true
+        },
+        {
+          "Name": "ConstructionGlowLine (6)",
+          "Enabled": true
+        },
+        {
+          "Name": "ConstructionGlowLine (7)",
+          "Enabled": true
+        },
+        {
+          "Name": "ConstructionGlowLine (8)",
+          "Enabled": true
+        },
+        {
+          "Name": "ConstructionGlowLine (15)",
+          "Enabled": true
+        },
+        {
+          "Name": "LightWithIdManager",
+          "Enabled": true
+        },
+        {
+          "Name": "LightEffects",
+          "Enabled": true
+        },
+        {
+          "Name": "Light (5)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (5)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (6)",
+          "Enabled": true
+        },
+        {
+          "Name": "NeonTube",
+          "Enabled": true
+        },
+        {
+          "Name": "NeonTube (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "GradientBackground",
+          "Enabled": true
+        },
+        {
+          "Name": "BakedReflectionProbe",
+          "Enabled": true
+        },
+        {
+          "Name": "BSBakedLightingLightWithIds",
+          "Enabled": true
+        },
+        {
+          "Name": "FakeMirrorSettings",
+          "Enabled": true
+        },
+        {
+          "Name": "BakedReflectionProbeInstaller",
+          "Enabled": true
+        }
+      ]
+    },
+    {
+      "Name": "PyroEnvironment",
+      "Enabled": true,
+      "Static": [
+        {
+          "Name": "Runway",
+          "Enabled": true
+        },
+        {
+          "Name": "StarSkyPS",
+          "Enabled": true
+        },
+        {
+          "Name": "StageRing",
+          "Enabled": true
+        },
+        {
+          "Name": "FrontScaffolding",
+          "Enabled": true
+        },
+        {
+          "Name": "ScreenSetupRight",
+          "Enabled": true
+        },
+        {
+          "Name": "ScreenSetupLeft",
+          "Enabled": true
+        },
+        {
+          "Name": "LightBoxesScaffoldingLeft",
+          "Enabled": true
+        },
+        {
+          "Name": "LightBoxesScaffoldingRight",
+          "Enabled": true
+        },
+        {
+          "Name": "PlayersPlace",
+          "Enabled": true
+        },
+        {
+          "Name": "Stairs",
+          "Enabled": true
+        },
+        {
+          "Name": "Behind",
+          "Enabled": true
+        }
+      ],
+      "Dynamic": [
+        {
+          "Name": "MainStageSetup",
+          "Enabled": true
+        },
+        {
+          "Name": "Fire",
+          "Enabled": true
+        },
+        {
+          "Name": "PlayerSetup",
+          "Enabled": true
+        },
+        {
+          "Name": "SmokeLeft",
+          "Enabled": true
+        },
+        {
+          "Name": "ProjectorArray",
+          "Enabled": true
+        },
+        {
+          "Name": "PyroLogo",
+          "Enabled": true
+        },
+        {
+          "Name": "CrowdFlipbookGroup",
+          "Enabled": true
+        },
+        {
+          "Name": "Video",
+          "Enabled": true
+        }
+      ],
+      "Lights": [
+        {
+          "Name": "DirectionalLights",
+          "Enabled": true
+        },
+        {
+          "Name": "CoreLighting",
+          "Enabled": true
+        },
+        {
+          "Name": "LightWithIdManager",
+          "Enabled": true
+        },
+        {
+          "Name": "LightEffects",
+          "Enabled": true
+        },
+        {
+          "Name": "LightColorGroupEffectManager",
+          "Enabled": true
+        },
+        {
+          "Name": "LightRotationGroupEffectManager",
+          "Enabled": true
+        },
+        {
+          "Name": "MainLasers",
+          "Enabled": true
+        },
+        {
+          "Name": "EnvironmentStartEndSongAudioEffect",
+          "Enabled": true
+        }
+      ]
+    },
+    {
+      "Name": "RocketEnvironment",
+      "Enabled": true,
+      "Static": [
+        {
+          "Name": "Mirror",
+          "Enabled": true
+        },
+        {
+          "Name": "RocketArena",
+          "Enabled": true
+        },
+        {
+          "Name": "Construction",
+          "Enabled": true
+        },
+        {
+          "Name": "PlayersPlace",
+          "Enabled": true
+        },
+        {
+          "Name": "RocketCarL",
+          "Enabled": true
+        },
+        {
+          "Name": "RocketCarR",
+          "Enabled": true
+        }
+      ],
+      "Dynamic": [
+        {
+          "Name": "DustPS",
+          "Enabled": true
+        }
+      ],
+      "Lights": [
+        {
+          "Name": "NarrowGameHUD",
+          "Enabled": true
+        },
+        {
+          "Name": "RocketArenaLight",
+          "Enabled": true
+        },
+        {
+          "Name": "BigSmokePS",
+          "Enabled": true
+        },
+        {
+          "Name": "RocketGateLight",
+          "Enabled": true
+        },
+        {
+          "Name": "LightWithIdManager",
+          "Enabled": true
+        },
+        {
+          "Name": "DirectionalLightManager",
+          "Enabled": true
+        },
+        {
+          "Name": "CoreLighting",
+          "Enabled": true
+        },
+        {
+          "Name": "LightEffects",
+          "Enabled": true
+        },
+        {
+          "Name": "GateLight0",
+          "Enabled": true
+        },
+        {
+          "Name": "GateLight1",
+          "Enabled": true
+        },
+        {
+          "Name": "FrontLights",
+          "Enabled": true
+        },
+        {
+          "Name": "GateLight1 (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "EnvLight0",
+          "Enabled": true
+        },
+        {
+          "Name": "EnvLight0 (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "EnvLight0 (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "EnvLight0 (6)",
+          "Enabled": true
+        },
+        {
+          "Name": "EnvLight0 (7)",
+          "Enabled": true
+        },
+        {
+          "Name": "EnvLight0 (8)",
+          "Enabled": true
+        },
+        {
+          "Name": "EnvLight0 (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "EnvLight0 (5)",
+          "Enabled": true
+        },
+        {
+          "Name": "EnvLight0 (9)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineR (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (5)",
+          "Enabled": true
+        },
+        {
+          "Name": "BackColumns",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (6)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (7)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (8)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL (9)",
+          "Enabled": true
+        },
+        {
+          "Name": "GradientBackground",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (13)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (12)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (7)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (8)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (9)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (10)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (11)",
+          "Enabled": true
+        },
+        {
+          "Name": "BakedReflectionProbe",
+          "Enabled": true
+        },
+        {
+          "Name": "BSBakedLightingLightWithIds",
+          "Enabled": true
+        },
+        {
+          "Name": "FakeMirrorSettings",
+          "Enabled": true
+        },
+        {
+          "Name": "BakedReflectionProbeInstaller",
+          "Enabled": true
+        }
+      ]
+    },
+    {
+      "Name": "RockMixtapeEnvironment",
+      "Enabled": true,
+      "Static": [
+        {
+          "Name": "Runway",
+          "Enabled": true
+        },
+        {
+          "Name": "PlayersPlace",
+          "Enabled": true
+        }
+      ],
+      "Dynamic": [
+        {
+          "Name": "DirectionalLights",
+          "Enabled": true
+        },
+        {
+          "Name": "Aurora",
+          "Enabled": true
+        }
+      ],
+      "Lights": [
+        {
+          "Name": "LasersBack",
+          "Enabled": true
+        },
+        {
+          "Name": "Tunnel",
+          "Enabled": true
+        },
+        {
+          "Name": "Mountains",
+          "Enabled": true
+        },
+        {
+          "Name": "Eyes",
+          "Enabled": true
+        },
+        {
+          "Name": "Horns",
+          "Enabled": true
+        },
+        {
+          "Name": "GuitarStrings",
+          "Enabled": true
+        },
+        {
+          "Name": "GuitarBridge",
+          "Enabled": true
+        },
+        {
+          "Name": "RunwayFront",
+          "Enabled": true
+        },
+        {
+          "Name": "Spikes",
+          "Enabled": true
+        },
+        {
+          "Name": "SideLasers",
+          "Enabled": true
+        },
+        {
+          "Name": "VideoScreens",
+          "Enabled": true
+        },
+        {
+          "Name": "BGBloom",
+          "Enabled": true
+        },
+        {
+          "Name": "Static Batch Component Container",
+          "Enabled": true
+        }
+      ]
+    },
+    {
+      "Name": "SkrillexEnvironment",
+      "Enabled": true,
+      "Static": [
+        {
+          "Name": "PlayersPlace",
+          "Enabled": true
+        }
+      ],
+      "Dynamic": [
+        {
+          "Name": "LightEffects",
+          "Enabled": true
+        },
+        {
+          "Name": "BasicGameHUD",
+          "Enabled": true
+        },
+        {
+          "Name": "DustPS",
+          "Enabled": true
+        },
+        {
+          "Name": "BigSmokePS",
+          "Enabled": true
+        }
+      ],
+      "Lights": [
+        {
+          "Name": "CoreLighting",
+          "Enabled": true
+        },
+        {
+          "Name": "LightWithIdManager",
+          "Enabled": true
+        },
+        {
+          "Name": "GradientBackground",
+          "Enabled": true
+        },
+        {
+          "Name": "SideMoveLasers",
+          "Enabled": true
+        },
+        {
+          "Name": "TrackLaneRings1",
+          "Enabled": true
+        },
+        {
+          "Name": "TrackLaneRings2",
+          "Enabled": true
+        },
+        {
+          "Name": "LeftLaser",
+          "Enabled": true
+        },
+        {
+          "Name": "RightLaser",
+          "Enabled": true
+        },
+        {
+          "Name": "TrackBL",
+          "Enabled": true
+        },
+        {
+          "Name": "TrackBR",
+          "Enabled": true
+        },
+        {
+          "Name": "TrackTR",
+          "Enabled": true
+        },
+        {
+          "Name": "TrackTL",
+          "Enabled": true
+        },
+        {
+          "Name": "SkrillexLogo",
+          "Enabled": true
+        },
+        {
+          "Name": "SkrillexLogo (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "LogoL",
+          "Enabled": true
+        },
+        {
+          "Name": "LogoR",
+          "Enabled": true
+        },
+        {
+          "Name": "NeonSide",
+          "Enabled": true
+        },
+        {
+          "Name": "NeonSide (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "NeonSide (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "NeonSide (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "NeonSide (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "NeonSide (5)",
+          "Enabled": true
+        },
+        {
+          "Name": "NeonSide (6)",
+          "Enabled": true
+        },
+        {
+          "Name": "NeonSide (7)",
+          "Enabled": true
+        },
+        {
+          "Name": "NeonSide (8)",
+          "Enabled": true
+        },
+        {
+          "Name": "NeonSide (9)",
+          "Enabled": true
+        },
+        {
+          "Name": "NeonSide (10)",
+          "Enabled": true
+        },
+        {
+          "Name": "NeonSide (11)",
+          "Enabled": true
+        },
+        {
+          "Name": "NeonSide (12)",
+          "Enabled": true
+        },
+        {
+          "Name": "NeonSide (13)",
+          "Enabled": true
+        },
+        {
+          "Name": "NeonSide (14)",
+          "Enabled": true
+        },
+        {
+          "Name": "NeonSide (15)",
+          "Enabled": true
+        },
+        {
+          "Name": "NeonSide (16)",
+          "Enabled": true
+        },
+        {
+          "Name": "NeonSide (17)",
+          "Enabled": true
+        }
+      ]
+    },
+    {
+      "Name": "TheSecondEnvironment",
+      "Enabled": true,
+      "Static": [
+        {
+          "Name": "PlayersPlace",
+          "Enabled": true
+        },
+        {
+          "Name": "TrackMirror",
+          "Enabled": true
+        },
+        {
+          "Name": "TrackConstruction",
+          "Enabled": true
+        },
+        {
+          "Name": "Buildings",
+          "Enabled": true
+        }
+      ],
+      "Dynamic": [
+        {
+          "Name": "BackColumns",
+          "Enabled": true
+        },
+        {
+          "Name": "BasicGameHUD",
+          "Enabled": true
+        },
+        {
+          "Name": "BigSmokePS",
+          "Enabled": true
+        },
+        {
+          "Name": "SmallTrackLaneRingsGroup",
+          "Enabled": true
+        },
+        {
+          "Name": "BigTrackLaneRingsGroup",
+          "Enabled": true
+        },
+        {
+          "Name": "DustPS",
+          "Enabled": true
+        },
+        {
+          "Name": "SpectrogramsTheSecond",
+          "Enabled": true
+        }
+      ],
+      "Lights": [
+        {
+          "Name": "RunwayLasers",
+          "Enabled": true
+        },
+        {
+          "Name": "Main Lasers Top",
+          "Enabled": true
+        },
+        {
+          "Name": "Main Lasers Bottom",
+          "Enabled": true
+        },
+        {
+          "Name": "FrontLogo",
+          "Enabled": true
+        },
+        {
+          "Name": "SpotlightGroupLeft",
+          "Enabled": true
+        },
+        {
+          "Name": "SpotlightGroupRight",
+          "Enabled": true
+        }
+      ]
+    },
+    {
+      "Name": "TheWeekndEnvironment",
+      "Enabled": true,
+      "Static": [
+        {
+          "Name": "PlayersPlace",
+          "Enabled": true
+        },
+        {
+          "Name": "TrackMirror",
+          "Enabled": true
+        }
+      ],
+      "Dynamic": [
+        {
+          "Name": "BasicGameHUD",
+          "Enabled": true
+        },
+        {
+          "Name": "BigSmokePS",
+          "Enabled": true
+        },
+        {
+          "Name": "DustPS",
+          "Enabled": true
+        }
+      ],
+      "Lights": [
+        {
+          "Name": "RunwayLasers",
+          "Enabled": true
+        },
+        {
+          "Name": "MiddleLaneLasersGroup",
+          "Enabled": true
+        },
+        {
+          "Name": "CenterpieceRing",
+          "Enabled": true
+        },
+        {
+          "Name": "ArrowsGroup",
+          "Enabled": true
+        },
+        {
+          "Name": "LampsGroupLeft",
+          "Enabled": true
+        },
+        {
+          "Name": "LampsGroupRight",
+          "Enabled": true
+        },
+        {
+          "Name": "SideLasersGroupLeft",
+          "Enabled": true
+        },
+        {
+          "Name": "SideLasersGroupRight",
+          "Enabled": true
+        },
+        {
+          "Name": "BuildingsLeft",
+          "Enabled": true
+        },
+        {
+          "Name": "BuildingsRight",
+          "Enabled": true
+        },
+        {
+          "Name": "BackgroundBuildings",
+          "Enabled": true
+        },
+        {
+          "Name": "PeripheralBuildings",
+          "Enabled": true
+        }
+      ]
+    },
+    {
+      "Name": "TimbalandEnvironment",
+      "Enabled": true,
+      "Static": [
+        {
+          "Name": "MainStructure",
+          "Enabled": true
+        },
+        {
+          "Name": "TopStructure",
+          "Enabled": true
+        },
+        {
+          "Name": "Buildings",
+          "Enabled": true
+        },
+        {
+          "Name": "TrackMirror",
+          "Enabled": true
+        },
+        {
+          "Name": "TrackConstruction",
+          "Enabled": true
+        }
+      ],
+      "Dynamic": [
+        {
+          "Name": "Spectrograms",
+          "Enabled": true
+        },
+        {
+          "Name": "BasicGameHUD",
+          "Enabled": true
+        },
+        {
+          "Name": "PlayersPlace",
+          "Enabled": true
+        },
+        {
+          "Name": "DustPS",
+          "Enabled": true
+        }
+      ],
+      "Lights": [
+        {
+          "Name": "PairLaserTrackLaneRings",
+          "Enabled": true
+        },
+        {
+          "Name": "BigSmokePS",
+          "Enabled": true
+        },
+        {
+          "Name": "CoreLighting",
+          "Enabled": true
+        },
+        {
+          "Name": "TimbalandLogo",
+          "Enabled": true
+        },
+        {
+          "Name": "LightEffects",
+          "Enabled": true
+        },
+        {
+          "Name": "LightWithIdManager",
+          "Enabled": true
+        },
+        {
+          "Name": "TimbalandLogo (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "TimbalandLogo (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "TimbalandLogo (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineL",
+          "Enabled": true
+        },
+        {
+          "Name": "GlowLineR",
+          "Enabled": true
+        },
+        {
+          "Name": "Light (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "Light (6)",
+          "Enabled": true
+        },
+        {
+          "Name": "Light (5)",
+          "Enabled": true
+        },
+        {
+          "Name": "BackColumns",
+          "Enabled": true
+        },
+        {
+          "Name": "Light (7)",
+          "Enabled": true
+        },
+        {
+          "Name": "GradientBackground",
+          "Enabled": true
+        },
+        {
+          "Name": "BakedReflectionProbe",
+          "Enabled": true
+        },
+        {
+          "Name": "BSBakedLightingLightWithIds",
+          "Enabled": true
+        },
+        {
+          "Name": "FakeMirrorSettings",
+          "Enabled": true
+        },
+        {
+          "Name": "BakedReflectionProbeInstaller",
+          "Enabled": true
+        }
+      ]
+    },
+    {
+      "Name": "TriangleEnvironment",
+      "Enabled": true,
+      "Static": [
+        {
+          "Name": "FloorConstruction",
+          "Enabled": true
+        },
+        {
+          "Name": "TrackMirror",
+          "Enabled": true
+        },
+        {
+          "Name": "BackColumns",
+          "Enabled": true
+        }
+      ],
+      "Dynamic": [
+        {
+          "Name": "BasicGameHUD",
+          "Enabled": true
+        },
+        {
+          "Name": "PlayersPlace",
+          "Enabled": true
+        },
+        {
+          "Name": "TriangleTrackLaneRings",
+          "Enabled": true
+        },
+        {
+          "Name": "BigTrackLaneRings",
+          "Enabled": true
+        },
+        {
+          "Name": "Spectrograms",
+          "Enabled": true
+        },
+        {
+          "Name": "BigSmokePS",
+          "Enabled": true
+        },
+        {
+          "Name": "DustPS",
+          "Enabled": true
+        }
+      ],
+      "Lights": [
+        {
+          "Name": "LightEffects",
+          "Enabled": true
+        },
+        {
+          "Name": "LightWithIdManager",
+          "Enabled": true
+        },
+        {
+          "Name": "CoreLighting",
+          "Enabled": true
+        },
+        {
+          "Name": "FrontLights",
+          "Enabled": true
+        },
+        {
+          "Name": "NeonTubeDirectionalL",
+          "Enabled": true
+        },
+        {
+          "Name": "NeonTubeDirectionalR",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (5)",
+          "Enabled": true
+        },
+        {
+          "Name": "RotatingLasersPair (6)",
+          "Enabled": true
+        },
+        {
+          "Name": "DoubleColorLaser",
+          "Enabled": true
+        },
+        {
+          "Name": "DoubleColorLaser (1)",
+          "Enabled": true
+        },
+        {
+          "Name": "DoubleColorLaser (2)",
+          "Enabled": true
+        },
+        {
+          "Name": "DoubleColorLaser (3)",
+          "Enabled": true
+        },
+        {
+          "Name": "DoubleColorLaser (4)",
+          "Enabled": true
+        },
+        {
+          "Name": "DoubleColorLaser (5)",
+          "Enabled": true
+        },
+        {
+          "Name": "DoubleColorLaser (6)",
+          "Enabled": true
+        },
+        {
+          "Name": "DoubleColorLaser (7)",
+          "Enabled": true
+        },
+        {
+          "Name": "DoubleColorLaser (8)",
+          "Enabled": true
+        },
+        {
+          "Name": "DoubleColorLaser (9)",
+          "Enabled": true
+        },
+        {
+          "Name": "GradientBackground",
+          "Enabled": true
+        },
+        {
+          "Name": "NearBuildingLeft",
+          "Enabled": true
+        },
+        {
+          "Name": "NearBuildingRight",
+          "Enabled": true
+        },
+        {
+          "Name": "BakedReflectionProbe",
+          "Enabled": true
+        },
+        {
+          "Name": "BSBakedLightingLightWithIds",
+          "Enabled": true
+        },
+        {
+          "Name": "FakeMirrorSettings",
+          "Enabled": true
+        },
+        {
+          "Name": "BakedReflectionProbeInstaller",
+          "Enabled": true
+        }
+      ]
+    },
+    {
+      "Name": "WeaveEnvironment",
+      "Enabled": true,
+      "Static": [
+        {
+          "Name": "PlayersPlace",
+          "Enabled": true
+        }
+      ],
+      "Dynamic": [
+        {
+          "Name": "NarrowGameHUD",
+          "Enabled": true
+        }
+      ],
+      "Lights": [
+        {
+          "Name": "CoreLighting",
+          "Enabled": true
+        },
+        {
+          "Name": "LightEffects",
+          "Enabled": true
+        },
+        {
+          "Name": "LightColorGroupEffectManager",
+          "Enabled": true
+        },
+        {
+          "Name": "LightRotationGroupEffectManager",
+          "Enabled": true
+        },
+        {
+          "Name": "LightWithIdManager",
+          "Enabled": true
+        },
+        {
+          "Name": "LightGroup0",
+          "Enabled": true
+        },
+        {
+          "Name": "LightGroup1",
+          "Enabled": true
+        },
+        {
+          "Name": "LightGroup2",
+          "Enabled": true
+        },
+        {
+          "Name": "LightGroup3",
+          "Enabled": true
+        },
+        {
+          "Name": "LightGroup4",
+          "Enabled": true
+        },
+        {
+          "Name": "LightGroup5",
+          "Enabled": true
+        },
+        {
+          "Name": "LightGroup6",
+          "Enabled": true
+        },
+        {
+          "Name": "LightGroup7",
+          "Enabled": true
+        },
+        {
+          "Name": "LightGroup8",
+          "Enabled": true
+        },
+        {
+          "Name": "LightGroup9",
+          "Enabled": true
+        },
+        {
+          "Name": "LightGroup10",
+          "Enabled": true
+        },
+        {
+          "Name": "LightGroup11",
+          "Enabled": true
+        },
+        {
+          "Name": "LightGroup12",
+          "Enabled": true
+        },
+        {
+          "Name": "LightGroup13",
+          "Enabled": true
+        },
+        {
+          "Name": "LightGroup14",
+          "Enabled": true
+        },
+        {
+          "Name": "LightGroup15",
+          "Enabled": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "Enabled": true,
-  "SelectedPresetId": "ad7decb0-d9a9-41f1-9221-86beac73947f",
+  "SelectedPresetId": "7b617efd-396d-4454-b019-75250da33bf4",
   "ExtraColorPresets": null,
   "ExtraColorPresetsV2": [
     {
@@ -99,9 +99,9 @@
       "colorSchemeId": "9c65ae83-4455-4f5e-96e9-b92faa433104",
       "name": "Artisan",
       "saberAColor": {
-        "red": 211,
-        "green": 218,
-        "blue": 236,
+        "red": 198,
+        "green": 204,
+        "blue": 220,
         "alpha": 1.0
       },
       "saberBColor": {

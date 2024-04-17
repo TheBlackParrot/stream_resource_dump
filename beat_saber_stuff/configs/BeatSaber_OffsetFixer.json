@@ -1,0 +1,12 @@
+{
+  "Enabled": true,
+  "ReactionTime": 600.0,
+  "NJSMultiplier": false,
+  "NJS": 20.0,
+  "Snap": true,
+  "Precision": 4.0,
+  "Overwrite": true,
+  "SS": 0.85,
+  "FS": 1.2,
+  "SF": 1.5
+}

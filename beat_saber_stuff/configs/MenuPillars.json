@@ -1,0 +1,15 @@
+{
+  "EnableLights": true,
+  "PillarLightsColor": {
+    "r": 0.3745098,
+    "g": 0.3343084,
+    "b": 0.4708658,
+    "a": 1.0
+  },
+  "LightsBrightness": 200.0,
+  "BrightnessCapRaised": true,
+  "UseCoverColor": true,
+  "VisualizeAudio": false,
+  "RainbowLights": false,
+  "RainbowLoopSpeed": 5.0
+}

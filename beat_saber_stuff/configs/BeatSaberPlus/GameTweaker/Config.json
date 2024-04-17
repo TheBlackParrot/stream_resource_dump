@@ -1,6 +1,6 @@
 ﻿{
   "Enabled": true,
-  "RemoveDebris": true,
+  "RemoveDebris": false,
   "RemoveAllCutParticles": true,
   "RemoveObstacleParticles": false,
   "RemoveSaberBurnMarks": true,

@@ -11,10 +11,10 @@
     "Sabers": true
   },
   "type": "FirstPerson",
-  "FOV": 75.0,
+  "FOV": 77.0,
   "layer": 2,
   "antiAliasing": 1,
-  "renderScale": 1.5,
+  "renderScale": 2.0,
   "orthographic": false,
   "farZ": 5000.0,
   "nearZ": 0.001,
@@ -29,8 +29,8 @@
     "followSpectatorPlattform": true
   },
   "Smoothfollow": {
-    "position": 30.0,
-    "rotation": 3.75,
+    "position": 22.5,
+    "rotation": 3.5,
     "followReplayPosition": true,
     "limits": {
       "pos_x": "-Infinity:Infinity",
@@ -38,7 +38,7 @@
       "pos_z": "-Infinity:Infinity",
       "rot_x": "-Infinity:Infinity",
       "rot_y": "-Infinity:Infinity",
-      "rot_z": "-6:6"
+      "rot_z": "-5:5"
     },
     "pivotingOffset": true
   },
@@ -56,11 +56,11 @@
   "targetPos": {
     "x": 0.0,
     "y": -0.175,
-    "z": -0.45
+    "z": -0.43
   },
   "targetRot": {
-    "x": -1.0,
+    "x": 0.0,
     "y": 0.0,
-    "z": -2.5
+    "z": -2.25
   }
 }
