@@ -50,10 +50,7 @@ body {
 	margin-bottom: var(--chatBlockSpacing);
 	margin-top: 0px;	
 }
-/*.badges, .pronouns, .message, .pfp, .flags, .displayName, .internationalName, .extraInfo {
-	filter: var(--effectFilters);
-}*/
-.userInfo, .message, .extraInfo {
+.badges, .pronouns, .message, .pfp, .flags, .displayName, .internationalName, .extraInfo {
 	filter: var(--effectFilters);
 }
 
@@ -94,6 +91,8 @@ body {
 .userInfo div {
 	margin-right: var(--messageUserInfoElementSpacing);
 	display: flex;
+	align-self: stretch;
+	align-items: center;
 }
 .userInfo div:last-child {
 	margin-right: 0px;
@@ -293,6 +292,7 @@ tt, code, pre {
 	font-size: var(--messageFontSize);
 	font-weight: 600;
 	flex-wrap: nowrap !important;
+	align-items: center;
 }
 
 .bsrArt, .bsrArt img, .bsrCode {
@@ -778,4 +778,30 @@ img.emoji {
 	position: fixed;
 	top: -100vh;
 	left: -100vw;
+}
+
+.spinner {
+	width: 0.7em;
+	height: 0.7em;
+	border-radius: 100%;
+	border: 0.225em solid #ffffff60;
+	border-bottom: 0.225em solid #fff;
+	animation-name: speen;
+	animation-iteration-count: infinite;
+	animation-duration: 1s;
+	animation-fill-mode: both;
+	animation-timing-function: linear;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.cheerWrap {
+	margin-right: 0.25em;
+}
+.cheerAmount {
+	margin-left: 0.15em;
+	background-color: var(--messageColor);
+	-webkit-text-stroke: var(--messageBoldAmount) transparent;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;	
 }

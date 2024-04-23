@@ -159,8 +159,8 @@ function set7TVPaint(nameBlock, paintID, userID, force) {
 	}
 
 	nameBlock.children().css("background-image", css).css("background-size", "contain");
-	nameBlock.children(".displayName").css("filter", `var(--nameEffects${userID})${shadows}`);
-	nameBlock.children(".internationalName").css("filter", `var(--nameEffects${userID})${shadows} saturate(var(--internationalNameSaturation))`);
+	nameBlock.children(".displayName").css("filter", `var(--effectFilters) ${shadows}`);
+	nameBlock.children(".internationalName").css("filter", `var(--effectFilters) ${shadows} saturate(var(--internationalNameSaturation))`);
 }
 
 function linearInterpolate(a, b, val) {
@@ -267,6 +267,10 @@ function randomInt(min, max) {
 	return Math.round(randomFloat(min, max));
 }
 
+var manualBotOverrides = {
+	add: [],
+	remove: []
+};
 var knownBots = [];
 async function getKnownBotsList() {
 	console.log("getting known bots list...");
@@ -317,8 +321,19 @@ async function getKnownBotsList() {
 }
 
 function isUserBot(username) {
-	if(knownBots.indexOf(username) !== -1) { return true; }
-	return false;
+	if(knownBots.indexOf(username) !== -1) { 
+		if(manualBotOverrides.remove.indexOf(username) === -1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	if(manualBotOverrides.add.indexOf(username) !== -1) {
+		return true;
+	} else {
+		return false;
+	}
 }
 
 function isWordSafe(word) {

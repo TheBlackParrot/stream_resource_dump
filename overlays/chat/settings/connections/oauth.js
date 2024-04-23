@@ -66,9 +66,9 @@ async function regenSpotifyCodes() {
 		});
 
 		if(!response.ok) {
-			throw new Error('HTTP status ' + response.status);
 			localStorage.removeItem("spotify_refreshToken");
-			return regenSpotifyCodes();
+			await regenSpotifyCodes();
+			return;
 		}
 
 		const data = await response.json();
@@ -118,7 +118,6 @@ async function setSpotifyTokens() {
 	});
 
 	if(!response.ok) {
-		throw new Error('HTTP status ' + response.status);
 		await regenSpotifyCodes();
 		return;
 	}
@@ -160,9 +159,10 @@ async function regenTwitchCodes() {
 
 		if(!response.ok) {
 			console.log("twitch oauth refresh token was bad");
-			throw new Error('HTTP status ' + response.status);
+			localStorage.removeItem("twitch_oauthAccessToken");
 			localStorage.removeItem("twitch_oauthRefreshToken");
-			return regenTwitchCodes();
+			await regenTwitchCodes();
+			return;
 		}
 		console.log("twitch oauth refresh token was good");
 
@@ -221,7 +221,6 @@ async function setTwitchTokens() {
 
 	if(!response.ok) {
 		console.log("couldn't get twitch tokens");
-		throw new Error('HTTP status ' + response.status);
 		await regenTwitchCodes();
 		return;
 	}

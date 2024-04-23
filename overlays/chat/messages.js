@@ -428,7 +428,7 @@ const chatFuncs = {
 		msgElement.children(".message").remove();
 
 		let infoElement = $(`<div class="bsrInfo loading"></div>`);
-		infoElement.html(`<i class="fas fa-spinner fa-pulse"></i> <span style="opacity: 0.67; margin-left: 6px;" class="loadingMsg">getting information for <strong>${args[0]}</strong>...</span>`);
+		infoElement.html(`<div class="spinner"></div> <span style="opacity: 0.67; margin-left: 6px;" class="loadingMsg">getting information for <strong>${args[0]}</strong>...</span>`);
 
 		msgElement.append(infoElement);
 
@@ -1408,8 +1408,8 @@ async function renderMessageBlock(data, rootElement) {
 						let mote = cheermote[reachedTier];
 						let type = (localStorage.getItem("setting_chatShowCheermotesAnimated") === "true" ? "animated" : "static");
 
-						let cheermoteColorString = (localStorage.getItem("setting_chatShowCheermotesColor") === "true" ? ` style="color: ${mote.color};"` : "");
-						words[wordIdx] = `<span class="emote cheermote" style="background-image: url('${mote.images[type]}');"><img src="${mote.images[type]}"/></span><span${cheermoteColorString}>${amount}</span>`;
+						let cheermoteColorString = (localStorage.getItem("setting_chatShowCheermotesColor") === "true" ? ` style="background-color: ${mote.color};"` : "");
+						words[wordIdx] = `<span class="cheerWrap"><span class="emote cheermote" style="background-image: url('${mote.images[type]}');"><img src="${mote.images[type]}"/></span><span${cheermoteColorString} class="cheerAmount">${amount}</span></span>`;
 					}
 				}
 			}

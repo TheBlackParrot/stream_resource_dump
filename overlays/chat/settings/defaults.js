@@ -125,7 +125,9 @@ const nonPublicSettings = [
 	"clips_useRandom",
 	"clips_triggerCommand",
 	"clips_preferredResolution",
-	"clips_allowRaidersToUse"
+	"clips_allowRaidersToUse",
+	"chatUsersThatAreBots",
+	"chatUsersThatAreNotBots"
 ];
 
 const defaultConfig = {
@@ -864,7 +866,9 @@ const defaultConfig = {
 	"clock_outlineOrder": "5",
 	"clock_outlineDivisor": "3",
 	"clock_outlineStripCorners": "true",
-	"clock_outlineThreshold": "0.2"
+	"clock_outlineThreshold": "0.2",
+	"chatUsersThatAreBots": "pretzelrocks",
+	"chatUsersThatAreNotBots": ""
 };
 // i typed out the bigNoNoWords so you don't have to, i'm sorry :(
 // it's gotta know what to remove

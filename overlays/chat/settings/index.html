@@ -64,7 +64,11 @@
 					<div class="row" data-tab="appearance"><i class="fas fa-palette"></i>Appearance</div>
 					<div class="row" data-tab="effects"><i class="fas fa-magic"></i>Effects</div>
 					<div class="row" data-tab="function"><i class="fas fa-cogs"></i>Function</div>
+					<div class="row" data-tab="layout"><i class="fas fa-table-cells-large"></i>Layout</div>
 					<div class="row" data-tab="sounds"><i class="fas fa-volume-up"></i>Sounds</div>
+					<hr/>
+					<div class="row" data-tab="viewerinfo"><i class="fas fa-user"></i>Chatter Information</div>
+					<div class="row" data-tab="messages"><i class="fas fa-comment-dots"></i>Messages</div>
 					<hr/>
 					<div class="row" data-tab="avatars"><i class="fas fa-image"></i>Avatars</div>
 					<div class="row" data-tab="badges"><i class="fas fa-square"></i>Badges</div>
@@ -250,728 +254,6 @@
 								<option value="ridge">Ridge</option>
 								<option selected value="solid">Solid</option>
 							</select>
-						</div>
-					</div>
-				</div>
-				<div class="part">
-					<h1>Names</h1>
-					<div class="setting">
-						<div class="settingCell">
-							<input checked id="ensureNameColorsAreBrightEnough" type="checkbox" data-dependent="brightNames"/> <span class="settingInfo">Ensure name colors are between a set brightness level</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="brightNames">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Minimum</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="nameColorMinBrightness" min="0" max="100" step="1" value="30"/><span class="settingCellMeasurement">%</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="brightNames">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Maximum</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="nameColorMaxBrightness" min="0" max="100" step="1" value="100"/><span class="settingCellMeasurement">%</span>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCell">
-							<input id="chatDefaultNameColorForced" type="checkbox"/> <span class="settingInfo">Force names to use the default name color</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Default color</span>
-						</div>
-						<div class="settingCell">
-							<input id="chatDefaultNameColor" type="text" data-coloris value="#AAAAAA"/>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCell">
-							<input id="chatNameUsesProminentColor" type="checkbox"/> <span class="settingInfo">Use the prominent color of the chatter's avatar over default name colors</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCell">
-							<input checked id="chatNameUsesProminentColorAsFallback" type="checkbox"/> <span class="settingInfo">Use the prominent color of the chatter's avatar as a fallback for not setting a color</span>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCell">
-							<input checked id="chatNameUsesGradient" type="checkbox" data-dependent="gradientNames"/> <span class="settingInfo">Apply a gradient to names</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="gradientNames">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Gradient color</span>
-						</div>
-						<div class="settingCell">
-							<input id="chatDefaultNameColorSecondary" type="text" data-coloris value="#FFFFFF"/>
-						</div>
-					</div>
-					<div class="setting" data-dependent="gradientNames">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Gradient angle</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="chatNameGradientAngle" min="0" max="360" step="1" value="170"/><span class="settingCellMeasurement">deg</span>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Font</span>
-						</div>
-						<div class="settingCell">
-							<input id="chatNameFont" type="text" value="Manrope"/>
-							<input id="chatNameFontItalic" type="checkbox"/> <span class="settingInfo">Italic</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Size</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="chatNameFontSize" min="4" max="64" step="0.25" value="15"/><span class="settingCellMeasurement">pt</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Weight</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="chatNameFontWeight" min="100" max="900" step="25" value="900"/>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Additional weight</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="chatNameFontWeightExtra" min="0" max="8" step="0.1" value="1.15"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Letter spacing</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="chatNameLetterSpacing" min="-12" max="12" step="0.2" value="0.8"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Transform</span>
-						</div>
-						<div class="settingCell">
-							<select id="chatNameTransform">
-								<option value="capitalize">Capitalize</option>
-								<option value="lowercase">Lowercase</option>
-								<option selected value="uppercase">Uppercase</option>
-								<option value="none">Do not transform</option>
-							</select>
-						</div>
-					</div>
-				</div>
-				<div class="part">
-					<h1>International Names</h1>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Margin</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="internationalNameMargin" min="-99" max="99" step="0.5" value="12"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Size scaling</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="internationalNameSize" min="0" max="999" step="1" value="75"/><span class="settingCellMeasurement">%</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Weight scaling</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="internationalNameWeightScaling" min="0" max="999" step="1" value="50"/><span class="settingCellMeasurement">%</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Saturation</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="internationalNameSaturation" min="0" max="999" step="1" value="33"/><span class="settingCellMeasurement">%</span>
-						</div>
-					</div>
-				</div>
-				<div class="part">
-					<h1>Chatter Information</h1>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Background color</span>
-						</div>
-						<div class="settingCell">
-							<input id="chatMessageUserInfoBackgroundColor" type="text" data-coloris value="#00000000"/>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCell">
-							<input id="chatMessageUserInfoBackgroundReflectUserColor" type="checkbox"/> <span class="settingInfo">Color fades into the chatter's own color</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Fading amount</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="chatMessageUserInfoBackgroundUserColorAmount" min="0" max="100" step="0.5" value="50"/><span class="settingCellMeasurement">%</span>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Vertical padding</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="chatMessageUserInfoElementPaddingVertical" min="0" max="64" step="0.5" value="0"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Horizontal padding</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="chatMessageUserInfoElementPaddingHorizontal" min="0" max="64" step="0.5" value="0"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Bottom margin</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="chatMessageUserInfoBottomMargin" min="0" max="64" step="1" value="0"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Border radius</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="chatMessageUserInfoElementBorderRadius" min="0" max="64" step="1" value="0"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Element spacing</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="chatMessageUserInfoElementSpacing" min="0" max="64" step="0.5" value="11"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Vertical offset</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="userInfoOffsetVertical" min="-999" max="999" step="1" value="0"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Horizontal offset</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="userInfoOffsetHorizontal" min="-999" max="999" step="1" value="0"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCell">
-							<input id="chatMessageUserInfoOutlines" type="checkbox" data-dependent="userInfoOutlines"/> <span class="settingInfo">Enable outlines around chatter information</span>
-						</div>
-					</div>
-					<div class="setting disabled" data-dependent="userInfoOutlines">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Outline color</span>
-						</div>
-						<div class="settingCell">
-							<input id="chatMessageUserInfoOutlinesColor" type="text" data-coloris value="#FFFFFF"/>
-						</div>
-					</div>
-					<div class="setting" data-dependent="userInfoOutlines">
-						<div class="settingCell">
-							<input id="chatMessageUserInfoOutlinesReflectUserColor" type="checkbox"/> <span class="settingInfo">Color fades into the chatter's own color</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="userInfoOutlines">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Fading amount</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="chatMessageUserInfoOutlinesUserColorAmount" min="0" max="100" step="0.5" value="100"/><span class="settingCellMeasurement">%</span>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting disabled" data-dependent="userInfoOutlines">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Size</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="chatMessageUserInfoOutlinesSize" min="0" max="8" step="1" value="1"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<div class="setting disabled" data-dependent="userInfoOutlines">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Style</span>
-						</div>
-						<div class="settingCell">
-							<select id="chatMessageUserInfoOutlineStyle">
-								<option value="dashed">Dashed</option>
-								<option value="dotted">Dotted</option>
-								<option value="double">Double</option>
-								<option value="groove">Groove</option>
-								<option value="inset">Inset</option>
-								<option value="outset">Outset</option>
-								<option value="ridge">Ridge</option>
-								<option selected value="solid">Solid</option>
-							</select>
-						</div>
-					</div>
-				</div>
-				<div class="part">
-					<h1>Messages</h1>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Background color</span>
-						</div>
-						<div class="settingCell">
-							<input id="chatMessageBackgroundColor" type="text" data-coloris value="#00000000"/>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCell">
-							<input id="chatMessageBackgroundReflectUserColor" type="checkbox"/> <span class="settingInfo">Color fades into the chatter's own color</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Fading amount</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="chatMessageBackgroundUserColorAmount" min="0" max="100" step="0.5" value="20"/><span class="settingCellMeasurement">%</span>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Text color</span>
-						</div>
-						<div class="settingCell">
-							<input id="chatMessageColor" type="text" data-coloris value="#FFFFFF"/>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCell">
-							<input checked id="chatMessageReflectUserColor" type="checkbox"/> <span class="settingInfo">Color fades into the chatter's own color</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Fading amount</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="chatMessageUserColorAmount" min="0" max="100" step="0.5" value="17.5"/><span class="settingCellMeasurement">%</span>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Font</span>
-						</div>
-						<div class="settingCell">
-							<input id="chatMessageFont" type="text" value="Manrope"/>
-							<input id="chatMessageFontItalic" type="checkbox"/> <span class="settingInfo">Italic</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Size</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="chatMessageFontSize" min="4" max="64" step="0.25" value="15"/><span class="settingCellMeasurement">pt</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Weight</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="chatMessageFontWeight" min="100" max="900" step="25" value="600"/>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Letter spacing</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="messageLetterSpacing" min="-12" max="12" step="0.2" value="0"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Transform</span>
-						</div>
-						<div class="settingCell">
-							<select id="messageTransform">
-								<option value="capitalize">Capitalize</option>
-								<option value="lowercase">Lowercase</option>
-								<option value="uppercase">Uppercase</option>
-								<option selected value="none">Do not transform</option>
-							</select>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Emboldening amount</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="messageBoldAmount" min="0" max="4" step="0.05" value="0.9"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Line height</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="chatMessageLineHeight" min="16" max="64" step="0.5" value="24"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Vertical offset</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="messageOffsetVertical" min="-999" max="999" step="1" value="0"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Horizontal offset</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="messageOffsetHorizontal" min="-999" max="999" step="1" value="0"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Vertical padding</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="chatMessagePaddingVertical" min="0" max="64" step="0.5" value="0"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Horizontal padding</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="chatMessagePaddingHorizontal" min="0" max="64" step="0.5" value="0"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Border radius</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="chatMessageBorderRadius" min="0" max="64" step="1" value="0"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCell">
-							<input id="chatMessageOutlines" type="checkbox" data-dependent="chatMessageOutlines"/> <span class="settingInfo">Enable outlines around chat message blocks</span>
-						</div>
-					</div>
-					<div class="setting disabled" data-dependent="chatMessageOutlines">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Outline color</span>
-						</div>
-						<div class="settingCell">
-							<input id="chatMessageOutlinesColor" type="text" data-coloris value="#FFFFFFFF"/>
-						</div>
-					</div>
-					<div class="setting" data-dependent="chatMessageOutlines">
-						<div class="settingCell">
-							<input id="chatMessageOutlinesReflectUserColor" type="checkbox"/> <span class="settingInfo">Color fades into the chatter's own color</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="chatMessageOutlines">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Fading amount</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="chatMessageOutlinesUserColorAmount" min="0" max="100" step="0.5" value="100"/><span class="settingCellMeasurement">%</span>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting disabled" data-dependent="chatMessageOutlines">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Size</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="chatMessageOutlinesSize" min="0" max="8" step="1" value="1"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<div class="setting disabled" data-dependent="chatMessageOutlines">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Style</span>
-						</div>
-						<div class="settingCell">
-							<select id="chatMessageOutlinesStyle">
-								<option value="dashed">Dashed</option>
-								<option value="dotted">Dotted</option>
-								<option value="double">Double</option>
-								<option value="groove">Groove</option>
-								<option value="inset">Inset</option>
-								<option value="outset">Outset</option>
-								<option value="ridge">Ridge</option>
-								<option selected value="solid">Solid</option>
-							</select>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCell">
-							<input id="chatMessageEnableSeparators" type="checkbox" data-dependent="chatSeparators"/> <span class="settingInfo">Enable separators between messages</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="chatSeparators">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Color</span>
-						</div>
-						<div class="settingCell">
-							<input id="chatMessageSeparatorColor" type="text" data-coloris value="#FFFFFF20"/>
-						</div>
-					</div>
-					<div class="setting" data-dependent="chatSeparators">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Width</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="chatMessageSeparatorWidth" min="1" max="16" step="1" value="1"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="chatSeparators">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Spacing</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="chatMessageSeparatorSpacing" min="0" max="64" step="1" value="0"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="chatSeparators">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Style</span>
-						</div>
-						<div class="settingCell">
-							<select id="chatMessageSeparatorStyle">
-								<option value="dashed">Dashed</option>
-								<option value="dotted">Dotted</option>
-								<option value="double">Double</option>
-								<option value="groove">Groove</option>
-								<option value="inset">Inset</option>
-								<option value="outset">Outset</option>
-								<option value="ridge">Ridge</option>
-								<option selected value="solid">Solid</option>
-							</select>
-						</div>
-					</div>
-				</div>
-				<div class="part">
-					<h1>Event Tags</h1>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Color</span>
-						</div>
-						<div class="settingCell">
-							<input id="eventTagsColor" type="text" data-coloris value="#FFFFFFFF"/>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Font</span>
-						</div>
-						<div class="settingCell">
-							<input id="eventTagsFont" type="text" value="Manrope"/>
-							<input id="eventTagsFontItalic" type="checkbox"/> <span class="settingInfo">Italic</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Size</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="eventTagsFontSize" min="4" max="64" step="0.25" value="12"/><span class="settingCellMeasurement">pt</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Weight</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="eventTagsFontWeight" min="100" max="900" step="25" value="900"/>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Additional weight</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="eventTagsFontWeightExtra" min="0" max="4" step="0.05" value="0.6"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Letter spacing</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="eventTagsLetterSpacing" min="-12" max="12" step="0.2" value="0.4"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Transform</span>
-						</div>
-						<div class="settingCell">
-							<select id="eventTagsTransform">
-								<option value="capitalize">Capitalize</option>
-								<option value="lowercase">Lowercase</option>
-								<option selected value="uppercase">Uppercase</option>
-								<option value="none">Do not transform</option>
-							</select>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Line height</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="eventTagsLineHeight" min="16" max="64" step="0.5" value="28"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-				</div>
-				<div class="part">
-					<h1>Positioning</h1>
-					<div class="setting">
-						<div class="settingCell">
-							<input id="overlayForceWidth" type="checkbox" data-dependent="forceWidth"/> <span class="settingInfo">Force the overlay to a set width</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="forceWidth">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Width</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="overlayWidth" min="100" max="3840" step="1" value="700"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCell">
-							<input id="messageBlockDirection" type="checkbox"/> <span class="settingInfo">Reverse the order of messages within message blocks</span>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Corner alignment</span>
-						</div>
-						<div class="settingCell">
-							<select id="chatCornerAlignment">
-								<option value="top,left">Top-left</option>
-								<option value="top,right">Top-right</option>
-								<option selected value="bottom,left">Bottom-left</option>
-								<option value="bottom,right">Bottom-right</option>
-							</select>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCell">
-							<input id="alternateCornerAlignment" type="checkbox"/> <span class="settingInfo">Alternate the horizontal corner alignment</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Content width</span>
-						</div>
-						<div class="settingCell">
-							<select id="chatBlockWidth">
-								<option selected value="-webkit-fill-available">Fill</option>
-								<option value="fit-content">Fit visible content</option>
-							</select>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Vertical margin</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="chatBlockPaddingVertical" min="0" max="99" step="0.25" value="16"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Horizontal margin</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="chatBlockPaddingHorizontal" min="0" max="99" step="0.25" value="16"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Vert. block padding</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="chatBlockIndividualPaddingVertical" min="0" max="64" step="0.25" value="0"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Horiz. block padding</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="chatBlockIndividualPaddingHorizontal" min="0" max="64" step="0.25" value="0"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Block spacing</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="chatBlockSpacing" min="0" max="128" step="1" value="10"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Border radius</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="chatBlockBorderRadius" min="0" max="64" step="0.25" value="0"/><span class="settingCellMeasurement">px</span>
 						</div>
 					</div>
 				</div>
@@ -1547,6 +829,37 @@
 					</div>
 				</div>
 				<div class="part">
+					<h1>Bots</h1>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="autoHideAllKnownBots" type="checkbox"/> <span class="settingInfo">Automatically hide known bot accounts</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Users to add to the list<br/><span style="font-size: var(--font-size-smol); opacity: 0.67;">(One account per line)</span></span>
+						</div>
+						<div class="settingCell">
+							<textarea id="chatUsersThatAreBots"></textarea>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Users to remove from the list<br/><span style="font-size: var(--font-size-smol); opacity: 0.67;">(One account per line)</span></span>
+						</div>
+						<div class="settingCell">
+							<textarea id="chatUsersThatAreNotBots"></textarea>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell smol">
+							Known bot list data is fetched from <a href="https://twitchinsights.net/bots">Twitch Insights</a>
+						</div>
+					</div>
+				</div>
+				<div class="part">
 					<h1>Cleanliness</h1>
 					<div class="setting">
 						<div class="settingCellLabel">
@@ -1589,22 +902,11 @@
 					</div>
 					<hr/>
 					<div class="setting">
-						<div class="settingCell">
-							<input checked id="autoHideAllKnownBots" type="checkbox"/> <span class="settingInfo">Automatically hide known bot accounts</span>
-						</div>
-					</div>
-					<div class="setting">
 						<div class="settingCellLabel">
 							<span class="settingInfo">Hide accounts<br/><span style="font-size: var(--font-size-smol); opacity: 0.67;">(One account per line)</span></span>
 						</div>
 						<div class="settingCell">
 							<textarea id="chatHideAccounts"></textarea>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCell smol">
-							Known bot list data is fetched from <a href="https://twitchinsights.net/bots">Twitch Insights</a>
 						</div>
 					</div>
 					<hr/>
@@ -2866,7 +2168,7 @@
 					</div>
 					<div class="setting">
 						<div class="settingCell centerSetting">
-							<div class="button" id="ohFuckOhShit"><i class="fas fa-dumpster-fire"></i> Press this button if the panel keeps reloading</div>
+							<div class="button" id="ohFuckOhShit"><i class="fas fa-dumpster-fire"></i> Press this button if something is catastrophically failing</div>
 						</div>
 					</div>
 				</div>
@@ -6231,6 +5533,731 @@
 						</div>
 						<div class="settingCell">
 							<input type="number" id="clips_boxShadowBlurInset" min="-32" max="32" step="0.25" value="-10"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section" data-content="layout">
+				<div class="part">
+					<div class="setting">
+						<div class="settingCell">
+							<input id="overlayForceWidth" type="checkbox" data-dependent="forceWidth"/> <span class="settingInfo">Force the overlay to a set width</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="forceWidth">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Width</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="overlayWidth" min="100" max="3840" step="1" value="700"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="messageBlockDirection" type="checkbox"/> <span class="settingInfo">Reverse the order of messages within message blocks</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Corner alignment</span>
+						</div>
+						<div class="settingCell">
+							<select id="chatCornerAlignment">
+								<option value="top,left">Top-left</option>
+								<option value="top,right">Top-right</option>
+								<option selected value="bottom,left">Bottom-left</option>
+								<option value="bottom,right">Bottom-right</option>
+							</select>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="alternateCornerAlignment" type="checkbox"/> <span class="settingInfo">Alternate the horizontal corner alignment</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Content width</span>
+						</div>
+						<div class="settingCell">
+							<select id="chatBlockWidth">
+								<option selected value="-webkit-fill-available">Fill</option>
+								<option value="fit-content">Fit visible content</option>
+							</select>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Vertical margin</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatBlockPaddingVertical" min="0" max="99" step="0.25" value="16"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Horizontal margin</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatBlockPaddingHorizontal" min="0" max="99" step="0.25" value="16"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Vert. block padding</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatBlockIndividualPaddingVertical" min="0" max="64" step="0.25" value="0"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Horiz. block padding</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatBlockIndividualPaddingHorizontal" min="0" max="64" step="0.25" value="0"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Block spacing</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatBlockSpacing" min="0" max="128" step="1" value="10"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Border radius</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatBlockBorderRadius" min="0" max="64" step="0.25" value="0"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section" data-content="viewerinfo">
+				<div class="part">
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Background color</span>
+						</div>
+						<div class="settingCell">
+							<input id="chatMessageUserInfoBackgroundColor" type="text" data-coloris value="#00000000"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="chatMessageUserInfoBackgroundReflectUserColor" type="checkbox"/> <span class="settingInfo">Color fades into the chatter's own color</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Fading amount</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatMessageUserInfoBackgroundUserColorAmount" min="0" max="100" step="0.5" value="50"/><span class="settingCellMeasurement">%</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Vertical padding</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatMessageUserInfoElementPaddingVertical" min="0" max="64" step="0.5" value="0"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Horizontal padding</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatMessageUserInfoElementPaddingHorizontal" min="0" max="64" step="0.5" value="0"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Bottom margin</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatMessageUserInfoBottomMargin" min="0" max="64" step="1" value="0"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Border radius</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatMessageUserInfoElementBorderRadius" min="0" max="64" step="1" value="0"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Element spacing</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatMessageUserInfoElementSpacing" min="0" max="64" step="0.5" value="11"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Vertical offset</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="userInfoOffsetVertical" min="-999" max="999" step="1" value="0"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Horizontal offset</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="userInfoOffsetHorizontal" min="-999" max="999" step="1" value="0"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="chatMessageUserInfoOutlines" type="checkbox" data-dependent="userInfoOutlines"/> <span class="settingInfo">Enable outlines around chatter information</span>
+						</div>
+					</div>
+					<div class="setting disabled" data-dependent="userInfoOutlines">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Outline color</span>
+						</div>
+						<div class="settingCell">
+							<input id="chatMessageUserInfoOutlinesColor" type="text" data-coloris value="#FFFFFF"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="userInfoOutlines">
+						<div class="settingCell">
+							<input id="chatMessageUserInfoOutlinesReflectUserColor" type="checkbox"/> <span class="settingInfo">Color fades into the chatter's own color</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="userInfoOutlines">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Fading amount</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatMessageUserInfoOutlinesUserColorAmount" min="0" max="100" step="0.5" value="100"/><span class="settingCellMeasurement">%</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting disabled" data-dependent="userInfoOutlines">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatMessageUserInfoOutlinesSize" min="0" max="8" step="1" value="1"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting disabled" data-dependent="userInfoOutlines">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Style</span>
+						</div>
+						<div class="settingCell">
+							<select id="chatMessageUserInfoOutlineStyle">
+								<option value="dashed">Dashed</option>
+								<option value="dotted">Dotted</option>
+								<option value="double">Double</option>
+								<option value="groove">Groove</option>
+								<option value="inset">Inset</option>
+								<option value="outset">Outset</option>
+								<option value="ridge">Ridge</option>
+								<option selected value="solid">Solid</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Names</h1>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="ensureNameColorsAreBrightEnough" type="checkbox" data-dependent="brightNames"/> <span class="settingInfo">Ensure name colors are between a set brightness level</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="brightNames">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Minimum</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="nameColorMinBrightness" min="0" max="100" step="1" value="30"/><span class="settingCellMeasurement">%</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="brightNames">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Maximum</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="nameColorMaxBrightness" min="0" max="100" step="1" value="100"/><span class="settingCellMeasurement">%</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="chatDefaultNameColorForced" type="checkbox"/> <span class="settingInfo">Force names to use the default name color</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Default color</span>
+						</div>
+						<div class="settingCell">
+							<input id="chatDefaultNameColor" type="text" data-coloris value="#AAAAAA"/>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="chatNameUsesProminentColor" type="checkbox"/> <span class="settingInfo">Use the prominent color of the chatter's avatar over default name colors</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="chatNameUsesProminentColorAsFallback" type="checkbox"/> <span class="settingInfo">Use the prominent color of the chatter's avatar as a fallback for not setting a color</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="chatNameUsesGradient" type="checkbox" data-dependent="gradientNames"/> <span class="settingInfo">Apply a gradient to names</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="gradientNames">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Gradient color</span>
+						</div>
+						<div class="settingCell">
+							<input id="chatDefaultNameColorSecondary" type="text" data-coloris value="#FFFFFF"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="gradientNames">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Gradient angle</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatNameGradientAngle" min="0" max="360" step="1" value="170"/><span class="settingCellMeasurement">deg</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Font</span>
+						</div>
+						<div class="settingCell">
+							<input id="chatNameFont" type="text" value="Manrope"/>
+							<input id="chatNameFontItalic" type="checkbox"/> <span class="settingInfo">Italic</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatNameFontSize" min="4" max="64" step="0.25" value="15"/><span class="settingCellMeasurement">pt</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatNameFontWeight" min="100" max="900" step="25" value="900"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Additional weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatNameFontWeightExtra" min="0" max="8" step="0.1" value="1.15"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Letter spacing</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatNameLetterSpacing" min="-12" max="12" step="0.2" value="0.8"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Transform</span>
+						</div>
+						<div class="settingCell">
+							<select id="chatNameTransform">
+								<option value="capitalize">Capitalize</option>
+								<option value="lowercase">Lowercase</option>
+								<option selected value="uppercase">Uppercase</option>
+								<option value="none">Do not transform</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>International Names</h1>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Margin</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="internationalNameMargin" min="-99" max="99" step="0.5" value="12"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Size scaling</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="internationalNameSize" min="0" max="999" step="1" value="75"/><span class="settingCellMeasurement">%</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Weight scaling</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="internationalNameWeightScaling" min="0" max="999" step="1" value="50"/><span class="settingCellMeasurement">%</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Saturation</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="internationalNameSaturation" min="0" max="999" step="1" value="33"/><span class="settingCellMeasurement">%</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section" data-content="messages">
+				<div class="part">
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Background color</span>
+						</div>
+						<div class="settingCell">
+							<input id="chatMessageBackgroundColor" type="text" data-coloris value="#00000000"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="chatMessageBackgroundReflectUserColor" type="checkbox"/> <span class="settingInfo">Color fades into the chatter's own color</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Fading amount</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatMessageBackgroundUserColorAmount" min="0" max="100" step="0.5" value="20"/><span class="settingCellMeasurement">%</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Text color</span>
+						</div>
+						<div class="settingCell">
+							<input id="chatMessageColor" type="text" data-coloris value="#FFFFFF"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="chatMessageReflectUserColor" type="checkbox"/> <span class="settingInfo">Color fades into the chatter's own color</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Fading amount</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatMessageUserColorAmount" min="0" max="100" step="0.5" value="17.5"/><span class="settingCellMeasurement">%</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Font</span>
+						</div>
+						<div class="settingCell">
+							<input id="chatMessageFont" type="text" value="Manrope"/>
+							<input id="chatMessageFontItalic" type="checkbox"/> <span class="settingInfo">Italic</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatMessageFontSize" min="4" max="64" step="0.25" value="15"/><span class="settingCellMeasurement">pt</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatMessageFontWeight" min="100" max="900" step="25" value="600"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Letter spacing</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="messageLetterSpacing" min="-12" max="12" step="0.2" value="0"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Transform</span>
+						</div>
+						<div class="settingCell">
+							<select id="messageTransform">
+								<option value="capitalize">Capitalize</option>
+								<option value="lowercase">Lowercase</option>
+								<option value="uppercase">Uppercase</option>
+								<option selected value="none">Do not transform</option>
+							</select>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Emboldening amount</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="messageBoldAmount" min="0" max="4" step="0.05" value="0.9"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Line height</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatMessageLineHeight" min="16" max="64" step="0.5" value="24"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Vertical offset</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="messageOffsetVertical" min="-999" max="999" step="1" value="0"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Horizontal offset</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="messageOffsetHorizontal" min="-999" max="999" step="1" value="0"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Vertical padding</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatMessagePaddingVertical" min="0" max="64" step="0.5" value="0"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Horizontal padding</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatMessagePaddingHorizontal" min="0" max="64" step="0.5" value="0"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Border radius</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatMessageBorderRadius" min="0" max="64" step="1" value="0"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="chatMessageOutlines" type="checkbox" data-dependent="chatMessageOutlines"/> <span class="settingInfo">Enable outlines around chat message blocks</span>
+						</div>
+					</div>
+					<div class="setting disabled" data-dependent="chatMessageOutlines">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Outline color</span>
+						</div>
+						<div class="settingCell">
+							<input id="chatMessageOutlinesColor" type="text" data-coloris value="#FFFFFFFF"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="chatMessageOutlines">
+						<div class="settingCell">
+							<input id="chatMessageOutlinesReflectUserColor" type="checkbox"/> <span class="settingInfo">Color fades into the chatter's own color</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="chatMessageOutlines">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Fading amount</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatMessageOutlinesUserColorAmount" min="0" max="100" step="0.5" value="100"/><span class="settingCellMeasurement">%</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting disabled" data-dependent="chatMessageOutlines">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatMessageOutlinesSize" min="0" max="8" step="1" value="1"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting disabled" data-dependent="chatMessageOutlines">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Style</span>
+						</div>
+						<div class="settingCell">
+							<select id="chatMessageOutlinesStyle">
+								<option value="dashed">Dashed</option>
+								<option value="dotted">Dotted</option>
+								<option value="double">Double</option>
+								<option value="groove">Groove</option>
+								<option value="inset">Inset</option>
+								<option value="outset">Outset</option>
+								<option value="ridge">Ridge</option>
+								<option selected value="solid">Solid</option>
+							</select>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="chatMessageEnableSeparators" type="checkbox" data-dependent="chatSeparators"/> <span class="settingInfo">Enable separators between messages</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="chatSeparators">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Color</span>
+						</div>
+						<div class="settingCell">
+							<input id="chatMessageSeparatorColor" type="text" data-coloris value="#FFFFFF20"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="chatSeparators">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Width</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatMessageSeparatorWidth" min="1" max="16" step="1" value="1"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="chatSeparators">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Spacing</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatMessageSeparatorSpacing" min="0" max="64" step="1" value="0"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="chatSeparators">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Style</span>
+						</div>
+						<div class="settingCell">
+							<select id="chatMessageSeparatorStyle">
+								<option value="dashed">Dashed</option>
+								<option value="dotted">Dotted</option>
+								<option value="double">Double</option>
+								<option value="groove">Groove</option>
+								<option value="inset">Inset</option>
+								<option value="outset">Outset</option>
+								<option value="ridge">Ridge</option>
+								<option selected value="solid">Solid</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Event Tags</h1>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Color</span>
+						</div>
+						<div class="settingCell">
+							<input id="eventTagsColor" type="text" data-coloris value="#FFFFFFFF"/>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Font</span>
+						</div>
+						<div class="settingCell">
+							<input id="eventTagsFont" type="text" value="Manrope"/>
+							<input id="eventTagsFontItalic" type="checkbox"/> <span class="settingInfo">Italic</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="eventTagsFontSize" min="4" max="64" step="0.25" value="12"/><span class="settingCellMeasurement">pt</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="eventTagsFontWeight" min="100" max="900" step="25" value="900"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Additional weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="eventTagsFontWeightExtra" min="0" max="4" step="0.05" value="0.6"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Letter spacing</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="eventTagsLetterSpacing" min="-12" max="12" step="0.2" value="0.4"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Transform</span>
+						</div>
+						<div class="settingCell">
+							<select id="eventTagsTransform">
+								<option value="capitalize">Capitalize</option>
+								<option value="lowercase">Lowercase</option>
+								<option selected value="uppercase">Uppercase</option>
+								<option value="none">Do not transform</option>
+							</select>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Line height</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="eventTagsLineHeight" min="16" max="64" step="0.5" value="28"/><span class="settingCellMeasurement">px</span>
 						</div>
 					</div>
 				</div>

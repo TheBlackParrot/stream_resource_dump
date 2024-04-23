@@ -537,6 +537,37 @@ class UserSet {
 			user.updatePronounBlocks();
 		}
 	}
+
+	refreshBotFlags() {
+		for(const idx in this) {
+			const user = this[idx];
+			user.bot = isUserBot(user.username);
+
+			if(user.bot) {
+				let hasBadgeAlready = false;
+				for(const badge of user.entitlements.overlay.badges) {
+					if(badge.type === "bot") {
+						hasBadgeAlready = true;
+					}
+				}
+
+				if(!hasBadgeAlready) {
+					user.entitlements.overlay.badges.push({
+						urls: {
+							high: "icons/gear.png",
+							low: "icons/gear.png"
+						},
+						color: "var(--botBadgeColor)",
+						type: "bot"
+					});
+				}
+			} else {
+				user.entitlements.overlay.badges = user.entitlements.overlay.badges.filter(function(badge) {
+					return badge.type !== "bot";
+				});
+			}
+		}
+	}
 }
 
 class SevenTVEntitlements {

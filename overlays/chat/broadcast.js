@@ -68,7 +68,7 @@ settingsFuncs = {
 	},
 
 	refreshEmotes: function(message) {
-		chatEmotes = {};
+		initEmoteSet();
 		refreshExternalStuff();
 	},
 

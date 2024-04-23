@@ -1413,6 +1413,14 @@ const settingUpdaters = {
 	},
 	enableAvatarsAsBackground: function(value) {
 		checkAvatarPermissions();
+	},
+	chatUsersThatAreBots: function(value) {
+		manualBotOverrides.add = value.split("\n").map((account) => { return account.trim().toLowerCase();}).filter((account) => { return account.length > 0; });
+		twitchUsers.refreshBotFlags();
+	},
+	chatUsersThatAreNotBots: function(value) {
+		manualBotOverrides.remove = value.split("\n").map((account) => { return account.trim().toLowerCase();}).filter((account) => { return account.length > 0; });
+		twitchUsers.refreshBotFlags();
 	}
 };
 settingUpdaters["chatHideAccounts"](localStorage.getItem("setting_chatHideAccounts"));

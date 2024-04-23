@@ -1,4 +1,48 @@
 {
+	"1713905296545": {
+		"updates": {
+			"chat": {
+				"revision": 46,
+				"notes": [
+					[
+						"replaced the font awesome spinner with a CSS-defined one for bsr map requests"
+					],
+					[
+						"fixed emote refresh button on the settings panel failing to refresh emotes",
+						["forgot to update this long ago, woops"]
+					],
+					[
+						"fixed 7TV name paints with glow effects not rendering the glow effect"
+					],
+					[
+						"added the ability to manually add to and remove from the known bot list fetched from Twitch Insights",
+						["noticed while debugging a thing that a normal person was being tagged as a bot from this list"]
+					],
+					[
+						"cleaned up cheers in chat messages a bit"
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 47,
+				"notes": [
+					[
+						"attempt at fixing some twitch oauth refresh failures that infinitely recurse",
+						["i'm not entirely sure what's triggering this issue (i've only ever seen it happen twice, ever, anywhere) and i can't purposefully get it to happen in my dev environment, so"]
+					],
+					[
+						"re-worded the dumpster fire button on the about page"
+					],
+					[
+						"split up the chat appearance settings tab into multiple different tabs",
+						["it was getting long, sorry"]
+					]
+				]
+			}
+		}
+	},
+
 	"1713293906193": {
 		"updates": {
 			"all": {
