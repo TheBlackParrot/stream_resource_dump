@@ -1,635 +1,250 @@
-<html style="--nameColor:#BBB; --nameFont:Manrope; --nameWeight:900; --nameSize:16pt; --nameStyle:normal; --nameSpacing:1px; --msgFont:Manrope; --msgSize:16pt; --msgSpacing:0px; --msgWeight:700; --nameTransform:uppercase; --nameVariant:normal; --nameColorSecondary:#FFF; --nameAngle:170deg; --showPfp:inline-block; --pfpShape:10px; --nameShadow:var(--outlineStuff) var(--shadowStuff);">
+<!DOCTYPE html>
+<html>
+
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	
-	<link rel="stylesheet" type="text/css" href="../reset.css">
-	<link rel="stylesheet" type="text/css" href="../main.css">
-	<link rel="stylesheet" type="text/css" href="../vars.css">
-	<link rel="stylesheet" type="text/css" href="../fonts.css">
+	<title>Chat Customization</title>
 
-	<style>
-		body {
-			overflow: auto;
-		}
+	<link rel="stylesheet" type="text/css" href="reset.css">
+	<link rel="stylesheet" type="text/css" href="fonts.css">
 
-		a {
-			color: #4bf;
-			text-decoration: none;
-		}
+	<link rel="stylesheet" type="text/css" href="coloris.min.css"/>
+	<script src="coloris.min.js"></script>
+	<script>
+		Coloris({
+			theme: "polaroid",
+			themeMode: "dark",
+			alpha: false,
+			margin: 4
+		});
+	</script>
 
-		#wrapper {
-			top: 0px;
-			position: unset;
-		}
+	<link rel="stylesheet" type="text/css" href="main.css">
+	<link rel="stylesheet" type="text/css" href="fontawesome-free-6.5.1-web/css/all.min.css">
 
-		.sectionWrap {
-			border-top: 1px solid #aaa;
-			margin-top: 24px;
-			padding: 12px;
-			padding-top: 24px;
-		}
-
-		.section {
-    		display: inline-block;
-    		vertical-align: top;
-    		margin-right: 32px;
-		}
-		.fullSection {
-			width: auto;
-			display: block;
-			margin-right: 0px;
-		}
-
-		.head {
-			font-size: 20pt;
-			margin-bottom: 10px;
-			padding-bottom: 10px;
-			border-bottom: 1px solid #777;
-		}
-
-		.input {
-			line-height: 24px;
-			width: 300px;
-			display: flex;
-			margin-top: 8px;
-			margin-bottom: 8px;
-			vertical-align: middle;
-		}
-		.input select, .input input {
-			flex-grow: 1;
-		}
-		.input input[type="checkbox"] {
-			flex-grow: 0;
-			padding: 0;
-			margin: 0;
-			margin-right: 8px;
-			margin-top: 4px;
-			height: 16px;
-			width: 16px;
-		}
-
-		.inputName {
-			font-size: 14pt;
-			font-weight: 500;
-			padding-right: 16px;
-		}
-
-		#outputCommand {
-			background: #000;
-			padding: 12px;
-			font-family: monospace;
-			font-weight: 400;
-			font-size: 10pt;
-			margin-top: 8px;
-			border-radius: 4px;
-			border: 1px solid #888;
-		}
-
-		.evil {
-			filter: invert(1) drop-shadow(1px 0px 0px rgba(0, 0, 0, 0.45))
-					drop-shadow(1px -1px 0px rgba(0, 0, 0, 0.45))
-					drop-shadow(1px 1px 0px rgba(0, 0, 0, 0.45))
-					drop-shadow(0px -1px 0px rgba(0, 0, 0, 0.45))
-					drop-shadow(0px 1px 0px rgba(0, 0, 0, 0.45))
-					drop-shadow(-1px 0px 0px rgba(0, 0, 0, 0.45))
-					drop-shadow(-1px -1px 0px rgba(0, 0, 0, 0.45))
-					drop-shadow(-1px 1px 0px rgba(0, 0, 0, 0.45))
-					drop-shadow(0px 1px 2px #000);
-		}
-
-		#identityFlags {
-			font-weight: 400;
-			font-size: 12pt;
-			font-weight: 900;
-			line-height: 20px;
-		}
-
-		#identityFlags .flag {
-			vertical-align: middle;
-			margin-right: 6px;
-		}
-		#identityFlags div {
-			display: inline-block;
-			background: #111;
-			margin: 3px;
-			padding: 8px;
-			padding-left: 10px;
-			padding-right: 10px;
-			border-radius: 6px;
-			border: 1px solid #444;
-		}
-
-		.text {
-			font-size: 12pt;
-			font-weight: 700;
-			margin-top: 16px;
-		}
-
-		.mono {
-			font-family: monospace;
-			padding: 2px;
-			padding-left: 4px;
-			padding-right: 4px;
-			border-radius: 4px;
-			margin-left: 2px;
-			margin-right: 2px;
-			background-color: rgba(0, 0, 0, 0.2);
-		}
-
-		:root {
-			--overlayOutlineSize: 1px;
-		}
-	</style>
-
-	<script type="text/javascript" src="../jquery-3.7.1.min.js"></script>
+	<script type="text/javascript" src="jquery-3.7.1.min.js"></script>
 </head>
+
 <body>
-	<div id="wrapper" class="bottom left" style="overflow: auto;">
-		<div class="chatBlock" data-msgidx="0">
-			<div class="userInfo ">
-				<div class="badges">
-					<span class="badgeWrap normal_badge badgeGradient" style="background-image: url('https://static-cdn.jtvnw.net/badges/v1/5527c58c-fb7d-422d-b71b-f309dcb85cc1/3');"></span>
-					<span class="badgeWrap sub_badge" style="background-image: url('https://static-cdn.jtvnw.net/badges/v1/58729162-8485-4919-aa0b-12a00801cc93/3');"></span>
-				</div>
-				<div class="flags" style=""><span class="flaghomo flag" style="background-image: url('../flags/gay.svg'); display: inline-block;"></span><span class="flagaro flag" style="background-image: url('../flags/aromantic.svg'); display: inline-block;"></span><span class="flagpolyam flag" style="background-image: url('../flags/polyamorous_heart.png'); display: inline-block;"></span></div>
-				<div class="pronouns">
-					It / Its
-				</div>
-				<img class="pfp" src="obamna.jpg" style="display: var(--showPfp); border-radius: var(--pfpShape);">
-				<div class="name">
-					<span class="displayName" style="background-image: linear-gradient(var(--nameAngle), var(--nameColorSecondary) 0%, var(--nameColor) 75%); filter: var(--nameShadow); font-family: var(--nameFont); font-weight: var(--nameWeight); font-size: var(--nameSize); font-style: var(--nameStyle); letter-spacing: var(--nameSpacing); text-transform: var(--nameTransform); font-variant: var(--nameVariant);">SampleUser69420</span>
-				</div>
-				<!--<div class="name" style="background-image: linear-gradient(var(--nameAngle), var(--nameColorSecondary) 0%, var(--nameColor) 75%); font-family: var(--nameFont); font-weight: var(--nameWeight); font-size: var(--nameSize); font-style: var(--nameStyle); letter-spacing: var(--nameSpacing); text-transform: var(--nameTransform); font-variant: var(--nameVariant); filter: var(--nameShadow);">
-					SampleUser69420
-				</div>-->
-			</div>
-			<div class="message" style="font-family: var(--msgFont); font-size: var(--msgSize); letter-spacing: var(--msgSpacing); font-weight: var(--msgWeight);">
-				This is a test message <span class="emote" style="background-image: url('https://static-cdn.jtvnw.net/emoticons/v2/305954156/default/dark/3.0');"><img src="https://static-cdn.jtvnw.net/emoticons/v2/305954156/default/dark/3.0"></span> Wow!
-			</div>
+	<div id="header">
+		<div class="cell grow">
+			<h1>TheBlackParrot's Chat Overlay Customization</h1>
 		</div>
-		<div class="chatBlock" data-msgidx="1">
-			<div class="userInfo">
-				<div class="badges">
-					<span class="badgeWrap normal_badge badgeGradient" style="background-image: url('https://static-cdn.jtvnw.net/badges/v1/5527c58c-fb7d-422d-b71b-f309dcb85cc1/3');"></span>
-					<span class="badgeWrap sub_badge" style="background-image: url('https://static-cdn.jtvnw.net/badges/v1/58729162-8485-4919-aa0b-12a00801cc93/3');"></span>
-				</div>
-				<div class="flags" style=""><span class="flagbi flag" style="background-image: url('../flags/bisexual.svg'); display: inline-block;"></span><span class="flagbiromantic flag" style="background-image: url('../flags/biromantic.png'); display: inline-block;"></span><span class="flagcis flag" style="background-image: url('../flags/cisgender.png'); display: inline-block;"></span><span class="flagpolyam flag" style="background-image: url('../flags/polyamorous_heart.png'); display: inline-block;"></span></div>
-				<div class="pronouns">
-					He / Him
-				</div>
-				<img class="pfp" src="obamna.jpg" style="display: var(--showPfp); border-radius: var(--pfpShape);">
-				<div class="name">
-					<span class="displayName" style="background-image: linear-gradient(var(--nameAngle), var(--nameColorSecondary) 0%, var(--nameColor) 75%); filter: var(--nameShadow); font-family: var(--nameFont); font-weight: var(--nameWeight); font-size: var(--nameSize); font-style: var(--nameStyle); letter-spacing: var(--nameSpacing); text-transform: var(--nameTransform); font-variant: var(--nameVariant);">SampleUser69420</span>
-				</div>
-			</div>
-			<div class="message" style="font-family: var(--msgFont); font-size: var(--msgSize); letter-spacing: var(--msgSpacing); font-weight: var(--msgWeight);">
-				Wikipedia is a multilingual free online encyclopedia written and maintained by a community of volunteers, known as Wikipedians, through open collaboration and using a wiki-based editing system called MediaWiki. Wikipedia is the largest and most-read reference work in history. It is consistently one of the 10 most popular websites ranked by Similarweb and formerly Alexa; as of 2023, Wikipedia was ranked the 5th most popular site in the world. It is hosted by the Wikimedia Foundation, an American non-profit organization funded mainly through donations.
-			</div>
+		<div class="cell">
+			<div class="button" id="signInButton"><i class="fa-brands fa-twitch fa-fw"></i> Sign In with Twitch</div>
 		</div>
+	</div>
 
-		<div class="chatBlock" data-msgidx="2">
-			<div class="userInfo">
-				<div class="flags" style=""><span class="flaghomo flag" style="background-image: url('../flags/gay.svg'); display: inline-block;"></span><span class="flagtrans flag" style="background-image: url('../flags/transgender.svg'); display: inline-block;"></span></div>
-				<img class="pfp evil" src="obamna.jpg" style="filter: inherit invert(100%); display: var(--showPfp); border-radius: var(--pfpShape);">
-				<div class="name">
-					<span class="displayName" style="background-image: linear-gradient(var(--nameAngle), var(--nameColorSecondary) 0%, var(--nameColor) 75%); filter: var(--nameShadow); font-family: var(--nameFont); font-weight: var(--nameWeight); font-size: var(--nameSize); font-style: var(--nameStyle); letter-spacing: var(--nameSpacing); text-transform: var(--nameTransform); font-variant: var(--nameVariant);">SampleUser69420</span>
-				</div>
-			</div>
-			<div class="message" style="font-family: var(--msgFont); font-size: var(--msgSize); letter-spacing: var(--msgSpacing); font-weight: var(--msgWeight);">
-				ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789 !@#$%^&*(){}[];:'",./?
-			</div>
+	<div id="wrapper">
+		<div class="cell">
+			This page allows you to customize your chat appearance on streams that use my chat overlay. Changes may not apply if the streamer disables the ability for you to change these settings, this is up to the streamer to allow them or not.
 		</div>
+		
+		<hr/>
+		
+		<div class="cell">
+			<h1>Name Display</h1>
 
-		<div class="sectionWrap">
-			<div class="section fullSection">
-				<div class="head">Command</div>
-				<div id="outputCommand">!chatsettings stuff</div>
+			<div class="content preview" style="text-align: center;">
+				<div id="namePreview">TheBlackParrot</div>
 			</div>
-		</div>
 
-		<div class="sectionWrap">
-			<div class="section">
-				<div class="head">Name Settings</div>
+			<hr/>
 
-				<div class="input">
-					<span class="inputName">Test Data</span>
-					<input id="testName" type="text" size="1">
+			<div class="settings">
+				<div class="content settingColumn">
+					<div class="setting">
+						<div class="settingLabel">Gradient Type</div>
+						<div class="settingValue">
+							<select id="nameGradientType">
+								<option selected value="linear-gradient">Linear</option>
+								<option value="radial-gradient">Radial</option>
+								<option value="conic-gradient">Conic</option>
+							</select>
+							<input id="nameGradientRepeats" type="checkbox"/> <span class="settingInfo">Repeat</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingLabel">Gradient Angle</div>
+						<div class="settingValue">
+							<input type="number" id="nameGradientAngle" min="0" max="360" step="1" value="170"/><span class="settingCellMeasurement">deg</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingLabel">Color Stops</div>
+						<div class="settingValue">
+							<input type="number" id="nameColorStops" min="1" max="6" step="1" value="2"/>
+						</div>
+					</div>
 				</div>
 
-				<div class="input">
-					<span class="inputName">Top Color</span>
-					<input id="nameColorSecondary" type="color" value="#FFFFFF">
-				</div>
-
-				<div class="input">
-					<span class="inputName">Bottom Color</span>
-					<input id="nameColor" type="color" value="#BBBBBB">
-				</div>
-
-				<div class="input">
-					<span class="inputName">Gradient Angle</span>
-					<input id="nameAngle" type="range" min="0" max="360" step="5"/>
-				</div>
-
-				<div class="input">
-					<span class="inputName">Font</span>
-					<select id="nameFont">
-					</select>
-				</div>
-
-				<div class="input">
-					<span class="inputName">Size</span>
-					<input id="nameSize" type="number" step="0.25" min="14" max="18"/>
-				</div>
-
-				<div class="input">
-					<input type="checkbox" id="italicizeName"/>
-					<span class="inputName">Italicize</span>
-				</div>
-
-				<div class="input">
-					<span class="inputName">Weight</span>
-					<select id="nameWeight">
-					</select>
-				</div>
-
-				<div class="input">
-					<span class="inputName">Transform</span>
-					<select id="nameTransform">
-						<option value="none">None</option>
-						<option value="lowercase">Lowercase</option>
-						<option value="uppercase">Uppercase</option>
-					</select>
-				</div>
-
-				<div class="input">
-					<span class="inputName">Variant</span>
-					<select id="nameVariant">
-						<option value="normal">Normal</option>
-						<option value="small-caps">Small Capitals</option>
-						<option value="unicase">Unicase</option>
-					</select>
-				</div>
-
-				<div class="input">
-					<span class="inputName">Letter Spacing</span>
-					<input id="nameSpacing" type="number" step="0.1" min="-4" max="5"/>
-				</div>
-
-				<div class="input">
-					<input type="checkbox" id="showPfp" checked/>
-					<span class="inputName" title="Only available for Broadcasters, Moderators, VIPs, and Subscribers">Show Avatar/PFP**</span>
-				</div>
-
-				<div class="input">
-					<span class="inputName">Avatar/PFP Shape</span>
-					<select id="pfpShape">
-						<option value="square">Square</option>
-						<option value="squircle">Rounded Square</option>
-						<option value="circle">Circle</option>
-					</select>
-				</div>
-
-				<div class="input">
-					<input type="checkbox" id="useUsername"/>
-					<span class="inputName">Use username over display name</span>
-				</div>
-
-				<div class="input">
-					<input type="checkbox" id="use7TVPaint"/>
-					<span class="inputName">Use 7TV Paint (if available)</span>
+				<div class="content settingColumn">
+					<div class="setting" data-multi-slot-list="nameColorStops" data-multi-slot="1">
+						<div class="settingValue">
+							<input type="text" id="nameColorStop1_color" data-coloris value="#cbadff"/> <span class="settingCellMeasurement">@</span>
+							<input type="number" id="nameColorStop1_percentage" min="-50" max="150" step="0.1" value="0"/><span class="settingCellMeasurement">%</span>
+						</div>
+					</div>
+					<div class="setting" data-multi-slot-list="nameColorStops" data-multi-slot="2">
+						<div class="settingValue">
+							<input type="text" id="nameColorStop2_color" data-coloris value="#cbadff"/> <span class="settingCellMeasurement">@</span>
+							<input type="number" id="nameColorStop2_percentage" min="-50" max="150" step="0.1" value="0"/><span class="settingCellMeasurement">%</span>
+						</div>
+					</div>
+					<div class="setting" data-multi-slot-list="nameColorStops" data-multi-slot="3">
+						<div class="settingValue">
+							<input type="text" id="nameColorStop3_color" data-coloris value="#cbadff"/> <span class="settingCellMeasurement">@</span>
+							<input type="number" id="nameColorStop3_percentage" min="-50" max="150" step="0.1" value="0"/><span class="settingCellMeasurement">%</span>
+						</div>
+					</div>
+					<div class="setting" data-multi-slot-list="nameColorStops" data-multi-slot="4">
+						<div class="settingValue">
+							<input type="text" id="nameColorStop4_color" data-coloris value="#cbadff"/> <span class="settingCellMeasurement">@</span>
+							<input type="number" id="nameColorStop4_percentage" min="-50" max="150" step="0.1" value="0"/><span class="settingCellMeasurement">%</span>
+						</div>
+					</div>
+					<div class="setting" data-multi-slot-list="nameColorStops" data-multi-slot="5">
+						<div class="settingValue">
+							<input type="text" id="nameColorStop5_color" data-coloris value="#cbadff"/> <span class="settingCellMeasurement">@</span>
+							<input type="number" id="nameColorStop5_percentage" min="-50" max="150" step="0.1" value="0"/><span class="settingCellMeasurement">%</span>
+						</div>
+					</div>
+					<div class="setting" data-multi-slot-list="nameColorStops" data-multi-slot="6">
+						<div class="settingValue">
+							<input type="text" id="nameColorStop6_color" data-coloris value="#cbadff"/> <span class="settingCellMeasurement">@</span>
+							<input type="number" id="nameColorStop6_percentage" min="-50" max="150" step="0.1" value="0"/><span class="settingCellMeasurement">%</span>
+						</div>
+					</div>
 				</div>
 			</div>
-			<div class="section">
-				<div class="head">Message Settings</div>
 
-				<div class="input">
-					<span class="inputName">Font</span>
-					<select id="msgFont">
-					</select>
-				</div>
+			<hr/>
 
-				<div class="input">
-					<span class="inputName">Size</span>
-					<input id="msgSize" type="number" step="0.25" min="14" max="18"/>
-				</div>
+			<div class="settings">
+				<div class="content settingColumn fullWidth">
+					<div class="setting">
+						<div class="settingLabel">Font</div>
+						<div class="settingValue">
+							<select id="nameFont"></select> <input id="nameItalic" type="checkbox"/> <span class="settingInfo">Italic</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingLabel">Size</div>
+						<div class="settingValue">
+							<input type="number" id="nameSize" min="12" max="20" step="0.5" value="16"/><span class="settingCellMeasurement">pt</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingLabel">Character Spacing</div>
+						<div class="settingValue">
+							<input type="number" id="nameCharSpacing" min="-2" max="2" step="0.1" value="1"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
 
-				<div class="input">
-					<span class="inputName">Weight</span>
-					<select id="msgWeight">
-					</select>
-				</div>
+					<hr/>
 
-				<div class="input">
-					<span class="inputName">Letter Spacing</span>
-					<input id="msgSpacing" type="number" step="0.1" min="-2" max="2"/>
+					<div class="setting">
+						<div class="settingLabel">Weight</div>
+						<div class="settingValue">
+							<select id="nameWeight"></select>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingLabel">Extra weight</div>
+						<div class="settingValue">
+							<input type="number" id="nameExtraWeight" min="0" max="2.5" step="0.1" value="1.2"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+
+					<hr/>
+
+					<div class="setting">
+						<div class="settingLabel">Transform</div>
+						<div class="settingValue">
+							<select id="nameTransform">
+								<option value="none">None</option>
+								<option value="lowercase">Lowercase</option>
+								<option selected value="uppercase">Uppercase</option>
+							</select>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingLabel">Variant</div>
+						<div class="settingValue">
+							<select id="nameVariant">
+								<option selected value="normal">Normal</option>
+								<option value="small-caps">Small Capitals</option>
+								<option value="tabular-nums">Tabular Numbers</option>
+								<option value="unicase">Unicase</option>
+							</select>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 
-		<div class="sectionWrap">
-			<div class="section fullSection">
-				<div class="head">Available Identity Flags</div>
-				<div id="identityFlags"></div>
-				<div class="text">Use <span class="mono">!flags flag flag flag flag flag</span> to set your identity flags. As an example, to use the gay and trans flag: <span class="mono">!flags gay trans</span></div>
-				<div class="text">If you want a flag and/or symbol that's not up here, please let me know! My Discord is <span class="mono">TheBlackParrot#5285</span></div>
+		<hr/>
+		
+		<div class="cell">
+			<h1>Message Display</h1>
+			<div class="content preview" style="text-align: left;">
+				<div id="messagePreview">Wikipedia is a multilingual free online encyclopedia written and maintained by a community of volunteers, known as Wikipedians, through open collaboration and using a wiki-based editing system called MediaWiki. Wikipedia is the largest and most-read reference work in history. It is consistently one of the 10 most popular websites ranked by Similarweb and formerly Alexa; as of 2023, Wikipedia was ranked the 5th most popular site in the world. It is hosted by the Wikimedia Foundation, an American non-profit organization funded mainly through donations.</div>
 			</div>
-		</div>
-
-		<div class="sectionWrap">
-			<div class="section fullSection">
-				<div class="text">Pronoun data is pulled from <a href="https://pronouns.alejo.io">Twitch Chat Pronouns</a>'s REST API.</div>
+			<hr/>
+			<div class="settings">
+				<div class="content settingColumn">
+					column 1
+				</div>
 			</div>
 		</div>
 	</div>
 
-	<script type="text/javascript" src="../settings.js"></script>
+	<div id="filterWrapper">
+		<svg xmlns="http://www.w3.org/2000/svg">
+			<filter id="outlineEffect" color-interpolation-filters="sRGB">
+				<feConvolveMatrix in="SourceAlpha" result="OutlineAlpha" divisor="4" order="5,5" kernelMatrix="0 1 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 0"/>
+				<feFlood flood-color="#000000" result="OutlineColor" />
+				<feComposite in="OutlineColor" in2="OutlineAlpha" operator="in" result="Outline" />
 
-	<script>
-		var fontData;
-		const weightEnums = {
-			"100": "Thin",
-			"200": "Extra Light",
-			"300": "Light",
-			"400": "Regular",
-			"500": "Medium",
-			"600": "Semi-Bold",
-			"700": "Bold",
-			"800": "Extra Bold",
-			"900": "Black"
-		};
+				<feMerge>
+					<feMergeNode in="Outline"/>
+					<feMergeNode in="SourceGraphic"/>
+				</feMerge>
+			</filter>
 
-		var cmdData = [
-			"#BBBBBB",
-			"Manrope",
-			"16",
-			"no",
-			"900",
-			"uppercase",
-			"normal",
-			"1",
-			"Manrope",
-			"16",
-			"700",
-			"0",
-			"#FFFFFF",
-			"170",
-			"yes",
-			"no",
-			"squircle"
-		];
+			<filter id="shadowEffect" color-interpolation-filters="sRGB">
+				<feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#000000"/>
+			</filter>
+			<filter id="blankEffect"></filter>
+		</svg>
+	</div>
 
-		let userSettings = {
-			nameFont: "Manrope",
-			msgFont: "Manrope",
-			nameColor: "#BBBBBB",
-			nameColorSecondary: "#FFFFFF",
-			nameAngle: 170,
-			nameSize: 16,
-			italicizeName: "no",
-			nameTransform: "uppercase",
-			nameVariant: "normal",
-			nameSpacing: 1,
-			showPfp: "yes",
-			pfpShape: "squircle",
-			useUsername: "no",
-			msgSize: 16,
-			msgSpacing: 0,
-			testName: "SampleUser69420",
-			nameWeight: 900,
-			msgWeight: 700,
-			use7TVPaint: "yes"
-		};
+	<datalist id="colorStops_percentageTicks">
+		<option value="-200"></option>
+		<option value="-175"></option>
+		<option value="-150"></option>
+		<option value="-125"></option>
+		<option value="-100"></option>
+		<option value="-75"></option>
+		<option value="-50"></option>
+		<option value="-25"></option>
+		<option value="0"></option>
+		<option value="25"></option>
+		<option value="50"></option>
+		<option value="75"></option>
+		<option value="100"></option>
+		<option value="125"></option>
+		<option value="150"></option>
+		<option value="175"></option>
+		<option value="200"></option>
+	</datalist>
 
-		window.addEventListener("load", function(event) {
-			$.get("../fonts.json", function(data) {
-				fontData = data;
-				let fonts = Object.keys(fontData);
-				fonts.sort();
-				fonts.reverse();
-				
-				for(let fontIdx in fonts) {
-					let fontName = fonts[fontIdx];
-					let font = fontData[fontName];
-
-					if(font.allowed.names) {
-						$("#nameFont").prepend($("<option>", { value: fontName, text: fontName }));
-					}
-
-					if(font.allowed.messages) {
-						$("#msgFont").prepend($("<option>", { value: fontName, text: fontName }));
-					}
-				}
-
-				for(let setting in userSettings) {
-					let settingValue = userSettings[setting];
-					let storedValue = localStorage.getItem(setting);
-					
-					if(storedValue === null) {
-						localStorage.setItem(setting, settingValue);
-					} else {
-						settingValue = storedValue.split("_").join(" ");
-						userSettings[setting] = storedValue;
-					}
-					let isBool = false;
-					if(settingValue === "yes" || settingValue === "no") {
-						settingValue = (settingValue === "yes" ? true : false);
-						isBool = true;
-					}
-					if(setting.indexOf("Weight") !== -1) {
-						settingValue = parseInt(settingValue);
-					}
-
-					console.log(setting, settingValue);
-					$(`#${setting}`).val(settingValue);
-
-					if(isBool) {
-						if(settingValue) {
-							$(`#${setting}`).attr("checked", true);
-						} else {
-							$(`#${setting}`).removeAttr("checked");
-						}
-					}
-					$(`#${setting}`).trigger("change").trigger("input");
-				}
-			});
-
-			$("#outputCommand").text(`!chatsettings ${cmdData.join(" ")}`);
-
-			let _flags = Object.keys(settings.flags);
-			_flags.sort();
-			for(let i in _flags) {
-				let flag = _flags[i];
-				$("#identityFlags").append(`<div><span class="flag${flag} flag" style="background-image: url('../flags/${settings.flags[flag]}'); display: inline-block;"></span> ${flag}</div>`);
-			}
-		});
-
-		$("#nameFont").on("change", function(e) {
-			let optionSelected = $("#nameFont:selected", this);
-			let font = this.value;
-
-			$("#nameWeight").empty();
-
-			let weights = Object.keys(fontData[font]);
-			if(!("700" in fontData[font])) {
-				weights.push("700");
-			}
-			weights.sort();
-
-			let oldWeight = parseInt(localStorage.getItem("nameWeight"));
-			let lastDiff = 1000;
-			let wantedWeight = 100;
-
-			for(let weightIdx in weights) {
-				let weight = weights[weightIdx];
-
-				if(!isNaN(parseInt(weight))) {
-					$("#nameWeight").append($("<option>", { value: weight, text: `${weightEnums[weight]} (${weight})` }));
-					let diff = Math.abs(parseInt(weight) - oldWeight);
-					if(diff < lastDiff) {
-						wantedWeight = parseInt(weight);
-						lastDiff = diff;
-					}
-				}
-			}
-
-			$("#nameWeight").val(wantedWeight);
-			$("#nameWeight").trigger("change");
-
-			$(":root").get(0).style.setProperty(`--nameFont`, font);
-			updateCmdData(1, "nameFont", font.split(" ").join("_"));
-		});
-		$("#msgFont").on("change", function(e) {
-			let optionSelected = $("#msgFont:selected", this);
-			let font = this.value;
-
-			$("#msgWeight").empty();
-
-			let weights = Object.keys(fontData[font]);
-			if(!("700" in fontData[font])) {
-				weights.push("700");
-			}
-			weights.sort();
-
-			let oldWeight = parseInt(localStorage.getItem("msgWeight"));
-			let lastDiff = 1000;
-			let wantedWeight = 100;
-
-			for(let weightIdx in weights) {
-				let weight = weights[weightIdx];
-
-				if(!isNaN(parseInt(weight))) {
-					$("#msgWeight").append($("<option>", { value: weight, text: `${weightEnums[weight]} (${weight})` }));
-					let diff = Math.abs(parseInt(weight) - oldWeight);
-					if(diff < lastDiff) {
-						wantedWeight = parseInt(weight);
-						lastDiff = diff;
-					}
-				}
-			}
-
-			$("#msgWeight").val(wantedWeight);
-			$("#msgWeight").trigger("change");
-
-			$(":root").get(0).style.setProperty(`--msgFont`, font);
-			updateCmdData(8, "msgFont", font.split(" ").join("_"));
-		});
-
-		$("#nameColor").on("input", function(e) {
-			$(":root").get(0).style.setProperty(`--nameColor`, this.value);
-			updateCmdData(0, "nameColor", this.value);
-		});
-		$("#nameColorSecondary").on("input", function(e) {
-			$(":root").get(0).style.setProperty(`--nameColorSecondary`, this.value);
-			updateCmdData(12, "nameColorSecondary", this.value);
-		});
-
-		$("#nameAngle").on("input", function(e) {
-			$(":root").get(0).style.setProperty(`--nameAngle`, `${this.value}deg`);
-			updateCmdData(13, "nameAngle", this.value);
-		});
-
-		$("#nameSize").on("change", function(e) {
-			$(":root").get(0).style.setProperty(`--nameSize`, `${this.value}pt`);
-			updateCmdData(2, "nameSize", this.value);
-		});
-		$("#msgSize").on("change", function(e) {
-			$(":root").get(0).style.setProperty(`--msgSize`, `${this.value}pt`);
-			updateCmdData(9, "msgSize", this.value);
-		});
-
-		$("#italicizeName").on("change", function(e) {
-			$(":root").get(0).style.setProperty(`--nameStyle`, ($("#italicizeName").is(":checked") ? "italic" : "normal"));
-			updateCmdData(3, "italicizeName", ($("#italicizeName").is(":checked") ? "yes" : "no"));
-		});
-
-		$("#nameWeight").on("change", function(e) {
-			$(":root").get(0).style.setProperty(`--nameWeight`, this.value);
-			updateCmdData(4, "nameWeight", this.value);
-		});
-		$("#msgWeight").on("change", function(e) {
-			$(":root").get(0).style.setProperty(`--msgWeight`, this.value);
-			updateCmdData(10, "msgWeight", this.value);
-		});
-
-		$("#nameSpacing").on("change", function(e) {
-			$(":root").get(0).style.setProperty(`--nameSpacing`, `${this.value}px`);
-			updateCmdData(7, "nameSpacing", this.value);
-		});
-		$("#msgSpacing").on("change", function(e) {
-			$(":root").get(0).style.setProperty(`--msgSpacing`, `${this.value}px`);
-			updateCmdData(11, "msgSpacing", this.value);
-		});
-
-		$("#testName").on("input", function(e) {
-			$(".displayName").text(this.value);
-			localStorage.setItem("testName", this.value);
-		});
-
-		$("#nameTransform").on("change", function(e) {
-			$(":root").get(0).style.setProperty(`--nameTransform`, this.value);
-			updateCmdData(5, "nameTransform", this.value);
-		});
-
-		$("#nameVariant").on("change", function(e) {
-			$(":root").get(0).style.setProperty(`--nameVariant`, this.value);
-			updateCmdData(6, "nameVariant", this.value);
-		});
-
-		$("#showPfp").on("change", function(e) {
-			$(":root").get(0).style.setProperty(`--showPfp`, ($("#showPfp").is(":checked") ? "inline-block" : "none"));
-			updateCmdData(14, "showPfp", ($("#showPfp").is(":checked") ? "yes" : "no"));
-		});
-
-		$("#useUsername").on("change", function(e) {
-			updateCmdData(15, "useUsername", ($("#useUsername").is(":checked") ? "yes" : "no"));
-		});
-
-		$("#pfpShape").on("change", function(e) {
-			let cssVal;
-			switch(this.value) {
-				case "square": cssVal = "0px"; break;
-				case "squircle": cssVal = "10px"; break;
-				case "circle": cssVal = "100%"; break;
-			}
-
-			$(":root").get(0).style.setProperty(`--pfpShape`, cssVal);
-			updateCmdData(16, "pfpShape", this.value);
-		});
-
-		$("#use7TVPaint").on("change", function(e) {
-			updateCmdData(17, "use7TVPaint", ($("#use7TVPaint").is(":checked") ? "yes" : "no"));
-		});
-
-		function updateCmdData(idx, key, value) {
-			cmdData[idx] = value;
-			userSettings[key] = value;
-
-			localStorage.setItem(key, value);
-			
-			$("#outputCommand").text(`!chatsettings ${cmdData.join(" ")}`);
-		}
-	</script>
+	<script defer type="text/javascript" src="funcs.js"></script>
+	<script defer type="text/javascript" src="settings.js"></script>
+	<script defer type="text/javascript" src="main.js"></script>
 </body>
+
+
 </html>

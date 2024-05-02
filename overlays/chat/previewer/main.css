@@ -1,0 +1,436 @@
+:root {
+	--font-family: "Manrope";
+	--font-color: #fff;
+	--font-weight: 600;
+	--font-weight-bold: 900;
+	--font-size: 12pt;
+	--line-height: 24px;
+
+	--background-color: #3a363e;
+	--background-color-darker: #232125;
+	--header-color: #232125ee;
+
+	--border-color: rgba(255, 255, 255, 0.2);
+	--primary-color: #cbadff;
+
+	--header-height: 60px;
+
+	--button-font-size: 10pt;
+	--button-padding: 16px;
+	--button-default-color: var(--background-color);
+	--button-gradient: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), transparent);
+	--button-gradient-active: linear-gradient(to top, rgba(255, 255, 255, 0.1), transparent);
+	--button-active-translate: 2px;
+	--button-shadow: drop-shadow(0px 1px 2px #000);
+
+	--input-height: 22px;
+	--input-padding: 8px;
+	--input-bg-color: var(--background-color-darker);
+	--input-color: var(--font-color);
+	--input-border-radius: 6px;
+	--input-font: monospace;
+	--input-weight: 600;
+	--input-shadow: 0px 0px 4px inset #000;
+	--input-border-color: rgba(255, 255, 255, 0.4);
+
+	--global-spacing: 16px;
+	--global-spacing-half: calc(var(--global-spacing) / 2);
+	--global-spacing-small: calc(var(--global-spacing) / 6);
+
+	--name-font: "Manrope";
+	--name-size: 16pt;
+	--name-weight: 900;
+	--name-weight-extra: 1.2px;
+	--name-font-style: normal;
+	--name-variant: normal;
+	--name-gradient-direction: 170deg;
+	--name-transform: uppercase;
+	--name-letter-spacing: 1px;
+	--name-color-1: #ffffff;
+	--name-color-1-percentage: 0%;
+	--name-color-2: #cbadff;
+	--name-color-2-percentage: 75%;
+	--name-color-3: #ffffff;
+	--name-color-3-percentage: 0%;
+	--name-color-4: #ffffff;
+	--name-color-4-percentage: 0%;
+	--name-color-5: #ffffff;
+	--name-color-5-percentage: 0%;
+	--name-color-6: #ffffff;
+	--name-color-6-percentage: 0%;
+	--name-filters: url(#outlineEffect) url(#shadowEffect);
+	--name-gradient: linear-gradient(var(--name-gradient-direction), var(--name-color-1) var(--name-color-1-percentage), var(--name-color-2) var(--name-color-2-percentage));
+
+	--message-font: "Manrope";
+	--message-size: 14pt;
+	--message-weight: 700;
+	--message-weight-extra: 0px;
+	--message-transform: none;
+	--message-letter-spacing: 0px;
+	--message-filters: url(#outlineEffect) url(#shadowEffect);
+}
+
+#filterWrapper {
+	position: fixed;
+	left: -1000px;
+	top: -1000px;
+}
+
+body {
+	font-family: "Manrope";
+	font-weight: var(--font-weight);
+	font-size: var(--font-size);
+	line-height: var(--line-height);
+	color: var(--font-color);
+	background-color: var(--background-color);
+}
+
+#header {
+	height: var(--header-height);
+	width: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 100;
+
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+
+	background-image: linear-gradient(to top, #000 -33%, var(--header-color) 20%);
+	border-bottom: 1px solid var(--border-color);
+	backdrop-filter: blur(5px);
+}
+
+#header .cell {
+	display: inline-flex;
+	align-items: center;
+	line-height: 0px;
+	margin-left: var(--global-spacing);
+	margin-right: var(--global-spacing);
+}
+.grow {
+	flex-grow: 1;
+}
+
+h1 {
+	font-size: calc(var(--font-size) * 1.33);
+	font-weight: var(--font-weight-bold);
+}
+
+.button {
+	display: inline-block;
+	cursor: default;
+	
+	padding-left: var(--button-padding);
+	padding-right: var(--button-padding);
+	padding-top: calc(var(--button-padding) / 2);
+	padding-bottom: calc(var(--button-padding) / 2);
+
+	font-weight: var(--font-weight-bold);
+	font-size: var(--button-font-size);
+	text-align: center;
+
+	border-radius: var(--input-border-radius);
+	border: 1px solid var(--input-border-color);
+
+	background-color: var(--button-default-color);
+	background-image: var(--button-gradient);
+
+	filter: var(--button-shadow);
+	text-shadow: 0px -1px 0px #00000060;
+}
+.button:hover {
+	filter: brightness(115%) var(--button-shadow);
+}
+.button:active {
+	background-image: var(--button-gradient-active);
+	transform: translateY(var(--button-active-translate));
+	filter: none;
+}
+
+#signInButton {
+	background-color: #9146FF;
+	display: flex;
+	line-height: 1em;
+	align-items: center;
+}
+#signInButton .fa-fw {
+	font-size: 1.25em;
+	line-height: 0px;
+	margin-right: 4px;
+}
+
+#wrapper {
+	position: relative;
+	top: var(--header-height);
+
+	display: flex;
+	flex-direction: column;
+
+	padding: var(--global-spacing);
+}
+
+#wrapper .cell {
+	display: flex;
+	flex-direction: column;
+}
+
+hr {
+	background-color: var(--border-color);
+	height: 1px;
+	width: 100%;
+	border: none;
+
+	margin: 0;
+	margin-bottom: var(--global-spacing);
+	margin-top: var(--global-spacing);
+}
+.cell hr {
+	margin-bottom: var(--global-spacing-half);
+	margin-top: var(--global-spacing-half);	
+}
+
+#wrapper h1 {
+	border-bottom: 1px solid var(--primary-color);
+	margin-bottom: var(--global-spacing-half);
+	padding-bottom: var(--global-spacing-half);
+	background-image: radial-gradient(ellipse at 50% 100%, var(--primary-color) -80%, transparent 60%);
+	color: var(--primary-color);
+	filter: drop-shadow(0px 1px 2px #000);
+	width: 100%;
+}
+
+.preview {
+	width: 100%;
+}
+
+#namePreview {
+	display: inline-block;
+	padding-top: var(--global-spacing);
+	padding-bottom: var(--global-spacing);
+
+	font-family: var(--name-font);
+	font-size: var(--name-size);
+	font-weight: var(--name-weight);
+	font-style: var(--name-font-style);
+	font-variant: var(--name-variant);
+
+	-webkit-text-stroke: var(--name-weight-extra) transparent;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-image: var(--name-gradient);
+
+	text-transform: var(--name-transform);
+	letter-spacing: var(--name-letter-spacing);
+
+	filter: var(--name-filters);
+}
+
+#messagePreview {
+	display: inline-block;
+	padding-top: var(--global-spacing);
+	padding-bottom: var(--global-spacing);
+
+	font-family: var(--message-font);
+	font-size: var(--message-size);
+	font-weight: var(--message-weight);
+	font-style: var(--message-font-style);
+
+	-webkit-text-stroke: var(--message-weight-extra) transparent;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-color: #fff;
+
+	text-transform: var(--message-transform);
+	letter-spacing: var(--message-letter-spacing);
+
+	filter: var(--message-filters);
+}
+
+.settings {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+}
+.setting {
+	display: flex;
+	flex-grow: 1;
+	align-items: center;
+	margin-top: var(--global-spacing-small);
+	margin-bottom: var(--global-spacing-small);
+}
+.settingColumn {
+	min-width: 400px;
+	width: 50%;
+	display: flex;
+	flex-direction: row;
+	justify-content: stretch;
+	flex-wrap: wrap;
+}
+.fullWidth {
+	width: 100%;
+}
+.fullWidth .setting {
+	width: 100%;
+}
+.fullWidth .settingValue {
+	flex-grow: unset;
+}
+
+.settingLabel, .settingValue {
+	display: inline-block;
+}
+.settingLabel {
+	text-align: right;
+	padding-right: 12px;
+	border-right: 2px solid var(--border-color);
+	width: 200px;
+}
+.settingValue {
+	text-align: left;
+	margin-left: 12px;
+	flex-grow: 1;
+}
+
+input, select, textarea {
+	min-height: var(--input-height);
+	margin: 0px;
+	padding: 0px;
+	padding-top: calc(var(--input-padding) / 2);
+	padding-bottom: calc(var(--input-padding) / 2);
+	padding-left: var(--input-padding);
+	padding-right: var(--input-padding);
+	background-color: var(--input-bg-color);
+	color: var(--font-color);
+	font-family: var(--input-font);
+	font-size: var(--font-size);
+	font-weight: var(--input-weight);
+	border-radius: var(--input-border-radius);
+	border: 1px solid var(--border-color);
+	vertical-align: middle;
+	box-shadow: var(--input-shadow);
+	margin-right: 6px;
+}
+
+input[type="checkbox"] {
+	width: var(--input-height);
+	height: var(--input-height);
+	vertical-align: middle;
+	margin-right: var(--global-spacing-half);
+	padding: 0px;
+	font-family: "Font Awesome 6 Free";
+	color: #000;
+	text-align: center;
+	line-height: var(--input-height);
+	appearance: none;
+	border: none;
+}
+
+input[type="checkbox"]:before, input[type="checkbox"]:checked:before {
+	display: block;
+	position: relative;
+	width: 100%;
+	height: 100%;
+	border-radius: var(--input-border-radius);
+	border: 1px solid var(--border-color);
+}
+input[type="checkbox"]:checked:before {
+	border: 1px solid var(--input-border-color);
+}
+
+input[type="checkbox"]:before {
+	content: "";
+	background: var(--input-bg-color);
+	box-shadow: var(--input-shadow);
+}
+
+input[type="checkbox"]:checked:before {
+	content: "\f00c";
+	background-color: var(--primary-color);
+	background-image: var(--checkbox-gradient);
+	box-shadow: none;
+}
+
+input[data-coloris] {
+	width: 100px;
+}
+.clr-field button {
+	border-radius: var(--input-border-radius);
+	width: 22px;
+	height: 22px;
+	margin-right: 6px;
+	background: transparent;
+}
+.clr-dark {
+	background-color: var(--background-color-darker);
+}
+.clr-dark input.clr-color {
+	background-color: #000;
+	border-color: var(--border-color);
+}
+.clr-picker.clr-polaroid {
+	box-shadow: 0px 2px 8px #000;
+}
+.clr-picker.clr-polaroid.clr-dark:before {
+	color: var(--background-color-darker);
+}
+
+input:focus-visible, select:focus-visible, textarea:focus-visible {
+	outline: 3px solid var(--primary-color);
+	border: 1px solid transparent;
+}
+
+textarea {
+	height: calc(var(--input-height) * 5);
+}
+
+.settingValue input[type="range"] {
+	appearance: none;
+	outline: none;
+	padding: 0;
+	width: calc(100% - 100px  - 140px);
+	box-shadow: none;
+	margin-left: var(--global-spacing);
+	margin-right: var(--global-spacing);
+	background-image: linear-gradient(var(--sidebar-active-row-bg-color), var(--sidebar-active-row-bg-color));
+	background-repeat: no-repeat;
+	height: calc(var(--input-height) / 2);
+}
+.settingValue input[type="range"]::-webkit-slider-thumb {
+	appearance: none;
+	height: calc(var(--input-height) / 1.33);
+	width: calc(var(--input-height) / 1.33);
+	background-color: #fff;
+	border-radius: 100%;
+}
+.settingValue input[type="range"]::-webkit-slider-runnable-track {
+	appearance: none;
+	height: var(--input-height);
+	position: relative;
+	top: -10%;
+}
+.rangeValue {
+	vertical-align: middle;
+	line-height: 1em;
+	width: 40px;
+	text-align: right;
+	display: inline-block;
+}
+.settingCellMeasurement {
+	vertical-align: middle;
+	line-height: 1em;
+}
+::selection {
+	background: var(--primary-color);
+	color: #000;
+}
+.settingInfo {
+	vertical-align: middle;
+}
+
+select option {
+	padding: 0px;
+}
