@@ -28,7 +28,8 @@
 	--input-bg-color: var(--background-color-darker);
 	--input-color: var(--font-color);
 	--input-border-radius: 6px;
-	--input-font: monospace;
+	--input-font: "Manrope";
+	--input-font-size: 12pt;
 	--input-weight: 600;
 	--input-shadow: 0px 0px 4px inset #000;
 	--input-border-color: rgba(255, 255, 255, 0.4);
@@ -36,6 +37,8 @@
 	--global-spacing: 16px;
 	--global-spacing-half: calc(var(--global-spacing) / 2);
 	--global-spacing-small: calc(var(--global-spacing) / 6);
+	--setting-spacing: 12px;
+	--setting-spacing-half: calc(var(--setting-spacing) / 2);
 
 	--name-font: "Manrope";
 	--name-size: 16pt;
@@ -44,8 +47,11 @@
 	--name-font-style: normal;
 	--name-variant: normal;
 	--name-gradient-direction: 170deg;
+	--name-gradient-x-pos: 50%;
+	--name-gradient-y-pos: 50%;
 	--name-transform: uppercase;
 	--name-letter-spacing: 1px;
+	--name-color-0-percentage: 0%; /* just in case */
 	--name-color-1: #ffffff;
 	--name-color-1-percentage: 0%;
 	--name-color-2: #cbadff;
@@ -85,6 +91,13 @@ body {
 	background-color: var(--background-color);
 }
 
+p {
+	margin-bottom: var(--global-spacing);
+}
+p:last-child {
+	margin-bottom: 0px;
+}
+
 #header {
 	height: var(--header-height);
 	width: 100%;
@@ -109,6 +122,12 @@ body {
 	margin-left: var(--global-spacing);
 	margin-right: var(--global-spacing);
 }
+#header .cell:first-child {
+	-webkit-mask-image: linear-gradient(to right, #ffffffff 80%, #00000000 100%);
+	height: 2em;
+	text-wrap: nowrap;
+	overflow-x: clip;
+}
 .grow {
 	flex-grow: 1;
 }
@@ -116,6 +135,7 @@ body {
 h1 {
 	font-size: calc(var(--font-size) * 1.33);
 	font-weight: var(--font-weight-bold);
+	text-overflow: clip;
 }
 
 .button {
@@ -154,6 +174,7 @@ h1 {
 	display: flex;
 	line-height: 1em;
 	align-items: center;
+	text-wrap: nowrap;
 }
 #signInButton .fa-fw {
 	font-size: 1.25em;
@@ -257,17 +278,17 @@ hr {
 }
 .setting {
 	display: flex;
-	flex-grow: 1;
+	width: 500px;
 	align-items: center;
 	margin-top: var(--global-spacing-small);
 	margin-bottom: var(--global-spacing-small);
 }
 .settingColumn {
-	min-width: 400px;
-	width: 50%;
+	width: 100%;
 	display: flex;
-	flex-direction: row;
-	justify-content: stretch;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 	flex-wrap: wrap;
 }
 .fullWidth {
@@ -285,14 +306,15 @@ hr {
 }
 .settingLabel {
 	text-align: right;
-	padding-right: 12px;
 	border-right: 2px solid var(--border-color);
-	width: 200px;
+	padding-right: var(--setting-spacing);
+	width: 33%;
+	font-weight: 900;
 }
 .settingValue {
 	text-align: left;
-	margin-left: 12px;
-	flex-grow: 1;
+	padding-left: var(--setting-spacing);
+	width: 67%;
 }
 
 input, select, textarea {
@@ -306,13 +328,14 @@ input, select, textarea {
 	background-color: var(--input-bg-color);
 	color: var(--font-color);
 	font-family: var(--input-font);
-	font-size: var(--font-size);
+	font-size: var(--input-font-size);
 	font-weight: var(--input-weight);
 	border-radius: var(--input-border-radius);
 	border: 1px solid var(--border-color);
 	vertical-align: middle;
 	box-shadow: var(--input-shadow);
 	margin-right: 6px;
+	font-variant: tabular-nums;
 }
 
 input[type="checkbox"] {
@@ -433,4 +456,35 @@ textarea {
 
 select option {
 	padding: 0px;
+}
+
+#signedInUser {
+	display: flex;
+	align-items: center;
+}
+#signedInUser_avatar, #signedInUser_avatarOutline {
+	border-radius: 50%;
+}
+#signedInUser_avatar {
+	height: 1.75em;
+	width: 1.75em;
+	background-image: var(--user-avatar);
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+#signedInUser_avatarOutline {
+	position: fixed;
+	z-index: 101;
+	height: calc(1.75em - 2px);
+	width: calc(1.75em - 2px);
+	border: 1px solid rgba(255, 255, 255, 0.5);
+}
+#signedInUser_name {
+	font-weight: 900;
+	margin-left: var(--global-spacing-half);
+}
+
+.settingValueSection {
+	margin-top: var(--global-spacing-small);
+	margin-bottom: var(--global-spacing-small);
 }

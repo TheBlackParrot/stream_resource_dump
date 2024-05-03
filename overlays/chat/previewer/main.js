@@ -87,7 +87,18 @@ function setNameGradient() {
 
 	let stops = [];
 	for(let i = 1; i <= amount; i++) {
-		stops.push(`var(--name-color-${i}) var(--name-color-${i}-percentage)`);
+		let isHard = localStorage.getItem(`clientSetting_nameColorStop${i}_isHard`);
+		let prevIdx = Math.max(1, i-1);
+
+		if(isHard === "true") {
+			stops.push(`var(--name-color-${prevIdx}) var(--name-color-${i}-percentage)`);
+			stops.push(`var(--name-color-${i}) var(--name-color-${i}-percentage)`);
+			if(i === amount) {
+				stops.push(`var(--name-color-${i}) calc(var(--name-color-${i}-percentage) + (var(--name-color-${i}-percentage) - var(--name-color-${prevIdx}-percentage)))`);
+			}
+		} else {
+			stops.push(`var(--name-color-${i}) var(--name-color-${i}-percentage)`);
+		}
 	}
 
 	let initialPart = "";
@@ -97,11 +108,11 @@ function setNameGradient() {
 			break;
 
 		case "radial-gradient":
-			// nothing
+			initialPart = "at var(--name-gradient-x-pos) var(--name-gradient-y-pos), ";
 			break;
 
 		case "conic-gradient":
-			initialPart = "from var(--name-gradient-direction), ";
+			initialPart = "from var(--name-gradient-direction) at var(--name-gradient-x-pos) var(--name-gradient-y-pos), ";
 			break;
 	}
 	rootCSS().setProperty("--name-gradient", `${repeats ? "repeating-" : ""}${type}(${initialPart}${stops.join(", ")})`);
@@ -148,6 +159,7 @@ $("input, select, textarea").on("change", function(e) {
 setNameGradient();
 
 var fontData;
+var userData;
 const weightEnums = {
 	"100": "Thin",
 	"200": "Extra Light",
@@ -160,9 +172,35 @@ const weightEnums = {
 	"900": "Black"
 };
 
-window.addEventListener("load", function(event) {
-	$.get("fonts.json", function(data) {
-		fontData = data;
+window.addEventListener("load", async function(event) {
+	$("#signInButton").hide();
+	const cookieParts = document.cookie.split("; ")
+	const cookieValue = cookieParts.find((key) => key.startsWith("access="))?.split("=")[1];
+
+	if(cookieValue) {
+		const response = await fetch('api/getUser.php');
+		if(!response.ok) {
+			$("#signInButton").show();
+			return;
+		}
+
+		userData = await response.json();
+		rootCSS().setProperty("--user-avatar", `url('${userData.profile_image_url}')`);
+		$("#signedInUser_name").text(userData.display_name);
+		$("#signedInUser").fadeIn(250);
+
+		$("#namePreview").fadeOut(250, function() {
+			$("#namePreview").text(userData.display_name);
+			$("#namePreview").fadeIn(250);
+		});
+	} else {
+		$("#signInButton").show();
+	}
+
+	const fontResponse = await fetch(`fonts.json?time=${Date.now()}`);
+	if(fontResponse.ok) {
+		fontData = await fontResponse.json();
+
 		let fonts = Object.keys(fontData);
 		fonts.sort();
 		fonts.reverse();
@@ -189,7 +227,7 @@ window.addEventListener("load", function(event) {
 
 		$("#nameFont").val(localStorage.getItem("clientSetting_nameFont"));
 		$("#nameFont").trigger("change");
-	});
+	}
 
 	/*
 	let _flags = Object.keys(settings.flags);
@@ -236,6 +274,32 @@ $("#nameFont").on("change", function(e) {
 	$(":root").get(0).style.setProperty(`--name-font`, font);
 });
 
+const oauthCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+const oauthRedirectUri = `${window.location.origin}${window.location.pathname}api/resolve.php`;
+const twitchClientID = "xz8xgox825yig2mk30m3ypt1f73rvy";
+
+function getRandomString(length) {
+	let rand = [];
+
+	for(let i = 0; i < length; i++) {
+		let char = oauthCharacters.charAt(Math.floor(Math.random() * oauthCharacters.length));
+		rand.push(char);
+	}
+
+	return rand.join("");
+}
+
 $("#signInButton").on("mouseup", function(e) {
-	alert("(this does nothing, no backend for this exists yet)");
+	let state = getRandomString(16);
+	sessionStorage.setItem("_clientSetting_oauth_state", state);
+
+	let args = new URLSearchParams({
+		response_type: 'code',
+		client_id: twitchClientID,
+		scope: "",
+		redirect_uri: oauthRedirectUri,
+		state: state
+	});
+
+	window.location = 'https://id.twitch.tv/oauth2/authorize?' + args;
 })

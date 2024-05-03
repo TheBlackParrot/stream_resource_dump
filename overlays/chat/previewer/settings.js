@@ -15,13 +15,18 @@ const settingUpdaters = {
 	nameColorStop4_color: function(value) { rootCSS().setProperty("--name-color-4", value); },
 	nameColorStop5_color: function(value) { rootCSS().setProperty("--name-color-5", value); },
 	nameColorStop6_color: function(value) { rootCSS().setProperty("--name-color-6", value); },
-
 	nameColorStop1_percentage: function(value) { rootCSS().setProperty("--name-color-1-percentage", `${value}%`); },
 	nameColorStop2_percentage: function(value) { rootCSS().setProperty("--name-color-2-percentage", `${value}%`); },
 	nameColorStop3_percentage: function(value) { rootCSS().setProperty("--name-color-3-percentage", `${value}%`); },
 	nameColorStop4_percentage: function(value) { rootCSS().setProperty("--name-color-4-percentage", `${value}%`); },
 	nameColorStop5_percentage: function(value) { rootCSS().setProperty("--name-color-5-percentage", `${value}%`); },
 	nameColorStop6_percentage: function(value) { rootCSS().setProperty("--name-color-6-percentage", `${value}%`); },
+	nameColorStop1_isHard: function(value) { setNameGradient(); },
+	nameColorStop2_isHard: function(value) { setNameGradient(); },
+	nameColorStop3_isHard: function(value) { setNameGradient(); },
+	nameColorStop4_isHard: function(value) { setNameGradient(); },
+	nameColorStop5_isHard: function(value) { setNameGradient(); },
+	nameColorStop6_isHard: function(value) { setNameGradient(); },
 
 	nameGradientAngle: function(value) {
 		rootCSS().setProperty("--name-gradient-direction", `${value}deg`);
@@ -47,6 +52,12 @@ const settingUpdaters = {
 	},
 	nameCharSpacing: function(value) {
 		rootCSS().setProperty("--name-letter-spacing", `${value}px`);
+	},
+	nameGradientXPos: function(value) {
+		rootCSS().setProperty("--name-gradient-x-pos", `${value}%`);
+	},
+	nameGradientYPos: function(value) {
+		rootCSS().setProperty("--name-gradient-y-pos", `${value}%`);
 	}
 };
 
@@ -62,6 +73,21 @@ function updateSetting(which, value, oldValue) {
 	if(setting in settingUpdaters) {
 		console.log(`setting ${setting} updated`);
 		settingUpdaters[setting](value.toString());
+	}
+
+	const subSettings = $(`.setting[data-show-for="${setting}"]`);
+	if(subSettings.length) {
+		console.log(subSettings);
+		subSettings.each(function(idx) {
+			let item = $(subSettings[idx]);
+			console.log(item);
+
+			if(item.attr("data-value-for").indexOf(value) === -1) {
+				item.hide();
+			} else {
+				item.show();
+			}
+		});
 	}
 }
 window.addEventListener("storage", function(event) {
