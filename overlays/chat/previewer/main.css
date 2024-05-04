@@ -1,3 +1,24 @@
+/*
+	funny:
+
+	transform: matrix3d(1, 0, 0, 0, 0, 1, 0, -0.002, 0, 0, 1, 0, 0, 0, 0, 1);
+		-- add a perspective effect
+	transform: skewX(-20deg);
+		-- drop italics? use this instead? maybe?
+
+	move SVG filter variable to the container that has the name preview rather than the name preview itself
+
+	expand color stop count to 8 max
+	take into account color stop amount of 1 and just solid color or dupe the first stop or something
+
+	allow the user to hide badges from external services (individually)
+
+	glow effect?
+
+	disable highlighting text on previews
+
+	overlay two-stop gradient (like you do to add shine to stuff)?
+*/
 :root {
 	--font-family: "Manrope";
 	--font-color: #fff;
@@ -11,7 +32,9 @@
 	--header-color: #232125ee;
 
 	--border-color: rgba(255, 255, 255, 0.2);
+	--border-separator: linear-gradient(90deg, transparent 8px, var(--border-color) 10%, var(--border-color) 90%, transparent calc(100% - 8px));
 	--primary-color: #cbadff;
+	--primary-color-desat: #e5d6ff;
 
 	--header-height: 60px;
 
@@ -34,11 +57,12 @@
 	--input-shadow: 0px 0px 4px inset #000;
 	--input-border-color: rgba(255, 255, 255, 0.4);
 
-	--global-spacing: 16px;
+	--global-spacing: 18px;
 	--global-spacing-half: calc(var(--global-spacing) / 2);
 	--global-spacing-small: calc(var(--global-spacing) / 6);
 	--setting-spacing: 12px;
 	--setting-spacing-half: calc(var(--setting-spacing) / 2);
+	--setting-spacing-small: calc(var(--setting-spacing) / 6);
 
 	--name-font: "Manrope";
 	--name-size: 16pt;
@@ -51,29 +75,48 @@
 	--name-gradient-y-pos: 50%;
 	--name-transform: uppercase;
 	--name-letter-spacing: 1px;
+	--name-color: unset;
 	--name-color-0-percentage: 0%; /* just in case */
 	--name-color-1: #ffffff;
 	--name-color-1-percentage: 0%;
 	--name-color-2: #cbadff;
 	--name-color-2-percentage: 75%;
 	--name-color-3: #ffffff;
-	--name-color-3-percentage: 0%;
+	--name-color-3-percentage: 100%;
 	--name-color-4: #ffffff;
-	--name-color-4-percentage: 0%;
+	--name-color-4-percentage: 100%;
 	--name-color-5: #ffffff;
-	--name-color-5-percentage: 0%;
+	--name-color-5-percentage: 100%;
 	--name-color-6: #ffffff;
-	--name-color-6-percentage: 0%;
-	--name-filters: url(#outlineEffect) url(#shadowEffect);
+	--name-color-6-percentage: 100%;
+	--name-color-7: #ffffff;
+	--name-color-7-percentage: 100%;
+	--name-color-8: #ffffff;
+	--name-color-8-percentage: 100%;
+	--name-color-9: #ffffff;
+	--name-color-9-percentage: 100%;
 	--name-gradient: linear-gradient(var(--name-gradient-direction), var(--name-color-1) var(--name-color-1-percentage), var(--name-color-2) var(--name-color-2-percentage));
+	--name-perspective-shift-amount: 0;
+	--name-perspective-shift: matrix3d(1, 0, 0, 0, 0, 1, 0, calc(var(--name-perspective-shift-amount) / 10000), 0, 0, 1, 0, 0, 0, 0, 1);
+	--name-skew-amount: 0deg;
+	--name-skew: skewX(var(--name-skew-amount));
+	--name-effects: none;
+	--name-glow-effect-color: #ffffffff;
+	--name-glow-effect-blur: 3px;
+	--name-glow-effect-actual: drop-shadow(0px 0px var(--name-glow-effect-blur) var(--name-glow-effect-color));
+	--name-glow-effect: opacity(1);
+	--name-filters: url(#outlineEffect) url(#shadowEffect) var(--name-glow-effect);
 
 	--message-font: "Manrope";
 	--message-size: 14pt;
 	--message-weight: 700;
 	--message-weight-extra: 0px;
-	--message-transform: none;
 	--message-letter-spacing: 0px;
 	--message-filters: url(#outlineEffect) url(#shadowEffect);
+	--message-bold-weight-extra: 1.2px;
+	--message-line-height: 24px;
+
+	--avatar-border-radius: 50%;
 }
 
 #filterWrapper {
@@ -98,6 +141,11 @@ p:last-child {
 	margin-bottom: 0px;
 }
 
+a {
+	color: var(--primary-color);
+	text-decoration: none;
+}
+
 #header {
 	height: var(--header-height);
 	width: 100%;
@@ -111,7 +159,8 @@ p:last-child {
 	align-items: center;
 
 	background-image: linear-gradient(to top, #000 -33%, var(--header-color) 20%);
-	border-bottom: 1px solid var(--border-color);
+	border-bottom: 1px solid;
+	border-image: var(--border-separator) 1;
 	backdrop-filter: blur(5px);
 }
 
@@ -190,15 +239,20 @@ h1 {
 	flex-direction: column;
 
 	padding: var(--global-spacing);
+	min-width: calc(600px - var(--global-spacing));
 }
 
 #wrapper .cell {
 	display: flex;
 	flex-direction: column;
+	border-bottom: 1px solid;
+	border-image: var(--border-separator) 1;
+	margin-bottom: calc(var(--global-spacing) * 4);
+	padding-bottom: var(--global-spacing);
 }
 
 hr {
-	background-color: var(--border-color);
+	background-image: var(--border-separator);
 	height: 1px;
 	width: 100%;
 	border: none;
@@ -208,22 +262,44 @@ hr {
 	margin-top: var(--global-spacing);
 }
 .cell hr {
-	margin-bottom: var(--global-spacing-half);
-	margin-top: var(--global-spacing-half);	
+	margin-bottom: var(--global-spacing);
+	margin-top: var(--global-spacing);	
 }
 
 #wrapper h1 {
-	border-bottom: 1px solid var(--primary-color);
-	margin-bottom: var(--global-spacing-half);
+	border-bottom: 1px solid;
+	border-image: linear-gradient(90deg, transparent 8px, var(--primary-color) 10%, var(--primary-color) 90%, transparent calc(100% - 8px)) 1;
+	margin-bottom: var(--global-spacing);
 	padding-bottom: var(--global-spacing-half);
-	background-image: radial-gradient(ellipse at 50% 100%, var(--primary-color) -80%, transparent 60%);
-	color: var(--primary-color);
-	filter: drop-shadow(0px 1px 2px #000);
+	background-image: radial-gradient(ellipse at 50% 100%, var(--primary-color) -40%, transparent 70%);
+	color: var(--primary-color-desat);
 	width: 100%;
+	height: 24px;
+	position: sticky;
+	top: calc(var(--header-height) + var(--global-spacing));
+	z-index: 98;
+	text-align: center;
 }
 
 .preview {
-	width: 100%;
+	position: sticky;
+	top: calc(var(--header-height) + var(--global-spacing) + 32px);
+	z-index: 99;
+	width: calc(100% - (var(--setting-spacing) * 2) - 2px);
+
+	background-image: linear-gradient(to bottom, #ffffff50, #ffffff20);
+	backdrop-filter: blur(5px);
+	box-shadow: 0px 10px 12px -8px #000;
+	border: 1px solid var(--primary-color);
+	border-radius: var(--input-border-radius);
+
+	padding-left: var(--setting-spacing);
+	padding-right: var(--setting-spacing);
+	padding-top: var(--setting-spacing-small);
+	padding-bottom: var(--setting-spacing-small);
+
+	margin-top: var(--setting-spacing);
+	margin-bottom: var(--setting-spacing);
 }
 
 #namePreview {
@@ -240,12 +316,14 @@ hr {
 	-webkit-text-stroke: var(--name-weight-extra) transparent;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
+	background-color: var(--name-color);
 	background-image: var(--name-gradient);
 
 	text-transform: var(--name-transform);
 	letter-spacing: var(--name-letter-spacing);
 
 	filter: var(--name-filters);
+	transform: var(--name-effects);
 }
 
 #messagePreview {
@@ -256,17 +334,23 @@ hr {
 	font-family: var(--message-font);
 	font-size: var(--message-size);
 	font-weight: var(--message-weight);
-	font-style: var(--message-font-style);
 
 	-webkit-text-stroke: var(--message-weight-extra) transparent;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 	background-color: #fff;
 
-	text-transform: var(--message-transform);
 	letter-spacing: var(--message-letter-spacing);
+	line-height: var(--message-line-height);
 
 	filter: var(--message-filters);
+}
+
+#messagePreview strong {
+	-webkit-text-stroke: var(--message-bold-weight-extra) transparent;
+}
+#messagePreview em {
+	font-style: italic;
 }
 
 .settings {
@@ -278,7 +362,7 @@ hr {
 }
 .setting {
 	display: flex;
-	width: 500px;
+	width: 600px;
 	align-items: center;
 	margin-top: var(--global-spacing-small);
 	margin-bottom: var(--global-spacing-small);
@@ -315,6 +399,8 @@ hr {
 	text-align: left;
 	padding-left: var(--setting-spacing);
 	width: 67%;
+	display: flex;
+	align-items: center;
 }
 
 input, select, textarea {
@@ -341,8 +427,9 @@ input, select, textarea {
 input[type="checkbox"] {
 	width: var(--input-height);
 	height: var(--input-height);
+	min-width: var(--input-height);
 	vertical-align: middle;
-	margin-right: var(--global-spacing-half);
+	margin-right: var(--setting-spacing);
 	padding: 0px;
 	font-family: "Font Awesome 6 Free";
 	color: #000;
@@ -380,12 +467,15 @@ input[type="checkbox"]:checked:before {
 input[data-coloris] {
 	width: 100px;
 }
+input[data-enable-alpha] {
+	width: 120px;
+}
 .clr-field button {
 	border-radius: var(--input-border-radius);
 	width: 22px;
 	height: 22px;
 	margin-right: 6px;
-	background: transparent;
+	/*background: transparent;*/
 }
 .clr-dark {
 	background-color: var(--background-color-darker);
@@ -487,4 +577,151 @@ select option {
 .settingValueSection {
 	margin-top: var(--global-spacing-small);
 	margin-bottom: var(--global-spacing-small);
+	margin-left: var(--global-spacing);
+
+	display: inline-flex;
+}
+
+.settingSingle {
+	min-height: calc(var(--input-height) + var(--input-padding));
+	display: flex;
+}
+
+#identityFlags {
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+}
+
+.flag {
+	display: flex;
+	align-items: center;
+	cursor: default;
+	height: var(--input-height);
+
+	padding: var(--input-padding);
+	padding-top: calc(var(--input-padding) / 3);
+	padding-bottom: calc(var(--input-padding) / 3);
+
+	margin: calc(var(--input-padding) * 1.5);
+
+	background-color: var(--input-bg-color);
+	border: 1px solid transparent;
+	border-radius: var(--input-border-radius);
+	box-shadow: var(--input-shadow);
+	opacity: 0.5;
+
+	font-size: 12pt;
+}
+
+.flagActive {
+	opacity: 1;
+	border: 1px solid var(--primary-color);
+	outline: 1px solid var(--primary-color);
+}
+
+.flagIconContainer {
+	width: calc(var(--input-height) + var(--input-padding) + 6px);
+	height: calc(var(--input-height) + var(--input-padding) + 6px);
+
+	position: relative;
+	left: calc(-1 * var(--input-padding) - 1px);
+}
+
+.flagIcon, .flagOutline {
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+
+	border-radius: var(--input-border-radius);
+}
+
+.flagIcon {
+	width: calc(var(--input-height) + var(--input-padding) + 6px);
+	height: calc(var(--input-height) + var(--input-padding) + 6px);
+
+	position: relative;
+	z-index: 2;
+	left: 1px;
+	top: 1px;
+}
+
+.flagOutline {
+	width: calc(var(--input-height) + var(--input-padding) + 8px);
+	height: calc(var(--input-height) + var(--input-padding) + 8px);
+
+	position: absolute;
+	z-index: 1;
+
+	filter: contrast(33%) saturate(200%) brightness(125%);
+}
+
+.flagActive .flagName {
+	background-color: #fff;
+	-webkit-text-stroke: 0.5px transparent;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.flagActive .flagIconContainer {
+	box-shadow: 0px 5px 7px -2px #000;
+}
+
+#avatarPreview {
+	width: 7.5em;
+	height: 7.5em;
+
+	background-color: #000;
+	background-image: var(--user-avatar);
+	background-size: contain;
+	background-repeat: no-repeat;
+	border-radius: var(--avatar-border-radius);
+}
+
+.forceOutline {
+	filter: url(#outlineEffect) url(#shadowEffect);
+}
+
+@media only screen and (max-width: 650px) {
+	#wrapper {
+		min-width: unset;
+		width: unset;
+	}
+
+	.settings {
+		justify-content: left;
+	}
+
+	.setting {
+		width: 100%;
+		flex-direction: column;
+		align-items: start;
+		margin-top: var(--setting-spacing);
+		margin-bottom: var(--setting-spacing);
+	}
+
+	.settingLabel {
+		border: 0px;
+		padding-left: 2px; /* wtf */
+		padding-right: 0px;
+		width: 100%;
+		text-align: left;
+		margin-bottom: 4px;
+		color: var(--primary-color-desat);
+		text-shadow: 0px 1px 2px #000;
+	}
+
+	.settingValue {
+		padding-left: 0px;
+		width: 100%;
+		flex-wrap: wrap;
+	}
+
+	.settingCellMeasurement:last-of-type {
+		margin-right: var(--global-spacing);
+	}
+
+	.settingValueSection {
+		margin-left: 0px;
+	}
 }

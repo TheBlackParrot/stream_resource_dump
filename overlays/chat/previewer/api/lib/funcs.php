@@ -16,7 +16,11 @@ function callTwitch($access, $endpoint, $data = []) {
 	$context = stream_context_create($options);
 
 	$response = file_get_contents($url, false, $context);
-	if($response === false) {
+	$statusCode = intval(explode(" ", $http_response_header[0])[1]);
+	if($response === false || $statusCode > 400) {
+		if($statusCode === 401) {
+			setcookie('access', "", 1, '/', $domain, false);
+		}
 		return ['error' => 'Request for ' . $endpoint . ' failed.'];
 	}
 

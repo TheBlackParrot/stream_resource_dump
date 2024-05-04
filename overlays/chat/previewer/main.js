@@ -81,9 +81,27 @@ function setNameGradient() {
 	let repeats = (localStorage.getItem("clientSetting_nameGradientRepeats") === "true");
 
 	if(amount < 1) { amount = 1; }
-	else if(amount > 6) { amount = 6; }
+	else if(amount > 9) { amount = 9; }
 
 	console.log(`user wants ${amount} color stops`);
+
+	let list = $('.setting[data-multi-slot-list="nameColorStops"]');
+	for(element of list) {
+		element = $(element);
+		if(parseInt(element.attr("data-multi-slot")) > amount) {
+			element.hide();
+		} else {
+			element.show();
+		}
+	}
+
+	if(amount === 1) {
+		rootCSS().setProperty("--name-gradient", 'unset');
+		rootCSS().setProperty("--name-color", 'var(--name-color-1)');
+		return;
+	} else {
+		rootCSS().setProperty("--name-color", 'unset');
+	}
 
 	let stops = [];
 	for(let i = 1; i <= amount; i++) {
@@ -116,16 +134,6 @@ function setNameGradient() {
 			break;
 	}
 	rootCSS().setProperty("--name-gradient", `${repeats ? "repeating-" : ""}${type}(${initialPart}${stops.join(", ")})`);
-
-	let list = $('.setting[data-multi-slot-list="nameColorStops"]');
-	for(element of list) {
-		element = $(element);
-		if(parseInt(element.attr("data-multi-slot")) > amount) {
-			element.hide();
-		} else {
-			element.show();
-		}
-	}
 }
 
 $("input, select, textarea").on("change", function(e) {
@@ -146,13 +154,35 @@ $("input, select, textarea").on("change", function(e) {
 			break;
 	}
 
-	if(value !== null && setting && loadingInit) {
-		let oldValue = localStorage.getItem(`clientSetting_${setting}`);
+	if(value !== null && setting) {
+		if($(this).attr("type") === "number") {
+			const min = parseFloat($(this).attr("min"));
+			const max = parseFloat($(this).attr("max"));
+			value = parseFloat(value);
 
-		console.log(`setting ${setting} is now ${value}`);
-		localStorage.setItem(`clientSetting_${setting}`, value);
+			if(!isNaN(min)) {
+				if(value < min) {
+					value = min;
+					$(this).val(min);
+				}
+			}
 
-		updateSetting(`clientSetting_${setting}`, value, oldValue);
+			if(!isNaN(max)) {
+				if(value > max) {
+					value = max;
+					$(this).val(max);
+				}
+			}
+		}
+
+		if(loadingInit) {
+			let oldValue = localStorage.getItem(`clientSetting_${setting}`);
+
+			console.log(`setting ${setting} is now ${value}`);
+			localStorage.setItem(`clientSetting_${setting}`, value);
+
+			updateSetting(`clientSetting_${setting}`, value, oldValue);
+		}
 	}
 });
 
@@ -160,6 +190,7 @@ setNameGradient();
 
 var fontData;
 var userData;
+var flagsData;
 const weightEnums = {
 	"100": "Thin",
 	"200": "Extra Light",
@@ -173,7 +204,6 @@ const weightEnums = {
 };
 
 window.addEventListener("load", async function(event) {
-	$("#signInButton").hide();
 	const cookieParts = document.cookie.split("; ")
 	const cookieValue = cookieParts.find((key) => key.startsWith("access="))?.split("=")[1];
 
@@ -197,7 +227,7 @@ window.addEventListener("load", async function(event) {
 		$("#signInButton").show();
 	}
 
-	const fontResponse = await fetch(`fonts.json?time=${Date.now()}`);
+	const fontResponse = await fetch(`fonts.json`);
 	if(fontResponse.ok) {
 		fontData = await fontResponse.json();
 
@@ -213,37 +243,49 @@ window.addEventListener("load", async function(event) {
 				$("#nameFont").prepend($("<option>", { value: fontName, text: fontName }));
 			}
 
-			/*
 			if(font.allowed.messages) {
-				$("#msgFont").prepend($("<option>", { value: fontName, text: fontName }));
+				$("#messageFont").prepend($("<option>", { value: fontName, text: fontName }));
 			}
-			*/
 		}
 
 		if(!localStorage.getItem("_clientSetting_hasInitBefore")) {
 			localStorage.setItem("_clientSetting_hasInitBefore", "yes");
+
 			localStorage.setItem("clientSetting_nameFont", "Manrope");
+			localStorage.setItem("clientSetting_messageFont", "Manrope");
 		}
 
 		$("#nameFont").val(localStorage.getItem("clientSetting_nameFont"));
-		$("#nameFont").trigger("change");
+		$("#messageFont").val(localStorage.getItem("clientSetting_messageFont"));
+		$("#nameFont, #messageFont").trigger("change");
 	}
 
-	/*
-	let _flags = Object.keys(settings.flags);
-	_flags.sort();
-	for(let i in _flags) {
-		let flag = _flags[i];
-		$("#identityFlags").append(`<div><span class="flag${flag} flag" style="background-image: url('../flags/${settings.flags[flag]}'); display: inline-block;"></span> ${flag}</div>`);
+	const flagsResponse = await fetch(`flags.json`);
+	if(flagsResponse.ok) {
+		flagsData = await flagsResponse.json();
+
+		let flags = Object.keys(flagsData);
+		flags.sort();
+
+		for(let flag of flags) {
+			let flagElement = $(`<div class="flag"></div>`);
+
+			let flagIconContainer = $(`<div class="flagIconContainer"></div>`);
+			flagIconContainer.append($(`<div class="flagOutline" style="background-image: url('flags/${flagsData[flag]}');"></div>`));
+			flagIconContainer.append($(`<div class="flagIcon" style="background-image: url('flags/${flagsData[flag]}');"></div>`));
+			flagElement.append(flagIconContainer);
+
+			flagElement.append($(`<span class="flagName">${flag}</span>`));
+			$("#identityFlags").append(flagElement);
+		}
 	}
-	*/
 });
 
-$("#nameFont").on("change", function(e) {
-	let optionSelected = $("#nameFont:selected", this);
+$("#nameFont, #messageFont").on("change", function(event) {
+	let which = (event.target.getAttribute("id") === "nameFont" ? "name" : "message");
 	let font = this.value;
 
-	$("#nameWeight").empty();
+	$(`#${which}Weight`).empty();
 
 	let weights = Object.keys(fontData[font]);
 	if(!("700" in fontData[font])) {
@@ -251,7 +293,7 @@ $("#nameFont").on("change", function(e) {
 	}
 	weights.sort();
 
-	let oldWeight = parseInt(localStorage.getItem("clientSetting_nameWeight"));
+	let oldWeight = parseInt(localStorage.getItem(`clientSetting_${which}Weight`));
 	let lastDiff = 1000;
 	let wantedWeight = 100;
 
@@ -259,7 +301,7 @@ $("#nameFont").on("change", function(e) {
 		let weight = weights[weightIdx];
 
 		if(!isNaN(parseInt(weight))) {
-			$("#nameWeight").append($("<option>", { value: weight, text: `${weightEnums[weight]} (${weight})` }));
+			$(`#${which}Weight`).append($("<option>", { value: weight, text: `${weightEnums[weight]} (${weight})` }));
 			let diff = Math.abs(parseInt(weight) - oldWeight);
 			if(diff < lastDiff) {
 				wantedWeight = parseInt(weight);
@@ -268,10 +310,10 @@ $("#nameFont").on("change", function(e) {
 		}
 	}
 
-	$("#nameWeight").val(wantedWeight);
-	$("#nameWeight").trigger("change");
+	$(`#${which}Weight`).val(wantedWeight);
+	$(`#${which}Weight`).trigger("change");
 
-	$(":root").get(0).style.setProperty(`--name-font`, font);
+	$(":root").get(0).style.setProperty(`--${which}-font`, font);
 });
 
 const oauthCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -303,3 +345,32 @@ $("#signInButton").on("mouseup", function(e) {
 
 	window.location = 'https://id.twitch.tv/oauth2/authorize?' + args;
 })
+
+$("input[data-coloris]").on("click", function(e) {
+	if($(this).attr("data-enable-alpha") !== undefined) {
+		Coloris({
+			alpha: true
+		});
+	} else {
+		Coloris({
+			alpha: false
+		});		
+	}
+})
+
+var activeFlags = 0;
+$("body").on("click", ".flag", function(e) {
+	if($(this).hasClass("flagActive")) {
+		activeFlags--;
+		$(this).removeClass("flagActive");
+		return;
+	}
+
+	if(activeFlags >= 5) {
+		alert("Only 5 flags are allowed maximum.");
+		return;
+	}
+
+	activeFlags++;
+	$(this).addClass("flagActive");
+});
