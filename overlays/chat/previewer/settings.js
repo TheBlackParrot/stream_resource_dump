@@ -174,7 +174,7 @@ async function saveSettings(which) {
 	$("#loader").fadeIn(100);
 
 	if(which === "flags") {
-		saveFlags();
+		await saveFlags();
 		return;
 	}
 
@@ -197,7 +197,7 @@ async function saveSettings(which) {
 
 		switch(element.attr("type")) {
 			case "checkbox":
-				value = element.is(":checked");
+				value = (element.is(":checked") ? 1 : 0);
 				break;
 
 			default:
@@ -233,19 +233,99 @@ async function saveSettings(which) {
 		return;
 	}
 
-	// have the server-sided save code spit out old values being overwritten, store those in sessionStorage and add a revert button
-	const oldSettings = await postResponse.json();
-	console.log(oldSettings);
+	const sanityCheck = await postResponse.json();
+	console.log(sanityCheck);
 	$("#loader").fadeOut(250);
 }
 
-function saveFlags() {
-	const elements = $(`.flagActive .flagName`);
-	let flags = [];
-
-	for(const element of elements) {
-		flags.push($(element).text());
+function discardSettings(which) {
+	if(which === "flags") {
+		discardFlags();
+		return;
 	}
 
-	console.log(`active flags: ${flags.join(", ")}`);
+	const elements = $(`.cell[id="_settings_${which}"] .setting input, .cell[id="_settings_${which}"] .setting select`);
+	if(!elements.length) {
+		console.error(`Could not find any settings for ${which}`);
+		return;
+	}
+
+	for(const elementRef of elements) {
+		const element = $(elementRef);
+		if(element.attr("data-ignoreSetting") === "true") {
+			continue;
+		}
+
+		const setting = element.attr("id");
+		var newValue = sessionStorage.getItem(`clientSetting_${setting}`);
+
+		if($(`#${setting}`).attr("data-coloris") !== undefined) {
+			var colorLength = 6;
+			if(element.attr("data-enable-alpha") !== undefined) {
+				colorLength = 8;
+			}
+
+			newValue = `#${(parseInt(newValue)).toString(16).padStart(colorLength, "0")}`;
+		}
+
+		switch(element.attr("type")) {
+			case "checkbox":
+				element.prop("checked", (newValue === "true" || newValue === "1")).trigger("update").trigger("change");
+				break;
+
+			default:
+				element.val(newValue).trigger("update").trigger("change");
+				break;
+		}
+	}
+}
+
+async function saveFlags() {
+	const elements = $(`.flagActive .flagName`);
+
+	let flags = {
+		'identityFlag1': "",
+		'identityFlag2': "",
+		'identityFlag3': "",
+		'identityFlag4': "",
+		'identityFlag5': ""
+	};
+	for(let i = 1; i <= 5; i++) {
+		localStorage.removeItem(`clientSetting_identityFlag${i}`);
+	}
+
+	for(let i = 0; i < elements.length; i++) {
+		const element = elements[i];
+		const setting = `identityFlag${i+1}`;
+
+		flags[setting] = $(element).text();
+		localStorage.setItem(`clientSetting_${setting}`, flags[setting]);
+	}
+
+	console.log(flags);
+
+	const postResponse = await fetch("api/save.php", {
+		method: "POST",
+		body: new URLSearchParams(flags)
+	});
+	$("#loader").fadeOut(250);
+	if(!postResponse.ok) {
+		console.error(`POST request failed for saving flags`);
+	}
+}
+
+function discardFlags() {
+	$(".flagActive").removeClass("flagActive");
+	activeFlags = [];
+
+	for(let i = 1; i <= 5; i++) {
+		const oldFlag = sessionStorage.getItem(`clientSetting_identityFlag${i}`);
+
+		if(oldFlag === "null" || oldFlag === "" || oldFlag === undefined) {
+			localStorage.removeItem(`clientSetting_identityFlag${i}`);
+		} else {
+			localStorage.setItem(`clientSetting_identityFlag${i}`, oldFlag);
+			$(`.flag[data-flag="${oldFlag}"]`).trigger("click");
+		}
+	}
 }

@@ -35,7 +35,7 @@ $validSettings = getSettingKeys($mysqli);
 $sanitizedSettings = [];
 $sanityCheck = [];
 foreach($_POST as $setting => $value) {
-	$charCheck = str_replace("_", "", $setting);
+	$charCheck = str_replace(["_", "-"], "", $setting);
 	if(!ctype_alnum($charCheck)) {
 		http_response_code(400);
 		die('{"error": "Invalid characters present in setting keys"}');
@@ -44,6 +44,25 @@ foreach($_POST as $setting => $value) {
 	if(!array_key_exists($setting, $validSettings)) {
 		http_response_code(400);
 		die('{"error": "Invalid setting key present", "data": "' . $setting . '"}');
+	}
+
+	if($setting === "nameFont" || $setting === "messageFont") {
+		if(!array_key_exists($value, $_fonts)) {
+			http_response_code(400);
+			die('{"error": "Font family not present in font list", "data": ["' . $setting . '", "' . $value . '"]}');
+		}
+
+		if(($setting === "nameFont" && !$_fonts[$value]["allowed"]["names"]) || ($setting === "messageFont" && !$_fonts[$value]["allowed"]["messages"])) {
+			http_response_code(400);
+			die('{"error": "Font family not allowed for this setting", "data": ["' . $setting . '", "' . $value . '"]}');
+		}
+	}
+
+	if(substr($setting, 0, 12) === "identityFlag" && $value !== "") {
+		if(!array_key_exists($value, $_flags)) {
+			http_response_code(400);
+			die('{"error": "Flag not in list of identity flags", "data": ["' . $setting . '", "' . $value . '"]}');
+		}
 	}
 
 	$setting = $mysqli->real_escape_string($setting);

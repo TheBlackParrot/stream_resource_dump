@@ -65,7 +65,6 @@ function loadSettings() {
 
 	loadingInit = true;
 }
-loadSettings();
 
 $('.settingValue input[type="range"]').on("update", function(e) {
 	value = $(this).val();
@@ -82,6 +81,8 @@ function setNameGradient() {
 
 	if(amount < 1) { amount = 1; }
 	else if(amount > 9) { amount = 9; }
+
+	if(isNaN(amount)) { amount = 2; }
 
 	console.log(`user wants ${amount} color stops`);
 
@@ -186,11 +187,10 @@ $("input, select, textarea").on("change", function(e) {
 	}
 });
 
-setNameGradient();
-
 var fontData;
 var userData;
 var flagsData;
+var initialSettings;
 const weightEnums = {
 	"100": "Thin",
 	"200": "Extra Light",
@@ -204,37 +204,19 @@ const weightEnums = {
 };
 
 window.addEventListener("load", async function(event) {
+	loadSettings();
+
 	const cookieParts = document.cookie.split("; ")
 	const cookieValue = cookieParts.find((key) => key.startsWith("access="))?.split("=")[1];
 	var isSignedIn = false;
 
-	if(cookieValue) {
-		const response = await fetch('api/getUser.php');
-		if(!response.ok) {
-			$("#signInButton").show();
-			$(".footer").hide();
-			$("#loader").fadeOut(250);
-			return;
-		}
-
-		userData = await response.json();
-		rootCSS().setProperty("--user-avatar", `url('${userData.profile_image_url}')`);
-		$("#signedInUser_name").text(userData.display_name);
-		$("#signedInUser").fadeIn(250);
-
-		$("#namePreview").fadeOut(250, function() {
-			$("#namePreview").text(userData.display_name);
-			$("#namePreview").fadeIn(250);
-		});
-
-		isSignedIn = true;
-	} else {
-		$("#signInButton").show();
-		$(".footer").hide();
-		$("#loader").fadeOut(250);
+	var firstInit = false;
+	if(!localStorage.getItem("_clientSetting_hasInitBefore")) {
+		localStorage.setItem("_clientSetting_hasInitBefore", "yes");
+		firstInit = true;
 	}
 
-	const fontResponse = await fetch(`fonts.json`);
+	const fontResponse = await fetch(`api/lib/fonts.json`);
 	if(fontResponse.ok) {
 		fontData = await fontResponse.json();
 
@@ -255,11 +237,11 @@ window.addEventListener("load", async function(event) {
 			}
 		}
 
-		if(!localStorage.getItem("_clientSetting_hasInitBefore")) {
-			localStorage.setItem("_clientSetting_hasInitBefore", "yes");
-
+		if(firstInit) {
 			localStorage.setItem("clientSetting_nameFont", "Manrope");
 			localStorage.setItem("clientSetting_messageFont", "Manrope");
+			localStorage.setItem("clientSetting_nameWeight", "900");
+			localStorage.setItem("clientSetting_messageWeight", "700");
 		}
 
 		$("#nameFont").val(localStorage.getItem("clientSetting_nameFont"));
@@ -267,7 +249,7 @@ window.addEventListener("load", async function(event) {
 		$("#nameFont, #messageFont").trigger("change");
 	}
 
-	const flagsResponse = await fetch(`flags.json`);
+	const flagsResponse = await fetch(`api/lib/flags.json`);
 	if(flagsResponse.ok) {
 		flagsData = await flagsResponse.json();
 
@@ -275,7 +257,7 @@ window.addEventListener("load", async function(event) {
 		flags.sort();
 
 		for(let flag of flags) {
-			let flagElement = $(`<div class="flag"></div>`);
+			let flagElement = $(`<div class="flag" data-flag="${flag}"></div>`);
 
 			let flagIconContainer = $(`<div class="flagIconContainer"></div>`);
 			flagIconContainer.append($(`<div class="flagOutline" style="background-image: url('flags/${flagsData[flag]}');"></div>`));
@@ -285,6 +267,49 @@ window.addEventListener("load", async function(event) {
 			flagElement.append($(`<span class="flagName">${flag}</span>`));
 			$("#identityFlags").append(flagElement);
 		}
+
+		for(let i = 1; i <= 5; i++) {
+			const flag = localStorage.getItem(`clientSetting_identityFlag${i}`);
+
+			if(flag === "null" || flag === "" || flag === undefined) {
+				continue;
+			}
+
+			$(`.flag[data-flag="${flag}"]`).trigger("click");
+		}
+	}
+
+	if(cookieValue) {
+		const response = await fetch('api/getUser.php');
+		if(!response.ok) {
+			$("#signInButton").show();
+			$(".footer").hide();
+			$("#loader").fadeOut(250);
+			return;
+		}
+
+		data = await response.json();
+		userData = data['user'];
+		initialSettings = data['settings'];
+		rootCSS().setProperty("--user-avatar", `url('${userData.profile_image_url}')`);
+		$("#signedInUser_name").text(userData.display_name);
+		$("#signedInUser").fadeIn(250);
+
+		$("#namePreview").fadeOut(250, function() {
+			$("#namePreview").text(userData.display_name);
+			$("#namePreview").fadeIn(250);
+		});
+
+		for(const setting in initialSettings) {
+			const value = initialSettings[setting];
+			sessionStorage.setItem(`clientSetting_${setting}`, value);
+		}
+
+		isSignedIn = true;
+	} else {
+		$("#signInButton").show();
+		$(".footer").hide();
+		$("#loader").fadeOut(250);
 	}
 
 	if(isSignedIn) {
@@ -294,6 +319,8 @@ window.addEventListener("load", async function(event) {
 			});
 		}, 250);
 	}
+
+	setNameGradient();
 });
 
 $("#nameFont, #messageFont").on("change", function(event) {
@@ -373,24 +400,28 @@ $("input[data-coloris]").on("click", function(e) {
 	}
 })
 
-var activeFlags = 0;
+var activeFlags = [];
 $("body").on("click", ".flag", function(e) {
 	if($(this).hasClass("flagActive")) {
-		activeFlags--;
+		activeFlags.splice(activeFlags.indexOf($(this).attr("data-flag")));
 		$(this).removeClass("flagActive");
 		return;
 	}
 
-	if(activeFlags >= 5) {
+	if(activeFlags.length >= 5) {
 		alert("Only 5 flags are allowed maximum.");
 		return;
 	}
 
-	activeFlags++;
+	activeFlags.push($(this).attr("data-flag"));
 	$(this).addClass("flagActive");
 });
 
 $(".saveButton").on("click", function(e) {
 	let which = $(this).parent().attr("data-buttons-affect");
 	saveSettings(which);
+});
+$(".discardButton").on("click", function(e) {
+	let which = $(this).parent().attr("data-buttons-affect");
+	discardSettings(which);
 });

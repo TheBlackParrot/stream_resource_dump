@@ -38,27 +38,47 @@ function getSettingKeys($mysqli) {
 				break;
 
 			default:
-				switch(substr($row['column_type'], 0, 7)) {
-					case 'decimal':
-						$type = "d";
-						break;
-						
-					case 'tinyint':
+				switch(substr($row['column_type'], 0, 8)) {
+					case "smallint":
 						$type = "i";
 						break;
 
-					case 'varchar':
-						$type = "s";
-						break;
-
 					default:
-						switch(substr($row['column_type'], 0, 4)) {
-							case 'enum':
+						switch(substr($row['column_type'], 0, 7)) {
+							case 'decimal':
+								$type = "d";
+								break;
+
+							case 'tinyint':
+								$type = "i";
+								break;
+
+							case 'varchar':
 								$type = "s";
 								break;
 
 							default:
-								$type = "i"; // int
+								switch(substr($row['column_type'], 0, 6)) {
+									case 'bigint':
+										$type = "i";
+										break;
+
+									case "double":
+										$type = "d";
+										break;
+
+									default:
+										switch(substr($row['column_type'], 0, 4)) {
+											case 'enum':
+												$type = "s";
+												break;
+
+											default:
+												$type = "i"; // int
+												break;
+										}
+										break;
+								}
 								break;
 						}
 						break;
