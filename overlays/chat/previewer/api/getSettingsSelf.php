@@ -30,30 +30,9 @@ $mysqli->real_connect('localhost', 'http', null, 'user_settings');
 
 prepareUser($mysqli, $user);
 
-$validSettings = getSettingKeys($mysqli);
-
-$sanitizedSettings = [];
-$sanityCheck = [];
-foreach($_POST as $setting => $value) {
-	$charCheck = str_replace("_", "", $setting);
-	if(!ctype_alnum($charCheck)) {
-		http_response_code(400);
-		die('{"error": "Invalid characters present in setting keys"}');
-	}
-
-	if(!array_key_exists($setting, $validSettings)) {
-		http_response_code(400);
-		die('{"error": "Invalid setting key present", "data": "' . $setting . '"}');
-	}
-
-	$setting = $mysqli->real_escape_string($setting);
-	$value = $mysqli->real_escape_string($value);
-
-	$sanityCheck[$setting] = saveSetting($mysqli, $user, $validSettings, $setting, $value);
-}
+$settings = getSettings($mysqli, $user);
 
 $mysqli->close();
-
-echo(json_encode($sanityCheck));
+echo(json_encode($settings));
 
 ?>

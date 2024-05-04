@@ -115,8 +115,16 @@
 	--message-filters: url(#outlineEffect) url(#shadowEffect);
 	--message-bold-weight-extra: 1.2px;
 	--message-line-height: 24px;
+	--message-variant: normal;
 
 	--avatar-border-radius: 50%;
+
+	--footer-height: 48px;
+}
+
+@keyframes speen {
+	from { transform: rotate(0deg); }
+	to { transform: rotate(360deg); }
 }
 
 #filterWrapper {
@@ -164,14 +172,15 @@ a {
 	backdrop-filter: blur(5px);
 }
 
-#header .cell {
+#header .cellImportant, .footer .cellImportant {
 	display: inline-flex;
+	flex-direction: row;
 	align-items: center;
 	line-height: 0px;
 	margin-left: var(--global-spacing);
 	margin-right: var(--global-spacing);
 }
-#header .cell:first-child {
+#header .cellImportant:first-of-type {
 	-webkit-mask-image: linear-gradient(to right, #ffffffff 80%, #00000000 100%);
 	height: 2em;
 	text-wrap: nowrap;
@@ -188,7 +197,7 @@ h1 {
 }
 
 .button {
-	display: inline-block;
+	display: flex;
 	cursor: default;
 	
 	padding-left: var(--button-padding);
@@ -198,7 +207,10 @@ h1 {
 
 	font-weight: var(--font-weight-bold);
 	font-size: var(--button-font-size);
+
 	text-align: center;
+	align-items: center;
+	text-wrap: nowrap;
 
 	border-radius: var(--input-border-radius);
 	border: 1px solid var(--input-border-color);
@@ -218,14 +230,7 @@ h1 {
 	filter: none;
 }
 
-#signInButton {
-	background-color: #9146FF;
-	display: flex;
-	line-height: 1em;
-	align-items: center;
-	text-wrap: nowrap;
-}
-#signInButton .fa-fw {
+.fa-fw {
 	font-size: 1.25em;
 	line-height: 0px;
 	margin-right: 4px;
@@ -334,6 +339,7 @@ hr {
 	font-family: var(--message-font);
 	font-size: var(--message-size);
 	font-weight: var(--message-weight);
+	font-variant: var(--message-variant);
 
 	-webkit-text-stroke: var(--message-weight-extra) transparent;
 	-webkit-background-clip: text;
@@ -575,11 +581,9 @@ select option {
 }
 
 .settingValueSection {
-	margin-top: var(--global-spacing-small);
-	margin-bottom: var(--global-spacing-small);
 	margin-left: var(--global-spacing);
-
 	display: inline-flex;
+	align-items: center;
 }
 
 .settingSingle {
@@ -682,6 +686,70 @@ select option {
 	filter: url(#outlineEffect) url(#shadowEffect);
 }
 
+.footer {
+	position: sticky;
+	height: var(--footer-height);
+	width: 100%;
+	bottom: var(--global-spacing);
+	z-index: 99;
+
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	margin-top: var(--global-spacing);
+
+	background-color: var(--header-color);
+	border: 1px solid var(--border-color);
+	border-radius: var(--input-border-radius);
+
+	box-shadow: var(--input-shadow);
+	backdrop-filter: blur(5px);
+}
+
+.footer .button {
+	margin-left: var(--global-spacing-half);
+	margin-right: var(--global-spacing-half);
+}
+
+#signInButton { background-color: #9146FF; }
+.saveButton { background-color: #209060; }
+.discardButton { background-color: #c01020; }
+
+#loader {
+	position: fixed;
+	z-index: 1000;
+	width: 100vw;
+	height: 100vh;
+	top: 0;
+	left: 0;
+
+	display: flex;
+	align-items: center;
+	align-self: center;
+	justify-content: center;
+	justify-items: center;
+
+	background-color: #000000b0;
+	backdrop-filter: blur(8px);
+}
+
+#spinner {
+	width: 30vw;
+	padding-bottom: 30vw;
+
+	border-radius: 100%;
+	border: 6vw solid #ffffff30;
+	border-bottom: 6vw solid #fff;
+	box-shadow: 0px 0px 24px #000, 0px 0px 24px inset #000;
+
+	animation-name: speen;
+	animation-iteration-count: infinite;
+	animation-duration: 1.5s;
+	animation-fill-mode: both;
+	animation-timing-function: linear;
+}
+
 @media only screen and (max-width: 650px) {
 	#wrapper {
 		min-width: unset;
@@ -723,5 +791,19 @@ select option {
 
 	.settingValueSection {
 		margin-left: 0px;
+	}
+
+	.footer {
+		bottom: var(--global-spacing-half);
+	}
+
+	.footer .button {
+		font-size: 9pt;
+		flex-grow: 1;
+		justify-content: center;
+	}
+
+	.footer .cellImportant {
+		width: 100%;
 	}
 }

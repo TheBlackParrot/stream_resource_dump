@@ -28,10 +28,10 @@
 
 <body>
 	<div id="header">
-		<div class="cell grow">
+		<div class="cellImportant grow">
 			<h1>TheBlackParrot's Chat Overlay Customization</h1>
 		</div>
-		<div class="cell">
+		<div class="cellImportant">
 			<div class="button" id="signInButton" style="display: none;"><i class="fa-brands fa-twitch fa-fw"></i> Sign In with Twitch</div>
 			<div id="signedInUser" style="display: none;">
 				<div id="signedInUser_avatar"></div>
@@ -54,7 +54,7 @@
 			</p>
 		</div>
 		
-		<div class="cell">
+		<div class="cell" id="_settings_name">
 			<h1><span class="forceOutline">Name Display</span></h1>
 
 			<div class="content preview" style="text-align: center;">
@@ -74,7 +74,7 @@
 					<div class="setting">
 						<div class="settingLabel">Size</div>
 						<div class="settingValue">
-							<input type="number" id="nameSize" min="12" max="20" step="0.5" value="16"/><span class="settingCellMeasurement">pt</span>
+							<input type="number" id="nameSize" min="14" max="20" step="0.5" value="16"/><span class="settingCellMeasurement">pt</span>
 						</div>
 					</div>
 					<div class="setting">
@@ -131,9 +131,9 @@
 						<div class="settingLabel">Gradient type</div>
 						<div class="settingValue">
 							<select id="nameGradientType">
-								<option selected value="linear-gradient">Linear</option>
-								<option value="radial-gradient">Radial</option>
-								<option value="conic-gradient">Conic</option>
+								<option selected value="linear">Linear</option>
+								<option value="radial">Radial</option>
+								<option value="conic">Conic</option>
 							</select>
 							<input id="nameGradientRepeats" type="checkbox"/> <span class="settingInfo">Repeat</span>
 						</div>
@@ -288,14 +288,21 @@
 					<div class="setting">
 						<div class="settingLabel">Blur amount</div>
 						<div class="settingValue">
-							<input type="number" id="nameGlowAmount" min="0" max="4" step="1" value="0"/><span class="settingCellMeasurement">px</span>
+							<input type="number" id="nameGlowAmount" min="0" max="4" step="1" value="2"/><span class="settingCellMeasurement">px</span>
 						</div>
 					</div>
 				</div>				
 			</div>
+
+			<div class="footer" style="display: none;">
+				<div class="cellImportant" data-buttons-affect="name">
+					<div class="button saveButton"><i class="fa-fw fa-solid fa-floppy-disk"></i> Save</div>
+					<div class="button discardButton"><i class="fa-fw fa-solid fa-trash-can"></i> Discard</div>
+				</div>
+			</div>
 		</div>
 		
-		<div class="cell">
+		<div class="cell" id="_settings_message">
 
 			<h1><span class="forceOutline">Message Display</span></h1>
 
@@ -352,11 +359,30 @@
 							<input type="number" id="messageBoldExtraWeight" min="0.7" max="2" step="0.1" value="1.2"/><span class="settingCellMeasurement">px</span>
 						</div>
 					</div>
+
+					<hr/>
+
+					<div class="setting">
+						<div class="settingLabel">Variant</div>
+						<div class="settingValue">
+							<select id="messageVariant">
+								<option selected value="normal">Normal</option>
+								<option value="tabular-nums">Tabular Numbers</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="footer" style="display: none;">
+				<div class="cellImportant" data-buttons-affect="message">
+					<div class="button saveButton"><i class="fa-fw fa-solid fa-floppy-disk"></i> Save</div>
+					<div class="button discardButton"><i class="fa-fw fa-solid fa-trash-can"></i> Discard</div>
 				</div>
 			</div>
 		</div>
 
-		<div class="cell">
+		<div class="cell" id="_settings_flags">
 
 			<h1><span class="forceOutline">Identity Flags</span></h1>
 
@@ -366,9 +392,16 @@
 					</div>
 				</div>
 			</div>
+
+			<div class="footer" style="display: none;">
+				<div class="cellImportant" data-buttons-affect="flags">
+					<div class="button saveButton"><i class="fa-fw fa-solid fa-floppy-disk"></i> Save</div>
+					<div class="button discardButton"><i class="fa-fw fa-solid fa-trash-can"></i> Discard</div>
+				</div>
+			</div>
 		</div>
 
-		<div class="cell">
+		<div class="cell" id="_settings_misc">
 
 			<h1><span class="forceOutline">Miscellaneous</span></h1>
 
@@ -382,13 +415,13 @@
 					<hr/>
 					<div class="setting">
 						<div class="settingSingle">
-							<input id="hideBTTVBadge" type="checkbox"/> <span class="settingInfo">Hide FrankerFaceZ badge</span>
+							<input id="hideFFZBadge" type="checkbox"/> <span class="settingInfo">Hide FrankerFaceZ badge</span>
 						</div>
 					</div>
 					<hr/>
 					<div class="setting">
 						<div class="settingSingle">
-							<input id="hideBTTVBadge" type="checkbox"/> <span class="settingInfo">Hide 7TV badge</span>
+							<input id="hide7TVBadge" type="checkbox"/> <span class="settingInfo">Hide 7TV badge</span>
 						</div>
 					</div>
 					<div class="setting">
@@ -435,6 +468,18 @@
 					<p>Pronouns are fetched from <a href="https://pr.alejo.io">Twitch Chat Pronouns</a>. You'll set those over on their service.</p>
 				</div>
 			</div>
+
+			<div class="footer" style="display: none;">
+				<div class="cellImportant" data-buttons-affect="misc">
+					<div class="button saveButton"><i class="fa-fw fa-solid fa-floppy-disk"></i> Save</div>
+					<div class="button discardButton"><i class="fa-fw fa-solid fa-trash-can"></i> Discard</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="loader">
+		<div id="spinner">
 		</div>
 	</div>
 
@@ -457,26 +502,6 @@
 			<filter id="blankEffect"></filter>
 		</svg>
 	</div>
-
-	<datalist id="colorStops_percentageTicks">
-		<option value="-200"></option>
-		<option value="-175"></option>
-		<option value="-150"></option>
-		<option value="-125"></option>
-		<option value="-100"></option>
-		<option value="-75"></option>
-		<option value="-50"></option>
-		<option value="-25"></option>
-		<option value="0"></option>
-		<option value="25"></option>
-		<option value="50"></option>
-		<option value="75"></option>
-		<option value="100"></option>
-		<option value="125"></option>
-		<option value="150"></option>
-		<option value="175"></option>
-		<option value="200"></option>
-	</datalist>
 
 	<script defer type="text/javascript" src="funcs.js"></script>
 	<script defer type="text/javascript" src="settings.js"></script>

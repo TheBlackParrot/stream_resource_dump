@@ -121,19 +121,19 @@ function setNameGradient() {
 
 	let initialPart = "";
 	switch(type) {
-		case "linear-gradient":
+		case "linear":
 			initialPart = "var(--name-gradient-direction), ";
 			break;
 
-		case "radial-gradient":
+		case "radial":
 			initialPart = "at var(--name-gradient-x-pos) var(--name-gradient-y-pos), ";
 			break;
 
-		case "conic-gradient":
+		case "conic":
 			initialPart = "from var(--name-gradient-direction) at var(--name-gradient-x-pos) var(--name-gradient-y-pos), ";
 			break;
 	}
-	rootCSS().setProperty("--name-gradient", `${repeats ? "repeating-" : ""}${type}(${initialPart}${stops.join(", ")})`);
+	rootCSS().setProperty("--name-gradient", `${repeats ? "repeating-" : ""}${type}-gradient(${initialPart}${stops.join(", ")})`);
 }
 
 $("input, select, textarea").on("change", function(e) {
@@ -206,11 +206,14 @@ const weightEnums = {
 window.addEventListener("load", async function(event) {
 	const cookieParts = document.cookie.split("; ")
 	const cookieValue = cookieParts.find((key) => key.startsWith("access="))?.split("=")[1];
+	var isSignedIn = false;
 
 	if(cookieValue) {
 		const response = await fetch('api/getUser.php');
 		if(!response.ok) {
 			$("#signInButton").show();
+			$(".footer").hide();
+			$("#loader").fadeOut(250);
 			return;
 		}
 
@@ -223,8 +226,12 @@ window.addEventListener("load", async function(event) {
 			$("#namePreview").text(userData.display_name);
 			$("#namePreview").fadeIn(250);
 		});
+
+		isSignedIn = true;
 	} else {
 		$("#signInButton").show();
+		$(".footer").hide();
+		$("#loader").fadeOut(250);
 	}
 
 	const fontResponse = await fetch(`fonts.json`);
@@ -278,6 +285,14 @@ window.addEventListener("load", async function(event) {
 			flagElement.append($(`<span class="flagName">${flag}</span>`));
 			$("#identityFlags").append(flagElement);
 		}
+	}
+
+	if(isSignedIn) {
+		setTimeout(function() {
+			$("#loader").fadeOut(250, function() {
+				$(".footer").fadeIn(250);
+			});
+		}, 250);
 	}
 });
 
@@ -373,4 +388,9 @@ $("body").on("click", ".flag", function(e) {
 
 	activeFlags++;
 	$(this).addClass("flagActive");
+});
+
+$(".saveButton").on("click", function(e) {
+	let which = $(this).parent().attr("data-buttons-affect");
+	saveSettings(which);
 });

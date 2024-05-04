@@ -124,12 +124,20 @@ const settingUpdaters = {
 	messageLineHeight: function(value) {
 		rootCSS().setProperty("--message-line-height", `${value}px`);
 	},
+	messageVariant: function(value) {
+		rootCSS().setProperty("--message-variant", value);
+	},
 	avatarBorderRadius: function(value) {
 		rootCSS().setProperty("--avatar-border-radius", `${value}%`);
 	}
 };
 
 function updateSetting(which, value, oldValue) {
+	if(!which || value === undefined) {
+		console.error(`updateSetting called but setting or value was not present\nwhich: ${which}\nvalue: ${value}`);
+		return;
+	}
+
 	console.log(`wants ${which}`);
 
 	if(which.indexOf("clientSetting_") === -1) {
@@ -161,3 +169,83 @@ function updateSetting(which, value, oldValue) {
 window.addEventListener("storage", function(event) {
 	updateSetting(event.key, event.newValue, event.oldValue);
 });
+
+async function saveSettings(which) {
+	$("#loader").fadeIn(100);
+
+	if(which === "flags") {
+		saveFlags();
+		return;
+	}
+
+	const elements = $(`.cell[id="_settings_${which}"] .setting input, .cell[id="_settings_${which}"] .setting select`);
+	if(!elements.length) {
+		console.error(`Could not find any settings for ${which}`);
+		$("#loader").fadeOut(250);
+		return;
+	}
+
+	let settings = {};
+	for(const elementRef of elements) {
+		const element = $(elementRef);
+		if(element.attr("data-ignoreSetting") === "true") {
+			continue;
+		}
+		
+		let value = null;
+		const setting = element.attr("id");
+
+		switch(element.attr("type")) {
+			case "checkbox":
+				value = element.is(":checked");
+				break;
+
+			default:
+				value = element.val();
+				break;
+		}
+
+		if(element.attr("data-coloris") !== undefined) {
+			if(element.attr("data-enable-alpha") !== undefined) {
+				if(value.length === 7) {
+					value = parseInt(`${value.substr(1)}ff`, 16);
+				} else {
+					value = parseInt(value.substr(1), 16);
+				}
+			} else {
+				value = parseInt(value.substr(1), 16);
+			}
+		}
+
+		settings[setting] = value;
+	}
+
+	console.log(`settings for ${which}:`);
+	console.log(settings);
+
+	const postResponse = await fetch("api/save.php", {
+		method: "POST",
+		body: new URLSearchParams(settings)
+	});
+	if(!postResponse.ok) {
+		console.error(`POST request failed for saving ${which} settings`);
+		$("#loader").fadeOut(250);
+		return;
+	}
+
+	// have the server-sided save code spit out old values being overwritten, store those in sessionStorage and add a revert button
+	const oldSettings = await postResponse.json();
+	console.log(oldSettings);
+	$("#loader").fadeOut(250);
+}
+
+function saveFlags() {
+	const elements = $(`.flagActive .flagName`);
+	let flags = [];
+
+	for(const element of elements) {
+		flags.push($(element).text());
+	}
+
+	console.log(`active flags: ${flags.join(", ")}`);
+}
