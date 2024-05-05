@@ -139,7 +139,9 @@ class User {
 			overlay: {
 				badges: [],
 				prominentColor: "var(--defaultNameColor)",
-				checkedForProminentColor: false
+				checkedForProminentColor: false,
+				customSettings: false,
+				fetchedCustomSettings: false
 			},
 			pronouns: {
 				primary: null,
@@ -172,6 +174,7 @@ class User {
 		if(this.id !== "-1") {
 			this.setPronouns();
 			this.#setFFZBadges();
+			this.getUserSettings();
 		}
 	}
 
@@ -406,13 +409,12 @@ class User {
 			return false;
 		}
 
-		if(!localStorage.getItem(`showpfp_${this.id}`)) {
-			localStorage.setItem(`showpfp_${this.id}`, "yes");
+		if(this.customSettings) {
+			if(!this.customSettings.showAvatar) {
+				return false;
+			}
 		}
 
-		if(localStorage.getItem(`showpfp_${this.id}`) === "no") {
-			return false;
-		}
 		if(localStorage.getItem("setting_hideDefaultAvatars") === "true" && this.avatar.indexOf("user-default-pictures") !== -1) {
 			return false;
 		}
@@ -476,6 +478,145 @@ class User {
 		}
 
 		return false;
+	}
+
+	async getUserSettings() {
+		const response = await fetch(`../chat-customizer/api/getSettings.php?id=${this.id}`);
+		this.fetchedCustomSettings = true;
+		if(!response.ok) {
+			return;
+		}
+
+		var data = await response.json();
+		if(!Object.keys(data).length) {
+			return;
+		}
+
+		data.flags = [];
+		data.stops = [];
+
+		for(let i = 1; i <= 9; i++) {
+			if(data[`identityFlag${i}`] !== "" && data[`identityFlag${i}`] !== null && data[`identityFlag${i}`] !== undefined) {
+				data.flags.push(data[`identityFlag${i}`]);
+			}
+
+			if(i > data.nameColorStops) {
+				continue;
+			}
+
+			data.stops.push({
+				color: `#${data[`nameColorStop${i}_color`].toString(16).padStart(6, "0")}`,
+				percentage: data[`nameColorStop${i}_percentage`],
+				hard: (data[`nameColorStop${i}_isHard`] === 1)
+			});
+		}
+
+		data.nameGlowColor = `#${data.nameGlowColor.toString(16).padStart(8, "0")}`;
+
+		this.entitlements.overlay.customSettings = data;
+
+		this.setUserGradient();
+		rootCSS().setProperty(`--nameFont${this.id}`, data.nameFont);
+		rootCSS().setProperty(`--nameWeight${this.id}`, data.nameWeight);
+		rootCSS().setProperty(`--nameScalar${this.id}`, "(var(--nameFontSizeNum) / 16)");
+		rootCSS().setProperty(`--nameExtraWeight${this.id}`, `calc(${data.nameExtraWeight}px * var(--nameScalar${this.id}))`);
+		rootCSS().setProperty(`--nameSize${this.id}`, `calc(${data.nameSize}pt * var(--nameScalar${this.id}))`);
+		rootCSS().setProperty(`--nameStyle${this.id}`, (data.nameItalic ? "italic" : "normal"));
+		rootCSS().setProperty(`--nameSpacing${this.id}`, `calc(${data.nameCharSpacing}px * var(--nameScalar${this.id}))`);
+		rootCSS().setProperty(`--nameTransform${this.id}`, data.nameTransform);
+		rootCSS().setProperty(`--nameVariant${this.id}`, data.nameVariant);
+		if(data.nameGlowEnabled) {
+			rootCSS().setProperty(`--nameGlow${this.id}`, `drop-shadow(0px 0px ${data.nameGlowAmount}px ${data.nameGlowColor})`);
+		} else {
+			rootCSS().setProperty(`--nameGlow${this.id}`, `opacity(1)`);
+		}
+		rootCSS().setProperty(`--namePerspectiveShift${this.id}`, `matrix3d(1, 0, 0, 0, 0, 1, 0, calc(${data.namePerspectiveShift} / 10000), 0, 0, 1, 0, 0, 0, 0, 1)`);
+		rootCSS().setProperty(`--nameSkew${this.id}`, `skewX(${data.nameSkew}deg)`);
+		let transforms = [];
+		if(data.namePerspectiveShift) {
+			transforms.push(`var(--namePerspectiveShift${this.id})`);
+		}
+		if(data.nameSkew) {
+			transforms.push(`var(--nameSkew${this.id})`);
+		}
+		rootCSS().setProperty(`--nameTransforms${this.id}`, transforms.length ? transforms.join(" ") : "none");
+
+		rootCSS().setProperty(`--msgFont${this.id}`, data.messageFont);
+		rootCSS().setProperty(`--msgWeight${this.id}`, data.messageWeight);
+		rootCSS().setProperty(`--msgScalar${this.id}`, "(var(--messageFontSizeNum) / 15)");
+		rootCSS().setProperty(`--msgExtraWeight${this.id}`, `calc(${data.messageExtraWeight}px * var(--msgScalar${this.id}))`);
+		rootCSS().setProperty(`--msgSize${this.id}`, `calc(${data.messageSize}pt * var(--msgScalar${this.id}))`);
+		rootCSS().setProperty(`--msgSpacing${this.id}`, `calc(${data.messageCharSpacing}px * var(--msgScalar${this.id}))`);
+		rootCSS().setProperty(`--msgLineHeight${this.id}`, `calc(${data.messageLineHeight}px * (var(--messageLineHeightNum) / 24))`);
+		rootCSS().setProperty(`--msgVariant${this.id}`, data.messageVariant);
+
+		rootCSS().setProperty(`--pfpShape${this.id}`, `${data.avatarBorderRadius}%`);
+	}
+
+	setUserGradient() {
+		const ensureBrightness = (localStorage.getItem("setting_ensureNameColorsAreBrightEnough") === "true");
+		const settings = this.entitlements.overlay.customSettings;
+
+		let amount = settings.nameColorStops;
+		let type = settings.nameGradientType;
+		let repeats = (settings.nameGradientRepeats === 1);
+		let stops = settings.stops;
+
+		if(amount < 1) { amount = 1; }
+		else if(amount > 9) { amount = 9; }
+		if(isNaN(amount)) { amount = 2; }
+
+		if(amount === 1) {
+			rootCSS().setProperty(`--nameGradient${this.id}`, '');
+			if(ensureBrightness) {
+				rootCSS().setProperty(`--nameColor${this.id}`, ensureSafeColor(stops[0].color));
+			} else {
+				rootCSS().setProperty(`--nameColor${this.id}`, stops[0].color);
+			}
+			return;
+		} else {
+			rootCSS().setProperty(`--nameColor${this.id}`, '');
+		}
+
+		let gradientOut = [];
+		for(let i = 0; i < amount; i++) {
+			let prevIdx = Math.max(0, i-1);
+
+			let color = (ensureBrightness ? ensureSafeColor(stops[i].color) : stops[i].color);
+			let prevColor = (ensureBrightness ? ensureSafeColor(stops[prevIdx].color) : stops[prevIdx].color);
+			let percentage = `${stops[i].percentage}%`;
+			let prevPercentage = `${stops[prevIdx].percentage}%`;
+
+			if(stops[i].hard) {
+				gradientOut.push(`${prevColor} ${percentage}`);
+				gradientOut.push(`${color} ${percentage}`);
+				if(i === amount) {
+					gradientOut.push(`${color} calc(${percentage} + (${percentage} - ${prevPercentage}))`);
+				}
+			} else {
+				gradientOut.push(`${color} ${percentage}`);
+			}
+		}
+
+		let initialPart = "";
+		switch(type) {
+			case "linear":
+				initialPart = `${settings.nameGradientAngle}deg, `;
+				break;
+
+			case "radial":
+				initialPart = `at ${settings.nameGradientXPos}% ${settings.nameGradientYPos}%, `;
+				break;
+
+			case "conic":
+				initialPart = `from ${settings.nameGradientAngle}deg at ${settings.nameGradientXPos}% ${settings.nameGradientYPos}%, `;
+				break;
+		}
+		rootCSS().setProperty(`--nameGradient${this.id}`, `${repeats ? "repeating-" : ""}${type}-gradient(${initialPart}${gradientOut.join(", ")})`);
+
+		if(localStorage.getItem("setting_allowUserCustomizations") === "true") {
+			$(`.name[data-userid="${this.id}"]`).children().css("background-image", `--nameGradient${this.id}`);
+		}
 	}
 }
 

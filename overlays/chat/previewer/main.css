@@ -1,24 +1,3 @@
-/*
-	funny:
-
-	transform: matrix3d(1, 0, 0, 0, 0, 1, 0, -0.002, 0, 0, 1, 0, 0, 0, 0, 1);
-		-- add a perspective effect
-	transform: skewX(-20deg);
-		-- drop italics? use this instead? maybe?
-
-	move SVG filter variable to the container that has the name preview rather than the name preview itself
-
-	expand color stop count to 8 max
-	take into account color stop amount of 1 and just solid color or dupe the first stop or something
-
-	allow the user to hide badges from external services (individually)
-
-	glow effect?
-
-	disable highlighting text on previews
-
-	overlay two-stop gradient (like you do to add shine to stuff)?
-*/
 :root {
 	--font-family: "Manrope";
 	--font-color: #fff;
@@ -133,6 +112,11 @@
 	top: -1000px;
 }
 
+* {
+	user-select: none;
+	-webkit-touch-callout: none;
+}
+
 body {
 	font-family: "Manrope";
 	font-weight: var(--font-weight);
@@ -185,9 +169,17 @@ a {
 	height: 2em;
 	text-wrap: nowrap;
 	overflow-x: clip;
-}
-.grow {
 	flex-grow: 1;
+}
+
+#accountStuff {
+	/* temporary fix */
+	position: fixed;
+	right: 0px;
+	background-color: #000;
+	padding: var(--input-padding);
+	border-radius: var(--input-border-radius);
+	border: 1px solid var(--border-color);
 }
 
 h1 {
@@ -244,7 +236,7 @@ h1 {
 	flex-direction: column;
 
 	padding: var(--global-spacing);
-	min-width: calc(600px - var(--global-spacing));
+	min-width: calc(650px - var(--global-spacing));
 }
 
 #wrapper .cell {
@@ -308,9 +300,13 @@ hr {
 }
 
 #namePreview {
-	display: inline-block;
 	padding-top: var(--global-spacing);
 	padding-bottom: var(--global-spacing);
+}
+
+#namePreviewValue {
+	display: inline-block;
+	padding: 4px;
 
 	font-family: var(--name-font);
 	font-size: var(--name-size);
@@ -368,7 +364,7 @@ hr {
 }
 .setting {
 	display: flex;
-	width: 600px;
+	width: 650px;
 	align-items: center;
 	margin-top: var(--global-spacing-small);
 	margin-bottom: var(--global-spacing-small);
@@ -603,7 +599,8 @@ select option {
 	cursor: default;
 	height: var(--input-height);
 
-	padding: var(--input-padding);
+	padding-left: var(--input-padding);
+	padding-right: calc(var(--input-padding) + 2px);
 	padding-top: calc(var(--input-padding) / 3);
 	padding-bottom: calc(var(--input-padding) / 3);
 
@@ -611,9 +608,12 @@ select option {
 
 	background-color: var(--input-bg-color);
 	border: 1px solid transparent;
+	border-left: 0px;
 	border-radius: var(--input-border-radius);
 	box-shadow: var(--input-shadow);
 	opacity: 0.5;
+	color: #ffffffd0;
+	filter: saturate(50%) brightness(90%);
 
 	font-size: 12pt;
 }
@@ -621,7 +621,9 @@ select option {
 .flagActive {
 	opacity: 1;
 	border: 1px solid var(--primary-color);
+	border-left: 0px;
 	outline: 1px solid var(--primary-color);
+	filter: opacity(1);
 }
 
 .flagIconContainer {
@@ -629,7 +631,7 @@ select option {
 	height: calc(var(--input-height) + var(--input-padding) + 6px);
 
 	position: relative;
-	left: calc(-1 * var(--input-padding) - 1px);
+	left: calc(-1 * var(--input-padding) - 3px);
 }
 
 .flagIcon, .flagOutline {
@@ -662,7 +664,7 @@ select option {
 
 .flagActive .flagName {
 	background-color: #fff;
-	-webkit-text-stroke: 0.5px transparent;
+	-webkit-text-stroke: 0.6px transparent;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 }
@@ -750,7 +752,7 @@ select option {
 	animation-timing-function: linear;
 }
 
-@media only screen and (max-width: 650px) {
+@media only screen and (max-width: 685px) {
 	#wrapper {
 		min-width: unset;
 		width: unset;

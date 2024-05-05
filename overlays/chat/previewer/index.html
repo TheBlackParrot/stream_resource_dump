@@ -4,6 +4,10 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+	<meta name="theme-color" media="(prefers-color-scheme: light)" content="#cbadff" />
+	<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#241f2e" />
+
 	<title>Chat Customization</title>
 
 	<link rel="stylesheet" type="text/css" href="reset.css">
@@ -28,10 +32,10 @@
 
 <body>
 	<div id="header">
-		<div class="cellImportant grow">
+		<div class="cellImportant">
 			<h1>TheBlackParrot's Chat Overlay Customization</h1>
 		</div>
-		<div class="cellImportant">
+		<div class="cellImportant" id="accountStuff">
 			<div class="button" id="signInButton" style="display: none;"><i class="fa-brands fa-twitch fa-fw"></i> Sign In with Twitch</div>
 			<div id="signedInUser" style="display: none;">
 				<div id="signedInUser_avatar"></div>
@@ -50,7 +54,10 @@
 				Streamers can also ensure custom colors are between set brightness thresholds and various settings will scale relative to what the streamer sets, so what you see here may not <em>quite</em> reflect what actually appears on the overlay.
 			</p>
 			<p>
-				Changes do not push to the database automatically, you must manually press the Save Changes button in each section. They are, however, saved <em>locally</em>. If you want to go back to your previously saved settings, click the Reload Settings button for that section.
+				Changes do not push to the database automatically, you must manually press the Save Changes button in each section. They are, however, saved <em>locally</em>. If you want to go back to your previously saved settings, click the <strong>Discard</strong> button for that section.
+			</p>
+			<p>
+				Once you finish changing settings and want to see them take affect on an already-running stream, use the <strong>!refreshcosettings</strong> command in chat.
 			</p>
 		</div>
 		
@@ -58,7 +65,9 @@
 			<h1><span class="forceOutline">Name Display</span></h1>
 
 			<div class="content preview" style="text-align: center;">
-				<div id="namePreview">TwitchUser42069</div>
+				<div id="namePreview">
+					<span id="namePreviewValue">TwitchUser42069</span>
+				</div>
 			</div>
 
 			<hr/>
@@ -74,13 +83,13 @@
 					<div class="setting">
 						<div class="settingLabel">Size</div>
 						<div class="settingValue">
-							<input type="number" id="nameSize" min="14" max="20" step="0.5" value="16"/><span class="settingCellMeasurement">pt</span>
+							<input type="number" id="nameSize" min="14" max="20" step="0.5" value="16" size="6"/><span class="settingCellMeasurement">pt</span>
 						</div>
 					</div>
 					<div class="setting">
 						<div class="settingLabel">Character spacing</div>
 						<div class="settingValue">
-							<input type="number" id="nameCharSpacing" min="-2" max="2" step="0.1" value="1"/><span class="settingCellMeasurement">px</span>
+							<input type="number" id="nameCharSpacing" min="-2" max="2" step="0.1" value="1" size="6"/><span class="settingCellMeasurement">px</span>
 						</div>
 					</div>
 
@@ -95,7 +104,7 @@
 					<div class="setting">
 						<div class="settingLabel">Extra weight</div>
 						<div class="settingValue">
-							<input type="number" id="nameExtraWeight" min="0" max="2.5" step="0.1" value="1.2"/><span class="settingCellMeasurement">px</span>
+							<input type="number" id="nameExtraWeight" min="0" max="2.5" step="0.1" value="1.2" size="6"/><span class="settingCellMeasurement">px</span>
 						</div>
 					</div>
 
@@ -147,9 +156,9 @@
 					<div class="setting" data-show-for="nameGradientType" data-value-for="radial-gradient conic-gradient">
 						<div class="settingLabel">Position</div>
 						<div class="settingValue">
-							<span class="settingCellMeasurement">X</span> <input type="number" id="nameGradientXPos" min="-500" max="500" step="1" value="50"/><span class="settingCellMeasurement">%</span>
+							<span class="settingCellMeasurement">X</span> <input type="number" id="nameGradientXPos" min="-500" max="500" step="1" value="50" size="6"/><span class="settingCellMeasurement">%</span>
 							<div class="settingValueSection" style="margin-bottom: 0px;">
-								<span class="settingCellMeasurement">Y</span> <input type="number" id="nameGradientYPos" min="-500" max="500" step="1" value="50"/><span class="settingCellMeasurement">%</span>
+								<span class="settingCellMeasurement">Y</span> <input type="number" id="nameGradientYPos" min="-500" max="500" step="1" value="50" size="6"/><span class="settingCellMeasurement">%</span>
 							</div>
 						</div>
 					</div>
@@ -161,7 +170,7 @@
 					<div class="setting">
 						<div class="settingLabel">Color stops</div>
 						<div class="settingValue">
-							<input type="number" id="nameColorStops" min="1" max="9" step="1" value="2"/>
+							<input type="number" id="nameColorStops" min="1" max="9" step="1" value="2" size="6"/>
 						</div>
 					</div>
 
@@ -169,14 +178,14 @@
 						<div class="settingLabel">Stop 1</div>
 						<div class="settingValue">
 							<input type="text" id="nameColorStop1_color" data-coloris value="#ffffff"/> <span class="settingCellMeasurement">@</span>
-							<input type="number" id="nameColorStop1_percentage" min="-50" max="150" step="0.1" value="0"/><span class="settingCellMeasurement">%</span>
+							<input type="number" id="nameColorStop1_percentage" min="-50" max="150" step="0.1" value="0" size="8"/><span class="settingCellMeasurement">%</span>
 						</div>
 					</div>
 					<div class="setting" data-multi-slot-list="nameColorStops" data-multi-slot="2">
 						<div class="settingLabel">Stop 2</div>
 						<div class="settingValue">
 							<input type="text" id="nameColorStop2_color" data-coloris value="#cbadff"/> <span class="settingCellMeasurement">@</span>
-							<input type="number" id="nameColorStop2_percentage" min="-50" max="150" step="0.1" value="75"/><span class="settingCellMeasurement">%</span>
+							<input type="number" id="nameColorStop2_percentage" min="-50" max="150" step="0.1" value="75" size="8"/><span class="settingCellMeasurement">%</span>
 							<div class="settingValueSection">
 								<input id="nameColorStop2_isHard" type="checkbox"/> <span class="settingInfo">Hard stop</span>
 							</div>
@@ -186,7 +195,7 @@
 						<div class="settingLabel">Stop 3</div>
 						<div class="settingValue">
 							<input type="text" id="nameColorStop3_color" data-coloris value="#ffffff"/> <span class="settingCellMeasurement">@</span>
-							<input type="number" id="nameColorStop3_percentage" min="-50" max="150" step="0.1" value="100"/><span class="settingCellMeasurement">%</span>
+							<input type="number" id="nameColorStop3_percentage" min="-50" max="150" step="0.1" value="100" size="8"/><span class="settingCellMeasurement">%</span>
 							<div class="settingValueSection">
 								<input id="nameColorStop3_isHard" type="checkbox"/> <span class="settingInfo">Hard stop</span>
 							</div>
@@ -196,7 +205,7 @@
 						<div class="settingLabel">Stop 4</div>
 						<div class="settingValue">
 							<input type="text" id="nameColorStop4_color" data-coloris value="#ffffff"/> <span class="settingCellMeasurement">@</span>
-							<input type="number" id="nameColorStop4_percentage" min="-50" max="150" step="0.1" value="100"/><span class="settingCellMeasurement">%</span>
+							<input type="number" id="nameColorStop4_percentage" min="-50" max="150" step="0.1" value="100" size="8"/><span class="settingCellMeasurement">%</span>
 							<div class="settingValueSection">
 								<input id="nameColorStop4_isHard" type="checkbox"/> <span class="settingInfo">Hard stop</span>
 							</div>
@@ -206,7 +215,7 @@
 						<div class="settingLabel">Stop 5</div>
 						<div class="settingValue">
 							<input type="text" id="nameColorStop5_color" data-coloris value="#ffffff"/> <span class="settingCellMeasurement">@</span>
-							<input type="number" id="nameColorStop5_percentage" min="-50" max="150" step="0.1" value="100"/><span class="settingCellMeasurement">%</span>
+							<input type="number" id="nameColorStop5_percentage" min="-50" max="150" step="0.1" value="100" size="8"/><span class="settingCellMeasurement">%</span>
 							<div class="settingValueSection">
 								<input id="nameColorStop5_isHard" type="checkbox"/> <span class="settingInfo">Hard stop</span>
 							</div>
@@ -216,7 +225,7 @@
 						<div class="settingLabel">Stop 6</div>
 						<div class="settingValue">
 							<input type="text" id="nameColorStop6_color" data-coloris value="#ffffff"/> <span class="settingCellMeasurement">@</span>
-							<input type="number" id="nameColorStop6_percentage" min="-50" max="150" step="0.1" value="100"/><span class="settingCellMeasurement">%</span>
+							<input type="number" id="nameColorStop6_percentage" min="-50" max="150" step="0.1" value="100" size="8"/><span class="settingCellMeasurement">%</span>
 							<div class="settingValueSection">
 								<input id="nameColorStop6_isHard" type="checkbox"/> <span class="settingInfo">Hard stop</span>
 							</div>
@@ -226,7 +235,7 @@
 						<div class="settingLabel">Stop 7</div>
 						<div class="settingValue">
 							<input type="text" id="nameColorStop7_color" data-coloris value="#ffffff"/> <span class="settingCellMeasurement">@</span>
-							<input type="number" id="nameColorStop7_percentage" min="-50" max="150" step="0.1" value="100"/><span class="settingCellMeasurement">%</span>
+							<input type="number" id="nameColorStop7_percentage" min="-50" max="150" step="0.1" value="100" size="8"/><span class="settingCellMeasurement">%</span>
 							<div class="settingValueSection">
 								<input id="nameColorStop7_isHard" type="checkbox"/> <span class="settingInfo">Hard stop</span>
 							</div>
@@ -236,7 +245,7 @@
 						<div class="settingLabel">Stop 8</div>
 						<div class="settingValue">
 							<input type="text" id="nameColorStop8_color" data-coloris value="#ffffff"/> <span class="settingCellMeasurement">@</span>
-							<input type="number" id="nameColorStop8_percentage" min="-50" max="150" step="0.1" value="100"/><span class="settingCellMeasurement">%</span>
+							<input type="number" id="nameColorStop8_percentage" min="-50" max="150" step="0.1" value="100" size="8"/><span class="settingCellMeasurement">%</span>
 							<div class="settingValueSection">
 								<input id="nameColorStop8_isHard" type="checkbox"/> <span class="settingInfo">Hard stop</span>
 							</div>
@@ -246,7 +255,7 @@
 						<div class="settingLabel">Stop 9</div>
 						<div class="settingValue">
 							<input type="text" id="nameColorStop9_color" data-coloris value="#ffffff"/> <span class="settingCellMeasurement">@</span>
-							<input type="number" id="nameColorStop9_percentage" min="-50" max="150" step="0.1" value="100"/><span class="settingCellMeasurement">%</span>
+							<input type="number" id="nameColorStop9_percentage" min="-50" max="150" step="0.1" value="100" size="8"/><span class="settingCellMeasurement">%</span>
 							<div class="settingValueSection">
 								<input id="nameColorStop9_isHard" type="checkbox"/> <span class="settingInfo">Hard stop</span>
 							</div>
@@ -260,13 +269,13 @@
 					<div class="setting">
 						<div class="settingLabel">Perspective shift</div>
 						<div class="settingValue">
-							<input type="number" id="namePerspectiveShift" min="-30" max="30" step="1" value="0"/>
+							<input type="number" id="namePerspectiveShift" min="-30" max="30" step="1" value="0" size="6"/>
 						</div>
 					</div>
 					<div class="setting">
 						<div class="settingLabel">Skew</div>
 						<div class="settingValue">
-							<input type="number" id="nameSkew" min="-25" max="25" step="0.5" value="0"/><span class="settingCellMeasurement">deg</span>
+							<input type="number" id="nameSkew" min="-25" max="25" step="0.5" value="0" size="6"/><span class="settingCellMeasurement">deg</span>
 						</div>
 					</div>
 				</div>
@@ -288,7 +297,7 @@
 					<div class="setting">
 						<div class="settingLabel">Blur amount</div>
 						<div class="settingValue">
-							<input type="number" id="nameGlowAmount" min="0" max="4" step="1" value="2"/><span class="settingCellMeasurement">px</span>
+							<input type="number" id="nameGlowAmount" min="0" max="4" step="1" value="2" size="6"/><span class="settingCellMeasurement">px</span>
 						</div>
 					</div>
 				</div>				
@@ -323,19 +332,19 @@
 					<div class="setting">
 						<div class="settingLabel">Size</div>
 						<div class="settingValue">
-							<input type="number" id="messageSize" min="13" max="18" step="0.5" value="15"/><span class="settingCellMeasurement">pt</span>
+							<input type="number" id="messageSize" min="13" max="18" step="0.5" value="15" size="6"/><span class="settingCellMeasurement">pt</span>
 						</div>
 					</div>
 					<div class="setting">
 						<div class="settingLabel">Character spacing</div>
 						<div class="settingValue">
-							<input type="number" id="messageCharSpacing" min="-1" max="1" step="0.1" value="0"/><span class="settingCellMeasurement">px</span>
+							<input type="number" id="messageCharSpacing" min="-1" max="1" step="0.1" value="0" size="6"/><span class="settingCellMeasurement">px</span>
 						</div>
 					</div>
 					<div class="setting">
 						<div class="settingLabel">Line height</div>
 						<div class="settingValue">
-							<input type="number" id="messageLineHeight" min="20" max="30" step="1" value="24"/><span class="settingCellMeasurement">px</span>
+							<input type="number" id="messageLineHeight" min="20" max="30" step="1" value="24" size="6"/><span class="settingCellMeasurement">px</span>
 						</div>
 					</div>
 
@@ -350,13 +359,13 @@
 					<div class="setting">
 						<div class="settingLabel">Extra weight</div>
 						<div class="settingValue">
-							<input type="number" id="messageExtraWeight" min="0" max="1" step="0.1" value="0"/><span class="settingCellMeasurement">px</span>
+							<input type="number" id="messageExtraWeight" min="0" max="1" step="0.1" value="0" size="6"/><span class="settingCellMeasurement">px</span>
 						</div>
 					</div>
 					<div class="setting">
 						<div class="settingLabel">Extra weight (Bold)</div>
 						<div class="settingValue">
-							<input type="number" id="messageBoldExtraWeight" min="0.7" max="2" step="0.1" value="1.2"/><span class="settingCellMeasurement">px</span>
+							<input type="number" id="messageBoldExtraWeight" min="0.7" max="2" step="0.1" value="1.2" size="6"/><span class="settingCellMeasurement">px</span>
 						</div>
 					</div>
 
@@ -457,7 +466,7 @@
 					<div class="setting">
 						<div class="settingLabel">Border radius</div>
 						<div class="settingValue">
-							<input type="number" id="avatarBorderRadius" min="0" max="50" step="1" value="50"/><span class="settingCellMeasurement">%</span>
+							<input type="number" id="avatarBorderRadius" min="0" max="50" step="1" value="50" size="6"/><span class="settingCellMeasurement">%</span>
 						</div>
 					</div>
 				</div>

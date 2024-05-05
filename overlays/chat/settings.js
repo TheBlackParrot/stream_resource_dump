@@ -2,106 +2,18 @@ const settings = {
 	cache: {
 		expireDelay: 604800
 	},
-
-	flags: {
-		"agender9": "agender9.svg",
-		"agender": "agender.svg",
-		"ally": "ally.png",
-		"straight_ally": "ally.png",
-		"aromantic": "aromantic.svg",
-		"aro": "aromantic.svg",
-		"asexual": "asexual.svg",
-		"ace": "asexual.svg",
-		"bear": "bear.svg",
-		"bigender": "bigender.svg",
-		"biromantic": "biromantic.png",
-		"bisexual": "bisexual.svg",
-		"bi": "bisexual.svg",
-		"bxy": "bxy.svg",
-		"cisgender": "cisgender.png",
-		"cis": "cisgender.png",
-		"demiboy": "demiboy.svg",
-		"demigirl": "demigirl.svg",
-		"demiromantic": "demiromantic.svg",
-		"demisexual": "demisexual.svg",
-		"demi": "demisexual.svg",
-		"doe": "doe.svg",
-		"gay": "gay.svg",
-		"heteroromantic": "heteroromantic.jpg",
-		"homo": "gay.svg",
-		"homosexual": "gay.svg",
-		"homoromantic": "homoromantic.png",
-		"gendercreative": "gendercreative.svg",
-		"genderfluid": "genderfluid.svg",
-		"genderflux": "genderflux.svg",
-		"genderqueer": "genderqueer.svg",
-		"gxrl": "gxrl.svg",
-		"intersex": "intersex.svg",
-		"intersex_trans": "intersex_trans.svg",
-		"trans_intersex": "intersex_trans.svg",
-		"lesbian_butch": "lesbian_butch.png",
-		"lesbian_lipstick": "lesbian_lipstick.svg",
-		"lesbian": "lesbian.svg",
-		"neutrois": "neutrois.svg",
-		"nonbinary": "nonbinary.svg",
-		"enby": "nonbinary.svg",
-		"nxnbinary": "nxnbinary.svg",
-		"pangender": "pangender_white.svg",
-		"pangender_yellow": "pangender_yellow.svg",
-		"pansexual": "pansexual.svg",
-		"pan": "pansexual.svg",
-		"plural": "plural.png",
-		"polyamorous": "polyamorous.webp",
-		"polyam": "polyamorous.webp",
-		"polyamorous_heart": "polyamorous_heart.png",
-		"polyam_heart": "polyamorous_heart.png",
-		"polysexual": "polysexual.svg",
-		"polysex": "polysexual.svg",
-		"straight": "straight.svg",
-		"hetero": "straight.svg",
-		"heterosexual": "straight.svg",
-		"transgender": "transgender.svg",
-		"trans": "transgender.svg",
-		"drag_aidf": "drag_aidf.jpg",
-		"drag": "drag.jpg",
-		"androgynous": "androgynous.png",
-		"twink": "twink.png",
-		"greyromantic": "greyromantic.png",
-		"grayromantic": "greyromantic.png",
-		"omnisexual": "omnisexual.png",
-		"greysexual": "greysexual.png",
-		"graysexual": "greysexual.png",
-		"leather": "leather.png",
-		"rubber": "rubber.png",
-		"mlm": "mlm.png",
-		"abrosexual": "abrosexual.png",
-		"pony": "pony.png",
-		"pony_play": "pony.png",
-		"metagender": "metagender.png",
-		"polyam_2022": "polyam_2022.png",
-		"polyamorous_2022": "polyam_2022.png",
-		"wlw": "wlw.png",
-		"sapphic": "wlw.png",
-		"bdsm": "bdsm.png",
-		"puppy": "puppy.png",
-		"puppy_play": "puppy.png",
-		"abdl": "abdl.png",
-		"mask": "mask.png",
-		"sneaker": "sneaker.png",
-		"progress": "progress.png",
-		"progress_pride": "progress.png",
-		"otherkin": "otherkin.png",
-		"therian": "therian.png",
-		"feet": "feet.png",
-		"feline": "feline.png",
-		"feline_pride": "feline.png",
-		"salmacian": "salmacian.png",
-		"qvp": "qvp.png",
-		"villain": "qvp.png",
-		"ace": "asexual.svg",
-		"aegosexual": "aegosexual.png"
-	}
+	flags: {}
 };
+
+async function grabFlags() {
+	const response = await fetch("../chat-customizer/api/lib/flags.json");
+	if(!response.ok) {
+		return;
+	}
+
+	settings.flags = await response.json();
+}
+grabFlags();
 
 var hideAccounts = [];
 var refreshExternalStuffTimeout;
@@ -472,9 +384,11 @@ const settingUpdaters = {
 		rootCSS().setProperty("--messageFont", value);
 	},
 	chatNameFontSize: function(value) {
+		rootCSS().setProperty("--nameFontSizeNum", value);
 		rootCSS().setProperty("--nameFontSize", `${value}pt`);
 	},
 	chatMessageFontSize: function(value) {
+		rootCSS().setProperty("--messageFontSizeNum", value);
 		rootCSS().setProperty("--messageFontSize", `${value}pt`);
 	},
 	chatNameFontWeight: function(value) {
@@ -578,6 +492,7 @@ const settingUpdaters = {
 	},
 
 	chatMessageLineHeight: function(value) {
+		rootCSS().setProperty("--messageLineHeightNum", value);
 		rootCSS().setProperty("--messageLineHeight", `${value}px`);
 	},
 

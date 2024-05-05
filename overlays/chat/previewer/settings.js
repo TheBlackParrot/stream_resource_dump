@@ -165,6 +165,10 @@ function updateSetting(which, value, oldValue) {
 			}
 		});
 	}
+
+	if($(`#${setting}`).attr("data-coloris") !== undefined) {
+		$(`#${setting}`)[0].dispatchEvent(new Event('input', { bubbles: true }));
+	}
 }
 window.addEventListener("storage", function(event) {
 	updateSetting(event.key, event.newValue, event.oldValue);
@@ -266,11 +270,12 @@ function discardSettings(which) {
 			}
 
 			newValue = `#${(parseInt(newValue)).toString(16).padStart(colorLength, "0")}`;
+			element[0].dispatchEvent(new Event('input', { bubbles: true }));
 		}
 
 		switch(element.attr("type")) {
 			case "checkbox":
-				element.prop("checked", (newValue === "true" || newValue === "1")).trigger("update").trigger("change");
+				element.prop("checked", (newValue === "true" || newValue === "1" ? "true" : "")).trigger("update").trigger("change");
 				break;
 
 			default:

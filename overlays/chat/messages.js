@@ -56,6 +56,12 @@ async function prepareMessage(tags, message, self, forceHighlight) {
 		isOverlayMessage = tags['is-overlay-message'];
 	}
 
+	if(!userData.fetchedCustomSettings && !isOverlayMessage) {
+		console.log("waiting for custom settings to set");
+		await delay(500);
+		return prepareMessage(tags, message, self, forceHighlight);		
+	}
+
 	let outObject = {
 		message: message,
 		isOverlayMessage: isOverlayMessage,
@@ -136,266 +142,8 @@ async function prepareMessage(tags, message, self, forceHighlight) {
 	setTimeout(async function() { await parseMessage(outObject); }, parseDelay);
 }
 
+var lastSettingsRefresh = [];
 const chatFuncs = {
-	namecolor: function(data, args) {
-		let color = args[0].replace("#", "");
-		if(!(/^([0-9a-f]{3}){1,2}$/i).test(color)) {
-			return;
-		}
-
-		if(localStorage.getItem("setting_ensureNameColorsAreBrightEnough") === "true") {
-			color = ensureSafeColor(`#${color}`).replace("#", "");
-		}
-
-		console.log(`set color for ${data.user.username} to #${color}`)
-		localStorage.setItem(`color_${data.user.id}`, `#${color}`);
-		rootCSS().setProperty(`--nameColor${data.user.id}`, `#${color}`);
-	},
-
-	namesecondarycolor: function(data, args) {
-		let color = args[0].replace("#", "");
-		if(!(/^([0-9a-f]{3}){1,2}$/i).test(color)) {
-			return;
-		}
-
-		if(localStorage.getItem("setting_ensureNameColorsAreBrightEnough") === "true") {
-			color = ensureSafeColor(`#${color}`).replace("#", "");
-		}
-
-		console.log(`set 2nd color for ${data.user.username} to #${color}`)
-		localStorage.setItem(`color2_${data.user.id}`, `#${color}`);
-		rootCSS().setProperty(`--nameColorSecondary${data.user.id}`, `#${color}`);
-
-		if(localStorage.getItem("setting_chatDefaultNameColorForced") !== "true") {
-			if(localStorage.getItem("setting_allowUserCustomizations") === "true") {
-				$(`.name[data-userid="${data.user.id}"]`).children().css("background-image", `linear-gradient(var(--nameAngle${data.user.id}), var(--nameColorSecondary${data.user.id}) 0%, transparent 75%)`);
-			}
-		}
-	},
-
-	namefont: function(data, args) {
-		let fontName = args.join(" ");
-		if(Object.keys(fonts).indexOf(fontName) === -1) { return; }
-		if(!fonts[fontName].allowed.names) { return; }
-
-		console.log(`set name font for ${data.user.username} to ${fontName}`)
-		localStorage.setItem(`namefont_${data.user.id}`, fontName);
-		rootCSS().setProperty(`--nameFont${data.user.id}`, fontName);
-	},
-
-	nameweight: function(data, args) {
-		let weight = args.join("").toLowerCase();
-		if(weight in enums.weight) {
-			weight = enums.weight[weight];
-		} else {
-			weight = parseInt(weight);
-			if(isNaN(weight)) { weight = 700; }
-
-			weight = Math.max(Math.min(weight - weight % 100, 900), 100);
-		}
-
-		console.log(`set name weight for ${data.user.username} to ${weight}`)
-		localStorage.setItem(`nameweight_${data.user.id}`, weight);
-		rootCSS().setProperty(`--nameWeight${data.user.id}`, weight);
-	},
-
-	namesize: function(data, args) {
-		let hardcodedDefaults = {
-			min: 14,
-			max: 18
-		};
-		let size = 16;
-
-		if(!isNaN(parseFloat(args[0]))) {
-			size = Math.max(Math.min(parseFloat(args[0]), hardcodedDefaults.max), hardcodedDefaults.min);
-		}
-
-		console.log(`set name size for ${data.user.username} to ${size}pt`)
-		localStorage.setItem(`namesize_${data.user.id}`, `${size}pt`);
-		rootCSS().setProperty(`--nameSize${data.user.id}`, `${size}pt`);
-	},
-
-	nameitalic: function(data, args) {
-		let which = (args[0].toLowerCase() === "yes" ? "italic" : "normal");
-
-		console.log(`set name italics for ${data.user.username} to ${which}`);
-		localStorage.setItem(`namestyle_${data.user.id}`, which);
-		rootCSS().setProperty(`--nameStyle${data.user.id}`, which);
-	},
-
-	namespacing: function(data, args) {
-		let hardcodedDefaults = {
-			min: -4,
-			max: 5
-		};
-		let val = 1;
-
-		if(!isNaN(parseFloat(args[0]))) {
-			val = Math.max(Math.min(parseFloat(args[0]), hardcodedDefaults.max), hardcodedDefaults.min);
-		}
-
-		console.log(`set name character spacing for ${data.user.username} to ${val}px`)
-		localStorage.setItem(`namespacing_${data.user.id}`, `${val}px`);
-		rootCSS().setProperty(`--nameSpacing${data.user.id}`, `${val}px`);
-	},
-
-	msgfont: function(data, args) {
-		let fontName = args.join(" ");
-
-		if(Object.keys(fonts).indexOf(fontName) === -1) { return; }
-		if(!fonts[fontName].allowed.messages) { return; }
-
-		console.log(`set message font for ${data.user.username} to ${fontName}`)
-		localStorage.setItem(`msgfont_${data.user.id}`, fontName);
-		rootCSS().setProperty(`--msgFont${data.user.id}`, fontName);
-	},
-
-	msgsize: function(data, args) {
-		let hardcodedDefaults = {
-			min: 14,
-			max: 18
-		};
-		let size = 16;
-
-		if(!isNaN(parseFloat(args[0]))) {
-			size = Math.max(Math.min(parseFloat(args[0]), hardcodedDefaults.max), hardcodedDefaults.min);
-		}
-
-		console.log(`set message size for ${data.user.username} to ${size}pt`)
-		localStorage.setItem(`msgsize_${data.user.id}`, `${size}pt`);
-		rootCSS().setProperty(`--msgSize${data.user.id}`, `${size}pt`);
-	},
-
-	msgspacing: function(data, args) {
-		let hardcodedDefaults = {
-			min: -2,
-			max: 2
-		};
-		let val = 0;
-
-		if(!isNaN(parseFloat(args[0]))) {
-			val = Math.max(Math.min(parseFloat(args[0]), hardcodedDefaults.max), hardcodedDefaults.min);
-		}
-
-		console.log(`set message character spacing for ${data.user.username} to ${val}px`)
-		localStorage.setItem(`msgspacing_${data.user.id}`, `${val}px`);
-		rootCSS().setProperty(`--msgSpacing${data.user.id}`, `${val}px`);
-	},
-
-	msgweight: function(data, args) {
-		let weight = args.join("").toLowerCase();
-		if(weight in enums.weight) {
-			weight = enums.weight[weight];
-		} else {
-			weight = parseInt(weight);
-			if(isNaN(weight)) { weight = 700; }
-		}
-
-		weight = Math.max(Math.min(weight - weight % 100, 900), 400);
-
-		console.log(`set message weight for ${data.user.username} to ${weight}`)
-		localStorage.setItem(`msgweight_${data.user.id}`, weight);
-		rootCSS().setProperty(`--msgWeight${data.user.id}`, weight);
-	},
-
-	nametransform: function(data, args) {
-		let valid = ["none", "lowercase", "uppercase"];
-		let chosen = valid[0];
-
-		if(!(isNaN(parseInt(args[0])))) {
-			let c = Math.max(Math.min(parseInt(args[0]), 2), 0);
-			chosen = valid[c];
-		} else {
-			if(valid.indexOf(args[0]) !== -1) {
-				chosen = args[0];
-			}
-		}
-
-		console.log(`set name transform for ${data.user.username} to ${chosen}`)
-		localStorage.setItem(`nametransform_${data.user.id}`, chosen);
-		rootCSS().setProperty(`--nameTransform${data.user.id}`, chosen);
-	},
-
-	namevariant: function(data, args) {
-		let valid = ["normal", "small-caps", "unicase"];
-		let chosen = valid[0];
-
-		if(!(isNaN(parseInt(args[0])))) {
-			let c = Math.max(Math.min(parseInt(args[0]), 2), 0);
-			chosen = valid[c];
-		} else {
-			if(valid.indexOf(args[0]) !== -1) {
-				chosen = args[0];
-			}
-		}
-
-		console.log(`set name variant for ${data.user.username} to ${chosen}`)
-		localStorage.setItem(`namevariant_${data.user.id}`, chosen);
-		rootCSS().setProperty(`--nameVariant${data.user.id}`, chosen);
-	},
-
-	nameangle: function(data, args) {
-		let angle = 170;
-		if(!isNaN(parseFloat(args[0]))) {
-			angle = Math.max(Math.min(parseFloat(args[0]), 360), 0);
-		}
-
-		console.log(`set name angle for ${data.user.username} to ${angle}deg`)
-		localStorage.setItem(`nameangle_${data.user.id}`, `${angle}deg`);
-		rootCSS().setProperty(`--nameAngle${data.user.id}`, `${angle}deg`);
-	},
-
-	chatsettings: function(data, args) {
-		if(args.length < 18) {
-			console.log("args not correct length");
-			return false;
-		}
-
-		chatFuncs["namecolor"](data, [args[0]]);
-		chatFuncs["namefont"](data, args[1].split("_"));
-		chatFuncs["namesize"](data, [args[2]]);
-		chatFuncs["nameitalic"](data, [args[3]]);
-		chatFuncs["nameweight"](data, [args[4]]);
-		chatFuncs["nametransform"](data, [args[5]]);
-		chatFuncs["namevariant"](data, [args[6]]);
-		chatFuncs["namespacing"](data, [args[7]]);
-		chatFuncs["msgfont"](data, args[8].split("_"));
-		chatFuncs["msgsize"](data, [args[9]]);
-		chatFuncs["msgweight"](data, [args[10]]);
-		chatFuncs["msgspacing"](data, [args[11]]);
-		chatFuncs["namesecondarycolor"](data, [args[12]]);
-		chatFuncs["nameangle"](data, [args[13]]);
-		chatFuncs["showpfp"](data, [args[14]]);
-		chatFuncs["useusername"](data, [args[15]]);
-		chatFuncs["pfpshape"](data, [args[16]]);
-		chatFuncs["use7tvpaint"](data, [args[17]]);
-
-		data.message = "New chat settings have applied!";
-		return true;
-	},
-
-	flags: function(data, args) {
-		let flags = [];
-		for(let idx = 0; idx < args.length; idx++) {
-			if(flags.length >= parseInt(localStorage.getItem("setting_maxFlagCount"))) {
-				break;
-			}
-
-			let flag = args[idx];
-			if(!(flag in settings.flags)) {
-				continue;
-			}
-
-			flags.push(flag);
-		}
-
-		flags = flags.join(",");
-
-		console.log(`set flag badges for ${data.user.username} to ${flags}`)
-		localStorage.setItem(`flags_${data.user.id}`, flags);
-	},
-	flag: function(data, args) { chatFuncs["flags"](data, args); },
-
 	bsr: async function(data, args, msgElement) {
 		if(localStorage.getItem("setting_cmdEnableBSR") !== "true") {
 			return;
@@ -499,37 +247,6 @@ const chatFuncs = {
 		await data.user.setPronouns();
 	},
 
-	showpfp: function(data, args) {
-		if(!args.length) { return; }
-		let show = (args[0] === "yes" ? "yes" : "no");
-
-		console.log(`show pfp for ${data.user.username} is now ${show}`);
-		localStorage.setItem(`showpfp_${data.user.id}`, show);
-	},
-
-	useusername: function(data, args) {
-		if(!args.length) { return; }
-		let which = (args[0] === "yes" ? "username" : "name");
-
-		console.log(`name for ${data.user.username} is now ${which}`);
-		localStorage.setItem(`usename_${data.user.id}`, which);
-	},
-
-	pfpshape: function(data, args) {
-		if(!args.length) { return; }
-
-		let val = "10px";
-		switch(args[0]) {
-			case "square": val = "0px"; break;
-			case "squircle": val = "10px"; break;
-			case "circle": val = "100%"; break;
-		}
-
-		console.log(`pfp shape for ${data.user.username} is now ${val}`);
-		localStorage.setItem(`pfpShape_${data.user.id}`, val);
-		rootCSS().setProperty(`--pfpShape${data.user.id}`, val);
-	},
-
 	refreshpfp: async function(data, args) {
 		await data.user.refreshCachedAvatar();
 	},
@@ -545,70 +262,6 @@ const chatFuncs = {
 		getGlobalChannelEmotes(broadcasterData);
 	},
 
-	use7tvpaint: function(data, args) {
-		if(!args.length) { return; }
-		let which = (args[0] === "yes" ? "yes" : "no");
-
-		console.log(`7tv paint for ${data.user.username} is now ${which} (only if available)`);
-		localStorage.setItem(`use7tvpaint_${data.user.id}`, which);
-	},
-
-	resetchat: function(data, args) {
-		localStorage.removeItem(`namesize_${data.user.id}`);
-		localStorage.removeItem(`nametransform_${data.user.id}`);
-		localStorage.removeItem(`namestyle_${data.user.id}`);
-		localStorage.removeItem(`namespacing_${data.user.id}`);
-		localStorage.removeItem(`namevariant_${data.user.id}`);
-		localStorage.removeItem(`nameangle_${data.user.id}`);
-		localStorage.removeItem(`nameweight_${data.user.id}`);
-		localStorage.removeItem(`namefont_${data.user.id}`);
-		localStorage.removeItem(`nameshadow_${data.user.id}`);
-		localStorage.removeItem(`nameoutline_${data.user.id}`);
-
-		localStorage.removeItem(`msgsize_${data.user.id}`);
-		localStorage.removeItem(`msgweight_${data.user.id}`);
-		localStorage.removeItem(`msgspacing_${data.user.id}`);
-		localStorage.removeItem(`msgfont_${data.user.id}`);
-
-		localStorage.removeItem(`color_${data.user.id}`);
-		localStorage.removeItem(`color2_${data.user.id}`);
-
-		localStorage.removeItem(`pfpShape_${data.user.id}`);
-		localStorage.setItem(`pfp_${data.user.id}_expiry`, "0");
-		localStorage.removeItem(`showpfp_${data.user.id}`);
-
-		localStorage.removeItem(`flags_${data.user.id}`);
-
-		localStorage.setItem(`pn_${data.user.id}_expiry`, "0");
-		localStorage.removeItem(`usename_${data.user.id}`);
-		localStorage.removeItem(`use7tvpaint_${data.user.id}`);
-
-		rootCSS().removeProperty(`--pfpShape${data.user.id}`);
-		rootCSS().removeProperty(`--nameColor${data.user.id}`);
-		rootCSS().removeProperty(`--nameColorSecondary${data.user.id}`);
-		rootCSS().removeProperty(`--nameAngle${data.user.id}`);
-		rootCSS().removeProperty(`--nameSize${data.user.id}`);
-		rootCSS().removeProperty(`--nameSpacing${data.user.id}`);
-		rootCSS().removeProperty(`--nameWeight${data.user.id}`);
-		rootCSS().removeProperty(`--nameStyle${data.user.id}`);
-		rootCSS().removeProperty(`--nameTransform${data.user.id}`);
-		rootCSS().removeProperty(`--nameVariant${data.user.id}`);
-		rootCSS().removeProperty(`--chatMessageColor${data.user.id}`);
-		rootCSS().removeProperty(`--msgSize${data.user.id}`);
-		rootCSS().removeProperty(`--nameFont${data.user.id}`);
-		rootCSS().removeProperty(`--msgFont${data.user.id}`);
-		rootCSS().removeProperty(`--msgWeight${data.user.id}`);
-		rootCSS().removeProperty(`--msgSpacing${data.user.id}`);
-
-		initUserSettingValues(data);
-
-		data.message = "Chat settings have been reset!"
-
-		$(`.name[data-userid="${data.user.id}"]`).children().css("background-image", "var(--nameBackground)");
-		$(`.chatBlock[data-userid="${data.user.id}"] .message`).attr("style", "");
-		$(`.chatBlock[data-userid="${data.user.id}"] .pfp`).attr("style", "");
-	},
-
 	overlayversion: function(data, args) {
 		if(!data.user.moderator) {
 			if(parseInt(data.user.id) !== 43464015) {
@@ -618,6 +271,20 @@ const chatFuncs = {
 
 		systemMessage(`Streamer is using overlay r${overlayRevision}`);
 		checkForUpdate();
+	},
+
+	refreshcosettings: async function(data, args) {
+		if(lastSettingsRefresh.indexOf(data.user.id) !== -1) {
+			if(Date.now() > (lastSettingsRefresh[data.user.id] + 15000)) {
+				return false;
+			}
+		}
+		lastSettingsRefresh[data.user.id] = Date.now();
+
+		await data.user.getUserSettings();
+
+		data.message = "New chat settings have applied!";
+		return true;
 	}
 }
 
@@ -847,24 +514,28 @@ function renderBadgeBlock(data, rootElement, userBlock) {
 }
 
 function renderFlagBlock(data) {
+	const customSettings = data.user.entitlements.overlay.customSettings;
+
 	let flagBlock = $('<div class="flags" style="display: none;"></div>');
 
-	if(!localStorage.getItem(`flags_${data.user.id}`)) { localStorage.setItem(`flags_${data.user.id}`, ""); }
-	if(localStorage.getItem("setting_enableFlags") === "true" && !data.isOverlayMessage) {
-		let flags = localStorage.getItem(`flags_${data.user.id}`).split(",");
+	if(localStorage.getItem("setting_enableFlags") === "false" || data.isOverlayMessage || !customSettings) {
+		return flagBlock;
+	}
 
-		if(flags.length) {
-			for(let flag of flags) {
-				if(!flag) {
-					continue;
-				}
+	let flags = customSettings.flags;
+	if(!flags.length) {
+		return flagBlock;
+	}
 
-				let filename = settings.flags[flag];
-
-				flagBlock.append($(`<span class="flag${flag} flag" style="background-image: url('flags/${filename}'); display: inline-block;"></div>`));
-				flagBlock.show();
-			}
+	for(let flag of flags) {
+		if(!flag) {
+			continue;
 		}
+
+		let filename = settings.flags[flag];
+
+		flagBlock.append($(`<span class="flag${flag} flag" style="background-image: url('flags/${filename}'); display: inline-block;"></div>`));
+		flagBlock.show();
 	}
 
 	return flagBlock;
@@ -895,9 +566,9 @@ function renderAvatarBlock(data) {
 
 	pfpBlock.attr("src", data.user.avatarImage);
 
-	if(!localStorage.getItem(`pfpShape_${data.user.id}`)) { localStorage.setItem(`pfpShape_${data.user.id}`, "var(--avatarBorderRadius)"); }
-	rootCSS().setProperty(`--pfpShape${data.user.id}`, localStorage.getItem(`pfpShape_${data.user.id}`));
-	pfpBlock.css("border-radius", `var(--pfpShape${data.user.id})`);
+	if(data.user.entitlements.overlay.customSettings) {
+		pfpBlock.css("border-radius", `var(--pfpShape${data.user.id})`);
+	}
 
 	if(data.user.avatarEnabled) {
 		pfpBlock.show();
@@ -927,48 +598,8 @@ function initUserSettingValues(data) {
 
 		localStorage.setItem(`color_${data.user.id}`, col);
 	}
-	if(!localStorage.getItem(`color2_${data.user.id}`)) { localStorage.setItem(`color2_${data.user.id}`, "var(--defaultNameColorSecondary)"); }
-	if(!localStorage.getItem(`nameangle_${data.user.id}`)) { localStorage.setItem(`nameangle_${data.user.id}`, "var(--nameGradientAngle)"); }
-	if(customizationOK) {
-		if(!localStorage.getItem(`namefont_${data.user.id}`)) { localStorage.setItem(`namefont_${data.user.id}`, "var(--nameFont)"); }
-		if(!localStorage.getItem(`nameweight_${data.user.id}`)) { localStorage.setItem(`nameweight_${data.user.id}`, "var(--nameFontWeight)"); }
-		if(!localStorage.getItem(`namesize_${data.user.id}`)) { localStorage.setItem(`namesize_${data.user.id}`, "var(--nameFontSize)"); }
-		if(!localStorage.getItem(`namestyle_${data.user.id}`)) { localStorage.setItem(`namestyle_${data.user.id}`, "var(--nameFontStyle)"); }
-		if(!localStorage.getItem(`namespacing_${data.user.id}`)) { localStorage.setItem(`namespacing_${data.user.id}`, "var(--nameLetterSpacing)"); }
-		if(!localStorage.getItem(`nametransform_${data.user.id}`)) { localStorage.setItem(`nametransform_${data.user.id}`, "var(--nameTransform)"); }
-		if(!localStorage.getItem(`namevariant_${data.user.id}`)) { localStorage.setItem(`namevariant_${data.user.id}`, "var(--nameVariant)"); }
-		if(!localStorage.getItem(`use7tvpaint_${data.user.id}`)) { localStorage.setItem(`use7tvpaint_${data.user.id}`, "yes"); }
-		if(!localStorage.getItem(`nameshadow_${data.user.id}`)) { localStorage.setItem(`nameshadow_${data.user.id}`, "yes"); }
-		if(!localStorage.getItem(`nameoutline_${data.user.id}`)) { localStorage.setItem(`nameoutline_${data.user.id}`, "yes"); }
-
-		if(!localStorage.getItem(`msgfont_${data.user.id}`)) { localStorage.setItem(`msgfont_${data.user.id}`, "var(--messageFont)"); }
-		if(!localStorage.getItem(`msgsize_${data.user.id}`)) { localStorage.setItem(`msgsize_${data.user.id}`, "var(--messageFontSize)"); }
-		if(!localStorage.getItem(`msgspacing_${data.user.id}`)) { localStorage.setItem(`msgspacing_${data.user.id}`, "var(--messageLetterSpacing)"); }
-		if(!localStorage.getItem(`msgweight_${data.user.id}`)) { localStorage.setItem(`msgweight_${data.user.id}`, "var(--messageFontWeight)"); }
-
-		if(!data.isOverlayMessage) {
-			rootCSS().setProperty(`--nameSize${data.user.id}`, localStorage.getItem(`namesize_${data.user.id}`));
-			if(localStorage.getItem("setting_chatNameFontSize") !== "16") {
-				let scale = parseFloat(localStorage.getItem("setting_chatNameFontSize")) / 16;
-				if(localStorage.getItem(`namesize_${data.user.id}`) !== "var(--nameFontSize)") {
-					rootCSS().setProperty(`--nameSize${data.user.id}`, `calc(${localStorage.getItem(`namesize_${data.user.id}`)} * ${scale})`);
-				}
-			}
-
-			rootCSS().setProperty(`--nameSpacing${data.user.id}`, localStorage.getItem(`namespacing_${data.user.id}`));
-			if(localStorage.getItem("setting_chatNameLetterSpacing") !== "1") {
-				let scale = parseFloat(localStorage.getItem("setting_chatNameLetterSpacing"));
-				if(localStorage.getItem(`namespacing_${data.user.id}`) !== "var(--nameLetterSpacing)") {
-					rootCSS().setProperty(`--nameSpacing${data.user.id}`, `calc(${localStorage.getItem(`namespacing_${data.user.id}`)} * ${scale})`);
-				}
-			}
-
-			rootCSS().setProperty(`--nameFont${data.user.id}`, localStorage.getItem(`namefont_${data.user.id}`));
-			rootCSS().setProperty(`--nameWeight${data.user.id}`, localStorage.getItem(`nameweight_${data.user.id}`));
-			rootCSS().setProperty(`--nameStyle${data.user.id}`, localStorage.getItem(`namestyle_${data.user.id}`));
-			rootCSS().setProperty(`--nameTransform${data.user.id}`, localStorage.getItem(`nametransform_${data.user.id}`));
-			rootCSS().setProperty(`--nameVariant${data.user.id}`, localStorage.getItem(`namevariant_${data.user.id}`));
-		}
+	if(!localStorage.getItem(`color2_${data.user.id}`)) {
+		localStorage.setItem(`color2_${data.user.id}`, "var(--defaultNameColorSecondary)");
 	}
 
 	let usesCustomColor = true;
@@ -1000,11 +631,6 @@ function initUserSettingValues(data) {
 
 	rootCSS().setProperty(`--nameColor${data.user.id}`, localStorage.getItem(`color_${data.user.id}`));
 	rootCSS().setProperty(`--nameColorSecondary${data.user.id}`, localStorage.getItem(`color2_${data.user.id}`));
-	if(customizationOK) {
-		rootCSS().setProperty(`--nameAngle${data.user.id}`, localStorage.getItem(`nameangle_${data.user.id}`));
-	} else {
-		rootCSS().setProperty(`--nameAngle${data.user.id}`, "var(--nameGradientAngle)");
-	}
 
 	return usesCustomColor;
 }
@@ -1014,6 +640,7 @@ function initUserBlockCustomizations(data, elements) {
 		return;
 	}
 
+	const customSettings = data.user.entitlements.overlay.customSettings;
 	let customizationOK = (localStorage.getItem("setting_allowUserCustomizations") === "true");
 	let usesCustomColor = initUserSettingValues(data);
 
@@ -1028,7 +655,7 @@ function initUserBlockCustomizations(data, elements) {
 	} else {
 		allNameElements.css("background-color", `var(--nameColor${data.user.id})`);
 
-		if(localStorage.getItem("setting_chatNameUsesGradient") === "true" && usesCustomColor) {
+		if(localStorage.getItem("setting_chatNameUsesGradient") === "true" && usesCustomColor && !customSettings) {
 			allNameElements.css("background-image", `linear-gradient(var(--nameAngle${data.user.id}), var(--nameColorSecondary${data.user.id}) 0%, transparent 75%)`);
 		}
 	}
@@ -1095,7 +722,7 @@ function initUserBlockCustomizations(data, elements) {
 		elements.messageWrapper.css("border-color", `var(--messageOutlineColor${data.user.id})`);
 	}
 
-	if(customizationOK && !data.isOverlayMessage) {
+	if(customSettings && customizationOK && !data.isOverlayMessage) {
 		elements.nameBlock.css("font-family", `var(--nameFont${data.user.id})`);
 		elements.nameBlock.css("font-weight", `var(--nameWeight${data.user.id})`);
 		elements.nameBlock.css("font-size", `var(--nameSize${data.user.id})`);
@@ -1104,20 +731,26 @@ function initUserBlockCustomizations(data, elements) {
 		allNameElements.css("text-transform", `var(--nameTransform${data.user.id})`);
 		allNameElements.css("font-variant", `var(--nameVariant${data.user.id})`);
 
-		if(localStorage.getItem(`namestyle_${data.user.id}`) === "italic") {
+		allNameElements.css("background-image", `var(--nameGradient${data.user.id})`);
+		allNameElements.css("-webkit-text-stroke", `var(--nameExtraWeight${data.user.id}) transparent`);
+		elements.nameBlock.css("transform", `var(--nameTransforms${data.user.id})`);
+
+		if(customSettings.nameItalic) {
 			allNameElements.css("padding-right", "4px");
 		}
 	}
 }
 
 function renderNameBlock(data) {
-	if(!localStorage.getItem(`usename_${data.user.id}`)) { localStorage.setItem(`usename_${data.user.id}`, "name"); }
+	const customSettings = data.user.entitlements.overlay.customSettings;
+	let useDisplayName = true;
+	if(customSettings.useUsername) {
+		useDisplayName = false;
+	}
 
-	// username = all latin
-	// name = anything
 	let internationalNameBlock = null;
 	let name = data.user.username;
-	if(localStorage.getItem(`usename_${data.user.id}`) === "name") {
+	if(useDisplayName) {
 		name = data.user.displayName;
 		let nameTest = name.replace(/[\x00-\xFF]/ug, "");
 
@@ -1166,7 +799,18 @@ function renderUserBlock(data, rootElement, overallWrapper, messageWrapper) {
 		});
 	}
 
-	if(localStorage.getItem(`use7tvpaint_${data.user.id}`) === "yes" && !data.isOverlayMessage && data.user.entitlements.sevenTV.paint) {
+	var use7TVPaint = true;
+	const customSettings = data.user.entitlements.overlay.customSettings;
+	if(customSettings) {
+		if((!customSettings.use7TVPaint || !data.user.entitlements.sevenTV.paint) && customSettings.nameGlowEnabled) {
+			nameBlock.children(".displayName").css("filter", `var(--effectFilters) var(--nameGlow${data.user.id})`);
+			nameBlock.children(".internationalName").css("filter", `var(--effectFilters) var(--nameGlow${data.user.id}) saturate(var(--internationalNameSaturation))`);
+
+			use7TVPaint = false;
+		}
+	}
+
+	if(!data.isOverlayMessage && data.user.entitlements.sevenTV.paint && use7TVPaint) {
 		set7TVPaint(nameBlock, data.user.entitlements.sevenTV.paint, data.user.id);
 	}
 
@@ -1174,6 +818,8 @@ function renderUserBlock(data, rootElement, overallWrapper, messageWrapper) {
 }
 
 function initMessageBlockCustomizations(data, elements) {
+	const messageBlock = elements.messageBlock;
+	const customSettings = data.user.entitlements.overlay.customSettings;
 	if(data.isOverlayMessage) {
 		return;
 	}
@@ -1192,33 +838,18 @@ function initMessageBlockCustomizations(data, elements) {
 			userColorUsed,
 			parseFloat(localStorage.getItem(`setting_chatMessageUserColorAmount`)
 		)));
-		elements.messageBlock.css("color", `var(--chatMessageColor${data.user.id})`);
+		messageBlock.css("color", `var(--chatMessageColor${data.user.id})`);
 	}
 
-	if(customizationOK) {
-		rootCSS().setProperty(`--msgFont${data.user.id}`, localStorage.getItem(`msgfont_${data.user.id}`));
-		rootCSS().setProperty(`--msgWeight${data.user.id}`, localStorage.getItem(`msgweight_${data.user.id}`));
+	if(customizationOK && customSettings) {
+		messageBlock.css("font-family", `var(--msgFont${data.user.id})`);
+		messageBlock.css("font-size", `var(--msgSize${data.user.id})`);
+		messageBlock.css("letter-spacing", `var(--msgSpacing${data.user.id})`);
+		messageBlock.css("font-weight", `var(--msgWeight${data.user.id})`);
 
-		rootCSS().setProperty(`--msgSize${data.user.id}`, localStorage.getItem(`msgsize_${data.user.id}`));
-		if(localStorage.getItem("setting_chatMessageFontSize") !== "16") {
-			let scale = parseFloat(localStorage.getItem("setting_chatMessageFontSize")) / 16;
-			if(localStorage.getItem(`msgsize_${data.user.id}`) !== "var(--messageFontSize)") {
-				rootCSS().setProperty(`--msgSize${data.user.id}`, `calc(${localStorage.getItem(`msgsize_${data.user.id}`)} * ${scale})`);
-			}
-		}
-
-		rootCSS().setProperty(`--msgSpacing${data.user.id}`, localStorage.getItem(`msgspacing_${data.user.id}`));
-		if(localStorage.getItem("setting_messageLetterSpacing") !== "0") {
-			let scale = parseFloat(localStorage.getItem("setting_messageLetterSpacing"));
-			if(localStorage.getItem(`msgspacing_${data.user.id}`) !== "var(--messageLetterSpacing)") {
-				rootCSS().setProperty(`--msgSpacing${data.user.id}`, `calc(${localStorage.getItem(`msgspacing_${data.user.id}`)} * ${scale})`);
-			}
-		}
-
-		elements.messageBlock.css("font-family", `var(--msgFont${data.user.id})`);
-		elements.messageBlock.css("font-size", `var(--msgSize${data.user.id})`);
-		elements.messageBlock.css("letter-spacing", `var(--msgSpacing${data.user.id})`);
-		elements.messageBlock.css("font-weight", `var(--msgWeight${data.user.id})`);
+		messageBlock.css("-webkit-text-stroke", `var(--msgExtraWeight${data.user.id}) transparent`);
+		messageBlock.css("line-height", `var(--msgLineHeight${data.user.id})`);
+		messageBlock.css("font-variant", `var(--msgVariant${data.user.id})`);
 	}
 }
 
@@ -1602,7 +1233,7 @@ async function parseMessage(data) {
 
 		let continueOn = false;
 		if(typeof wantedCommand === "function") {
-			continueOn = wantedCommand(data, wantedArgs);
+			continueOn = await wantedCommand(data, wantedArgs);
 		}
 
 		if(!continueOn && localStorage.getItem("setting_chatHideCommands") === "true") {
@@ -1727,6 +1358,13 @@ async function parseMessage(data) {
 
 function render7TVBadges(user, badgeBlock) {
 	const entitlements = user.entitlements;
+	const customSettings = entitlements.overlay.customSettings;
+
+	if(customSettings) {
+		if(customSettings.hide7TVBadge) {
+			return;
+		}
+	}
 
 	if(entitlements.sevenTV.badges.length) {
 		for(let i in entitlements.sevenTV.badges) {
@@ -1750,6 +1388,13 @@ function render7TVBadges(user, badgeBlock) {
 
 function renderFFZBadges(user, badgeBlock) {
 	const entitlements = user.entitlements;
+	const customSettings = entitlements.overlay.customSettings;
+
+	if(customSettings) {
+		if(customSettings.hideFFZBadge) {
+			return;
+		}
+	}
 
 	if(entitlements.ffz.badges.length) {
 		for(let i in entitlements.ffz.badges) {
@@ -1777,6 +1422,13 @@ function renderFFZBadges(user, badgeBlock) {
 
 function renderBTTVBadges(user, badgeBlock) {
 	const entitlements = user.entitlements;
+	const customSettings = entitlements.overlay.customSettings;
+
+	if(customSettings) {
+		if(customSettings.hideBTTVBadge) {
+			return;
+		}
+	}
 
 	if(entitlements.bttv.badge) {
 		let badge = entitlements.bttv.badge;

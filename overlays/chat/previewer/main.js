@@ -295,9 +295,9 @@ window.addEventListener("load", async function(event) {
 		$("#signedInUser_name").text(userData.display_name);
 		$("#signedInUser").fadeIn(250);
 
-		$("#namePreview").fadeOut(250, function() {
-			$("#namePreview").text(userData.display_name);
-			$("#namePreview").fadeIn(250);
+		$("#namePreviewValue").fadeOut(250, function() {
+			$("#namePreviewValue").text(userData.display_name);
+			$("#namePreviewValue").fadeIn(250);
 		});
 
 		for(const setting in initialSettings) {
