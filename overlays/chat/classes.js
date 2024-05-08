@@ -118,6 +118,20 @@ class User {
 		this.created = new Date(opts.created).getTime();
 		this.bot = isUserBot(opts.username);
 
+		const actuallyThis = this;
+		this.customSettingsFetchPromise = new Promise(async function(resolve, reject) {
+			const state = await actuallyThis.getUserSettings();
+			actuallyThis.fetchedCustomSettings = true;
+
+			if(state) {
+				resolve();
+			} else {
+				reject("getUserSettings didn't apply");
+			}
+		}).catch(function(msg) {
+			console.warn(msg);
+		});
+
 		this.entitlements = {
 			twitch: {
 				badges: {
@@ -174,7 +188,6 @@ class User {
 		if(this.id !== "-1") {
 			this.setPronouns();
 			this.#setFFZBadges();
-			this.getUserSettings();
 		}
 	}
 
@@ -481,15 +494,18 @@ class User {
 	}
 
 	async getUserSettings() {
+		if(parseInt(this.id) === -1) {
+			return false;
+		}
+
 		const response = await fetch(`../chat-customizer/api/getSettings.php?id=${this.id}`);
-		this.fetchedCustomSettings = true;
 		if(!response.ok) {
-			return;
+			return false;
 		}
 
 		var data = await response.json();
 		if(!Object.keys(data).length) {
-			return;
+			return false;
 		}
 
 		data.flags = [];
@@ -551,6 +567,8 @@ class User {
 		rootCSS().setProperty(`--msgVariant${this.id}`, data.messageVariant);
 
 		rootCSS().setProperty(`--pfpShape${this.id}`, `${data.avatarBorderRadius}%`);
+
+		return true;
 	}
 
 	setUserGradient() {
@@ -561,12 +579,11 @@ class User {
 		let type = settings.nameGradientType;
 		let repeats = (settings.nameGradientRepeats === 1);
 		let stops = settings.stops;
+		let colors = stops.map(function(stop) {
+			return (ensureBrightness ? ensureSafeColor(stop.color) : stop.color);
+		});
 
-		if(amount < 1) { amount = 1; }
-		else if(amount > 9) { amount = 9; }
-		if(isNaN(amount)) { amount = 2; }
-
-		if(amount === 1) {
+		if(stops.length === 1) {
 			rootCSS().setProperty(`--nameGradient${this.id}`, '');
 			if(ensureBrightness) {
 				rootCSS().setProperty(`--nameColor${this.id}`, ensureSafeColor(stops[0].color));
@@ -579,18 +596,18 @@ class User {
 		}
 
 		let gradientOut = [];
-		for(let i = 0; i < amount; i++) {
+		for(let i = 0; i < stops.length; i++) {
 			let prevIdx = Math.max(0, i-1);
 
-			let color = (ensureBrightness ? ensureSafeColor(stops[i].color) : stops[i].color);
-			let prevColor = (ensureBrightness ? ensureSafeColor(stops[prevIdx].color) : stops[prevIdx].color);
+			let color = colors[i];
+			let prevColor = colors[prevIdx];
 			let percentage = `${stops[i].percentage}%`;
 			let prevPercentage = `${stops[prevIdx].percentage}%`;
 
 			if(stops[i].hard) {
 				gradientOut.push(`${prevColor} ${percentage}`);
 				gradientOut.push(`${color} ${percentage}`);
-				if(i === amount) {
+				if(i === stops.length) {
 					gradientOut.push(`${color} calc(${percentage} + (${percentage} - ${prevPercentage}))`);
 				}
 			} else {
@@ -614,7 +631,7 @@ class User {
 		}
 		rootCSS().setProperty(`--nameGradient${this.id}`, `${repeats ? "repeating-" : ""}${type}-gradient(${initialPart}${gradientOut.join(", ")})`);
 
-		if(localStorage.getItem("setting_allowUserCustomizations") === "true") {
+		if(localStorage.getItem("setting_allowUserCustomizations") === "true" && !settings.useDefaultNameSettings) {
 			$(`.name[data-userid="${this.id}"]`).children().css("background-image", `--nameGradient${this.id}`);
 		}
 	}
@@ -622,48 +639,61 @@ class User {
 
 class UserSet {
 	constructor() {
+		this.promises = {};
 	}
 
 	async getUser(id) {
 		if(id in this) {
 			return this[id];
-		} else {
-			this[id] = null;
+		}
+		if(id in this.promises) {
+			await this.promises[id];
+			return this[id];
 		}
 
-		console.log(`creating new user object for ${id}`);
+		let actuallyThis = this;
+		this.promises[id] = new Promise(async function(resolve) {
+			if(id in actuallyThis) {
+				resolve(actuallyThis[id]);
+			} else {
+				console.log(`creating new user object for ${id}`);
 
-		let userDataRaw;
-		if(id !== "-1") {
-			let response = await callTwitchAsync({
-				endpoint: "users",
-				args: {
-					id: id
+				let userDataRaw;
+				if(id !== "-1") {
+					let response = await callTwitchAsync({
+						endpoint: "users",
+						args: {
+							id: id
+						}
+					});
+
+					userDataRaw = response.data[0];
+					console.log(userDataRaw);
+				} else {
+					// profile_image_url: `twemoji/svg/${(0x1f300 + Math.ceil(Math.random() * 8)).toString(16)}.svg`,
+					userDataRaw = {
+						display_name: `Chat Overlay (r${overlayRevision})`,
+						login: "<system>",
+						profile_image_url: `icons/1f9e9.png`,
+						broadcaster_type: null,
+						created_at: Date.now()
+					}
 				}
-			});
 
-			userDataRaw = response.data[0];
-			console.log(userDataRaw);
-		} else {
-			// profile_image_url: `twemoji/svg/${(0x1f300 + Math.ceil(Math.random() * 8)).toString(16)}.svg`,
-			userDataRaw = {
-				display_name: `Chat Overlay (r${overlayRevision})`,
-				login: "<system>",
-				profile_image_url: `icons/1f9e9.png`,
-				broadcaster_type: null,
-				created_at: Date.now()
+				actuallyThis[id] = new User({
+					id: id,
+					name: (userDataRaw.display_name || userDataRaw.login),
+					username: userDataRaw.login,
+					avatar: userDataRaw.profile_image_url,
+					broadcasterType: userDataRaw.broadcaster_type,
+					created: userDataRaw.created_at
+				});
+
+				resolve(actuallyThis[id]);
 			}
-		}
-
-		this[id] = new User({
-			id: id,
-			name: (userDataRaw.display_name || userDataRaw.login),
-			username: userDataRaw.login,
-			avatar: userDataRaw.profile_image_url,
-			broadcasterType: userDataRaw.broadcaster_type,
-			created: userDataRaw.created_at
 		});
 
+		await this.promises[id];
 		return this[id];
 	}
 
@@ -672,8 +702,12 @@ class UserSet {
 			if(idx === -1) {
 				continue;
 			}
-
+			
 			const user = this[idx];
+			if(user.entitlements === undefined) {
+				continue;
+			}
+
 			user.entitlements.pronouns.string = user.pronounString();
 			user.updatePronounBlocks();
 		}
@@ -682,6 +716,10 @@ class UserSet {
 	refreshBotFlags() {
 		for(const idx in this) {
 			const user = this[idx];
+			if(user.entitlements === undefined) {
+				continue;
+			}
+			
 			user.bot = isUserBot(user.username);
 
 			if(user.bot) {

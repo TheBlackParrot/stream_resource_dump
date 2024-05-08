@@ -185,6 +185,7 @@ async function saveSettings(which) {
 	const elements = $(`.cell[id="_settings_${which}"] .setting input, .cell[id="_settings_${which}"] .setting select`);
 	if(!elements.length) {
 		console.error(`Could not find any settings for ${which}`);
+		sendNotification(`Could not find any settings for "${which}"`, 5, "error");
 		$("#loader").fadeOut(250);
 		return;
 	}
@@ -234,12 +235,15 @@ async function saveSettings(which) {
 	if(!postResponse.ok) {
 		console.error(`POST request failed for saving ${which} settings`);
 		$("#loader").fadeOut(250);
+		sendNotification(`POST request failed for saving "${which}" settings`, 5, "error");
 		return;
 	}
 
 	const sanityCheck = await postResponse.json();
 	console.log(sanityCheck);
 	$("#loader").fadeOut(250);
+
+	sendNotification(`Successfully updated "${which}" settings`, 5, "success");
 }
 
 function discardSettings(which) {
@@ -251,6 +255,7 @@ function discardSettings(which) {
 	const elements = $(`.cell[id="_settings_${which}"] .setting input, .cell[id="_settings_${which}"] .setting select`);
 	if(!elements.length) {
 		console.error(`Could not find any settings for ${which}`);
+		sendNotification(`Could not find any settings for "${which}"`, 5, "error");
 		return;
 	}
 
@@ -283,6 +288,8 @@ function discardSettings(which) {
 				break;
 		}
 	}
+
+	sendNotification(`Reloaded "${which}" settings`, 5);
 }
 
 async function saveFlags() {
@@ -293,9 +300,13 @@ async function saveFlags() {
 		'identityFlag2': "",
 		'identityFlag3': "",
 		'identityFlag4': "",
-		'identityFlag5': ""
+		'identityFlag5': "",
+		'identityFlag6': "",
+		'identityFlag7': "",
+		'identityFlag8': "",
+		'identityFlag9': ""
 	};
-	for(let i = 1; i <= 5; i++) {
+	for(let i = 1; i <= 9; i++) {
 		localStorage.removeItem(`clientSetting_identityFlag${i}`);
 	}
 
@@ -315,15 +326,19 @@ async function saveFlags() {
 	});
 	$("#loader").fadeOut(250);
 	if(!postResponse.ok) {
-		console.error(`POST request failed for saving flags`);
+		console.error("POST request failed for saving flags");
+		sendNotification("POST request failed for saving flags settings", 5, "error");
+		return;
 	}
+
+	sendNotification(`Successfully updated flags settings`, 5, "success");
 }
 
 function discardFlags() {
 	$(".flagActive").removeClass("flagActive");
 	activeFlags = [];
 
-	for(let i = 1; i <= 5; i++) {
+	for(let i = 1; i <= 9; i++) {
 		const oldFlag = sessionStorage.getItem(`clientSetting_identityFlag${i}`);
 
 		if(oldFlag === "null" || oldFlag === "" || oldFlag === undefined) {
@@ -333,4 +348,6 @@ function discardFlags() {
 			$(`.flag[data-flag="${oldFlag}"]`).trigger("click");
 		}
 	}
+
+	sendNotification(`Reloaded flags settings`, 5);
 }

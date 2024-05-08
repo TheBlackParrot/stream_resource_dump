@@ -99,6 +99,11 @@
 	--avatar-border-radius: 50%;
 
 	--footer-height: 48px;
+
+	--warning-color: #fe4;
+	--error-color: #f45;
+	--info-color: #49f;
+	--success-color: #4a8;
 }
 
 @keyframes speen {
@@ -136,6 +141,13 @@ p:last-child {
 a {
 	color: var(--primary-color);
 	text-decoration: none;
+}
+
+strong {
+	font-weight: 900;
+}
+em {
+	font-style: italic;
 }
 
 #header {
@@ -223,8 +235,10 @@ h1 {
 }
 
 .fa-fw {
-	font-size: 1.25em;
 	line-height: 0px;
+}
+.button .fa-fw {
+	font-size: 1.25em;
 	margin-right: 4px;
 }
 
@@ -349,10 +363,8 @@ hr {
 }
 
 #messagePreview strong {
+	font-weight: var(--message-weight);
 	-webkit-text-stroke: var(--message-bold-weight-extra) transparent;
-}
-#messagePreview em {
-	font-style: italic;
 }
 
 .settings {
@@ -737,13 +749,13 @@ select option {
 }
 
 #spinner {
-	width: 30vw;
-	padding-bottom: 30vw;
+	width: 100px;
+	padding-bottom: 100px;
 
 	border-radius: 100%;
-	border: 6vw solid #ffffff30;
-	border-bottom: 6vw solid #fff;
-	box-shadow: 0px 0px 24px #000, 0px 0px 24px inset #000;
+	border: 20px solid #ffffff30;
+	border-bottom: 20px solid #fff;
+	box-shadow: 0px 0px 12px #000, 0px 0px 12px inset #000;
 
 	animation-name: speen;
 	animation-iteration-count: infinite;
@@ -751,6 +763,57 @@ select option {
 	animation-fill-mode: both;
 	animation-timing-function: linear;
 }
+
+#notifications {
+	position: fixed;
+	left: var(--global-spacing);
+	width: calc(100vw - (var(--global-spacing) * 2));
+	bottom: calc((var(--global-spacing) * 2) + var(--footer-height));
+	z-index: 99;
+
+	display: flex;
+	flex-direction: column;
+}
+
+.notification {
+	margin-top: var(--global-spacing-half);
+	padding-top: var(--global-spacing-half);
+	padding-bottom: var(--global-spacing-half);
+	padding-left: var(--global-spacing);
+	padding-right: var(--global-spacing);
+
+	border-radius: var(--input-border-radius);
+
+	background-color: #000000b0;
+	color: #fff;
+	border: 1px solid;
+
+	box-shadow: 0px 4px 8px -4px #000;
+	backdrop-filter: blur(8px);
+
+	font-size: var(--button-font-size);
+
+	display: flex;
+	width: max-content;
+	align-items: center;
+}
+
+.notification .fa-fw {
+	font-size: var(--input-font-size);
+	margin-right: 4px;
+}
+
+.warningNotif { border-color: var(--warning-color); }
+.warningNotif .fa-fw { color: var(--warning-color); }
+
+.errorNotif { border-color: var(--error-color); }
+.errorNotif .fa-fw { color: var(--error-color); }
+
+.infoNotif { border-color: var(--info-color); }
+.infoNotif .fa-fw { color: var(--info-color); }
+
+.successNotif { border-color: var(--success-color); }
+.successNotif .fa-fw { color: var(--success-color); }
 
 @media only screen and (max-width: 685px) {
 	#wrapper {
@@ -807,5 +870,16 @@ select option {
 
 	.footer .cellImportant {
 		width: 100%;
+	}
+
+	#notifications {
+		bottom: calc(var(--global-spacing) + var(--footer-height));
+	}
+	.notification {
+		margin-top: var(--global-spacing-small);
+		padding-top: var(--global-spacing-small);
+		padding-bottom: var(--global-spacing-small);
+		padding-left: var(--global-spacing-half);
+		padding-right: var(--global-spacing-half);
 	}
 }

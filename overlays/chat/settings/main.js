@@ -11,8 +11,8 @@ function changeStatusCircle(which, status, msg) {
 
 $("#sensitive .section").show();
 
-const overlayRevision = 47;
-const overlayRevisionTimestamp = 1713905296545;
+const overlayRevision = 50;
+const overlayRevisionTimestamp = 1715129304875;
 $("#revision").text(`revision ${overlayRevision}`);
 
 function resetEverything() {
@@ -79,9 +79,48 @@ function settingsCheck() {
 			localStorage.setItem("setting_chatBlockPaddingHorizontal", localStorage.getItem("setting_chatBlockPadding"));
 			localStorage.removeItem("setting_chatBlockPadding");
 		}
+
+		if(version < 4) {
+			console.log("removing old user-customization variables");
+
+			var keys = Object.keys(localStorage);
+			const wants = [
+				"(namesize_)",
+				"(nametransform_)",
+				"(namestyle_)",
+				"(namespacing_)",
+				"(namevariant_)",
+				"(nameangle_)",
+				"(nameweight_)",
+				"(namefont_)",
+				"(nameshadow_)",
+				"(nameoutline_)",
+				"(msgsize_)",
+				"(msgweight_)",
+				"(msgspacing_)",
+				"(msgfont_)",
+				"(color_)",
+				"(color2_)",
+				"(pfpshape_)",
+				"(showpfp_)",
+				"(flags_)",
+				"(usename_)",
+				"(use7tvpaint_)"
+			];
+			const re = new RegExp(wants.join("|"), "i")
+			oldKeys = keys.filter(function(key) {
+				return re.test(key);
+			});
+
+			console.log(oldKeys);
+
+			for(const key of oldKeys) {
+				localStorage.removeItem(key);
+			}
+		}
 	}
 
-	localStorage.setItem("setting_version", "3");
+	localStorage.setItem("setting_version", "4");
 }
 settingsCheck();
 

@@ -18,11 +18,6 @@ async function prepareMessage(tags, message, self, forceHighlight) {
 
 	let userData = await twitchUsers.getUser(tags['user-id']);
 	console.log(userData);
-	if(userData === null) {
-		console.log("we're going too fast wtf");
-		await delay(500);
-		return prepareMessage(tags, message, self, forceHighlight);
-	}
 
 	if(hideAccounts.indexOf(userData.username) !== -1) {
 		return;
@@ -58,8 +53,7 @@ async function prepareMessage(tags, message, self, forceHighlight) {
 
 	if(!userData.fetchedCustomSettings && !isOverlayMessage) {
 		console.log("waiting for custom settings to set");
-		await delay(500);
-		return prepareMessage(tags, message, self, forceHighlight);		
+		await userData.customSettingsFetchPromise;
 	}
 
 	let outObject = {
@@ -554,6 +548,7 @@ function renderPronounsBlock(data) {
 }
 
 function renderAvatarBlock(data) {
+	const customSettings = data.user.entitlements.overlay.customSettings;
 	let pfpBlock = $('<img class="pfp" src="" style="display: none;"/>');
 
 	if(localStorage.getItem("setting_enableAvatars") === "false" || data.isOverlayMessage) {
@@ -566,8 +561,10 @@ function renderAvatarBlock(data) {
 
 	pfpBlock.attr("src", data.user.avatarImage);
 
-	if(data.user.entitlements.overlay.customSettings) {
-		pfpBlock.css("border-radius", `var(--pfpShape${data.user.id})`);
+	if(customSettings && localStorage.getItem("setting_allowUserCustomizations") === "true" && localStorage.getItem("setting_allowUserAvatarShape") === "true") {
+		if(!customSettings.useDefaultAvatarBorderRadius) {
+			pfpBlock.css("border-radius", `var(--pfpShape${data.user.id})`);
+		}
 	}
 
 	if(data.user.avatarEnabled) {
@@ -723,20 +720,28 @@ function initUserBlockCustomizations(data, elements) {
 	}
 
 	if(customSettings && customizationOK && !data.isOverlayMessage) {
-		elements.nameBlock.css("font-family", `var(--nameFont${data.user.id})`);
-		elements.nameBlock.css("font-weight", `var(--nameWeight${data.user.id})`);
-		elements.nameBlock.css("font-size", `var(--nameSize${data.user.id})`);
-		allNameElements.css("font-style", `var(--nameStyle${data.user.id})`);
-		allNameElements.css("letter-spacing", `var(--nameSpacing${data.user.id})`);
-		allNameElements.css("text-transform", `var(--nameTransform${data.user.id})`);
-		allNameElements.css("font-variant", `var(--nameVariant${data.user.id})`);
+		if(!customSettings.useDefaultNameSettings) {
+			if(localStorage.getItem("setting_allowUserCustomNameFonts") === "true") {
+				elements.nameBlock.css("font-family", `var(--nameFont${data.user.id})`);
+				elements.nameBlock.css("font-weight", `var(--nameWeight${data.user.id})`);
+				elements.nameBlock.css("font-size", `var(--nameSize${data.user.id})`);
+				allNameElements.css("font-style", `var(--nameStyle${data.user.id})`);
+				allNameElements.css("letter-spacing", `var(--nameSpacing${data.user.id})`);
+				allNameElements.css("text-transform", `var(--nameTransform${data.user.id})`);
+				allNameElements.css("font-variant", `var(--nameVariant${data.user.id})`);
+				allNameElements.css("-webkit-text-stroke", `var(--nameExtraWeight${data.user.id}) transparent`);
+				if(customSettings.nameItalic) {
+					allNameElements.css("padding-right", "4px");
+				}
+			}
 
-		allNameElements.css("background-image", `var(--nameGradient${data.user.id})`);
-		allNameElements.css("-webkit-text-stroke", `var(--nameExtraWeight${data.user.id}) transparent`);
-		elements.nameBlock.css("transform", `var(--nameTransforms${data.user.id})`);
+			if(localStorage.getItem("setting_allowUserCustomNameColors") === "true") {
+				allNameElements.css("background-image", `var(--nameGradient${data.user.id})`);
+			}
 
-		if(customSettings.nameItalic) {
-			allNameElements.css("padding-right", "4px");
+			if(localStorage.getItem("setting_allowUserNameTransforms") === "true") {
+				elements.nameBlock.css("transform", `var(--nameTransforms${data.user.id})`);
+			}
 		}
 	}
 }
@@ -800,9 +805,11 @@ function renderUserBlock(data, rootElement, overallWrapper, messageWrapper) {
 	}
 
 	var use7TVPaint = true;
-	const customSettings = data.user.entitlements.overlay.customSettings;
+	const entitlements = data.user.entitlements;
+	const customSettings = entitlements.overlay.customSettings;
 	if(customSettings) {
-		if((!customSettings.use7TVPaint || !data.user.entitlements.sevenTV.paint) && customSettings.nameGlowEnabled) {
+		if((!customSettings.use7TVPaint || !entitlements.sevenTV.paint) && customSettings.nameGlowEnabled && localStorage.getItem("setting_allowUserCustomizations") === "true" && localStorage.getItem("setting_allowUserNameGlow") === "true" && !customSettings.useDefaultNameSettings) {
+			// jfc this is a long conditional LMAO
 			nameBlock.children(".displayName").css("filter", `var(--effectFilters) var(--nameGlow${data.user.id})`);
 			nameBlock.children(".internationalName").css("filter", `var(--effectFilters) var(--nameGlow${data.user.id}) saturate(var(--internationalNameSaturation))`);
 
@@ -841,15 +848,17 @@ function initMessageBlockCustomizations(data, elements) {
 		messageBlock.css("color", `var(--chatMessageColor${data.user.id})`);
 	}
 
-	if(customizationOK && customSettings) {
-		messageBlock.css("font-family", `var(--msgFont${data.user.id})`);
-		messageBlock.css("font-size", `var(--msgSize${data.user.id})`);
-		messageBlock.css("letter-spacing", `var(--msgSpacing${data.user.id})`);
-		messageBlock.css("font-weight", `var(--msgWeight${data.user.id})`);
+	if(customizationOK && customSettings && localStorage.getItem("setting_allowUserCustomMessageFonts") === "true") {
+		if(!customSettings.useDefaultMessageSettings) {
+			messageBlock.css("font-family", `var(--msgFont${data.user.id})`);
+			messageBlock.css("font-size", `var(--msgSize${data.user.id})`);
+			messageBlock.css("letter-spacing", `var(--msgSpacing${data.user.id})`);
+			messageBlock.css("font-weight", `var(--msgWeight${data.user.id})`);
 
-		messageBlock.css("-webkit-text-stroke", `var(--msgExtraWeight${data.user.id}) transparent`);
-		messageBlock.css("line-height", `var(--msgLineHeight${data.user.id})`);
-		messageBlock.css("font-variant", `var(--msgVariant${data.user.id})`);
+			messageBlock.css("-webkit-text-stroke", `var(--msgExtraWeight${data.user.id}) transparent`);
+			messageBlock.css("line-height", `var(--msgLineHeight${data.user.id})`);
+			messageBlock.css("font-variant", `var(--msgVariant${data.user.id})`);
+		}
 	}
 }
 
@@ -1482,11 +1491,6 @@ async function bttvBadge(data, userData) {
 
 	let user = await twitchUsers.getUser(data.providerId);
 
-	if(user === null) {
-		await delay(500);
-		return bttvBadge(data, userData);
-	}
-
 	if(user.entitlements.bttv.badge !== null) {
 		return;
 	}
@@ -1664,12 +1668,6 @@ function start7TVWebsocket() {
 				break;
 			}
 
-			if(!user) {
-				console.log("we're going too fast wtf");
-				await delay(500);
-				return dispatchFuncs["entitlement.create"](data);
-			}
-
 			switch(data.kind) {
 				case "BADGE":
 					if(user.entitlements.sevenTV.badges.indexOf(data.ref_id) === -1) {
@@ -1699,12 +1697,6 @@ function start7TVWebsocket() {
 
 				user = await twitchUsers.getUser(connection.id);
 				break;
-			}
-
-			if(!user) {
-				console.log("we're going too fast wtf");
-				await delay(500);
-				return dispatchFuncs["entitlement.delete"](data);
 			}
 
 			switch(data.kind) {

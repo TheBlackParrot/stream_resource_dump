@@ -1,4 +1,105 @@
 {
+	"1715129304875": {
+		"updates": {
+			"chat": {
+				"revision": 48,
+				"notes": [
+					[
+						"reworked user initialization in order to remove arbitrary delays in message parsing if the user doesn't exist yet"
+					],
+					[
+						"fixed stall issue with !refreshcosettings command"
+					]
+				]
+			},
+
+			"customizer": {
+				"revision": 2,
+				"notes": [
+					[
+						"added settings (that are ENABLED by default) that will force what settings the *streamer* sets to be the default, rather than the user overrides",
+						[
+							"i've seen some people only changing part of everything you can change and thought maybe i needed some safeguards in place in case something wasn't changed from defaults, as *my* defaults would then override what the streamer sets",
+							"if you've previously set custom settings, i've already toggled all of these off for you and there's nothing extra you need to do. they'll be on by default for everyone else"
+						]
+					],
+					[
+						"fixed some strong and em tags not emboldening or italicizing text (woops)"
+					],
+					[
+						"ensured message display's enbolded font uses the base message weight"
+					],
+					[
+						"added confirmation of saving success/failure and other functions"
+					],
+					[
+						"loader spinner is now static-sized instead of dynamic-sized"
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 50,
+				"notes": [
+					[
+						"variables from the old customization commands are now cleared on load, woops"
+					],
+					[
+						"moved custom user/chatter settings toggles to their own tab",
+						["felt like these might've needed to be more accessible"]
+					]
+				]
+			}
+		}
+	},
+
+	"1714963758850": {
+		"updates": {
+			"chat": {
+				"revision": 47,
+				"notes": [
+					[
+						"completely overhauled user chat customization",
+						[
+							"using commands to set chat appearance clogs up chat and confuses people that don't even know it's there, i think it's time to move this to a centralized spot and apply it globally instead",
+							"use https://theblackparrot.me/overlays/chat-customizer if you want to update URLs, the old previewer now does a 301 redirect to that URL",
+							"for now the !refreshcosettings may not show an update message, i'm running into a reeeally bizarre 12 second stall if i properly wait for the task it's doing to properly finish up"
+						]
+					],
+					[
+						"flags are now fetched from the customizer rather than hardcoded internally"
+					],
+					[
+						"fixed vertical alignment issues with some fonts on name display"
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 49,
+				"notes": [
+					[
+						"added some toggles pertaining to the new chat customization options"
+					]
+				]
+			}
+		}
+	},
+
+	"1714252607795": {
+		"updates": {
+			"settings": {
+				"revision": 48,
+				"notes": [
+					[
+						"made the dumpster fire button reload the settings panel and all overlays",
+						["man i really don't know anymore, still investigating why twitch oauth is failing"]
+					]
+				]
+			}
+		}
+	},
+
 	"1713905296545": {
 		"updates": {
 			"chat": {

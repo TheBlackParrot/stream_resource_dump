@@ -285,6 +285,7 @@ window.addEventListener("load", async function(event) {
 			$("#signInButton").show();
 			$(".footer").hide();
 			$("#loader").fadeOut(250);
+			sendNotification("Could not authenticate, please sign in again", 7, "error");
 			return;
 		}
 
@@ -303,8 +304,12 @@ window.addEventListener("load", async function(event) {
 		for(const setting in initialSettings) {
 			const value = initialSettings[setting];
 			sessionStorage.setItem(`clientSetting_${setting}`, value);
+			if(firstInit) {
+				localStorage.setItem(`clientSetting_${setting}`, value);
+			}
 		}
 
+		sendNotification(`Authenticated as ${userData.login}`, 5, "success");
 		isSignedIn = true;
 	} else {
 		$("#signInButton").show();
@@ -408,8 +413,8 @@ $("body").on("click", ".flag", function(e) {
 		return;
 	}
 
-	if(activeFlags.length >= 5) {
-		alert("Only 5 flags are allowed maximum.");
+	if(activeFlags.length >= 9) {
+		sendNotification("Only a maximum of 9 flags are allowed", 5, "warning");
 		return;
 	}
 
@@ -425,3 +430,38 @@ $(".discardButton").on("click", function(e) {
 	let which = $(this).parent().attr("data-buttons-affect");
 	discardSettings(which);
 });
+
+function sendNotification(msg, duration, type) {
+	const notif = $('<div class="notification" style="display: none;"></div>');
+	notif.text(msg);
+	notif.addClass(`${type ? type : "info"}Notif`);
+
+	switch(type) {
+		case "warning":
+			notif.prepend($('<i class="fa-fw fa-solid fa-triangle-exclamation"></i>'));
+			break;
+
+		case "error":
+			notif.prepend($('<i class="fa-fw fa-solid fa-circle-xmark"></i>'));
+			break;
+
+		case "success":
+			notif.prepend($('<i class="fa-fw fa-solid fa-circle-check"></i>'));
+			break;
+
+		default:
+			notif.prepend($('<i class="fa-fw fa-solid fa-circle-exclamation"></i>'));
+			break;
+	}
+
+	notif.fadeIn(250);
+	if(duration !== -1) {
+		setTimeout(function() {
+			notif.fadeOut(250, function() {
+				notif.remove();
+			});
+		}, (duration * 1000) + 250);
+	}
+
+	$("#notifications").append(notif);
+}

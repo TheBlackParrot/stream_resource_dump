@@ -57,6 +57,9 @@
 				Changes do not push to the database automatically, you must manually press the Save Changes button in each section. They are, however, saved <em>locally</em>. If you want to go back to your previously saved settings, click the <strong>Discard</strong> button for that section.
 			</p>
 			<p>
+				By default, most of these settings will be ignored on the streamer's side. <strong>You must uncheck the <em>"Use default settings"</em> toggles if you want the settings in these sections to take affect.</strong>
+			</p>
+			<p>
 				Once you finish changing settings and want to see them take affect on an already-running stream, use the <strong>!refreshcosettings</strong> command in chat.
 			</p>
 		</div>
@@ -74,6 +77,14 @@
 
 			<div class="settings">
 				<div class="content settingColumn">
+					<div class="setting">
+						<div class="settingSingle">
+							<input checked id="useDefaultNameSettings" type="checkbox"/> <span class="settingInfo">Use default name settings set by the streamer</span>
+						</div>
+					</div>
+					
+					<hr/>
+
 					<div class="setting">
 						<div class="settingLabel">Font</div>
 						<div class="settingValue">
@@ -324,6 +335,14 @@
 			<div class="settings">
 				<div class="content settingColumn">
 					<div class="setting">
+						<div class="settingSingle">
+							<input checked id="useDefaultMessageSettings" type="checkbox"/> <span class="settingInfo">Use default message settings set by the streamer</span>
+						</div>
+					</div>
+					
+					<hr/>
+
+					<div class="setting">
 						<div class="settingLabel">Font</div>
 						<div class="settingValue">
 							<select id="messageFont"></select>
@@ -458,9 +477,20 @@
 							<div id="avatarPreview"></div>
 						</div>
 					</div>
+
+					<hr/>
+					
 					<div class="setting">
 						<div class="settingSingle">
 							<input checked id="showAvatar" type="checkbox"/> <span class="settingInfo">Show your avatar / profile picture (if permitted)</span>
+						</div>
+					</div>
+
+					<hr/>
+
+					<div class="setting">
+						<div class="settingSingle">
+							<input checked id="useDefaultAvatarBorderRadius" type="checkbox"/> <span class="settingInfo">Use the default avatar border radius set by the streamer</span>
 						</div>
 					</div>
 					<div class="setting">
@@ -490,6 +520,9 @@
 	<div id="loader">
 		<div id="spinner">
 		</div>
+	</div>
+
+	<div id="notifications">
 	</div>
 
 	<div id="filterWrapper">

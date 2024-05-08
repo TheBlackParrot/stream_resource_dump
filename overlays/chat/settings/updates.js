@@ -7,7 +7,8 @@ const properOverlayNames = {
 	"text": "Text Rotation Overlay",
 	"bs": "Beat Saber Overlay",
 	"clips": "Twitch Clip Overlay",
-	"all": "All Overlays"
+	"all": "All Overlays",
+	"customizer": "Chat Customizer"
 };
 
 var mostRecentUpdate = 0;

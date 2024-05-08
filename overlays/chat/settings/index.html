@@ -76,6 +76,7 @@
 					<div class="row" data-tab="flags"><i class="fas fa-flag"></i>Flags</div>
 					<div class="row" data-tab="pronouns"><i class="fas fa-user"></i>Pronouns</div>
 					<hr/>
+					<div class="row" data-tab="individuality"><i class="fas fa-brush"></i>Individuality</div>
 					<div class="row" data-tab="external"><i class="fas fa-cubes"></i>External Services</div>
 				</div>
 
@@ -133,12 +134,6 @@
 		<div id="settings">
 			<div class="section" data-content="appearance">
 				<div class="part">
-					<div class="setting">
-						<div class="settingCell">
-							<input checked id="allowUserCustomizations" type="checkbox"/> <span class="settingInfo">Allow chatters to customize personal settings</span>
-						</div>
-					</div>
-					<hr/>
 					<div class="setting">
 						<div class="settingCell">
 							<input id="gradientFadeMaskEnabled" type="checkbox" data-dependent="gradientFadeMask"/> <span class="settingInfo">Apply a gradient mask to the overlay as a whole</span>
@@ -6258,6 +6253,48 @@
 						</div>
 						<div class="settingCell">
 							<input type="number" id="eventTagsLineHeight" min="16" max="64" step="0.5" value="28"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section" data-content="individuality">
+				<div class="part">
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="allowUserCustomizations" type="checkbox" data-dependent="userCustomizations"/> <span class="settingInfo">Allow chatters to customize personal settings</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting" data-dependent="userCustomizations">
+						<div class="settingCell">
+							<input checked id="allowUserAvatarShape" type="checkbox"/> <span class="settingInfo">Allow chatters to change the shape of their avatars</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting" data-dependent="userCustomizations">
+						<div class="settingCell">
+							<input checked id="allowUserCustomNameColors" type="checkbox"/> <span class="settingInfo">Allow chatters to change their name colors</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="userCustomizations">
+						<div class="settingCell">
+							<input checked id="allowUserCustomNameFonts" type="checkbox"/> <span class="settingInfo">Allow chatters to change their name font (and related settings)</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="userCustomizations">
+						<div class="settingCell">
+							<input checked id="allowUserNameGlow" type="checkbox"/> <span class="settingInfo">Allow chatters to add an extra glow/shadow to their name</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="userCustomizations">
+						<div class="settingCell">
+							<input checked id="allowUserNameTransforms" type="checkbox"/> <span class="settingInfo">Allow chatters to add transform functions to their name</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting" data-dependent="userCustomizations">
+						<div class="settingCell">
+							<input checked id="allowUserCustomMessageFonts" type="checkbox"/> <span class="settingInfo">Allow chatters to change their message font (and related settings)</span>
 						</div>
 					</div>
 				</div>
