@@ -1,4 +1,45 @@
 {
+	"9999999999999": {
+		"updates": {
+			"chat": {
+				"revision": 49,
+				"notes": [
+					[
+						"fixed issue with new message blocks parenting to previous message blocks even if they're currently in a dismiss animation"
+					]
+				]
+			},
+
+			"heartrate": {
+				"revision": 1,
+				"notes": [
+					[
+						"got overlay ready for public use",
+						[
+							"available at https://theblackparrot.me/overlays/heartrate",
+							"for details on how to set it up, see https://theblackparrot.me/overlays"
+						]
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 51,
+				"notes": [
+					[
+						"added support for emitting events from HeartRateBroadcaster"
+					],
+					[
+						"twitch clip overlay status wasn't in the right spot woops",
+						[
+							"we love alphabetical order"
+						]
+					]
+				]
+			}
+		}
+	},
+
 	"1715129304875": {
 		"updates": {
 			"chat": {

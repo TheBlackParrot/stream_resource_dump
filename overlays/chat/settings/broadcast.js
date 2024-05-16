@@ -181,6 +181,21 @@ broadcastFuncs = {
 		let settingsKeys = Object.keys(defaultConfig);
 		let settingsKeysExclude = settingsKeys.filter((key) => key.substr(0, 6) === "clips_");
 		postToChannel("settingsKeysClips", settingsKeysExclude);
+	},
+
+	HROverlayExists: function(data) {
+		changeStatusCircle("HROverlayStatus", "green", `loaded (r${data.data.version})`);
+
+		let settingsKeys = Object.keys(defaultConfig);
+		let settingsKeysHR = settingsKeys.filter((key) => key.substr(0, 3) === "hr_");
+		postToChannel("settingsKeysHR", settingsKeysHR);
+
+		showExtraRow("hr");
+		startHRWebsocket();
+
+		if("hasSeenFirstMessage" in hr_ws) {
+			postToHREventChannel({event: (hr_ws.hasSeenFirstMessage ? "connected" : "disconnected")});
+		}
 	}
 };
 

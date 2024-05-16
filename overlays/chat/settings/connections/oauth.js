@@ -257,5 +257,18 @@ $("#ohFuckOhShit").on("mouseup", function(e) {
 	localStorage.removeItem('spotify_accessToken');
 	localStorage.removeItem('spotify_refreshToken');
 
-	addNotification("All service OAuth tokens have been cleared, hopefully this stops whatever's happening.", {duration: 10});
+	sessionStorage.setItem("_tokens_were_cleared", "true");
+
+	postToChannel("reload");
+	location.reload();
 });
+
+$(document).ready(function() {
+	const check = sessionStorage.getItem("_tokens_were_cleared");
+
+	if(check === "true") {
+		addNotification("Cached Twitch and Spotify authentication tokens have been cleared, please reconnect to any services you were previously using.", {duration: 20});
+	}
+
+	sessionStorage.removeItem("_tokens_were_cleared");
+})

@@ -100,6 +100,15 @@
 					<div class="row" data-tab="clock_effects"><i class="fas fa-magic"></i>Effects</div>
 				</div>
 
+				<div class="rowCollapsable extraRow" data-tab="hr"><i class="fas fa-angle-right treeIcon"></i> <i class="fas fa-heart"></i>Heart Rate</div>
+				<div class="rowEntries" data-tab="hr">
+					<div class="row" data-tab="hr_function"><i class="fas fa-cogs"></i>Function</div>
+					<hr/>
+					<div class="row" data-tab="hr_appearance"><i class="fas fa-palette"></i>Appearance</div>
+					<div class="row" data-tab="hr_effects"><i class="fas fa-magic"></i>Effects</div>
+					<div class="row" data-tab="hr_layout"><i class="fas fa-table-cells-large"></i>Layout</div>
+				</div>
+
 				<div class="rowCollapsable extraRow" data-tab="spotify"><i class="fas fa-angle-right treeIcon"></i> <i class="fab fa-spotify"></i>Now Playing</div>
 				<div class="rowEntries" data-tab="spotify">
 					<div class="row" data-tab="spotify_layout"><i class="fas fa-table-cells-large"></i>Layout</div>
@@ -2254,14 +2263,6 @@
 					</div>
 					<div class="setting">
 						<div class="settingCellLabel">
-							<strong>Twitch Clip Overlay</strong>
-						</div>
-						<div class="settingCell">
-							<div class="statusCircle grayCircle" id="ClipsOverlayStatus"></div> <div class="statusMessage grayMessage">inactive</div>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
 							<strong>Clock Overlay</strong>
 						</div>
 						<div class="settingCell">
@@ -2286,10 +2287,26 @@
 					</div>
 					<div class="setting">
 						<div class="settingCellLabel">
+							<strong>Heart Rate Overlay</strong>
+						</div>
+						<div class="settingCell">
+							<div class="statusCircle grayCircle" id="HROverlayStatus"></div> <div class="statusMessage grayMessage">inactive</div>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
 							<strong>Spotify Overlay</strong>
 						</div>
 						<div class="settingCell">
 							<div class="statusCircle grayCircle" id="SpotifyOverlayStatus"></div> <div class="statusMessage grayMessage">inactive</div>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<strong>Twitch Clip Overlay</strong>
+						</div>
+						<div class="settingCell">
+							<div class="statusCircle grayCircle" id="ClipsOverlayStatus"></div> <div class="statusMessage grayMessage">inactive</div>
 						</div>
 					</div>
 					<hr/>
@@ -2312,6 +2329,14 @@
 						</div>
 						<div class="settingCell">
 							<div class="statusCircle grayCircle" id="BSPlusStatus"></div> <div class="statusMessage grayMessage">inactive</div>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<strong>HeartRateBroadcaster</strong>
+						</div>
+						<div class="settingCell">
+							<div class="statusCircle grayCircle" id="HRBStatus"></div> <div class="statusMessage grayMessage">inactive</div>
 						</div>
 					</div>
 					<div class="setting">
@@ -2816,6 +2841,31 @@
 					<div class="setting">
 						<div class="settingCell smol">
 							The settings panel will need to be reloaded after switching which data mod is being used for Beat Saber-related overlays. You can do this by right-clicking the settings panel and clicking Refresh in the menu that pops up.
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>HeartRateBroadcaster</h1>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">IP address</span>
+						</div>
+						<div class="settingCell">
+							<input id="hr_ip" type="text" value="127.0.0.1"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Port</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="hr_port" min="1" max="65536" step="1" value="2752"/>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell smol">
+							HeartRateBroadcaster can be downloaded from CatseTheCat's GitHub repository for the project: https://github.com/catsethecat/HeartRateBroadcaster
 						</div>
 					</div>
 				</div>
@@ -6299,6 +6349,357 @@
 					</div>
 				</div>
 			</div>
+			<div class="section" data-content="hr_function">
+				<div class="part">
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Timeout after</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="hr_timeoutWait" min="4" max="60" step="0.5" value="7.5"/><span class="settingCellMeasurement">seconds</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section" data-content="hr_appearance">
+				<div class="part">
+					<h1>Peak Display</h1>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Icon color</span>
+						</div>
+						<div class="settingCell">
+							<input id="hr_headerIconColor" type="text" data-coloris value="#CBADFF"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="hr_headerAdaptColor" type="checkbox"/> <span class="settingInfo">Icons reflect the Now Playing overlay primary color</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="hr_headerIconUsesGradient" type="checkbox"/> <span class="settingInfo">Apply a gradient to icons</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Gradient color</span>
+						</div>
+						<div class="settingCell">
+							<input id="hr_headerIconGradientColor" type="text" data-coloris value="#FFFFFF"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Gradient angle</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="hr_headerIconGradientAngle" min="0" max="360" step="1" value="170"/><span class="settingCellMeasurement">deg</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Color</span>
+						</div>
+						<div class="settingCell">
+							<input id="hr_headerColor" type="text" data-coloris value="#FFFFFF"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Font</span>
+						</div>
+						<div class="settingCell">
+							<input id="hr_headerFont" type="text" value="Manrope"/>
+							<input id="hr_headerFontItalic" type="checkbox"/> <span class="settingInfo">Italic</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="hr_headerFontSize" min="4" max="64" step="0.25" value="12"/><span class="settingCellMeasurement">pt</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="hr_headerFontWeight" min="100" max="900" step="25" value="900"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Additional weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="hr_headerFontWeightExtra" min="0" max="8" step="0.1" value="0.7"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Character spacing</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="hr_headerLetterSpacing" min="-12" max="12" step="0.2" value="0"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Value</h1>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Icon color</span>
+						</div>
+						<div class="settingCell">
+							<input id="hr_valueIconColor" type="text" data-coloris value="#CBADFF"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="hr_valueAdaptColor" type="checkbox"/> <span class="settingInfo">Icon reflects the Now Playing overlay primary color</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="hr_valueIconUsesGradient" type="checkbox"/> <span class="settingInfo">Apply a gradient to icons</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Gradient color</span>
+						</div>
+						<div class="settingCell">
+							<input id="hr_valueIconGradientColor" type="text" data-coloris value="#FFFFFF"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Gradient angle</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="hr_valueIconGradientAngle" min="0" max="360" step="1" value="170"/><span class="settingCellMeasurement">deg</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Color</span>
+						</div>
+						<div class="settingCell">
+							<input id="hr_valueColor" type="text" data-coloris value="#FFFFFF"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Font</span>
+						</div>
+						<div class="settingCell">
+							<input id="hr_valueFont" type="text" value="Manrope"/>
+							<input id="hr_valueFontItalic" type="checkbox"/> <span class="settingInfo">Italic</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="hr_valueFontSize" min="4" max="64" step="0.25" value="27"/><span class="settingCellMeasurement">pt</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="hr_valueFontWeight" min="100" max="900" step="25" value="900"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Additional weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="hr_valueFontWeightExtra" min="0" max="8" step="0.1" value="1"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Character spacing</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="hr_valueLetterSpacing" min="-12" max="12" step="0.2" value="-1"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section" data-content="hr_effects">
+				<div class="part">
+					<h1>Filters</h1>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="hr_enableShadowEffects" type="checkbox" data-dependent="hr_enableShadowEffects"/> <span class="settingInfo">Draw shadows underneath overlay content</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="hr_enableShadowEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Color</span>
+						</div>
+						<div class="settingCell">
+							<input id="hr_shadowColor" type="text" data-coloris value="#000000"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="hr_enableShadowEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">X offset</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="hr_shadowXOffset" min="-32" max="32" step="0.25" value="0"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="hr_enableShadowEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Y offset</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="hr_shadowYOffset" min="-32" max="32" step="0.25" value="1"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="hr_enableShadowEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Blur amount</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="hr_shadowBlurRadius" min="0" max="32" step="0.25" value="2"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="hr_enableOutlineEffects" type="checkbox" data-dependent="hr_enableOutlineEffects"/> <span class="settingInfo">Draw outlines underneath overlay content</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="hr_enableOutlineEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Color</span>
+						</div>
+						<div class="settingCell">
+							<input id="hr_outlineColor" type="text" data-coloris value="#000000"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="hr_enableOutlineEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Matrix Size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="hr_outlineOrder" min="0" max="64" step="1" value="5"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="hr_enableOutlineEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Divisor</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="hr_outlineDivisor" min="1" max="64" step="1" value="3"/>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting" data-dependent="hr_enableOutlineEffects">
+						<div class="settingCell">
+							<input checked id="hr_outlineStripCorners" type="checkbox"/> <span class="settingInfo">Smooth out corners of the outline matrix</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="hr_enableOutlineEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Distance threshold</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="hr_outlineThreshold" min="0.01" max="0.99" step="0.01" value="0.2"/>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section" data-content="hr_layout">
+				<div class="part">
+					<h1>Display</h1>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="hr_showPeak" type="checkbox" data-dependent="hrPeak"/> <span class="settingInfo">Show peak heart rate</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="hrPeak">
+						<div class="settingCell">
+							<input checked id="hr_showBSPeak" type="checkbox"/> <span class="settingInfo">Show peak heart rate for individual Beat Saber maps while playing a map</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="hr_enablePadding" type="checkbox" data-dependent="hrPadding"/> <span class="settingInfo">Pad heart rate with leading zeros</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="hrPadding">
+						<div class="settingCell">
+							<input checked id="hr_fadeOutPadding" type="checkbox"/> <span class="settingInfo">Fade out leading zeros</span>
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Layout</h1>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Line spacing</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="hr_elementSpacing" min="0" max="200" step="1" value="4"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Element width</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="hr_elementWidth" min="0" max="9999" step="1" value="120"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Horizontal margin</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="hr_overlayMarginHorizontal" min="0" max="200" step="1" value="8"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Vertical margin</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="hr_overlayMarginVertical" min="0" max="200" step="1" value="8"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Horizontal alignment</span>
+						</div>
+						<div class="settingCell">
+							<select id="hr_elementJustify">
+								<option value="start">Left</option>
+								<option selected value="center">Center</option>
+								<option value="end">Right</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div id="sensitive">
 			<div class="section">
@@ -6339,5 +6740,6 @@
 	<script defer type="text/javascript" src="connections/streamlabs.js"></script>
 	<script defer type="text/javascript" src="connections/streamelements.js"></script>
 	<script defer type="text/javascript" src="connections/spotify.js"></script>
+	<script defer type="text/javascript" src="connections/heartratebroadcaster.js"></script>
 </body>
 </html>

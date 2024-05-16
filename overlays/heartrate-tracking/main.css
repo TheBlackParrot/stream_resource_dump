@@ -1,0 +1,167 @@
+:root {
+	--colorDark: #000000;
+	--colorLight: #A695FF;
+
+	--shadowStuff: url(#shadowEffect);
+	--overlayShadowColor: #000000;
+	--outlineStuff: url(#outlineEffect);
+	--overlayOutlineColor: #000000;
+
+	--effectFilters: var(--outlineStuff) var(--shadowStuff);
+
+	--horizontalMargin: 8px;
+	--verticalMargin: 8px;
+
+	--verticalSpacing: 2px;
+
+	--elementWidth: 120px;
+	--elementJustify: center;
+
+	--beatInterval: 1s;
+	--fadeOutOpacity: 0.33;
+
+	--headerIconColorActual: #CBADFF;
+	--headerIconColor: var(--headerIconColorActual);
+	--headerIconGradientAngle: 170deg;
+	--headerIconGradientColor: #FFFFFF;
+	--headerIconGradientBackground: linear-gradient(var(--headerIconGradientAngle), var(--headerIconGradientColor) 0%, var(--headerIconColor) 75%);
+	--headerIconBackgroundColor: unset;
+	--headerIconBackgroundImage: var(--headerIconGradientBackground);
+	--headerColor: #FFFFFF;
+	--headerFont: "Manrope";
+	--headerFontStyle: normal;
+	--headerFontSize: 27pt;
+	--headerFontWeight: 900;
+	--headerFontWeightExtra: 0.7px;
+	--headerLetterSpacing: 0px;
+
+	--valueIconColorActual: #CBADFF;
+	--valueIconColor: var(--valueIconColorActual);
+	--valueIconGradientAngle: 170deg;
+	--valueIconGradientColor: #FFFFFF;
+	--valueIconGradientBackground: linear-gradient(var(--valueIconGradientAngle), var(--valueIconGradientColor) 0%, var(--valueIconColor) 75%);
+	--valueIconBackgroundColor: unset;
+	--valueIconBackgroundImage: var(--valueIconGradientBackground);
+	--valueColor: #FFFFFF;
+	--valueFont: "Manrope";
+	--valueFontStyle: normal;
+	--valueFontSize: 27pt;
+	--valueFontWeight: 900;
+	--valueFontWeightExtra: 1px;
+	--valueLetterSpacing: -1px;
+	--valuePaddingOpacity: 0.33;
+
+}
+@keyframes beatKF {
+	0% {
+		transform: scale(1.0);
+	}
+	10% {
+		transform: scale(1.1);
+	}
+	100% {
+		transform: scale(1.0);
+	}
+}
+
+body {
+	background: #333;
+	font-family: "Manrope";
+	font-variant: tabular-nums;
+	opacity: var(--fadeOutOpacity);
+}
+#wrapper {
+	margin-top: var(--verticalMargin);
+	margin-bottom: var(--verticalMargin);
+	margin-left: var(--horizontalMargin);
+	margin-right: var(--horizontalMargin);
+	width: var(--elementWidth);
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	flex-wrap: wrap;
+}
+#filterWrapper {
+	position: fixed;
+	top: -100vh;
+	left: -100vw;
+}
+
+#peak, #cur {
+	width: 100%;
+	display: flex;
+	padding-top: var(--verticalSpacing);
+	padding-bottom: var(--verticalSpacing);
+	padding-left: 4px;
+	padding-right: 4px;
+
+	justify-content: var(--elementJustify);
+	align-items: center;
+
+	filter: var(--outlineStuff) var(--shadowStuff);
+}
+#cur {
+	font-family: var(--valueFont);
+	font-size: var(--valueFontSize);
+	font-weight: var(--valueFontWeight);
+	font-style: var(--valueFontStyle);
+	letter-spacing: var(--valueLetterSpacing);
+}
+#cur_value {
+	padding-right: 3px;
+	display: inline-flex;
+}
+#transparent_number, #cur_value_value {
+	background: var(--valueColor);
+	-webkit-text-stroke: var(--valueFontWeightExtra) transparent;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+#transparent_number {
+	opacity: var(--valuePaddingOpacity);
+}
+
+#peak {
+	font-family: var(--headerFont);
+	font-size: var(--headerFontSize);
+	font-weight: var(--headerFontWeight);
+	font-style: var(--headerFontStyle);
+	letter-spacing: var(--headerLetterSpacing);
+}
+#peak_value {
+	padding-right: 3px;
+	background: var(--headerColor);
+	-webkit-text-stroke: var(--headerFontWeightExtra) transparent;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+#peak .fas {
+	font-size: 1em;
+}
+.fa-angle-double-up {
+	margin-right: 8px;
+}
+#cur .fas {
+	font-size: 0.8em;
+	margin-right: 12px;
+}
+
+.fa-heart {
+	-webkit-text-stroke: 0px;
+	background-color: var(--valueIconBackgroundColor);
+	background-image: var(--valueIconBackgroundImage);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	animation-name: beatKF;
+	animation-duration: var(--beatInterval);
+	animation-iteration-count: infinite;
+}
+
+.fa-globe, .fa-map, .fa-angle-double-up {
+	-webkit-text-stroke: 0px;
+	background-color: var(--headerIconBackgroundColor);
+	background-image: var(--headerIconBackgroundImage);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;			
+}

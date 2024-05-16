@@ -312,14 +312,14 @@ function renderAvatarBGBlock(data, rootElement) {
 }
 
 var lastUser;
-var lastRootElement;
+var lastRootElement = [];
 var lastMessageIdx;
 var messageCount = 0;
 var combinedCount = 0;
 var testNameBlock;
 function getRootElement(data) {
 	if($(`.chatBlock[data-rootIdx="${combinedCount}"]`).length) {
-		if(lastUser === data.user.id) {
+		if(lastUser === data.user.id && !lastRootElement[0].hasClass("slideOut")) {
 			return lastRootElement;
 		}
 	}
