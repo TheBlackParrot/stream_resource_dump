@@ -26,30 +26,40 @@ function updateHR(rate) {
 		$(".which-icon").removeClass("fa-map").addClass("fa-globe");
 	}
 
-	$(":root").get(0).style.setProperty(`--beatInterval`, `${60/rate}s`);
+	const animation = $(".fa-heart")[0].getAnimations()[0];
+	if(animation) {
+		animation.playbackRate = rate/60;
+	}
 	animateHRChange();
 }
 
 var hrChangeTO;
 function animateHRChange() {
-	animatingHRChange = true;
-	clearTimeout(hrChangeTO);
+	if(localStorage.getItem("setting_hr_animateRateChanges") === "false") {
+		animatingHRChange = false;
+		curHR = finalHR;
+	} else {
+		animatingHRChange = true;
+		clearTimeout(hrChangeTO);
 
-	if(curHR === finalHR) {
-		return;
-	}
+		if(curHR === finalHR) {
+			return;
+		}
 
-	let toChange = finalHR - curHR;
+		let toChange = finalHR - curHR;
 
-	if(!toChange) {
-		animatingAccChange = false;
-		return;
-	}
+		if(!toChange) {
+			animatingAccChange = false;
+			return;
+		}
 
-	if(toChange > 0) {
-		curHR += 1;
-	} else if(toChange < 0) {
-		curHR -= 1;
+		if(toChange > 0) {
+			curHR += 1;
+		} else if(toChange < 0) {
+			curHR -= 1;
+		}
+
+		hrChangeTO = setTimeout(animateHRChange, parseInt(localStorage.getItem("setting_hr_animateRateInterval")));
 	}
 
 	if(curHR < 10) {
@@ -60,8 +70,6 @@ function animateHRChange() {
 		$("#transparent_number").empty();
 	}
 	$("#cur_value_value").text(curHR);
-
-	hrChangeTO = setTimeout(animateHRChange, 10);
 }
 
 window.addEventListener("storage", function(event) {

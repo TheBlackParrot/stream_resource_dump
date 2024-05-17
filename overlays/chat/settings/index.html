@@ -4316,7 +4316,7 @@
 					<hr/>
 					<div class="setting">
 						<div class="settingCell">
-							<input id="bs_animateAccChanges" type="checkbox" data-dependent="animateAcc"/> <span class="settingInfo">Animate accuracy changes</span>
+							<input checked id="bs_animateAccChanges" type="checkbox" data-dependent="animateAcc"/> <span class="settingInfo">Animate accuracy changes</span>
 						</div>
 					</div>	
 					<div class="setting" data-dependent="animateAcc">
@@ -6451,7 +6451,15 @@
 					</div>
 				</div>
 				<div class="part">
-					<h1>Value</h1>
+					<h1>Value Display</h1>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Icon size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="hr_valueIconSize" min="0.01" max="3" step="0.01" value="0.8"/><span class="settingCellMeasurement">em</span>
+						</div>
+					</div>
 					<div class="setting">
 						<div class="settingCellLabel">
 							<span class="settingInfo">Icon color</span>
@@ -6540,6 +6548,36 @@
 				</div>
 			</div>
 			<div class="section" data-content="hr_effects">
+				<div class="part">
+					<h1>Animations</h1>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="hr_enableHeartBeatAnimation" type="checkbox" data-dependent="hr_enableHeartBeatAnimation"/> <span class="settingInfo">Pulse the heart icon at the speed of the current heart rate</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="hr_enableHeartBeatAnimation">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Pulse strength</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="hr_heartBeatAnimationStrength" min="50" max="150" step="1" value="110"/><span class="settingCellMeasurement">%</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="hr_animateRateChanges" type="checkbox" data-dependent="animateRate"/> <span class="settingInfo">Animate heart rate value changes</span>
+						</div>
+					</div>	
+					<div class="setting" data-dependent="animateRate">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Interval</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="hr_animateRateInterval" min="1" max="250" step="1" value="10"/><span class="settingCellMeasurement">ms</span>
+						</div>
+					</div>
+				</div>
 				<div class="part">
 					<h1>Filters</h1>
 					<div class="setting">

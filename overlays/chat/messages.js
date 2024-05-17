@@ -731,7 +731,8 @@ function initUserBlockCustomizations(data, elements) {
 				allNameElements.css("font-variant", `var(--nameVariant${data.user.id})`);
 				allNameElements.css("-webkit-text-stroke", `var(--nameExtraWeight${data.user.id}) transparent`);
 				if(customSettings.nameItalic) {
-					allNameElements.css("padding-right", "4px");
+					allNameElements.css("padding-right", "8px");
+					allNameElements.css("margin-right", "-8px");
 				}
 			}
 

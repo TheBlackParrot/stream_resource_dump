@@ -1,11 +1,20 @@
 {
-	"9999999999999": {
+	"1715904368165": {
 		"updates": {
 			"chat": {
 				"revision": 49,
 				"notes": [
 					[
 						"fixed issue with new message blocks parenting to previous message blocks even if they're currently in a dismiss animation"
+					],
+					[
+						"doubled padding on name displays to fix clipping issues on italicized/skewed fonts"
+					],
+					[
+						"added negative right margin to act against added padding in name displays",
+						[
+							"experimenting with this as a fix, shouldn't be visible on left-aligned layouts but should get right-aligned ones lined up right"
+						]
 					]
 				]
 			},
@@ -34,6 +43,9 @@
 						[
 							"we love alphabetical order"
 						]
+					],
+					[
+						"ensured default color settings are all lowercase to avoid false positives on non-default settings checks"
 					]
 				]
 			}

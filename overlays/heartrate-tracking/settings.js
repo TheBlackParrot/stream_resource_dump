@@ -218,6 +218,21 @@ const settingUpdaters = {
 	},
 	valueIconGradientAngle: function(value) {
 		rootCSS().setProperty("--valueIconGradientAngle", `${value}deg`);
+	},
+	valueIconSize: function(value) {
+		rootCSS().setProperty("--valueIconSize", `${value}em`);
+	},
+
+	enableHeartBeatAnimation: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--heartBeatAnimation", "beatKF");
+		} else {
+			rootCSS().setProperty("--heartBeatAnimation", "none");
+		}
+	},
+	heartBeatAnimationStrength: function(value) {
+		value = parseFloat(value);
+		rootCSS().setProperty("--heartBeatAnimationScale", `${value}%`);
 	}
 };
 

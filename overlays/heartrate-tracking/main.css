@@ -17,7 +17,6 @@
 	--elementWidth: 120px;
 	--elementJustify: center;
 
-	--beatInterval: 1s;
 	--fadeOutOpacity: 0.33;
 
 	--headerIconColorActual: #CBADFF;
@@ -42,6 +41,7 @@
 	--valueIconGradientBackground: linear-gradient(var(--valueIconGradientAngle), var(--valueIconGradientColor) 0%, var(--valueIconColor) 75%);
 	--valueIconBackgroundColor: unset;
 	--valueIconBackgroundImage: var(--valueIconGradientBackground);
+	--valueIconSize: 0.8em;
 	--valueColor: #FFFFFF;
 	--valueFont: "Manrope";
 	--valueFontStyle: normal;
@@ -51,16 +51,18 @@
 	--valueLetterSpacing: -1px;
 	--valuePaddingOpacity: 0.33;
 
+	--heartBeatAnimation: beatKF;
+	--heartBeatAnimationScale: 110%;
 }
 @keyframes beatKF {
 	0% {
-		transform: scale(1.0);
+		transform: scale(100%);
 	}
-	10% {
-		transform: scale(1.1);
+	15% {
+		transform: scale(var(--heartBeatAnimationScale));
 	}
-	100% {
-		transform: scale(1.0);
+	75% {
+		transform: scale(100%);
 	}
 }
 
@@ -143,8 +145,8 @@ body {
 	margin-right: 8px;
 }
 #cur .fas {
-	font-size: 0.8em;
-	margin-right: 12px;
+	font-size: var(--valueIconSize);
+	margin-right: calc((var(--valueIconSize) / 2) - 0.1em);
 }
 
 .fa-heart {
@@ -153,9 +155,10 @@ body {
 	background-image: var(--valueIconBackgroundImage);
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
-	animation-name: beatKF;
-	animation-duration: var(--beatInterval);
+	animation-name: var(--heartBeatAnimation);
+	animation-duration: 1s;
 	animation-iteration-count: infinite;
+	padding-right: 0.1em;
 }
 
 .fa-globe, .fa-map, .fa-angle-double-up {
