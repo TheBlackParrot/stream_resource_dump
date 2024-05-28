@@ -1,7 +1,10 @@
 Unless otherwise noted with a URL, these mods should be found in BeatMods's repositories (via ModAssistant).
 Naluluna mods are available through her own mod manager.
 
+I'm currently using version 1.34.2 of the game.
+
 AdBlocker
+AssetBundleLoadingTools
 AudioLink
 BeatmapInformation
  - https://github.com/denpadokei/BeatmapInformation
@@ -13,11 +16,8 @@ BeatSaverVoting
 BetterSongList (iPixelGalaxy's fork)
  - https://github.com/iPixelGalaxy/BeatSaber_BetterSongList
 BetterSongSearch
-BetterSort.LastPlayed
 BSExtraColorPresets
  - https://github.com/DJDavid98/BSExtraColorPresets
-BSIndexHapticFix
- - https://github.com/hardcpp/BSIndexHapticFix
 BSNightcore
  - https://github.com/Puplip/BSNightcore
 Camera2
@@ -25,32 +25,31 @@ Chroma
 ClockAndVolume
  - https://github.com/iPixelGalaxy/ClockAndVolume
 CustomJSONData
-CustomPlatforms
+CustomMenuText
+CustomNotes
 EasyOffset
-EnvironmentHider
- - https://github.com/Redageddon/EnvironmentHider
 GottaGoFast
 Heck
-HitScoreVisualizer
- - https://github.com/ErisApps/HitScoreVisualizer
 HitsoundTweaks
-ImageFactory
-LocalLeaderboard
+ImageFactory (DJDavid98's fork)
+ - https://github.com/DJDavid98/ImageFactory
+LocalLeaderboard (Older version compatible with 1.34.2)
+ - https://github.com/TheBlackParrot/stream_resource_dump/raw/main/beat_saber_stuff/custom_plugin_binaries/1.34.2/LocalLeaderboard.dll
 LookupID
 MappingExtensions
 MemoryMinimizer
  - https://discord.com/channels/441805394323439646/950792822116724777/954469889433796678
-MenuPillars
-MenuSaberColors
 NalulunaCounters
+NalulunaLevelDetail
 NalulunaMenu
 NalulunaRewinder
 NalulunaSound
 NjsFixer
- - (seems like the binaries are missing now, check this folder for what i've got)
+ - https://discord.com/channels/441805394323439646/1183920920763584564/1186089721659674787
 NoodleExtensions
 NoteMovementFix
  - https://github.com/Loloppe/BeatSaber_NoteMovementFix
+NullSearchFix
 OffsetFixer
  - https://github.com/Loloppe/BeatSaber_OffsetFixer
 ParticleOverdrive
@@ -58,23 +57,19 @@ PauseCredit
  - https://github.com/Futuremappermydud/PauseCredit
 PauseMusic
  - https://github.com/Futuremappermydud/PauseMusic
-PlayFirst
 PlaylistManager
 PrioritySetter
  - https://github.com/Arimodu/PrioritySetter (Light, AboveNormal)
 ReeSabers
  - https://www.beatleader.xyz/supporting-project/link
-SaberFactory
 ScorePercentage
+ - https://github.com/Idlebawb/ScorePercentage
 SmoothedController
  - https://github.com/kinsi55/BeatSaber_SmoothedController
-SongCore (Pink's fork)
- - https://github.com/ModdingPink/SongCoreLegacy
+SongCore
 SongDetailsCache
 SoundReplacer
-TakeMeToResults
 Tweaks55
-UITweaks
 Unfunny
  - https://github.com/kaitlyndotmoe/Unfunny
 wipbot
