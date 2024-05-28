@@ -1,0 +1,1 @@
+temporary mirroring script for the old system so it works with the new overlay. BLE's signal strength kinda sucks and chrome browsers limit non-SSL websockets to localhost instead of *any* LAN IP range. grr
