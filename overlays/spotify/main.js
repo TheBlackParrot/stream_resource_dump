@@ -97,11 +97,11 @@ const spotifyFuncs = {
 					$("#detailsWrapper").addClass("fadeIn").removeClass("fadeOut");
 					$("#title").addClass("slideIn").removeClass("slideOut");
 					setTimeout(function() {
-						$("#artist").addClass("slideIn").removeClass("slideOut");
+						$("#secondary").addClass("slideIn").removeClass("slideOut");
 					}, timespans.small);
 
 					setTimeout(function() {
-						$("#art, #artBG, #artOutline").fadeIn(timespans.large);
+						$("#artAnimationWrapper").fadeIn(timespans.large);
 						$("#bgWrapper .artContainer").fadeIn(parseFloat(localStorage.getItem("setting_spotify_artBackgroundFadeInDuration")) * 1000);
 					}, timespans.medium);
 
@@ -122,11 +122,11 @@ const spotifyFuncs = {
 					$("#detailsWrapper").addClass("fadeOut").removeClass("fadeIn");
 					$("#title").addClass("slideOut").removeClass("slideIn");
 					setTimeout(function() {
-						$("#artist").addClass("slideOut").removeClass("slideIn");
+						$("#secondary").addClass("slideOut").removeClass("slideIn");
 					}, timespans.small);
 
 					setTimeout(function() {
-						$("#art, #artBG, #artOutline, #bgWrapper .artContainer").fadeOut(timespans.medium);
+						$("#artAnimationWrapper, #bgWrapper .artContainer").fadeOut(timespans.medium);
 					}, timespans.medium);
 
 					setTimeout(function() {
@@ -208,13 +208,13 @@ const spotifyFuncs = {
 		}, timespans.small);
 
 		setTimeout(function() {
-			$("#art, #artBG, #artOutline, #bgWrapper .artContainer").fadeOut(timespans.medium, function() {
+			$("#artAnimationWrapper, #bgWrapper .artContainer").fadeOut(timespans.medium, function() {
 				$("#art, #artLoader").attr("src", data.art);
 				rootCSS().setProperty("--art-url", `url('${data.art}')`);
 
 				$("#artLoader").one({
 					load: function() {
-						$("#art, #artBG, #artOutline").fadeIn(timespans.large);
+						$("#artAnimationWrapper").fadeIn(timespans.large);
 						$("#bgWrapper .artContainer").fadeIn(parseFloat(localStorage.getItem("setting_spotify_artBackgroundFadeInDuration")) * 1000);
 					},
 					error: function() {

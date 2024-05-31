@@ -121,10 +121,9 @@
 				</div>
 			</div>
 			<div id="sideButtons">
-				<div class="button" id="sendTestButton"><i class="fas fa-comment-dots"></i> Test Message</div>
-				<div class="button" id="clearMessagesButton"><i class="fas fa-trash-alt"></i> Clear Messages</div>
-				<hr/>
-				<div class="button" id="reloadEmotesButton"><i class="fas fa-sync-alt"></i> FFZ / BTTV / 7TV</div>
+				<div class="button isChatThing" id="clearMessagesButton"><i class="fas fa-trash-alt"></i> Clear Messages</div>
+				<hr class="isChatThing"/>
+				<div class="button isChatThing" id="reloadEmotesButton"><i class="fas fa-sync-alt"></i> FFZ / BTTV / 7TV</div>
 				<div class="button" id="reloadOverlayButton"><i class="fas fa-sync-alt"></i> All Overlays</div>
 				<hr/>
 				<div class="button" id="reloadPanelButton"><i class="fas fa-sync-alt"></i> Settings Panel</div>
@@ -1214,6 +1213,26 @@
 					<div class="setting">
 						<div class="settingCell">
 							<input id="debugRawMessages" type="checkbox"/> <span class="settingInfo">Log raw Twitch IRC messages to the DevTools console</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="allowSampleMessages" type="checkbox" data-dependent="sampleMessages"/> <span class="settingInfo">Send a constant stream of sample messages</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="sampleMessages">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Message interval</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="sampleMessageInterval" min="1" max="30" step="1" value="5"/><span class="settingCellMeasurement">seconds</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell smol">
+							User individuality settings (that are not related to flag settings) will be forcefully disabled while sample messages are active.
 						</div>
 					</div>
 				</div>
@@ -3182,7 +3201,7 @@
 					</div>
 					<div class="setting" data-dependent="spotify_enableArtistAlbumCycle">
 						<div class="settingCell">
-							<input id="spotify_showLabel" type="checkbox"/> <span class="settingInfo">Show label/publisher information after album information (if available)</span>
+							<input id="spotify_showLabel" type="checkbox"/> <span class="settingInfo">Show label/publisher information after album information (* if available)</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="spotify_enableArtistAlbumCycle">
@@ -3298,6 +3317,12 @@
 						</div>
 						<div class="settingCell">
 							<input type="number" id="spotify_artistGradientAngle" min="0" max="360" step="1" value="170"/><span class="settingCellMeasurement">deg</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell smol">
+							* Label/publisher information is fetched from MusicBrainz using the song's ISRC, as Spotify does not provide this information in a public API call.
 						</div>
 					</div>
 				</div>

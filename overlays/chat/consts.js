@@ -1,5 +1,5 @@
-const overlayRevision = 49;
-const overlayRevisionTimestamp = 1715904368165;
+const overlayRevision = 50;
+const overlayRevisionTimestamp = 1717153564754;
 
 const enums = {
 	weight: {
@@ -689,3 +689,152 @@ async function setPronounTags() {
 	console.log("successfully grabbed available pronoun tags");
 }
 setPronounTags();
+
+function getRandomHexColor(length) {
+	var parts = [];
+	for(let i = 0; i < length; i++) {
+		parts.push(Math.floor(Math.random() * 255).toString(16).padStart(2, "0"));
+	}
+	return `#${parts.join("")}`;
+}
+var allowedTestMessageOwners = [
+	{
+		"user-id": "43464015",
+		"login": "sampleuser001",
+		"display-name": "SampleUser001",
+		"message-type": "system",
+		"badges": {
+			"moderator": "1"
+		},
+		"color": getRandomHexColor(3),
+	},
+	{
+		"user-id": "56299229",
+		"login": "sampleuserthesecond",
+		"display-name": "SampleUserTheSECOND",
+		"message-type": "system",
+		"badges": {
+			"vip": "1"
+		},
+		"color": getRandomHexColor(3),
+	},
+	{
+		"user-id": "198356382",
+		"login": "sampleusernumber3",
+		"display-name": "SampleUserNumber3",
+		"message-type": "system",
+		"badges": {
+			"vip": "1",
+			"turbo": "1"
+		},
+		"color": getRandomHexColor(3),
+	},
+];
+const testMessageConversations = [
+	[
+		{
+			"whom": 1,
+			"msg": "hey there fellow test subjects! happy to be here today HeyGuys",
+			"emotes": {
+				30259: ['55-61']
+			}
+		},
+		{
+			"whom": 1,
+			"msg": "how is everyone?"
+		},
+		{
+			"whom": 0,
+			"msg": "doin great!!! thx!!"
+		},
+		{
+			"whom": 2,
+			"msg": "I'm a bit sleepy, I haven't had my morning coffee quite yet haha."
+		},
+		{
+			"whom": 1,
+			"msg": "you should go make some then LUL",
+			"emotes": {
+				425618: ['29-31']
+			}
+		},
+		{
+			"whom": 2,
+			"msg": "Yeah maybe... bed's a bit too comfortable and I don't want to get out of it, though."
+		},
+		{
+			"whom": 0,
+			"msg": "ughhhhhh thats *SUCH* a mood XD"
+		}
+	],
+	[
+		{
+			"whom": 0,
+			"msg": "omg are they doing it??? PogChamp",
+			"emotes": {
+				305954156: ['25-32']
+			}
+		},
+		{
+			"whom": 1,
+			"msg": "there's no way they do it, no way Kappa",
+			"emotes": {
+				25: ['34-38']
+			}
+		},
+		{
+			"whom": 2,
+			"msg": "i believe Prayge",
+		},
+		{
+			"whom": 2,
+			"msg": "oh no",
+		},
+		{
+			"whom": 0,
+			"msg": "NOOOOOOOO NotLikeThis that stinks",
+			"emotes": {
+				58765: ['10-20']
+			}
+		},
+		{
+			"whom": 1,
+			"msg": "man big F, i'm so sorry"
+		}
+	],
+	[
+		{
+			"whom": 0,
+			"msg": "omg are they actually doing it again??? PogChamp PogChamp omg omg",
+			"emotes": {
+				305954156: ['40-47', '49-56']
+			}
+		},
+		{
+			"whom": 1,
+			"msg": "maybe third time's the charm? Kappa",
+			"emotes": {
+				25: ['30-34']
+			}
+		},
+		{
+			"whom": 2,
+			"msg": "i believe Prayge",
+		},
+		{
+			"whom": 2,
+			"msg": "YESSSSS THEY DID IT"
+		},
+		{
+			"whom": 0,
+			"msg": "YOOOOOOOOOOO LET'S GOOOO Pog Clap"
+		},
+		{
+			"whom": 1,
+			"msg": "PogChamp Clap",
+			"emotes": {
+				305954156: ['0-7']
+			}
+		}
+	]
+];

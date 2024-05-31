@@ -16,10 +16,6 @@ $("#reloadOverlayButton").on("mouseup", function(e) {
 	postToChannel("reload");
 });
 
-$("#sendTestButton").on("mouseup", function(e) {
-	postToChannel("testChatMessage");
-});
-
 $("#clearMessagesButton").on("mouseup", function(e) {
 	postToChannel("clearChatMessages");
 });
@@ -71,6 +67,7 @@ broadcastFuncs = {
 		changeStatusCircle("ChatOverlayStatus", "green", `loaded (r${data.version})`);
 
 		showExtraRow("chat");
+		$(".isChatThing").show();
 
 		if(allowedToProceed && !isTwitchRunning) {
 			isTwitchRunning = true;
@@ -216,5 +213,16 @@ settingsChannel.onmessage = function(message) {
 		broadcastFuncs[message.event](message);
 	}
 };
+
+var sampleMessageInterval;
+function sampleMessageIntervalFunction() {
+	clearTimeout(sampleMessageInterval);
+	sampleMessageInterval = setTimeout(sampleMessageIntervalFunction, parseInt(localStorage.getItem("setting_sampleMessageInterval")) * 1000);
+
+	if(localStorage.getItem("setting_allowSampleMessages") === "true") {
+		postToChannel("testChatMessage");
+	}
+}
+sampleMessageIntervalFunction();
 
 postToChannel("settingsOverlayLoaded");

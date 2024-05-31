@@ -40,7 +40,8 @@ const mapPacks = {
 	"Linkin Park x Mike Shinoda DLC Pack":["alreadyover","crawling","fightingmyself","inmyhead","lost","morethevictim","numbencore","rememberthename"],
 	"The Rolling Stones DLC Pack":["angry","bitemyheadoff","cantyouhearmeknocking","gimmeshelter","icantgetnosatisfaction","livebythesword","messitup","paintitblack","startmeup","sympathyforthedevil","wholewideworld"],
 	"OST Vol. 6":["heavyweight","liftoff","powerofthesaberblade","tempokatana","cathedral"],
-	"Daft Punk DLC Pack": ["aroundtheworld", "aroundtheworldharderbetterfasterstronger", "dafunkdaftendirekt", "getlucky", "harderbetterfasterstronger", "loseyourselftodance", "onemoretime", "primetimeofyourlifebrainwasherrollinalivelive2007", "technologic", "veridisquo"]
+	"Daft Punk DLC Pack": ["aroundtheworld", "aroundtheworldharderbetterfasterstronger", "dafunkdaftendirekt", "getlucky", "harderbetterfasterstronger", "loseyourselftodance", "onemoretime", "primetimeofyourlifebrainwasherrollinalivelive2007", "technologic", "veridisquo"],
+	"Hip Hop Mixtape DLC Pack": ['alleyezonme', 'anaconda', 'ginandjuice', 'godzilla', 'heyya', 'hypnotize', 'nuthinbutagthang', 'themessage', 'thewoo']
 };
 
 const bsEventChannel = new BroadcastChannel("bs");

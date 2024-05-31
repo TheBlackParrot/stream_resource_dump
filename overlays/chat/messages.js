@@ -561,7 +561,7 @@ function renderAvatarBlock(data) {
 
 	pfpBlock.attr("src", data.user.avatarImage);
 
-	if(customSettings && localStorage.getItem("setting_allowUserCustomizations") === "true" && localStorage.getItem("setting_allowUserAvatarShape") === "true") {
+	if(customSettings && localStorage.getItem("setting_allowUserCustomizations") === "true" && localStorage.getItem("setting_allowUserAvatarShape") === "true" && localStorage.getItem("setting_allowSampleMessages") === "false") {
 		if(!customSettings.useDefaultAvatarBorderRadius) {
 			pfpBlock.css("border-radius", `var(--pfpShape${data.user.id})`);
 		}
@@ -577,7 +577,7 @@ function renderAvatarBlock(data) {
 }
 
 function initUserSettingValues(data) {
-	let customizationOK = (localStorage.getItem("setting_allowUserCustomizations") === "true");
+	let customizationOK = (localStorage.getItem("setting_allowUserCustomizations") === "true" && localStorage.getItem("setting_allowSampleMessages") === "false");
 
 	if(!localStorage.getItem(`color_${data.user.id}`)) {
 		let col = data.user.entitlements.twitch.color;
@@ -638,7 +638,7 @@ function initUserBlockCustomizations(data, elements) {
 	}
 
 	const customSettings = data.user.entitlements.overlay.customSettings;
-	let customizationOK = (localStorage.getItem("setting_allowUserCustomizations") === "true");
+	let customizationOK = (localStorage.getItem("setting_allowUserCustomizations") === "true" && localStorage.getItem("setting_allowSampleMessages") === "false");
 	let usesCustomColor = initUserSettingValues(data);
 
 	let allNameElements = elements.nameBlock.children();
@@ -809,7 +809,7 @@ function renderUserBlock(data, rootElement, overallWrapper, messageWrapper) {
 	const entitlements = data.user.entitlements;
 	const customSettings = entitlements.overlay.customSettings;
 	if(customSettings) {
-		if((!customSettings.use7TVPaint || !entitlements.sevenTV.paint) && customSettings.nameGlowEnabled && localStorage.getItem("setting_allowUserCustomizations") === "true" && localStorage.getItem("setting_allowUserNameGlow") === "true" && !customSettings.useDefaultNameSettings) {
+		if((!customSettings.use7TVPaint || !entitlements.sevenTV.paint) && customSettings.nameGlowEnabled && localStorage.getItem("setting_allowUserCustomizations") === "true" && localStorage.getItem("setting_allowSampleMessages") === "false" && localStorage.getItem("setting_allowUserNameGlow") === "true" && !customSettings.useDefaultNameSettings) {
 			// jfc this is a long conditional LMAO
 			nameBlock.children(".displayName").css("filter", `var(--effectFilters) var(--nameGlow${data.user.id})`);
 			nameBlock.children(".internationalName").css("filter", `var(--effectFilters) var(--nameGlow${data.user.id}) saturate(var(--internationalNameSaturation))`);
@@ -832,7 +832,7 @@ function initMessageBlockCustomizations(data, elements) {
 		return;
 	}
 
-	let customizationOK = (localStorage.getItem("setting_allowUserCustomizations") === "true");
+	let customizationOK = (localStorage.getItem("setting_allowUserCustomizations") === "true" && localStorage.getItem("setting_allowSampleMessages") === "false");
 	let colorToUse = (localStorage.getItem("setting_chatDefaultNameColorForced") === "true" ? "setting_chatDefaultNameColor" : `color_${data.user.id}`);
 
 	let userColorUsed = localStorage.getItem(colorToUse);

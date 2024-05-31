@@ -1,4 +1,53 @@
 {
+	"1717153564754": {
+		"updates": {
+			"chat": {
+				"revision": 50,
+				"notes": [
+					[
+						"made changes relating to the new test message system"
+					]
+				]
+			},
+
+			"spotify": {
+				"revision": 18,
+				"notes": [
+					[
+						"fixed secondary metadata transitions triggering the slide-in animation anytime it went back to the artist"
+					],
+					[
+						"fixed art fade in/out animations applying to each individual part of itself, rather than a container"
+					]
+				]
+			},			
+
+			"settings": {
+				"revision": 52,
+				"notes": [
+					[
+						"revamped test messages to a constant stream of messages from pre-defined conversations",
+						[
+							"if you'd like to be added as a sample message subject, just let me know! all i need is your twitch username"
+						]
+					],
+					[
+						"removed the test message button and replaced it with a toggle in the Debug section of Chat > Function"
+					],
+					[
+						"added data source information for album/publisher information for the spotify overlay"
+					],
+					[
+						"updated beat saber DLC pack data"
+					],
+					[
+						"buttons to refresh emote data and clear messages will now only appear if the chat overlay is active"
+					]
+				]
+			}
+		}
+	},
+
 	"1715904368165": {
 		"updates": {
 			"chat": {

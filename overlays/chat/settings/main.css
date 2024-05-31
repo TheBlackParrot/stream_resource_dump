@@ -925,3 +925,7 @@ ol li ol li:before {
 .extraRow, .extraHR {
 	display: none;
 }
+
+.isChatThing {
+	display: none;
+}

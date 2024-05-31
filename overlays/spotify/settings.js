@@ -1,5 +1,5 @@
-const overlayRevision = 17;
-const overlayRevisionTimestamp = 1713293906193;
+const overlayRevision = 18;
+const overlayRevisionTimestamp = 1717153564754;
 
 const settingsChannel = new BroadcastChannel("settings_overlay");
 

@@ -929,7 +929,9 @@ const defaultConfig = {
 	"hr_enableHeartBeatAnimation": "true",
 	"hr_heartBeatAnimationStrength": "110",
 	"hr_animateRateChanges": "true",
-	"hr_animateRateInterval": "10"
+	"hr_animateRateInterval": "10",
+	"allowSampleMessages": "false",
+	"sampleMessageInterval": "5"
 };
 // i typed out the bigNoNoWords so you don't have to, i'm sorry :(
 // it's gotta know what to remove

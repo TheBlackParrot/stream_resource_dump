@@ -12,6 +12,8 @@ function postToSettingsChannel(event, data) {
 	settingsChannel.postMessage(message);
 }
 
+currentActiveConversation = 0;
+currentActiveConversationMessage = Infinity;
 settingsFuncs = {
 	reload: function(message) {
 		setTimeout(function() {
@@ -20,31 +22,36 @@ settingsFuncs = {
 	},
 
 	testChatMessage: function() {
-		lastUser = -69; // nice
-		let col = Math.floor(Math.random() * 16777216);
-		let r = ((col >> 16) & 0xFF).toString(16).padStart(2, "0");
-		let g = ((col >> 8) & 0xFF).toString(16).padStart(2, "0");
-		let b = (col & 0xFF).toString(16).padStart(2, "0");
+		currentActiveConversationMessage++;
 
-		let tagsObject = {
-			"badges": {
-				"broadcaster": "1"
-			},
-			"username": broadcasterData.login,
-			"display-name": broadcasterData.display_name,
-			"user-id": "-1",
-			"is-overlay-message": false,
-			"message-type": "system",
-			"emotes": {
-				305954156: ['205-212'],
-				25: ['199-203']
-			},
-			"id": `system-${Date.now()}`,
-			"color": `#${r}${g}${b}`,
-			"is-test-message": true
+		if(currentActiveConversationMessage >= testMessageConversations[currentActiveConversation].length) {
+			currentActiveConversation = Math.floor(Math.random() * testMessageConversations.length);
+			currentActiveConversationMessage = 0;
+
+			// do not actually do this to randomize anything important, this is super duper biased and only really meant to just move things around occasionally
+			allowedTestMessageOwners.sort(() => .5 - Math.random());
+			//allowedTestMessageOwners.map((x) => x.color = getRandomHexColor(3));
 		}
 
-		prepareMessage(tagsObject, "Hello there! This is a *fake message* so that you can see what your *chat settings* look like! **Have fun!** AaBbCcDd EeFfGgHh IiJjKkLl MmNnOoPp QqRrSsTt UuVvWwXx YyZz 0123456789 Also, look! Emotes! Kappa PogChamp catJAM ~~sarcastic text~~", false, false);
+		let conversation = testMessageConversations[currentActiveConversation];
+		let msg = conversation[currentActiveConversationMessage];
+		let testUser = allowedTestMessageOwners[msg.whom];
+
+		let tagsObject = {
+			"badges": testUser.badges,
+			"username": testUser.login,
+			"display-name": testUser.display_name,
+			"user-id": testUser['user-id'],
+			"is-overlay-message": false,
+			"message-type": "system",
+			"id": `system-${Date.now()}`,
+			"is-test-message": true
+		};
+		if("emotes" in msg) {
+			tagsObject.emotes = msg.emotes;
+		}
+
+		prepareMessage(tagsObject, msg.msg, false, false);
 	},
 
 	clearChatMessages: function(message) {
