@@ -21,7 +21,7 @@
 
 	--sidebar-row-height: 32px;
 	--sidebar-padding: 12px;
-	--sidebar-row-text-color: var(--primary-color);
+	--sidebar-row-text-color: var(--primary-color-bright);
 	--sidebar-width: 210px;
 	--sidebar-bg-color: var(--primary-color-darkest);
 	--sidebar-icon-margin: 7px;
@@ -229,6 +229,7 @@ body {
 }
 
 .row .fas, .row .fab, .rowCollapsable .fas, .rowCollapsable .fab {
+	color: var(--primary-color);
 	margin-right: var(--sidebar-icon-margin);
 	width: var(--sidebar-icon-width);
 	text-align: center;
@@ -299,7 +300,9 @@ h1 .icon {
 	background-color: var(--sidebar-active-row-bg-color) !important;
 	background-image: var(--sidebar-active-row-bg-gradient) !important;
 }
-
+.active .fas, .active .fab {
+	color: var(--sidebar-active-row-text-color) !important;
+}
 .active .icon {
 	background-color: var(--sidebar-active-row-text-color) !important;
 }
@@ -928,4 +931,9 @@ ol li ol li:before {
 
 .isChatThing {
 	display: none;
+}
+
+.clr-field .resetToDefaultValueButton {
+	position: relative;
+	left: 38px;
 }

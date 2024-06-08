@@ -1,4 +1,79 @@
 {
+	"1717808406236": {
+		"updates": {
+			"bs": {
+				"revision": 8,
+				"notes": [
+					[
+						"fixed FC display bugging out if the first block was missed"
+					]
+				]				
+			},
+
+			"chat": {
+				"revision": 51,
+				"notes": [
+					[
+						"another attempt at ensuring deleted messages don't appear if they were deleted before data fetching/message prep finished"
+					],
+					[
+						"attempted to fix randomly ocurring issues involving random functions being called before initialization"
+					]
+				]
+			},
+
+			"heartrate": {
+				"revision": 2,
+				"notes": [
+					[
+						"fixed (sort of) effects on 0-digit pad numbers not following transparency",
+						["the current value's effects render on top of the padded numbers still, but that'll be a whole 'nother headache"]
+					],
+					[
+						"tweaked pulse animation"
+					],
+					[
+						"fixed clipping on the left side of the heart icon"
+					],
+					[
+						"not fading out leading zeroes now just adds zeroes onto the displayed value",
+						["this hides the issue with effects if fading isn't wanted"]
+					],
+					[
+						"fixed pre-mature firing of an \"overlay loaded\" event sometimes breaking the overlay"
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 53,
+				"notes": [
+					[
+						"beat saber pack data is now separated from the script setting the variable for it"	
+					],
+					[
+						"attempted to fix randomly occurring issues involving random functions being called before initialization",
+						["if the changes i've made here fix the issues i'm running into, all overlays will get an update similar to this later on"]
+					],
+					[
+						"moved update data over to async fetch"
+					],
+					[
+						"sidebar text is now lighter than the icons beside them",
+						["should make longer lists easier to read"]
+					],
+					[
+						"fixed revert button on color input fields",
+						["...i broke these at some point? idk how"]
+					],
+					[
+						"most recent overlay patch notes will now also show in the about tab"
+					]
+				]
+			}
+		}
+	},
+
 	"1717153564754": {
 		"updates": {
 			"chat": {

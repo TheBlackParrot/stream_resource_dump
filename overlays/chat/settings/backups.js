@@ -47,7 +47,6 @@ function checkToDoAutoBackup() {
 		setTimeout(checkToDoAutoBackup, 1000);
 	}
 }
-checkToDoAutoBackup();
 
 function restoreFromBackup(timestamp) {
 	doSettingsBackup();
@@ -118,7 +117,6 @@ function generateBackupOptions() {
 		$(".selectedBackup").append(option);
 	}
 }
-generateBackupOptions();
 
 function getSelectedBackup() {
 	let key = $(".selectedBackup").val();

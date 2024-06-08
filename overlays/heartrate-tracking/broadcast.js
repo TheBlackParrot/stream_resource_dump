@@ -1,5 +1,5 @@
-const overlayRevision = 1;
-const overlayRevisionTimestamp = 1715904368165;
+const overlayRevision = 2;
+const overlayRevisionTimestamp = 1717808406236;
 const settingsChannel = new BroadcastChannel("settings_overlay");
 
 function postToSettingsChannel(event, data) {
@@ -13,7 +13,6 @@ function postToSettingsChannel(event, data) {
 	console.log(message);
 	settingsChannel.postMessage(message);
 }
-postToSettingsChannel("HROverlayExists", {version: overlayRevision});
 
 const settingsFuncs = {
 	reload: function(message) {

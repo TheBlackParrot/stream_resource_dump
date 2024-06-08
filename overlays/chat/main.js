@@ -30,7 +30,6 @@ var cheermotes = {};
 var twitchHelixReachable = false;
 
 var chatEmotes;
-initEmoteSet();
 
 var channelPointRedeems = {};
 

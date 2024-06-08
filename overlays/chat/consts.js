@@ -1,4 +1,4 @@
-const overlayRevision = 50;
+const overlayRevision = 51;
 const overlayRevisionTimestamp = 1717153564754;
 
 const enums = {
@@ -688,7 +688,6 @@ async function setPronounTags() {
 	pronounTags = await response.json();
 	console.log("successfully grabbed available pronoun tags");
 }
-setPronounTags();
 
 function getRandomHexColor(length) {
 	var parts = [];

@@ -370,7 +370,12 @@ function getRootElement(data) {
 	});
 
 	$("#wrapper").append(rootElement);
-	return [rootElement, overallWrapper, messageWrapper];
+	if(deleteMessages.indexOf(data.uuid) === -1) {
+		return [rootElement, overallWrapper, messageWrapper];
+	} else {
+		console.log("message was deleted, not returning a DOM element");
+		return false;
+	}
 }
 
 function renderBadgeBlock(data, rootElement, userBlock) {
@@ -1220,7 +1225,6 @@ async function parseMessage(data) {
 	console.log(data);
 
 	if(deleteMessages.indexOf(data.uuid) !== -1) {
-		deleteMessages.splice(deleteMessages.indexOf(data.uuid), 1);
 		console.log("message was removed, not rendering");
 		return;
 	}
@@ -1253,6 +1257,9 @@ async function parseMessage(data) {
 
 	messageCount++;
 	let rootParts = getRootElement(data);
+	if(!rootParts) {
+		return;
+	}
 	let rootElement = rootParts[0];
 	let overallWrapper = rootParts[1];
 	let messageWrapper = rootParts[2];
@@ -1349,21 +1356,6 @@ async function parseMessage(data) {
 	if(doSound) {
 		playSound("newMsg");
 	}
-
-	/*const emoteBlocks = messageBlock.find(".emote img").toArray();
-	for(const block of emoteBlocks) {
-		if("src" in block.dataset) {
-			block.onload = function() {
-				if(this.src.substr(0, 4) === "blob") {
-					console.log(`revoking blob object, we're done (${this.src})`);
-					URL.revokeObjectURL(this.src);
-				}
-			}
-			setTimeout(function() {
-				block.src = block.dataset.src;
-			}, 33); // sigh
-		}
-	}*/
 }
 
 function render7TVBadges(user, badgeBlock) {

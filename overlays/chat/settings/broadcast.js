@@ -223,6 +223,3 @@ function sampleMessageIntervalFunction() {
 		postToChannel("testChatMessage");
 	}
 }
-sampleMessageIntervalFunction();
-
-postToChannel("settingsOverlayLoaded");

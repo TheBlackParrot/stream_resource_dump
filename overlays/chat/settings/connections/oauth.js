@@ -233,22 +233,6 @@ async function setTwitchTokens() {
 	onTwitchReady();
 }
 
-if(oauthCode) {
-	const service = sessionStorage.getItem("_oauth_service");
-
-	switch(service) {
-		case "spotify":
-			sessionStorage.removeItem("_oauth_service");
-			setSpotifyTokens();
-			break;
-
-		case "twitch":
-			sessionStorage.removeItem("_oauth_service");
-			setTwitchTokens();
-			break;
-	}
-}
-
 $("#ohFuckOhShit").on("mouseup", function(e) {
 	e.preventDefault();
 

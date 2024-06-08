@@ -15,7 +15,14 @@ const properOverlayNames = {
 var mostRecentUpdate = 0;
 var lastSettingReset = parseInt(localStorage.getItem("_lastSettingReset")) || 0;
 
-$.get(`./changelog.json?sigh=${Date.now()}`, function(data) {
+async function getUpdateData() {
+	const response = await fetch(`./changelog.json?sigh=${Date.now()}`);
+	if(!response.ok) {
+		console.log("couldn't get update data? uh");
+		return;
+	}
+
+	const data = await response.json();
 	console.log(data);
 
 	for(let timestamp in data) {
@@ -87,6 +94,15 @@ $.get(`./changelog.json?sigh=${Date.now()}`, function(data) {
 				}
 			}
 		}
+
+		if(!$("#newestUpdate").length) {
+			const copiedElement = rootElement.clone();
+			copiedElement.insertBefore("#whereToFind");
+
+			copiedElement.attr("id", "newestUpdate");
+			$("#newestUpdate hr:last-child").remove(); // wtf
+			$("#newestUpdate h1").text(`Newest Update - ${$("#newestUpdate h1").text()}`);
+		}
 	}
 
 	let lastClickedUpdateTab = parseInt(localStorage.getItem("_lastClickedUpdateTab"));
@@ -95,4 +111,4 @@ $.get(`./changelog.json?sigh=${Date.now()}`, function(data) {
 	}
 
 	$("#updatesSection hr:last-child").remove();
-});
+}

@@ -927,7 +927,7 @@ const defaultConfig = {
 	"hr_valueIconGradientAngle": "170",
 	"hr_valueIconSize": "0.8",
 	"hr_enableHeartBeatAnimation": "true",
-	"hr_heartBeatAnimationStrength": "110",
+	"hr_heartBeatAnimationStrength": "117",
 	"hr_animateRateChanges": "true",
 	"hr_animateRateInterval": "10",
 	"allowSampleMessages": "false",

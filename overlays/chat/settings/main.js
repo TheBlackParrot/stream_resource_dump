@@ -11,7 +11,7 @@ function changeStatusCircle(which, status, msg) {
 
 $("#sensitive .section").show();
 
-const overlayRevision = 52;
+const overlayRevision = 53;
 const overlayRevisionTimestamp = 1717153564754;
 $("#revision").text(`revision ${overlayRevision}`);
 
@@ -122,7 +122,6 @@ function settingsCheck() {
 
 	localStorage.setItem("setting_version", "4");
 }
-settingsCheck();
 
 var activeRow;
 var scrollTops = {};
@@ -170,7 +169,6 @@ function setRow(which, bypassSensitiveCheck) {
 		localStorage.setItem("_lastClickedUpdateTab", Date.now());
 	}
 }
-setRow("about");
 
 function showExtraRow(name) {
 	if($(`.extraRow[data-tab="${name}"]`).is(":visible")) {

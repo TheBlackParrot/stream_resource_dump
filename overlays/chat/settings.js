@@ -13,7 +13,6 @@ async function grabFlags() {
 
 	settings.flags = await response.json();
 }
-grabFlags();
 
 var hideAccounts = [];
 var refreshExternalStuffTimeout;

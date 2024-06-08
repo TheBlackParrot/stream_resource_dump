@@ -430,14 +430,6 @@ function setHitMiss(state) {
 		return;
 	}
 	oldCombo = state.combo;
-
-	if(state.hits === state.combo) {
-		$("#FCCell").show();
-		$("#missCell").hide();	
-	} else {
-		$("#FCCell").hide();
-		$("#missCell").show();
-	}
 }
 
 rootCSS().setProperty("--background-art-height", `${$("#wrapper").outerHeight(true)}px`);

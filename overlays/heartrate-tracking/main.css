@@ -17,7 +17,8 @@
 	--elementWidth: 120px;
 	--elementJustify: center;
 
-	--fadeOutOpacity: 0.33;
+	/*--fadeOutOpacity: 0.33;*/
+	--fadeOutOpacity: 1;
 
 	--headerIconColorActual: #CBADFF;
 	--headerIconColor: var(--headerIconColorActual);
@@ -58,16 +59,22 @@
 	0% {
 		transform: scale(100%);
 	}
-	15% {
+	10% {
 		transform: scale(var(--heartBeatAnimationScale));
 	}
-	75% {
+	35% {
+		transform: scale(100%);
+	}
+	45% {
+		transform: scale(calc(100% + ((var(--heartBeatAnimationScale) - 100%) / 2.5)));
+	}
+	70% {
 		transform: scale(100%);
 	}
 }
 
 body {
-	background: #333;
+	background: #aaa;
 	font-family: "Manrope";
 	font-variant: tabular-nums;
 	opacity: var(--fadeOutOpacity);
@@ -99,8 +106,6 @@ body {
 
 	justify-content: var(--elementJustify);
 	align-items: center;
-
-	filter: var(--outlineStuff) var(--shadowStuff);
 }
 #cur {
 	font-family: var(--valueFont);
@@ -118,6 +123,8 @@ body {
 	-webkit-text-stroke: var(--valueFontWeightExtra) transparent;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
+
+	filter: var(--outlineStuff) var(--shadowStuff);
 }
 #transparent_number {
 	opacity: var(--valuePaddingOpacity);
@@ -129,6 +136,8 @@ body {
 	font-weight: var(--headerFontWeight);
 	font-style: var(--headerFontStyle);
 	letter-spacing: var(--headerLetterSpacing);
+
+	filter: var(--outlineStuff) var(--shadowStuff);
 }
 #peak_value {
 	padding-right: 3px;
@@ -159,6 +168,7 @@ body {
 	animation-duration: 1s;
 	animation-iteration-count: infinite;
 	padding-right: 0.1em;
+	filter: var(--outlineStuff) var(--shadowStuff);
 }
 
 .fa-globe, .fa-map, .fa-angle-double-up {

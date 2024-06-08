@@ -166,4 +166,3 @@ function loadSettings() {
 
 	loadingInit = true;
 }
-loadSettings();

@@ -33,6 +33,26 @@ function updateHR(rate) {
 	animateHRChange();
 }
 
+function setHRDisplay() {
+	if(curHR < 0) {
+		return;
+	}
+
+	if(localStorage.getItem("setting_hr_fadeOutPadding") === "true") {
+		if(curHR < 10) {
+			$("#transparent_number").text("00");
+		} else if(curHR < 100) {
+			$("#transparent_number").text("0");
+		} else {
+			$("#transparent_number").empty();
+		}
+		$("#cur_value_value").text(curHR);
+	} else {
+		$("#transparent_number").empty();
+		$("#cur_value_value").text(curHR.toString().padStart(3, "0"));
+	}	
+}
+
 var hrChangeTO;
 function animateHRChange() {
 	if(localStorage.getItem("setting_hr_animateRateChanges") === "false") {
@@ -62,14 +82,7 @@ function animateHRChange() {
 		hrChangeTO = setTimeout(animateHRChange, parseInt(localStorage.getItem("setting_hr_animateRateInterval")));
 	}
 
-	if(curHR < 10) {
-		$("#transparent_number").text("00");
-	} else if(curHR < 100) {
-		$("#transparent_number").text("0");
-	} else {
-		$("#transparent_number").empty();
-	}
-	$("#cur_value_value").text(curHR);
+	setHRDisplay();
 }
 
 window.addEventListener("storage", function(event) {

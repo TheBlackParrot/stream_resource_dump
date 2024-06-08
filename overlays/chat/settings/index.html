@@ -2195,7 +2195,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="part">
+				<div class="part" id="whereToFind">
 					<h1>Where to find me</h1>
 					<div class="setting">
 						<div class="settingCellLabel">
@@ -6804,5 +6804,45 @@
 	<script defer type="text/javascript" src="connections/streamelements.js"></script>
 	<script defer type="text/javascript" src="connections/spotify.js"></script>
 	<script defer type="text/javascript" src="connections/heartratebroadcaster.js"></script>
+
+	<script type="text/javascript">
+		window.addEventListener("load", async function() {
+			setRow("about");
+
+			loadSettings();
+			settingsCheck();
+
+			await getUpdateData();
+
+			if(oauthCode) {
+				const service = sessionStorage.getItem("_oauth_service");
+
+				switch(service) {
+					case "spotify":
+						sessionStorage.removeItem("_oauth_service");
+						setSpotifyTokens();
+						break;
+
+					case "twitch":
+						sessionStorage.removeItem("_oauth_service");
+						setTwitchTokens();
+						break;
+				}
+			}
+
+			if(localStorage.getItem('twitch_oauthRefreshToken')) {
+				regenTwitchCodes();
+			}
+
+			sampleMessageIntervalFunction();
+
+			checkToDoAutoBackup();
+			generateBackupOptions();
+
+			await getMapPacks();
+
+			postToChannel("settingsOverlayLoaded");
+		});
+	</script>
 </body>
 </html>

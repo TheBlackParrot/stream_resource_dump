@@ -51,6 +51,7 @@ const settingUpdaters = {
 		} else {
 			rootCSS().setProperty("--valuePaddingOpacity", "1");
 		}
+		setHRDisplay();
 	},
 	elementSpacing: function(value) {
 		rootCSS().setProperty("--verticalSpacing", `${parseFloat(value) / 2}px`);
