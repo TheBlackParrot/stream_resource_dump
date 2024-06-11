@@ -1,4 +1,33 @@
 {
+	"1717969899625": {
+		"updates": {
+			"clips": {
+				"revision": 4,
+				"notes": [
+					[
+						"fixed usernames with underscores reporting back as a non-existant user due to filtering out of said underscore characters"
+					],
+					[
+						"moved onloaded code out of a deferred script tag"
+					]
+				]
+			}
+		}
+	},
+
+	"1717906610971": {
+		"updates": {
+			"chat": {
+				"revision": 52,
+				"notes": [
+					[
+						"fixed identity flags sometimes failing to load, causing other things to also fail to load"
+					]
+				]
+			}
+		}
+	},
+
 	"1717808406236": {
 		"updates": {
 			"bs": {

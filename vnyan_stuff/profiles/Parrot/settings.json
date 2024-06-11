@@ -1,0 +1,4098 @@
+{
+    "VMCPort": 3334,
+    "WebSocketPort": 4570,
+    "WebSocketInUse": true,
+    "UseSpout": true,
+    "SpoutName": "VNyanSpout",
+    "LimitFps": true,
+    "LimitFpsValue": 61,
+    "Antialias": true,
+    "AntialiasValue": 2,
+    "FocalDistance": 68.13128662109375,
+    "DefaultCameraX": 1.7499990463256837,
+    "DefaultCameraY": -0.5949999690055847,
+    "DefaultCameraDistance": 8.200000762939454,
+    "DefaultCameraRotX": -133.3801727294922,
+    "DefaultCameraRotY": -0.5399999022483826,
+    "NodeGraphCount": 20,
+    "DirectColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 1.0
+    },
+    "DirectIntensity": 1.0,
+    "DirectShadows": true,
+    "ContactShadows": true,
+    "AmbientColor": {
+        "r": 0.3333996534347534,
+        "g": 0.3333996534347534,
+        "b": 0.3333996534347534,
+        "a": 1.0
+    },
+    "AmbientIntensity": 1.399999976158142,
+    "DirectRotation": {
+        "x": 0.14712820947170258,
+        "y": -0.8385167717933655,
+        "z": 0.27682599425315859,
+        "w": 0.4456571042537689
+    },
+    "DirectWorld": true,
+    "DirectBias": 0.004999999888241291,
+    "BloomActive": true,
+    "BloomIntensity": 0.5,
+    "BloomThreshold": 1.6699999570846558,
+    "BloomDiffusion": 7.099999904632568,
+    "BloomColor": {
+        "r": 0.7904998660087586,
+        "g": 0.7904998660087586,
+        "b": 0.7904998660087586,
+        "a": 0.0
+    },
+    "BloomColorIntensity": 0.800000011920929,
+    "AnalogActive": false,
+    "AnalogJitter": 0.25333333015441897,
+    "AnalogJump": 0.019999999552965165,
+    "AnalogShake": 0.0,
+    "AnalogDrift": 0.019999999552965165,
+    "ChromaticActive": false,
+    "ChromaticIntensity": 0.037500184029340747,
+    "DigitalActive": false,
+    "DigitalIntensity": 0.0,
+    "BinaryActive": false,
+    "BinaryDitherType": 3,
+    "BinaryDitherScale": 1,
+    "BinaryColor": {
+        "r": 0.3463501036167145,
+        "g": 0.3463501036167145,
+        "b": 0.3463501036167145,
+        "a": 1.0
+    },
+    "BinaryOpacity": 0.4562501013278961,
+    "LensActive": false,
+    "LensIntensity": 0.0,
+    "LensXMultiplier": 0.0,
+    "LensYMultiplier": 0.0,
+    "LensCenterX": 0.0,
+    "LensCenterY": 0.0,
+    "LensScale": 0.0,
+    "ColorActive": false,
+    "ColorTemperature": 0.0,
+    "ColorTint": 0.0,
+    "ColorHue": 0.0,
+    "ColorSaturation": 0.0,
+    "ColorBrightness": 0.0,
+    "ColorContrast": 0.0,
+    "AOActive": true,
+    "AOIntensity": 1.4333330392837525,
+    "AORadius": 3.6666619777679445,
+    "AOQuality": 0,
+    "AOColor": {
+        "r": 0.2504998743534088,
+        "g": 0.2504998743534088,
+        "b": 0.2504998743534088,
+        "a": 0.0
+    },
+    "GrainActive": false,
+    "GrainColored": false,
+    "GrainIntensity": 0.37777799367904665,
+    "GrainSize": 0.30000001192092898,
+    "GrainLuminosity": 1.0,
+    "HeadColliderSize": 0.34285715222358706,
+    "HeadColliderOffset": 0.08571434020996094,
+    "TorsoColliderSize": 0.41428571939468386,
+    "TorsoColliderOffset": 0.12857139110565186,
+    "MouthColliderSize": 0.392857164144516,
+    "MouthColliderDepth": 0.08571457862854004,
+    "MouthColliderHeight": 0.05714297294616699,
+    "WindPower": 0.0,
+    "WindDirection": 2,
+    "WindIgnoreChest": false,
+    "Props": [
+        {
+            "linkBone": 0,
+            "FileName": "C:\\Utils\\VNyan\\Props\\patsmooth.gif",
+            "position": {
+                "x": 0.0,
+                "y": 0.20000000298023225,
+                "z": 0.002899761311709881
+            },
+            "rotation": {
+                "x": -0.14293444156646729,
+                "y": -0.9227021336555481,
+                "z": -0.30559635162353518,
+                "w": 0.18655160069465638
+            },
+            "scale": {
+                "x": 0.25,
+                "y": 0.25,
+                "z": 0.25
+            },
+            "id": "a9d30958-ac96-457c-b6c2-ba9f1c2ac142",
+            "faceCamera": true,
+            "propType": 0,
+            "propValue": "",
+            "propName": "patsmooth.gif",
+            "linkName": ""
+        },
+        {
+            "linkBone": 5,
+            "FileName": "C:\\Utils\\VNyan\\Props\\amongus.png",
+            "position": {
+                "x": 0.0,
+                "y": 0.15000000596046449,
+                "z": 0.0
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "scale": {
+                "x": 0.6000000238418579,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "id": "db7c80ef-ab0b-444b-bc62-49e33aa56caf",
+            "faceCamera": true,
+            "propType": 0,
+            "propValue": "",
+            "propName": "amongus.png",
+            "linkName": ""
+        }
+    ],
+    "Cameras": [
+        {
+            "Distance": 5.379993438720703,
+            "Pos": {
+                "x": -0.9899997711181641,
+                "y": 0.11500008404254914
+            },
+            "Rot": {
+                "x": -206.27992248535157,
+                "y": 0.1799999624490738
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 1"
+        },
+        {
+            "Distance": 3.1949896812438967,
+            "Pos": {
+                "x": 0.470000684261322,
+                "y": -0.11000002175569534
+            },
+            "Rot": {
+                "x": -147.24020385742188,
+                "y": 6.299997329711914
+            },
+            "RotZ": 2.879999876022339,
+            "Name": "Cam 2"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 3"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 4"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 5"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 6"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 7"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 8"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 9"
+        },
+        {
+            "Distance": 5.379993438720703,
+            "Pos": {
+                "x": -0.9899997711181641,
+                "y": 0.11500008404254914
+            },
+            "Rot": {
+                "x": -344.3393249511719,
+                "y": 3.96000075340271
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 10"
+        },
+        {
+            "Distance": 5.379993438720703,
+            "Pos": {
+                "x": -1.0549997091293336,
+                "y": -0.009999940171837807
+            },
+            "Rot": {
+                "x": -333.8997497558594,
+                "y": 3.96000075340271
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 11"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 12"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 13"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 14"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 15"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 16"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 17"
+        },
+        {
+            "Distance": 3.1949896812438967,
+            "Pos": {
+                "x": -1.754998803138733,
+                "y": -1.244999647140503
+            },
+            "Rot": {
+                "x": -120.2402572631836,
+                "y": -2.700000762939453
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 18"
+        },
+        {
+            "Distance": 4.315001010894775,
+            "Pos": {
+                "x": -0.6800000667572022,
+                "y": 0.07999972999095917
+            },
+            "Rot": {
+                "x": -158.5800018310547,
+                "y": 4.500006198883057
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 19"
+        },
+        {
+            "Distance": 5.379993438720703,
+            "Pos": {
+                "x": -1.0549997091293336,
+                "y": -0.009999940171837807
+            },
+            "Rot": {
+                "x": -172.62059020996095,
+                "y": -2.159999132156372
+            },
+            "RotZ": 0.0,
+            "Name": "Menu Cam Offset"
+        },
+        {
+            "Distance": 8.700000762939454,
+            "Pos": {
+                "x": 1.8199989795684815,
+                "y": -0.6399999260902405
+            },
+            "Rot": {
+                "x": -119.52029418945313,
+                "y": -5.219999313354492
+            },
+            "RotZ": 0.0,
+            "Name": "Init Cam"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 22"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 23"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 24"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 25"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 26"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 27"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 28"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 29"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 30"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 31"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 32"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 33"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 34"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 35"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 36"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 37"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 38"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 39"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 40"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 41"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 42"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 43"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 44"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 45"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 46"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 47"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 48"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 49"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 50"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 51"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 52"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 53"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 54"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 55"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 56"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 57"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 58"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 59"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 60"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 61"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 62"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 63"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 64"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 65"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 66"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 67"
+        },
+        {
+            "Distance": 0.0,
+            "Pos": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "Rot": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 68"
+        },
+        {
+            "Distance": 3.1949896812438967,
+            "Pos": {
+                "x": 0.5000006556510925,
+                "y": -0.11000002175569534
+            },
+            "Rot": {
+                "x": -147.06021118164063,
+                "y": -4.14000129699707
+            },
+            "RotZ": 0.0,
+            "Name": "Cam 69"
+        }
+    ],
+    "VolumeMaster": 1.0,
+    "VolumeBonk": 1.0,
+    "VolumeConfetti": 0.19393938779830934,
+    "HandsOverrideAnim": true,
+    "BaseRotationY": 0.0,
+    "AllowWindowResize": true,
+    "RightFoodOffset": {
+        "x": 0.05000000074505806,
+        "y": -0.05999999865889549,
+        "z": 0.0
+    },
+    "LeftFoodOffset": {
+        "x": -0.05000000074505806,
+        "y": -0.05999999865889549,
+        "z": 0.0
+    },
+    "RightFoodRot": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "LeftFoodRot": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "SkipStartWizard": true,
+    "SkipNewWizard": true,
+    "DisplayLightMonitor": -1,
+    "DisplayLightOpacity": 1.0,
+    "EmoteDropper": false,
+    "SMAA": false,
+    "Chains": [],
+    "ARKitType": 0,
+    "ARKitMirror": false,
+    "ARKitEyes": true,
+    "ARKitNonARkitTracking": false,
+    "ARKitTrackHead": 1.0,
+    "ARKitTrackNeck": 1.0,
+    "ARKitTrackSpine": 1.0,
+    "ARKitTrackHipRot": 1.0,
+    "ARKitTrackHipPos": 1.0,
+    "ARKitTrackRoot": 1.0,
+    "ARKitTrackLegs": 1.0,
+    "ARKitIP": "",
+    "ARKitMoveRange": 0.0,
+    "ARKitRotRange": 0.0,
+    "ARKitAltRange": 0.0,
+    "ARKitSmoothing": 0.0,
+    "ARKitJitter": 10,
+    "ARKitArmAngle": 0.0,
+    "ARKitUseArmAngle": false,
+    "ARKitDepth": 0.05000000074505806,
+    "ARKitIK": false,
+    "ARKitLocomotion": 0.0,
+    "ARKitGaze": 0.5,
+    "ARKitNod": 2.0,
+    "ARKitTilt": 2.0,
+    "ARKitPelvisRotation": 0.0,
+    "ARKitMaintainPelvis": 0.0,
+    "ARKitInterpolation": 10.0,
+    "ARKitPlantFeet": true,
+    "ARKitBlendshapes": true,
+    "ARKitLinkedBlink": false,
+    "ARKitLinkedThreshold": 0.6000000238418579,
+    "AudioLinkInput": "CABLE Output (VB-Audio Virtual Cable)",
+    "AudioLinkThreshold1": 0.6000000238418579,
+    "AudioLinkThreshold2": 1.0,
+    "AudioLinkThreshold3": 1.0,
+    "AudioLinkThreshold4": 0.8500000238418579,
+    "AudioLinkGain": 0.800000011920929,
+    "LipsyncInput": "line 1 (virtual audio cable)",
+    "LipsyncGain": 1.0,
+    "LipsyncSmooth": 67,
+    "LastPath": "C:\\Temp\\shared\\vnyan-20240611\\Null",
+    "AdvancedMode": true,
+    "LeapActive": false,
+    "LeapMode": 0,
+    "LeapHeight": 0.0,
+    "LeapDistance": 0.0,
+    "LeapMirror": false,
+    "LeapHandDistance": 0.03999999910593033,
+    "LeapPosX": 0.0,
+    "LeapScale": 1.0,
+    "LeapRotX": 0.0,
+    "LeapRotY": 0.0,
+    "LeapRotZ": 0.0,
+    "LeapArms": true,
+    "LeapUpSpeed": 10.0,
+    "LeapDownSpeed": 3.0,
+    "MPWebCamera": "",
+    "MPWebCameraCaps": 0,
+    "MPMirror": false,
+    "MPEyes": true,
+    "MPNonARkitTracking": false,
+    "MPTrackHead": 1.0,
+    "MPTrackNeck": 1.0,
+    "MPTrackSpine": 1.0,
+    "MPTrackHipRot": 1.0,
+    "MPTrackHipPos": 1.0,
+    "MPTrackRoot": 1.0,
+    "MPTrackLegs": 1.0,
+    "MPTrackHands": 1.0,
+    "MPMoveRange": 0.20000000298023225,
+    "MPRotRange": 1.0,
+    "MPAltRange": 0.05000000074505806,
+    "MPSmooth": 0.0,
+    "MPSmooth2": 0.30000001192092898,
+    "MPSmoothHands": 0.30000001192092898,
+    "MPDepth": 0.05000000074505806,
+    "MPLocomotion": 0.0,
+    "MPGaze": 0.5,
+    "MPNod": 1.5,
+    "MPTilt": 1.5,
+    "MPPelvisRotation": 1.0,
+    "MPMaintainPelvis": 0.0,
+    "MPPlantFeet": true,
+    "MPBlendshapes": true,
+    "MPLinkedBlink": false,
+    "MPLinkedThreshold": 0.20000000298023225,
+    "MPJitterRemoval": 1,
+    "MPHandTracking": false,
+    "MPHandX": 0.0,
+    "MPHandY": 0.0,
+    "MPHandZ": 0.0,
+    "BlendshapeAdd": true,
+    "OSCPort": "28569",
+    "SpeechRecognition": false,
+    "NoUpdateOffScreen": false,
+    "UseNDI": false,
+    "YoutubeChannelID": "",
+    "KickUserName": "",
+    "ChaturbateToken": "",
+    "LovenseIP": "",
+    "LovensePort": 0,
+    "UIScale": 1.0,
+    "UITheme": "Dark Gray",
+    "UIHelp": true,
+    "AvatarCacheInUse": false,
+    "VCamActive": false,
+    "VCamMirror": false,
+    "EmoteWhitelist": "",
+    "WebcamTexture": "",
+    "HideNSFW": true,
+    "TwitchScopeVersion": 1,
+    "ExpTiltActive": false,
+    "ExpTiltRot": 1.0,
+    "ExpTiltTilt": 1.0,
+    "ExpTiltLift": 1.0,
+    "BreathActive": true,
+    "BreathHeart": false,
+    "BreathSpeed": 1.5499999523162842,
+    "BreathRot": 1.3300000429153443,
+    "BreathLift": 0.44999998807907107,
+    "BreathScale": 0.33000001311302187,
+    "ArmSwayActive": false,
+    "ArmSwayYMultiplier": 50.0,
+    "ArmSwayXMultiplier": 15.0,
+    "ArmSwayBreathe": 1.0,
+    "ArmSwayShoulder": 2.0,
+    "ArmSwayArm": 1.0,
+    "ArmSwayHand": 10.0,
+    "ArmSwayFinger": 2.0,
+    "Expressions": [
+        {
+            "name": "New Expression",
+            "inputs": [
+                {
+                    "blendshape": "Neutral",
+                    "minValue": 0.0,
+                    "maxValue": 1.0
+                }
+            ],
+            "outputs": [
+                {
+                    "type": 0,
+                    "blendshape": "PupilDilation",
+                    "value": -0.4000000059604645,
+                    "multiplier": 1.0,
+                    "minValue": 0.0,
+                    "maxValue": 1.0,
+                    "smooth": 0.0
+                }
+            ]
+        }
+    ],
+    "Trackers": [
+        {
+            "trackerNum": 0,
+            "trackerName": ""
+        },
+        {
+            "trackerNum": 1,
+            "trackerName": ""
+        },
+        {
+            "trackerNum": 2,
+            "trackerName": ""
+        },
+        {
+            "trackerNum": 3,
+            "trackerName": ""
+        },
+        {
+            "trackerNum": 4,
+            "trackerName": ""
+        },
+        {
+            "trackerNum": 5,
+            "trackerName": ""
+        },
+        {
+            "trackerNum": 6,
+            "trackerName": ""
+        },
+        {
+            "trackerNum": 7,
+            "trackerName": ""
+        },
+        {
+            "trackerNum": 8,
+            "trackerName": ""
+        },
+        {
+            "trackerNum": 9,
+            "trackerName": ""
+        },
+        {
+            "trackerNum": 10,
+            "trackerName": ""
+        },
+        {
+            "trackerNum": 11,
+            "trackerName": ""
+        },
+        {
+            "trackerNum": 12,
+            "trackerName": ""
+        },
+        {
+            "trackerNum": 13,
+            "trackerName": ""
+        },
+        {
+            "trackerNum": 14,
+            "trackerName": ""
+        },
+        {
+            "trackerNum": 15,
+            "trackerName": ""
+        },
+        {
+            "trackerNum": 16,
+            "trackerName": ""
+        },
+        {
+            "trackerNum": 17,
+            "trackerName": ""
+        },
+        {
+            "trackerNum": 18,
+            "trackerName": ""
+        },
+        {
+            "trackerNum": 19,
+            "trackerName": ""
+        },
+        {
+            "trackerNum": 20,
+            "trackerName": ""
+        },
+        {
+            "trackerNum": 21,
+            "trackerName": ""
+        },
+        {
+            "trackerNum": 22,
+            "trackerName": ""
+        },
+        {
+            "trackerNum": 23,
+            "trackerName": ""
+        },
+        {
+            "trackerNum": 24,
+            "trackerName": ""
+        },
+        {
+            "trackerNum": 25,
+            "trackerName": ""
+        },
+        {
+            "trackerNum": 26,
+            "trackerName": ""
+        },
+        {
+            "trackerNum": 27,
+            "trackerName": ""
+        },
+        {
+            "trackerNum": 28,
+            "trackerName": ""
+        },
+        {
+            "trackerNum": 29,
+            "trackerName": ""
+        },
+        {
+            "trackerNum": 30,
+            "trackerName": ""
+        },
+        {
+            "trackerNum": 31,
+            "trackerName": ""
+        }
+    ],
+    "VMCLayers": [
+        {
+            "layerNum": 0,
+            "port": "3334",
+            "trackRightFingers": 0.0,
+            "trackLeftFingers": 0.0,
+            "trackRightHand": 0.0,
+            "trackLeftHand": 0.0,
+            "trackRightArm": 0.0,
+            "trackLeftArm": 0.0,
+            "trackHead": 0.0,
+            "trackNeck": 0.0,
+            "trackSpine": 0.0,
+            "trackHipRotation": 0.0,
+            "trackHipPosition": 0.0,
+            "trackRoot": 0.0,
+            "trackLeftLeg": 0.0,
+            "trackRightLeg": 0.0,
+            "trackEyeBones": 0.0,
+            "trackJaw": 0.0,
+            "trackBlendshapes": 0,
+            "useTimeout": true,
+            "smoothing": 0.0
+        },
+        {
+            "layerNum": 1,
+            "port": "39539",
+            "trackRightFingers": 1.0,
+            "trackLeftFingers": 1.0,
+            "trackRightHand": 1.0,
+            "trackLeftHand": 1.0,
+            "trackRightArm": 1.0,
+            "trackLeftArm": 1.0,
+            "trackHead": 1.0,
+            "trackNeck": 1.0,
+            "trackSpine": 1.0,
+            "trackHipRotation": 1.0,
+            "trackHipPosition": 1.0,
+            "trackRoot": 1.0,
+            "trackLeftLeg": 1.0,
+            "trackRightLeg": 1.0,
+            "trackEyeBones": 0.0,
+            "trackJaw": 0.0,
+            "trackBlendshapes": 1,
+            "useTimeout": true,
+            "smoothing": 0.0
+        },
+        {
+            "layerNum": 2,
+            "port": "39993",
+            "trackRightFingers": 1.0,
+            "trackLeftFingers": 1.0,
+            "trackRightHand": 1.0,
+            "trackLeftHand": 1.0,
+            "trackRightArm": 1.0,
+            "trackLeftArm": 1.0,
+            "trackHead": 1.0,
+            "trackNeck": 1.0,
+            "trackSpine": 1.0,
+            "trackHipRotation": 1.0,
+            "trackHipPosition": 1.0,
+            "trackRoot": 1.0,
+            "trackLeftLeg": 1.0,
+            "trackRightLeg": 1.0,
+            "trackEyeBones": 1.0,
+            "trackJaw": 0.0,
+            "trackBlendshapes": 0,
+            "useTimeout": true,
+            "smoothing": 0.0
+        },
+        {
+            "layerNum": 3,
+            "port": "39994",
+            "trackRightFingers": 1.0,
+            "trackLeftFingers": 1.0,
+            "trackRightHand": 1.0,
+            "trackLeftHand": 1.0,
+            "trackRightArm": 1.0,
+            "trackLeftArm": 1.0,
+            "trackHead": 1.0,
+            "trackNeck": 1.0,
+            "trackSpine": 1.0,
+            "trackHipRotation": 1.0,
+            "trackHipPosition": 1.0,
+            "trackRoot": 1.0,
+            "trackLeftLeg": 1.0,
+            "trackRightLeg": 1.0,
+            "trackEyeBones": 1.0,
+            "trackJaw": 0.0,
+            "trackBlendshapes": 0,
+            "useTimeout": true,
+            "smoothing": 0.0
+        }
+    ],
+    "WebcamAdjustment": [
+        {
+            "blendshape": "eyeLookUpLeft",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "eyeLookUpRight",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "eyeLookDownLeft",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "eyeLookDownRight",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "eyeLookInLeft",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "eyeLookInRight",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "eyeLookOutLeft",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "eyeLookOutRight",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "eyeBlinkLeft",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "eyeBlinkRight",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "eyeSquintLeft",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "eyeSquintRight",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "eyeWideLeft",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "eyeWideRight",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "jawOpen",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "jawForward",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "jawLeft",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "jawRight",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthFunnel",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthPucker",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthLeft",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthRight",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthRollUpper",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthRollLower",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthShrugUpper",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthShrugLower",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthClose",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthSmileLeft",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthSmileRight",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthFrownLeft",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthFrownRight",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthStretchLeft",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthStretchRight",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthDimpleLeft",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthDimpleRight",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthUpperUpLeft",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthUpperUpRight",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthLowerDownLeft",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthLowerDownRight",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthPressLeft",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthPressRight",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "tongueOut",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "browInnerUp",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "browDownLeft",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "browDownRight",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "browOuterUpLeft",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "browOuterUpRight",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "cheekPuff",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "cheekSquintLeft",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "cheekSquintRight",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "noseSneerLeft",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "noseSneerRight",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "a",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "i",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "u",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "e",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "o",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "Blink_R",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "Blink_L",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        }
+    ],
+    "PhoneAdjustment": [
+        {
+            "blendshape": "eyeLookUpLeft",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "eyeLookUpRight",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "eyeLookDownLeft",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "eyeLookDownRight",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "eyeLookInLeft",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "eyeLookInRight",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "eyeLookOutLeft",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "eyeLookOutRight",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "eyeBlinkLeft",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "eyeBlinkRight",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "eyeSquintLeft",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "eyeSquintRight",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "eyeWideLeft",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "eyeWideRight",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "jawOpen",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "jawForward",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "jawLeft",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "jawRight",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthFunnel",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthPucker",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthLeft",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthRight",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthRollUpper",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthRollLower",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthShrugUpper",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthShrugLower",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthClose",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthSmileLeft",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthSmileRight",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthFrownLeft",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthFrownRight",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthStretchLeft",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthStretchRight",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthDimpleLeft",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthDimpleRight",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthUpperUpLeft",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthUpperUpRight",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthLowerDownLeft",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthLowerDownRight",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthPressLeft",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "mouthPressRight",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "tongueOut",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "browInnerUp",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "browDownLeft",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "browDownRight",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "browOuterUpLeft",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "browOuterUpRight",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "cheekPuff",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "cheekSquintLeft",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "cheekSquintRight",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "noseSneerLeft",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "noseSneerRight",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "a",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "i",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "u",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "e",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "o",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "Blink_R",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        },
+        {
+            "blendshape": "Blink_L",
+            "weight": 1.0,
+            "keyframes": [
+                {
+                    "x": 0.0,
+                    "y": 1.0
+                },
+                {
+                    "x": 1.0,
+                    "y": 1.0
+                }
+            ]
+        }
+    ],
+    "AvatarPositions": [
+        {
+            "Name": "Pos 1",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 2",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 3",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 4",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 5",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 6",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 7",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 8",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 9",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 10",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 11",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 12",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 13",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 14",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 15",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 16",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 17",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 18",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 19",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 20",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 21",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 22",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 23",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 24",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 25",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 26",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 27",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 28",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 29",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 30",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 31",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 32",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 33",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 34",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 35",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 36",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 37",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 38",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 39",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 40",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 41",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 42",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 43",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 44",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 45",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 46",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 47",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 48",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 49",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 50",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 51",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 52",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 53",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 54",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 55",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 56",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 57",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 58",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 59",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 60",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 61",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 62",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 63",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 64",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 65",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 66",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 67",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 68",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        },
+        {
+            "Name": "Pos 69",
+            "Position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            }
+        }
+    ]
+}

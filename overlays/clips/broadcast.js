@@ -1,5 +1,5 @@
-const overlayRevision = 3;
-const overlayRevisionTimestamp = 1713293906193;
+const overlayRevision = 4;
+const overlayRevisionTimestamp = 1717969899625;
 
 const settingsChannel = new BroadcastChannel("settings_overlay");
 
@@ -94,7 +94,7 @@ const twitchEventFuncs = {
 				urlCheck = new URL(parts[1]);
 			} catch(err) {
 				// must be a name
-				targetLogin = parts[1].toLowerCase().replaceAll(/[^a-zA-Z0-9]/g, "").substr(0, 25);
+				targetLogin = parts[1].toLowerCase().replaceAll(/[^a-zA-Z0-9\_]/g, "").substr(0, 25);
 			}
 		}
 

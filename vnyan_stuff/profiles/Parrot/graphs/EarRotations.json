@@ -1,0 +1,700 @@
+{
+    "graphName": "Ear Rotations",
+    "graphIsActive": true,
+    "nodes": [
+        {
+            "id": "7e025baf-c291-4a63-a02c-b55ced9cb75b",
+            "values": [
+                {
+                    "key": "triggerName",
+                    "value": "EarsReset"
+                }
+            ],
+            "posX": -310.0,
+            "posY": 48.0,
+            "path": "Nodes/TriggerNode",
+            "inputSocketIds": [],
+            "outputSocketIds": [
+                "5aacf7f7-d7ac-4c6a-b8d0-dc0f5e8f32d2638182319782491408"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "57b962ae-3409-4ce4-8745-dd69c58e63c7",
+            "values": [
+                {
+                    "key": "rotx",
+                    "value": ""
+                },
+                {
+                    "key": "roty",
+                    "value": ""
+                },
+                {
+                    "key": "rotz",
+                    "value": ""
+                },
+                {
+                    "key": "name",
+                    "value": "LeftEar"
+                },
+                {
+                    "key": "seconds",
+                    "value": "250"
+                },
+                {
+                    "key": "toggle",
+                    "value": "0"
+                }
+            ],
+            "posX": -85.0,
+            "posY": 206.0,
+            "path": "Nodes/ObjectRotNode",
+            "inputSocketIds": [
+                "a463949b-21a4-4b09-b69a-1cbbf09f00a4638182319978299620"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "8b556a38-9ef3-4400-abaf-ef8776bd714a",
+            "values": [
+                {
+                    "key": "rotx",
+                    "value": ""
+                },
+                {
+                    "key": "roty",
+                    "value": ""
+                },
+                {
+                    "key": "rotz",
+                    "value": ""
+                },
+                {
+                    "key": "name",
+                    "value": "RightEar"
+                },
+                {
+                    "key": "seconds",
+                    "value": "250"
+                },
+                {
+                    "key": "toggle",
+                    "value": "0"
+                }
+            ],
+            "posX": 137.0,
+            "posY": 204.0,
+            "path": "Nodes/ObjectRotNode",
+            "inputSocketIds": [
+                "5d134169-6591-4cb9-a12e-a7dbacba6f55638182320001076251"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "233cbcb0-5e2c-488d-a31d-fb125c72ccf8",
+            "values": [
+                {
+                    "key": "triggerName",
+                    "value": "EarsJoy"
+                }
+            ],
+            "posX": 361.0,
+            "posY": 56.0,
+            "path": "Nodes/TriggerNode",
+            "inputSocketIds": [],
+            "outputSocketIds": [
+                "ea5d62d7-440c-46b4-9dce-cb8363c688b4638182320785182223"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "7666b4f6-a2b9-43b9-9986-a65b3cbbaa7e",
+            "values": [
+                {
+                    "key": "rotx",
+                    "value": "35"
+                },
+                {
+                    "key": "roty",
+                    "value": "5"
+                },
+                {
+                    "key": "rotz",
+                    "value": "-5"
+                },
+                {
+                    "key": "name",
+                    "value": "LeftEar"
+                },
+                {
+                    "key": "seconds",
+                    "value": "300"
+                },
+                {
+                    "key": "toggle",
+                    "value": "0"
+                }
+            ],
+            "posX": 576.0,
+            "posY": 223.0,
+            "path": "Nodes/ObjectRotNode",
+            "inputSocketIds": [
+                "f2c4b38a-c6c7-4101-9e1b-8f0139afe96d638182320992718159"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "5a639c74-9479-417c-ae17-160a93c51e71",
+            "values": [
+                {
+                    "key": "rotx",
+                    "value": "35"
+                },
+                {
+                    "key": "roty",
+                    "value": "-5"
+                },
+                {
+                    "key": "rotz",
+                    "value": "5"
+                },
+                {
+                    "key": "name",
+                    "value": "RightEar"
+                },
+                {
+                    "key": "seconds",
+                    "value": "300"
+                },
+                {
+                    "key": "toggle",
+                    "value": "0"
+                }
+            ],
+            "posX": 799.0,
+            "posY": 224.0,
+            "path": "Nodes/ObjectRotNode",
+            "inputSocketIds": [
+                "d00c3c1a-e6e0-4b72-b663-866faf59d38c638182321011900769"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "628ccb8c-70d0-47bf-a909-d0b02d552d7b",
+            "values": [
+                {
+                    "key": "timerName",
+                    "value": "EarsReset"
+                }
+            ],
+            "posX": -317.0,
+            "posY": 498.0,
+            "path": "Nodes/TimerNode",
+            "inputSocketIds": [],
+            "outputSocketIds": [
+                "67a799cf-6efb-4ff3-80f2-5632c7c6aca1638182321329399822"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "9f05f516-7781-4605-b7c0-5957739b13f7",
+            "values": [
+                {
+                    "key": "triggerName",
+                    "value": "EarsReset"
+                },
+                {
+                    "key": "callTime",
+                    "value": "0"
+                }
+            ],
+            "posX": -87.0,
+            "posY": 488.0,
+            "path": "Nodes/CallTriggerNode",
+            "inputSocketIds": [
+                "5aca376c-36e4-4543-809a-f42bb2bdf491638182321431941137"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "1b20c853-3fae-4653-ba7b-c0a3f5066860",
+            "values": [
+                {
+                    "key": "triggerName",
+                    "value": "EarsAngry"
+                }
+            ],
+            "posX": 346.0,
+            "posY": -602.0,
+            "path": "Nodes/TriggerNode",
+            "inputSocketIds": [],
+            "outputSocketIds": [
+                "4b7564dc-551b-4810-ae2c-cd3ebc58304b638182322758677909"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "12988941-24bb-41f2-b122-8b2357beacad",
+            "values": [
+                {
+                    "key": "rotx",
+                    "value": "-30"
+                },
+                {
+                    "key": "roty",
+                    "value": "-20"
+                },
+                {
+                    "key": "rotz",
+                    "value": "5"
+                },
+                {
+                    "key": "name",
+                    "value": "LeftEar"
+                },
+                {
+                    "key": "seconds",
+                    "value": "300"
+                },
+                {
+                    "key": "toggle",
+                    "value": "0"
+                }
+            ],
+            "posX": 580.0,
+            "posY": -451.0,
+            "path": "Nodes/ObjectRotNode",
+            "inputSocketIds": [
+                "b3a98008-1238-425b-aead-e4311ac95840638182322798998341"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "1b182bf3-c146-4828-bd2e-2a052f207d0c",
+            "values": [
+                {
+                    "key": "rotx",
+                    "value": "-30"
+                },
+                {
+                    "key": "roty",
+                    "value": "20"
+                },
+                {
+                    "key": "rotz",
+                    "value": "-5"
+                },
+                {
+                    "key": "name",
+                    "value": "RightEar"
+                },
+                {
+                    "key": "seconds",
+                    "value": "300"
+                },
+                {
+                    "key": "toggle",
+                    "value": "0"
+                }
+            ],
+            "posX": 802.0,
+            "posY": -450.0,
+            "path": "Nodes/ObjectRotNode",
+            "inputSocketIds": [
+                "662c1efb-485b-4803-9b87-4b33efbe928d638182322840362676"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "a3dd7b14-e359-40d5-a533-3c483f444e4a",
+            "values": [
+                {
+                    "key": "triggerName",
+                    "value": "EarsPet"
+                }
+            ],
+            "posX": 335.0,
+            "posY": -1290.0,
+            "path": "Nodes/TriggerNode",
+            "inputSocketIds": [],
+            "outputSocketIds": [
+                "0ab91133-f270-4d0c-85ad-a435233a0878638182323682574298"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "12a9d465-e690-458a-b8fa-1aec98c2efaa",
+            "values": [
+                {
+                    "key": "rotx",
+                    "value": "-35"
+                },
+                {
+                    "key": "roty",
+                    "value": "-20"
+                },
+                {
+                    "key": "rotz",
+                    "value": "7"
+                },
+                {
+                    "key": "name",
+                    "value": "LeftEar"
+                },
+                {
+                    "key": "seconds",
+                    "value": "750"
+                },
+                {
+                    "key": "toggle",
+                    "value": "0"
+                }
+            ],
+            "posX": 578.3333740234375,
+            "posY": -1139.333251953125,
+            "path": "Nodes/ObjectRotNode",
+            "inputSocketIds": [
+                "e7fde7a8-b965-44d4-8f00-e776b66b42de638182323709557656"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "01c77ce4-aee5-4d6b-bec7-899ad1236922",
+            "values": [
+                {
+                    "key": "rotx",
+                    "value": "-35"
+                },
+                {
+                    "key": "roty",
+                    "value": "20"
+                },
+                {
+                    "key": "rotz",
+                    "value": "-7"
+                },
+                {
+                    "key": "name",
+                    "value": "RightEar"
+                },
+                {
+                    "key": "seconds",
+                    "value": "750"
+                },
+                {
+                    "key": "toggle",
+                    "value": "0"
+                }
+            ],
+            "posX": 805.3333740234375,
+            "posY": -1140.0,
+            "path": "Nodes/ObjectRotNode",
+            "inputSocketIds": [
+                "918cb311-0f16-4ccd-85a2-982761eec4b8638182323733022798"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "6e1d09f2-1d24-42c7-88b9-27713d7a0244",
+            "values": [
+                {
+                    "key": "paramName",
+                    "value": "InExpression"
+                },
+                {
+                    "key": "value",
+                    "value": "true"
+                }
+            ],
+            "posX": 601.3359375,
+            "posY": 620.6683349609375,
+            "path": "Nodes/SetTextParamNode",
+            "inputSocketIds": [
+                "adcc8ad4-5817-4ce8-b27b-6b98da52dfc7638342038284408459"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "d661254a-dfbd-4280-b823-09c1b5ac90e3",
+            "values": [
+                {
+                    "key": "triggerName",
+                    "value": ""
+                }
+            ],
+            "posX": 369.00201416015627,
+            "posY": 600.0018310546875,
+            "path": "Nodes/TriggerNode",
+            "inputSocketIds": [],
+            "outputSocketIds": [
+                "b7826206-81b0-43c2-be6f-e562b9bbe28d638342038384403238"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "7022dc8b-a04a-4614-b9c4-f07cee95b4a2",
+            "values": [
+                {
+                    "key": "triggerName",
+                    "value": "EarsOhShit"
+                }
+            ],
+            "posX": 1077.6666259765625,
+            "posY": 44.333343505859378,
+            "path": "Nodes/TriggerNode",
+            "inputSocketIds": [],
+            "outputSocketIds": [
+                "3d3b602b-5ab5-428e-b2fb-f8206a16fb96638342038508701193"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "f35a0758-2d91-4281-8323-9e82c62848dd",
+            "values": [
+                {
+                    "key": "rotx",
+                    "value": "12"
+                },
+                {
+                    "key": "roty",
+                    "value": "15"
+                },
+                {
+                    "key": "rotz",
+                    "value": "-12"
+                },
+                {
+                    "key": "name",
+                    "value": "LeftEar"
+                },
+                {
+                    "key": "seconds",
+                    "value": "200"
+                },
+                {
+                    "key": "toggle",
+                    "value": "0"
+                }
+            ],
+            "posX": 1317.6666259765625,
+            "posY": 213.0,
+            "path": "Nodes/ObjectRotNode",
+            "inputSocketIds": [
+                "9a512d56-caf1-4be9-9a1e-91ba0da6b087638342038604743016"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "a4fa7ba0-2c5b-4d27-8ccf-5df8666fbfe2",
+            "values": [
+                {
+                    "key": "rotx",
+                    "value": "12"
+                },
+                {
+                    "key": "roty",
+                    "value": "-15"
+                },
+                {
+                    "key": "rotz",
+                    "value": "12"
+                },
+                {
+                    "key": "name",
+                    "value": "RightEar"
+                },
+                {
+                    "key": "seconds",
+                    "value": "200"
+                },
+                {
+                    "key": "toggle",
+                    "value": "0"
+                }
+            ],
+            "posX": 1530.666748046875,
+            "posY": 212.33331298828126,
+            "path": "Nodes/ObjectRotNode",
+            "inputSocketIds": [
+                "c2c99bb0-7721-4914-b398-55e75c9dbd56638342038626894586"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "49cb5904-7582-4f58-9f4d-016635937ac3",
+            "values": [
+                {
+                    "key": "triggerName",
+                    "value": "EarsYikes"
+                }
+            ],
+            "posX": 1045.9998779296875,
+            "posY": -784.0,
+            "path": "Nodes/TriggerNode",
+            "inputSocketIds": [],
+            "outputSocketIds": [
+                "d39b68d3-7e9a-43f7-b091-dcce9f90b69f638342052767164310"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "b9ed71dc-77b3-4c21-b29c-c303aa25cd8d",
+            "values": [
+                {
+                    "key": "rotx",
+                    "value": "-8"
+                },
+                {
+                    "key": "roty",
+                    "value": "-20"
+                },
+                {
+                    "key": "rotz",
+                    "value": ""
+                },
+                {
+                    "key": "name",
+                    "value": "LeftEar"
+                },
+                {
+                    "key": "seconds",
+                    "value": "200"
+                },
+                {
+                    "key": "toggle",
+                    "value": "0"
+                }
+            ],
+            "posX": 1317.6666259765625,
+            "posY": -638.6666259765625,
+            "path": "Nodes/ObjectRotNode",
+            "inputSocketIds": [
+                "892a68a1-2fd3-4d4f-9ee9-3898eba455c9638342052893663913"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "647a8f62-e071-46ea-bfe0-b7a751d51af5",
+            "values": [
+                {
+                    "key": "rotx",
+                    "value": "-8"
+                },
+                {
+                    "key": "roty",
+                    "value": "20"
+                },
+                {
+                    "key": "rotz",
+                    "value": ""
+                },
+                {
+                    "key": "name",
+                    "value": "RightEar"
+                },
+                {
+                    "key": "seconds",
+                    "value": "200"
+                },
+                {
+                    "key": "toggle",
+                    "value": "0"
+                }
+            ],
+            "posX": 1535.666748046875,
+            "posY": -639.3333129882813,
+            "path": "Nodes/ObjectRotNode",
+            "inputSocketIds": [
+                "7ad12738-ef4c-4db7-84ee-6574ce13ed87638342052926428411"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        }
+    ],
+    "connections": [
+        {
+            "id": "0487a3f4-332a-4c2c-bb2b-68779bf7e586",
+            "outputSocketId": "5aacf7f7-d7ac-4c6a-b8d0-dc0f5e8f32d2638182319782491408",
+            "inputSocketId": "a463949b-21a4-4b09-b69a-1cbbf09f00a4638182319978299620"
+        },
+        {
+            "id": "6e5d3690-429a-49a4-a18a-bccd50236a24",
+            "outputSocketId": "5aacf7f7-d7ac-4c6a-b8d0-dc0f5e8f32d2638182319782491408",
+            "inputSocketId": "5d134169-6591-4cb9-a12e-a7dbacba6f55638182320001076251"
+        },
+        {
+            "id": "d8a47b22-e492-4185-b4eb-36844fd2a9eb",
+            "outputSocketId": "ea5d62d7-440c-46b4-9dce-cb8363c688b4638182320785182223",
+            "inputSocketId": "f2c4b38a-c6c7-4101-9e1b-8f0139afe96d638182320992718159"
+        },
+        {
+            "id": "d12e1f5c-eec3-4711-9046-46c78b6ad757",
+            "outputSocketId": "ea5d62d7-440c-46b4-9dce-cb8363c688b4638182320785182223",
+            "inputSocketId": "d00c3c1a-e6e0-4b72-b663-866faf59d38c638182321011900769"
+        },
+        {
+            "id": "f3faa289-bf5b-4958-959c-6dd04a3b4ae8",
+            "outputSocketId": "67a799cf-6efb-4ff3-80f2-5632c7c6aca1638182321329399822",
+            "inputSocketId": "5aca376c-36e4-4543-809a-f42bb2bdf491638182321431941137"
+        },
+        {
+            "id": "eabe9c5d-dd82-45fa-8f0c-7020589169fe",
+            "outputSocketId": "4b7564dc-551b-4810-ae2c-cd3ebc58304b638182322758677909",
+            "inputSocketId": "b3a98008-1238-425b-aead-e4311ac95840638182322798998341"
+        },
+        {
+            "id": "3cda446f-e439-475a-9169-59dc7a43f2c3",
+            "outputSocketId": "4b7564dc-551b-4810-ae2c-cd3ebc58304b638182322758677909",
+            "inputSocketId": "662c1efb-485b-4803-9b87-4b33efbe928d638182322840362676"
+        },
+        {
+            "id": "c5957ef9-1b28-4b75-bdd6-d2049dc0e57b",
+            "outputSocketId": "0ab91133-f270-4d0c-85ad-a435233a0878638182323682574298",
+            "inputSocketId": "e7fde7a8-b965-44d4-8f00-e776b66b42de638182323709557656"
+        },
+        {
+            "id": "a76688f5-a309-4d70-8aaf-328b1868ed9a",
+            "outputSocketId": "0ab91133-f270-4d0c-85ad-a435233a0878638182323682574298",
+            "inputSocketId": "918cb311-0f16-4ccd-85a2-982761eec4b8638182323733022798"
+        },
+        {
+            "id": "360b8973-8177-4db8-b95d-92e27b7c2fb2",
+            "outputSocketId": "b7826206-81b0-43c2-be6f-e562b9bbe28d638342038384403238",
+            "inputSocketId": "adcc8ad4-5817-4ce8-b27b-6b98da52dfc7638342038284408459"
+        },
+        {
+            "id": "607f2f50-f548-49bd-bcbb-0c0692760313",
+            "outputSocketId": "3d3b602b-5ab5-428e-b2fb-f8206a16fb96638342038508701193",
+            "inputSocketId": "9a512d56-caf1-4be9-9a1e-91ba0da6b087638342038604743016"
+        },
+        {
+            "id": "781e5dee-09a4-4977-b7d5-12ff9446e586",
+            "outputSocketId": "3d3b602b-5ab5-428e-b2fb-f8206a16fb96638342038508701193",
+            "inputSocketId": "c2c99bb0-7721-4914-b398-55e75c9dbd56638342038626894586"
+        },
+        {
+            "id": "25ce2443-8246-410e-b287-d62aac95848d",
+            "outputSocketId": "d39b68d3-7e9a-43f7-b091-dcce9f90b69f638342052767164310",
+            "inputSocketId": "892a68a1-2fd3-4d4f-9ee9-3898eba455c9638342052893663913"
+        },
+        {
+            "id": "e026b099-4159-4894-8e26-a84158bf5e30",
+            "outputSocketId": "d39b68d3-7e9a-43f7-b091-dcce9f90b69f638342052767164310",
+            "inputSocketId": "7ad12738-ef4c-4db7-84ee-6574ce13ed87638342052926428411"
+        }
+    ]
+}

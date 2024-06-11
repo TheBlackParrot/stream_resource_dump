@@ -1,0 +1,1176 @@
+{
+    "graphName": "balls",
+    "graphIsActive": true,
+    "nodes": [
+        {
+            "id": "4bc99020-f078-45bf-9432-df77866f3db9",
+            "values": [
+                {
+                    "key": "items",
+                    "value": "Ball (Blue);Ball (Green);Ball (Red);Ball (White);Ball (Yellow)"
+                },
+                {
+                    "key": "amount",
+                    "value": "1"
+                },
+                {
+                    "key": "destroy",
+                    "value": "3"
+                },
+                {
+                    "key": "random",
+                    "value": "1"
+                },
+                {
+                    "key": "volume",
+                    "value": "0.4625"
+                },
+                {
+                    "key": "mass",
+                    "value": "0"
+                },
+                {
+                    "key": "drag",
+                    "value": "2"
+                },
+                {
+                    "key": "tag",
+                    "value": "BallItem"
+                },
+                {
+                    "key": "scale",
+                    "value": "1"
+                }
+            ],
+            "posX": 604.999755859375,
+            "posY": 585.3331298828125,
+            "path": "Nodes/DropNode",
+            "inputSocketIds": [
+                "49cf5aa3-8f20-472e-8a47-b06f98db23f1638363891151338282"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "f0ac9662-7669-4b95-afdb-8cdbc2cd905d",
+            "values": [
+                {
+                    "key": "timerName",
+                    "value": "BallTimer"
+                }
+            ],
+            "posX": -1146.000244140625,
+            "posY": 569.6665649414063,
+            "path": "Nodes/TimerNode",
+            "inputSocketIds": [],
+            "outputSocketIds": [
+                "4303f098-4ea4-4583-9fd3-04e01aa9f6a2638363903125114292"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "ee087b58-6e51-491d-961c-53fee6cb5923",
+            "values": [
+                {
+                    "key": "timerName",
+                    "value": "BallTimer"
+                },
+                {
+                    "key": "seconds",
+                    "value": "[BallWaitValue]"
+                }
+            ],
+            "posX": -369.33355712890627,
+            "posY": 631.3331298828125,
+            "path": "Nodes/SetTimerNode",
+            "inputSocketIds": [
+                "fa99471a-f9c5-4019-bb5e-e1ae1be05962638363903298667915"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "af8c859d-b4fa-4019-9e96-41b5f04581bd",
+            "values": [
+                {
+                    "key": "amount",
+                    "value": "1"
+                },
+                {
+                    "key": "items",
+                    "value": "Ball (Blue);Ball (Green);Ball (Red);Ball (White);Ball (Yellow)"
+                },
+                {
+                    "key": "flinch",
+                    "value": "0.1509785"
+                },
+                {
+                    "key": "destroy",
+                    "value": "3"
+                },
+                {
+                    "key": "cooldown",
+                    "value": ""
+                },
+                {
+                    "key": "volume",
+                    "value": "0.5"
+                },
+                {
+                    "key": "tag",
+                    "value": "BallItem"
+                },
+                {
+                    "key": "scale",
+                    "value": "1"
+                },
+                {
+                    "key": "dir",
+                    "value": "1"
+                },
+                {
+                    "key": "bone",
+                    "value": "10"
+                },
+                {
+                    "key": "altitude",
+                    "value": "0.754777"
+                },
+                {
+                    "key": "force",
+                    "value": "3.820384"
+                },
+                {
+                    "key": "sticky",
+                    "value": "0"
+                },
+                {
+                    "key": "sticktime",
+                    "value": ""
+                }
+            ],
+            "posX": 238.332763671875,
+            "posY": 1333.6669921875,
+            "path": "Nodes/ThrowNode",
+            "inputSocketIds": [
+                "40d4675f-b354-4aeb-bc88-16f2aaaa46a6638363907329136673"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "da449c02-e108-48b2-999c-babbcf5f8329",
+            "values": [],
+            "posX": -141.6689453125,
+            "posY": 731.1659545898438,
+            "path": "Nodes/Random10Node",
+            "inputSocketIds": [
+                "3b7769e2-4733-45b0-8568-db770f51d8d4638363908291779908"
+            ],
+            "outputSocketIds": [
+                "df4635e3-0b76-466b-b9dc-377889852b24638363908291779977",
+                "3a57814e-72ec-47fa-ba51-72e8ac22db4d638363908291779996",
+                "9bec0257-a58e-49bb-b128-61dcddcca7de638363908291780014",
+                "86cd0a7c-a302-4d37-9c15-13de059888d9638363908291780032",
+                "8cf91fc4-8abd-4748-85a4-8260cb365575638363908291780050",
+                "fad1277c-7098-4b60-956e-b653ff3499d6638363908291780081",
+                "9fd5c928-b0cd-48ca-92b9-8f7ad46f6305638363908291780105",
+                "ed298d6a-f6d1-4b4d-83ba-277c3a96d870638363908291780123",
+                "0e3b7ab0-5be8-4082-8b33-b4248a2e3846638363908291780141",
+                "9c3917e1-d256-458c-b6b2-0f5f18354706638363908291780159"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "404ec6b1-f8fc-41c4-b740-dca2a86e56c7",
+            "values": [
+                {
+                    "key": "amount",
+                    "value": "1"
+                },
+                {
+                    "key": "items",
+                    "value": "Ball (Blue);Ball (Green);Ball (Red);Ball (White);Ball (Yellow)"
+                },
+                {
+                    "key": "flinch",
+                    "value": "0.1509782"
+                },
+                {
+                    "key": "destroy",
+                    "value": "3"
+                },
+                {
+                    "key": "cooldown",
+                    "value": ""
+                },
+                {
+                    "key": "volume",
+                    "value": "0.5"
+                },
+                {
+                    "key": "tag",
+                    "value": "BallItem"
+                },
+                {
+                    "key": "scale",
+                    "value": "1"
+                },
+                {
+                    "key": "dir",
+                    "value": "1"
+                },
+                {
+                    "key": "bone",
+                    "value": "10"
+                },
+                {
+                    "key": "altitude",
+                    "value": "0.4999998"
+                },
+                {
+                    "key": "force",
+                    "value": "5.712104"
+                },
+                {
+                    "key": "sticky",
+                    "value": "0"
+                },
+                {
+                    "key": "sticktime",
+                    "value": ""
+                }
+            ],
+            "posX": 238.33273315429688,
+            "posY": 940.3336181640625,
+            "path": "Nodes/ThrowNode",
+            "inputSocketIds": [
+                "6dd2e3b7-36f3-474d-a77f-2a56afc5d8ea638363908564650282"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "7426b357-680f-4644-aee9-24770584d112",
+            "values": [
+                {
+                    "key": "amount",
+                    "value": "1"
+                },
+                {
+                    "key": "items",
+                    "value": "Ball (Blue);Ball (Green);Ball (Red);Ball (White);Ball (Yellow)"
+                },
+                {
+                    "key": "flinch",
+                    "value": "0.2063495"
+                },
+                {
+                    "key": "destroy",
+                    "value": "3"
+                },
+                {
+                    "key": "cooldown",
+                    "value": ""
+                },
+                {
+                    "key": "volume",
+                    "value": "0.5"
+                },
+                {
+                    "key": "tag",
+                    "value": "BallItem"
+                },
+                {
+                    "key": "scale",
+                    "value": "1"
+                },
+                {
+                    "key": "dir",
+                    "value": "1"
+                },
+                {
+                    "key": "bone",
+                    "value": "10"
+                },
+                {
+                    "key": "altitude",
+                    "value": "0.1316338"
+                },
+                {
+                    "key": "force",
+                    "value": "10"
+                },
+                {
+                    "key": "sticky",
+                    "value": "0"
+                },
+                {
+                    "key": "sticktime",
+                    "value": ""
+                }
+            ],
+            "posX": 239.99942016601563,
+            "posY": 552.0003662109375,
+            "path": "Nodes/ThrowNode",
+            "inputSocketIds": [
+                "23fd69da-6cf8-4d1e-afe4-a0ac290159b5638363908861961024"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "c7d158a6-a2fe-4d12-b8e5-1b24731ecbc9",
+            "values": [
+                {
+                    "key": "amount",
+                    "value": "1"
+                },
+                {
+                    "key": "items",
+                    "value": "Ball (Blue);Ball (Green);Ball (Red);Ball (White);Ball (Yellow)"
+                },
+                {
+                    "key": "flinch",
+                    "value": "0.1509785"
+                },
+                {
+                    "key": "destroy",
+                    "value": "3"
+                },
+                {
+                    "key": "cooldown",
+                    "value": ""
+                },
+                {
+                    "key": "volume",
+                    "value": "0.5"
+                },
+                {
+                    "key": "tag",
+                    "value": "BallItem"
+                },
+                {
+                    "key": "scale",
+                    "value": "1"
+                },
+                {
+                    "key": "dir",
+                    "value": "1"
+                },
+                {
+                    "key": "bone",
+                    "value": "10"
+                },
+                {
+                    "key": "altitude",
+                    "value": "-0.2929968"
+                },
+                {
+                    "key": "force",
+                    "value": "7.898087"
+                },
+                {
+                    "key": "sticky",
+                    "value": "0"
+                },
+                {
+                    "key": "sticktime",
+                    "value": ""
+                }
+            ],
+            "posX": 606.6660766601563,
+            "posY": 938.6669921875,
+            "path": "Nodes/ThrowNode",
+            "inputSocketIds": [
+                "7831068d-7238-437e-b3ba-1eb8ca1d5e59638363909570402381"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "e74c1ea4-1bae-442a-be1c-5a160c629883",
+            "values": [
+                {
+                    "key": "paramName",
+                    "value": "BallWaitValue"
+                },
+                {
+                    "key": "min",
+                    "value": "1"
+                },
+                {
+                    "key": "max",
+                    "value": "50"
+                }
+            ],
+            "posX": -780.6676025390625,
+            "posY": 1043.3304443359375,
+            "path": "Nodes/RandomParamNode",
+            "inputSocketIds": [
+                "dd0a0f8f-bd91-477b-b084-9fde7b8692cc638363912871544191"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "014bfbe7-4bcc-48fc-b485-2a0702439f2c",
+            "values": [],
+            "posX": -604.0009155273438,
+            "posY": 689.9971923828125,
+            "path": "Nodes/Ordered5Node",
+            "inputSocketIds": [
+                "ec354236-86d0-472e-8680-542be49afd2f638363913091143859"
+            ],
+            "outputSocketIds": [
+                "771e5f45-52b7-4112-b06c-dc21adf27b1f638363913091143919",
+                "6cedd061-afdb-4e06-b342-0eabc37e59f7638363913091143933",
+                "3baa581f-28c1-4352-a611-b10b2071bc3a638363913091143951",
+                "0f64cf3d-591f-4279-8903-7b08eafda570638363913091143963",
+                "de68652e-4857-4038-adf4-c174e486d817638363913091143976"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "ac22c51f-bad0-46d5-be87-fe366d7e7b98",
+            "values": [
+                {
+                    "key": "paramName",
+                    "value": "BallAmount"
+                },
+                {
+                    "key": "min",
+                    "value": "125"
+                },
+                {
+                    "key": "max",
+                    "value": "250"
+                }
+            ],
+            "posX": -567.3342895507813,
+            "posY": 306.663818359375,
+            "path": "Nodes/RandomParamNode",
+            "inputSocketIds": [
+                "14262a41-194a-46a4-b378-9db0429e92de638363914253073200"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "51c28bb7-dcf2-4971-91bc-0f497774128f",
+            "values": [
+                {
+                    "key": "pname",
+                    "value": "BallAmount"
+                },
+                {
+                    "key": "pvalue",
+                    "value": "0"
+                }
+            ],
+            "posX": -890.6676025390625,
+            "posY": 676.663818359375,
+            "path": "Nodes/FilterParamNode",
+            "inputSocketIds": [
+                "2a3cc50d-cf0e-4799-adea-8309a7d60880638363914461116062"
+            ],
+            "outputSocketIds": [
+                "eb22f88c-9861-49aa-a23a-aab17b71122e638363914461116135",
+                "0e3b2481-1cf9-4327-98e4-6fc3bb4bf5c0638363914461116150",
+                "2e8e1008-ca77-4286-b605-db24c7dee913638363914461116162"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "3ed0e435-b9de-43f7-acea-4dca39888c57",
+            "values": [
+                {
+                    "key": "paramName",
+                    "value": "BallAmount"
+                },
+                {
+                    "key": "value1",
+                    "value": "[BallAmount]"
+                },
+                {
+                    "key": "value2",
+                    "value": "1"
+                },
+                {
+                    "key": "operation",
+                    "value": "1"
+                }
+            ],
+            "posX": -370.6678466796875,
+            "posY": 843.3305053710938,
+            "path": "Nodes/ParamOpNode",
+            "inputSocketIds": [
+                "f80c9ed5-ca3a-4e48-95c0-a5200187610c638363914889519733"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "8cee3fb9-e51d-4f82-b80d-dfd0f3e12c64",
+            "values": [
+                {
+                    "key": "triggerName",
+                    "value": "DoBalls"
+                }
+            ],
+            "posX": -1115.667724609375,
+            "posY": 301.6638488769531,
+            "path": "Nodes/TriggerNode",
+            "inputSocketIds": [],
+            "outputSocketIds": [
+                "d1e1fd6d-75db-4012-9634-cac67384f8ec638363915373355103"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "c45c9f7b-30ef-48ca-a9ab-2d04e95038c7",
+            "values": [],
+            "posX": -844.0007934570313,
+            "posY": 306.6639099121094,
+            "path": "Nodes/Ordered5Node",
+            "inputSocketIds": [
+                "ac357ab9-f12f-49e9-b55a-32a2d9756865638363915423069717"
+            ],
+            "outputSocketIds": [
+                "cdfc5bea-cad6-4256-8c4f-fee462ae0c46638363915423069786",
+                "046963e7-fa26-455a-bf1d-86284e613069638363915423069848",
+                "074197c6-3732-45d3-ac98-afc58f5df77a638363915423069874",
+                "4fafa900-735a-4a85-81bd-0376a3f547ad638363915423069892",
+                "8abe22e4-2103-4dc0-a804-d8b324b7b231638363915423069904"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "1a4cd0e4-1a66-427e-b3c8-a9977b807910",
+            "values": [
+                {
+                    "key": "timerName",
+                    "value": "BallTimer"
+                },
+                {
+                    "key": "seconds",
+                    "value": "1500"
+                }
+            ],
+            "posX": -564.0009765625,
+            "posY": 113.33050537109375,
+            "path": "Nodes/SetTimerNode",
+            "inputSocketIds": [
+                "cc71610e-a827-4bb8-9a0a-10d8dba10a4c638363915587085831"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "54999dae-ce93-4b2e-83ea-cc98121b8994",
+            "values": [
+                {
+                    "key": "paramName",
+                    "value": "BallWaitValue"
+                },
+                {
+                    "key": "value1",
+                    "value": "[BallAmount]"
+                },
+                {
+                    "key": "operation",
+                    "value": "0"
+                }
+            ],
+            "posX": -434.00091552734377,
+            "posY": 1319.9970703125,
+            "path": "Nodes/ParamMathNode",
+            "inputSocketIds": [
+                "a125d013-d11f-4669-9015-952daa97aeaf638363917161901523"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "4695753e-21ef-41cc-bfa2-3c4579ba5290",
+            "values": [
+                {
+                    "key": "paramName",
+                    "value": "BallWaitValue"
+                },
+                {
+                    "key": "value1",
+                    "value": "[BallWaitValue]"
+                },
+                {
+                    "key": "value2",
+                    "value": "40"
+                },
+                {
+                    "key": "operation",
+                    "value": "2"
+                }
+            ],
+            "posX": -200.66778564453126,
+            "posY": 1301.6639404296875,
+            "path": "Nodes/ParamOpNode",
+            "inputSocketIds": [
+                "1f4d5322-9a54-4a7e-a23b-81f1a7980045638363918769229333"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "d944e1f5-1065-4103-bc59-92d09b144146",
+            "values": [
+                {
+                    "key": "soundFile",
+                    "value": "UjhYZHJleEwvejExdzNEbnpra1RLRlBOMmJHTTNRM0dDNGcvQVZyTTMzYz0="
+                },
+                {
+                    "key": "volume",
+                    "value": "1"
+                },
+                {
+                    "key": "duration",
+                    "value": ""
+                },
+                {
+                    "key": "fadeout",
+                    "value": ""
+                }
+            ],
+            "posX": -565.0029296875,
+            "posY": -91.33462524414063,
+            "path": "Nodes/SoundNode",
+            "inputSocketIds": [
+                "ff8f637a-8c3c-43b1-9d20-20ba4842611a638363924339027668"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "db6f4e18-ad4c-4e86-b18a-58be608c6e02",
+            "values": [
+                {
+                    "key": "soundFile",
+                    "value": "TC9UaDJXdCt6RURCL3F0TmVYM0FrdXZnMXlLOGhnaFo4ZkNOamdLNGlSYz0="
+                },
+                {
+                    "key": "volume",
+                    "value": "0.6395832"
+                },
+                {
+                    "key": "duration",
+                    "value": ""
+                },
+                {
+                    "key": "fadeout",
+                    "value": ""
+                }
+            ],
+            "posX": 169.99700927734376,
+            "posY": 236.99868774414063,
+            "path": "Nodes/SoundNode",
+            "inputSocketIds": [
+                "29200d8c-eb41-40db-ab36-bc20be9394dd638363925017502908"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "e6c38bb2-d61a-4db9-ae87-011e05792bad",
+            "values": [
+                {
+                    "key": "soundFile",
+                    "value": "TC9UaDJXdCt6RURCL3F0TmVYM0FraU1MNlIrR1F6WVlRNnYzK3VJa0lRQT0="
+                },
+                {
+                    "key": "volume",
+                    "value": "0.3583332"
+                },
+                {
+                    "key": "duration",
+                    "value": ""
+                },
+                {
+                    "key": "fadeout",
+                    "value": ""
+                }
+            ],
+            "posX": 384.99700927734377,
+            "posY": 235.33203125,
+            "path": "Nodes/SoundNode",
+            "inputSocketIds": [
+                "da8f9482-521d-42a4-b604-943e5b07e8e5638363925279073641"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "9e13ac32-04bf-4726-afe3-760f9a4f678a",
+            "values": [
+                {
+                    "key": "soundFile",
+                    "value": "TC9UaDJXdCt6RURCL3F0TmVYM0FrbHVlT3l2TjN6ZFYvcE11cjVmTytYcz0="
+                },
+                {
+                    "key": "volume",
+                    "value": "0.2333336"
+                },
+                {
+                    "key": "duration",
+                    "value": ""
+                },
+                {
+                    "key": "fadeout",
+                    "value": ""
+                }
+            ],
+            "posX": 596.6636962890625,
+            "posY": 233.66534423828126,
+            "path": "Nodes/SoundNode",
+            "inputSocketIds": [
+                "2af281db-4341-40da-b761-011bfc20b125638363925357320484"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "35465705-dbe3-421f-818f-71c60878ded7",
+            "values": [
+                {
+                    "key": "colType",
+                    "value": "0"
+                },
+                {
+                    "key": "tag",
+                    "value": "BallItem"
+                }
+            ],
+            "posX": -1147.001708984375,
+            "posY": -430.3338317871094,
+            "path": "Nodes/CollisionNode",
+            "inputSocketIds": [],
+            "outputSocketIds": [
+                "74ed9f46-f730-4e8e-ad65-f408e1a11500638363930338105444"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "0ced647c-ec2f-4b75-8bf1-ed6cfa6e107d",
+            "values": [
+                {
+                    "key": "colType",
+                    "value": "1"
+                },
+                {
+                    "key": "tag",
+                    "value": "BallItem"
+                }
+            ],
+            "posX": -1147.001708984375,
+            "posY": -583.6671752929688,
+            "path": "Nodes/CollisionNode",
+            "inputSocketIds": [],
+            "outputSocketIds": [
+                "c197b33d-94e1-4808-b134-ae519cdd35fe638363930460310429"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "fcc4cd22-797d-43b6-815a-f3db8a28f8d7",
+            "values": [
+                {
+                    "key": "paramName",
+                    "value": "BallsHit"
+                },
+                {
+                    "key": "value1",
+                    "value": "[BallsHit]"
+                },
+                {
+                    "key": "value2",
+                    "value": "1"
+                },
+                {
+                    "key": "operation",
+                    "value": "0"
+                }
+            ],
+            "posX": -540.33447265625,
+            "posY": -465.3348388671875,
+            "path": "Nodes/ParamOpNode",
+            "inputSocketIds": [
+                "6818174c-7f85-4139-9190-f4db745be64e638363930557785745"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "505b2e06-e161-47aa-a875-9c9acc22e077",
+            "values": [],
+            "posX": -845.3345336914063,
+            "posY": -498.6681823730469,
+            "path": "Nodes/Ordered5Node",
+            "inputSocketIds": [
+                "272fdea7-9d96-4747-9964-f74b2b4f1153638363930604076476"
+            ],
+            "outputSocketIds": [
+                "79900e2d-0ff4-4ad5-8091-2dc10b28fef9638363930604076533",
+                "6a702994-c6db-4d3c-9ac5-3cc7fac4ff9e638363930604076547",
+                "2b58f1b0-8f82-44e2-ad66-c0dc2061a195638363930604076560",
+                "a4d5b3cd-bd6a-450d-b6ed-84bc0cebebf9638363930604076573",
+                "b341b957-8977-4b14-8134-6aa38decbe66638363930604076586"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "b09935cb-a6ad-48f4-b90b-7972281e393c",
+            "values": [
+                {
+                    "key": "pname",
+                    "value": "BallsHit"
+                },
+                {
+                    "key": "pvalue",
+                    "value": "125"
+                }
+            ],
+            "posX": -542.001220703125,
+            "posY": -683.6681518554688,
+            "path": "Nodes/FilterParamNode",
+            "inputSocketIds": [
+                "4a9516bc-eb1a-4510-94c5-a3b953c14cfa638363931112647673"
+            ],
+            "outputSocketIds": [
+                "ce2853e2-2266-45e6-846e-9f183600745c638363931112647767",
+                "88bf764c-f357-4eff-ba5a-d7db1ce24da8638363931112647798",
+                "d831df51-44c7-412a-a496-e2e5c281287f638363931112647817"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "67b73615-73c0-4762-a0b0-800ab9c7ed09",
+            "values": [
+                {
+                    "key": "paramName",
+                    "value": "BallsHit"
+                },
+                {
+                    "key": "value",
+                    "value": "0"
+                }
+            ],
+            "posX": -62.001220703125,
+            "posY": -602.00146484375,
+            "path": "Nodes/SetParamNode",
+            "inputSocketIds": [
+                "8846a674-07c6-47b5-ab62-d07fe7fd128c638363931302790835"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "bb090e47-1a72-44ce-b1b3-662d22e92209",
+            "values": [
+                {
+                    "key": "triggerName",
+                    "value": "DeathNoise"
+                },
+                {
+                    "key": "callTime",
+                    "value": "1"
+                }
+            ],
+            "posX": -60.33439636230469,
+            "posY": -761.6683349609375,
+            "path": "Nodes/CallTriggerNode",
+            "inputSocketIds": [
+                "cb55d5d2-ca74-4732-aaf0-4b46c7f9e396638363931606737054"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "c2cced11-cd8c-4e60-b2b0-bcd5beb36264",
+            "values": [],
+            "posX": -297.001220703125,
+            "posY": -688.6681518554688,
+            "path": "Nodes/Ordered5Node",
+            "inputSocketIds": [
+                "d93f5923-6b90-4b1b-8972-e832af85acea638363931804598963"
+            ],
+            "outputSocketIds": [
+                "9ef2afe4-6d0d-43cd-a0cc-ff20263d4b9d638363931804599021",
+                "9da78356-336f-43ea-885f-941d69761790638363931804599035",
+                "7f3245a1-bba2-4dfc-a2ff-50aaff21394b638363931804599048",
+                "feab85ee-b2ad-4de5-8523-3a8261f623c1638363931804599061",
+                "cea3b4b6-0c05-4e86-ac81-afa56d00949a638363931804599073"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "3d477116-931d-4e4f-b710-036c5195c1ed",
+            "values": [
+                {
+                    "key": "yeetX",
+                    "value": ""
+                },
+                {
+                    "key": "yeetY",
+                    "value": "2"
+                },
+                {
+                    "key": "yeetZ",
+                    "value": "-5"
+                },
+                {
+                    "key": "torqueX",
+                    "value": "-5"
+                },
+                {
+                    "key": "torqueY",
+                    "value": "5"
+                },
+                {
+                    "key": "torqueZ",
+                    "value": "-5"
+                },
+                {
+                    "key": "respawnTime",
+                    "value": "10"
+                }
+            ],
+            "posX": -56.66851806640625,
+            "posY": -1044.6680908203125,
+            "path": "Nodes/ForceNode",
+            "inputSocketIds": [
+                "81306d48-7d5e-4257-8059-dbd34cf151c1638363933523719743"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "576dc237-ce89-4e88-ba57-ce1ac0d6785c",
+            "values": [
+                {
+                    "key": "camera",
+                    "value": "18"
+                },
+                {
+                    "key": "duration",
+                    "value": "1000"
+                }
+            ],
+            "posX": -54.99981689453125,
+            "posY": -1330.333740234375,
+            "path": "Nodes/CameraNode",
+            "inputSocketIds": [
+                "0c2102b8-a70b-49e2-bc60-54baa019a0bc638363948288855073"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "ae3d2ab7-0304-406a-8808-f03d132defec",
+            "values": [
+                {
+                    "key": "timerName",
+                    "value": "SetPrevCam"
+                },
+                {
+                    "key": "seconds",
+                    "value": "10000"
+                }
+            ],
+            "posX": -53.33331298828125,
+            "posY": -1498.6671142578125,
+            "path": "Nodes/SetTimerNode",
+            "inputSocketIds": [
+                "3bd7a65d-456b-4213-981f-a4cb1faa1337638363948897955509"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "053125c0-0240-4c15-90ed-f558b2318199",
+            "values": [
+                {
+                    "key": "redeemValue",
+                    "value": "balls"
+                }
+            ],
+            "posX": -1115.668212890625,
+            "posY": 192.33367919921876,
+            "path": "Nodes/RedeemNode",
+            "inputSocketIds": [],
+            "outputSocketIds": [
+                "27140b5f-8086-43da-8082-55cf25c3bf98638363952936769195"
+            ],
+            "headerColor": 0
+        }
+    ],
+    "connections": [
+        {
+            "id": "7bbe7617-0376-4f03-a21a-6dba02b99acd",
+            "outputSocketId": "3a57814e-72ec-47fa-ba51-72e8ac22db4d638363908291779996",
+            "inputSocketId": "40d4675f-b354-4aeb-bc88-16f2aaaa46a6638363907329136673"
+        },
+        {
+            "id": "5374dfce-89bb-4807-83f0-84aca049ba12",
+            "outputSocketId": "df4635e3-0b76-466b-b9dc-377889852b24638363908291779977",
+            "inputSocketId": "6dd2e3b7-36f3-474d-a77f-2a56afc5d8ea638363908564650282"
+        },
+        {
+            "id": "fe219595-62ef-4372-a7f0-dda75526b0d7",
+            "outputSocketId": "86cd0a7c-a302-4d37-9c15-13de059888d9638363908291780032",
+            "inputSocketId": "23fd69da-6cf8-4d1e-afe4-a0ac290159b5638363908861961024"
+        },
+        {
+            "id": "c80ce594-94d9-4157-8d0e-2d4e5870c327",
+            "outputSocketId": "9bec0257-a58e-49bb-b128-61dcddcca7de638363908291780014",
+            "inputSocketId": "7831068d-7238-437e-b3ba-1eb8ca1d5e59638363909570402381"
+        },
+        {
+            "id": "2f8624e5-6357-4b32-907d-5d7dd124e018",
+            "outputSocketId": "fad1277c-7098-4b60-956e-b653ff3499d6638363908291780081",
+            "inputSocketId": "49cf5aa3-8f20-472e-8a47-b06f98db23f1638363891151338282"
+        },
+        {
+            "id": "1ff9155e-0519-4dc1-b842-c8d1007017af",
+            "outputSocketId": "8cf91fc4-8abd-4748-85a4-8260cb365575638363908291780050",
+            "inputSocketId": "49cf5aa3-8f20-472e-8a47-b06f98db23f1638363891151338282"
+        },
+        {
+            "id": "4aa76369-ad76-4bc0-823e-59a02db76656",
+            "outputSocketId": "ed298d6a-f6d1-4b4d-83ba-277c3a96d870638363908291780123",
+            "inputSocketId": "49cf5aa3-8f20-472e-8a47-b06f98db23f1638363891151338282"
+        },
+        {
+            "id": "34303192-d9f7-4347-aec1-b1b07753510b",
+            "outputSocketId": "4303f098-4ea4-4583-9fd3-04e01aa9f6a2638363903125114292",
+            "inputSocketId": "2a3cc50d-cf0e-4799-adea-8309a7d60880638363914461116062"
+        },
+        {
+            "id": "084d8a16-ef7f-424d-a56a-d9119b431338",
+            "outputSocketId": "eb22f88c-9861-49aa-a23a-aab17b71122e638363914461116135",
+            "inputSocketId": "ec354236-86d0-472e-8680-542be49afd2f638363913091143859"
+        },
+        {
+            "id": "d6651702-17dc-4a15-93ea-9333c61d58a8",
+            "outputSocketId": "de68652e-4857-4038-adf4-c174e486d817638363913091143976",
+            "inputSocketId": "3b7769e2-4733-45b0-8568-db770f51d8d4638363908291779908"
+        },
+        {
+            "id": "a7fb31a8-5742-44c9-9639-807fce42bdf7",
+            "outputSocketId": "0f64cf3d-591f-4279-8903-7b08eafda570638363913091143963",
+            "inputSocketId": "fa99471a-f9c5-4019-bb5e-e1ae1be05962638363903298667915"
+        },
+        {
+            "id": "112240b7-532c-475b-91a0-dc3340b18b60",
+            "outputSocketId": "d1e1fd6d-75db-4012-9634-cac67384f8ec638363915373355103",
+            "inputSocketId": "ac357ab9-f12f-49e9-b55a-32a2d9756865638363915423069717"
+        },
+        {
+            "id": "3a846399-feb1-41f4-85ba-db2acc866272",
+            "outputSocketId": "cdfc5bea-cad6-4256-8c4f-fee462ae0c46638363915423069786",
+            "inputSocketId": "14262a41-194a-46a4-b378-9db0429e92de638363914253073200"
+        },
+        {
+            "id": "e06e674c-e64d-40a9-adde-fe31bcd2487d",
+            "outputSocketId": "046963e7-fa26-455a-bf1d-86284e613069638363915423069848",
+            "inputSocketId": "cc71610e-a827-4bb8-9a0a-10d8dba10a4c638363915587085831"
+        },
+        {
+            "id": "5a0ce3b4-3fba-4373-a15d-84d28fd8f189",
+            "outputSocketId": "771e5f45-52b7-4112-b06c-dc21adf27b1f638363913091143919",
+            "inputSocketId": "a125d013-d11f-4669-9015-952daa97aeaf638363917161901523"
+        },
+        {
+            "id": "0619564a-558b-4db6-b7f9-f6b44e7e200d",
+            "outputSocketId": "3baa581f-28c1-4352-a611-b10b2071bc3a638363913091143951",
+            "inputSocketId": "f80c9ed5-ca3a-4e48-95c0-a5200187610c638363914889519733"
+        },
+        {
+            "id": "2867d27b-c8de-4c28-b746-d109470533f9",
+            "outputSocketId": "6cedd061-afdb-4e06-b342-0eabc37e59f7638363913091143933",
+            "inputSocketId": "1f4d5322-9a54-4a7e-a23b-81f1a7980045638363918769229333"
+        },
+        {
+            "id": "2555b2a3-4d5a-47c4-a32c-5bc4a755f2ce",
+            "outputSocketId": "074197c6-3732-45d3-ac98-afc58f5df77a638363915423069874",
+            "inputSocketId": "ff8f637a-8c3c-43b1-9d20-20ba4842611a638363924339027668"
+        },
+        {
+            "id": "aa3c6080-d4cc-4eed-a0fa-d5b96647fc32",
+            "outputSocketId": "9fd5c928-b0cd-48ca-92b9-8f7ad46f6305638363908291780105",
+            "inputSocketId": "29200d8c-eb41-40db-ab36-bc20be9394dd638363925017502908"
+        },
+        {
+            "id": "12eeb3f4-f343-4e1f-8ac3-95e3b109635f",
+            "outputSocketId": "9c3917e1-d256-458c-b6b2-0f5f18354706638363908291780159",
+            "inputSocketId": "da8f9482-521d-42a4-b604-943e5b07e8e5638363925279073641"
+        },
+        {
+            "id": "8798c5ff-4054-4171-8956-24acbe6901db",
+            "outputSocketId": "0e3b7ab0-5be8-4082-8b33-b4248a2e3846638363908291780141",
+            "inputSocketId": "2af281db-4341-40da-b761-011bfc20b125638363925357320484"
+        },
+        {
+            "id": "8459cbab-3b71-4ef1-a03a-1caa6719ecaa",
+            "outputSocketId": "74ed9f46-f730-4e8e-ad65-f408e1a11500638363930338105444",
+            "inputSocketId": "272fdea7-9d96-4747-9964-f74b2b4f1153638363930604076476"
+        },
+        {
+            "id": "cf813fa5-320d-43f8-9cbf-0184531610ac",
+            "outputSocketId": "c197b33d-94e1-4808-b134-ae519cdd35fe638363930460310429",
+            "inputSocketId": "272fdea7-9d96-4747-9964-f74b2b4f1153638363930604076476"
+        },
+        {
+            "id": "d4ed4236-4b3a-4ff6-bff1-668c7d3236f2",
+            "outputSocketId": "79900e2d-0ff4-4ad5-8091-2dc10b28fef9638363930604076533",
+            "inputSocketId": "6818174c-7f85-4139-9190-f4db745be64e638363930557785745"
+        },
+        {
+            "id": "08eff4e8-6f54-4f0a-a3d6-459d828d9dfc",
+            "outputSocketId": "b341b957-8977-4b14-8134-6aa38decbe66638363930604076586",
+            "inputSocketId": "4a9516bc-eb1a-4510-94c5-a3b953c14cfa638363931112647673"
+        },
+        {
+            "id": "061a1250-5634-4cb7-8cef-bd99c430f966",
+            "outputSocketId": "ce2853e2-2266-45e6-846e-9f183600745c638363931112647767",
+            "inputSocketId": "d93f5923-6b90-4b1b-8972-e832af85acea638363931804598963"
+        },
+        {
+            "id": "5f8d017e-82b4-46b5-842f-7c7d974bf9dd",
+            "outputSocketId": "9ef2afe4-6d0d-43cd-a0cc-ff20263d4b9d638363931804599021",
+            "inputSocketId": "8846a674-07c6-47b5-ab62-d07fe7fd128c638363931302790835"
+        },
+        {
+            "id": "ad818c62-d79a-4f07-bf62-d80f3f72acc4",
+            "outputSocketId": "9da78356-336f-43ea-885f-941d69761790638363931804599035",
+            "inputSocketId": "cb55d5d2-ca74-4732-aaf0-4b46c7f9e396638363931606737054"
+        },
+        {
+            "id": "acac331b-fe3a-429b-878f-26691ce31882",
+            "outputSocketId": "7f3245a1-bba2-4dfc-a2ff-50aaff21394b638363931804599048",
+            "inputSocketId": "81306d48-7d5e-4257-8059-dbd34cf151c1638363933523719743"
+        },
+        {
+            "id": "8cc5f0bd-e6f7-4748-8d2c-9fb1ff767293",
+            "outputSocketId": "feab85ee-b2ad-4de5-8523-3a8261f623c1638363931804599061",
+            "inputSocketId": "0c2102b8-a70b-49e2-bc60-54baa019a0bc638363948288855073"
+        },
+        {
+            "id": "12a69ccd-74d1-498d-9c1a-8c185f963d9c",
+            "outputSocketId": "cea3b4b6-0c05-4e86-ac81-afa56d00949a638363931804599073",
+            "inputSocketId": "3bd7a65d-456b-4213-981f-a4cb1faa1337638363948897955509"
+        },
+        {
+            "id": "9c05a0fd-57f1-46fc-8e3c-0b2bec2442b0",
+            "outputSocketId": "27140b5f-8086-43da-8082-55cf25c3bf98638363952936769195",
+            "inputSocketId": "ac357ab9-f12f-49e9-b55a-32a2d9756865638363915423069717"
+        }
+    ]
+}

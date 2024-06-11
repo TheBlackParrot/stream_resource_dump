@@ -1,0 +1,264 @@
+{
+    "graphName": "VMC Status",
+    "graphIsActive": true,
+    "nodes": [
+        {
+            "id": "96662e02-8218-4b45-bfa7-424aaa2e09c0",
+            "values": [
+                {
+                    "key": "layer",
+                    "value": "1"
+                },
+                {
+                    "key": "status",
+                    "value": "0"
+                }
+            ],
+            "posX": -291.0,
+            "posY": 152.0,
+            "path": "Nodes/VMCStatusNode",
+            "inputSocketIds": [],
+            "outputSocketIds": [
+                "087180f7-249f-4ced-879f-3d303c3ee72e638481321148372389"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "0d6cec47-ad0a-42e7-922b-2ad496cf25d2",
+            "values": [
+                {
+                    "key": "temperature",
+                    "value": "0"
+                },
+                {
+                    "key": "tint",
+                    "value": "0"
+                },
+                {
+                    "key": "hue",
+                    "value": "0"
+                },
+                {
+                    "key": "saturation",
+                    "value": "0"
+                },
+                {
+                    "key": "brightness",
+                    "value": "0"
+                },
+                {
+                    "key": "contrast",
+                    "value": "0"
+                },
+                {
+                    "key": "active",
+                    "value": "0"
+                }
+            ],
+            "posX": 217.0,
+            "posY": 277.0,
+            "path": "Nodes/EffectColorNode",
+            "inputSocketIds": [
+                "8c623a09-6a72-493f-abb9-412362439fe6638481321417995216"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "1903c097-d505-4cfb-bd2b-67704b7d5f11",
+            "values": [
+                {
+                    "key": "layer",
+                    "value": "1"
+                },
+                {
+                    "key": "status",
+                    "value": "1"
+                }
+            ],
+            "posX": -314.0,
+            "posY": -441.0,
+            "path": "Nodes/VMCStatusNode",
+            "inputSocketIds": [],
+            "outputSocketIds": [
+                "7ce10e15-5471-4299-8044-f28697ad3459638481321535553187"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "b13c1dc2-a3d8-4b0a-90fd-c57ff6b29d5a",
+            "values": [
+                {
+                    "key": "temperature",
+                    "value": "0"
+                },
+                {
+                    "key": "tint",
+                    "value": "0"
+                },
+                {
+                    "key": "hue",
+                    "value": "0"
+                },
+                {
+                    "key": "saturation",
+                    "value": "-100"
+                },
+                {
+                    "key": "brightness",
+                    "value": "-21.48228"
+                },
+                {
+                    "key": "contrast",
+                    "value": "0"
+                },
+                {
+                    "key": "active",
+                    "value": "1"
+                }
+            ],
+            "posX": 233.0,
+            "posY": -403.0,
+            "path": "Nodes/EffectColorNode",
+            "inputSocketIds": [
+                "9e97e1b3-bec5-4b11-9a64-71e45e9805c9638481321579205495"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "102b827d-b744-4088-8f9e-255724391d5a",
+            "values": [],
+            "posX": -51.0,
+            "posY": 166.0,
+            "path": "Nodes/Ordered5Node",
+            "inputSocketIds": [
+                "447aa3ba-6b34-499a-b8fd-93ef664792af638481322518744629"
+            ],
+            "outputSocketIds": [
+                "16d62c34-31ad-4af4-b1f0-7b94e2f19d80638481322518744629",
+                "5e830c20-4f39-4c4c-9528-d547313698ba638481322518744629",
+                "cb4241ec-6652-4549-bbdc-51a60416fbd7638481322518744629",
+                "65931e6e-1cab-4255-92c3-89fddb94442e638481322518744629",
+                "60573fa8-a281-45a6-8c69-6be75d318558638481322518744629"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "b7a989a9-6ed5-43bc-a00f-3a7a0166e392",
+            "values": [],
+            "posX": -49.0,
+            "posY": -430.0,
+            "path": "Nodes/Ordered5Node",
+            "inputSocketIds": [
+                "5c58a9df-8953-43be-a362-966fa66a76fa638481322670712174"
+            ],
+            "outputSocketIds": [
+                "cc54fbee-7a0c-4f2c-ade1-a409cefbe31b638481322670712174",
+                "e6b6eca4-198e-47ae-bf9d-712edc5257e5638481322670712174",
+                "3cfc32cf-1df6-4640-951c-eee7988e5f53638481322670712174",
+                "f36ba68f-0c4f-4dd9-a752-da80657daf5b638481322670712174",
+                "de52164e-419e-4892-addf-2fa022e784fd638481322670712174"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "7d919c54-b22c-496c-8cd9-b3c36fb27541",
+            "values": [
+                {
+                    "key": "scanline",
+                    "value": "0"
+                },
+                {
+                    "key": "vertical",
+                    "value": "0"
+                },
+                {
+                    "key": "horizontal",
+                    "value": "0"
+                },
+                {
+                    "key": "drift",
+                    "value": "0"
+                },
+                {
+                    "key": "active",
+                    "value": "0"
+                }
+            ],
+            "posX": 222.0,
+            "posY": -30.0,
+            "path": "Nodes/EffectAnalogGlitchNode",
+            "inputSocketIds": [
+                "f25b443c-e59b-44dc-a49b-149c914bde1c638481323422375405"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "7807914a-f0cd-469f-81e6-7368e62f53e1",
+            "values": [
+                {
+                    "key": "scanline",
+                    "value": "0.33"
+                },
+                {
+                    "key": "vertical",
+                    "value": "0"
+                },
+                {
+                    "key": "horizontal",
+                    "value": "0"
+                },
+                {
+                    "key": "drift",
+                    "value": "0.04"
+                },
+                {
+                    "key": "active",
+                    "value": "1"
+                }
+            ],
+            "posX": 237.0,
+            "posY": -727.0,
+            "path": "Nodes/EffectAnalogGlitchNode",
+            "inputSocketIds": [
+                "8a8dcc9d-a2a1-4201-9e64-763980266b4d638481323556063236"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        }
+    ],
+    "connections": [
+        {
+            "id": "fe85af31-f16a-4476-ad17-c1ad45d929ff",
+            "outputSocketId": "087180f7-249f-4ced-879f-3d303c3ee72e638481321148372389",
+            "inputSocketId": "447aa3ba-6b34-499a-b8fd-93ef664792af638481322518744629"
+        },
+        {
+            "id": "55336707-1084-49c3-b002-14a721249821",
+            "outputSocketId": "16d62c34-31ad-4af4-b1f0-7b94e2f19d80638481322518744629",
+            "inputSocketId": "8c623a09-6a72-493f-abb9-412362439fe6638481321417995216"
+        },
+        {
+            "id": "1d0fa58d-e58e-408f-901d-2b37a45b8fff",
+            "outputSocketId": "7ce10e15-5471-4299-8044-f28697ad3459638481321535553187",
+            "inputSocketId": "5c58a9df-8953-43be-a362-966fa66a76fa638481322670712174"
+        },
+        {
+            "id": "61c93869-bf26-4731-87a3-8605539a2868",
+            "outputSocketId": "cc54fbee-7a0c-4f2c-ade1-a409cefbe31b638481322670712174",
+            "inputSocketId": "9e97e1b3-bec5-4b11-9a64-71e45e9805c9638481321579205495"
+        },
+        {
+            "id": "3b7e0f4d-4d44-4b5b-9226-55135204b71c",
+            "outputSocketId": "5e830c20-4f39-4c4c-9528-d547313698ba638481322518744629",
+            "inputSocketId": "f25b443c-e59b-44dc-a49b-149c914bde1c638481323422375405"
+        },
+        {
+            "id": "00e62cb5-638e-4d63-9f8c-fedc250298ee",
+            "outputSocketId": "e6b6eca4-198e-47ae-bf9d-712edc5257e5638481322670712174",
+            "inputSocketId": "8a8dcc9d-a2a1-4201-9e64-763980266b4d638481323556063236"
+        }
+    ]
+}

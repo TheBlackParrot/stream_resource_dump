@@ -1,0 +1,246 @@
+{
+    "graphName": "Metal Pipe",
+    "graphIsActive": true,
+    "nodes": [
+        {
+            "id": "d58d40de-9f2a-4c8b-99f3-b87140df819f",
+            "values": [
+                {
+                    "key": "items",
+                    "value": "Metal Pipe"
+                },
+                {
+                    "key": "amount",
+                    "value": ""
+                },
+                {
+                    "key": "destroy",
+                    "value": ""
+                },
+                {
+                    "key": "random",
+                    "value": "1"
+                },
+                {
+                    "key": "volume",
+                    "value": "0.7625"
+                },
+                {
+                    "key": "mass",
+                    "value": "100"
+                },
+                {
+                    "key": "drag",
+                    "value": "1.7"
+                },
+                {
+                    "key": "tag",
+                    "value": "MetalPipe"
+                },
+                {
+                    "key": "scale",
+                    "value": "1"
+                }
+            ],
+            "posX": 147.0,
+            "posY": 86.0,
+            "path": "Nodes/DropNode",
+            "inputSocketIds": [
+                "202106c9-27bd-460f-9fbf-90ae56fec752638399403506676400"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "4e16f85a-d09d-4ccc-987c-8943cc2dc6d3",
+            "values": [
+                {
+                    "key": "triggerName",
+                    "value": "MetalPipeFall"
+                }
+            ],
+            "posX": -389.0,
+            "posY": 76.0,
+            "path": "Nodes/TriggerNode",
+            "inputSocketIds": [],
+            "outputSocketIds": [
+                "a92b29cf-c92c-4d22-9c6d-95ac00f6c6a6638399403641124073"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "3705f8e4-1958-42d2-a8cd-f336fb848dd3",
+            "values": [
+                {
+                    "key": "soundFile",
+                    "value": "UjhYZHJleEwvejExdzNEbnpra1RLTmFTclNlZnB1UlR3UnRLQktkTmcwMk1pRUhJWWlpRzllWUxlRXUwU1RWZg=="
+                },
+                {
+                    "key": "volume",
+                    "value": "0.675"
+                },
+                {
+                    "key": "duration",
+                    "value": ""
+                },
+                {
+                    "key": "fadeout",
+                    "value": ""
+                }
+            ],
+            "posX": 78.0,
+            "posY": -211.0,
+            "path": "Nodes/SoundNode",
+            "inputSocketIds": [
+                "737abb67-322b-4dfe-9785-f6b074fe618e638399406039900189"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "0a813687-0e02-4b76-8c23-5e2e26959246",
+            "values": [],
+            "posX": -156.0,
+            "posY": 93.0,
+            "path": "Nodes/Ordered5Node",
+            "inputSocketIds": [
+                "da778451-21b4-40ad-9fec-ba1ba40b5b57638399406153188689"
+            ],
+            "outputSocketIds": [
+                "2d44413d-f18b-4139-b0e7-d0d503b49258638399406153188759",
+                "df040817-fcdb-4a10-a237-fc50b05e8036638399406153188785",
+                "99cba611-1475-4fe6-8bc1-1d1aaea7b251638399406153188804",
+                "fc54dc46-d893-4d1c-ad90-e865387e6d94638399406153188830",
+                "730b9161-a716-467f-87b5-1d3823aa640c638399406153188849"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "75c4dc29-88ab-4d30-977d-c638f9a2fe8b",
+            "values": [
+                {
+                    "key": "yeetX",
+                    "value": "0"
+                },
+                {
+                    "key": "yeetY",
+                    "value": "-3"
+                },
+                {
+                    "key": "yeetZ",
+                    "value": "-3"
+                },
+                {
+                    "key": "torqueX",
+                    "value": "2"
+                },
+                {
+                    "key": "torqueY",
+                    "value": "-1"
+                },
+                {
+                    "key": "torqueZ",
+                    "value": "-1"
+                },
+                {
+                    "key": "respawnTime",
+                    "value": "10"
+                }
+            ],
+            "posX": 83.0,
+            "posY": -571.0,
+            "path": "Nodes/ForceNode",
+            "inputSocketIds": [
+                "8aab380f-f4ac-4e4d-a116-31f3f60f4b4c638399407192887923"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        },
+        {
+            "id": "dc2c37ae-adb8-48f3-b12a-ed810022081b",
+            "values": [
+                {
+                    "key": "colType",
+                    "value": "1"
+                },
+                {
+                    "key": "tag",
+                    "value": "MetalPipe"
+                }
+            ],
+            "posX": -189.0,
+            "posY": -462.0,
+            "path": "Nodes/CollisionNode",
+            "inputSocketIds": [],
+            "outputSocketIds": [
+                "b104f6cd-98a9-465a-a0b9-2ddb45abd821638399407458956673"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "77f52213-d465-4b16-bcf8-c7f2c45e05c2",
+            "values": [
+                {
+                    "key": "redeemValue",
+                    "value": "*metal pipe*"
+                }
+            ],
+            "posX": -505.0,
+            "posY": -128.0,
+            "path": "Nodes/RedeemNode",
+            "inputSocketIds": [],
+            "outputSocketIds": [
+                "e1e65648-e2e0-4990-9d70-a7b9f09d4901638399482652947973"
+            ],
+            "headerColor": 0
+        },
+        {
+            "id": "dd67630e-bd92-4c6b-bd4e-a7f7d3da8ab3",
+            "values": [
+                {
+                    "key": "triggerName",
+                    "value": "MetalPipeFall"
+                },
+                {
+                    "key": "callTime",
+                    "value": "0"
+                }
+            ],
+            "posX": -260.0,
+            "posY": -146.0,
+            "path": "Nodes/CallTriggerNode",
+            "inputSocketIds": [
+                "0184d04e-7153-46ff-a2c6-4ad2f7076e49638399482775224613"
+            ],
+            "outputSocketIds": [],
+            "headerColor": 0
+        }
+    ],
+    "connections": [
+        {
+            "id": "c03294a4-4c91-4da5-9587-437d93fa2f44",
+            "outputSocketId": "a92b29cf-c92c-4d22-9c6d-95ac00f6c6a6638399403641124073",
+            "inputSocketId": "da778451-21b4-40ad-9fec-ba1ba40b5b57638399406153188689"
+        },
+        {
+            "id": "ba37ab28-e816-48df-adca-fa57c6194ced",
+            "outputSocketId": "2d44413d-f18b-4139-b0e7-d0d503b49258638399406153188759",
+            "inputSocketId": "202106c9-27bd-460f-9fbf-90ae56fec752638399403506676400"
+        },
+        {
+            "id": "193b6096-de1c-417d-837a-5067c8094e5f",
+            "outputSocketId": "df040817-fcdb-4a10-a237-fc50b05e8036638399406153188785",
+            "inputSocketId": "737abb67-322b-4dfe-9785-f6b074fe618e638399406039900189"
+        },
+        {
+            "id": "aaf6d70e-f392-43d9-ae09-847d5cd8378f",
+            "outputSocketId": "b104f6cd-98a9-465a-a0b9-2ddb45abd821638399407458956673",
+            "inputSocketId": "8aab380f-f4ac-4e4d-a116-31f3f60f4b4c638399407192887923"
+        },
+        {
+            "id": "262f79a4-3fd1-4018-aad1-808950752d7e",
+            "outputSocketId": "e1e65648-e2e0-4990-9d70-a7b9f09d4901638399482652947973",
+            "inputSocketId": "0184d04e-7153-46ff-a2c6-4ad2f7076e49638399482775224613"
+        }
+    ]
+}
