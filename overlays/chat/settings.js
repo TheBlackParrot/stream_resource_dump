@@ -1,17 +1,17 @@
 const settings = {
 	cache: {
 		expireDelay: 604800
-	},
-	flags: {}
+	}
 };
 
+var identityFlags = {};
 async function grabFlags() {
 	const response = await fetch("../chat-customizer/api/lib/flags.json");
 	if(!response.ok) {
 		return;
 	}
 
-	settings.flags = await response.json();
+	identityFlags = await response.json();
 }
 
 var hideAccounts = [];

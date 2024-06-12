@@ -1,5 +1,5 @@
-const overlayRevision = 4;
-const overlayRevisionTimestamp = 1713293906193;
+const overlayRevision = 5;
+const overlayRevisionTimestamp = 1718225179008;
 
 const settingsEventChannel = new BroadcastChannel("settings_overlay");
 
@@ -43,8 +43,6 @@ settingsEventChannel.onmessage = function(message) {
 		broadcastFuncs[message.event](message);
 	}
 };
-
-postToSettingsEventChannel("ClockOverlayExists", {version: overlayRevision});
 
 async function onTwitchReady() {
 	currentClock = -1;

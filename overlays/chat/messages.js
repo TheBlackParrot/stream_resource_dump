@@ -190,6 +190,15 @@ const chatFuncs = {
 
 		let canShowInfo = canShowArt;
 		if(!canShowInfo) {
+			if(!("uploader" in mapData)) {
+				infoElement.html(`<i class="fas fa-times"></i> <span class="loadingMsg"><strong>(${args[0]})</strong> no uploader present in API response</span>`);
+				return;
+			}
+			if(!Object.keys(mapData.uploader).length) {
+				infoElement.html(`<i class="fas fa-times"></i> <span class="loadingMsg"><strong>(${args[0]})</strong> uploader doesn't exist according to API response</span>`);
+				return;
+			}
+
 			if("firstUpload" in mapData.uploader.stats) {
 				let firstUploadTimestamp = new Date(mapData.uploader.stats.firstUpload).getTime();
 				if(Date.now() - firstUploadTimestamp > (15552000000)) {
@@ -531,7 +540,7 @@ function renderFlagBlock(data) {
 			continue;
 		}
 
-		let filename = settings.flags[flag];
+		let filename = identityFlags[flag];
 
 		flagBlock.append($(`<span class="flag${flag} flag" style="background-image: url('flags/${filename}'); display: inline-block;"></div>`));
 		flagBlock.show();
@@ -735,10 +744,6 @@ function initUserBlockCustomizations(data, elements) {
 				allNameElements.css("text-transform", `var(--nameTransform${data.user.id})`);
 				allNameElements.css("font-variant", `var(--nameVariant${data.user.id})`);
 				allNameElements.css("-webkit-text-stroke", `var(--nameExtraWeight${data.user.id}) transparent`);
-				if(customSettings.nameItalic) {
-					allNameElements.css("padding-right", "8px");
-					allNameElements.css("margin-right", "-8px");
-				}
 			}
 
 			if(localStorage.getItem("setting_allowUserCustomNameColors") === "true") {

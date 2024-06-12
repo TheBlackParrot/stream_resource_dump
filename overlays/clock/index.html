@@ -67,6 +67,16 @@
 	<script defer type="text/javascript" src="settings.js"></script>
 	<script defer type="text/javascript" src="twitch.js"></script>
 	<script defer type="text/javascript" src="main.js"></script>
+	<script type="text/javascript">
+		window.addEventListener("load", function() {
+			setTZ();
+
+			doClock();
+			setInterval(doClock, 1000);
+
+			postToSettingsEventChannel("ClockOverlayExists", {version: overlayRevision});
+		});
+	</script>
 </body>
 
 </html>

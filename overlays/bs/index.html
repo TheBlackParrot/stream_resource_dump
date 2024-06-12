@@ -123,6 +123,12 @@
 	<script defer type="text/javascript" src="settings.js"></script>
 	<script defer type="text/javascript" src="main.js"></script>
 	<script defer type="text/javascript" src="broadcast.js"></script>
+	<script type="text/javascript">
+		window.addEventListener("load", function() {
+			postToSettingsEventChannel("BSStatsOverlayExists", {version: overlayRevision});
+			rootCSS().setProperty("--background-art-height", `${$("#wrapper").outerHeight(true)}px`);
+		});
+	</script>
 </body>
 
 </html>

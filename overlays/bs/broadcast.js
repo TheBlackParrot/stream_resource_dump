@@ -60,5 +60,3 @@ settingsEventChannel.onmessage = function(message) {
 		broadcastFuncs[message.event](message);
 	}
 };
-
-postToSettingsEventChannel("BSStatsOverlayExists", {version: overlayRevision});

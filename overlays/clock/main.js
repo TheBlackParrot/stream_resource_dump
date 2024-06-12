@@ -54,7 +54,6 @@ function setTZ() {
 		$(this).text(text);
 	});
 }
-setTZ();
 
 function parseTime(val) {
 	val = parseInt(val/1000);
@@ -110,7 +109,6 @@ function doMainClock() {
 	$("#localTime .main").text(`${h}:${m}`);
 	$("#localTime .second").text(s);
 }
-doClock();
 
 function doUptimeClock() {
 	const uptime = Date.now() - new Date(streamData.started_at).getTime();
@@ -143,7 +141,6 @@ function doClock() {
 	doUptimeClock();
 	doAdClock();
 }
-setInterval(doClock, 1000);
 
 var clocksEnabled = {
 	localTime: true,

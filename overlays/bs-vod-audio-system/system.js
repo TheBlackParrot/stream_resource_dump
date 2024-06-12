@@ -46,7 +46,6 @@ async function syncRemoteDatabases() {
 		console.log(`synced ${count.toLocaleString()} hashes with ${dbURL.href}`);
 	}
 }
-syncRemoteDatabases();
 
 const obsEventChannel = new BroadcastChannel("obs");
 const bsEventChannel = new BroadcastChannel("bs");

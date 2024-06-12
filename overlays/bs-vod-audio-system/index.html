@@ -42,5 +42,11 @@
 	<script defer type="text/javascript" src="broadcast.js"></script>
 	<script defer type="text/javascript" src="main.js"></script>
 	<script defer type="text/javascript" src="system.js"></script>
+	<script type="text/javascript">
+		window.addEventListener("load", async function() {
+			await syncRemoteDatabases();
+			postToChannel("BSVodAudioExists", {version: overlayRevision});
+		});
+	</script>
 </body>
 </html>

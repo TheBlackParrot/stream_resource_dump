@@ -1,4 +1,52 @@
 {
+	"1718225179008": {
+		"updates": {
+			"all": {
+				"notes": [
+					[
+						"improved initialization flow for all remaining overlays",
+						["this includes: Beat Saber Stats, Beat Saber VOD Audio System, Clock, and Spotify overlays"]
+					]
+				]
+			},
+
+			"chat": {
+				"revision": 53,
+				"notes": [
+					[
+						"added a check to make sure the mapper associated with a beat saber map actually exists",
+						["this appears to be an error on beatsaver's side, adding a catch in case there's more than 1 case of this happening"]
+					],
+					[
+						"extended clipping fix on slanted/wide fonts from 8px to 12px"
+					],
+					[
+						"applied clipping fix to all name fonts, rather than just italicized ones"
+					]
+				]
+			},
+
+			"customizer": {
+				"revision": 3,
+				"notes": [
+					[
+						"fixed clipping on extremely slanted/italicized fonts",
+						["padding fix goes brrr"]
+					]
+				]
+			},
+
+			"spotify": {
+				"revision": 19,
+				"notes": [
+					[
+						"fixed titles that start with numbers appearing reversed when right-aligned"
+					]
+				]
+			}
+		}
+	},
+
 	"1717969899625": {
 		"updates": {
 			"clips": {

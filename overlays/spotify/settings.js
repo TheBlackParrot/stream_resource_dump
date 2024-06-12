@@ -1,5 +1,5 @@
-const overlayRevision = 18;
-const overlayRevisionTimestamp = 1717153564754;
+const overlayRevision = 19;
+const overlayRevisionTimestamp = 1718225179008;
 
 const settingsChannel = new BroadcastChannel("settings_overlay");
 
@@ -14,11 +14,6 @@ function postToSettingsChannel(event, data) {
 	console.log(message);
 	settingsChannel.postMessage(message);
 }
-
-postToSettingsChannel("SpotifyOverlayExists", {
-	version: overlayRevision,
-	timestamp: overlayRevisionTimestamp
-});
 
 function rootCSS() {
 	return document.querySelector("html").style;

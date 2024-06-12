@@ -431,5 +431,3 @@ function setHitMiss(state) {
 	}
 	oldCombo = state.combo;
 }
-
-rootCSS().setProperty("--background-art-height", `${$("#wrapper").outerHeight(true)}px`);

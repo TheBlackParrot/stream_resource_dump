@@ -316,6 +316,7 @@ body {
 }
 .right #titleString, .right #extraString, .right #artist {
 	padding-right: 4px;
+	direction: ltr;
 }
 #extraString {
 	direction: ltr;
