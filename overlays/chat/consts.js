@@ -1,5 +1,5 @@
-const overlayRevision = 53;
-const overlayRevisionTimestamp = 1718225179008;
+const overlayRevision = 54;
+const overlayRevisionTimestamp = 1719140993760;
 
 const enums = {
 	weight: {

@@ -1,4 +1,31 @@
 {
+	"1719140993760": {
+		"updates": {
+			"chat": {
+				"revision": 54,
+				"notes": [
+					[
+						"fixed issue with 7tv reconnections re-applying user paints even if disabled by the user",
+						["i caved and bought a 7tv sub for a month so debugging paid-for 7tv stuff should be easier now. guh"]
+					],
+					[
+						"fixed 7tv badges remaining visible after they were removed on 7tv's side"
+					]
+				]
+			},
+
+			"spotify": {
+				"revision": 20,
+				"notes": [
+					[
+						"worked around rare issue with song metadata not fading back in with animations due to an animation conflict",
+						["lazy fix for now, i'll look into this deeper later on"]
+					]
+				]
+			}
+		}
+	},
+
 	"1718225179008": {
 		"updates": {
 			"all": {

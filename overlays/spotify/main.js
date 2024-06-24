@@ -94,10 +94,13 @@ const spotifyFuncs = {
 				if(localStorage.getItem("setting_spotify_hideOnPause") === "true") {
 					updateMarquee();
 
-					$("#detailsWrapper").addClass("fadeIn").removeClass("fadeOut");
-					$("#title").addClass("slideIn").removeClass("slideOut");
+					$("#detailsWrapper").addClass("fadeIn");
+					$("#detailsWrapper").removeClass("fadeOut");
+					$("#title").addClass("slideIn");
+					$("#title").removeClass("slideOut");
 					setTimeout(function() {
-						$("#secondary").addClass("slideIn").removeClass("slideOut");
+						$("#secondary").addClass("slideIn");
+						$("#secondary").removeClass("slideOut");
 					}, timespans.small);
 
 					setTimeout(function() {
@@ -119,10 +122,13 @@ const spotifyFuncs = {
 
 			if(wasPreviouslyPlaying) {
 				if(localStorage.getItem("setting_spotify_hideOnPause") === "true") {
-					$("#detailsWrapper").addClass("fadeOut").removeClass("fadeIn");
-					$("#title").addClass("slideOut").removeClass("slideIn");
+					$("#detailsWrapper").addClass("fadeOut");
+					$("#detailsWrapper").removeClass("fadeIn");
+					$("#title").addClass("slideOut");
+					$("#title").removeClass("slideIn");
 					setTimeout(function() {
-						$("#secondary").addClass("slideOut").removeClass("slideIn");
+						$("#secondary").addClass("slideOut")
+						$("#secondary").removeClass("slideIn");
 					}, timespans.small);
 
 					setTimeout(function() {
@@ -151,11 +157,14 @@ const spotifyFuncs = {
 
 		stopTimers();
 
-		$("#detailsWrapper").addClass("fadeOut").removeClass("fadeIn");
+		$("#detailsWrapper").addClass("fadeOut");
+		$("#detailsWrapper").removeClass("fadeIn");
 
-		$("#title").addClass("slideOut").removeClass("slideIn");
+		$("#title").addClass("slideOut");
+		$("#title").removeClass("slideIn");
 		setTimeout(function() {
-			$("#secondary").addClass("slideOut").removeClass("slideIn");
+			$("#secondary").addClass("slideOut");
+			$("#secondary").removeClass("slideIn");
 
 			$("#secondary").one("animationend", function() {
 				$("#titleString").text(data.title);
@@ -189,8 +198,10 @@ const spotifyFuncs = {
 				$(":root").get(0).style.setProperty("--colorDark", darkColor);
 				$(":root").get(0).style.setProperty("--colorLight", lightColor);
 
-				$("#detailsWrapper").addClass("fadeIn").removeClass("fadeOut");
-				$("#title").addClass("slideIn").removeClass("slideOut");
+				$("#detailsWrapper").addClass("fadeIn")
+				$("#detailsWrapper").removeClass("fadeOut");
+				$("#title").addClass("slideIn")
+				$("#title").removeClass("slideOut");
 				
 				setTimeout(function() {
 					$("#secondary").removeClass("slideOut");
@@ -268,6 +279,16 @@ const spotifyFuncs = {
 				});
 			});
 		}, timespans.large)
+
+		setTimeout(function() {
+			// i'm lazy, there's some animation conflict here and it is 6 in the morning and i am tired
+			$("#title").removeClass("slideIn");
+			$("#title").removeClass("slideOut");
+			$("#detailsWrapper").removeClass("fadeIn");
+			$("#detailsWrapper").removeClass("fadeOut");
+			$("#secondary").removeClass("slideIn");
+			$("#secondary").removeClass("slideOut");
+		}, timespans.large * 3);
 	}
 };
 

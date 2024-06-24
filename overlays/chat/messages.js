@@ -1367,6 +1367,8 @@ function render7TVBadges(user, badgeBlock) {
 	const entitlements = user.entitlements;
 	const customSettings = entitlements.overlay.customSettings;
 
+	$(`.chatBlock[data-userid="${user.id}"] .sevenTVBadge`).remove();
+
 	if(customSettings) {
 		if(customSettings.hide7TVBadge) {
 			return;
@@ -1675,9 +1677,17 @@ function start7TVWebsocket() {
 					break;
 
 				case "PAINT":
-					user.setSevenTVPaint(data.ref_id);
-					console.log(user);
-					set7TVPaint($(`.name[data-userid="${user.id}"]`), data.ref_id, user.id);
+					let changePaint = true;
+					if("use7TVPaint" in user.entitlements.overlay.customSettings) {
+						if(!user.entitlements.overlay.customSettings.use7TVPaint) {
+							changePaint = false;
+						}
+					}
+
+					if(changePaint) {
+						user.setSevenTVPaint(data.ref_id);
+						set7TVPaint($(`.name[data-userid="${user.id}"]`), data.ref_id, user.id);
+					}
 					break;
 			}
 		},
@@ -1700,8 +1710,9 @@ function start7TVWebsocket() {
 			switch(data.kind) {
 				case "BADGE":
 					user.entitlements.sevenTV.badges = user.entitlements.sevenTV.badges.filter(function(badge) { 
-						return badge.id !== data.ref_id;
+						return badge !== data.ref_id;
 					});
+					render7TVBadges(user, $(`.chatBlock[data-userid="${user.id}"] .badges`));
 					break;
 
 				case "PAINT":
