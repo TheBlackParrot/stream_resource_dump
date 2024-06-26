@@ -163,6 +163,7 @@ body {
 	font-family: var(--nameFont);
 	font-weight: var(--nameFontWeight);
 	font-size: var(--nameFontSize);
+	align-self: center !important;
 }
 
 .displayName, .internationalName {

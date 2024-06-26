@@ -904,7 +904,7 @@ async function renderMessageBlock(data, rootElement) {
 
 	let hasBigEmotes = false;
 	let useLQImages = (localStorage.getItem("setting_useLowQualityImages") === "true");
-	if(localStorage.getItem("setting_enableEmotes") === "true") {
+	if(localStorage.getItem("setting_enableEmotes") === "true" && !data.isOverlayMessage) {
 		let checkExternalEmotes = Array.from(data.message.trim().normalize());
 
 		if(data.emotes) {
@@ -1678,9 +1678,11 @@ function start7TVWebsocket() {
 
 				case "PAINT":
 					let changePaint = true;
-					if("use7TVPaint" in user.entitlements.overlay.customSettings) {
-						if(!user.entitlements.overlay.customSettings.use7TVPaint) {
-							changePaint = false;
+					if(user.entitlements.overlay.customSettings) {
+						if("use7TVPaint" in user.entitlements.overlay.customSettings) {
+							if(!user.entitlements.overlay.customSettings.use7TVPaint) {
+								changePaint = false;
+							}
 						}
 					}
 

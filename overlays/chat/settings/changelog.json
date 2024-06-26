@@ -1,4 +1,25 @@
 {
+	"1719433323766": {
+		"updates": {
+			"chat": {
+				"revision": 55,
+				"notes": [
+					[
+						"fixed issue with 7tv paints not applying sometimes",
+						["this was my bad haha woops"]
+					],
+					[
+						"fixed vertical alignment issue with name elements if the avatar was the tallest element"
+					],
+					[
+						"prevented emote parsing in system messages",
+						["7TV added a global emote specifically for \"7TV\", which shows up in the initialization messages"]
+					]
+				]
+			}
+		}
+	},
+
 	"1719140993760": {
 		"updates": {
 			"chat": {
