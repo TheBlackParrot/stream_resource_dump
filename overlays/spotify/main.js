@@ -88,30 +88,28 @@ const spotifyFuncs = {
 		};
 
 		if(data.isPlaying) {
-			if(!wasPreviouslyPlaying) {
-				startTimers();
+			startTimers();
 
-				if(localStorage.getItem("setting_spotify_hideOnPause") === "true") {
-					updateMarquee();
+			if(localStorage.getItem("setting_spotify_hideOnPause") === "true") {
+				updateMarquee();
 
-					$("#detailsWrapper").addClass("fadeIn");
-					$("#detailsWrapper").removeClass("fadeOut");
-					$("#title").addClass("slideIn");
-					$("#title").removeClass("slideOut");
-					setTimeout(function() {
-						$("#secondary").addClass("slideIn");
-						$("#secondary").removeClass("slideOut");
-					}, timespans.small);
+				$("#detailsWrapper").addClass("fadeIn");
+				$("#detailsWrapper").removeClass("fadeOut");
+				$("#title").addClass("slideIn");
+				$("#title").removeClass("slideOut");
+				setTimeout(function() {
+					$("#secondary").addClass("slideIn");
+					$("#secondary").removeClass("slideOut");
+				}, timespans.small);
 
-					setTimeout(function() {
-						$("#artAnimationWrapper").fadeIn(timespans.large);
-						$("#bgWrapper .artContainer").fadeIn(parseFloat(localStorage.getItem("setting_spotify_artBackgroundFadeInDuration")) * 1000);
-					}, timespans.medium);
+				setTimeout(function() {
+					$("#artAnimationWrapper").fadeIn(timespans.large);
+					$("#bgWrapper .artContainer").fadeIn(parseFloat(localStorage.getItem("setting_spotify_artBackgroundFadeInDuration")) * 1000);
+				}, timespans.medium);
 
-					setTimeout(function() {
-						$("#scannableShadow").fadeIn(timespans.large);
-					}, timespans.large);
-				}
+				setTimeout(function() {
+					$("#scannableShadow").fadeIn(timespans.large);
+				}, timespans.large);
 			}
 			wasPreviouslyPlaying = true;
 
@@ -120,29 +118,46 @@ const spotifyFuncs = {
 		} else {
 			stopTimers();
 
-			if(wasPreviouslyPlaying) {
-				if(localStorage.getItem("setting_spotify_hideOnPause") === "true") {
-					$("#detailsWrapper").addClass("fadeOut");
-					$("#detailsWrapper").removeClass("fadeIn");
-					$("#title").addClass("slideOut");
-					$("#title").removeClass("slideIn");
-					setTimeout(function() {
-						$("#secondary").addClass("slideOut")
-						$("#secondary").removeClass("slideIn");
-					}, timespans.small);
+			if(localStorage.getItem("setting_spotify_hideOnPause") === "true") {
+				$("#detailsWrapper").addClass("fadeOut");
+				$("#detailsWrapper").removeClass("fadeIn");
+				$("#title").addClass("slideOut");
+				$("#title").removeClass("slideIn");
+				setTimeout(function() {
+					$("#secondary").addClass("slideOut")
+					$("#secondary").removeClass("slideIn");
+				}, timespans.small);
 
-					setTimeout(function() {
-						$("#artAnimationWrapper, #bgWrapper .artContainer").fadeOut(timespans.medium);
-					}, timespans.medium);
+				setTimeout(function() {
+					$("#artAnimationWrapper, #bgWrapper .artContainer").fadeOut(timespans.medium);
+				}, timespans.medium);
 
-					setTimeout(function() {
-						$("#scannableShadow").fadeOut(timespans.medium);
-					}, timespans.large);
-				}
+				setTimeout(function() {
+					$("#scannableShadow").fadeOut(timespans.medium);
+				}, timespans.large);
+			} else {
+				$("#detailsWrapper").addClass("fadeIn");
+				$("#detailsWrapper").removeClass("fadeOut");
+				$("#title").addClass("slideIn");
+				$("#title").removeClass("slideOut");
+				setTimeout(function() {
+					$("#secondary").addClass("slideIn");
+					$("#secondary").removeClass("slideOut");
+				}, timespans.small);
+
+				setTimeout(function() {
+					$("#artAnimationWrapper").fadeIn(timespans.large);
+					$("#bgWrapper .artContainer").fadeIn(parseFloat(localStorage.getItem("setting_spotify_artBackgroundFadeInDuration")) * 1000);
+				}, timespans.medium);
+
+				setTimeout(function() {
+					$("#scannableShadow").fadeIn(timespans.large);
+				}, timespans.large);				
 			}
 			wasPreviouslyPlaying = false;
 		}
 
+		currentSong.isPlaying = data.isPlaying;
 		if(data.uri === currentSong.uri) {
 			return;
 		}

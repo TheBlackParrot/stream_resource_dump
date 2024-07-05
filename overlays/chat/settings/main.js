@@ -1,5 +1,3 @@
-$.ajaxSetup({ timeout: parseInt(localStorage.getItem("setting_ajaxTimeout")) * 1000 || 7000 });
-
 function changeStatusCircle(which, status, msg) {
 	console.log(`${which}: ${status} - ${msg}`)
 	let circleWhich = $(`#${which}`);
@@ -11,8 +9,8 @@ function changeStatusCircle(which, status, msg) {
 
 $("#sensitive .section").show();
 
-const overlayRevision = 53;
-const overlayRevisionTimestamp = 1717153564754;
+const overlayRevision = 54;
+const overlayRevisionTimestamp = 1720218494209;
 $("#revision").text(`revision ${overlayRevision}`);
 
 function resetEverything() {
@@ -404,10 +402,10 @@ $.get(`version.json?sigh=${Date.now()}`, function(data) {
 });
 
 async function compressImage(url, size, quality) {
-	console.log(`compressing image ${url} to ${size}x${size}`);
+	console.log(`compressing image ${url} to ${size}x${size} at quality ${quality*100}`);
 
 	const controller = new AbortController();
-	const timedOutID = setTimeout(() => controller.abort(), parseInt(localStorage.getItem("setting_ajaxTimeout")) * 1000);
+	const timedOutID = setTimeout(() => controller.abort(), parseFloat(localStorage.getItem("setting_ajaxTimeout")) * 1000);
 
 	var response;
 	try {
@@ -430,6 +428,8 @@ async function compressImage(url, size, quality) {
 
 	canvas.height = canvas.width = size;
 
+	ctx.imageSmoothingEnabled = true;
+	ctx.imageSmoothingQuality = "high";
 	ctx.drawImage(bitmap, 0, 0, size, size);
 	return canvas.toDataURL("image/jpeg", quality);
 }

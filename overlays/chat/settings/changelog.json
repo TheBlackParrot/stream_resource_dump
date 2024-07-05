@@ -1,4 +1,44 @@
 {
+	"1720218494209": {
+		"updates": {
+			"spotify": {
+				"revision": 21,
+				"notes": [
+					[
+						"fixed overlay failing to return after resuming playback if the \"Hide overlay if music is paused\" setting was disabled while playback was paused"
+					],
+					[
+						"added a setting to control cover art image size",
+						["initially i forced it to double the cover art container size, but leaving it here seems kinda useless if no changes are being made to the layout"]
+					],
+					[
+						"added a setting to control cover art image quality settings"
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 54,
+				"notes": [
+					[
+						"moved the remote data fetching timeout setting to the main About page in the Panel Settings portion, as that applies to various non-chat related things now",
+						["meant to do this forever ago, my bad"]
+					],
+					[
+						"fixed the remote data fetching timeout setting being interpreted as an integer rather than a float in various areas of code",
+						["...guh. bluh, even"]
+					],
+					[
+						"force-capped the remote data fetching timeout setting between 3 and 30 seconds"
+					],
+					[
+						"enabled image smoothing on image compression/re-sizing function"
+					]
+				]
+			}
+		}
+	},
+
 	"1719433323766": {
 		"updates": {
 			"chat": {

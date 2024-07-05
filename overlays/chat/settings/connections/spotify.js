@@ -84,7 +84,7 @@ async function updateTrack() {
 
 					labels: [],
 					isrc: null,
-					art: await compressImage(art, parseInt(localStorage.getItem("setting_spotify_artSize")) * 2, 0.8),
+					art: await compressImage(art, parseInt(localStorage.getItem("setting_spotify_artImageSize")), parseInt(localStorage.getItem("setting_spotify_artImageQuality")) / 100),
 					year: null
 				};
 
@@ -131,7 +131,7 @@ async function updateTrack() {
 						});
 
 						const isrcController = new AbortController();
-						const isrcTimedOutID = setTimeout(() => isrcController.abort(), parseInt(localStorage.getItem("setting_ajaxTimeout")) * 1000);
+						const isrcTimedOutID = setTimeout(() => isrcController.abort(), parseFloat(localStorage.getItem("setting_ajaxTimeout")) * 1000);
 						var isrcResponse = {ok: false};
 						try {
 							isrcResponse = await fetch(`https://musicbrainz.org/ws/2/isrc/${response.item.external_ids.isrc}?fmt=xml&inc=releases&status=official`, { signal: isrcController.signal, headers: headers });
@@ -163,7 +163,7 @@ async function updateTrack() {
 							}
 
 							const labelController = new AbortController();
-							const labelTimedOutID = setTimeout(() => labelController.abort(), parseInt(localStorage.getItem("setting_ajaxTimeout")) * 1000);
+							const labelTimedOutID = setTimeout(() => labelController.abort(), parseFloat(localStorage.getItem("setting_ajaxTimeout")) * 1000);
 							var labelResponse = {ok: false};
 							try {
 								labelResponse = await fetch(`https://musicbrainz.org/ws/2/label?release=${release.id}`, { signal: labelController.signal, headers: headers });

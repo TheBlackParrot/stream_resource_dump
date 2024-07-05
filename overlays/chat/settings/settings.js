@@ -1,3 +1,13 @@
+function checkTimeoutSetting() {
+	const oldValue = parseFloat(localStorage.getItem("setting_ajaxTimeout"));
+	var value = oldValue;
+	if(isNaN(value)) {
+		value = parseFloat(defaultConfig.ajaxTimeout);
+	}
+	
+	localStorage.setItem("setting_ajaxTimeout", Math.min(Math.max(3, value), 30));
+}
+
 function rootCSS() {
 	return document.querySelector("html").style;
 }

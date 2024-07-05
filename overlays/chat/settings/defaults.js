@@ -931,7 +931,9 @@ const defaultConfig = {
 	"hr_animateRateChanges": "true",
 	"hr_animateRateInterval": "10",
 	"allowSampleMessages": "false",
-	"sampleMessageInterval": "5"
+	"sampleMessageInterval": "5",
+	"spotify_artImageSize": "104",
+	"spotify_artImageQuality": "80"
 };
 // i typed out the bigNoNoWords so you don't have to, i'm sorry :(
 // it's gotta know what to remove

@@ -813,15 +813,6 @@
 							<input id="debugFreezeChat" type="checkbox"/> <span class="settingInfo">Don't render new chat messages</span>
 						</div>
 					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Remote data fetching timeout</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="ajaxTimeout" min="2" max="99" step="1" value="4"/><span class="settingCellMeasurement">seconds</span>
-						</div>
-					</div>
 				</div>
 				<div class="part">
 					<h1>Images</h1>
@@ -2417,7 +2408,6 @@
 							<input id="panel_primaryColor" type="text" data-coloris value="#cbadffff"/>
 						</div>
 					</div>
-					<hr/>
 					<div class="setting">
 						<div class="settingCellLabel">
 							<span class="settingInfo">Minimum width</span>
@@ -2425,7 +2415,16 @@
 						<div class="settingCell">
 							<input type="number" id="panel_minWidth" min="100" max="4096" step="1" value="500"/><span class="settingCellMeasurement">px</span>
 						</div>
-					</div>					
+					</div>	
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Remote data fetching timeout</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="ajaxTimeout" min="2" max="99" step="1" value="4"/><span class="settingCellMeasurement">seconds</span>
+						</div>
+					</div>				
 				</div>
 				<div class="part">
 					<h1>Backups</h1>
@@ -3010,7 +3009,7 @@
 					</div>
 					<div class="setting" data-dependent="spotify_enableArt">
 						<div class="settingCellLabel">
-							<span class="settingInfo">Size</span>
+							<span class="settingInfo">Container size</span>
 						</div>
 						<div class="settingCell">
 							<input type="number" id="spotify_artSize" min="1" max="640" step="1" value="52"/><span class="settingCellMeasurement">px</span>
@@ -3022,6 +3021,29 @@
 						</div>
 						<div class="settingCell">
 							<input type="number" id="spotify_artBorderRadius" min="0" max="64" step="1" value="4"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting" data-dependent="spotify_enableArt">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Image size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_artImageSize" min="16" max="640" step="1" value="104"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableArt">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Image quality</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_artImageQuality" min="1" max="100" step="1" value="80"/><span class="settingCellMeasurement">%</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell smol">
+							Image settings will apply when new track data is obtained
 						</div>
 					</div>
 					<hr/>
@@ -6811,6 +6833,9 @@
 
 			loadSettings();
 			settingsCheck();
+
+			checkTimeoutSetting();
+			$.ajaxSetup({ timeout: parseFloat(localStorage.getItem("setting_ajaxTimeout")) * 1000 || 7000 });
 
 			await getUpdateData();
 
