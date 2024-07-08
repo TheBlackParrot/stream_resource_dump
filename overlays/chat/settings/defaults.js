@@ -131,7 +131,12 @@ const nonPublicSettings = [
 	"hr_port",
 	"hr_ip",
 	"hr_showBSPeak",
-	"hr_timeoutWait"
+	"hr_timeoutWait",
+	"chatHideUntilThresholdMet",
+	"chatHideThreshold",
+	"chatHideASCIIArt",
+	"chatHideASCIIArtThreshold",
+	"enableEventTagsFirstTimeChat"
 ];
 
 const defaultConfig = {
@@ -933,7 +938,15 @@ const defaultConfig = {
 	"allowSampleMessages": "false",
 	"sampleMessageInterval": "5",
 	"spotify_artImageSize": "104",
-	"spotify_artImageQuality": "80"
+	"spotify_artImageQuality": "80",
+	"chatHideUntilThresholdMet": "false",
+	"chatHideThreshold": "5",
+	"chatHideASCIIArt": "true",
+	"chatHideASCIIArtThreshold": "10",
+	"enableEventTagsFirstTimeChat": "false",
+	"eventTagsFirstTimeChatFormat": "first time chat",
+	"highlightFirstTimeMessages": "false"
+
 };
 // i typed out the bigNoNoWords so you don't have to, i'm sorry :(
 // it's gotta know what to remove

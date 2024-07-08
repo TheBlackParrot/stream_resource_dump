@@ -1,4 +1,68 @@
 {
+	"1720409575766": {
+		"updates": {
+			"chat": {
+				"revision": 56,
+				"notes": [
+					[
+						"fixed italic fonts being forced on viewers that have applied custom chat settings if the streamer uses an italic font"
+					],
+					[
+						"fixed small vertical alignment issue in the user info container"
+					],
+					[
+						"messages from newer viewers can now be hidden until they send some amount of messages",
+						["this particular metric has been tracked for a *long* time for avatar display permissions, turning this on (it's off by default) shouldn't disrupt things"]
+					],
+					[
+						"added the ability to filter messages suspected of only being ASCII art",
+						["messages containing characters from the unicode ranges for Block Elements, Box Drawing, Braille Patterns, Dingbats, and Geometric Shapes will trigger filter checks"]
+					],
+					[
+						"messages flagged as a \"first time chat\" can now be tagged as such on the overlay"
+					],
+					[
+						"ensured messages decay if the decay timer on message elements somehow fails"
+					],
+					[
+						"added icons for cheer, resub, and new subscription event tags"
+					]
+				]
+			},
+
+			"customizer": {
+				"revision": 4,
+				"notes": [
+					[
+						"message fonts can now be italicized",
+						["this was initially for a bugfix on the chat overlay, but decided to just make it a setting for viewers"]
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 55,
+				"notes": [
+					[
+						"added mention of the chat customization page for viewers to change their own chat settings in the Chat > Individuality section and the About section",
+						["i don't think some people know this (still) exists actually: https://theblackparrot.me/overlays/chat-customizer"]
+					],
+					[
+						"separated chat filtering settings from Chat > Function into their own section",
+						["it was getting long... which you could see as a negative thing, in a sense :("]
+					],
+					[
+						"removed sensitive content warning from the Chat > Function tab",
+						["was all moved to the new Chat > Filtering tab"]
+					],
+					[
+						"moved message settings in Chat > Function to Chat > Messages with the rest of the message settings"
+					]
+				]
+			}
+		}
+	},
+
 	"1720218494209": {
 		"updates": {
 			"spotify": {

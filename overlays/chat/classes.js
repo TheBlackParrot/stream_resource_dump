@@ -565,6 +565,7 @@ class User {
 		rootCSS().setProperty(`--msgSpacing${this.id}`, `calc(${data.messageCharSpacing}px * var(--msgScalar${this.id}))`);
 		rootCSS().setProperty(`--msgLineHeight${this.id}`, `calc(${data.messageLineHeight}px * (var(--messageLineHeightNum) / 24))`);
 		rootCSS().setProperty(`--msgVariant${this.id}`, data.messageVariant);
+		rootCSS().setProperty(`--msgStyle${this.id}`, (data.messageItalic ? "italic" : "normal"));
 
 		rootCSS().setProperty(`--pfpShape${this.id}`, `${data.avatarBorderRadius}%`);
 

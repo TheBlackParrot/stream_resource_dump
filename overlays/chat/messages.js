@@ -56,18 +56,65 @@ async function prepareMessage(tags, message, self, forceHighlight) {
 		await userData.customSettingsFetchPromise;
 	}
 
+	let hasMetThreshold = true;
+	if(localStorage.getItem("setting_chatHideUntilThresholdMet") === "true" && !isOverlayMessage) {
+		hasMetThreshold = false;
+		
+		if(parseInt(localStorage.getItem(`msgCount_${broadcasterData.id}_${userData.id}`)) < parseInt(localStorage.getItem("setting_chatHideThreshold"))) {
+			if(userData.moderator) {
+				hasMetThreshold = true;
+			} else {
+				if('badges' in tags) {
+					if(tags.badges) {
+						let roles = Object.keys(tags.badges);
+						if(roles.indexOf("vip") !== -1) {
+							hasMetThreshold = true;
+						}
+					}
+				}
+			}
+		} else {
+			hasMetThreshold = true;
+		}
+	}
+	if(!hasMetThreshold) {
+		return;
+	}
+
+	if(localStorage.getItem("setting_chatHideASCIIArt") === "true") {
+		const brailleAmount = (message.match(brailleTest) || []).length;
+		const messageLength = message.length;
+		const asciiThreshold = (parseInt(localStorage.getItem("setting_chatHideASCIIArtThreshold")) || 0) / 100;
+
+		if(brailleAmount / messageLength >= asciiThreshold) {
+			message = "[REDACTED]";
+			tags['emotes'] = null;
+			tags['emotes-raw'] = null;
+		}
+	}
+
 	let outObject = {
 		message: message,
 		isOverlayMessage: isOverlayMessage,
 		type: tags['message-type'],
-		highlighted: false,
+		highlighted: (forceHighlight ? true : false),
 		emotes: tags['emotes'],
 		uuid: tags['id'],
 		parseCheermotes: ('bits' in tags),
 		user: userData
 	};
 
-	outObject.highlighted = (forceHighlight ? true : false);
+	if('first-msg' in tags) {
+		if(tags['first-msg']) {
+			if(localStorage.getItem("setting_enableEventTagsFirstTimeChat") === "true") {
+				outObject.extraInfo = `<div class="firstTimeChatIcon"></div> ${localStorage.getItem("setting_eventTagsFirstTimeChatFormat")}`;
+				if(localStorage.getItem("setting_highlightFirstTimeMessages") === "true") {
+					outObject.highlighted = true;
+				}
+			}
+		}
+	}
+
 	if('msg-id' in tags) {
 		switch(tags['msg-id']) {
 			case "highlighted-message":
@@ -104,7 +151,8 @@ async function prepareMessage(tags, message, self, forceHighlight) {
 	switch(outObject.type) {
 		case "resub":
 			if(localStorage.getItem("setting_enableEventTagsSubs") === "true") {
-				outObject.extraInfo = localStorage.getItem("setting_eventTagsResubFormat")
+				outObject.extraInfo = '<div class="subIcon"></div> ';
+				outObject.extraInfo += localStorage.getItem("setting_eventTagsResubFormat")
 					.replaceAll("%amount", tags['msg-param-cumulative-months'])
 					.replaceAll("%tier", subTiers[tags['msg-param-sub-plan']]);
 			}
@@ -112,14 +160,16 @@ async function prepareMessage(tags, message, self, forceHighlight) {
 
 		case "subscription":
 			if(localStorage.getItem("setting_enableEventTagsSubs") === "true") {
-				outObject.extraInfo = localStorage.getItem("setting_eventTagsNewSubFormat").replaceAll("%tier", subTiers[tags['msg-param-sub-plan']]);
+				outObject.extraInfo = '<div class="subIcon"></div> ';
+				outObject.extraInfo += localStorage.getItem("setting_eventTagsNewSubFormat").replaceAll("%tier", subTiers[tags['msg-param-sub-plan']]);
 			}
 			break;
 
 		case "cheer":
 		case "chat":
 			if("bits" in tags && localStorage.getItem("setting_enableEventTagsBits") === "true") {
-				outObject.extraInfo = localStorage.getItem("setting_eventTagsCheerFormat").replaceAll("%amount", parseInt(tags['bits']).toLocaleString());
+				outObject.extraInfo = '<div class="cheerIcon"></div> ';
+				outObject.extraInfo += localStorage.getItem("setting_eventTagsCheerFormat").replaceAll("%amount", parseInt(tags['bits']).toLocaleString());
 			}
 			break;
 	}
@@ -329,6 +379,11 @@ var testNameBlock;
 function getRootElement(data) {
 	if($(`.chatBlock[data-rootIdx="${combinedCount}"]`).length) {
 		if(lastUser === data.user.id && !lastRootElement[0].hasClass("slideOut")) {
+			if(localStorage.getItem("setting_chatRemoveMessageDelay") !== "0") {
+				const ensureClear = Date.now() + (parseFloat(localStorage.getItem("setting_chatRemoveMessageDelay")) * 1.5 * 1000);
+				lastRootElement[0].attr("data-ensureClear", ensureClear);
+			}
+
 			return lastRootElement;
 		}
 	}
@@ -336,8 +391,14 @@ function getRootElement(data) {
 	combinedCount++;
 	lastUser = data.user.id;
 
-	const cornerAlignment = localStorage.getItem("setting_chatCornerAlignment").split(",");
 	let rootElement = $(`<div class="chatBlock slideIn" data-rootIdx="${combinedCount}" data-userID="${data.user.id}"></div>`);
+
+	if(localStorage.getItem("setting_chatRemoveMessageDelay") !== "0") {
+		const ensureClear = Date.now() + (parseFloat(localStorage.getItem("setting_chatRemoveMessageDelay")) * 1.5 * 1000);
+		rootElement.attr("data-ensureClear", ensureClear);
+	}
+	
+	const cornerAlignment = localStorage.getItem("setting_chatCornerAlignment").split(",");
 	if(localStorage.getItem("setting_alternateCornerAlignment") === "true") {
 		const order = [cornerAlignment[1], (cornerAlignment[1] === "left" ? "right" : "left")];
 		rootElement.addClass(order[combinedCount % 2]);
@@ -869,6 +930,7 @@ function initMessageBlockCustomizations(data, elements) {
 			messageBlock.css("-webkit-text-stroke", `var(--msgExtraWeight${data.user.id}) transparent`);
 			messageBlock.css("line-height", `var(--msgLineHeight${data.user.id})`);
 			messageBlock.css("font-variant", `var(--msgVariant${data.user.id})`);
+			messageBlock.css("font-style", `var(--msgStyle${data.user.id})`);
 		}
 	}
 }

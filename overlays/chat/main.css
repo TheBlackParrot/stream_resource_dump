@@ -77,7 +77,7 @@ body {
 	margin-bottom: var(--userInfoBottomMargin);
 	display: inline-flex;
 	justify-content: flex-start;
-	align-items: center;
+	align-items: baseline;
 	background-color: var(--userInfoBackgroundColor);
 	padding-top: var(--userInfoPaddingVertical);
 	padding-bottom: var(--userInfoPaddingVertical);
@@ -271,6 +271,7 @@ tt, code, pre {
 	max-height: var(--avatarSize);
 	margin-right: 10px;
 	border-radius: var(--avatarBorderRadius);
+	align-items: center;
 }
 
 .highlighted {
@@ -765,7 +766,7 @@ img.emoji {
 .ffzBadge { display: var(--displayFFZBadges); }
 .bttvBadge { display: var(--displayBTTVBadges); }
 
-.pointRedeemIcon, .watchStreakIcon {
+.pointRedeemIcon, .watchStreakIcon, .firstTimeChatIcon, .cheerIcon, .giftIcon, .subIcon {
 	display: inline-block;
 	height: 1.25em;
 	width: 1.25em;
@@ -777,6 +778,13 @@ img.emoji {
 
 .pointRedeemIcon { -webkit-mask-image: url("icons/points.svg"); }
 .watchStreakIcon { -webkit-mask-image: url("icons/eye.svg"); }
+.firstTimeChatIcon {
+	margin-right: 0.2em;
+	-webkit-mask-image: url("icons/sparkles.svg");
+}
+.cheerIcon { -webkit-mask-image: url("icons/cheer.svg"); }
+.giftIcon { -webkit-mask-image: url("icons/gift.svg"); }
+.subIcon { -webkit-mask-image: url("icons/sub.svg"); }
 
 #filterWrapper {
 	position: fixed;

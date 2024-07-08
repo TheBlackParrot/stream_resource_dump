@@ -1,5 +1,5 @@
-const overlayRevision = 55;
-const overlayRevisionTimestamp = 1719433323766;
+const overlayRevision = 56;
+const overlayRevisionTimestamp = 1720409575766;
 
 const enums = {
 	weight: {
@@ -837,3 +837,5 @@ const testMessageConversations = [
 		}
 	]
 ];
+
+const brailleTest = new RegExp("[\u2500-\u257F\u2580-\u259F\u25A0-\u25FF\u2700-\u27BF\u2800-\u28FF]", "g")

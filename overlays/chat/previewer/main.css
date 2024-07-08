@@ -87,6 +87,7 @@
 	--name-filters: url(#outlineEffect) url(#shadowEffect) var(--name-glow-effect);
 
 	--message-font: "Manrope";
+	--message-font-style: normal;
 	--message-size: 14pt;
 	--message-weight: 700;
 	--message-weight-extra: 0px;
@@ -321,6 +322,8 @@ hr {
 #namePreviewValue {
 	display: inline-block;
 	padding: 4px;
+	padding-left: 10px;
+	padding-right: 10px;
 
 	font-family: var(--name-font);
 	font-size: var(--name-size);
@@ -347,6 +350,7 @@ hr {
 	padding-bottom: var(--global-spacing);
 
 	font-family: var(--message-font);
+	font-style: var(--message-font-style);
 	font-size: var(--message-size);
 	font-weight: var(--message-weight);
 	font-variant: var(--message-variant);

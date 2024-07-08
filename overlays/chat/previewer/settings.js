@@ -106,6 +106,9 @@ const settingUpdaters = {
 	messageFont: function(value) {
 		rootCSS().setProperty("--message-font", value);
 	},
+	messageItalic: function(value) {
+		rootCSS().setProperty("--message-font-style", (value === "true" ? "italic" : "normal"));
+	},
 	messageWeight: function(value) {
 		rootCSS().setProperty("--message-weight", value);
 	},

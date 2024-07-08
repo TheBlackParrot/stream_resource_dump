@@ -137,6 +137,8 @@ CREATE TABLE IF NOT EXISTS data
 
 	messageFont VARCHAR(64)
 		DEFAULT "Manrope",
+	messageItalic BOOLEAN
+		DEFAULT false,
 	messageSize REAL(3,1) UNSIGNED
 		DEFAULT 15
 		CHECK (messageSize>=13 AND messageSize<=18),

@@ -68,6 +68,7 @@
 					<div class="row" data-tab="sounds"><i class="fas fa-volume-up"></i>Sounds</div>
 					<hr/>
 					<div class="row" data-tab="viewerinfo"><i class="fas fa-user"></i>Chatter Information</div>
+					<div class="row" data-tab="filtering"><i class="fas fa-filter"></i>Filtering</div>
 					<div class="row" data-tab="messages"><i class="fas fa-comment-dots"></i>Messages</div>
 					<hr/>
 					<div class="row" data-tab="avatars"><i class="fas fa-image"></i>Avatars</div>
@@ -794,7 +795,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="section" data-content="function" data-sensitive="true">
+			<div class="section" data-content="function">
 				<div class="part">
 					<h1>Overlay Management</h1>
 					<div class="setting">
@@ -819,37 +820,6 @@
 					<div class="setting">
 						<div class="settingCell">
 							<input id="useLowQualityImages" type="checkbox"/> <span class="settingInfo">Use lower quality images (when available)</span>
-						</div>
-					</div>
-				</div>
-				<div class="part">
-					<h1>Bots</h1>
-					<div class="setting">
-						<div class="settingCell">
-							<input checked id="autoHideAllKnownBots" type="checkbox"/> <span class="settingInfo">Automatically hide known bot accounts</span>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Users to add to the list<br/><span style="font-size: var(--font-size-smol); opacity: 0.67;">(One account per line)</span></span>
-						</div>
-						<div class="settingCell">
-							<textarea id="chatUsersThatAreBots"></textarea>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Users to remove from the list<br/><span style="font-size: var(--font-size-smol); opacity: 0.67;">(One account per line)</span></span>
-						</div>
-						<div class="settingCell">
-							<textarea id="chatUsersThatAreNotBots"></textarea>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCell smol">
-							Known bot list data is fetched from <a href="https://twitchinsights.net/bots">Twitch Insights</a>
 						</div>
 					</div>
 				</div>
@@ -888,297 +858,6 @@
 							<input type="number" id="delayChat" min="0" max="30" step="0.5" value="2"/><span class="settingCellMeasurement">seconds</span>
 						</div>
 					</div>					
-					<hr/>
-					<div class="setting">
-						<div class="settingCell">
-							<input id="hideCustomRewardMessages" type="checkbox"/> <span class="settingInfo">Hide messages attached to custom channel point redemptions</span>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Hide accounts<br/><span style="font-size: var(--font-size-smol); opacity: 0.67;">(One account per line)</span></span>
-						</div>
-						<div class="settingCell">
-							<textarea id="chatHideAccounts"></textarea>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCell">
-							<input checked id="chatHideCommands" type="checkbox" data-dependent="hideCommands"/> <span class="settingInfo">Hide messages associated with custom chat commands</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="hideCommands">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Command character</span>
-						</div>
-						<div class="settingCell">
-							<input id="chatCommandCharacter" type="text" value="!"/>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Censor words in chat<br/><span style="font-size: var(--font-size-smol); opacity: 0.67;">(One word per line, harsher filter)</span></span>
-						</div>
-						<div class="settingCell">
-							<textarea id="bigNoNoWords"></textarea>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Censor words in chat<br/><span style="font-size: var(--font-size-smol); opacity: 0.67;">(One word per line, softer filter)</span></span>
-						</div>
-						<div class="settingCell">
-							<textarea id="bigNoNoWordsWordSpecific"></textarea>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCell smol">
-							The harsher filter combines chat messages into one long string of characters with non-letter characters stripped out, and characters with accent marks are "devolved" back to an English alphabet.<br/>
-							The softer filter specifically only looks for the word given, it does not combine the message into one long string of characters. Put words here if you get false positives. (This will also include words given for the harsher filter).
-						</div>
-					</div>
-				</div>
-				<div class="part">
-					<h1>Messages</h1>
-					<div class="setting">
-						<div class="settingCell">
-							<input checked id="chatParseMarkdown" type="checkbox"/> <span class="settingInfo">Allow inline Markdown formatting</span>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCell">
-							<input checked id="enableEventTagsSubs" type="checkbox" data-dependent="eventTagsSubs"/> <span class="settingInfo">Tag messages with subscription notices</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="eventTagsSubs">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Resub format</span>
-						</div>
-						<div class="settingCell">
-							<input id="eventTagsResubFormat" type="text" value="%tier resubscription (%amount months)"/>
-						</div>
-					</div>
-					<div class="setting" data-dependent="eventTagsSubs">
-						<div class="settingCellLabel">
-							<span class="settingInfo">New sub format</span>
-						</div>
-						<div class="settingCell">
-							<input id="eventTagsNewSubFormat" type="text" value="new %tier subscription"/>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCell">
-							<input checked id="enableEventTagsBits" type="checkbox" data-dependent="eventTagsBits"/> <span class="settingInfo">Tag messages with cheer notices</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="eventTagsBits">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Cheer format</span>
-						</div>
-						<div class="settingCell">
-							<input id="eventTagsCheerFormat" type="text" value="cheered %amount bits"/>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCell">
-							<input checked id="enableEventTagsChannelPoints" type="checkbox" data-dependent="eventTagsChannelPoints"/> <span class="settingInfo">Tag messages with channel point redemptions</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="eventTagsChannelPoints">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Redemption format</span>
-						</div>
-						<div class="settingCell">
-							<input id="eventTagsChannelPointFormat" type="text" value="%name (%amount)"/>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCell">
-							<input checked id="enableEventTagsWatchStreaks" type="checkbox" data-dependent="eventTagsWatchStreaks"/> <span class="settingInfo">Tag messages with watch streak notices</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="eventTagsWatchStreaks">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Notice format</span>
-						</div>
-						<div class="settingCell">
-							<input id="eventTagsWatchStreakFormat" type="text" value="watched %amount streams in a row (%reward)"/>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCell">
-							<input checked id="enableEventTagsAnnouncements" type="checkbox" data-dependent="enableEventTagsAnnouncements"/> <span class="settingInfo">Tag announcement messages</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="enableEventTagsAnnouncements">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Tag string</span>
-						</div>
-						<div class="settingCell">
-							<input id="eventTagsAnnouncementFormat" type="text" value="announcement"/>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCell smol">
-							Use <tt>%amount</tt> in fields with varying amounts to show the amount of said event<br/>
-							Use <tt>%tier</tt> in subscription/resubscription fields to show the subscription plan name<br/>
-							Use <tt>%name</tt> in the point redemption field to show the name of the redemption<br/>
-							Use <tt>%reward</tt> to show the channel point reward if points are being given to the viewer
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Prime plan name</span>
-						</div>
-						<div class="settingCell">
-							<input id="eventTagsPlanNamePrime" type="text" value="Twitch Prime"/>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Tier 1 plan name</span>
-						</div>
-						<div class="settingCell">
-							<input id="eventTagsPlanNameTier1" type="text" value="Tier 1"/>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Tier 2 plan name</span>
-						</div>
-						<div class="settingCell">
-							<input id="eventTagsPlanNameTier2" type="text" value="Tier 2"/>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Tier 3 plan name</span>
-						</div>
-						<div class="settingCell">
-							<input id="eventTagsPlanNameTier3" type="text" value="Tier 3"/>
-						</div>
-					</div>
-				</div>
-				<div class="part">
-					<h1>Timestamps</h1>
-					<div class="setting">
-						<div class="settingCell">
-							<input id="enableMessageTimestamps" type="checkbox" data-dependent="timestamps"/> <span class="settingInfo">Add timestamps before message text</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCell">
-							<input checked id="hideTimestampsOnBigEmotes" type="checkbox"/> <span class="settingInfo">Hide timestamps if message only contains emotes</span>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCell">
-							<input id="timestampTracksUptime" type="checkbox"/> <span class="settingInfo">Track stream uptime rather than current local time</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="timestamps">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Format</span>
-						</div>
-						<div class="settingCell">
-							<input id="timestampFormat" type="text" value="H:mm:ss"/>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCell smol">
-							Local time formatting available: <a href="https://moment.github.io/luxon/#/formatting?id=table-of-tokens">here</a><br/>
-							Duration time formatting available: <a href="https://moment.github.io/luxon/api-docs/index.html#durationtoformat">here</a>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting" data-dependent="timestamps">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Color</span>
-						</div>
-						<div class="settingCell">
-							<input id="timestampColor" type="text" data-coloris value="#808080"/>
-						</div>
-					</div>
-					<div class="setting" data-dependent="timestamps">
-						<div class="settingCell">
-							<input checked id="timestampUsesGradient" type="checkbox"/> <span class="settingInfo">Apply a gradient to timestamps</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="timestamps">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Gradient color</span>
-						</div>
-						<div class="settingCell">
-							<input id="timestampColorSecondary" type="text" data-coloris value="#FFFFFF"/>
-						</div>
-					</div>
-					<div class="setting" data-dependent="timestamps">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Gradient angle</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="timestampGradientAngle" min="0" max="360" step="1" value="170"/><span class="settingCellMeasurement">deg</span>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting" data-dependent="timestamps">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Font</span>
-						</div>
-						<div class="settingCell">
-							<input id="timestampFont" type="text" value="Manrope"/>
-							<input id="timestampFontItalic" type="checkbox"/> <span class="settingInfo">Italic</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="timestamps">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Size</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="timestampFontSize" min="4" max="64" step="0.25" value="12"/><span class="settingCellMeasurement">pt</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="timestamps">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Weight</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="timestampFontWeight" min="100" max="900" step="25" value="900"/>
-						</div>
-					</div>
-					<div class="setting" data-dependent="timestamps">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Additional weight</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="timestampFontWeightExtra" min="0" max="8" step="0.1" value="0.5"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="timestamps">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Letter spacing</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="timestampLetterSpacing" min="-12" max="12" step="0.2" value="0"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting" data-dependent="timestamps">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Horizontal margin</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="timestampPadding" min="-50" max="50" step="0.5" value="10"/><span class="settingCellMeasurement">px</span>
-						</div>
-					</div>
 				</div>
 				<div class="part">
 					<h1>Commands</h1>
@@ -2179,6 +1858,7 @@
 						<p>This is the settings panel for my streaming overlays, make sure this and any other part of the overlay suite is loaded in OBS!</p>
 						<p>If anything seems wrong or is malfunctioning, make sure you refresh the cache on all overlay sources (it's in the properties for each source).</p>
 						<p>Links to all public overlays and for more information on them are available at <a href="https://theblackparrot.me/overlays">https://theblackparrot.me/overlays/</a></p>
+						<p>Viewers can customizer their own chat settings on the Chat Customizer page: <a href="https://theblackparrot.me/overlays/chat-customizer">https://theblackparrot.me/overlays/chat-customizer</a></p>
 					</div>
 					<div class="setting">
 						<div class="settingCell centerSetting">
@@ -6032,6 +5712,12 @@
 			<div class="section" data-content="messages">
 				<div class="part">
 					<div class="setting">
+						<div class="settingCell">
+							<input checked id="chatParseMarkdown" type="checkbox"/> <span class="settingInfo">Allow inline Markdown formatting</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
 						<div class="settingCellLabel">
 							<span class="settingInfo">Background color</span>
 						</div>
@@ -6282,6 +5968,145 @@
 				<div class="part">
 					<h1>Event Tags</h1>
 					<div class="setting">
+						<div class="settingCell">
+							<input checked id="enableEventTagsSubs" type="checkbox" data-dependent="eventTagsSubs"/> <span class="settingInfo">Tag messages with subscription notices</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="eventTagsSubs">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Resub format</span>
+						</div>
+						<div class="settingCell">
+							<input id="eventTagsResubFormat" type="text" value="%tier resubscription (%amount months)"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="eventTagsSubs">
+						<div class="settingCellLabel">
+							<span class="settingInfo">New sub format</span>
+						</div>
+						<div class="settingCell">
+							<input id="eventTagsNewSubFormat" type="text" value="new %tier subscription"/>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="enableEventTagsBits" type="checkbox" data-dependent="eventTagsBits"/> <span class="settingInfo">Tag messages with cheer notices</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="eventTagsBits">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Cheer format</span>
+						</div>
+						<div class="settingCell">
+							<input id="eventTagsCheerFormat" type="text" value="cheered %amount bits"/>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="enableEventTagsChannelPoints" type="checkbox" data-dependent="eventTagsChannelPoints"/> <span class="settingInfo">Tag messages with channel point redemptions</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="eventTagsChannelPoints">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Redemption format</span>
+						</div>
+						<div class="settingCell">
+							<input id="eventTagsChannelPointFormat" type="text" value="%name (%amount)"/>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="enableEventTagsWatchStreaks" type="checkbox" data-dependent="eventTagsWatchStreaks"/> <span class="settingInfo">Tag messages with watch streak notices</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="eventTagsWatchStreaks">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Notice format</span>
+						</div>
+						<div class="settingCell">
+							<input id="eventTagsWatchStreakFormat" type="text" value="watched %amount streams in a row (%reward)"/>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="enableEventTagsAnnouncements" type="checkbox" data-dependent="enableEventTagsAnnouncements"/> <span class="settingInfo">Tag announcement messages</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="enableEventTagsAnnouncements">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Tag string</span>
+						</div>
+						<div class="settingCell">
+							<input id="eventTagsAnnouncementFormat" type="text" value="announcement"/>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="enableEventTagsFirstTimeChat" type="checkbox" data-dependent="enableEventTagsFirstTimeChat"/> <span class="settingInfo">Tag messages from first time chatters</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="enableEventTagsAnnouncements">
+						<div class="settingCell">
+							<input id="highlightFirstTimeMessages" type="checkbox"/> <span class="settingInfo">Highlight messages from first time chatters</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="enableEventTagsAnnouncements">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Tag string</span>
+						</div>
+						<div class="settingCell">
+							<input id="eventTagsFirstTimeChatFormat" type="text" value="first time chat"/>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell smol">
+							Use <tt>%amount</tt> in fields with varying amounts to show the amount of said event<br/>
+							Use <tt>%tier</tt> in subscription/resubscription fields to show the subscription plan name<br/>
+							Use <tt>%name</tt> in the point redemption field to show the name of the redemption<br/>
+							Use <tt>%reward</tt> to show the channel point reward if points are being given to the viewer
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Prime plan name</span>
+						</div>
+						<div class="settingCell">
+							<input id="eventTagsPlanNamePrime" type="text" value="Twitch Prime"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Tier 1 plan name</span>
+						</div>
+						<div class="settingCell">
+							<input id="eventTagsPlanNameTier1" type="text" value="Tier 1"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Tier 2 plan name</span>
+						</div>
+						<div class="settingCell">
+							<input id="eventTagsPlanNameTier2" type="text" value="Tier 2"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Tier 3 plan name</span>
+						</div>
+						<div class="settingCell">
+							<input id="eventTagsPlanNameTier3" type="text" value="Tier 3"/>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
 						<div class="settingCellLabel">
 							<span class="settingInfo">Color</span>
 						</div>
@@ -6289,7 +6114,6 @@
 							<input id="eventTagsColor" type="text" data-coloris value="#FFFFFFFF"/>
 						</div>
 					</div>
-					<hr/>
 					<div class="setting">
 						<div class="settingCellLabel">
 							<span class="settingInfo">Font</span>
@@ -6353,6 +6177,240 @@
 						</div>
 					</div>
 				</div>
+				<div class="part">
+					<h1>Timestamps</h1>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="enableMessageTimestamps" type="checkbox" data-dependent="timestamps"/> <span class="settingInfo">Add timestamps before message text</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="hideTimestampsOnBigEmotes" type="checkbox"/> <span class="settingInfo">Hide timestamps if message only contains emotes</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="timestampTracksUptime" type="checkbox"/> <span class="settingInfo">Track stream uptime rather than current local time</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="timestamps">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Format</span>
+						</div>
+						<div class="settingCell">
+							<input id="timestampFormat" type="text" value="H:mm:ss"/>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell smol">
+							Local time formatting available: <a href="https://moment.github.io/luxon/#/formatting?id=table-of-tokens">here</a><br/>
+							Duration time formatting available: <a href="https://moment.github.io/luxon/api-docs/index.html#durationtoformat">here</a>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting" data-dependent="timestamps">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Color</span>
+						</div>
+						<div class="settingCell">
+							<input id="timestampColor" type="text" data-coloris value="#808080"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="timestamps">
+						<div class="settingCell">
+							<input checked id="timestampUsesGradient" type="checkbox"/> <span class="settingInfo">Apply a gradient to timestamps</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="timestamps">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Gradient color</span>
+						</div>
+						<div class="settingCell">
+							<input id="timestampColorSecondary" type="text" data-coloris value="#FFFFFF"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="timestamps">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Gradient angle</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="timestampGradientAngle" min="0" max="360" step="1" value="170"/><span class="settingCellMeasurement">deg</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting" data-dependent="timestamps">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Font</span>
+						</div>
+						<div class="settingCell">
+							<input id="timestampFont" type="text" value="Manrope"/>
+							<input id="timestampFontItalic" type="checkbox"/> <span class="settingInfo">Italic</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="timestamps">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="timestampFontSize" min="4" max="64" step="0.25" value="12"/><span class="settingCellMeasurement">pt</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="timestamps">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="timestampFontWeight" min="100" max="900" step="25" value="900"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="timestamps">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Additional weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="timestampFontWeightExtra" min="0" max="8" step="0.1" value="0.5"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="timestamps">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Letter spacing</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="timestampLetterSpacing" min="-12" max="12" step="0.2" value="0"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting" data-dependent="timestamps">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Horizontal margin</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="timestampPadding" min="-50" max="50" step="0.5" value="10"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section" data-content="filtering" data-sensitive="true">
+				<div class="part">
+					<div class="setting">
+						<div class="settingCell">
+							<input id="hideCustomRewardMessages" type="checkbox"/> <span class="settingInfo">Hide messages attached to custom channel point redemptions</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="chatHideUntilThresholdMet" type="checkbox" data-dependent="chatHideUntilThresholdMet"/> <span class="settingInfo">Hide messages from viewers until enough messages have been sent</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="chatHideUntilThresholdMet">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Message count threshold</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatHideThreshold" min="1" max="100" step="1" value="5"/><span class="settingCellMeasurement">messages</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell smol">
+							This setting will not apply to VIPs and moderators.
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="chatHideASCIIArt" type="checkbox" data-dependent="chatHideASCIIArt"/> <span class="settingInfo">Hide messages suspected of being copypasta ASCII art</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="chatHideASCIIArt">
+						<div class="settingCellLabel">
+							<span class="settingInfo">ASCII art content percentage</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatHideASCIIArtThreshold" min="1" max="100" step="1" value="10"/><span class="settingCellMeasurement">%</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Hide accounts<br/><span style="font-size: var(--font-size-smol); opacity: 0.67;">(One account per line)</span></span>
+						</div>
+						<div class="settingCell">
+							<textarea id="chatHideAccounts"></textarea>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Censor words in chat<br/><span style="font-size: var(--font-size-smol); opacity: 0.67;">(One word per line, harsher filter)</span></span>
+						</div>
+						<div class="settingCell">
+							<textarea id="bigNoNoWords"></textarea>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Censor words in chat<br/><span style="font-size: var(--font-size-smol); opacity: 0.67;">(One word per line, softer filter)</span></span>
+						</div>
+						<div class="settingCell">
+							<textarea id="bigNoNoWordsWordSpecific"></textarea>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell smol">
+							The harsher filter combines chat messages into one long string of characters with non-letter characters stripped out, and characters with accent marks are "devolved" back to an English alphabet.<br/>
+							The softer filter specifically only looks for the word given, it does not combine the message into one long string of characters. Put words here if you get false positives. (This will also include words given for the harsher filter).
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="chatHideCommands" type="checkbox" data-dependent="hideCommands"/> <span class="settingInfo">Hide messages associated with custom chat commands</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="hideCommands">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Command character</span>
+						</div>
+						<div class="settingCell">
+							<input id="chatCommandCharacter" type="text" value="!"/>
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Bots</h1>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="autoHideAllKnownBots" type="checkbox"/> <span class="settingInfo">Automatically hide known bot accounts</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Users to add to the list<br/><span style="font-size: var(--font-size-smol); opacity: 0.67;">(One account per line)</span></span>
+						</div>
+						<div class="settingCell">
+							<textarea id="chatUsersThatAreBots"></textarea>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Users to remove from the list<br/><span style="font-size: var(--font-size-smol); opacity: 0.67;">(One account per line)</span></span>
+						</div>
+						<div class="settingCell">
+							<textarea id="chatUsersThatAreNotBots"></textarea>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell smol">
+							Known bot list data is fetched from <a href="https://twitchinsights.net/bots">Twitch Insights</a>
+						</div>
+					</div>
+				</div>
 			</div>
 			<div class="section" data-content="individuality">
 				<div class="part">
@@ -6392,6 +6450,12 @@
 					<div class="setting" data-dependent="userCustomizations">
 						<div class="settingCell">
 							<input checked id="allowUserCustomMessageFonts" type="checkbox"/> <span class="settingInfo">Allow chatters to change their message font (and related settings)</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell smol">
+							Viewers can customize their own personal settings on the Chat Customizer page: https://theblackparrot.me/overlays/chat-customizer
 						</div>
 					</div>
 				</div>
