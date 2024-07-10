@@ -1,5 +1,5 @@
-const overlayRevision = 21;
-const overlayRevisionTimestamp = 1720218494209;
+const overlayRevision = 22;
+const overlayRevisionTimestamp = 1720628041023;
 
 const settingsChannel = new BroadcastChannel("settings_overlay");
 
@@ -529,8 +529,12 @@ const settingUpdaters = {
 	},
 
 	hideOnPause: function(value) {
-		if(!wasPreviouslyPlaying && currentSong.uri !== null) {
-			spotifyFuncs.trackData(currentSong);
+		if(currentSong.uri !== null) {
+			if(!wasPreviouslyPlaying && value === "true") {
+				hideStuff();
+			} else {
+				showStuff();
+			}
 		}
 	}
 };

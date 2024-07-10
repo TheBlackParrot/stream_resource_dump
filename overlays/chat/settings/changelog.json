@@ -1,4 +1,41 @@
 {
+	"1720628041023": {
+		"updates": {
+			"chat": {
+				"revision": 57,
+				"notes": [
+					[
+						"replaced placeholder first time chat icon with twitch's first time chat icon",
+						["oopsie i fogor"]
+					],
+					[
+						"mentions in chat messages can now reflect colors from the person being mentioned",
+						["e.g. mentioning me would color my name #CBADFF in the message, rather than only emboldening it"]
+					]
+				]
+			},
+
+			"spotify": {
+				"revision": 22,
+				"notes": [
+					[
+						"fixed slide-in animations retriggering every time playback state checks were triggered",
+						["i think i'm just going to end up completely re-doing display flow at some point, should be mostly fine for now"]
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 56,
+				"notes": [
+					[
+						"(update only contains new settings)"
+					]
+				]
+			}
+		}
+	},
+
 	"1720409575766": {
 		"updates": {
 			"chat": {

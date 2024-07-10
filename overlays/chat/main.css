@@ -778,10 +778,7 @@ img.emoji {
 
 .pointRedeemIcon { -webkit-mask-image: url("icons/points.svg"); }
 .watchStreakIcon { -webkit-mask-image: url("icons/eye.svg"); }
-.firstTimeChatIcon {
-	margin-right: 0.2em;
-	-webkit-mask-image: url("icons/sparkles.svg");
-}
+.firstTimeChatIcon { -webkit-mask-image: url("icons/sparkles.svg"); }
 .cheerIcon { -webkit-mask-image: url("icons/cheer.svg"); }
 .giftIcon { -webkit-mask-image: url("icons/gift.svg"); }
 .subIcon { -webkit-mask-image: url("icons/sub.svg"); }

@@ -945,7 +945,11 @@ const defaultConfig = {
 	"chatHideASCIIArtThreshold": "10",
 	"enableEventTagsFirstTimeChat": "false",
 	"eventTagsFirstTimeChatFormat": "first time chat",
-	"highlightFirstTimeMessages": "false"
+	"highlightFirstTimeMessages": "false",
+	"chatMessageMentionsReflectTargetColor": "false",
+	"chatMessageMentionsReflectTargetColorFade": "true",
+	"chatMessageMentionsReflectTargetColorFadeAmount": "60",
+	"chatMessageMentionsReflectTargetColorFadeColor": "#FFFFFF"
 
 };
 // i typed out the bigNoNoWords so you don't have to, i'm sorry :(

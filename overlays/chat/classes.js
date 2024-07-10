@@ -641,6 +641,7 @@ class User {
 class UserSet {
 	constructor() {
 		this.promises = {};
+		this.usernames = {};
 	}
 
 	async getUser(id) {
@@ -689,6 +690,11 @@ class UserSet {
 					broadcasterType: userDataRaw.broadcaster_type,
 					created: userDataRaw.created_at
 				});
+
+				actuallyThis.usernames[userDataRaw.login] = actuallyThis[id];
+				if(userDataRaw.display_name) {
+					actuallyThis.usernames[userDataRaw.display_name] = actuallyThis[id];
+				}
 
 				resolve(actuallyThis[id]);
 			}

@@ -1092,8 +1092,26 @@ async function renderMessageBlock(data, rootElement) {
 				lastWordWasEmote = false;
 			}
 
-			if(word[0] === "@") {
-				words[wordIdx] = `<strong>${word}</strong>`;
+			if(word[0] === "@" && word !== "@") {
+				if(localStorage.getItem("setting_chatMessageMentionsReflectTargetColor") === "true") {
+					let target = word.substr(1);
+					if(target in twitchUsers.usernames) {
+						const targetUser = twitchUsers.usernames[target];
+						let col = `var(--nameColor${targetUser.id})`;
+						if(localStorage.getItem("setting_chatMessageMentionsReflectTargetColorFade") === "true") {
+							col = localStorage.getItem(`color_${targetUser.id}`);
+							if(col === "var(--defaultNameColor)") {
+								col = localStorage.getItem("setting_chatDefaultNameColor");
+							}
+							col = interpolateColor(col, localStorage.getItem("setting_chatMessageMentionsReflectTargetColorFadeColor"), parseFloat(localStorage.getItem("setting_chatMessageMentionsReflectTargetColorFadeAmount")));
+						}
+						words[wordIdx] = `<strong data-ignoreStyle="true" style="background-color: ${col};">${word}</strong>`;
+					} else {
+						words[wordIdx] = `<strong>${word}</strong>`;
+					}
+				} else {
+					words[wordIdx] = `<strong>${word}</strong>`;
+				}
 			}
 
 			if(data.parseCheermotes && localStorage.getItem("setting_chatShowCheermotes") === "true") {
@@ -1361,7 +1379,7 @@ async function parseMessage(data) {
 	setHistoryOpacity();
 
 	if(localStorage.getItem("setting_chatMessageReflectUserColor") === "true" && !data.isOverlayMessage) {
-		messageBlock.find("strong").css("background-color", `var(--chatMessageColor${data.user.id})`);
+		messageBlock.find('strong[data-ignoreStyle!="true"]').css("background-color", `var(--chatMessageColor${data.user.id})`);
 	}
 
 	let hasBigEmotes = messageBlock.hasClass("isBigEmoteMode");
