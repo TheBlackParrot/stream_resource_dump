@@ -175,9 +175,6 @@ const spotifyFuncs = {
 		if(localStorage.getItem("setting_spotify_enableArt") === "true") { $("#artWrapper").show(); }
 
 		currentSong = data;
-		clearTimeout(albumArtistCycleTO);
-
-		stopTimers();
 
 		$("#detailsWrapper").addClass("fadeOut");
 		$("#detailsWrapper").removeClass("fadeIn");
@@ -188,7 +185,7 @@ const spotifyFuncs = {
 			$("#secondary").addClass("slideOut");
 			$("#secondary").removeClass("slideIn");
 
-			$("#secondary").one("animationend", function() {
+			setTimeout(function() {
 				$("#titleString").text(data.title);
 				$("#artistString").text(data.artists.join(", "));
 				$("#albumString").text(data.album.name);
@@ -200,7 +197,6 @@ const spotifyFuncs = {
 				$(":root").get(0).style.setProperty("--currentProgressAngle", '0deg');
 				prevPerc = -1;
 				updateProgress();
-				startTimers();
 
 				$("#albumString").removeClass("isSingle");
 				if(data.album.type === "single") {
@@ -237,7 +233,7 @@ const spotifyFuncs = {
 					}, parseFloat(localStorage.getItem("setting_spotify_artistAlbumCycleDelay")) * 1000);
 				}
 				updateMarquee();
-			});
+			}, timespans.large);
 		}, timespans.small);
 
 		setTimeout(function() {

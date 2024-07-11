@@ -1,4 +1,18 @@
 {
+	"1720683202542": {
+		"updates": {
+			"spotify": {
+				"revision": 23,
+				"notes": [
+					[
+						"fixed song metadata failing to update on narrower source sizes",
+						["note to self: CSS animationend events are not as stable as they seem"]
+					]
+				]
+			}
+		}
+	},
+
 	"1720628041023": {
 		"updates": {
 			"chat": {
