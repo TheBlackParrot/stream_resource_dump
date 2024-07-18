@@ -75,13 +75,20 @@ async function setNextAdBreak() {
 		}
 	});
 
+	console.log(adData);
+
 	if(!adData.data) {
 		console.log("ad data blank, probably not authorized");
 		return;
 	}
 
+	if(!adData.data.length) {
+		console.log("ad data blank, probably not authorized");
+		return;
+	}
+
 	const data = adData.data[0];
-	nextAdBreak = data.next_ad_at * 1000;
+	nextAdBreak = (parseInt(data.next_ad_at) || 0) * 1000;
 }
 
 var adTimerTO;

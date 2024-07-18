@@ -949,7 +949,12 @@ const defaultConfig = {
 	"chatMessageMentionsReflectTargetColor": "false",
 	"chatMessageMentionsReflectTargetColorFade": "true",
 	"chatMessageMentionsReflectTargetColorFadeAmount": "60",
-	"chatMessageMentionsReflectTargetColorFadeColor": "#FFFFFF"
+	"chatMessageMentionsReflectTargetColorFadeColor": "#FFFFFF",
+	"spotify_enableShadowEffectsScannable": "false",
+	"spotify_enableOutlineEffectsScannable": "false",
+	"spotify_outlineColorReflectsScannable": "false",
+	"bigNoNoEmotes": "",
+	"bigNoNoEmotesEmoteSpecific": ""
 
 };
 // i typed out the bigNoNoWords so you don't have to, i'm sorry :(

@@ -94,8 +94,10 @@
 :root {
 	--scroll-direction: scroll;
 	--shadowStuff: url(#shadowEffect);
+	--shadowStuffScannable: url(#shadowEffect);
 	--overlayShadowColor: #000000;
 	--outlineStuff: url(#outlineEffect);
+	--outlineStuffScannable: url(#outlineEffectColorReflect);
 	--overlayOutlineColor: #000000;
 
 	--effects: var(--outlineStuff) var(--shadowStuff);

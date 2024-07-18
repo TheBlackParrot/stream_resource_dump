@@ -979,6 +979,15 @@ async function renderMessageBlock(data, rootElement) {
 					let startAt = parseInt(spots[0]);
 					let stopAt = parseInt(spots[1]);
 
+					if(parseInt(i) === 0) {
+						let ignoreCheck = data.message.substr(startAt, stopAt - startAt + 1);
+						console.log(ignoreCheck);
+						if(isEmoteIgnored(ignoreCheck)) {
+							console.log(`ignoring emote ${ignoreCheck}`);
+							continue;
+						}
+					}
+
 					for(let charIdx = startAt; charIdx <= stopAt; charIdx++) {
 						originalMessage[charIdx] = "";
 						checkExternalEmotes[charIdx] = "";
@@ -1018,7 +1027,7 @@ async function renderMessageBlock(data, rootElement) {
 				if(!(word in chatEmotes)) {
 					eprww.push(eprw[wordIdx]);
 				} else {
-					if(!chatEmotes[word].enabled) {
+					if(!chatEmotes[word].enabled || isEmoteIgnored(word)) {
 						eprww.push(eprw[wordIdx]);
 					}
 				}
@@ -1060,7 +1069,7 @@ async function renderMessageBlock(data, rootElement) {
 				let externalEmote = chatEmotes[word];
 				let modifiers = [];
 
-				if(!externalEmote.enabled) {
+				if(!externalEmote.enabled || isEmoteIgnored(word)) {
 					lastWordWasEmote = false;
 				} else {
 					if("modifiers" in externalEmote) {

@@ -1859,6 +1859,7 @@
 						<p>If anything seems wrong or is malfunctioning, make sure you refresh the cache on all overlay sources (it's in the properties for each source).</p>
 						<p>Links to all public overlays and for more information on them are available at <a href="https://theblackparrot.me/overlays">https://theblackparrot.me/overlays/</a></p>
 						<p>Viewers can customizer their own chat settings on the Chat Customizer page: <a href="https://theblackparrot.me/overlays/chat-customizer">https://theblackparrot.me/overlays/chat-customizer</a></p>
+						<p>If you need further/quicker support, check the Discord server invite down below!</p>
 					</div>
 					<div class="setting">
 						<div class="settingCell centerSetting">
@@ -1882,6 +1883,14 @@
 						</div>
 						<div class="settingCell">
 							<tt>@theblackparrot</tt>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<strong><i class="fa-brands fa-discord"></i> Discord</strong>
+						</div>
+						<div class="settingCell">
+							<tt>https://discord.gg/WFbzQ4WC8Z</tt>
 						</div>
 					</div>
 					<div class="setting">
@@ -2228,6 +2237,25 @@
 					<div class="setting">
 						<div class="settingCell smol">
 							This setting is experimental and (for me, at least) breaks chat parsing in the current version of OBS. In browsers, this will fix some unicode emoji not being set to trigger big emote mode.
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Filtering</h1>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Ignore emotes that contain<br/><span style="font-size: var(--font-size-smol); opacity: 0.67;">(One string per line)</span></span>
+						</div>
+						<div class="settingCell">
+							<textarea id="bigNoNoEmotes"></textarea>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Ignore emotes<br/><span style="font-size: var(--font-size-smol); opacity: 0.67;">(One emote per line)</span></span>
+						</div>
+						<div class="settingCell">
+							<textarea id="bigNoNoEmotesEmoteSpecific"></textarea>
 						</div>
 					</div>
 				</div>
@@ -3213,7 +3241,12 @@
 							<input checked id="spotify_enableShadowEffects" type="checkbox" data-dependent="spotify_enableShadowEffects"/> <span class="settingInfo">Draw shadows underneath text content</span>
 						</div>
 					</div>
-					<div class="setting" data-dependent="spotify_enableShadowEffects">
+					<div class="setting">
+						<div class="settingCell">
+							<input id="spotify_enableShadowEffectsScannable" type="checkbox"/> <span class="settingInfo">Draw shadows underneath scannable's foreground content</span>
+						</div>
+					</div>
+					<div class="setting">
 						<div class="settingCellLabel">
 							<span class="settingInfo">Color</span>
 						</div>
@@ -3221,7 +3254,7 @@
 							<input id="spotify_shadowColor" type="text" data-coloris value="#000000FF"/>
 						</div>
 					</div>
-					<div class="setting" data-dependent="spotify_enableShadowEffects">
+					<div class="setting">
 						<div class="settingCellLabel">
 							<span class="settingInfo">X offset</span>
 						</div>
@@ -3229,7 +3262,7 @@
 							<input type="number" id="spotify_shadowXOffset" min="-32" max="32" step="0.25" value="0"/><span class="settingCellMeasurement">px</span>
 						</div>
 					</div>
-					<div class="setting" data-dependent="spotify_enableShadowEffects">
+					<div class="setting">
 						<div class="settingCellLabel">
 							<span class="settingInfo">Y offset</span>
 						</div>
@@ -3237,7 +3270,7 @@
 							<input type="number" id="spotify_shadowYOffset" min="-32" max="32" step="0.25" value="1"/><span class="settingCellMeasurement">px</span>
 						</div>
 					</div>
-					<div class="setting" data-dependent="spotify_enableShadowEffects">
+					<div class="setting">
 						<div class="settingCellLabel">
 							<span class="settingInfo">Blur amount</span>
 						</div>
@@ -3251,7 +3284,17 @@
 							<input checked id="spotify_enableOutlineEffects" type="checkbox" data-dependent="spotify_enableOutlineEffects"/> <span class="settingInfo">Draw outlines underneath text content</span>
 						</div>
 					</div>
-					<div class="setting" data-dependent="spotify_enableOutlineEffects">
+					<div class="setting">
+						<div class="settingCell">
+							<input id="spotify_enableOutlineEffectsScannable" type="checkbox"/> <span class="settingInfo">Draw outlines underneath scannable's foreground content</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="spotify_outlineColorReflectsScannable" type="checkbox"/> <span class="settingInfo">Scannable's outline color reflects its background color</span>
+						</div>
+					</div>
+					<div class="setting">
 						<div class="settingCellLabel">
 							<span class="settingInfo">Color</span>
 						</div>
@@ -3259,7 +3302,7 @@
 							<input id="spotify_outlineColor" type="text" data-coloris value="#000000FF"/>
 						</div>
 					</div>
-					<div class="setting" data-dependent="spotify_enableOutlineEffects">
+					<div class="setting">
 						<div class="settingCellLabel">
 							<span class="settingInfo">Matrix Size</span>
 						</div>
@@ -3267,7 +3310,7 @@
 							<input type="number" id="spotify_outlineOrder" min="0" max="64" step="1" value="5"/>
 						</div>
 					</div>
-					<div class="setting" data-dependent="spotify_enableOutlineEffects">
+					<div class="setting">
 						<div class="settingCellLabel">
 							<span class="settingInfo">Divisor</span>
 						</div>
@@ -3276,12 +3319,12 @@
 						</div>
 					</div>
 					<hr/>
-					<div class="setting" data-dependent="spotify_enableOutlineEffects">
+					<div class="setting">
 						<div class="settingCell">
 							<input checked id="spotify_outlineStripCorners" type="checkbox"/> <span class="settingInfo">Smooth out corners of the outline matrix</span>
 						</div>
 					</div>
-					<div class="setting" data-dependent="spotify_enableOutlineEffects">
+					<div class="setting">
 						<div class="settingCellLabel">
 							<span class="settingInfo">Distance threshold</span>
 						</div>

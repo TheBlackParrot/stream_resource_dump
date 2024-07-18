@@ -9,8 +9,8 @@ function changeStatusCircle(which, status, msg) {
 
 $("#sensitive .section").show();
 
-const overlayRevision = 56;
-const overlayRevisionTimestamp = 1720628041023;
+const overlayRevision = 58;
+const overlayRevisionTimestamp = 1720944273198;
 $("#revision").text(`revision ${overlayRevision}`);
 
 function resetEverything() {
@@ -208,6 +208,9 @@ $('input[type="range"]').on("update", function(e) {
 
 $("input, select, textarea").on("change", function(e) {
 	if($(this).attr("data-ignoreSetting") === "true") {
+		return;
+	}
+	if($(this).hasClass("selectedBackup")) {
 		return;
 	}
 	

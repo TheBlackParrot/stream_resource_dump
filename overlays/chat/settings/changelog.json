@@ -1,4 +1,93 @@
 {
+	"9999999999999": {
+		"updates": {
+			"bsvas": {
+				"revision": 6,
+				"notes": [
+					[
+						"hash checks are performed independent of map data fetching now",
+						["should prevent stalling if beatsaver's slow to respond with map data, seen this happen a few times"]
+					],
+					[
+						"fixed internal cover art not loading for bs+ data endpoints"
+					]
+				]
+			},
+
+			"chat": {
+				"revision": 58,
+				"notes": [
+					[
+						"emote parsing can now be filtered to ignore words or substrings, akin to the censor filter",
+						["figured some of you with the funny 'the' -> 'hte' emote might not want it to show on the overlay, or you just don't want to see a specific streamer's emotes or something"]
+					]
+				]
+			},
+
+			"clock": {
+				"revision": 6,
+				"notes": [
+					[
+						"attempt at fixing an odd case of the ad timer never updating properly"
+					]
+				]
+			},
+
+			"spotify": {
+				"revision": 24,
+				"notes": [
+					[
+						"added the ability to apply outline and shadow effects to the scannable tag's foreground content",
+						["do note this may make scannable tags harder to read, effects will be forced off if the foreground color is dark (unless the outline color matches the background) as this renders it completely unreadable"]
+					],
+					[
+						"fixed black foreground color resetting to white when a new song starts"
+					],
+					[
+						"fixed both secondary metadata fields appearing occasionally when a new song starts"
+					]
+				]				
+			},
+
+			"settings": {
+				"revision": 58,
+				"notes": [
+					[
+						"updated FancySelect to v0.6.1",
+						["had to add a small patch to fix a type error in a conditional check, too"]
+					],
+					[
+						"fixed backup selection dropdown not working"
+					],
+					[
+						"fixed setting input checks triggering on the backup selection dropdown"
+					],
+					[
+						"added a 'hash' event to beatsaber output, triggered whenever the current map's hash changes",
+						["this is primarily for the VOD audio system as it runs on map hashes rather than any map data, i've seen it stall a couple of times waiting for beatsaver to respond with some extra data. which is bad"]
+					]
+				]
+			}
+		}
+	},
+
+	"1720944273198": {
+		"updates": {
+			"settings": {
+				"revision": 57,
+				"notes": [
+					[
+						"fixed icon/text color inconsistencies in the sidebar"
+					],
+					[
+						"added mention of the new support-oriented discord server in the About page",
+						["https://discord.gg/WFbzQ4WC8Z"]
+					]
+				]
+			}
+		}
+	},
+
 	"1720683202542": {
 		"updates": {
 			"spotify": {

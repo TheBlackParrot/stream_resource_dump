@@ -125,6 +125,11 @@ async function updateBeatSaberMapData() {
 		});
 		return;
 	} else {
+		postToBSEventChannel({
+			type: "hash",
+			data: currentBSSong.map.hash
+		});
+
 		for(const packName in mapPacks) {
 			const pack = mapPacks[packName];
 			if(pack.indexOf(currentBSSong.map.hash) !== -1) {

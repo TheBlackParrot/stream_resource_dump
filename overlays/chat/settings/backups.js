@@ -116,6 +116,8 @@ function generateBackupOptions() {
 
 		$(".selectedBackup").append(option);
 	}
+
+	FancySelect.update($(".selectedBackup")[0]);
 }
 
 function getSelectedBackup() {

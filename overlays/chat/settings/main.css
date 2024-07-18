@@ -266,6 +266,7 @@ body {
 	-webkit-mask-image: url('icons/bs-notes.png');
 	height: 60%;
 	vertical-align: middle;
+	background-color: var(--primary-color);
 }
 
 h1 .icon {
@@ -293,6 +294,9 @@ h1 .icon {
 
 #sidebar .row:hover .icon, #sidebar .rowCollapsable:hover .icon {
 	background-color: #fff;
+}
+#sidebar .row:hover .fas, #sidebar .rowCollapsable:hover .fas {
+	color: #fff;
 }
 
 .active {

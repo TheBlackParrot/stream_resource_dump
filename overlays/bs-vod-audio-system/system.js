@@ -86,28 +86,28 @@ var eventFuncs = {
 		}
 	},
 
-	"map": async function(data) {
-		let map = mapInfo = data.data;
-		map.isVODSafe = 0;
-
-		console.log(`Song is "${map.song.title}${(map.song.subtitle == "" ? "" : " " + map.song.subtitle)}" by ${map.song.artist}, mapped by ${map.map.author}`);
+	"hash": function(data) {
+		let hash = data.data;
+		let isVODSafe = 0;
 
 		let allow = true;
 		let found = "";
 
-		if(map.map.hash.indexOf("wip") !== -1) {
-			console.log(`${map.map.hash} is a WIP map, muting VOD audio`);
-			map.isVODSafe = 2;
+		$(":root").get(0).style.setProperty("--currentHash", `"${hash}"`);
+
+		if(hash.indexOf("wip") !== -1) {
+			console.log(`${hash} is a WIP map, muting VOD audio`);
+			isVODSafe = 2;
 			allow = false;
 			found = "local";
 		} else {
-			if(db.safe.indexOf(map.map.hash) !== -1) {
-				console.log(`${map.map.hash} is marked safe, unmuting VOD audio`);
-				map.isVODSafe = 1;
+			if(db.safe.indexOf(hash) !== -1) {
+				console.log(`${hash} is marked safe, unmuting VOD audio`);
+				isVODSafe = 1;
 				found = "local";
-			} else if(db.unsafe.indexOf(map.map.hash) !== -1) {
-				console.log(`${map.map.hash} is marked unsafe, muting VOD audio`);
-				map.isVODSafe = 2;
+			} else if(db.unsafe.indexOf(hash) !== -1) {
+				console.log(`${hash} is marked unsafe, muting VOD audio`);
+				isVODSafe = 2;
 				allow = false;
 				found = "local";
 			} else {
@@ -117,32 +117,32 @@ var eventFuncs = {
 					for(let url in remoteDB) {
 						let rDB = remoteDB[url];
 
-						if(rDB.safe.indexOf(map.map.hash) !== -1) {
+						if(rDB.safe.indexOf(hash) !== -1) {
 							presentInRemote = true;
 
 							if(found !== "") {
-								if(localStorage.getItem("setting_bsvodaudio_muteOnConflict") === "true" && map.isVODSafe == 2) {
-									console.log(`${map.map.hash} conflict found in ${url} with ${found}, leaving marked as unsafe`);
+								if(localStorage.getItem("setting_bsvodaudio_muteOnConflict") === "true" && isVODSafe == 2) {
+									console.log(`${hash} conflict found in ${url} with ${found}, leaving marked as unsafe`);
 								} else {
-									console.log(`${map.map.hash} conflict found in ${url} with ${found}, preferring lowest index array`);
-									map.isVODSafe = 1;
+									console.log(`${hash} conflict found in ${url} with ${found}, preferring lowest index array`);
+									isVODSafe = 1;
 								}
 							} else {
-								console.log(`${map.map.hash} is marked safe in ${url}, unmuting VOD audio`);
-								map.isVODSafe = 1;
+								console.log(`${hash} is marked safe in ${url}, unmuting VOD audio`);
+								isVODSafe = 1;
 							}
 
 							found = url;
-						} else if(rDB.unsafe.indexOf(map.map.hash) !== -1) {
+						} else if(rDB.unsafe.indexOf(hash) !== -1) {
 							presentInRemote = true;
 
-							console.log(`${map.map.hash} is marked unsafe in ${url}, muting VOD audio`);
+							console.log(`${hash} is marked unsafe in ${url}, muting VOD audio`);
 
 							if(found !== "") {
-								console.log(`${map.map.hash} conflict found in ${url} with ${found}`);
+								console.log(`${hash} conflict found in ${url} with ${found}`);
 							}
 
-							map.isVODSafe = 2;
+							isVODSafe = 2;
 							allow = false;
 							found = url;
 						}
@@ -151,10 +151,10 @@ var eventFuncs = {
 
 				if(!presentInRemote) {
 					if(localStorage.getItem("setting_bsvodaudio_muteOnUnknown")) {
-						console.log(`${map.map.hash} is unknown, muting VOD audio out of caution`);
+						console.log(`${hash} is unknown, muting VOD audio out of caution`);
 						allow = false;
 					} else {
-						console.log(`${map.map.hash} is unknown, letting VOD audio remain`);
+						console.log(`${hash} is unknown, letting VOD audio remain`);
 						allow = true;
 					}
 				}
@@ -162,12 +162,19 @@ var eventFuncs = {
 		}
 
 		currentVODAudioState = "Unknown";
-		if(map.isVODSafe) {
-			currentVODAudioState = (map.isVODSafe === 1 ? "Safe" : "Unsafe");
+		if(isVODSafe) {
+			currentVODAudioState = (isVODSafe === 1 ? "Safe" : "Unsafe");
 		}
 		checkAudioState();
 
-		$(":root").get(0).style.setProperty("--currentHash", `"${map.map.hash}"`);
+		postToOBSEventChannel("toggleVODAudio", allow);
+	},
+
+	"map": async function(data) {
+		let map = mapInfo = data.data;
+
+		console.log(`Song is "${map.song.title}${(map.song.subtitle == "" ? "" : " " + map.song.subtitle)}" by ${map.song.artist}, mapped by ${map.map.author}`);
+
 		$(":root").get(0).style.setProperty("--currentTitle", `"${map.song.title}${(map.song.subtitle == "" ? "" : " " + map.song.subtitle)}"`);
 		$(":root").get(0).style.setProperty("--currentArtist", `"${map.song.artist}"`);
 		$(":root").get(0).style.setProperty("--currentMapper", `"${map.map.author}"`);
@@ -175,10 +182,12 @@ var eventFuncs = {
 		if(map.cover.internal.image === null) {
 			$(":root").get(0).style.setProperty("--currentArt", `url(data:image/jpeg;base64,${map.cover.external.image})`);
 		} else {
-			$(":root").get(0).style.setProperty("--currentArt", `url(data:image/jpeg;base64,${map.cover.internal.image})`);
+			if(localStorage.getItem("setting_beatSaberDataMod") === "datapuller") {
+				$(":root").get(0).style.setProperty("--currentArt", `url(data:image/jpeg;base64,${map.cover.internal.image})`);
+			} else {
+				$(":root").get(0).style.setProperty("--currentArt", `url(${map.cover.internal.image})`);
+			}
 		}
-
-		postToOBSEventChannel("toggleVODAudio", allow);
 	}
 }
 

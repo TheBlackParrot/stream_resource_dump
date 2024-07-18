@@ -66,9 +66,9 @@ function determineScannableFGColor(data) {
 		console.log(`scannable brightness: ${brightness}, max: ${maxBrightness}`);
 
 		if(brightness > maxBrightness) {
-			settingUpdaters["scannableFGDark"]("true");
+			settingUpdaters["scannableFGDark"]((localStorage.getItem("setting_spotify_scannableFGDark") === "true" ? "false" : "true"));
 		} else {
-			settingUpdaters["scannableFGDark"]("false");
+			settingUpdaters["scannableFGDark"]((localStorage.getItem("setting_spotify_scannableFGDark") === "true" ? "true" : "false"));
 		}
 	}
 
@@ -90,6 +90,7 @@ function showStuff() {
 	$("#title").addClass("slideIn");
 	$("#title").removeClass("slideOut");
 	setTimeout(function() {
+		cycleAlbumArtist("artist", true);
 		$("#secondary").addClass("slideIn");
 		$("#secondary").removeClass("slideOut");
 	}, timespans.small);
@@ -379,11 +380,11 @@ function updateSecondaryMarquee() {
 }
 
 var currentCycle;
-function cycleAlbumArtist(which) {
+function cycleAlbumArtist(which, noAnimations) {
 	clearTimeout(albumArtistCycleTO);
 	currentCycle = which;
 
-	let fadeDuration = (localStorage.getItem("setting_spotify_enableAnimations") === "true" ? 250 : 0)
+	let fadeDuration = (localStorage.getItem("setting_spotify_enableAnimations") === "true" || noAnimations ? 250 : 0)
 
 	if(which === "artist") {
 		$("#extraStringWrapper").fadeOut(fadeDuration, function() {

@@ -1,4 +1,4 @@
-const overlayRevision = 23;
+const overlayRevision = 24;
 const overlayRevisionTimestamp = 1720683202542;
 
 const settingsChannel = new BroadcastChannel("settings_overlay");
@@ -420,13 +420,33 @@ const settingUpdaters = {
 		}
 	},
 
+	enableShadowEffectsScannable: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--shadowStuffScannable", "url(#shadowEffect)");
+		} else {
+			rootCSS().setProperty("--shadowStuffScannable", "url(#blankEffect)");
+		}
+	},
+
+	enableOutlineEffectsScannable: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--outlineStuffScannable", "url(#outlineEffectColorReflect)");
+		} else {
+			rootCSS().setProperty("--outlineStuffScannable", "url(#blankEffect)");
+		}
+	},
+
 	scannableFGDark: function(value) {
 		if(value === "true") {
 			rootCSS().setProperty("--scannable-mix-mode", 'multiply');
-			rootCSS().setProperty("--scannable-filters", 'invert(1)');
+			if(localStorage.getItem("setting_spotify_outlineColorReflectsScannable") === "true") {
+				rootCSS().setProperty("--scannable-filters", 'invert(1) var(--outlineStuffScannable)');
+			} else {
+				rootCSS().setProperty("--scannable-filters", 'invert(1)');
+			}
 		} else {
 			rootCSS().setProperty("--scannable-mix-mode", 'screen');
-			rootCSS().setProperty("--scannable-filters", 'unset');
+			rootCSS().setProperty("--scannable-filters", 'var(--outlineStuffScannable) var(--shadowStuffScannable)');
 		}
 	},
 
@@ -536,6 +556,16 @@ const settingUpdaters = {
 				showStuff();
 			}
 		}
+	},
+
+	outlineColorReflectsScannable: function(value) {
+		if(value === "true") {
+			$("#changeThisForScannableColorReflect").attr("flood-color", "var(--scannable-background-color)");
+		} else {
+			$("#changeThisForScannableColorReflect").attr("flood-color", "var(--overlayOutlineColor)");
+		}
+
+		settingUpdaters["scannableFGDark"](localStorage.getItem("setting_spotify_scannableFGDark"));
 	}
 };
 

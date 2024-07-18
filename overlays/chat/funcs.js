@@ -556,3 +556,26 @@ function getSmoothMatrix(size, threshold) {
 	}
 	return matrix;
 }
+
+function isEmoteIgnored(emote) {
+	const softList = localStorage.getItem("setting_bigNoNoEmotes").split("\n")
+						.map(function(x) { return x.trim(); })
+						.filter(function(x) { return x.length > 0; });
+	const hardList = localStorage.getItem("setting_bigNoNoEmotesEmoteSpecific").split("\n")
+						.map(function(x) { return x.trim(); })
+						.filter(function(x) { return x.length > 0; });
+
+	for(const check of hardList) {
+		if(check === emote) {
+			return true;
+		}
+	}
+
+	for(const check of softList) {
+		if(emote.indexOf(check) !== -1) {
+			return true;
+		}
+	}
+
+	return false;
+}
