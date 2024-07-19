@@ -10,6 +10,9 @@
 					],
 					[
 						"fixed internal cover art not loading for bs+ data endpoints"
+					],
+					[
+						"calmed console logging on beat saber event messages"
 					]
 				]
 			},
@@ -19,7 +22,8 @@
 				"notes": [
 					[
 						"emote parsing can now be filtered to ignore words or substrings, akin to the censor filter",
-						["figured some of you with the funny 'the' -> 'hte' emote might not want it to show on the overlay, or you just don't want to see a specific streamer's emotes or something"]
+						["figured some of you with the funny 'the' -> 'hte' emote might not want it to show on the overlay, or you just don't want to see a specific streamer's emotes or something"],
+						{"anchor": "bigNoNoEmotes"}
 					]
 				]
 			},
@@ -28,7 +32,7 @@
 				"revision": 6,
 				"notes": [
 					[
-						"attempt at fixing an odd case of the ad timer never updating properly"
+						"added some sanity checks on ad timer updating/values"
 					]
 				]
 			},
@@ -38,7 +42,8 @@
 				"notes": [
 					[
 						"added the ability to apply outline and shadow effects to the scannable tag's foreground content",
-						["do note this may make scannable tags harder to read, effects will be forced off if the foreground color is dark (unless the outline color matches the background) as this renders it completely unreadable"]
+						["do note this may make scannable tags harder to read, effects will be forced off if the foreground color is dark (unless the outline color matches the background) as this renders it completely unreadable"],
+						{"anchor": "spotify_enableShadowEffectsScannable"}
 					],
 					[
 						"fixed black foreground color resetting to white when a new song starts"
@@ -65,6 +70,16 @@
 					[
 						"added a 'hash' event to beatsaber output, triggered whenever the current map's hash changes",
 						["this is primarily for the VOD audio system as it runs on map hashes rather than any map data, i've seen it stall a couple of times waiting for beatsaver to respond with some extra data. which is bad"]
+					],
+					[
+						"fixed hover CSS stuff not applying to branded icons"
+					],
+					[
+						"added quick jumps to settings in changelog messages",
+						["this has been a very long time coming, apologies"]
+					],
+					[
+						"some minor styling tweaks"
 					]
 				]
 			}

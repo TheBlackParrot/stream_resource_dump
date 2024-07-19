@@ -63,7 +63,6 @@ function postToOBSEventChannel(event, data) {
 }
 
 bsEventChannel.onmessage = function(message) {
-	console.log(message);
 	data = message.data;
 
 	processMessage(data);
@@ -193,6 +192,7 @@ var eventFuncs = {
 
 async function processMessage(data) {
 	if(data.type in eventFuncs) {
+		console.log(data);
 		eventFuncs[data.type](data);
 	}
 }

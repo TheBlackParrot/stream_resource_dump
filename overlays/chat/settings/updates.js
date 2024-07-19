@@ -66,8 +66,12 @@ async function getUpdateData() {
 						rootNoteElement.text(notePart);
 					} else {
 						let noteElement = $(`<ol></ol>`);
-						for(const noteSubPart of notePart) {
-							noteElement.append($(`<li>${noteSubPart}</li>`));
+						if("anchor" in notePart) {
+							rootNoteElement.prepend($(`<div class="quickJumpAnchorButton" data-setting="${notePart.anchor}"><i class="fas fa-up-right-from-square quickJumpAnchor"></i> Jump</div>`));
+						} else {
+							for(const noteSubPart of notePart) {
+								noteElement.append($(`<li>${noteSubPart}</li>`));
+							}
 						}
 						rootNoteElement.append(noteElement);
 					}
@@ -112,3 +116,48 @@ async function getUpdateData() {
 
 	$("#updatesSection hr:last-child").remove();
 }
+
+var lastActiveRow;
+$("body").on("click", ".quickJumpAnchorButton", function(e) {
+	console.log("clicked anchor");
+	e.preventDefault();
+
+	lastActiveRow = activeRow;
+
+	let wantedSetting = $(`#${$(this).attr("data-setting")}`);
+	let wantedSettingParent = wantedSetting.closest(".setting");
+	let section = wantedSetting.closest(".section").attr("data-content");
+	let wantedRow = $(`.row[data-tab="${section}"]`);
+	console.log(wantedRow);
+
+	setRow(section);
+	$("#quickJumpBar").show();
+
+	$("#settings").scrollTop(wantedSetting.position().top - ($("#quickJumpBar").height() * 3));
+	wantedSettingParent.addClass("blinkAnchor");
+	wantedSettingParent.one("animationend", function() {
+		$(this).removeClass("blinkAnchor");
+	});
+
+	let parts = [];
+	if(wantedRow.parent().hasClass("rowEntries")) {
+		let parentTab = wantedRow.parent().attr("data-tab");
+		parts.push($(`.rowCollapsable[data-tab="${parentTab}"]`).text());
+	}
+	parts.push(wantedRow.text());
+
+	$("#quickJumpSectionName").empty();
+	for(const part of parts) {
+		let partElement = $(`<div class="quickJumpSectionNamePart"></div>`);
+		partElement.text(part);
+
+		$("#quickJumpSectionName").append(partElement);
+		$("#quickJumpSectionName").append($(`<div class="quickJumpSectionNameSeparator"><i class="fas fa-chevron-right"></i></div>`));
+	}
+	$("#quickJumpSectionName .quickJumpSectionNameSeparator:last-child").remove();
+});
+
+$("#leaveQuickJump").on("click", function(e) {
+	$("#quickJumpBar").hide();
+	setRow(lastActiveRow);
+});

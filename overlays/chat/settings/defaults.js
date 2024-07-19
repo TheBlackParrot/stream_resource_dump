@@ -136,7 +136,9 @@ const nonPublicSettings = [
 	"chatHideThreshold",
 	"chatHideASCIIArt",
 	"chatHideASCIIArtThreshold",
-	"enableEventTagsFirstTimeChat"
+	"enableEventTagsFirstTimeChat",
+	"bigNoNoEmotes",
+	"bigNoNoEmotesEmoteSpecific"
 ];
 
 const defaultConfig = {

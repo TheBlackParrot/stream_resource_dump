@@ -6935,6 +6935,13 @@
 				</div>
 			</div>
 		</div>
+		<div id="quickJumpBar">
+			<span id="leaveQuickJump">
+				<i class="fas fa-left-long fa-fw"></i> Back
+			</span>
+			<div id="quickJumpSectionName">
+			</div>
+		</div>
 	</div>
 
 	<div id="notificationWrapper">
@@ -6963,6 +6970,7 @@
 
 	<script type="text/javascript">
 		window.addEventListener("load", async function() {
+			$("#quickJumpBar").hide();
 			setRow("about");
 
 			loadSettings();

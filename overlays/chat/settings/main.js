@@ -182,6 +182,8 @@ function showExtraRow(name) {
 $("body").on("click", ".row", function(e) {
 	e.preventDefault();
 	setRow($(this).attr("data-tab"));
+
+	$("#quickJumpBar").hide();
 });
 
 $("body").on("click", ".rowCollapsable", function(e) {
