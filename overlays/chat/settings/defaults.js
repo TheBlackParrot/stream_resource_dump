@@ -138,7 +138,10 @@ const nonPublicSettings = [
 	"chatHideASCIIArtThreshold",
 	"enableEventTagsFirstTimeChat",
 	"bigNoNoEmotes",
-	"bigNoNoEmotesEmoteSpecific"
+	"bigNoNoEmotesEmoteSpecific",
+	"clock_overrideTimezone",
+	"clock_timezoneValue",
+	"clock_showMeridiems"
 ];
 
 const defaultConfig = {
@@ -956,7 +959,10 @@ const defaultConfig = {
 	"spotify_enableOutlineEffectsScannable": "false",
 	"spotify_outlineColorReflectsScannable": "false",
 	"bigNoNoEmotes": "",
-	"bigNoNoEmotesEmoteSpecific": ""
+	"bigNoNoEmotesEmoteSpecific": "",
+	"clock_overrideTimezone": "false",
+	"clock_timezoneValue": "America/New_York",
+	"clock_showMeridiems": "true"
 
 };
 // i typed out the bigNoNoWords so you don't have to, i'm sorry :(

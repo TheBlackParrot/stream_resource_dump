@@ -93,6 +93,7 @@
 
 				<div class="rowCollapsable extraRow" data-tab="clock"><i class="fas fa-angle-right treeIcon"></i> <i class="fas fa-clock"></i>Clock</div>
 				<div class="rowEntries" data-tab="clock">
+					<div class="row" data-tab="clock_function"><i class="fas fa-cogs"></i>Function</div>
 					<div class="row" data-tab="clock_layout"><i class="fas fa-table-cells-large"></i>Layout</div>
 					<hr/>
 					<div class="row" data-tab="clock_headers"><i class="fas fa-bookmark"></i>Headers</div>
@@ -3380,6 +3381,24 @@
 					</div>
 				</div>
 			</div>
+			<div class="section" data-content="clock_function">
+				<div class="part">
+					<div class="setting">
+						<div class="settingCell">
+							<input id="clock_overrideTimezone" type="checkbox" data-dependent="clock_overrideTimezone"/> <span class="settingInfo">Use a specific timezone instead of automatically using your local timezone</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Timezone</span>
+						</div>
+						<div class="settingCell">
+							<select id="clock_timezoneValue">
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
 			<div class="section" data-content="clock_layout">
 				<div class="part">
 					<h1>Display</h1>
@@ -3404,6 +3423,12 @@
 							<input id="clock_use12Hour" type="checkbox" data-dependent="clock_use12Hour"/> <span class="settingInfo">Use 12-hour time format</span>
 						</div>
 					</div>
+					<div class="setting" data-dependent="clock_use12Hour">
+						<div class="settingCell">
+							<input checked id="clock_showMeridiems" type="checkbox"/> <span class="settingInfo">Show meridiems (AM/PM)</span>
+						</div>
+					</div>
+					<hr/>
 					<div class="setting">
 						<div class="settingCell">
 							<input checked id="clock_padHour" type="checkbox"/> <span class="settingInfo">Pad leading value with a leading zero</span>
@@ -6972,6 +6997,8 @@
 		window.addEventListener("load", async function() {
 			$("#quickJumpBar").hide();
 			setRow("about");
+
+			populateTimezones();
 
 			loadSettings();
 			settingsCheck();

@@ -292,6 +292,21 @@ const settingUpdaters = {
 	},
 	fadeDuration: function(value) {
 		rootCSS().setProperty("--animationDuration", `${value}s`);
+	},
+
+	overrideTimezone: function(value) {
+		setTZ();
+		doMainClock();
+	},
+	timezoneValue: function(value) {
+		setTZ();
+		doMainClock();
+	},
+	showMeridiems: function(value) {
+		doMainClock();
+	},
+	use12Hour: function(value) {
+		doMainClock();
 	}
 };
 

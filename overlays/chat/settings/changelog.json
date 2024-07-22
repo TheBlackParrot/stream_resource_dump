@@ -1,5 +1,39 @@
 {
-	"9999999999999": {
+	"1721689587850": {
+		"updates": {
+			"clock": {
+				"revision": 7,
+				"notes": [
+					[
+						"timezones can now be manually overriden",
+						{"anchor": "clock_overrideTimezone"}
+					],
+					[
+						"swapped from javascript Date objects to Luxon DateTime objects on the local clock",
+						["had to do this for the timezone overrides"]
+					],
+					[
+						"fixed timezones with an offset of 0 not displaying a sign prefix"
+					],
+					[
+						"meridiems can now be disabled in 12-hour display",
+						{"anchor": "clock_showMeridiems"}
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 59,
+				"notes": [
+					[
+						"more minor styling tweaks"
+					]
+				]
+			}
+		}
+	},
+
+	"1721425357628": {
 		"updates": {
 			"bsvas": {
 				"revision": 6,
@@ -76,7 +110,10 @@
 					],
 					[
 						"added quick jumps to settings in changelog messages",
-						["this has been a very long time coming, apologies"]
+						[
+							"this has been a very long time coming, apologies",
+							"also retroactively added jumps to some previous changelog entries"
+						]
 					],
 					[
 						"some minor styling tweaks"
@@ -128,7 +165,8 @@
 					],
 					[
 						"mentions in chat messages can now reflect colors from the person being mentioned",
-						["e.g. mentioning me would color my name #CBADFF in the message, rather than only emboldening it"]
+						["e.g. mentioning me would color my name #CBADFF in the message, rather than only emboldening it"],
+						{"anchor": "chatMessageMentionsReflectTargetColor"}
 					]
 				]
 			},
@@ -167,14 +205,17 @@
 					],
 					[
 						"messages from newer viewers can now be hidden until they send some amount of messages",
-						["this particular metric has been tracked for a *long* time for avatar display permissions, turning this on (it's off by default) shouldn't disrupt things"]
+						["this particular metric has been tracked for a *long* time for avatar display permissions, turning this on (it's off by default) shouldn't disrupt things"],
+						{"anchor": "chatHideUntilThresholdMet"}
 					],
 					[
 						"added the ability to filter messages suspected of only being ASCII art",
-						["messages containing characters from the unicode ranges for Block Elements, Box Drawing, Braille Patterns, Dingbats, and Geometric Shapes will trigger filter checks"]
+						["messages containing characters from the unicode ranges for Block Elements, Box Drawing, Braille Patterns, Dingbats, and Geometric Shapes will trigger filter checks"],
+						{"anchor": "chatHideASCIIArt"}
 					],
 					[
-						"messages flagged as a \"first time chat\" can now be tagged as such on the overlay"
+						"messages flagged as a \"first time chat\" can now be tagged as such on the overlay",
+						{"anchor": "enableEventTagsFirstTimeChat"}
 					],
 					[
 						"ensured messages decay if the decay timer on message elements somehow fails"
@@ -228,10 +269,12 @@
 					],
 					[
 						"added a setting to control cover art image size",
-						["initially i forced it to double the cover art container size, but leaving it here seems kinda useless if no changes are being made to the layout"]
+						["initially i forced it to double the cover art container size, but leaving it here seems kinda useless if no changes are being made to the layout"],
+						{"anchor": "spotify_artImageSize"}
 					],
 					[
-						"added a setting to control cover art image quality settings"
+						"added a setting to control cover art image quality settings",
+						{"anchor": "spotify_artImageQuality"}
 					]
 				]
 			},
@@ -486,9 +529,8 @@
 				"notes": [
 					[
 						"revamped test messages to a constant stream of messages from pre-defined conversations",
-						[
-							"if you'd like to be added as a sample message subject, just let me know! all i need is your twitch username"
-						]
+						["if you'd like to be added as a sample message subject, just let me know! all i need is your twitch username"],
+						{"anchor": "allowSampleMessages"}
 					],
 					[
 						"removed the test message button and replaced it with a toggle in the Debug section of Chat > Function"
@@ -548,9 +590,7 @@
 					],
 					[
 						"twitch clip overlay status wasn't in the right spot woops",
-						[
-							"we love alphabetical order"
-						]
+						["we love alphabetical order"]
 					],
 					[
 						"ensured default color settings are all lowercase to avoid false positives on non-default settings checks"

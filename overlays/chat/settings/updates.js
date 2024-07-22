@@ -131,9 +131,10 @@ $("body").on("click", ".quickJumpAnchorButton", function(e) {
 	console.log(wantedRow);
 
 	setRow(section);
+	$(".activeSection").addClass("quickJumpIsActive");
 	$("#quickJumpBar").show();
 
-	$("#settings").scrollTop(wantedSetting.position().top - ($("#quickJumpBar").height() * 3));
+	$("#settings").scrollTop(wantedSetting.position().top - ($("#quickJumpBar").height() * 2));
 	wantedSettingParent.addClass("blinkAnchor");
 	wantedSettingParent.one("animationend", function() {
 		$(this).removeClass("blinkAnchor");
@@ -159,5 +160,6 @@ $("body").on("click", ".quickJumpAnchorButton", function(e) {
 
 $("#leaveQuickJump").on("click", function(e) {
 	$("#quickJumpBar").hide();
+	$(".quickJumpIsActive").removeClass("quickJumpIsActive");
 	setRow(lastActiveRow);
 });

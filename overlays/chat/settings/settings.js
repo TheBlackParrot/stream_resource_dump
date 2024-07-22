@@ -68,10 +68,10 @@ const settingUpdaters = {
 		rootCSS().setProperty("--primary-color-bright", interpolateColor("#ffffffff", value, 50));
 		rootCSS().setProperty("--primary-color-bright-desat", interpolateColor("#000000ff", interpolateColor("#808080ff", value, 75), 40));
 		rootCSS().setProperty("--primary-color-brighter-desat", interpolateColor("#606060ff", interpolateColor("#808080ff", value, 50), 70));
-		rootCSS().setProperty("--primary-color-desat", interpolateColor("#000000ff", interpolateColor("#808080ff", value, 22), 40));
-		rootCSS().setProperty("--primary-color-dark", interpolateColor("#000000ff", interpolateColor("#808080ff", value, 33), 25));
-		rootCSS().setProperty("--primary-color-darkest", interpolateColor("#000000ff", interpolateColor("#808080ff", value, 50), 15));
-		rootCSS().setProperty("--primary-color-darkester", interpolateColor("#000000ff", interpolateColor("#808080ff", value, 50), 6));
+		rootCSS().setProperty("--primary-color-desat", interpolateColor("#000000ff", interpolateColor("#808080ff", value, 24), 37));
+		rootCSS().setProperty("--primary-color-dark", interpolateColor("#000000ff", interpolateColor("#808080ff", value, 30), 24));
+		rootCSS().setProperty("--primary-color-darkest", interpolateColor("#000000ff", interpolateColor("#808080ff", value, 67), 18));
+		rootCSS().setProperty("--primary-color-darkester", interpolateColor("#000000ff", interpolateColor("#808080ff", value, 45), 4));
 	},
 
 	minWidth: function(value) {
@@ -175,4 +175,21 @@ function loadSettings() {
 	}
 
 	loadingInit = true;
+}
+
+function populateTimezones() {
+	let zones = Intl.supportedValuesOf("timeZone");
+	zones.sort(function(a, b) {
+		return b - a;
+	});
+
+	$("#clock_timezoneValue").empty();
+
+	for(const zone of zones) {
+		const option = $(`<option value="${zone}">${zone}</option>`);
+		$("#clock_timezoneValue").append(option);
+	}
+	$("#clock_timezoneValue").val(localStorage.getItem("setting_clock_timezoneValue"));
+	
+	FancySelect.update($("#clock_timezoneValue")[0]);
 }

@@ -3,7 +3,10 @@ const fixTZCodes = {
 };
 
 function setTZ() {
-	const dt = luxon.DateTime.local();
+	var dt = luxon.DateTime.local();
+	if(localStorage.getItem("setting_clock_overrideTimezone") === "true") {
+		dt = dt.setZone(localStorage.getItem("setting_clock_timezoneValue"));
+	}
 
 	const tz = {
 		name: dt.offsetNameLong.split(" "),
@@ -31,7 +34,7 @@ function setTZ() {
 
 	if(tz.offset < 0) { 
 		tz.prefix = "";
-	} else if(tz.offset > 0) {
+	} else if(tz.offset >= 0) {
 		tz.prefix = "+";
 	}
 
@@ -88,11 +91,19 @@ function parseTime(val) {
 }
 
 function doMainClock() {
-	const d = new Date();
+	var d = luxon.DateTime.now();
+	if(localStorage.getItem("setting_clock_overrideTimezone") === "true") {
+		d = d.setZone(localStorage.getItem("setting_clock_timezoneValue"));
+	}
 
-	let h = d.getHours();
+	let h = d.hour;
 	if(localStorage.getItem("setting_clock_use12Hour") === "true") {
-		$("#localTime .meridiem").text(h >= 12 ? " PM" : " AM");
+		if(localStorage.getItem("setting_clock_showMeridiems") === "true") {
+			$("#localTime .meridiem").text(h >= 12 ? " PM" : " AM");
+		} else {
+			$("#localTime .meridiem").empty();
+		}
+		
 		h = (h > 12 ? h % 12 : h);
 		if(!h) { h = 12; }
 	} else {
@@ -103,8 +114,8 @@ function doMainClock() {
 		h = h.toString().padStart(2, "0");
 	}
 
-	let m = d.getMinutes().toString().padStart(2, "0");
-	let s = d.getSeconds().toString().padStart(2, "0");
+	let m = d.minute.toString().padStart(2, "0");
+	let s = d.second.toString().padStart(2, "0");
 
 	$("#localTime .main").text(`${h}:${m}`);
 	$("#localTime .second").text(s);

@@ -9,8 +9,8 @@ function changeStatusCircle(which, status, msg) {
 
 $("#sensitive .section").show();
 
-const overlayRevision = 58;
-const overlayRevisionTimestamp = 1720944273198;
+const overlayRevision = 59;
+const overlayRevisionTimestamp = 1721689587850;
 $("#revision").text(`revision ${overlayRevision}`);
 
 function resetEverything() {
@@ -184,6 +184,7 @@ $("body").on("click", ".row", function(e) {
 	setRow($(this).attr("data-tab"));
 
 	$("#quickJumpBar").hide();
+	$(".quickJumpIsActive").removeClass("quickJumpIsActive");
 });
 
 $("body").on("click", ".rowCollapsable", function(e) {
