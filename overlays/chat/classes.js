@@ -592,8 +592,6 @@ class User {
 				rootCSS().setProperty(`--nameColor${this.id}`, stops[0].color);
 			}
 			return;
-		} else {
-			rootCSS().setProperty(`--nameColor${this.id}`, '');
 		}
 
 		let gradientOut = [];

@@ -47,7 +47,7 @@
 	--settings-bg-color: var(--primary-color-desat);
 	--settings-height: 750px;
 	--settings-padding: 12px;
-	--settings-text-line-height: 22px;
+	--settings-text-line-height: 18px;
 	--settings-header-color: var(--primary-color-bright);
 	--settings-font-size: 10pt;
 
@@ -776,7 +776,7 @@ input[type="range"]::-webkit-slider-runnable-track {
 }
 
 .smol {
-	line-height: 20px;
+	line-height: 18px;
 }
 
 .statusCircle {
@@ -879,10 +879,10 @@ input[type="range"]::-webkit-slider-runnable-track {
 }
 
 ol li {
-	margin-bottom: 10px;
+	margin-bottom: 8px;
 }
 .part h2 {
-	margin-bottom: 6px;
+	margin-bottom: 8px;
 }
 
 ol li:before {

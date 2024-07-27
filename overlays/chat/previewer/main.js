@@ -10,12 +10,20 @@ function loadSettings() {
 	for(let i in settings) {
 		let element = $(settings[i]);
 
-		let setting = element.attr("id");
-		let val = null;
+		if(element.attr("data-coloris") === "") {
+			continue;
+		}
+
+		if(element.attr("id").substr(0, 4) === "clr-") {
+			continue; // guh
+		}
 
 		if(element.attr("data-ignoreSetting") === "true") {
 			continue;
 		}
+
+		let setting = element.attr("id");
+		let val = null;
 
 		switch(element.attr("type")) {
 			case "checkbox":
@@ -296,18 +304,20 @@ window.addEventListener("load", async function(event) {
 		$("#signedInUser_name").text(userData.display_name);
 		$("#signedInUser").fadeIn(250);
 
-		$("#namePreviewValue").fadeOut(250, function() {
-			$("#namePreviewValue").text(userData.display_name);
-			$("#namePreviewValue").fadeIn(250);
-		});
-
 		for(const setting in initialSettings) {
 			const value = initialSettings[setting];
 			sessionStorage.setItem(`clientSetting_${setting}`, value);
-			if(firstInit) {
-				localStorage.setItem(`clientSetting_${setting}`, value);
-			}
 		}
+
+		// this is so hacky but it works so w/e
+		$(".discardButton").each(function() {
+			discardSettings($(this).parent().attr("data-buttons-affect"), true);
+		});
+
+		$("#namePreviewValue").fadeOut(250, function() {
+			settingUpdaters.useUsername(localStorage.getItem("clientSetting_useUsername"));
+			$("#namePreviewValue").fadeIn(250);
+		});
 
 		sendNotification(`Authenticated as ${userData.login}`, 5, "success");
 		isSignedIn = true;

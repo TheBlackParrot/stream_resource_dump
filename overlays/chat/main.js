@@ -563,3 +563,8 @@ twitchEventChannel.onmessage = function(message) {
 		}
 	}
 };
+
+$("body").on("animationend", ".userInfoIn", function() {
+	console.log("removed userInfoIn class");
+	$(this).removeClass("userInfoIn");
+})

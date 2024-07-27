@@ -1,4 +1,60 @@
 {
+	"1722050606023": {
+		"updates": {
+			"chat": {
+				"revision": 59,
+				"notes": [
+					[
+						"another attempt at fixing deleted messages remaining up on the overlay if they're deleted during processing"
+					],
+					[
+						"fixed name colors showing up as transparent if viewers refresh their settings and allow the streamer's settings to take precedence"
+					],
+					[
+						"added icons for announcement event tags"
+					],
+					[
+						"fixed names not showing ellipsis if needed at low enough widths"
+					],
+					[
+						"fixed low width user info element culling being wonky sometimes"
+					]
+				]
+			},
+
+			"customizer": {
+				"revision": 5,
+				"notes": [
+					[
+						"fixed an issue with loading settings on completely new browser sessions"
+					],
+					[
+						"fixed settings initializers mistakenly considering coloris fields as settings"
+					],
+					[
+						"fixed being unable to interact with elements underneath the notification bubble wrapper"
+					],
+					[
+						"toggling the setting to use your username over displayed name now changes the displayed name in the name preview"
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 60,
+				"notes": [
+					[
+						"even more minor styling tweaks"
+					],
+					[
+						"added setting to disable successful connection notifications",
+						{"anchor": "panel_disableSuccessNotifications"}
+					]
+				]				
+			}
+		}
+	},
+
 	"1721689587850": {
 		"updates": {
 			"clock": {

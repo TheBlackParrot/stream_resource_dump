@@ -10,6 +10,12 @@ function addNotification(message, settings) {
 	let actualSettings = Object.assign({}, defaultNotifSettings);
 	Object.assign(actualSettings, settings);
 
+	if(localStorage.getItem("setting_panel_disableSuccessNotifications") === "true") {
+		if(actualSettings.bgColor === "var(--notif-color-success)") {
+			return;
+		}
+	}
+
 	let notifElement = $(`<div class="notif" style="display: none;"></div>`);
 	notifElement.css("background-color", actualSettings.bgColor);
 	notifElement.css("color", actualSettings.textColor);

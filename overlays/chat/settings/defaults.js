@@ -141,7 +141,8 @@ const nonPublicSettings = [
 	"bigNoNoEmotesEmoteSpecific",
 	"clock_overrideTimezone",
 	"clock_timezoneValue",
-	"clock_showMeridiems"
+	"clock_showMeridiems",
+	"panel_disableSuccessNotifications"
 ];
 
 const defaultConfig = {
@@ -962,7 +963,8 @@ const defaultConfig = {
 	"bigNoNoEmotesEmoteSpecific": "",
 	"clock_overrideTimezone": "false",
 	"clock_timezoneValue": "America/New_York",
-	"clock_showMeridiems": "true"
+	"clock_showMeridiems": "true",
+	"panel_disableSuccessNotifications": "false"
 
 };
 // i typed out the bigNoNoWords so you don't have to, i'm sorry :(

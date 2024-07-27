@@ -131,7 +131,7 @@ async function prepareMessage(tags, message, self, forceHighlight) {
 
 			case "announcement":
 				if(localStorage.getItem("setting_enableEventTagsAnnouncements") === "true") {
-					outObject.extraInfo = localStorage.getItem("setting_eventTagsAnnouncementFormat");
+					outObject.extraInfo = `<div class="announcementIcon"></div>  ${localStorage.getItem("setting_eventTagsAnnouncementFormat")}`;
 				}
 				break;
 		}
@@ -376,7 +376,7 @@ var lastMessageIdx;
 var messageCount = 0;
 var combinedCount = 0;
 var testNameBlock;
-function getRootElement(data) {
+async function getRootElement(data) {
 	if($(`.chatBlock[data-rootIdx="${combinedCount}"]`).length) {
 		if(lastUser === data.user.id && !lastRootElement[0].hasClass("slideOut")) {
 			if(localStorage.getItem("setting_chatRemoveMessageDelay") !== "0") {
@@ -426,21 +426,9 @@ function getRootElement(data) {
 
 	lastRootElement = [rootElement, overallWrapper, messageWrapper];
 
-	userBlock.waitForImages(function() {
-		// [userBlock, badgeBlock, flagBlock, pronounsBlock, pfpBlock, nameBlock];
-		let elementChecks = [userBlockElements[2], userBlockElements[1], userBlockElements[4], userBlockElements[3]];
-		//                   flags,                badges,               pfp,                  pronouns
-		for(let testAgainst of elementChecks) {
-			if(widthTest(rootElement, userBlock)) {
-				testAgainst.hide();
-			}
-		}
-		if(widthTest(rootElement, userBlock)) { userBlockElements[5].children().addClass("clip"); }
-		$("#wrapper").append(rootElement);
-	});
-
-	$("#wrapper").append(rootElement);
 	if(deleteMessages.indexOf(data.uuid) === -1) {
+		$("#wrapper").append(rootElement);
+		checkBadgeBlockWidth(userBlockElements[1]);
 		return [rootElement, overallWrapper, messageWrapper];
 	} else {
 		console.log("message was deleted, not returning a DOM element");
@@ -577,7 +565,7 @@ function renderBadgeBlock(data, rootElement, userBlock) {
 		}	
 	}
 
-	renderExternalBadges(data.user, badgeBlock);
+	renderExternalBadges(data, badgeBlock);
 
 	return badgeBlock;
 }
@@ -1350,7 +1338,7 @@ async function parseMessage(data) {
 	}
 
 	messageCount++;
-	let rootParts = getRootElement(data);
+	let rootParts = await getRootElement(data);
 	if(!rootParts) {
 		return;
 	}
@@ -1456,7 +1444,7 @@ function render7TVBadges(user, badgeBlock) {
 	const entitlements = user.entitlements;
 	const customSettings = entitlements.overlay.customSettings;
 
-	$(`.chatBlock[data-userid="${user.id}"] .sevenTVBadge`).remove();
+	//$(`.chatBlock[data-userid="${user.id}"] .sevenTVBadge`).remove();
 
 	if(customSettings) {
 		if(customSettings.hide7TVBadge) {
@@ -1479,6 +1467,7 @@ function render7TVBadges(user, badgeBlock) {
 
 			if(!badgeElem.is(":visible")) {
 				badgeBlock.show();
+				checkBadgeBlockWidth(badgeBlock);
 			}
 		}
 	}	
@@ -1513,6 +1502,7 @@ function renderFFZBadges(user, badgeBlock) {
 
 			if(badgeElem.is(":visible")) {
 				badgeBlock.show();
+				checkBadgeBlockWidth(badgeBlock);
 			}
 		}
 	}
@@ -1541,15 +1531,50 @@ function renderBTTVBadges(user, badgeBlock) {
 		badgeBlock.append(badgeElem);
 		if(badgeElem.is(":visible")) {
 			badgeBlock.show();
+			checkBadgeBlockWidth(badgeBlock);
 		}
 	}
 }
 
-function renderExternalBadges(user, badgeBlock) {
+async function checkBadgeBlockWidth(badgeBlock) {
+	const rootElement = badgeBlock.closest(".chatBlock");
+	const userBlock = badgeBlock.closest(".userInfo");
+	const flagBlock = userBlock.children(".flags").eq(0);
+	const pfpBlock = userBlock.children(".pfp").eq(0);
+	const pronounsBlock = userBlock.children(".pronouns").eq(0);
+	const nameBlock = userBlock.children(".name").eq(0);
+
+	console.log([rootElement, badgeBlock, userBlock, flagBlock, pfpBlock, pronounsBlock, nameBlock]);
+
+	await new Promise(function(resolve, reject) {
+		console.log("renderExternalBadges: waiting for images to load");
+		badgeBlock.waitForImages({
+			finished: function() {
+				console.log("renderExternalBadges: images loaded");
+				resolve();
+			},
+			waitForAll: true
+		});
+	});
+
+	let elementChecks = [flagBlock, badgeBlock, pfpBlock, pronounsBlock];
+	for(let testAgainst of elementChecks) {
+		if(widthTest(rootElement, userBlock)) {
+			testAgainst.hide();
+		}
+	}
+	if(widthTest(rootElement, userBlock)) { nameBlock.children().addClass("clip"); }
+
+	$("#wrapper").append(rootElement);
+}
+
+async function renderExternalBadges(data, badgeBlock) {
 	if(!badgeBlock) {
 		console.log("no badge block?");
 		return;
 	}
+
+	const user = data.user;
 
 	if(parseInt(user.id) === -1) {
 		return;

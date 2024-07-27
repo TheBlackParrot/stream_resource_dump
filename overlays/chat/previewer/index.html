@@ -184,6 +184,29 @@
 							<input type="number" id="nameColorStops" min="1" max="9" step="1" value="2" size="6"/>
 						</div>
 					</div>
+					<!-- not supported in Chrome 103 (OBS's CEF version as of 2024/07/26), keeping this here as a reminder to look back at in a year or so (https://github.com/obsproject/obs-browser/pull/434)
+					<div class="setting">
+						<div class="settingLabel">Color space</div>
+						<div class="settingValue">
+							<select id="nameGradientColorSpace">
+								<option value="lab">CIELAB</option>
+								<option value="xyz">CIEXYZ</option>
+								<option value="hsl">HSL</option>
+								<option value="hsl longer hue">HSL (longer hue)</option>
+								<option value="hwb">HWB</option>
+								<option value="hwb longer hue">HWB (longer hue)</option>
+								<option value="lch">LCH</option>
+								<option value="lch longer hue">LCH (longer hue)</option>
+								<option value="oklab">Oklab</option>
+								<option value="oklch">Oklch</option>
+								<option value="oklch longer hue">Oklch (longer hue)</option>
+								<option selected value="srgb">Standard RGB</option>
+								<option value="srgb-linear">Standard RGB (linear)</option>
+							</select>
+							<input id="nameGradientRepeats" type="checkbox"/> <span class="settingInfo">Repeat</span>
+						</div>
+					</div>
+					-->
 
 					<div class="setting" data-multi-slot-list="nameColorStops" data-multi-slot="1">
 						<div class="settingLabel">Stop 1</div>

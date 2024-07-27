@@ -132,6 +132,17 @@ const settingUpdaters = {
 	},
 	avatarBorderRadius: function(value) {
 		rootCSS().setProperty("--avatar-border-radius", `${value}%`);
+	},
+	useUsername: function(value) {
+		if(!userData) {
+			return;
+		}
+
+		if(value === "true") {
+			$("#namePreviewValue").text(userData.login);
+		} else {
+			$("#namePreviewValue").text(userData.display_name);
+		}
 	}
 };
 
@@ -174,6 +185,10 @@ function updateSetting(which, value, oldValue) {
 	}
 }
 window.addEventListener("storage", function(event) {
+	if(event.newValue === event.oldValue) {
+		return;
+	}
+
 	updateSetting(event.key, event.newValue, event.oldValue);
 });
 
@@ -249,9 +264,9 @@ async function saveSettings(which) {
 	sendNotification(`Successfully updated "${which}" settings`, 5, "success");
 }
 
-function discardSettings(which) {
+function discardSettings(which, bypassNotif) {
 	if(which === "flags") {
-		discardFlags();
+		discardFlags(bypassNotif);
 		return;
 	}
 
@@ -292,7 +307,9 @@ function discardSettings(which) {
 		}
 	}
 
-	sendNotification(`Reloaded "${which}" settings`, 5);
+	if(!bypassNotif) {
+		sendNotification(`Reloaded "${which}" settings`, 5);
+	}
 }
 
 async function saveFlags() {
@@ -337,7 +354,7 @@ async function saveFlags() {
 	sendNotification(`Successfully updated flags settings`, 5, "success");
 }
 
-function discardFlags() {
+function discardFlags(bypassNotif) {
 	$(".flagActive").removeClass("flagActive");
 	activeFlags = [];
 
@@ -352,5 +369,7 @@ function discardFlags() {
 		}
 	}
 
-	sendNotification(`Reloaded flags settings`, 5);
+	if(!bypassNotif) {
+		sendNotification(`Reloaded flags settings`, 5);
+	}
 }
