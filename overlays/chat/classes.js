@@ -105,8 +105,670 @@ class Emote {
 	}
 }
 
+function widthTest(user) {
+	console.log("width test called");
+	const parentWidth = $("#wrapper").innerWidth();
+
+	const testIdentifier = `testRoot-${Date.now()}`;
+	const testRoot = user.userBlock.render();
+	testRoot.children().removeClass("forceHide");
+	const testChatBlock = $(`<div class="chatBlock ${testIdentifier}"></div>`);
+	testChatBlock.append(testRoot);
+	$("#testWrapper").append(testChatBlock);
+
+	const originalBlocks = user.userBlock;
+	const badgeBlock = testRoot.children(".badges");
+	const flagBlock = testRoot.children(".flags");
+	const pronounsBlock = testRoot.children(".pronouns");
+	const pfpBlock = testRoot.children(".pfp");
+	const nameBlock = testRoot.children(".name");
+
+	testRoot.waitForImages({
+		finished: function() {
+			console.log("render: images loaded");
+
+			if(testRoot.width() > parentWidth) {
+				flagBlock.addClass("forceHide");
+				originalBlocks.flagBlock.addClass("forceHide");
+			} else {
+				flagBlock.removeClass("forceHide");
+				badgeBlock.removeClass("forceHide");
+				pfpBlock.removeClass("forceHide");
+				pronounsBlock.removeClass("forceHide");
+				nameBlock.children().removeClass("clip");
+
+				originalBlocks.flagBlock.removeClass("forceHide");
+				originalBlocks.badgeBlock.removeClass("forceHide");
+				originalBlocks.pfpBlock.removeClass("forceHide");
+				originalBlocks.pronounsBlock.removeClass("forceHide");
+				originalBlocks.displayNameBlock.removeClass("clip");
+				originalBlocks.internationalNameBlock.removeClass("clip");
+			}
+
+			if(testRoot.width() > parentWidth) {
+				badgeBlock.addClass("forceHide");
+				originalBlocks.badgeBlock.addClass("forceHide");
+			} else {
+				badgeBlock.removeClass("forceHide");
+				pfpBlock.removeClass("forceHide");
+				pronounsBlock.removeClass("forceHide");
+				nameBlock.children().removeClass("clip");
+
+				originalBlocks.badgeBlock.removeClass("forceHide");
+				originalBlocks.pfpBlock.removeClass("forceHide");
+				originalBlocks.pronounsBlock.removeClass("forceHide");
+				originalBlocks.displayNameBlock.removeClass("clip");
+				originalBlocks.internationalNameBlock.removeClass("clip");
+			}
+
+			if(testRoot.width() > parentWidth) {
+				pfpBlock.addClass("forceHide");
+				originalBlocks.pfpBlock.addClass("forceHide");
+			} else {
+				pfpBlock.removeClass("forceHide");
+				pronounsBlock.removeClass("forceHide");
+				nameBlock.children().removeClass("clip");
+
+				originalBlocks.pfpBlock.removeClass("forceHide");
+				originalBlocks.pronounsBlock.removeClass("forceHide");
+				originalBlocks.displayNameBlock.removeClass("clip");
+				originalBlocks.internationalNameBlock.removeClass("clip");
+			}
+
+			if(testRoot.width() > parentWidth) {
+				pronounsBlock.addClass("forceHide");
+				originalBlocks.pronounsBlock.addClass("forceHide");
+			} else {
+				pronounsBlock.removeClass("forceHide");
+				nameBlock.children().removeClass("clip");
+
+				originalBlocks.pronounsBlock.removeClass("forceHide");
+				originalBlocks.displayNameBlock.removeClass("clip");
+				originalBlocks.internationalNameBlock.removeClass("clip");
+			}
+
+			if(testRoot.width() > parentWidth) {
+				nameBlock.children().addClass("clip");
+				originalBlocks.displayNameBlock.addClass("clip");
+				originalBlocks.internationalNameBlock.addClass("clip");
+			} else {
+				nameBlock.children().removeClass("clip");
+
+				originalBlocks.displayNameBlock.removeClass("clip");
+				originalBlocks.internationalNameBlock.removeClass("clip");
+			}
+
+			$(`.chatBlock[data-userid="${user.id}"] .userInfo`).each(function() {
+				const root = $(this);
+				const _badgeBlock = root.children(".badges");
+				const _flagBlock = root.children(".flags");
+				const _pronounsBlock = root.children(".pronouns");
+				const _pfpBlock = root.children(".pfp");
+				const _displayNameBlock = root.children(".displayName");
+				const _internationalNameBlock = root.children(".internationalName");
+
+				if(originalBlocks.badgeBlock.hasClass("forceHide")) { _badgeBlock.addClass("forceHide"); }
+				if(originalBlocks.flagBlock.hasClass("forceHide")) { _flagBlock.addClass("forceHide"); }
+				if(originalBlocks.pronounsBlock.hasClass("forceHide")) { _pronounsBlock.addClass("forceHide"); }
+				if(originalBlocks.pfpBlock.hasClass("forceHide")) { _pfpBlock.addClass("forceHide"); }
+				if(originalBlocks.displayNameBlock.hasClass("clip")) { _displayNameBlock.addClass("clip"); }
+				if(originalBlocks.internationalNameBlock.hasClass("clip")) { _internationalNameBlock.addClass("clip"); }
+			});
+
+			$(`.${testIdentifier}`).remove();
+		},
+		waitForAll: true
+	});
+}
+
+class UserBlock {
+	constructor(opts) {
+		this.user = opts.user;
+		this.rootBlock = $('<div class="userInfo"></div>');
+		this.badgeBlock = $('<div class="badges" style="display: none;"></div>');
+		this.flagBlock = $('<div class="flags" style="display: none;"></div>');
+		this.pronounsBlock = $('<div class="pronouns" style="display: none;"></div>');
+		this.pfpBlock = $('<img class="pfp" src="" style="display: none;"/>');
+		this.displayNameBlock = $(`<span class="displayName">${this.user.displayName}</span>`);
+		this.internationalNameBlock = $(`<span class="internationalName">${this.user.username}</span>`);
+		this.nameBlock = $(`<div class="name" data-userid="${this.user.id}"></div>`);
+
+		this.updateUserInfoBlock();
+		this.initUserBlockCustomizations();
+	}
+
+	async updateUserInfoBlock() {
+		await this.user.customSettingsFetchPromise;
+
+		this.rootBlock.empty();
+
+		if(localStorage.getItem("setting_chatAnimationsIn") === "true") {
+			this.rootBlock.addClass("userInfoIn");
+		} else {
+			this.rootBlock.removeClass("userInfoIn");
+		}
+
+		this.updateNameBlock();
+	}
+
+	updateBadgeBlock() {
+		let badges = this.user.entitlements.twitch.badges;
+
+		this.badgeBlock.empty();
+		this.badgeBlock.hide();
+
+		if(this.user.id === "-1") {
+			return;
+		}
+
+		if(localStorage.getItem("setting_enableTwitchBadges") === "true") {
+			if(localStorage.getItem("setting_enableTwitchSubscriberBadges") === "true" && localStorage.getItem(`setting_enableTwitchFounderBadges`) === "false" && badges.list) {
+				if("founder" in badges.list) {
+					let monthPoss = [1, 1, 2, 3, 3, 3, 6, 6, 6, 9, 9, 9];
+					let founderInt = parseInt(badges.info.founder);
+					if(founderInt > monthPoss.length) {
+						founderInt -= founderInt % 6;
+					}
+
+					badges.list["subscriber"] = founderInt.toString();			
+				}
+			}
+
+			let useLQImages = (localStorage.getItem("setting_useLowQualityImages") === "true");
+			for(let badgeType in badges.list) {
+				let showBadge = true;
+				let foundBadge = false;
+				let addGradient = false;
+
+				for(let checkAgainst in twitchBadgeTypes) {
+					let badgeTypeData = twitchBadgeTypes[checkAgainst];
+					if(badgeTypeData.badges.indexOf(badgeType) !== -1) {
+						foundBadge = true;
+						if(localStorage.getItem(`setting_${badgeTypeData.setting}`) === "false") {
+							showBadge = false;
+							break;
+						}
+
+						if(badgeTypeData.is_solid) {
+							addGradient = true;
+						}
+					}
+				}
+
+				if(!foundBadge) {
+					// assume it's a game-related badge
+					if(localStorage.getItem("setting_enableTwitchGameBadges") === "false") {
+						showBadge = false;
+					}
+				}
+
+				if(!showBadge) {
+					continue;
+				}
+
+				let badgeData = getBadgeData(badgeType, badges.list[badgeType]);
+				let url;
+
+				if(!badgeData) {
+					// uh, wtf
+					continue;
+				}
+				
+				if(typeof badgeData === "undefined" && badges.info) {
+					// this should only trigger on channels that have founders badges off, and do not have custom sub badges set
+					// twitch ID's these differently compared to custom sub badges
+					const monthInt = parseInt(badges.info.subscriber);
+					var chosenDefaultLength = 0;
+					for(const lengthIdx in defaultSubBadgeLengths) {
+						if(monthInt >= defaultSubBadgeLengths[lengthIdx]) {
+							chosenDefaultLength = lengthIdx;
+						} else {
+							break;
+						}
+					}
+
+					if(useLQImages) {
+						url = twitchBadges["subscriber"].versions[chosenDefaultLength].image_url_1x;
+					} else {
+						url = twitchBadges["subscriber"].versions[chosenDefaultLength].image_url_4x;
+						if(typeof url === "undefined") {
+							url = twitchBadges["subscriber"].versions[chosenDefaultLength].image_url_1x;
+						}
+					}
+				} else {
+					if(useLQImages) {
+						url = badgeData.image_url_1x;
+					} else {
+						url = badgeData.image_url_4x;
+						if(typeof url === "undefined") {
+							url = badgeData.image_url_1x;
+						}
+					}
+				}
+
+				let badgeElem = $(`<span class="badgeWrap"></span>`);
+				badgeElem.css("background-image", `url('${url}')`);
+				if(badgeType === "subscriber") {
+					badgeElem.addClass("sub_badge");
+				} else {
+					badgeElem.addClass("normal_badge");
+					if(addGradient) {
+						badgeElem.addClass("badgeGradient");
+					}
+				}
+
+				this.badgeBlock.append(badgeElem);
+				this.badgeBlock.show();
+			}
+		}
+
+		const entitlements = this.user.entitlements;
+
+		if(entitlements.overlay.badges.length) {
+			for(let i in entitlements.overlay.badges) {
+				let badge = entitlements.overlay.badges[i];
+
+				let badgeElem = $(`<span class="badgeWrap normal_badge badgeGradient ${badge.type}Badge"></span>`);
+				if(localStorage.getItem("setting_useLowQualityImages") === "true") {
+					badgeElem.css("background-image", `url('${badge.urls.low}')`);
+				} else {
+					badgeElem.css("background-image", `url('${badge.urls.high}')`);
+				}
+
+				if("color" in badge) {
+					badgeElem.css("background-color", badge.color);
+				}
+
+				this.badgeBlock.prepend(badgeElem);
+				if(badgeElem.is(":visible")) {
+					this.badgeBlock.show();
+				}
+			}	
+		}
+
+		this.check7TV();
+		this.checkBTTV();
+		this.checkFFZ();
+
+		$(`.chatBlock[data-userid="${this.user.id}"] .badges`).replaceWith(this.badgeBlock.clone(true));
+
+		widthTest(this.user);
+	}
+
+	check7TV() {
+		const entitlements = this.user.entitlements;
+		const customSettings = entitlements.overlay.customSettings;
+
+		if(customSettings) {
+			if(customSettings.hide7TVBadge) {
+				return;
+			}
+		}
+
+		if(entitlements.sevenTV.badges.length) {
+			for(let i in entitlements.sevenTV.badges) {
+				let badge = sevenTVEntitlements.getBadge(entitlements.sevenTV.badges[i]);
+
+				let badgeElem = $(`<span class="badgeWrap normal_badge badgeGradient sevenTVBadge" data-badgeid="${badge.id}"></span>`);
+				if(localStorage.getItem("setting_useLowQualityImages") === "true") {
+					badgeElem.css("background-image", `url('${badge.urls.low}')`);
+				} else {
+					badgeElem.css("background-image", `url('${badge.urls.high}')`);
+				}
+
+				this.badgeBlock.append(badgeElem);
+
+				if(!badgeElem.is(":visible")) {
+					this.badgeBlock.show();
+					//checkBadgeBlockWidth(this.badgeBlock);
+				}
+			}
+		}
+	}
+
+	checkBTTV() {
+		const entitlements = this.user.entitlements;
+		const customSettings = entitlements.overlay.customSettings;
+
+		if(customSettings) {
+			if(customSettings.hideBTTVBadge) {
+				return;
+			}
+		}
+
+		if(entitlements.bttv.badge) {
+			let badge = entitlements.bttv.badge;
+
+			let badgeElem = $(`<span class="badgeWrap normal_badge badgeGradient bttvBadge"></span>`);
+			if(localStorage.getItem("setting_useLowQualityImages") === "true") {
+				badgeElem.css("background-image", `url('${badge.low}')`);
+			} else {
+				badgeElem.css("background-image", `url('${badge.high}')`);
+			}
+
+			this.badgeBlock.append(badgeElem);
+			if(badgeElem.is(":visible")) {
+				this.badgeBlock.show();
+				//checkBadgeBlockWidth(badgeBlock);
+			}
+		}
+	}
+
+	checkFFZ() {
+		const entitlements = this.user.entitlements;
+		const customSettings = entitlements.overlay.customSettings;
+
+		if(customSettings) {
+			if(customSettings.hideFFZBadge) {
+				return;
+			}
+		}
+
+		if(entitlements.ffz.badges.length) {
+			for(let i in entitlements.ffz.badges) {
+				let badge = entitlements.ffz.badges[i];
+
+				let badgeElem = $(`<span class="badgeWrap normal_badge badgeGradient ffzBadge"></span>`);
+				if(localStorage.getItem("setting_useLowQualityImages") === "true") {
+					badgeElem.css("background-image", `url('${badge.urls.low}')`);
+				} else {
+					badgeElem.css("background-image", `url('${badge.urls.high}')`);
+				}
+
+				if("color" in badge) {
+					badgeElem.css("background-color", badge.color);
+				}
+
+				this.badgeBlock.append(badgeElem);
+
+				if(badgeElem.is(":visible")) {
+					this.badgeBlock.show();
+					//checkBadgeBlockWidth(badgeBlock);
+				}
+			}
+		}
+	}
+
+	updateFlagBlock() {
+		const customSettings = this.user.entitlements.overlay.customSettings;
+
+		this.flagBlock.hide();
+		this.flagBlock.empty();
+
+		if(localStorage.getItem("setting_enableFlags") === "false" || !customSettings) {
+			return;
+		}
+
+		let flags = customSettings.flags;
+		if(!flags.length) {
+			return;
+		}
+
+		for(let flag of flags) {
+			if(!flag) {
+				continue;
+			}
+
+			let filename = identityFlags[flag];
+
+			this.flagBlock.append($(`<span class="flag${flag} flag" style="background-image: url('flags/${filename}'); display: inline-block;"></div>`));
+			this.flagBlock.show();
+		}
+
+		$(`.chatBlock[data-userid="${this.user.id}"] .flags`).replaceWith(this.flagBlock.clone(true));
+	}
+
+	updatePronounsBlock() {
+		this.pronounsBlock.hide();
+		this.pronounsBlock.empty();
+
+		if(localStorage.getItem("setting_enablePronouns") === "true") {
+			if(this.user.entitlements.pronouns.string !== null) {
+				this.pronounsBlock.text(this.user.entitlements.pronouns.string).show();
+			}
+		}
+
+		$(`.chatBlock[data-userid="${this.user.id}"] .pronouns`).replaceWith(this.pronounsBlock.clone(true));
+
+		widthTest(this.user);
+	}
+
+	updateAvatarBlock() {
+		const customSettings = this.user.entitlements.overlay.customSettings;
+
+		this.pfpBlock.hide();
+		this.pfpBlock.empty();
+
+		if(localStorage.getItem("setting_enableAvatars") === "false") {
+			return;
+		}
+
+		if(!this.user.avatar) {
+			return;
+		}
+
+		this.pfpBlock.attr("src", this.user.avatarImage);
+
+		if(customSettings && localStorage.getItem("setting_allowUserCustomizations") === "true" && localStorage.getItem("setting_allowUserAvatarShape") === "true" && localStorage.getItem("setting_allowSampleMessages") === "false") {
+			if(!customSettings.useDefaultAvatarBorderRadius) {
+				this.pfpBlock.css("border-radius", `var(--pfpShape${this.user.id})`);
+			}
+		}
+
+		if(this.user.avatarEnabled) {
+			this.pfpBlock.show();
+		} else {
+			this.pfpBlock.hide();
+		}
+
+		$(`.chatBlock[data-userid="${this.user.id}"] .pfp`).replaceWith(this.pfpBlock.clone(true));
+	}
+
+	updateNameBlock() {
+		const entitlements = this.user.entitlements;
+		const customSettings = entitlements.overlay.customSettings;
+
+		this.internationalNameBlock.hide();
+
+		let useDisplayName = true;
+		if(customSettings.useUsername) {
+			useDisplayName = false;
+		}
+
+		let showInternationalNameBlock = false;
+		let name = this.user.username;
+		if(useDisplayName) {
+			name = this.user.displayName;
+			let nameTest = name.replace(/[\x00-\xFF]/ug, "");
+
+			if(nameTest.length) {
+				this.internationalNameBlock.show();
+			}
+		}
+
+		this.displayNameBlock.text(name);
+		this.internationalNameBlock.text(this.user.username);
+
+		var use7TVPaint = true;
+		if(customSettings) {
+			if((!customSettings.use7TVPaint || !entitlements.sevenTV.paint) && customSettings.nameGlowEnabled && localStorage.getItem("setting_allowUserCustomizations") === "true" && localStorage.getItem("setting_allowSampleMessages") === "false" && localStorage.getItem("setting_allowUserNameGlow") === "true" && !customSettings.useDefaultNameSettings) {
+				// jfc this is a long conditional LMAO
+				this.displayNameBlock.css("filter", `var(--effectFilters) var(--nameGlow${this.user.id})`);
+				this.internationalNameBlock.css("filter", `var(--effectFilters) var(--nameGlow${this.user.id}) saturate(var(--internationalNameSaturation))`);
+
+				use7TVPaint = false;
+			}
+		}
+
+		if(entitlements.sevenTV.paint && use7TVPaint) {
+			set7TVPaint(this.nameBlock, entitlements.sevenTV.paint, this.user.id);
+		}
+
+		this.nameBlock.append(this.displayNameBlock);
+		this.nameBlock.append(this.internationalNameBlock);
+
+		$(`.chatBlock[data-userid="${this.user.id}"] .name`).replaceWith(this.nameBlock.clone(true));
+	}
+
+	initUserSettingsValues() {
+		const user = this.user;
+		const customizationOK = (localStorage.getItem("setting_allowUserCustomizations") === "true" && localStorage.getItem("setting_allowSampleMessages") === "false");
+
+		if(!localStorage.getItem(`color_${user.id}`)) {
+			let col = user.entitlements.twitch.color;
+			if(!col) {
+				if(localStorage.getItem("setting_chatNameUsesProminentColorAsFallback") === "true") {
+					col = user.entitlements.overlay.prominentColor;
+				} else {
+					col = "var(--defaultNameColor)";
+				}
+			}
+
+			if(localStorage.getItem("setting_chatNameUsesProminentColor") === "true") {
+				col = user.entitlements.overlay.prominentColor;
+			}
+
+			localStorage.setItem(`color_${user.id}`, col);
+		}
+		if(!localStorage.getItem(`color2_${user.id}`)) {
+			localStorage.setItem(`color2_${user.id}`, "var(--defaultNameColorSecondary)");
+		}
+
+		let usesCustomColor = true;
+		if(localStorage.getItem(`color2_${user.id}`) === "var(--defaultNameColorSecondary)" || !customizationOK) {
+			// (user hasn't set custom colors, double check twitch colors are up to date)
+			let col;
+			if(localStorage.getItem("setting_chatNameUsesProminentColor") === "true") {
+				col = user.entitlements.overlay.prominentColor;
+			} else {
+				col = user.entitlements.twitch.color;
+			}
+
+			if(!col) {
+				if(localStorage.getItem("setting_chatNameUsesProminentColorAsFallback") === "true") {
+					col = user.entitlements.overlay.prominentColor;
+				}
+			}
+
+			if(col) {
+				if(localStorage.getItem("setting_ensureNameColorsAreBrightEnough") === "true") {
+					localStorage.setItem(`color_${user.id}`, ensureSafeColor(col));
+				} else {
+					localStorage.setItem(`color_${user.id}`, col);
+				}
+			}
+
+			usesCustomColor = false;
+		}
+
+		rootCSS().setProperty(`--nameColor${user.id}`, localStorage.getItem(`color_${user.id}`));
+		rootCSS().setProperty(`--nameColorSecondary${user.id}`, localStorage.getItem(`color2_${user.id}`));
+
+		return usesCustomColor;
+	}
+
+	async initUserBlockCustomizations() {
+		await this.user.customSettingsFetchPromise;
+
+		const user = this.user;
+		const customSettings = user.entitlements.overlay.customSettings;
+
+		const customizationOK = (localStorage.getItem("setting_allowUserCustomizations") === "true" && localStorage.getItem("setting_allowSampleMessages") === "false");
+		const usesCustomColor = this.initUserSettingsValues();
+
+		let allNameElements = this.nameBlock.children();
+		let displayNameElement = this.displayNameBlock;
+		let internationalNameElement = this.internationalNameBlock;
+
+		let colorToUse = `color_${user.id}`;
+		if(localStorage.getItem("setting_chatDefaultNameColorForced") === "true") {
+			allNameElements.css("background-color", "var(--nameBackgroundNoGradientDefault)");
+			colorToUse = `setting_chatDefaultNameColor`;
+		} else {
+			allNameElements.css("background-color", `var(--nameColor${user.id})`);
+
+			if(localStorage.getItem("setting_chatNameUsesGradient") === "true" && usesCustomColor && !customSettings) {
+				allNameElements.css("background-image", `linear-gradient(var(--nameAngle${user.id}), var(--nameColorSecondary${user.id}) 0%, transparent 75%)`);
+			}
+		}
+
+		let userColorUsed = localStorage.getItem(colorToUse);
+		if(!userColorUsed || userColorUsed === "var(--defaultNameColor)") {
+			userColorUsed = localStorage.getItem("setting_chatDefaultNameColor");
+		}
+
+		if(localStorage.getItem("setting_chatMessageUserInfoBackgroundReflectUserColor") === "true") {
+			rootCSS().setProperty(`--userInfoBGColor${user.id}`, interpolateColor(
+				localStorage.getItem("setting_chatMessageUserInfoBackgroundColor"),
+				userColorUsed,
+				parseFloat(localStorage.getItem(`setting_chatMessageUserInfoBackgroundUserColorAmount`)
+			)));
+			this.rootBlock.css("background-color", `var(--userInfoBGColor${user.id})`);
+		}
+		if(localStorage.getItem("setting_chatMessageUserInfoOutlinesReflectUserColor") === "true") {
+			rootCSS().setProperty(`--userOutlineColor${user.id}`, interpolateColor(
+				localStorage.getItem("setting_chatMessageUserInfoOutlinesColor"),
+				userColorUsed,
+				parseFloat(localStorage.getItem(`setting_chatMessageUserInfoOutlinesUserColorAmount`)
+			)));
+			this.rootBlock.css("border-color", `var(--userOutlineColor${user.id})`);
+		}
+		if(localStorage.getItem("setting_pronounsReflectUserColor") === "true") {
+			rootCSS().setProperty(`--pronounsColor${user.id}`, interpolateColor(
+				localStorage.getItem("setting_pronounsColor"),
+				userColorUsed,
+				parseFloat(localStorage.getItem(`setting_pronounsUserColorAmount`)
+			)));
+			this.pronounsBlock.css("background-color", `var(--pronounsColor${user.id})`);
+		}
+
+		if(customSettings && customizationOK) {
+			if(!customSettings.useDefaultNameSettings) {
+				if(localStorage.getItem("setting_allowUserCustomNameFonts") === "true") {
+					this.nameBlock.css("font-family", `var(--nameFont${user.id})`);
+					this.nameBlock.css("font-weight", `var(--nameWeight${user.id})`);
+					this.nameBlock.css("font-size", `var(--nameSize${user.id})`);
+					allNameElements.css("font-style", `var(--nameStyle${user.id})`);
+					allNameElements.css("letter-spacing", `var(--nameSpacing${user.id})`);
+					allNameElements.css("text-transform", `var(--nameTransform${user.id})`);
+					allNameElements.css("font-variant", `var(--nameVariant${user.id})`);
+					allNameElements.css("-webkit-text-stroke", `var(--nameExtraWeight${user.id}) transparent`);
+				}
+
+				if(localStorage.getItem("setting_allowUserCustomNameColors") === "true") {
+					allNameElements.css("background-image", `var(--nameGradient${user.id})`);
+				}
+
+				if(localStorage.getItem("setting_allowUserNameTransforms") === "true") {
+					this.nameBlock.css("transform", `var(--nameTransforms${user.id})`);
+				}
+			}
+		}
+	}
+
+	render() {
+		const root = this.rootBlock.clone(true);
+
+		const badgeBlock = this.badgeBlock.clone(true);
+		const flagBlock = this.flagBlock.clone(true);
+		const pronounsBlock = this.pronounsBlock.clone(true);
+		const pfpBlock = this.pfpBlock.clone(true);
+		const nameBlock = this.nameBlock.clone(true);
+
+		root.append(badgeBlock);
+		root.append(flagBlock);
+		root.append(pronounsBlock);
+		root.append(pfpBlock);
+		root.append(nameBlock);
+
+		return root;
+	}
+}
+
 class User {
 	constructor(opts) {
+		const actuallyThis = this;
+
 		this.id = opts.id;
 		this.displayName = opts.name;
 		this.username = opts.username;
@@ -117,8 +779,8 @@ class User {
 		this.broadcasterType = opts.broadcasterType;
 		this.created = new Date(opts.created).getTime();
 		this.bot = isUserBot(opts.username);
+		this.userBlock = new UserBlock({user: actuallyThis});
 
-		const actuallyThis = this;
 		this.customSettingsFetchPromise = new Promise(async function(resolve, reject) {
 			const state = await actuallyThis.getUserSettings();
 			actuallyThis.fetchedCustomSettings = true;
@@ -193,6 +855,8 @@ class User {
 
 	setSevenTVPaint(ref_id) {
 		this.entitlements.sevenTV.paint = ref_id;
+		set7TVPaint(this.userBlock.nameBlock, ref_id, this.id);
+		this.userBlock.updateNameBlock();
 	}
 
 	async refreshProminentColor() {
@@ -269,6 +933,8 @@ class User {
 		this.entitlements.pronouns.secondary = data.alt_pronoun_id;
 		this.entitlements.pronouns.string = this.pronounString();
 		this.updatePronounBlocks();
+
+		await this.userBlock.updatePronounsBlock();
 	}
 
 	pronounString() {
@@ -317,7 +983,7 @@ class User {
 			}
 		}
 
-		renderFFZBadges(this, $(`.chatBlock[data-userid="${this.id}"] .badges`));
+		await this.userBlock.updateBadgeBlock();
 	}
 
 	async refreshCachedAvatar() {
@@ -345,6 +1011,8 @@ class User {
 				$(this).attr("src", argh.avatarImage).fadeIn(250);
 			});
 		}
+
+		await this.userBlock.updateAvatarBlock();
 	}
 
 	async cacheAvatar() {
@@ -409,6 +1077,9 @@ class User {
 
 			await this.refreshProminentColor();
 		}
+
+		await this.userBlock.updateAvatarBlock();
+		this.userBlock.initUserBlockCustomizations();
 
 		return true;
 	}
@@ -568,6 +1239,10 @@ class User {
 		rootCSS().setProperty(`--msgStyle${this.id}`, (data.messageItalic ? "italic" : "normal"));
 
 		rootCSS().setProperty(`--pfpShape${this.id}`, `${data.avatarBorderRadius}%`);
+
+		this.userBlock.initUserBlockCustomizations();
+		this.userBlock.updateFlagBlock();
+		this.userBlock.updateNameBlock();
 
 		return true;
 	}

@@ -815,3 +815,7 @@ img.emoji {
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;	
 }
+
+.forceHide {
+	display: none !important;
+}
