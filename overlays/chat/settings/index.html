@@ -52,6 +52,7 @@
 					<div class="row" data-tab="bsinfo_art"><i class="fas fa-image"></i>Cover Art Cell</div>
 					<div class="row" data-tab="bsinfo_hitmiss"><i class="fas fa-xmark"></i>Hit / Miss Cell</div>
 					<div class="row" data-tab="bsinfo_misc"><i class="fas fa-circle-info"></i>Miscellaneous Info Cell</div>
+					<div class="row" data-tab="bsinfo_pp"><i class="fas fa-ranking-star"></i>Ranked PP Cell</div>
 					<div class="row" data-tab="bsinfo_metadata"><i class="fas fa-compact-disc"></i>Song Metadata Cell</div>
 					<hr/>
 					<div class="row" data-tab="bsinfo_effects"><i class="fas fa-magic"></i>Effects</div>
@@ -2091,6 +2092,12 @@
 				<div class="part">
 					<h1>Panel Settings</h1>
 					<div class="setting">
+						<div class="settingCell">
+							<input id="panel_disableSuccessNotifications" type="checkbox"/> <span class="settingInfo">Disable success notifications</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
 						<div class="settingCellLabel">
 							<span class="settingInfo">Primary color</span>
 						</div>
@@ -2113,12 +2120,6 @@
 						</div>
 						<div class="settingCell">
 							<input type="number" id="ajaxTimeout" min="2" max="99" step="1" value="4"/><span class="settingCellMeasurement">seconds</span>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCell">
-							<input id="panel_disableSuccessNotifications" type="checkbox"/> <span class="settingInfo">Disable success notifications</span>
 						</div>
 					</div>
 				</div>
@@ -2574,6 +2575,25 @@
 					<div class="setting">
 						<div class="settingCell smol">
 							The settings panel will need to be reloaded after switching which data mod is being used for Beat Saber-related overlays. You can do this by right-clicking the settings panel and clicking Refresh in the menu that pops up.
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>BeatSaver</h1>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Cached map data expires after</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bsMapCacheExpiryDelay" min="1" max="365" step="1" value="5"/><span class="settingCellMeasurement">days</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Cached user data expires after</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bsUserCacheExpiryDelay" min="1" max="365" step="1" value="30"/><span class="settingCellMeasurement">days</span>
 						</div>
 					</div>
 				</div>
@@ -4064,7 +4084,7 @@
 					</div>
 					<div class="setting">
 						<div class="settingCell smol">
-							<strong>Available elements:</strong> acc, art, hitmiss, metadata, misc
+							<strong>Available elements:</strong> acc, art, hitmiss, metadata, misc, pp
 						</div>
 					</div>
 					<div class="setting">
@@ -4126,6 +4146,23 @@
 						</div>
 						<div class="settingCell">
 							<input type="number" id="bs_animateAccInterval" min="1" max="250" step="1" value="10"/><span class="settingCellMeasurement">ms</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="animateAcc">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Divisor</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_accAnimationDivisor" min="1" max="100" step="1" value="10"/>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Decimal precision</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_accPrecision" min="0" max="4" step="1" value="2"/><span class="settingCellMeasurement">digits</span>
 						</div>
 					</div>
 					<hr/>
@@ -4352,7 +4389,7 @@
 							<span class="settingInfo">Width</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="bs_hitMissWidth" min="0" max="500" step="1" value="100"/><span class="settingCellMeasurement">px</span>
+							<input type="number" id="bs_hitMissWidth" min="0" max="500" step="1" value="80"/><span class="settingCellMeasurement">px</span>
 						</div>
 					</div>
 					<div class="setting">
@@ -4446,6 +4483,96 @@
 						</div>
 						<div class="settingCell">
 							<input id="bs_missIconColor" type="text" data-coloris value="#DD1133FF"/>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section" data-content="bsinfo_pp">
+				<div class="part">
+					<h1>Ranked PP Cell</h1>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Width</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_ppWidth" min="0" max="500" step="1" value="100"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Line height</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_ppLineHeight" min="0" max="999" step="1" value="16"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="bs_flipPPDetails" type="checkbox"/> <span class="settingInfo">Flip vertical order of leaderboard services</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Horizontal alignment</span>
+						</div>
+						<div class="settingCell">
+							<select id="bs_ppAlignment">
+								<option value="left">Left</option>
+								<option value="center">Center</option>
+								<option selected value="right">Right</option>
+							</select>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Decimal precision</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_ppPrecision" min="0" max="4" step="1" value="1"/><span class="settingCellMeasurement">digits</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Color</span>
+						</div>
+						<div class="settingCell">
+							<input id="bs_ppColor" type="text" data-coloris value="#FFFFFFFF"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Font</span>
+						</div>
+						<div class="settingCell">
+							<input id="bs_ppFontFamily" type="text" value="Manrope"/>
+							<input id="bs_ppFontItalic" type="checkbox"/> <span class="settingInfo">Italic</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Font size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_ppFontSize" min="0" max="96" step="0.25" value="12"/><span class="settingCellMeasurement">pt</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Font weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_ppFontWeight" min="0" max="900" step="100" value="900"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Additional font weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_ppFontAdditionalWeight" min="0" max="20" step="0.1" value="0"/><span class="settingCellMeasurement">px</span>
 						</div>
 					</div>
 				</div>

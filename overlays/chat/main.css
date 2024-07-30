@@ -271,7 +271,7 @@ tt, code, pre {
 	max-height: var(--avatarSize);
 	margin-right: 10px;
 	border-radius: var(--avatarBorderRadius);
-	align-items: center;
+	align-self: center;
 }
 
 .highlighted {

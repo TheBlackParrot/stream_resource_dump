@@ -90,6 +90,17 @@
 			</div>
 		</div>
 
+		<div class="cell" id="ppCell">
+			<div id="ssCell">
+				<img class="ppIcon" src="icons/ss_logo.svg"/>
+				<span id="ssValue">0.0</span>
+			</div>
+			<div id="blCell">
+				<img class="ppIcon" src="icons/bl_logo.png"/>
+				<span id="blValue">0.0</span>
+			</div>
+		</div>
+
 		<div id="bgWrapper">
 			<div id="artBGWrap">
 				<div class="artContainer"></div>
@@ -123,6 +134,7 @@
 	<script defer type="text/javascript" src="settings.js"></script>
 	<script defer type="text/javascript" src="main.js"></script>
 	<script defer type="text/javascript" src="broadcast.js"></script>
+	<script defer type="text/javascript" src="rankpp.js"></script>
 	<script type="text/javascript">
 		window.addEventListener("load", function() {
 			postToSettingsEventChannel("BSStatsOverlayExists", {version: overlayRevision});

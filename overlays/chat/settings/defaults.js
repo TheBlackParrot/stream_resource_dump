@@ -142,7 +142,9 @@ const nonPublicSettings = [
 	"clock_overrideTimezone",
 	"clock_timezoneValue",
 	"clock_showMeridiems",
-	"panel_disableSuccessNotifications"
+	"panel_disableSuccessNotifications",
+	"bsMapCacheExpiryDelay",
+	"bsUserCacheExpiryDelay"
 ];
 
 const defaultConfig = {
@@ -723,7 +725,7 @@ const defaultConfig = {
 	"bs_artistAdditionalFontWeight": "0",
 	"bs_artistTransform": "none",
 	"bs_miscInfoWidth": "120",
-	"bs_hitMissWidth": "100",
+	"bs_hitMissWidth": "80",
 	"bs_flipHitMissDetails": "false",
 	"bs_accWidth": "120",
 	"bs_flipAccDetails": "false",
@@ -964,8 +966,22 @@ const defaultConfig = {
 	"clock_overrideTimezone": "false",
 	"clock_timezoneValue": "America/New_York",
 	"clock_showMeridiems": "true",
-	"panel_disableSuccessNotifications": "false"
-
+	"panel_disableSuccessNotifications": "false",
+	"bsMapCacheExpiryDelay": "5",
+	"bsUserCacheExpiryDelay": "30",
+	"bs_accPrecision": "2",
+	"bs_ppWidth": "110",
+	"bs_ppColor": "#ffffff",
+	"bs_ppFontFamily": "Manrope",
+	"bs_ppFontItalic": "false",
+	"bs_ppFontSize": "12",
+	"bs_ppFontWeight": "900",
+	"bs_ppAlignment": "right",
+	"bs_ppFontAdditionalWeight": "0",
+	"bs_ppLineHeight": "16",
+	"bs_flipPPDetails": "false",
+	"bs_ppPrecision": "1",
+	"bs_accAnimationDivisor": "10"
 };
 // i typed out the bigNoNoWords so you don't have to, i'm sorry :(
 // it's gotta know what to remove

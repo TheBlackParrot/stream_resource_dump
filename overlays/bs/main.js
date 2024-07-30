@@ -7,19 +7,6 @@ function formatTime(val) {
 	return `${mins}:${secs.toString().padStart(2, '0')}`;
 }
 
-function getHTTP(url, callback) {
-	let xH = new XMLHttpRequest();
-
-	xH.onreadystatechange = function() {
-		if(xH.readyState === 4 && xH.status === 200) {
-			callback(xH.responseText);
-		}
-	}
-
-	xH.open("GET", url, true);
-	xH.send(null);
-}
-
 function togglePause(state) {
 	if(localStorage.getItem("setting_bs_desaturateOnPause") === "true") {
 		if(state) {
@@ -192,9 +179,11 @@ const eventFuncs = {
 		}
 
 		if(data.acc === 1 && !hits) {
-			$("#acc").text("00.00");
+			let precision = parseInt(localStorage.getItem("setting_bs_accPrecision"));
+			$("#acc").text(`00${precision ? `.${"".padStart(parseInt(precision), "0")}` : ""}`);
 		} else {
 			setAcc(data.acc * 100);
+			updatePPValues(data.acc);
 		}
 
 		$("#combo").text(data.combo.toLocaleString());
@@ -210,11 +199,33 @@ const eventFuncs = {
 		}
 	},
 
-	"map": function(map) {
+	"hash": function(hash) {
 		toggleOverlay(true);
-		activeMap = map;
-
 		switchSecondary(true);
+
+		rootCSS().setProperty("--art-url", `url('placeholder.png')`);
+		$("#art, #artDoppleganger").attr("src", "placeholder.png");
+
+		songLength = 0;
+		$("#duration").text("0:00");
+
+		$("#titleString").text("loading...");
+		$("#artist").text("please wait...");
+		$("#mapperContainer").empty();
+
+		$("#codeWrap").hide();
+		$("#diffWrap").show();
+		$("#bsrCode").empty();
+
+		$("#combo").text(0);
+		$("#hitValue").text(0);
+		$("#FCCell").show();
+		$("#missCell").hide();
+		oldCombo = 0;
+	},
+
+	"map": async function(map) {
+		activeMap = map;
 
 		setArt();
 
@@ -269,19 +280,14 @@ const eventFuncs = {
 		}
 
 		updateSecondaryMarquee();
-
-		$("#combo").text(0);
-		$("#hitValue").text(0);
-		$("#FCCell").show();
-		$("#missCell").hide();
-		oldCombo = 0;
+		refreshLeaderboardData(map.map.difficulty, map.map.characteristic, map.map.hash);
 	}
 };
 function processMessage(data) {
-	console.log(data);
-
 	if(data.type in eventFuncs) {
 		eventFuncs[data.type](data.data);
+	} else {
+		console.log(data);
 	}
 }
 
@@ -352,7 +358,8 @@ function timerFunction() {
 var finalAcc = 100;
 var curAcc = 100;
 function setAcc(acc) {
-	finalAcc = parseFloat(acc.toFixed(2));
+	const decimalPlaces = parseInt(localStorage.getItem("setting_bs_accPrecision"));
+	finalAcc = parseFloat(acc.toFixed(decimalPlaces));
 
 	if(localStorage.getItem("setting_bs_animateAccChanges") === "true") {
 		if(!isAnimating) {
@@ -360,7 +367,7 @@ function setAcc(acc) {
 		}
 	} else {
 		curAcc = finalAcc;
-		$("#acc").text(finalAcc.toFixed(2));
+		$("#acc").text(finalAcc.toFixed(decimalPlaces));
 	}
 }
 
@@ -369,45 +376,33 @@ var isAnimating = false;
 function animateAccChange() {
 	isAnimating = true;
 
+	const decimalPlaces = parseInt(localStorage.getItem("setting_bs_accPrecision"));
+
 	if(curAcc === finalAcc) {
 		isAnimating = false;
+		$("#acc").text(finalAcc.toFixed(decimalPlaces));
 		return;
 	}
 
-	let toChange = parseFloat((Math.round((finalAcc - curAcc)*100)/100).toFixed(2));
+	const divisor = Math.max(parseInt(localStorage.getItem("setting_bs_accAnimationDivisor")), 1);
+	const factor = Math.pow(divisor, decimalPlaces);
+
+	let toChange = parseFloat((Math.round((finalAcc - curAcc) * factor) / factor).toFixed(decimalPlaces));
 	if(!toChange) {
 		isAnimating = false;
+		$("#acc").text(finalAcc.toFixed(decimalPlaces));
 		return;
 	}
 
 	if(toChange > 0) {
-		curAcc += Math.ceil((toChange*100) / 10) / 100;
+		curAcc += Math.ceil((toChange * factor) / divisor) / factor;
 	} else if(toChange < 0) {
-		curAcc += Math.floor((toChange*100) / 10) / 100;
+		curAcc += Math.floor((toChange * factor) / divisor) / factor;
 	}
 
-	$("#acc").text(curAcc.toFixed(2));
+	$("#acc").text(curAcc.toFixed(decimalPlaces));
 
 	setTimeout(animateAccChange, currentAccInterval);
-}
-
-function setCombo(combo) {
-	let comboStr = combo.toString();
-	let len = comboStr.length;
-
-	for(let i = 0; i < len; i++) {
-		if(i >= currentComboSpans) {
-			$("#comboNums").append($(`<span class="comboNum" id="comboNum${i}">`));
-			currentComboSpans++;
-		}
-
-		$(`#comboNum${i}`).text(comboStr[i]);
-	}
-
-	for(let i = currentComboSpans-1; i >= len; i--) {
-		$(`#comboNum${i}`).remove();
-		currentComboSpans--;
-	}
 }
 
 var oldCombo = 0;

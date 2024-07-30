@@ -13,7 +13,7 @@ function postToBSEventChannel(event, data) {
 }
 
 bsEventChannel.onmessage = function(message) {
-	console.log(message);
+	//console.log(message);
 	data = message.data;
 
 	processMessage(data);

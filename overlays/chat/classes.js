@@ -944,7 +944,7 @@ class User {
 		}
 
 		let separator = localStorage.getItem("setting_pronounsSeparator");
-		if(!separator) {
+		if(typeof separator === "undefined") {
 			separator = " / ";
 		}
 
@@ -955,9 +955,8 @@ class User {
 	}
 
 	updatePronounBlocks() {
-		if(this.entitlements.pronouns.primary !== null) {
-			$(`.chatBlock[data-userid="${this.id}"] .pronouns`).text(this.entitlements.pronouns.string).show();
-		}
+		this.entitlements.pronouns.string = this.pronounString();
+		this.userBlock.updatePronounsBlock();
 	}
 
 	async #setFFZBadges() {
@@ -1379,16 +1378,15 @@ class UserSet {
 
 	refreshPronounStrings() {
 		for(const idx in this) {
-			if(idx === -1) {
+			const user = this[idx];
+
+			if(!("entitlements" in user)) {
 				continue;
 			}
-			
-			const user = this[idx];
 			if(user.entitlements === undefined) {
 				continue;
 			}
 
-			user.entitlements.pronouns.string = user.pronounString();
 			user.updatePronounBlocks();
 		}
 	}

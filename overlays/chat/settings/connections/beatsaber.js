@@ -24,7 +24,7 @@ async function getMapPacks() {
 
 const bsEventChannel = new BroadcastChannel("bs");
 function postToBSEventChannel(data) {
-	console.log(data);
+	//console.log(data);
 	if(data) {
 		bsEventChannel.postMessage(data);
 	}
@@ -51,8 +51,8 @@ async function getCachedBeatSaverUserData(url) {
 		await cacheStorage.put(`https://api.beatsaver.com/users/id/${userDataJSON.id}`, cachedResponse);		
 	} else {
 		const cacheTimestamp = parseInt(cachedResponse.headers.get("X-Cache-Timestamp"));
-		if(Date.now() - cacheTimestamp > 2592000000) {
-			// 30 days has passed since last fetch, refetch
+		const staleThreshold = parseFloat(localStorage.getItem("setting_bsUserCacheExpiryDelay")) * 24 * 60 * 60 * 1000;
+		if(Date.now() - cacheTimestamp > staleThreshold) {
 			console.log(`cached user data for ${url} is stale, re-fetching...`);
 			cacheStorage.delete(url);
 			return await getCachedBeatSaverUserData(url);
@@ -89,8 +89,8 @@ async function getCachedMapData(url) {
 		await cacheStorage.put(`https://api.beatsaver.com/maps/id/${mapData.id}`, cachedResponse);
 	} else {
 		const cacheTimestamp = parseInt(cachedResponse.headers.get("X-Cache-Timestamp"));
-		if(Date.now() - cacheTimestamp > 604800000) {
-			// 7 days has passed since last fetch, refetch
+		const staleThreshold = parseFloat(localStorage.getItem("setting_bsMapCacheExpiryDelay")) * 24 * 60 * 60 * 1000;
+		if(Date.now() - cacheTimestamp > staleThreshold) {
 			console.log(`cached map data for ${url} is stale, re-fetching...`);
 			cacheStorage.delete(url);
 			return await getCachedMapData(url);

@@ -1,4 +1,75 @@
 {
+	"9999999999999": {
+		"updates": {
+			"bs": {
+				"revision": 9,
+				"notes": [
+					[
+						"map data now clears on receving the hash event"
+					],
+					[
+						"decimal precision on the accuracy display can now be changed",
+						{"anchor": "bs_accPrecision"}
+					],
+					[
+						"removed unused old HTTP fetch and old combo display code"
+					],
+					[
+						"added a 'pp' option to element display list that shows current PP value of ranked maps on ScoreSaber and BeatLeader",
+						{"anchor": "bs_elementOrder"}
+					],
+					[
+						"hit/miss/FC icons on the hit/miss display now align themselves to the right of values if the display is aligned to the right"
+					],
+					[
+						"calmed down logging on state change events"
+					],
+					[
+						"added setting to change animation 'divisor' on accuracy changes",
+						["the higher the value, the more time it will take for it to fall into the final accuracy value"],
+						{"anchor": "bs_accAnimationDivisor"}
+					],
+					[
+						"fixed accuracy display not perfectly representing the final accuracy post-animations",
+						["this wasn't an apparent issue without the new settings, but with low enough divisors and high enough decimal precision, it became super obvious"]
+					]
+				]
+			},
+
+			"chat": {
+				"revision": 60,
+				"notes": [
+					[
+						"completely overhauled flow of creating and updating the user/viewer information element",
+						["this should fix the flickery-ness of user info element initialization for those that have multiple external badges too"]
+					],
+					[
+						"fixed vertical alignment issue with avatars smaller than the parent container's height"
+					],
+					[
+						"avatar shape now uses percentages rather than static pixel amounts"
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 61,
+				"notes": [
+					[
+						"added settings to change thresholds for refreshing BeatSaver data caches",
+						{"anchor": "bsMapCacheExpiryDelay"}
+					],
+					[
+						"reduced default BeatSaver map data cache expiry time from 7 days to 5 days"
+					],
+					[
+						"calmed down logging on Beat Saber state change events"
+					]
+				]
+			}
+		}
+	},
+
 	"1722050606023": {
 		"updates": {
 			"chat": {

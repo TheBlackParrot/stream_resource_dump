@@ -452,7 +452,10 @@ async function getRootElement(data) {
 		messageWrapper.css("border-color", `var(--messageOutlineColor${data.user.id})`);
 	}
 
+	const avatarBGBlock = renderAvatarBGBlock(data, rootElement);
+
 	overallWrapper.append(userBlock);
+	overallWrapper.append(avatarBGBlock);
 	overallWrapper.append(messageWrapper);
 
 	lastRootElement = [rootElement, overallWrapper, messageWrapper];

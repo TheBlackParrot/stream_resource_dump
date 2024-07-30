@@ -40,13 +40,14 @@
 	--hitMissFontStyle: normal;
 	--hitMissFontWeight: 900;
 	--hitMissFontSize: 12pt;
-	--hitMissWidth: 100px;
+	--hitMissWidth: 80px;
 	--hitMissVerticalAlignment: column;
 	--hitMissColor: #FFFFFFFF;
 	--hitIconColor: #33AA55FF;
 	--missIconColor: #DD1133FF;
 	--FCIconColor: #DDAA00FF;
 	--hitMissAlignment: left;
+	--hitMissAlignmentDirection: ltr;
 	--hitMissFontAdditionalWeight: 0px;
 	--hitMissLineHeight: 22px;
 	
@@ -149,4 +150,16 @@
 	--cssScrollAmount: 0px;
 	--cssScrollDelay: 7s;
 	--cssScrollDuration: 1s;
+
+	--ppFontFamily: "Manrope";
+	--ppFontStyle: normal;
+	--ppFontWeight: 900;
+	--ppFontSize: 12pt;
+	--ppWidth: 100px;
+	--ppVerticalAlignment: column;
+	--ppColor: #FFFFFFFF;
+	--ppAlignment: left;
+	--ppAlignmentDirection: ltr;
+	--ppFontAdditionalWeight: 0px;
+	--ppLineHeight: 22px;
 }

@@ -93,7 +93,7 @@ body {
 	transition: var(--desaturateFadeOutDuration);
 }
 
-#diffWrap, #codeWrap, #timeWrap, #title, #artist, .mapper, #mapperContainer:before, .basePack, #hitMissCell, #accCell {
+#diffWrap, #codeWrap, #timeWrap, #title, #artist, .mapper, #mapperContainer:before, .basePack, #hitMissCell, #accCell, #ppCell {
 	filter:	var(--effects);
 }
 #diffWrap, #title, #artist, .mapper, .basePack {
@@ -161,14 +161,14 @@ body {
 	-webkit-mask-position: center;
 }
 
-#duration, #time, #combo, #acc, #hitValue, #missValue {
+#duration, #time, #combo, #acc, #hitValue, #missValue, #ssValue, #blValue {
 	font-variant: tabular-nums;
 }
-#miscInfoCell, #metadataCell, #hitMissCell, #accCell {
+#miscInfoCell, #metadataCell, #hitMissCell, #accCell, #ppCell {
 	white-space: nowrap;
 	overflow-x: clip;
 }
-#diffWrap, #codeWrap, #hitCell, #FCCell, #missCell, #comboWrap, #accWrap {
+#diffWrap, #codeWrap, #hitCell, #FCCell, #missCell, #comboWrap, #accWrap, #ssCell, #blCell {
 	padding-top: var(--verticalSpacing);
 	padding-bottom: var(--verticalSpacing);
 }
@@ -245,6 +245,18 @@ body {
 	font-size: var(--hitMissFontSize);
 	text-align: var(--hitMissAlignment);
 	line-height: var(--hitMissLineHeight);
+	direction: var(--hitMissAlignmentDirection);
+}
+#ppCell {
+	min-width: var(--ppWidth);
+	font-weight: var(--ppFontWeight);
+	flex-direction: var(--ppVerticalAlignment);
+	font-family: var(--ppFontFamily);
+	font-style: var(--ppFontStyle);
+	font-size: var(--ppFontSize);
+	text-align: var(--ppAlignment);
+	line-height: var(--ppLineHeight);
+	direction: var(--ppAlignmentDirection);
 }
 #missCell {
 	display: none;
@@ -255,6 +267,12 @@ body {
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 	-webkit-text-stroke: var(--hitMissFontAdditionalWeight) transparent;	
+}
+#blCell span, #ssCell span {
+	background-color: var(--ppColor);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-webkit-text-stroke: var(--ppFontAdditionalWeight) transparent;		
 }
 
 #accCell {
@@ -481,6 +499,19 @@ body {
 	position: fixed;
 	top: -100vh;
 	left: -100vw;
+}
+
+#ssValue:after, #blValue:after {
+	content: "pp";
+	font-size: 0.8em;
+	line-height: 0px;
+}
+
+.ppIcon {
+	height: 1em;
+	width: 1em;
+	line-height: 0px;
+	vertical-align: top;
 }
 
 /* uncomment after OBS updates CEF to a recent chrome version

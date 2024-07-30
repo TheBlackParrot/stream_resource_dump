@@ -519,9 +519,9 @@ const settingUpdaters = {
 
 	avatarShape: function(value) {
 		switch(value) {
-			case "circle": rootCSS().setProperty("--avatarBorderRadius", "100%"); break;
-			case "squircle": rootCSS().setProperty("--avatarBorderRadius", "10px"); break;
-			case "square": rootCSS().setProperty("--avatarBorderRadius", "0px"); break;
+			case "circle": rootCSS().setProperty("--avatarBorderRadius", "50%"); break;
+			case "squircle": rootCSS().setProperty("--avatarBorderRadius", "30%"); break;
+			case "square": rootCSS().setProperty("--avatarBorderRadius", "0%"); break;
 		}
 	},
 

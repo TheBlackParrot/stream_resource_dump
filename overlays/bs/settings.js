@@ -20,7 +20,8 @@ const elementMap = {
 	"artCell": ["art", "cover", "coverart", "pic", "picture", "img", "image"],
 	"metadataCell": ["meta", "metadata", "song", "map", "track", "title", "which", "data"],
 	"hitMissCell": ["hit", "miss", "hitmiss", "hits", "misses", "correct", "wrong", "errors", "error"],
-	"accCell": ["acc", "accuracy", "combo", "percent", "percentage", "score"]
+	"accCell": ["acc", "accuracy", "combo", "percent", "percentage", "score"],
+	"ppCell": ["pp", "rank", "ranked", "points", "rankpoints", "rankedpoints", "performancepoints", "rankpp"]
 };
 
 const diffMap = {
@@ -96,6 +97,7 @@ const settingUpdaters = {
 
 	elementOrder: function(value) {
 		/* remove `.attr("style", "")` after OBS updates CEF to a recent chrome version */
+		$(".cell").attr("data-enabled", "false");
 		$(".cell").attr("style", "").hide();
 		value = value.toLowerCase();
 
@@ -117,6 +119,7 @@ const settingUpdaters = {
 
 			if(foundElement) {
 				$("#wrapper").append($(`#${foundElement}`))
+				$(`#${foundElement}`).attr("data-enabled", "true");
 				$(`#${foundElement}`).show();
 			}
 		}
@@ -497,6 +500,11 @@ const settingUpdaters = {
 	},
 	hitMissAlignment: function(value) {
 		rootCSS().setProperty("--hitMissAlignment", value);
+		if(value === "left" || value === "center") {
+			rootCSS().setProperty("--hitMissAlignmentDirection", "ltr");
+		} else {
+			rootCSS().setProperty("--hitMissAlignmentDirection", "rtl");
+		}
 		updateMarquee();
 	},
 	accAlignment: function(value) {
@@ -597,6 +605,71 @@ const settingUpdaters = {
 	},
 	overlayOutlineThreshold: function() {
 		settingUpdaters.overlayOutlineOrder(localStorage.getItem("setting_bs_outlineOrder"));
+	},
+	accPrecision: function(value) {
+		value = parseInt(value);
+
+		curAcc = 0;
+		if(!currentState.acc) {
+			finalAcc = 0;
+		} else {
+			curAcc = 100;
+			finalAcc = parseFloat((currentState.acc * 100).toFixed(value));
+		}
+
+		if(currentState.scene === "Playing") {
+			setAcc(finalAcc);
+		} else {
+			$("#acc").text(`00${value ? `.${"".padStart(parseInt(value), "0")}` : ""}`);
+		}
+	},
+	ppWidth: function(value) {
+		rootCSS().setProperty("--ppWidth", `${value}px`);
+	},
+	flipPPDetails: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--ppVerticalAlignment", "column-reverse");
+		} else {
+			rootCSS().setProperty("--ppVerticalAlignment", "column");
+		}
+	},
+	ppFontFamily: function(value) {
+		rootCSS().setProperty("--ppFontFamily", value);
+	},
+	ppFontItalic: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--ppFontStyle", "italic");
+		} else {
+			rootCSS().setProperty("--ppFontStyle", "normal");
+		}
+	},
+	ppFontWeight: function(value) {
+		rootCSS().setProperty("--ppFontWeight", value);
+	},
+	ppFontSize: function(value) {
+		rootCSS().setProperty("--ppFontSize", `${value}pt`);
+	},
+	ppColor: function(value) {
+		rootCSS().setProperty("--ppColor", value);
+	},
+	ppAlignment: function(value) {
+		rootCSS().setProperty("--ppAlignment", value);
+		if(value === "left" || value === "center") {
+			rootCSS().setProperty("--ppAlignmentDirection", "ltr");
+		} else {
+			rootCSS().setProperty("--ppAlignmentDirection", "rtl");
+		}
+		updateMarquee();
+	},
+	ppFontAdditionalWeight: function(value) {
+		rootCSS().setProperty("--ppFontAdditionalWeight", `${value}px`);
+	},
+	ppLineHeight: function(value) {
+		rootCSS().setProperty("--ppLineHeight", `${value}px`);
+	},
+	ppPrecision: function(value) {
+		ppDecimalPrecision = parseInt(value);
+		updatePPValues(currentState.acc);
 	}
 };
 
