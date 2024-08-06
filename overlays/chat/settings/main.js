@@ -9,8 +9,8 @@ function changeStatusCircle(which, status, msg) {
 
 $("#sensitive .section").show();
 
-const overlayRevision = 61;
-const overlayRevisionTimestamp = 1722050606023;
+const overlayRevision = 62;
+const overlayRevisionTimestamp = 1722911240097;
 $("#revision").text(`revision ${overlayRevision}`);
 
 function resetEverything() {
@@ -439,5 +439,19 @@ async function compressImage(url, size, quality) {
 	ctx.drawImage(bitmap, 0, 0, size, size);
 	return canvas.toDataURL("image/jpeg", quality);
 }
+
+$("#clearBSDataCacheButton").on("mouseup", function(e) {
+	e.preventDefault();
+	caches.delete("beatSaverCache");
+
+	addNotification("Cached BeatSaver data has been cleared.", {duration: 5});
+});
+$("#clearRankedMapDataCacheButton").on("mouseup", function(e) {
+	e.preventDefault();
+	caches.delete("BeatLeaderCache");
+	caches.delete("ScoreSaberCache");
+
+	addNotification("Cached ranked map data has been cleared.", {duration: 5});
+});
 
 $("#UAString").text(window.navigator.userAgent);

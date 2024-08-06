@@ -2577,9 +2577,7 @@
 							The settings panel will need to be reloaded after switching which data mod is being used for Beat Saber-related overlays. You can do this by right-clicking the settings panel and clicking Refresh in the menu that pops up.
 						</div>
 					</div>
-				</div>
-				<div class="part">
-					<h1>BeatSaver</h1>
+					<hr/>
 					<div class="setting">
 						<div class="settingCellLabel">
 							<span class="settingInfo">Cached map data expires after</span>
@@ -2594,6 +2592,25 @@
 						</div>
 						<div class="settingCell">
 							<input type="number" id="bsUserCacheExpiryDelay" min="1" max="365" step="1" value="30"/><span class="settingCellMeasurement">days</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Cached ranked data expires after</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="rankedMapCacheExpiryDelay" min="1" max="365" step="1" value="14"/><span class="settingCellMeasurement">days</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell centerSetting">
+							<div class="button" id="clearBSDataCacheButton">
+								<i class="fa-solid fa-trash-can"></i> Clear BeatSaver Cache
+							</div>
+							<div class="button" id="clearRankedMapDataCacheButton">
+								<i class="fa-solid fa-trash-can"></i> Clear Ranked Data Cache
+							</div>
 						</div>
 					</div>
 				</div>
@@ -4105,7 +4122,7 @@
 							<span class="settingInfo">Width</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="bs_accWidth" min="0" max="500" step="1" value="120"/><span class="settingCellMeasurement">px</span>
+							<input type="number" id="bs_accWidth" min="0" max="500" step="1" value="130"/><span class="settingCellMeasurement">px</span>
 						</div>
 					</div>
 					<div class="setting">
@@ -4491,6 +4508,17 @@
 				<div class="part">
 					<h1>Ranked PP Cell</h1>
 					<div class="setting">
+						<div class="settingCell">
+							<input checked id="bs_ppDisplaySS" type="checkbox"/> <span class="settingInfo">Display ScoreSaber performance points</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="bs_ppDisplayBL" type="checkbox"/> <span class="settingInfo">Display BeatLeader performance points</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
 						<div class="settingCellLabel">
 							<span class="settingInfo">Width</span>
 						</div>
@@ -4518,9 +4546,9 @@
 						</div>
 						<div class="settingCell">
 							<select id="bs_ppAlignment">
-								<option value="left">Left</option>
+								<option selected value="left">Left</option>
 								<option value="center">Center</option>
-								<option selected value="right">Right</option>
+								<option value="right">Right</option>
 							</select>
 						</div>
 					</div>
@@ -4581,6 +4609,27 @@
 				<div class="part">
 					<h1>Miscellaneous Info Cell</h1>
 					<div class="setting">
+						<div class="settingCell">
+							<input checked id="bs_miscInfoShowDifficulty" type="checkbox"/> <span class="settingInfo">Show map difficulty in information rotation</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="bs_miscInfoShowBSR" type="checkbox"/> <span class="settingInfo">Show map !bsr code in information rotation</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="bs_miscInfoShowScoreSaberStars" type="checkbox"/> <span class="settingInfo">Show map's ScoreSaber star rating (if ranked) in information rotation</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="bs_miscInfoShowBeatLeaderStars" type="checkbox"/> <span class="settingInfo">Show map's overall BeatLeader star rating (if ranked) in information rotation</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
 						<div class="settingCellLabel">
 							<span class="settingInfo">Width</span>
 						</div>
@@ -4596,6 +4645,15 @@
 							<input type="number" id="bs_miscInfoLineHeight" min="0" max="999" step="1" value="24"/><span class="settingCellMeasurement">px</span>
 						</div>
 					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Rotate info every</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_miscInfoRotationInterval" min="0" max="60" step="0.5" value="7"/><span class="settingCellMeasurement">seconds</span>
+						</div>
+					</div>					
 					<hr/>
 					<div class="setting">
 						<div class="settingCell">

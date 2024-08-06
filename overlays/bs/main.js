@@ -147,7 +147,7 @@ function toggleOverlay(show) {
 	}
 
 	if(show) {
-		$("#miscInfoCell, #hitMissCell, #accCell").removeClass("fadeOut").addClass("fadeIn");
+		$("#miscInfoCell, #hitMissCell, #accCell, #ppCell").removeClass("fadeOut").addClass("fadeIn");
 		$("#bgWrapper").removeClass("fadeOut").addClass("fadeInLong");
 		$("#title").removeClass("slideOut").addClass("slideIn");
 
@@ -156,7 +156,7 @@ function toggleOverlay(show) {
 			$("#artWrapper").removeClass("fadeOut").addClass("fadeIn");
 		}, 100);
 	} else {
-		$("#miscInfoCell, #hitMissCell, #accCell").removeClass("fadeIn").addClass("fadeOut");
+		$("#miscInfoCell, #hitMissCell, #accCell, #ppCell").removeClass("fadeIn").addClass("fadeOut");
 		$("#bgWrapper").removeClass("fadeInLong").addClass("fadeOut");
 		$("#title").removeClass("slideIn").addClass("slideOut");
 
@@ -178,7 +178,7 @@ const eventFuncs = {
 			togglePause(previousState !== "playing");
 		}
 
-		if(data.acc === 1 && !hits) {
+		if(data.acc === 1 && !data.hits) {
 			let precision = parseInt(localStorage.getItem("setting_bs_accPrecision"));
 			$("#acc").text(`00${precision ? `.${"".padStart(parseInt(precision), "0")}` : ""}`);
 		} else {
@@ -213,15 +213,12 @@ const eventFuncs = {
 		$("#artist").text("please wait...");
 		$("#mapperContainer").empty();
 
-		$("#codeWrap").hide();
-		$("#diffWrap").show();
-		$("#bsrCode").empty();
+		hideMiscInfoDisplayElements();
 
 		$("#combo").text(0);
 		$("#hitValue").text(0);
 		$("#FCCell").show();
 		$("#missCell").hide();
-		oldCombo = 0;
 	},
 
 	"map": async function(map) {
@@ -241,12 +238,12 @@ const eventFuncs = {
 		updateMarquee();
 
 		$("#artist").text(map.song.artist);
-		if(!map.map.bsr) {
-			$("#codeWrap").hide();
-			$("#diffWrap").show();
-		} else {
+		if(map.map.bsr) {
 			$("#bsrCode").text(map.map.bsr);
 		}
+
+		hideMiscInfoDisplayElements();
+		changeMiscInfoDisplay();
 
 		$("#mapperContainer").empty();
 		if(localStorage.getItem("setting_bs_forceBeatSaverData") === "true") {
@@ -318,25 +315,105 @@ function switchSecondary(force) {
 	}
 }
 
-setInterval(function() {
+var miscInfoDisplayTO;
+var currentMiscInfoIndex = 0;
+const miscInfoWrapElements = [
+	"#diffWrap",
+	"#codeWrap",
+	"#ssStarsWrap",
+	"#blStarsWrap"
+];
+
+function hideMiscInfoDisplayElements() {
+	for(const which of miscInfoWrapElements) {
+		$(which).hide();
+	}
+	currentMiscInfoIndex = 0;
+}
+function changeMiscInfoDisplay() {
+	clearTimeout(miscInfoDisplayTO);
+	miscInfoDisplayTO = setTimeout(changeMiscInfoDisplay, parseFloat(localStorage.getItem("setting_bs_miscInfoRotationInterval")) * 1000);
+
+	let allowedToDisplay = [
+		(localStorage.getItem("setting_bs_miscInfoShowDifficulty") === "true"),
+		(localStorage.getItem("setting_bs_miscInfoShowBSR") === "true"),
+		(localStorage.getItem("setting_bs_miscInfoShowScoreSaberStars") === "true"),
+		(localStorage.getItem("setting_bs_miscInfoShowBeatLeaderStars") === "true")
+	]
+
 	if("map" in activeMap) {
 		if(!activeMap.map.bsr) {
-			$("#codeWrap").hide();
-			$("#diffWrap").show();
-			return;
+			allowedToDisplay[1] = false;
+			allowedToDisplay[2] = false;
+			allowedToDisplay[3] = false;
+		} else {
+			if(leaderboardData.ScoreSaber) {
+				if(!leaderboardData.ScoreSaber.ranked || activeMap.map.hash !== leaderboardData.hash) {
+					allowedToDisplay[2] = false;
+				}
+			} else {
+				allowedToDisplay[2] = false;
+			}
+
+			if(leaderboardData.BeatLeader) {
+				if(!leaderboardData.BeatLeader.ranked || activeMap.map.hash !== leaderboardData.hash) {
+					allowedToDisplay[3] = false;
+				}
+			} else {
+				allowedToDisplay[3] = false;
+			}
 		}
 	}
 
-	if($("#codeWrap").is(":visible")) {
-		$("#codeWrap").fadeOut(250, function() {
-			$("#diffWrap").fadeIn(250);
-		})
-	} else {
-		$("#diffWrap").fadeOut(250, function() {
-			$("#codeWrap").fadeIn(250);
-		})
+	let partsDisplaying = 0;
+	for(let bool of allowedToDisplay) {
+		if(bool === true) {
+			partsDisplaying++;
+		}
 	}
-}, 7000);
+
+	if(!partsDisplaying) {
+		for(const which of miscInfoWrapElements) {
+			$(which).hide();
+		}
+		return;
+	}
+
+	if(partsDisplaying === 1) {
+		for(let idx in allowedToDisplay) {
+			let bool = allowedToDisplay[idx];
+			if(bool === true) {
+				$(miscInfoWrapElements[idx]).fadeIn(250);
+				currentMiscInfoIndex = idx;
+			} else {
+				$(miscInfoWrapElements[idx]).hide();
+			}
+		}
+		return;
+	}
+
+	for(let idx = 0; idx < miscInfoWrapElements.length; idx++) {
+		if(idx !== currentMiscInfoIndex) {
+			$(miscInfoWrapElements[idx]).hide();
+		}
+	}
+
+	$(miscInfoWrapElements[currentMiscInfoIndex]).fadeOut(250, function() {
+		currentMiscInfoIndex++;
+		if(currentMiscInfoIndex >= miscInfoWrapElements.length) {
+			currentMiscInfoIndex = 0;
+		}
+
+		while(allowedToDisplay[currentMiscInfoIndex] === false) {
+			currentMiscInfoIndex++;
+			if(currentMiscInfoIndex >= miscInfoWrapElements.length) {
+				currentMiscInfoIndex = 0;
+			}
+		}
+
+		$(miscInfoWrapElements[currentMiscInfoIndex]).fadeIn(250);
+	});
+}
 
 var elapsedTimers = [];
 var elapsed = 0;
@@ -359,6 +436,10 @@ var finalAcc = 100;
 var curAcc = 100;
 function setAcc(acc) {
 	const decimalPlaces = parseInt(localStorage.getItem("setting_bs_accPrecision"));
+	const factor = Math.pow(10, decimalPlaces);
+
+	acc = Math.floor(factor * acc) / factor;
+	
 	finalAcc = parseFloat(acc.toFixed(decimalPlaces));
 
 	if(localStorage.getItem("setting_bs_animateAccChanges") === "true") {
@@ -405,24 +486,15 @@ function animateAccChange() {
 	setTimeout(animateAccChange, currentAccInterval);
 }
 
-var oldCombo = 0;
-var hits = 0;
 function setHitMiss(state) {
 	$("#missValue").text(state.misses.toLocaleString());
 	$("#hitValue").text(state.hits.toLocaleString());
 
 	if(state.misses !== 0) {
 		$("#FCCell").hide();
-		$("#missCell").show();	
+		$("#missCell").show();
+	} else {
+		$("#FCCell").show();
+		$("#missCell").hide();
 	}
-
-	if(state.combo === oldCombo) {
-		return;
-	}
-
-	if(state.combo < oldCombo) {
-		oldCombo = state.combo;
-		return;
-	}
-	oldCombo = state.combo;
 }

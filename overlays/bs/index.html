@@ -25,8 +25,20 @@
 				<div id="diff">Expert+</div>
 			</div>
 
-			<div id="codeWrap">
+			<div id="codeWrap" style="display: none;">
 				<div>!bsr </div><div id="bsrCode">1ad3b</div>
+			</div>
+
+			<div id="ssStarsWrap" style="display: none;">
+				<img class="ppIcon" src="icons/ss_logo.svg">
+				<i class="fas fa-star fa-fw"></i>
+				<div id="ssStarsValue">4.53</div>
+			</div>
+
+			<div id="blStarsWrap" style="display: none;">
+				<img class="ppIcon" src="icons/bl_logo.png">
+				<i class="fas fa-star fa-fw"></i>
+				<div id="blStarsValue">5.81</div>
 			</div>
 
 			<div id="timeWrap">
@@ -137,6 +149,8 @@
 	<script defer type="text/javascript" src="rankpp.js"></script>
 	<script type="text/javascript">
 		window.addEventListener("load", function() {
+			changeMiscInfoDisplay();
+
 			postToSettingsEventChannel("BSStatsOverlayExists", {version: overlayRevision});
 			rootCSS().setProperty("--background-art-height", `${$("#wrapper").outerHeight(true)}px`);
 		});

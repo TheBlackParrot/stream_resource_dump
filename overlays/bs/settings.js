@@ -1,5 +1,5 @@
-const overlayRevision = 9;
-const overlayRevisionTimestamp = 1718225179008;
+const overlayRevision = 11;
+const overlayRevisionTimestamp = 1722911240097;
 
 const settingsChannel = new BroadcastChannel("settings_overlay");
 
@@ -509,6 +509,11 @@ const settingUpdaters = {
 	},
 	accAlignment: function(value) {
 		rootCSS().setProperty("--accAlignment", value);
+		if(value === "left" || value === "center") {
+			rootCSS().setProperty("--comboAlignmentDirection", "ltr");
+		} else {
+			rootCSS().setProperty("--comboAlignmentDirection", "rtl");
+		}
 		updateMarquee();
 	},
 
@@ -614,11 +619,10 @@ const settingUpdaters = {
 			finalAcc = 0;
 		} else {
 			curAcc = 100;
-			finalAcc = parseFloat((currentState.acc * 100).toFixed(value));
 		}
 
 		if(currentState.scene === "Playing") {
-			setAcc(finalAcc);
+			setAcc(currentState.acc * 100);
 		} else {
 			$("#acc").text(`00${value ? `.${"".padStart(parseInt(value), "0")}` : ""}`);
 		}
@@ -670,6 +674,24 @@ const settingUpdaters = {
 	ppPrecision: function(value) {
 		ppDecimalPrecision = parseInt(value);
 		updatePPValues(currentState.acc);
+	},
+	ppDisplaySS: function(value) {
+		if(value === "true") {
+			if(leaderboardData.ScoreSaber.ranked) {
+				$("#ssCell").show();
+			}
+		} else {
+			$("#ssCell").hide();
+		}
+	},
+	ppDisplayBL: function(value) {
+		if(value === "true") {
+			if(leaderboardData.BeatLeader.ranked) {
+				$("#blCell").show();
+			}
+		} else {
+			$("#blCell").hide();
+		}
 	}
 };
 

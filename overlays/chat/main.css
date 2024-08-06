@@ -64,6 +64,7 @@ body {
 	padding-right: var(--chatBlockIndividualPaddingHorizontal);
 	padding-top: var(--chatBlockIndividualPaddingVertical);
 	padding-bottom: var(--chatBlockIndividualPaddingVertical);
+	transform-origin: var(--chatHistoryOriginPoint);
 }
 
 #wrapper .userInfo {

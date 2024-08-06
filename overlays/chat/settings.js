@@ -164,9 +164,13 @@ function setHistoryOpacity() {
 
 		if(filterList.length) {
 			$(this).children(".overallWrapper").css("filter", filterList.join(" "));
+		} else {
+			$(this).children(".overallWrapper").css("filter", "opacity(1)");
 		}
 		if(transformList.length) {
 			$(this).children(".overallWrapper").css("transform", transformList.join(" "));
+		} else {
+			$(this).children(".overallWrapper").css("transform", "unset");
 		}
 	});
 }

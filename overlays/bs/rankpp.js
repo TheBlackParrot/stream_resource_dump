@@ -73,21 +73,60 @@ const curveData = {
 		[0, 0]
 	]
 }
+
+async function getCachedRankedData(service, url) {
+	if(service === "BeatLeader") {
+		var cacheStorage = await caches.open("BeatLeaderCache");
+	} else {
+		var cacheStorage = await caches.open("ScoreSaberCache");
+	}
+
+	var cachedResponse = await cacheStorage.match(url);
+	if(!cachedResponse) {
+		const newResponse = await fetch(url);
+		if(!newResponse.ok) {
+			return null;
+		}
+		var mapData = await newResponse.json();
+
+		cachedResponse = new Response(JSON.stringify(mapData), {
+			headers: {
+				'Content-Type': "application/json",
+				'X-Cache-Timestamp': Date.now()
+			}
+		});
+		await cacheStorage.put(url, await cachedResponse.clone());
+	} else {
+		const cacheTimestamp = parseInt(cachedResponse.headers.get("X-Cache-Timestamp"));
+		const staleThreshold = parseFloat(localStorage.getItem("setting_rankedMapCacheExpiryDelay")) * 24 * 60 * 60 * 1000;
+		if(Date.now() - cacheTimestamp > staleThreshold) {
+			console.log(`cached ranked data for ${url} is stale, re-fetching...`);
+			cacheStorage.delete(url);
+			return await getCachedRankedData(service, url);
+		}
+
+		return await cachedResponse.json();
+	}
+
+	cachedResponse = await cacheStorage.match(url);
+	return await cachedResponse.json();
+}
+
 var leaderboardData = {
 	BeatLeader: {},
-	ScoreSaber: {}
+	ScoreSaber: {},
+	hash: null
 };
 
 async function getBeatLeaderLeaderboardData(difficulty, characteristic, hash) {
 	const query = new URLSearchParams({
 		hash: hash
-	})
-	const response = await fetch("proxies/beatleader.php?" + query.toString());
-	if(!response.ok) {
+	});
+	const data = await getCachedRankedData("BeatLeader", "proxies/beatleader.php?" + query.toString());
+	if(data === null) {
 		return null;
 	}
 
-	const data = await response.json();
 	let foundData;
 	for(const check of data.data.difficulties) {
 		if(check.modeName !== characteristic || check.difficultyName !== difficulty) {
@@ -120,12 +159,12 @@ async function getScoreSaberLeaderboardData(difficulty, characteristic, hash) {
 		diff: diffEnum[difficulty],
 		mode: characteristic
 	});
-	const response = await fetch("proxies/scoresaber.php?" + query.toString());
-	if(!response.ok) {
+	const data = await getCachedRankedData("ScoreSaber", "proxies/scoresaber.php?" + query.toString());
+	if(data === null) {
 		return null;
 	}
 
-	return await response.json();
+	return data;
 }
 
 var previousRankedHashCheck;
@@ -164,8 +203,12 @@ async function refreshLeaderboardData(difficulty, characteristic, hash) {
 		}
 
 		if(beatLeaderData.status === 3) {
-			$("#blCell").show();
+			if(localStorage.getItem("setting_bs_ppDisplayBL")) {
+				$("#blCell").show();
+			}
 			isRanked = true;
+
+			$("#blStarsValue").text(beatLeaderData.stars.toFixed(2));
 		}
 	}
 
@@ -182,19 +225,31 @@ async function refreshLeaderboardData(difficulty, characteristic, hash) {
 			}
 
 			if(scoreSaberData.data.ranked) {
-				$("#ssCell").show();
+				if(localStorage.getItem("setting_bs_ppDisplaySS")) {
+					$("#ssCell").show();
+				}
 				isRanked = true;
+
+				$("#ssStarsValue").text(scoreSaberData.data.stars.toFixed(2));
 			}
 		} else {
 			leaderboardData.ScoreSaber = null;
 		}
 	}
 
+	leaderboardData.hash = hash;
+
 	if(!isRanked) {
 		$("#ppCell").hide();
 	} else {
 		if($("#ppCell").attr("data-enabled") === "true") {
 			$("#ppCell").show();
+		}
+		if(!currentState.hits && !currentState.misses) {
+			$("#ssValue").text(`0${ppDecimalPrecision ? `.${"".padStart(ppDecimalPrecision, "0")}` : ""}`);
+			$("#blValue").text(`0${ppDecimalPrecision ? `.${"".padStart(ppDecimalPrecision, "0")}` : ""}`);
+		} else {
+			updatePPValues(currentState.acc);
 		}
 	}
 
@@ -223,6 +278,10 @@ public static float Curve2(float acc)
 */
 
 function _Curve2(points, acc) {
+	if(isNaN(acc) || acc === undefined) {
+		return 0;
+	}
+	
 	let i = 0;
 	for(; i < points.length; i++) {
 		if(points[i][0] <= acc) {
@@ -273,11 +332,20 @@ function getBeatLeaderPP(acc, accRating, passRating, techRating) {
 	let accPP = _Curve2(curveData.BeatLeader, acc) * accRating * 34;
 	let techPP = Math.exp(1.9 * acc) * 1.08 * techRating;
 
-	return [passPP, accPP, techPP, _Inflate(passPP + accPP + techPP)];
+	let finalPP = _Inflate(passPP + accPP + techPP);
+	if(isNaN(finalPP) || finalPP === undefined) {
+		finalPP = 0;
+	}
+	return [passPP, accPP, techPP, finalPP];
 }
 
 function getScoreSaberPP(acc, stars) {
-	return _Curve2(curveData.ScoreSaber, acc) * stars * 42.114296;
+	const value = _Curve2(curveData.ScoreSaber, acc) * stars * 42.114296;
+	if(isNaN(value) || value === undefined) {
+		return 0;
+	}
+
+	return value;
 }
 
 // really don't wanna call localStorage super frequently so, this changes from settings.js
@@ -286,6 +354,8 @@ function updatePPValues(acc) {
 	if(!$("#ppCell").is(":visible")) {
 		return;
 	}
+
+	acc = Math.min(1, Math.max(0, acc));
 
 	const ss = leaderboardData.ScoreSaber;
 	const bl = leaderboardData.BeatLeader;

@@ -93,7 +93,7 @@ body {
 	transition: var(--desaturateFadeOutDuration);
 }
 
-#diffWrap, #codeWrap, #timeWrap, #title, #artist, .mapper, #mapperContainer:before, .basePack, #hitMissCell, #accCell, #ppCell {
+#diffWrap, #codeWrap, #timeWrap, #title, #artist, .mapper, #mapperContainer:before, .basePack, #hitMissCell, #accCell, #ppCell, #ssStarsWrap, #blStarsWrap {
 	filter:	var(--effects);
 }
 #diffWrap, #title, #artist, .mapper, .basePack {
@@ -168,12 +168,12 @@ body {
 	white-space: nowrap;
 	overflow-x: clip;
 }
-#diffWrap, #codeWrap, #hitCell, #FCCell, #missCell, #comboWrap, #accWrap, #ssCell, #blCell {
+#diffWrap, #codeWrap, #hitCell, #FCCell, #missCell, #comboWrap, #accWrap, #ssCell, #blCell, #ssStarsWrap, #blStarsWrap {
 	padding-top: var(--verticalSpacing);
 	padding-bottom: var(--verticalSpacing);
 }
 
-#diffWrap, #codeWrap {
+#diffWrap, #codeWrap, #ssStarsWrap, #blStarsWrap {
 	line-height: var(--miscInfoLineHeight);
 	align-items: baseline;
 	justify-content: center;
@@ -311,6 +311,7 @@ body {
 	font-size: var(--comboFontSize);
 	height: var(--accLineHeight);
 	line-height: 0px;
+	direction: var(--comboAlignmentDirection);
 }
 #combo {
 	font-family: var(--comboFontFamily);
@@ -507,11 +508,27 @@ body {
 	line-height: 0px;
 }
 
-.ppIcon {
+#ppCell .ppIcon {
 	height: 1em;
 	width: 1em;
 	line-height: 0px;
 	vertical-align: top;
+	margin-left: 0.125em;
+	margin-right: 0.125em;
+}
+
+#miscInfoCell .ppIcon {
+	height: calc(var(--miscInfoLineHeight) - 2px);
+	width: calc(var(--miscInfoLineHeight) - 2px);
+	line-height: 0px;
+	align-self: center;
+	margin-right: 0.3em;
+}
+
+#miscInfoCell .fa-star {
+	font-size: 0.7em;
+	align-self: center;
+	margin-right: 0.15em;
 }
 
 /* uncomment after OBS updates CEF to a recent chrome version

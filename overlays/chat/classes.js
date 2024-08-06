@@ -896,7 +896,8 @@ class User {
 				if(wantedSwatch._population === 0) {
 					let maxPop = 0;
 
-					for(let swatch of swatches) {
+					for(let swatchIdx in swatches) {
+						let swatch = swatches[swatchIdx];
 						if(!swatch._population) {
 							continue;
 						}
@@ -909,7 +910,8 @@ class User {
 
 				argh.entitlements.overlay.prominentColor = wantedSwatch.getHex();
 				resolve(argh.entitlements.overlay.prominentColor);
-			}).catch(function() {
+			}).catch(function(error) {
+				console.warn(error);
 				resolve("var(--defaultNameColor)");
 			});
 

@@ -1,5 +1,94 @@
 {
-	"9999999999999": {
+	"1722911240097": {
+		"updates": {
+			"bs": {
+				"revision": 11,
+				"notes": [
+					[
+						"fixed FC display failing to initialize sometimes"
+					],
+					[
+						"simplified hit/miss and FC display code"
+					],
+					[
+						"minor positioning tweaks in ranked star display"
+					],
+					[
+						"attempted to fix extra miscellaneous info cells occasionally showing when loading a new map"
+					],
+					[
+						"ranked map data is now cached locally",
+						["defaults to 2 weeks"],
+						{"anchor": "rankedMapCacheExpiryDelay"}
+					],
+					[
+						"service icons in pp display elements now reflect Font Awesome full-width element margins"
+					],
+					[
+						"pp display is now updated when leaderboard/ranked data is refreshed"
+					],
+					[
+						"pp values are now capped between 0% and 100% accuracy values"
+					],
+					[
+						"added sanity checks to pp value calculation",
+						["the accuracy caps should address weird values too but w/e"]
+					],
+					[
+						"accuracy display now forcibly rounds down to the nearest decimal place instead of rounding normally",
+						["before, 97.96% would round up to 98.0% with decimals only showing to the tenths place. it will now show 97.9% instead"]
+					]
+				]
+			},
+
+			"chat": {
+				"revision": 61,
+				"notes": [
+					[
+						"fixed scaling on decaying messages not properly taking the origin point setting into account"
+					],
+					[
+						"fixed history effects not toggling on and off properly",
+						["toggling fade effects on and off are still a little weird for some reason, no idea what's causing it yet"]
+					],
+					[
+						"fixed emotes within the Dingbats unicode range triggering ASCII art filters"
+					],
+					[
+						"fixed prominent avatar colors failing to set if a 'Vibrant' color was not found"
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 62,
+				"notes": [
+					[
+						"moved BeatSaver cache settings into the Beat Saber section in the Connections tab",
+						{"anchor": "bsMapCacheExpiryDelay"}
+					],
+					[
+						"added buttons to clear Beat Saber-related cached data"
+					]
+				]
+			}
+		}
+	},
+
+	"1722556300433": {
+		"updates": {
+			"bs": {
+				"revision": 10,
+				"notes": [
+					[
+						"fixed overlay stalling if BeatLeader or ScoreSaber leaderboard data remains null"
+					]
+				]
+			}
+		}
+	},
+
+	"1722370867475": {
 		"updates": {
 			"bs": {
 				"revision": 9,
@@ -19,7 +108,7 @@
 						{"anchor": "bs_elementOrder"}
 					],
 					[
-						"hit/miss/FC icons on the hit/miss display now align themselves to the right of values if the display is aligned to the right"
+						"icons on the hit/miss and combo display now align themselves to the right of values if aligned to the right"
 					],
 					[
 						"calmed down logging on state change events"
@@ -32,6 +121,21 @@
 					[
 						"fixed accuracy display not perfectly representing the final accuracy post-animations",
 						["this wasn't an apparent issue without the new settings, but with low enough divisors and high enough decimal precision, it became super obvious"]
+					],
+					[
+						"added ranked map star rating information to miscellaneous info rotation",
+						{"anchor": "bs_miscInfoShowScoreSaberStars"}
+					],
+					[
+						"individual parts of the miscellaneous info display rotation can now be toggled on and off",
+						{"anchor": "bs_miscInfoShowDifficulty"}
+					],
+					[
+						"interval of miscellaneous info rotating out can now be changed",
+						{"anchor": "bs_miscInfoRotationInterval"}
+					],
+					[
+						"adjusted default layout settings to accomodate new pp display"
 					]
 				]
 			},

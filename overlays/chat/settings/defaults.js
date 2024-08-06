@@ -727,7 +727,7 @@ const defaultConfig = {
 	"bs_miscInfoWidth": "120",
 	"bs_hitMissWidth": "80",
 	"bs_flipHitMissDetails": "false",
-	"bs_accWidth": "120",
+	"bs_accWidth": "130",
 	"bs_flipAccDetails": "false",
 	"bs_enableOutlineEffects": "true",
 	"bs_outlineColor": "#000000",
@@ -976,12 +976,19 @@ const defaultConfig = {
 	"bs_ppFontItalic": "false",
 	"bs_ppFontSize": "12",
 	"bs_ppFontWeight": "900",
-	"bs_ppAlignment": "right",
+	"bs_ppAlignment": "left",
 	"bs_ppFontAdditionalWeight": "0",
 	"bs_ppLineHeight": "16",
 	"bs_flipPPDetails": "false",
 	"bs_ppPrecision": "1",
-	"bs_accAnimationDivisor": "10"
+	"bs_accAnimationDivisor": "10",
+	"bs_miscInfoShowDifficulty": "true",
+	"bs_miscInfoShowBSR": "true",
+	"bs_miscInfoShowScoreSaberStars": "false",
+	"bs_miscInfoShowBeatLeaderStars": "false",
+	"bs_miscInfoRotationInterval": "7",
+	"bs_ppDisplaySS": "true",
+	"bs_ppDisplayBL": "true"
 };
 // i typed out the bigNoNoWords so you don't have to, i'm sorry :(
 // it's gotta know what to remove

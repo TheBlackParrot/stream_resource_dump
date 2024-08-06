@@ -69,6 +69,7 @@
 	--comboFontSize: 12pt;
 	--comboFontWeight: 900;
 	--comboFontAdditionalWeight: 0px;
+	--comboAlignmentDirection: ltr;
 
 	--metadataLineHeight: 24px;
 	--fixWeirdMetadataAlignmentIssue: 1px;
