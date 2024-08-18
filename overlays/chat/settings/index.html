@@ -54,6 +54,7 @@
 					<div class="row" data-tab="bsinfo_misc"><i class="fas fa-circle-info"></i>Miscellaneous Info Cell</div>
 					<div class="row" data-tab="bsinfo_pp"><i class="fas fa-ranking-star"></i>Ranked PP Cell</div>
 					<div class="row" data-tab="bsinfo_metadata"><i class="fas fa-compact-disc"></i>Song Metadata Cell</div>
+					<div class="row" data-tab="bsinfo_hands"><i class="fas fa-hands"></i>Swing Averages Cell</div>
 					<hr/>
 					<div class="row" data-tab="bsinfo_effects"><i class="fas fa-magic"></i>Effects</div>
 				</div>
@@ -105,8 +106,6 @@
 
 				<div class="rowCollapsable extraRow" data-tab="hr"><i class="fas fa-angle-right treeIcon"></i> <i class="fas fa-heart"></i>Heart Rate</div>
 				<div class="rowEntries" data-tab="hr">
-					<div class="row" data-tab="hr_function"><i class="fas fa-cogs"></i>Function</div>
-					<hr/>
 					<div class="row" data-tab="hr_appearance"><i class="fas fa-palette"></i>Appearance</div>
 					<div class="row" data-tab="hr_effects"><i class="fas fa-magic"></i>Effects</div>
 					<div class="row" data-tab="hr_layout"><i class="fas fa-table-cells-large"></i>Layout</div>
@@ -2634,8 +2633,55 @@
 					</div>
 					<hr/>
 					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Timeout after</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="hr_timeoutWait" min="4" max="60" step="0.5" value="7.5"/><span class="settingCellMeasurement">seconds</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
 						<div class="settingCell smol">
 							HeartRateBroadcaster can be downloaded from CatseTheCat's GitHub repository for the project: https://github.com/catsethecat/HeartRateBroadcaster
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>External Music Player</h1>
+					<div class="setting settingOnlyText">
+						<p>If you do not wish to use Spotify for currently playing music information on the Now Playing overlay, you can override what it displays with an external media player (so long as an external bridge script, or a plugin has been made for it)</p>						
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="mus_overrideSpotify" type="checkbox"/> <span class="settingInfo">Override music information with external player information</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">IP address</span>
+						</div>
+						<div class="settingCell">
+							<input id="mus_ip" type="text" value="127.0.0.1"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Port</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="mus_port" min="1" max="65536" step="1" value="42069"/>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Timeout after</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="mus_timeoutWait" min="4" max="60" step="0.5" value="7.5"/><span class="settingCellMeasurement">seconds</span>
 						</div>
 					</div>
 				</div>
@@ -4101,7 +4147,7 @@
 					</div>
 					<div class="setting">
 						<div class="settingCell smol">
-							<strong>Available elements:</strong> acc, art, hitmiss, metadata, misc, pp
+							<strong>Available elements:</strong> acc, art, hitmiss, metadata, misc, pp, hands
 						</div>
 					</div>
 					<div class="setting">
@@ -4274,6 +4320,59 @@
 							<input type="number" id="bs_comboFontAdditionalWeight" min="0" max="20" step="0.1" value="0"/><span class="settingCellMeasurement">px</span>
 						</div>
 					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="bs_showFCAccIfNotFC" type="checkbox"/> <span class="settingInfo">Show FC accuracy if dropped out of a full combo</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">FC accuracy color</span>
+						</div>
+						<div class="settingCell">
+							<input id="bs_fcAccColor" type="text" data-coloris value="#FFFFFFFF"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">FC accuracy font</span>
+						</div>
+						<div class="settingCell">
+							<input id="bs_fcAccFontFamily" type="text" value="Manrope"/>
+							<input id="bs_fcAccFontItalic" type="checkbox"/> <span class="settingInfo">Italic</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">FC accuracy size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_fcAccFontSize" min="0" max="96" step="0.25" value="12"/><span class="settingCellMeasurement">pt</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">FC accuracy font weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_fcAccFontWeight" min="0" max="900" step="100" value="900"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Additional font weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_fcAccFontAdditionalWeight" min="0" max="20" step="0.1" value="0"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell smol">
+							<strong>NOTE:</strong> FC accuracy display is only available through DataPuller. Beat Saber Plus doesn't track the stats needed to calculate FC accuracy.
+						</div>
+					</div>
 				</div>
 			</div>
 			<div class="section" data-content="bsinfo_art">
@@ -4394,6 +4493,168 @@
 						</div>
 						<div class="settingCell">
 							<input type="number" id="bs_artBackgroundFadeInDuration" min="0" max="15" step="0.5" value="5"/><span class="settingCellMeasurement">seconds</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section" data-content="bsinfo_hands">
+				<div class="part">
+					<h1>Swing Averages Cell</h1>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Width</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_handsWidth" min="0" max="500" step="1" value="90"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Line height</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_handsLineHeight" min="0" max="999" step="1" value="20"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Horizontal alignment</span>
+						</div>
+						<div class="settingCell">
+							<select id="bs_handsAlignment">
+								<option value="left">Left</option>
+								<option selected value="center">Center</option>
+								<option value="right">Right</option>
+							</select>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Decimal precision</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_handsPrecision" min="0" max="4" step="1" value="1"/><span class="settingCellMeasurement">digits</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="bs_handsColorReflectsSaberColors" type="checkbox"/> <span class="settingInfo">Hand columns reflect active saber colors</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Left hand color</span>
+						</div>
+						<div class="settingCell">
+							<input id="bs_handsLeftColor" type="text" data-coloris value="#ffffff"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Right hand color</span>
+						</div>
+						<div class="settingCell">
+							<input id="bs_handsRightColor" type="text" data-coloris value="#ffffff"/>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="bs_ensureHandsColorIsBrightEnough" type="checkbox"/> <span class="settingInfo">Ensure active saber color is between a set brightness level</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Minimum</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_handsColorMinBrightness" min="0" max="100" step="1" value="40"/><span class="settingCellMeasurement">%</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Maximum</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_handsColorMaxBrightness" min="0" max="100" step="1" value="100"/><span class="settingCellMeasurement">%</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Font</span>
+						</div>
+						<div class="settingCell">
+							<input id="bs_handsFontFamily" type="text" value="Manrope"/>
+							<input id="bs_handsFontItalic" type="checkbox"/> <span class="settingInfo">Italic</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Font size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_handsFontSize" min="0" max="96" step="0.25" value="12"/><span class="settingCellMeasurement">pt</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Font weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_handsFontWeight" min="0" max="900" step="100" value="900"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Additional font weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_handsFontAdditionalWeight" min="0" max="20" step="0.1" value="0"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="bs_handsFlashOnHit" type="checkbox" data-dependent="bs_handsFlashOnHit"/> <span class="settingInfo">Flash values whenever a hit is detected</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="bs_handsFlashOnHit">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Brightness</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_handsFlashIntercept" min="-200" max="200" step="1" value="17"/><span class="settingCellMeasurement">%</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="bs_handsFlashOnHit">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Flash fade duration</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_handsFlashDuration" min="0" max="20" step="0.01" value="0.07"/><span class="settingCellMeasurement">seconds</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="bs_handsFlashOnHit">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Glow radius</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_handsFlashRadius" min="0" max="32" step="0.25" value="1.5"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell smol">
+							<strong>NOTE:</strong> Swing average display is only available through DataPuller. Beat Saber Plus doesn't track the stats needed to calculate swing statistics.
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell smol">
+							<strong>NOTE:</strong> DataPuller values may not reflect actual swing average statistics currently, it's occasionally not properly tracking cuts on the correct hands, and chains are untrackable. (bug has been reported)
 						</div>
 					</div>
 				</div>
@@ -6746,18 +7007,6 @@
 					</div>
 				</div>
 			</div>
-			<div class="section" data-content="hr_function">
-				<div class="part">
-					<div class="setting">
-						<div class="settingCellLabel">
-							<span class="settingInfo">Timeout after</span>
-						</div>
-						<div class="settingCell">
-							<input type="number" id="hr_timeoutWait" min="4" max="60" step="0.5" value="7.5"/><span class="settingCellMeasurement">seconds</span>
-						</div>
-					</div>
-				</div>
-			</div>
 			<div class="section" data-content="hr_appearance">
 				<div class="part">
 					<h1>Peak Display</h1>
@@ -7182,6 +7431,7 @@
 	<script defer type="text/javascript" src="connections/streamlabs.js"></script>
 	<script defer type="text/javascript" src="connections/streamelements.js"></script>
 	<script defer type="text/javascript" src="connections/spotify.js"></script>
+	<script defer type="text/javascript" src="connections/external_music.js"></script>
 	<script defer type="text/javascript" src="connections/heartratebroadcaster.js"></script>
 
 	<script type="text/javascript">
@@ -7193,6 +7443,8 @@
 
 			loadSettings();
 			settingsCheck();
+
+			FancySelect.update($("#beatSaberDataMod")[0]);
 
 			checkTimeoutSetting();
 			$.ajaxSetup({ timeout: parseFloat(localStorage.getItem("setting_ajaxTimeout")) * 1000 || 7000 });

@@ -67,6 +67,13 @@ const BSPlusMessageHandlers = {
 		currentBSState.score = data.scoreEvent.score;
 		currentBSState.timestamp = Date.now();
 
+		if(!currentBSState.misses) {
+			currentBSState.fcacc = data.scoreEvent.accuracy;
+		} else {
+			// temporary
+			currentBSState.fcacc = NaN
+		}
+
 		postToBSEventChannel({
 			type: "state",
 			data: currentBSState
@@ -124,6 +131,12 @@ function startBSPlusWebsocket() {
 	if(bsplusInit) {
 		return;
 	}
+
+	if(localStorage.getItem("setting_beatSaberDataMod") !== "bsplus") {
+		return;
+	}
+
+	changeStatusCircle("BSPlusStatus", "red", "disconnected");
 
 	bsplusInit = true;
 

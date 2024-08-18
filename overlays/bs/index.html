@@ -92,6 +92,9 @@
 		</div>
 
 		<div class="cell" id="accCell">
+			<div id="fcAccWrap" style="display: none;">
+				<span id="fcAccHead">FC</span><span id="fcAcc">97.81</span>
+			</div>
 			<div id="comboWrap">
 				<i class="fa-fw fas fa-link"></i>
 				<span id="combo">0</span>
@@ -110,6 +113,19 @@
 			<div id="blCell">
 				<img class="ppIcon" src="icons/bl_logo.png"/>
 				<span id="blValue">0.0</span>
+			</div>
+		</div>
+
+		<div class="cell" id="handValueCell">
+			<div class="handCellContainer" id="handValueCellLeft">
+				<div class="preSwingCell" id="preSwingCellLeft">70.0</div>
+				<div class="postSwingCell" id="postSwingCellLeft">30.0</div>
+				<div class="swingAccuracyCell" id="swingAccuracyCellLeft">15.0</div>
+			</div>
+			<div class="handCellContainer" id="handValueCellRight">
+				<div class="preSwingCell" id="preSwingCellRight">70.0</div>
+				<div class="postSwingCell" id="postSwingCellRight">30.0</div>
+				<div class="swingAccuracyCell" id="swingAccuracyCellRight">15.0</div>
 			</div>
 		</div>
 
@@ -138,6 +154,24 @@
 			<filter id="shadowEffect" color-interpolation-filters="sRGB">
 				<feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="var(--overlayShadowColor)"/>
 			</filter>
+
+			<filter id="handsFlashEffectLeft" color-interpolation-filters="sRGB">
+				<feDropShadow dx="0" dy="0" stdDeviation="2" flood-color="var(--handsLeftColor)"/>
+				<feComponentTransfer>
+					<feFuncR type="linear" slope="1" intercept="0.1"></feFuncR>
+					<feFuncG type="linear" slope="1" intercept="0.1"></feFuncG>
+					<feFuncB type="linear" slope="1" intercept="0.1"></feFuncB>
+				</feComponentTransfer>
+			</filter>
+			<filter id="handsFlashEffectRight" color-interpolation-filters="sRGB">
+				<feDropShadow dx="0" dy="0" stdDeviation="2" flood-color="var(--handsRightColor)"/>
+				<feComponentTransfer>
+					<feFuncR type="linear" slope="1" intercept="0.1"></feFuncR>
+					<feFuncG type="linear" slope="1" intercept="0.1"></feFuncG>
+					<feFuncB type="linear" slope="1" intercept="0.1"></feFuncB>
+				</feComponentTransfer>
+			</filter>
+
 			<filter id="blankEffect"></filter>
 		</svg>
 	</div>

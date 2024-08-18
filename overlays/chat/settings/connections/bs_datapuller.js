@@ -2,10 +2,20 @@ var dataPullerInit_MapInfo = false;
 var datapuller_ws_MapInfo;
 var dataPullerTimeout_MapInfo;
 var oldScene;
+var currentHandColors = {
+	left: "#ffffff",
+	right: "#ffffff"
+};
 function startDataPullerMapInfoWebsocket() {
 	if(dataPullerInit_MapInfo) {
 		return;
 	}
+
+	if(localStorage.getItem("setting_beatSaberDataMod") !== "datapuller") {
+		return;
+	}
+
+	changeStatusCircle("BSDataPullerMapDataStatus", "red", "MapData disconnected");
 
 	dataPullerInit_MapInfo = true;
 
@@ -78,6 +88,10 @@ function startDataPullerMapInfoWebsocket() {
 					image: null,
 					url: data.CoverImage
 				}
+			},
+			colors: {
+				left: data.ColorScheme.SaberAColor.HexCode,
+				right: data.ColorScheme.SaberBColor.HexCode
 			}
 		};
 
@@ -109,10 +123,25 @@ function startDataPullerMapInfoWebsocket() {
 var dataPullerInit_LiveData = false;
 var datapuller_ws_LiveData;
 var dataPullerTimeout_LiveData;
+const liveDataEventTriggers = {
+	Unknown: 0,
+	TimerElapsed: 1,
+	NoteMissed: 2,
+	EnergyChange: 3,
+	ScoreChange: 4
+};
+var leftHandTotal = [0, 0, 0, 0];
+var rightHandTotal = [0, 0, 0, 0];
 function startDataPullerLiveDataWebsocket() {
 	if(dataPullerInit_LiveData) {
 		return;
 	}
+
+	if(localStorage.getItem("setting_beatSaberDataMod") !== "datapuller") {
+		return;
+	}
+
+	changeStatusCircle("BSDataPullerLiveDataStatus", "red", "LiveData disconnected");
 
 	dataPullerInit_LiveData = true;
 
@@ -133,6 +162,46 @@ function startDataPullerLiveDataWebsocket() {
 		currentBSState.misses = data.Misses;
 		currentBSState.scene = (currentBSState.state === "playing" ? "Playing" : "Menu");
 		currentBSState.score = data.Score;
+
+		if(data.FullCombo) {
+			currentBSState.fcacc = currentBSState.acc;
+		} else {
+			currentBSState.fcacc = data.Score / data.MaxScore;
+		}
+
+		if(data.EventTrigger === liveDataEventTriggers.ScoreChange) {
+			let hand;
+			if(data.ColorType === 0) {
+				hand = leftHandTotal;
+			} else if(data.ColorType === 1) {
+				hand = rightHandTotal;
+			}
+
+			if(typeof hand !== "undefined" && data.BlockHitScore.PreSwing && data.BlockHitScore.PostSwing) {
+				// i have no way to check for chains, sorry! just swing all the way through lol
+				hand[3]++;
+				hand[0] += data.BlockHitScore.PreSwing;
+				hand[1] += data.BlockHitScore.PostSwing;
+				hand[2] += data.BlockHitScore.CenterSwing;
+
+				let averages = currentBSState.averages.left;
+				if(data.ColorType === 1) {
+					averages = currentBSState.averages.right;
+				}
+
+				if(hand[3]) {
+					postToBSEventChannel({
+						type: "hand",
+						data: (data.ColorType ? "right" : "left")
+					});
+
+					// do NOT divide by zero
+					averages[0] = hand[0] / hand[3];
+					averages[1] = hand[1] / hand[3];
+					averages[2] = hand[2] / hand[3];
+				}
+			}
+		}
 
 		postToBSEventChannel({
 			type: "state",

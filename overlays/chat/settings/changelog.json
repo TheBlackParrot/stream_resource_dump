@@ -1,4 +1,69 @@
 {
+	"9999999999999": {
+		"updates": {
+			"bs": {
+				"revision": 12,
+				"notes": [
+					[
+						"added the ability to replace combo with FC acc on miss",
+						["this is currently only functional with DataPuller as the data source, ask HardCPP for an equivalent DataPuller -> LiveData/MaxScore variable if you want this with Beat Saber Plus (as it's not provided)"],
+						{"anchor": "bs_showFCAccIfNotFC"}
+					],
+					[
+						"added a 'hands' option to element display list that shows current average pre-swing, post-swing, and accuracy scoring on both hands",
+						[
+							"this is currently only functional with DataPuller as the data source, ask HardCPP for swing average variables per-hand if you want this with Beat Saber Plus (as it's not provided)",
+							"DataPuller's hand scoring is currently buggy, these values will probably not reflect actual values at the moment (bug has been reported)"
+						],
+						{"anchor": "bs_elementOrder"}
+					],
+					[
+						"fixed some weird css overflow thing that broke metadata scrolling only on newer versions of chromium i think?",
+						["...uhhhhh? it's been fine up until i updated my dev environment the other day. /shrug"]
+					],
+					[
+						"fixed vertical alignment issue when flipping combo / accuracy display"
+					],
+					[
+						"fixed blank space appearing where the ranked PP display should be upon refreshing the settings panel if a map is not ranked"
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 63,
+				"notes": [
+					[
+						"making sure HTTP 401 errors are specifically being handled in Spotify oauth flow"
+					],
+					[
+						"added placeholder support for non-Spotify music players through a websocket layer",
+						["this is just a placeholder for the time being, there's no functionality yet. just wanted to get some other things done first before starting on this"]
+					],
+					[
+						"moved MusicBrainz data fetching to its own separate function"
+					],
+					[
+						"moved heartrate timeout settings over to the Connections tab",
+						{"anchor": "hr_timeoutWait"}
+					],
+					[
+						"fixed Beat Saber data sources showing as disconnected upon refreshing any Beat Saber-related overlay"
+					],
+					[
+						"fixed Beat Saber data source setting dropdown not properly initializing"
+					],
+					[
+						"fixed color settings not updating their swatches on initialization"
+					],
+					[
+						"fixed Beat Saber Plus connections starting upon exit of Beat Saber even if DataPuller is the selected data source, and vice versa"
+					]
+				]
+			}
+		}
+	},
+
 	"1722911240097": {
 		"updates": {
 			"bs": {

@@ -176,6 +176,7 @@ async function refreshLeaderboardData(difficulty, characteristic, hash) {
 		return;
 	}
 
+	$("#ppCell").hide();
 	$("#blCell").hide();
 	$("#ssCell").hide();
 
@@ -239,9 +240,7 @@ async function refreshLeaderboardData(difficulty, characteristic, hash) {
 
 	leaderboardData.hash = hash;
 
-	if(!isRanked) {
-		$("#ppCell").hide();
-	} else {
+	if(isRanked) {
 		if($("#ppCell").attr("data-enabled") === "true") {
 			$("#ppCell").show();
 		}

@@ -61,8 +61,11 @@ function setArt() {
 	let lightColor = activeMap.cover.colors.light;
 
 	if(localStorage.getItem("setting_bs_ensureColorIsBrightEnough") === "true") {
-		darkColor = ensureSafeColor(darkColor);
-		lightColor = ensureSafeColor(lightColor);
+		let minBrightness = (parseFloat(localStorage.getItem("setting_bs_colorMinBrightness"))/100) * 255;
+		let maxBrightness = (parseFloat(localStorage.getItem("setting_bs_colorMaxBrightness"))/100) * 255;
+
+		darkColor = ensureSafeColor(darkColor, minBrightness, maxBrightness);
+		lightColor = ensureSafeColor(lightColor, minBrightness, maxBrightness);
 	}
 
 	localStorage.setItem("art_darkColor", darkColor);
@@ -181,8 +184,29 @@ const eventFuncs = {
 		if(data.acc === 1 && !data.hits) {
 			let precision = parseInt(localStorage.getItem("setting_bs_accPrecision"));
 			$("#acc").text(`00${precision ? `.${"".padStart(parseInt(precision), "0")}` : ""}`);
+			$("#fcAcc").text(`00${precision ? `.${"".padStart(parseInt(precision), "0")}` : ""}`);
+
+			setHandAverages({
+				left: [0, 0, 0],
+				right: [0, 0, 0]
+			});
 		} else {
 			setAcc(data.acc * 100);
+
+			if(!isNaN(data.fcacc)) {
+				$("#fcAcc").text((data.fcacc * 100).toFixed(parseInt(localStorage.getItem("setting_bs_accPrecision"))));
+
+				if(localStorage.getItem("setting_bs_showFCAccIfNotFC") === "true" && data.misses) {
+					$("#comboWrap").hide();
+					$("#fcAccWrap").show();
+				}
+			}
+
+			setHandAverages({
+				left: data.averages.left,
+				right: data.averages.right
+			});
+
 			updatePPValues(data.acc);
 		}
 
@@ -219,6 +243,8 @@ const eventFuncs = {
 		$("#hitValue").text(0);
 		$("#FCCell").show();
 		$("#missCell").hide();
+		$("#fcAccWrap").hide();
+		$("#comboWrap").show();
 	},
 
 	"map": async function(map) {
@@ -278,6 +304,31 @@ const eventFuncs = {
 
 		updateSecondaryMarquee();
 		refreshLeaderboardData(map.map.difficulty, map.map.characteristic, map.map.hash);
+
+		checkCustomColors();
+	},
+
+	"hand": function(hand) {
+		if(localStorage.getItem("setting_bs_handsFlashOnHit") === "false") {
+			return;
+		}
+
+		let element;
+		let className;
+
+		if(hand === "left") {
+			element = $("#handValueCellLeft");
+			className = "flashLeft";
+		} else if(hand === "right") {
+			element = $("#handValueCellRight");
+			className = "flashRight";
+		}
+
+		element.addClass(className);
+
+		element[0].style.animation = 'none';
+		element[0].offsetHeight;
+		element[0].style.animation = null; 
 	}
 };
 function processMessage(data) {
@@ -497,4 +548,18 @@ function setHitMiss(state) {
 		$("#FCCell").show();
 		$("#missCell").hide();
 	}
+}
+
+function setHandAverages(averages) {
+	if(!averages) {
+		return;
+	}
+
+	const precision = parseInt(localStorage.getItem("setting_bs_handsPrecision"));
+	$("#preSwingCellLeft").text(averages.left[0].toFixed(precision))
+	$("#postSwingCellLeft").text(averages.left[1].toFixed(precision))
+	$("#swingAccuracyCellLeft").text(averages.left[2].toFixed(precision))
+	$("#preSwingCellRight").text(averages.right[0].toFixed(precision))
+	$("#postSwingCellRight").text(averages.right[1].toFixed(precision))
+	$("#swingAccuracyCellRight").text(averages.right[2].toFixed(precision))
 }

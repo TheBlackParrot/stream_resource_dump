@@ -93,7 +93,12 @@ body {
 	transition: var(--desaturateFadeOutDuration);
 }
 
-#diffWrap, #codeWrap, #timeWrap, #title, #artist, .mapper, #mapperContainer:before, .basePack, #hitMissCell, #accCell, #ppCell, #ssStarsWrap, #blStarsWrap {
+#diffWrap, #codeWrap, #timeWrap,
+#title, #artist, .mapper, #mapperContainer:before, .basePack,
+#hitMissCell,
+#accWrap, #fcAcc, #fcAccHead, #comboWrap,
+#ppCell, #ssStarsWrap, #blStarsWrap,
+#handValueCellLeft, #handValueCellRight {
 	filter:	var(--effects);
 }
 #diffWrap, #title, #artist, .mapper, .basePack {
@@ -161,14 +166,17 @@ body {
 	-webkit-mask-position: center;
 }
 
-#duration, #time, #combo, #acc, #hitValue, #missValue, #ssValue, #blValue {
+#duration, #time, #combo, #acc, #hitValue, #missValue, #ssValue, #blValue, #fcAcc, .handCellContainer {
 	font-variant: tabular-nums;
 }
-#miscInfoCell, #metadataCell, #hitMissCell, #accCell, #ppCell {
+#miscInfoCell, #metadataCell, #hitMissCell, #accCell, #ppCell, #handValueCell {
 	white-space: nowrap;
 	overflow-x: clip;
 }
-#diffWrap, #codeWrap, #hitCell, #FCCell, #missCell, #comboWrap, #accWrap, #ssCell, #blCell, #ssStarsWrap, #blStarsWrap {
+#metadataCell {
+	overflow: hidden; /* ????? */
+}
+#diffWrap, #codeWrap, #hitCell, #FCCell, #missCell, #comboWrap, #accWrap, #ssCell, #blCell, #ssStarsWrap, #blStarsWrap, #fcAccWrap, .handCellContainer {
 	padding-top: var(--verticalSpacing);
 	padding-bottom: var(--verticalSpacing);
 }
@@ -296,7 +304,7 @@ body {
 	padding-bottom: 0px;
 	/* there's some weird vertical mis-alignment i literally cannot think of a solution for so i'm just doing it the hard way */
 	position: relative;
-	top: -1px;
+	top: var(--accVerticalOffset);
 }
 #accPerc {
 	font-size: calc(var(--accFontSize) / 1.67);
@@ -312,6 +320,14 @@ body {
 	height: var(--accLineHeight);
 	line-height: 0px;
 	direction: var(--comboAlignmentDirection);
+	align-content: var(--comboVerticalAlignment);
+}
+#fcAccWrap {
+	font-size: var(--fcAccFontSize);
+	height: var(--accLineHeight);
+	line-height: 0px;
+	direction: var(--comboAlignmentDirection);
+	align-content: var(--comboVerticalAlignment);
 }
 #combo {
 	font-family: var(--comboFontFamily);
@@ -321,6 +337,15 @@ body {
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 	-webkit-text-stroke: var(--comboFontAdditionalWeight) transparent;	
+}
+#fcAcc {
+	font-family: var(--fcAccFontFamily);
+	font-style: var(--fcAccFontStyle);
+	font-weight: var(--fcAccFontWeight);
+	background-color: var(--fcAccColor);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-webkit-text-stroke: var(--fcAccFontAdditionalWeight) transparent;		
 }
 
 #artOutline, #artBG {
@@ -530,6 +555,72 @@ body {
 	align-self: center;
 	margin-right: 0.15em;
 }
+
+#fcAccHead {
+	line-height: 1em; /* wtf */
+	background-image: var(--secondaryGradientActual);
+	-webkit-text-stroke: var(--fcAccFontAdditionalWeight) transparent;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	margin-right: 0.3em;
+}
+#fcAcc:after {
+	content: "%";
+	font-size: 0.8em;
+}
+
+#handValueCell {
+	min-width: var(--handsWidth);
+	text-align: var(--handsAlignment);
+	font-weight: var(--handsFontWeight);
+	overflow-x: visible;
+	flex-direction: row;
+}
+.handCellContainer {
+	font-family: var(--handsFontFamily);
+	font-style: var(--handsFontStyle);
+	font-weight: var(--handsFontWeight);
+	font-size: var(--handsFontSize);
+	flex-grow: 1;
+	line-height: var(--handsLineHeight);
+}
+#handValueCellLeft {
+	background-color: var(--handsLeftColor);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-webkit-text-stroke: var(--handsFontAdditionalWeight) transparent;
+}
+#handValueCellRight {
+	background-color: var(--handsRightColor);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-webkit-text-stroke: var(--handsFontAdditionalWeight) transparent;
+}
+
+@keyframes flashLeft {
+	0% {
+		filter: var(--effects) url('#handsFlashEffectLeft');
+	}
+	100% {
+		filter: var(--effects);
+	}
+}
+@keyframes flashRight {
+	0% {
+		filter: var(--effects) url('#handsFlashEffectRight');
+	}
+	100% {
+		filter: var(--effects);
+	}
+}
+
+.flashLeft, .flashRight {
+	animation-duration: var(--handsFlashDuration);
+	animation-iteration-count: 1;
+	animation-timing-function: linear;
+}
+.flashLeft { animation-name: flashLeft; }
+.flashRight { animation-name: flashRight; }
 
 /* uncomment after OBS updates CEF to a recent chrome version
 :nth-child(1 of div.cell) {

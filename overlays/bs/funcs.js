@@ -66,10 +66,7 @@ function getYIQ(rawColor) {
 	return ((color.r*299)+(color.g*587)+(color.b*114))/1000;
 }
 
-function ensureSafeColor(color) {
-	let minBrightness = (parseFloat(localStorage.getItem("setting_bs_colorMinBrightness"))/100) * 255;
-	let maxBrightness = (parseFloat(localStorage.getItem("setting_bs_colorMaxBrightness"))/100) * 255;
-
+function ensureSafeColor(color, minBrightness, maxBrightness) {
 	let brightness = getYIQ(color);
 	console.log(`brightness for ${color} is ${brightness}`);
 
@@ -84,4 +81,24 @@ function ensureSafeColor(color) {
 	}
 
 	return color;
+}
+
+function checkCustomColors() {
+	if("colors" in activeMap) {
+		if(localStorage.getItem("setting_bs_handsColorReflectsSaberColors") === "true") {
+			let leftColor = activeMap.colors.left;
+			let rightColor = activeMap.colors.right;
+
+			if(localStorage.getItem("setting_bs_ensureHandsColorIsBrightEnough") === "true") {
+				let minBrightness = (parseFloat(localStorage.getItem("setting_bs_handsColorMinBrightness"))/100) * 255;
+				let maxBrightness = (parseFloat(localStorage.getItem("setting_bs_handsColorMaxBrightness"))/100) * 255;
+
+				leftColor = ensureSafeColor(leftColor, minBrightness, maxBrightness);
+				rightColor = ensureSafeColor(rightColor, minBrightness, maxBrightness);
+			}
+
+			rootCSS().setProperty("--handsLeftColor", leftColor);
+			rootCSS().setProperty("--handsRightColor", rightColor);
+		}
+	}
 }

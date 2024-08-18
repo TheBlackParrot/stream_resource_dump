@@ -4,6 +4,11 @@ var currentBSState = {
 	elapsed: 0,
 	timestamp: Date.now(),
 	acc: 1,
+	fcacc: NaN,
+	averages: {
+		left: [0, 0, 0],
+		right: [0, 0, 0]
+	},
 	combo: 0,
 	hits: 0,
 	misses: 0,
@@ -113,6 +118,13 @@ async function updateBeatSaberMapData() {
 		console.log(`old hash is not current hash, updating map data (old: ${oldHash}, new: ${curHash})`);
 	}
 	oldHash = curHash;
+
+	leftHandTotal = [0, 0, 0, 0];
+	rightHandTotal = [0, 0, 0, 0];
+	currentBSState.averages = {
+		left: [0, 0, 0],
+		right: [0, 0, 0]
+	};
 
 	if(!currentBSSong.song.title) { currentBSSong.song.title = '(no title)'; }
 	if(!currentBSSong.song.artist) { currentBSSong.song.artist = '(no artist)'; }
@@ -232,14 +244,11 @@ async function updateBeatSaberMapData() {
 function connectBeatSaber() {
 	switch(localStorage.getItem("setting_beatSaberDataMod")) {
 		case "bsplus":
-			changeStatusCircle("BSPlusStatus", "red", "disconnected");
 			startBSPlusWebsocket();
 			break;
 
 		case "datapuller":
-			changeStatusCircle("BSDataPullerMapDataStatus", "red", "MapData disconnected");
 			startDataPullerMapInfoWebsocket();
-			changeStatusCircle("BSDataPullerLiveDataStatus", "red", "LiveData disconnected");
 			startDataPullerLiveDataWebsocket();
 			break;
 	}

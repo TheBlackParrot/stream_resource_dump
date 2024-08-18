@@ -1,4 +1,4 @@
-const overlayRevision = 11;
+const overlayRevision = 12;
 const overlayRevisionTimestamp = 1722911240097;
 
 const settingsChannel = new BroadcastChannel("settings_overlay");
@@ -21,7 +21,8 @@ const elementMap = {
 	"metadataCell": ["meta", "metadata", "song", "map", "track", "title", "which", "data"],
 	"hitMissCell": ["hit", "miss", "hitmiss", "hits", "misses", "correct", "wrong", "errors", "error"],
 	"accCell": ["acc", "accuracy", "combo", "percent", "percentage", "score"],
-	"ppCell": ["pp", "rank", "ranked", "points", "rankpoints", "rankedpoints", "performancepoints", "rankpp"]
+	"ppCell": ["pp", "rank", "ranked", "points", "rankpoints", "rankedpoints", "performancepoints", "rankpp"],
+	"handValueCell": ["hand", "hands", "swing", "swings", "avg", "average", "pre", "post", "swingacc", "swingaccuracy", "avgs", "averages"]
 };
 
 const diffMap = {
@@ -120,7 +121,13 @@ const settingUpdaters = {
 			if(foundElement) {
 				$("#wrapper").append($(`#${foundElement}`))
 				$(`#${foundElement}`).attr("data-enabled", "true");
-				$(`#${foundElement}`).show();
+				if(foundElement === "ppCell") {
+					if(leaderboardData.BeatLeader.ranked || leaderboardData.ScoreSaber.ranked) {
+						$(`#${foundElement}`).show();
+					}
+				} else {
+					$(`#${foundElement}`).show();
+				}
 			}
 		}
 
@@ -344,8 +351,12 @@ const settingUpdaters = {
 	flipAccDetails: function(value) {
 		if(value === "true") {
 			rootCSS().setProperty("--accVerticalAlignment", "column-reverse");
+			rootCSS().setProperty("--comboVerticalAlignment", 'end');
+			rootCSS().setProperty("--accVerticalOffset", '1px');
 		} else {
 			rootCSS().setProperty("--accVerticalAlignment", "column");
+			rootCSS().setProperty("--comboVerticalAlignment", 'start');
+			rootCSS().setProperty("--accVerticalOffset", '-1px');
 		}
 	},
 
@@ -579,13 +590,13 @@ const settingUpdaters = {
 		rootCSS().setProperty("--overlayShadowColor", value);
 	},
 	shadowXOffset: function(value) {
-		$("feDropShadow").attr("dx", value);
+		$("#shadowEffect feDropShadow").attr("dx", value);
 	},
 	shadowYOffset: function(value) {
-		$("feDropShadow").attr("dy", value);
+		$("#shadowEffect feDropShadow").attr("dy", value);
 	},
 	shadowBlurRadius: function(value) {
-		$("feDropShadow").attr("stdDeviation", value);
+		$("#shadowEffect feDropShadow").attr("stdDeviation", value);
 	},
 	outlineColor: function(value) {
 		rootCSS().setProperty("--overlayOutlineColor", value);
@@ -623,8 +634,10 @@ const settingUpdaters = {
 
 		if(currentState.scene === "Playing") {
 			setAcc(currentState.acc * 100);
+			$("#fcAcc").text((currentState.fcacc * 100).toFixed(parseInt(value)));
 		} else {
 			$("#acc").text(`00${value ? `.${"".padStart(parseInt(value), "0")}` : ""}`);
+			$("#fcAcc").text(`00${value ? `.${"".padStart(parseInt(value), "0")}` : ""}`);
 		}
 	},
 	ppWidth: function(value) {
@@ -692,7 +705,114 @@ const settingUpdaters = {
 		} else {
 			$("#blCell").hide();
 		}
-	}
+	},
+	fcAccColor: function(value) {
+		rootCSS().setProperty("--fcAccColor", value);
+	},
+	fcAccFontFamily: function(value) {
+		rootCSS().setProperty("--fcAccFontFamily", value);
+	},
+	fcAccFontItalic: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--fcAccFontStyle", "italic");
+		} else {
+			rootCSS().setProperty("--fcAccFontStyle", "normal");
+		}
+	},
+	fcAccFontSize: function(value) {
+		rootCSS().setProperty("--fcAccFontSize", `${value}pt`);
+	},
+	fcAccFontWeight: function(value) {
+		rootCSS().setProperty("--fcAccFontWeight", value);
+	},
+	fcAccFontAdditionalWeight: function(value) {
+		rootCSS().setProperty("--fcAccFontAdditionalWeight", `${value}px`);
+	},
+	showFCAccIfNotFC: function(value) {
+		if(!currentState.misses) {
+			$("#comboWrap").show();
+			$("#fcAccWrap").hide();
+			return;
+		}
+
+		if(value === "true") {
+			$("#comboWrap").hide();
+			$("#fcAccWrap").show();
+		} else {
+			$("#comboWrap").show();
+			$("#fcAccWrap").hide();
+		}
+	},
+
+	handsLeftColor: function(value) {
+		if(localStorage.getItem("setting_bs_handsColorReflectsSaberColors") === "true") {
+			return;
+		}
+		rootCSS().setProperty("--handsLeftColor", value);
+	},
+	handsRightColor: function(value) {
+		if(localStorage.getItem("setting_bs_handsColorReflectsSaberColors") === "true") {
+			return;
+		}
+		rootCSS().setProperty("--handsRightColor", value);
+	},
+	handsFontFamily: function(value) {
+		rootCSS().setProperty("--handsFontFamily", value);
+	},
+	handsFontItalic: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--handsFontStyle", "italic");
+		} else {
+			rootCSS().setProperty("--handsFontStyle", "normal");
+		}
+	},
+	handsFontSize: function(value) {
+		rootCSS().setProperty("--handsFontSize", `${value}pt`);
+	},
+	handsFontWeight: function(value) {
+		rootCSS().setProperty("--handsFontWeight", value);
+	},
+	handsFontAdditionalWeight: function(value) {
+		rootCSS().setProperty("--handsFontAdditionalWeight", `${value}px`);
+	},
+	handsPrecision: function(value) {
+		setHandAverages(currentState.averages);
+	},
+	handsLineHeight: function(value) {
+		rootCSS().setProperty("--handsLineHeight", `${value}px`);
+	},
+	handsAlignment: function(value) {
+		rootCSS().setProperty("--handsAlignment", value);
+	},
+	handsWidth: function(value) {
+		rootCSS().setProperty("--handsWidth", `${value}px`);
+	},
+	handsFlashRadius: function(value) {
+		$("#handsFlashEffectLeft feDropShadow, #handsFlashEffectRight feDropShadow").attr("stdDeviation", value);
+	},
+	handsFlashDuration: function(value) {
+		rootCSS().setProperty("--handsFlashDuration", `${value}s`);
+	},
+	handsFlashIntercept: function(value) {
+		value = parseInt(value) / 100;
+		$("#handsFlashEffectLeft feComponentTransfer *, #handsFlashEffectRight feComponentTransfer *").attr("intercept", value);
+	},
+	handsColorReflectsSaberColors: function(value) {
+		if(value === "true" && "colors" in activeMap) {
+			rootCSS().setProperty("--handsLeftColor", activeMap.colors.left);
+			rootCSS().setProperty("--handsRightColor", activeMap.colors.right);
+
+			if(localStorage.getItem("setting_bs_ensureHandsColorIsBrightEnough") === "true") {
+				checkCustomColors();
+			}
+		} else {
+			rootCSS().setProperty("--handsLeftColor", localStorage.getItem("setting_bs_handsLeftColor"));
+			rootCSS().setProperty("--handsRightColor", localStorage.getItem("setting_bs_handsRightColor"));			
+		}
+	},
+	ensureHandsColorIsBrightEnough: function(value) { settingUpdaters.handsColorReflectsSaberColors(localStorage.getItem("setting_bs_handsColorReflectsSaberColors")); },
+	handsColorMinBrightness: function(value) { settingUpdaters.handsColorReflectsSaberColors(localStorage.getItem("setting_bs_handsColorReflectsSaberColors")); },
+	handsColorMaxBrightness: function(value) { settingUpdaters.handsColorReflectsSaberColors(localStorage.getItem("setting_bs_handsColorReflectsSaberColors")); }
 };
 
 function updateSetting(which, value, oldValue) {

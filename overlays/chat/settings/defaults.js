@@ -144,7 +144,11 @@ const nonPublicSettings = [
 	"clock_showMeridiems",
 	"panel_disableSuccessNotifications",
 	"bsMapCacheExpiryDelay",
-	"bsUserCacheExpiryDelay"
+	"bsUserCacheExpiryDelay",
+	"mus_port",
+	"mus_ip",
+	"mus_timeoutWait",
+	"mus_overrideSpotify"
 ];
 
 const defaultConfig = {
@@ -988,7 +992,36 @@ const defaultConfig = {
 	"bs_miscInfoShowBeatLeaderStars": "false",
 	"bs_miscInfoRotationInterval": "7",
 	"bs_ppDisplaySS": "true",
-	"bs_ppDisplayBL": "true"
+	"bs_ppDisplayBL": "true",
+	"mus_ip": "127.0.0.1",
+	"mus_port": "42069",
+	"mus_timeoutWait": "7.5",
+	"mus_overrideSpotify": "false",
+	"bs_fcAccColor": "#ffffff",
+	"bs_fcAccFontFamily": "Manrope",
+	"bs_fcAccFontItalic": "false",
+	"bs_fcAccFontSize": "12",
+	"bs_fcAccFontWeight": "900",
+	"bs_fcAccFontAdditionalWeight": "0",
+	"bs_handsWidth": "90",
+	"bs_handsLineHeight": "20",
+	"bs_handsAlignment": "center",
+	"bs_handsPrecision": "1",
+	"bs_handsLeftColor": "#ffffff",
+	"bs_handsRightColor": "#ffffff",
+	"bs_handsFontFamily": "Manrope",
+	"bs_handsFontItalic": "false",
+	"bs_handsFontSize": "12",
+	"bs_handsFontWeight": "900",
+	"bs_handsFontAdditionalWeight" :"0",
+	"bs_handsFlashOnHit": "false",
+	"bs_handsFlashDuration": "0.07",
+	"bs_handsFlashRadius": "1.5",
+	"bs_handsFlashIntercept": "17",
+	"bs_handsColorReflectsSaberColors": "false",
+	"bs_ensureHandsColorIsBrightEnough": "true",
+	"bs_handsColorMinBrightness": "40",
+	"bs_handsColorMaxBrightness": "100"
 };
 // i typed out the bigNoNoWords so you don't have to, i'm sorry :(
 // it's gotta know what to remove

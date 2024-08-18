@@ -12,6 +12,13 @@ async function getState() {
 		await delay(15000);
 		return getState();
 	}
+
+	if(response.status === 401) {
+		// invalid tokens? try again
+		await regenSpotifyCodes();
+		await delay(3000);
+		return getState();
+	}
 	
 	if(!response.ok) {
 		await regenSpotifyCodes();
@@ -46,6 +53,77 @@ var persistentData = {
 	art: null,
 	year: null
 };
+async function fetchMusicBrainz(isrc) {
+	persistentData.isrc = isrc;
+
+	// chrome doesn't allow user agent spoofing but you can't say i didn't try :(
+	// https://musicbrainz.org/doc/MusicBrainz_API/Rate_Limiting
+	const headers = new Headers({
+		"User-Agent": `TBPSpotifyOverlay/${overlayRevision} ( https://theblackparrot.me/overlays )`
+	});
+
+	const isrcController = new AbortController();
+	const isrcTimedOutID = setTimeout(() => isrcController.abort(), parseFloat(localStorage.getItem("setting_ajaxTimeout")) * 1000);
+	var isrcResponse = {ok: false};
+	try {
+		isrcResponse = await fetch(`https://musicbrainz.org/ws/2/isrc/${isrc}?fmt=xml&inc=releases&status=official`, { signal: isrcController.signal, headers: headers });
+	} catch(err) {
+		console.log("failed to fetch musicbrainz isrc request");
+	}
+
+	if(isrcResponse.ok) {
+		console.log("musicbrainz isrc request was ok");
+		const isrcText = await isrcResponse.text();
+
+		let isrcParser = new DOMParser();
+		let isrcDOM = isrcParser.parseFromString(isrcText, "text/xml");
+		const releases = isrcDOM.getElementsByTagName("release");
+		var release = releases[0];
+		let oldestDate = Infinity;
+
+		for(const check of releases) {
+			let dates = check.getElementsByTagName("date");
+			if(dates.length) {
+				let timestamp = new Date(dates[0].innerHTML);
+				if(timestamp.getTime() < oldestDate) {
+					oldestDate = timestamp;
+					release = check;
+					persistentData.year = timestamp.getUTCFullYear();
+					console.log(`year should be ${persistentData.year}`);
+				}
+			}
+		}
+
+		const labelController = new AbortController();
+		const labelTimedOutID = setTimeout(() => labelController.abort(), parseFloat(localStorage.getItem("setting_ajaxTimeout")) * 1000);
+		var labelResponse = {ok: false};
+		try {
+			labelResponse = await fetch(`https://musicbrainz.org/ws/2/label?release=${release.id}`, { signal: labelController.signal, headers: headers });
+		} catch(err) {
+			console.log("failed to fetch musicbrainz label request");
+		}
+
+		if(labelResponse.ok) {
+			const labelText = await labelResponse.text();
+
+			let labelParser = new DOMParser();
+			let labelDOM = labelParser.parseFromString(labelText, "text/xml");
+			
+			for(const label of labelDOM.getElementsByTagName("name")) {
+				if(label.parentNode.nodeName.toLowerCase() === "label") {
+					if(label.textContent === "[no label]") {
+						// is a self-publish
+						continue;
+					}
+
+					if(persistentData.labels.indexOf(label.textContent) === -1) {
+						persistentData.labels.push(label.textContent);
+					}
+				}
+			}
+		}
+	}
+}
 async function updateTrack() {
 	const defaultUpdateDelay = parseFloat(localStorage.getItem("setting_spotify_refreshInterval")) * 1000;
 
@@ -121,77 +199,7 @@ async function updateTrack() {
 				}
 
 				if("external_ids" in response.item) {
-					if("isrc" in response.item.external_ids) {
-						persistentData.isrc = response.item.external_ids.isrc;
-
-						// chrome doesn't allow user agent spoofing but you can't say i didn't try :(
-						// https://musicbrainz.org/doc/MusicBrainz_API/Rate_Limiting
-						const headers = new Headers({
-							"User-Agent": `TBPSpotifyOverlay/${overlayRevision} ( https://theblackparrot.me/overlays )`
-						});
-
-						const isrcController = new AbortController();
-						const isrcTimedOutID = setTimeout(() => isrcController.abort(), parseFloat(localStorage.getItem("setting_ajaxTimeout")) * 1000);
-						var isrcResponse = {ok: false};
-						try {
-							isrcResponse = await fetch(`https://musicbrainz.org/ws/2/isrc/${response.item.external_ids.isrc}?fmt=xml&inc=releases&status=official`, { signal: isrcController.signal, headers: headers });
-						} catch(err) {
-							console.log("failed to fetch musicbrainz isrc request");
-						}
-
-						if(isrcResponse.ok) {
-							console.log("musicbrainz isrc request was ok");
-							const isrcText = await isrcResponse.text();
-
-							let isrcParser = new DOMParser();
-							let isrcDOM = isrcParser.parseFromString(isrcText, "text/xml");
-							const releases = isrcDOM.getElementsByTagName("release");
-							var release = releases[0];
-							let oldestDate = Infinity;
-
-							for(const check of releases) {
-								let dates = check.getElementsByTagName("date");
-								if(dates.length) {
-									let timestamp = new Date(dates[0].innerHTML);
-									if(timestamp.getTime() < oldestDate) {
-										oldestDate = timestamp;
-										release = check;
-										persistentData.year = timestamp.getUTCFullYear();
-										console.log(`year should be ${persistentData.year}`);
-									}
-								}
-							}
-
-							const labelController = new AbortController();
-							const labelTimedOutID = setTimeout(() => labelController.abort(), parseFloat(localStorage.getItem("setting_ajaxTimeout")) * 1000);
-							var labelResponse = {ok: false};
-							try {
-								labelResponse = await fetch(`https://musicbrainz.org/ws/2/label?release=${release.id}`, { signal: labelController.signal, headers: headers });
-							} catch(err) {
-								console.log("failed to fetch musicbrainz label request");
-							}
-
-							if(labelResponse.ok) {
-								const labelText = await labelResponse.text();
-
-								let labelParser = new DOMParser();
-								let labelDOM = labelParser.parseFromString(labelText, "text/xml");
-								
-								for(const label of labelDOM.getElementsByTagName("name")) {
-									if(label.parentNode.nodeName.toLowerCase() === "label") {
-										if(label.textContent === "[no label]") {
-											// is a self-publish
-											continue;
-										}
-
-										if(persistentData.labels.indexOf(label.textContent) === -1) {
-											persistentData.labels.push(label.textContent);
-										}
-									}
-								}
-							}
-						}
-					}
+					await fetchMusicBrainz(response.item.external_ids.isrc);
 				}
 			}
 			oldID = response.item.id;
@@ -224,7 +232,7 @@ async function updateTrack() {
 	}).catch(async function(err) {
 		throw err;
 		console.log("error thrown, retriggering");
-		await delay(15000);
+		await delay(5000);
 		if(localStorage.getItem('spotify_accessToken')) {
 			updateTrack();
 		}

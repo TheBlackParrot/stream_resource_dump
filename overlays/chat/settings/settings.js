@@ -151,6 +151,13 @@ function loadSettings() {
 						element.val(storedVal).trigger("update");
 						break;
 
+					case "text":
+						element.val(storedVal);
+						if(typeof element.attr("data-coloris") !== "undefined") {
+							element[0].dispatchEvent(new Event('input', { bubbles: true }));
+						}
+						break;
+
 					default:
 						element.val(storedVal);
 				}
