@@ -1021,7 +1021,8 @@ const defaultConfig = {
 	"bs_handsColorReflectsSaberColors": "false",
 	"bs_ensureHandsColorIsBrightEnough": "true",
 	"bs_handsColorMinBrightness": "40",
-	"bs_handsColorMaxBrightness": "100"
+	"bs_handsColorMaxBrightness": "100",
+	"chatMessageMentionsReflectTargetFont": "false"
 };
 // i typed out the bigNoNoWords so you don't have to, i'm sorry :(
 // it's gotta know what to remove

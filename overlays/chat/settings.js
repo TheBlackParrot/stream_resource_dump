@@ -649,6 +649,7 @@ const settingUpdaters = {
 	},
 
 	messageBoldAmount: function(value) {
+		rootCSS().setProperty("--messageBoldAmountNum", `${value}`);
 		rootCSS().setProperty("--messageBoldAmount", `${value}px`);
 	},
 

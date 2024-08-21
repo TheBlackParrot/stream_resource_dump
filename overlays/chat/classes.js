@@ -1241,6 +1241,18 @@ class User {
 
 		rootCSS().setProperty(`--pfpShape${this.id}`, `${data.avatarBorderRadius}%`);
 
+		rootCSS().setProperty(`--nameSizeRaw${this.id}`, `${data.nameSize}`);
+		if(data.useDefaultMessageSettings) {
+			rootCSS().setProperty(`--nameMentionScalar${this.id}`, `calc(var(--messageFontSizeNum) / var(--nameSizeRaw${this.id}))`);
+		} else {
+			rootCSS().setProperty(`--nameMentionScalar${this.id}`, `calc(${data.messageSize} / var(--nameSizeRaw${this.id}))`);
+		}
+		rootCSS().setProperty(`--nameMentionSpacing${this.id}`, `calc(var(--nameSpacing${this.id}) * var(--nameMentionScalar${this.id}))`);
+		//rootCSS().setProperty(`--nameMentionExtraWeight${this.id}`, `calc(var(--nameExtraWeight${this.id}) + ((var(--messageBoldAmount) / 2) * var(--nameMentionScalar${this.id})))`);
+		rootCSS().setProperty(`--nameMentionExtraWeight${this.id}`, `calc((var(--messageBoldAmount) * var(--nameMentionScalar${this.id})) + (var(--nameExtraWeight${this.id}) * var(--nameMentionScalar${this.id})))`);
+
+		//(var(--messageBoldAmount) * var(--nameMentionScalar${this.id})) + var(--nameExtraWeight${this.id})
+
 		this.userBlock.initUserBlockCustomizations();
 		this.userBlock.updateFlagBlock();
 		this.userBlock.updateNameBlock();
@@ -1282,13 +1294,15 @@ class User {
 			if(stops[i].hard) {
 				gradientOut.push(`${prevColor} ${percentage}`);
 				gradientOut.push(`${color} ${percentage}`);
-				if(i === stops.length) {
+				if(i === stops.length - 1) {
 					gradientOut.push(`${color} calc(${percentage} + (${percentage} - ${prevPercentage}))`);
 				}
 			} else {
 				gradientOut.push(`${color} ${percentage}`);
 			}
 		}
+
+		console.log(gradientOut);
 
 		let initialPart = "";
 		switch(type) {

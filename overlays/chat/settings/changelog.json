@@ -1,5 +1,5 @@
 {
-	"9999999999999": {
+	"1724245024068": {
 		"updates": {
 			"bs": {
 				"revision": 12,
@@ -30,6 +30,38 @@
 				]
 			},
 
+			"chat": {
+				"revision": 62,
+				"notes": [
+					[
+						"made flow of mention CSS changes make a little more sense"
+					],
+					[
+						"mentions in chat messages can now reflect the name's font setting from the person being mentioned, if they've set one",
+						{"anchor": "chatMessageMentionsReflectTargetFont"}
+					],
+					[
+						"fixed issue with repeating name gradients (from the chat customizer) missing the final color if it was a hard stop",
+						["7TV name paints go through different processing, those were unaffected / always worked fine"]
+					]
+				]
+			},
+
+			"customizer": {
+				"revision": 6,
+				"notes": [
+					[
+						"added some more 'space' to various parts of the page on mobile devices"	
+					],
+					[
+						"fixed rightmost margins still applying on last-child input fields"
+					],
+					[
+						"fixed some minor various alignment issues"
+					]
+				]
+			},
+
 			"settings": {
 				"revision": 63,
 				"notes": [
@@ -38,7 +70,7 @@
 					],
 					[
 						"added placeholder support for non-Spotify music players through a websocket layer",
-						["this is just a placeholder for the time being, there's no functionality yet. just wanted to get some other things done first before starting on this"]
+						["this is just a placeholder for the time being, there's no functionality yet. just wanted to get some other things done first before starting on this. more to come!"]
 					],
 					[
 						"moved MusicBrainz data fetching to its own separate function"

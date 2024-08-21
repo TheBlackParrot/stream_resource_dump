@@ -675,11 +675,15 @@ async function renderMessageBlock(data, rootElement) {
 			}
 
 			if(word[0] === "@" && word !== "@") {
-				if(localStorage.getItem("setting_chatMessageMentionsReflectTargetColor") === "true") {
-					let target = word.substr(1);
-					if(target in twitchUsers.usernames) {
-						const targetUser = twitchUsers.usernames[target];
+				let wordElement = $(`<strong>${word}</strong>`);
+				let target = word.substr(1);
+
+				if(target in twitchUsers.usernames) {
+					const targetUser = twitchUsers.usernames[target];
+
+					if(localStorage.getItem("setting_chatMessageMentionsReflectTargetColor") === "true") {
 						let col = `var(--nameColor${targetUser.id})`;
+
 						if(localStorage.getItem("setting_chatMessageMentionsReflectTargetColorFade") === "true") {
 							col = localStorage.getItem(`color_${targetUser.id}`);
 							if(col === "var(--defaultNameColor)") {
@@ -687,13 +691,32 @@ async function renderMessageBlock(data, rootElement) {
 							}
 							col = interpolateColor(col, localStorage.getItem("setting_chatMessageMentionsReflectTargetColorFadeColor"), parseFloat(localStorage.getItem("setting_chatMessageMentionsReflectTargetColorFadeAmount")));
 						}
-						words[wordIdx] = `<strong data-ignoreStyle="true" style="background-color: ${col};">${word}</strong>`;
-					} else {
-						words[wordIdx] = `<strong>${word}</strong>`;
+
+						wordElement.attr("data-ignoreStyle", "true");
+						wordElement.css("background-color", col);
 					}
-				} else {
-					words[wordIdx] = `<strong>${word}</strong>`;
+
+					if(localStorage.getItem("setting_chatMessageMentionsReflectTargetFont") === "true") {
+						const customSettings = targetUser.entitlements.overlay.customSettings;
+
+						if(customSettings) {
+							if("nameFont" in customSettings) {
+								if(!customSettings.useDefaultNameSettings) {
+									wordElement.attr("data-ignoreStyle", "true");
+
+									wordElement.css("font-family", `var(--nameFont${targetUser.id})`);
+									wordElement.css("font-weight", `var(--nameWeight${targetUser.id})`);
+									wordElement.css("letter-spacing", `var(--nameMentionSpacing${targetUser.id})`);
+									wordElement.css("text-transform", `var(--nameTransform${targetUser.id})`);
+									wordElement.css("font-variant", `var(--nameVariant${targetUser.id})`);
+									wordElement.css("-webkit-text-stroke", `var(--nameMentionExtraWeight${targetUser.id}) transparent`);
+								}
+							}
+						}
+					}
 				}
+
+				words[wordIdx] = wordElement[0].outerHTML;
 			}
 
 			if(data.parseCheermotes && localStorage.getItem("setting_chatShowCheermotes") === "true") {
