@@ -40,8 +40,12 @@ This is an example showing the schema for what the Now Playing overlay's externa
 }
 ```
 
-`data.id` is only a unique identifier for internal use, change this for each unique song  
+`data.id` is only a unique identifier for internal use, change this for each unique song
+
 `data.duration` is in milliseconds
+
 `data.art.type` is the mime type of the encoded art data, anything CEF can read will work here. null if art is not present
+
 `data.art.data` is binary image data encoded in base64, null if art is not present
+
 `data.isrc` is null if an ISRC is not present
