@@ -32,8 +32,8 @@ This is an example showing the schema for what the Now Playing overlay's externa
 			"year": 2024
 		},
 		"art": {
-			type: "image/jpeg",
-			data: "[base64 art data here]"
+			"type": "image/jpeg",
+			"data": "[base64 art data here]"
 		},
 		"isrc": "QZS652374108"
 	}
