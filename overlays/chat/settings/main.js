@@ -9,8 +9,8 @@ function changeStatusCircle(which, status, msg) {
 
 $("#sensitive .section").show();
 
-const overlayRevision = 63;
-const overlayRevisionTimestamp = 1724245024068;
+const overlayRevision = 64;
+const overlayRevisionTimestamp = 1724671935043;
 $("#revision").text(`revision ${overlayRevision}`);
 
 function resetEverything() {
@@ -408,7 +408,11 @@ $.get(`version.json?sigh=${Date.now()}`, function(data) {
 });
 
 async function compressImage(url, size, quality) {
-	console.log(`compressing image ${url} to ${size}x${size} at quality ${quality*100}`);
+	if(url.substr(0, 4) === "http") {
+		console.log(`compressing image ${url} to ${size}x${size} at quality ${quality*100}`);
+	} else {
+		console.log(`compressing raw image to ${size}x${size} at quality ${quality*100}`);
+	}
 
 	const controller = new AbortController();
 	const timedOutID = setTimeout(() => controller.abort(), parseFloat(localStorage.getItem("setting_ajaxTimeout")) * 1000);

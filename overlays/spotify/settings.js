@@ -1,5 +1,5 @@
-const overlayRevision = 24;
-const overlayRevisionTimestamp = 1721425357628;
+const overlayRevision = 25;
+const overlayRevisionTimestamp = 1724671935043;
 
 const settingsChannel = new BroadcastChannel("settings_overlay");
 
@@ -203,6 +203,10 @@ const settingUpdaters = {
 		rootCSS().setProperty("--box-shadow-effects-inset", `${value}px`);
 	},
 	progressInterval: function(value) {
+		if(localStorage.getItem("setting_mus_overrideSpotify") === "true") {
+			return;
+		}
+		
 		stopTimers();
 		timerInterval = parseFloat(value) * 1000;
 		startTimers();
@@ -243,6 +247,10 @@ const settingUpdaters = {
 	},
 
 	scannableUsesCustomBGColor: function(value) {
+		if(!("colors" in currentSong)) {
+			return;
+		}
+
 		if(value === "true") {
 			rootCSS().setProperty("--scannable-background-color", localStorage.getItem("setting_spotify_scannableCustomBGColor"));
 		} else {
@@ -261,6 +269,10 @@ const settingUpdaters = {
 	},
 
 	scannableUseBlack: function(value) {
+		if(!("colors" in currentSong)) {
+			return;
+		}
+
 		if(currentSong.uri === null) {
 			return;
 		}
@@ -278,6 +290,10 @@ const settingUpdaters = {
 	},
 
 	scannableCustomBGColor: function(value) {
+		if(!("colors" in currentSong)) {
+			return;
+		}
+
 		if(localStorage.getItem("setting_spotify_scannableUsesCustomBGColor") === "false") {
 			return;
 		}
@@ -288,6 +304,10 @@ const settingUpdaters = {
 	},
 
 	scannableFGColor: function(value) {
+		if(!("colors" in currentSong)) {
+			return;
+		}
+
 		rootCSS().setProperty("--scannable-foreground-color", value);
 		determineScannableFGColor(currentSong);
 	},

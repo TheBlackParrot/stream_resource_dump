@@ -337,7 +337,20 @@ function isUserBot(username) {
 }
 
 function isWordSafe(word) {
-	const bigNoNoWords = [].concat(localStorage.getItem("setting_bigNoNoWords").split("\n"), localStorage.getItem("setting_bigNoNoWordsWordSpecific").split("\n"));
+	const harsherFilterWords = localStorage.getItem("setting_bigNoNoWords").split("\n").filter(function(word) {
+		if(word !== "") {
+			return true;
+		}
+		return false;
+	});
+	const softerFilterWords = localStorage.getItem("setting_bigNoNoWordsWordSpecific").split("\n").filter(function(word) {
+		if(word !== "") {
+			return true;
+		}
+		return false;
+	});
+
+	const bigNoNoWords = [].concat(harsherFilterWords, softerFilterWords);
 	word = word.trim().toLowerCase().replace(/[\d,!-/,:-@,[-`,{-~]/gi, "");
 
 	if(bigNoNoWords.indexOf(word) !== -1) {
@@ -351,17 +364,21 @@ function isWordSafe(word) {
 		return char;
 	}).join("");
 
-	for(const badWord of bigNoNoWords) {
-		if(devolved === badWord) {
-			return false;
-		}
+	if(bigNoNoWords.indexOf(devolved) !== -1) {
+		console.log(bigNoNoWords.indexOf(devolved));
+		return false;
 	}
 
 	return true;
 }
 
 function isStringSafe(data) {
-	const bigNoNoWords = localStorage.getItem("setting_bigNoNoWords").split("\n");
+	const bigNoNoWords = localStorage.getItem("setting_bigNoNoWords").split("\n").filter(function(word) {
+		if(word !== "") {
+			return true;
+		}
+		return false;
+	});
 
 	let words = data.trim().toLowerCase().replace(/[\d,!-/,:-@,[-`,{-~]/gi, "").split(" ");
 
@@ -378,10 +395,9 @@ function isStringSafe(data) {
 		return char;
 	}).join("");
 
-	for(const badWord of bigNoNoWords) {
-		if(devolved.indexOf(badWord) !== -1) {
-			return false;
-		}
+	if(bigNoNoWords.indexOf(devolved) !== -1) {
+		console.log(bigNoNoWords.indexOf(devolved));
+		return false;
 	}
 
 	return true;

@@ -46,6 +46,9 @@ function updateMarquee() {
 }
 
 function determineScannableFGColor(data) {
+	if(!("colors" in currentSong)) {
+		return;
+	}
 	if(currentSong.uri === null) {
 		return;
 	}
@@ -316,7 +319,13 @@ var timerInterval = parseFloat(localStorage.getItem("setting_spotify_progressInt
 var prevPerc = -1;
 
 function updateProgress() {
-	let perc = ((elapsed + (Date.now() - lastUpdate)) / currentSong.duration);
+	let perc;
+	if(localStorage.getItem("setting_mus_overrideSpotify") === "false") {
+		perc = ((elapsed + (Date.now() - lastUpdate)) / currentSong.duration);
+	} else {
+		perc = elapsed / currentSong.duration;
+	}
+
 	if(perc > 1 || localStorage.getItem("setting_spotify_enableArtOutlineProgress") === "false") {
 		perc = 1;
 	}

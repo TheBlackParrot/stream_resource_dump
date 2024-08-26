@@ -1,0 +1,14 @@
+{
+	"mpd": {
+		"host": "127.0.0.1",
+		"port": 6600
+	},
+
+	"ws": {
+		"host": "127.0.0.1",
+		"port": 42069
+	},
+
+	"retrySeconds": 10,
+	"musicDirectory": "/home/theblackparrot/Music"
+}

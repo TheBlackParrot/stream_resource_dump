@@ -124,6 +124,37 @@ async function fetchMusicBrainz(isrc) {
 		}
 	}
 }
+async function updateArtColors(art) {
+	try {
+		let swatches = await Vibrant.from(art).getSwatches();
+		let colors = {
+			light: [],
+			dark: []
+		};
+		const checks = {
+			light: ["LightVibrant", "Vibrant", "LightMuted", "Muted"],
+			dark: ["DarkVibrant", "DarkMuted", "Muted", "Vibrant"]
+		};
+
+		for(let shade in checks) {
+			for(let i in checks[shade]) {
+				let check = checks[shade][i];
+				if(check in swatches) {
+					if(swatches[check] !== null) {
+						colors[shade].push(swatches[check].getRgb());
+					}
+				}
+			}
+		}
+		persistentData.colors.dark = `#${colors.dark[0].map(function(x) { return Math.floor(x).toString(16).padStart(2, "0"); }).join("")}`;
+		persistentData.colors.light = `#${colors.light[0].map(function(x) { return Math.floor(x).toString(16).padStart(2, "0"); }).join("")}`;
+		
+		localStorage.setItem("art_darkColor", persistentData.colors.dark);
+		localStorage.setItem("art_lightColor", persistentData.colors.light);
+	} catch(err) {
+		throw err;
+	}
+}
 async function updateTrack() {
 	const defaultUpdateDelay = parseFloat(localStorage.getItem("setting_spotify_refreshInterval")) * 1000;
 
@@ -167,35 +198,7 @@ async function updateTrack() {
 				};
 
 				if(persistentData.art !== "placeholder.png") {
-					try {
-						let swatches = await Vibrant.from(persistentData.art).getSwatches();
-						let colors = {
-							light: [],
-							dark: []
-						};
-						const checks = {
-							light: ["LightVibrant", "Vibrant", "LightMuted", "Muted"],
-							dark: ["DarkVibrant", "DarkMuted", "Muted", "Vibrant"]
-						};
-
-						for(let shade in checks) {
-							for(let i in checks[shade]) {
-								let check = checks[shade][i];
-								if(check in swatches) {
-									if(swatches[check] !== null) {
-										colors[shade].push(swatches[check].getRgb());
-									}
-								}
-							}
-						}
-						persistentData.colors.dark = `#${colors.dark[0].map(function(x) { return Math.floor(x).toString(16).padStart(2, "0"); }).join("")}`;
-						persistentData.colors.light = `#${colors.light[0].map(function(x) { return Math.floor(x).toString(16).padStart(2, "0"); }).join("")}`;
-						
-						localStorage.setItem("art_darkColor", persistentData.colors.dark);
-						localStorage.setItem("art_lightColor", persistentData.colors.light);
-					} catch(err) {
-						throw err;
-					}
+					await updateArtColors(persistentData.art)
 				}
 
 				if("external_ids" in response.item) {

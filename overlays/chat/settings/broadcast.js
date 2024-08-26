@@ -149,7 +149,16 @@ broadcastFuncs = {
 
 		showExtraRow("spotify");
 
-		checkToSendSpotifyData();
+		if(localStorage.getItem("setting_mus_overrideSpotify") !== "true") {
+			checkToSendSpotifyData();
+		} else {
+			startMusicWebsocket();
+			if(currentSong) {
+				if("id" in currentSong) {
+					sendOutTrackData(currentSong);
+				}
+			}
+		}
 	},
 
 	ClockOverlayExists: function(message) {

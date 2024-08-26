@@ -1,4 +1,40 @@
 {
+	"1724671935043": {
+		"updates": {
+			"chat": {
+				"revision": 63,
+				"notes": [
+					[
+						"fixed issues with message censoring filters becoming very trigger happy if either of the censor lists were blank, especially on numbers"
+					]
+				]
+			},
+
+			"spotify": {
+				"revision": 25,
+				"notes": [
+					[
+						"added support for external music players",
+						[
+							"this currently only supports Music Player Daemon/MPD through an example bridge script, bridge scripts/player plugins must be made to support the socket connection",
+							"the MPD bridge script can be viewed at https://github.com/TheBlackParrot/stream_resource_dump/tree/main/overlays/overlay-mpd-bridge"
+						],
+						{"anchor": "mus_overrideSpotify"}
+					]
+				]				
+			},
+
+			"settings": {
+				"revision": 64,
+				"notes": [
+					[
+						"(update only contains new settings)"
+					]
+				]
+			}
+		}
+	},
+
 	"1724245024068": {
 		"updates": {
 			"bs": {

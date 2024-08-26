@@ -1,8 +1,67 @@
 const musicEventChannel = new BroadcastChannel("music");
 function postToMusicEventChannel(data) {
-	console.log(data);
+	//console.log(data);
 	if(data) {
 		musicEventChannel.postMessage(data);
+	}
+}
+
+var currentMusicState = {
+	playing: false,
+	elapsed: 0
+};
+function sendOutTrackData(data) {
+	postToMusicEventChannel({
+		event: "track",
+		data: {
+			title: data.title,
+			artists: data.artists,
+			album: {
+				name: data.album.name,
+				year: (persistentData.year ? persistentData.year : data.album.year),
+				art: {
+					data: data.art.compressed,
+					colors: persistentData.colors
+				}
+			},
+			duration: data.duration,
+			isrc: data.isrc,
+			labels: persistentData.labels
+		}
+	});
+}
+const musicFuncs = {
+	track: async function(data) {
+		if(data.art.data) {
+			data.art.compressed = await compressImage(`data:${data.art.type};base64,${data.art.data}`, parseInt(localStorage.getItem("setting_spotify_artImageSize")), parseInt(localStorage.getItem("setting_spotify_artImageQuality")) / 100);
+			$("#musicImageContainer").attr("src", data.art.compressed);
+
+			await updateArtColors(data.art.compressed);
+		} else {
+			data.art.compressed = "placeholder.png";
+			persistentData.colors.dark = localStorage.getItem("setting_spotify_artistColor");
+			persistentData.colors.light = localStorage.getItem("setting_spotify_artistColor");
+
+			$("#musicImageContainer").attr("src", "connections/placeholder.png");
+		}
+
+		persistentData.labels = [];
+		persistentData.year = null;
+		if(data.isrc) {
+			await fetchMusicBrainz(data.isrc);
+		}
+
+		currentSong = data;
+		sendOutTrackData(data);
+	},
+
+	state: function(data) {
+		currentMusicState = data;
+
+		postToMusicEventChannel({
+			event: "state",
+			data: data
+		});
 	}
 }
 
@@ -25,6 +84,13 @@ function startMusicWebsocket() {
 
 	mus_ws.addEventListener("message", function(msg) {
 		mus_ws.hasSeenFirstMessage = true;
+		const data = JSON.parse(msg.data);
+
+		if("event" in data) {
+			if(data.event in musicFuncs) {
+				musicFuncs[data.event](data.data);
+			}
+		}
 	});
 
 	mus_ws.addEventListener("open", function() {

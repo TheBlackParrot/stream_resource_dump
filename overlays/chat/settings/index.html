@@ -2650,7 +2650,8 @@
 				<div class="part">
 					<h1>External Music Player</h1>
 					<div class="setting settingOnlyText">
-						<p>If you do not wish to use Spotify for currently playing music information on the Now Playing overlay, you can override what it displays with an external media player (so long as an external bridge script, or a plugin has been made for it)</p>						
+						<p>If you do not wish to use Spotify for currently playing music information on the Now Playing overlay, you can override what it displays with an external media player (so long as an external bridge script, or a plugin has been made for it)</p>
+						<p>I've made an example bridge script for Music Player Daemon/MPD utilizing a few Node.js libraries if you're interested in making a plugin/bridge script for other music players. Code and socket data structure can be viewed at <a href="https://github.com/TheBlackParrot/stream_resource_dump/tree/main/overlays/overlay-mpd-bridge">https://github.com/TheBlackParrot/stream_resource_dump/tree/main/overlays/overlay-mpd-bridge</a></p>
 					</div>
 					<hr/>
 					<div class="setting">
@@ -7418,6 +7419,7 @@
 	</div>
 
 	<img id="bsplusImageContainer" style="display: none;" src=""/>
+	<img id="musicImageContainer" style="display: none;" src=""/>
 
 	<script defer type="text/javascript" src="notifs.js"></script>
 	<script defer type="text/javascript" src="defaults.js"></script>
