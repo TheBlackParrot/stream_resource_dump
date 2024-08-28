@@ -105,7 +105,7 @@ class Emote {
 	}
 }
 
-function widthTest(user) {
+function widthTest(user, callback) {
 	console.log("width test called");
 	const parentWidth = $("#wrapper").innerWidth();
 
@@ -133,12 +133,14 @@ function widthTest(user) {
 			} else {
 				flagBlock.removeClass("forceHide");
 				badgeBlock.removeClass("forceHide");
+				badgeBlock.children(".badgeWrap").removeClass("forceHide");
 				pfpBlock.removeClass("forceHide");
 				pronounsBlock.removeClass("forceHide");
 				nameBlock.children().removeClass("clip");
 
 				originalBlocks.flagBlock.removeClass("forceHide");
 				originalBlocks.badgeBlock.removeClass("forceHide");
+				originalBlocks.badgeBlock.children(".badgeWrap").removeClass("forceHide");
 				originalBlocks.pfpBlock.removeClass("forceHide");
 				originalBlocks.pronounsBlock.removeClass("forceHide");
 				originalBlocks.displayNameBlock.removeClass("clip");
@@ -146,15 +148,41 @@ function widthTest(user) {
 			}
 
 			if(testRoot.width() > parentWidth) {
-				badgeBlock.addClass("forceHide");
-				originalBlocks.badgeBlock.addClass("forceHide");
+				const badges = [];
+				const originalBadges = [];
+
+				badgeBlock.children(".badgeWrap").each(function(idx) {
+					badges.push($(this));
+				});
+				originalBlocks.badgeBlock.children(".badgeWrap").each(function(idx) {
+					originalBadges.push($(this));
+				});
+
+				for(let idx = badges.length - 1; idx >= 0; idx--) {
+					if(testRoot.width() > parentWidth) {
+						const badge = badges[idx];
+						const originalBadge = originalBadges[idx];
+
+						badge.addClass("forceHide");
+						originalBadge.addClass("forceHide");
+					} else {
+						break;
+					}
+				}
+
+				if(testRoot.width() > parentWidth) {
+					badgeBlock.addClass("forceHide");
+					originalBlocks.badgeBlock.addClass("forceHide");
+				}
 			} else {
 				badgeBlock.removeClass("forceHide");
+				badgeBlock.children(".badgeWrap").removeClass("forceHide");
 				pfpBlock.removeClass("forceHide");
 				pronounsBlock.removeClass("forceHide");
 				nameBlock.children().removeClass("clip");
 
 				originalBlocks.badgeBlock.removeClass("forceHide");
+				originalBlocks.badgeBlock.children(".badgeWrap").removeClass("forceHide");
 				originalBlocks.pfpBlock.removeClass("forceHide");
 				originalBlocks.pronounsBlock.removeClass("forceHide");
 				originalBlocks.displayNameBlock.removeClass("clip");
@@ -201,6 +229,7 @@ function widthTest(user) {
 			$(`.chatBlock[data-userid="${user.id}"] .userInfo`).each(function() {
 				const root = $(this);
 				const _badgeBlock = root.children(".badges");
+				const _badges = _badgeBlock.children(".badgeWrap");
 				const _flagBlock = root.children(".flags");
 				const _pronounsBlock = root.children(".pronouns");
 				const _pfpBlock = root.children(".pfp");
@@ -208,6 +237,11 @@ function widthTest(user) {
 				const _internationalNameBlock = root.children(".internationalName");
 
 				if(originalBlocks.badgeBlock.hasClass("forceHide")) { _badgeBlock.addClass("forceHide"); }
+				originalBlocks.badgeBlock.children(".badgeWrap").each(function(idx) {
+					if($(this).hasClass("forceHide")) {
+						$(_badges[idx]).addClass("forceHide");
+					}
+				})
 				if(originalBlocks.flagBlock.hasClass("forceHide")) { _flagBlock.addClass("forceHide"); }
 				if(originalBlocks.pronounsBlock.hasClass("forceHide")) { _pronounsBlock.addClass("forceHide"); }
 				if(originalBlocks.pfpBlock.hasClass("forceHide")) { _pfpBlock.addClass("forceHide"); }
@@ -216,6 +250,10 @@ function widthTest(user) {
 			});
 
 			$(`.${testIdentifier}`).remove();
+
+			if(typeof callback === "function") {
+				callback();
+			}
 		},
 		waitForAll: true
 	});
@@ -260,6 +298,8 @@ class UserBlock {
 		if(this.user.id === "-1") {
 			return;
 		}
+
+		const actuallyThis = this;
 
 		if(localStorage.getItem("setting_enableTwitchBadges") === "true") {
 			if(localStorage.getItem("setting_enableTwitchSubscriberBadges") === "true" && localStorage.getItem(`setting_enableTwitchFounderBadges`) === "false" && badges.list) {
@@ -390,9 +430,9 @@ class UserBlock {
 		this.checkBTTV();
 		this.checkFFZ();
 
-		$(`.chatBlock[data-userid="${this.user.id}"] .badges`).replaceWith(this.badgeBlock.clone(true));
-
-		widthTest(this.user);
+		widthTest(this.user, function() {
+			$(`.chatBlock[data-userid="${actuallyThis.user.id}"] .badges`).replaceWith(actuallyThis.badgeBlock.clone(true));
+		});
 	}
 
 	check7TV() {
@@ -519,6 +559,8 @@ class UserBlock {
 	}
 
 	updatePronounsBlock() {
+		const actuallyThis = this;
+
 		this.pronounsBlock.hide();
 		this.pronounsBlock.empty();
 
@@ -528,9 +570,9 @@ class UserBlock {
 			}
 		}
 
-		$(`.chatBlock[data-userid="${this.user.id}"] .pronouns`).replaceWith(this.pronounsBlock.clone(true));
-
-		widthTest(this.user);
+		widthTest(this.user, function() {
+			$(`.chatBlock[data-userid="${actuallyThis.user.id}"] .pronouns`).replaceWith(actuallyThis.pronounsBlock.clone(true));
+		});
 	}
 
 	updateAvatarBlock() {

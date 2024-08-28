@@ -1354,6 +1354,38 @@ const settingUpdaters = {
 	chatUsersThatAreNotBots: function(value) {
 		manualBotOverrides.remove = value.split("\n").map((account) => { return account.trim().toLowerCase();}).filter((account) => { return account.length > 0; });
 		twitchUsers.refreshBotFlags();
+	},
+
+	chatReplyOpacity: function(value) {
+		rootCSS().setProperty("--replyOpacity", parseFloat(value) / 100);
+	},
+	chatReplyScale: function(value) {
+		rootCSS().setProperty("--replyScale", parseFloat(value) / 100);
+	},
+	chatReplyElementSpacing: function(value) {
+		rootCSS().setProperty("--replyElementSpacing", `${value}px`);
+	},
+	chatReplyBlockSpacing: function(value) {
+		rootCSS().setProperty("--replyBlockSpacing", `${value}px`);
+	},
+	chatReplyIconSpacing: function(value) {
+		rootCSS().setProperty("--replyIconSpacing", `${value}px`);
+	},
+	chatReplyIndentation: function(value) {
+		rootCSS().setProperty("--replyIndentation", `${value}px`);
+	},
+	chatReplyItalicize: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--replyFontStyle", "italic");
+		} else {
+			rootCSS().setProperty("--replyFontStyle", "normal");
+		}		
+	},
+	chatReplyIcon: function(value) {
+		$(".replyIcon").attr("class", `fas ${value} replyIcon`);
+	},
+	chatReplyIconVerticalOffset: function(value) {
+		rootCSS().setProperty("--replyIconVerticalOffset", `${value}px`);
 	}
 };
 settingUpdaters["chatHideAccounts"](localStorage.getItem("setting_chatHideAccounts"));

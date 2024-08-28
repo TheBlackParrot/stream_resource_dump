@@ -981,7 +981,7 @@
 					<hr/>
 					<div class="setting">
 						<div class="settingCell">
-							<input id="applyGradientToBadges" type="checkbox" data-dependent="twitchBadgesGradients"/> <span class="settingInfo">Render a gradient on top of role and external badges</span>
+							<input checked id="applyGradientToBadges" type="checkbox" data-dependent="twitchBadgesGradients"/> <span class="settingInfo">Render a gradient on top of role and external badges</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="twitchBadgesGradients">
@@ -989,7 +989,7 @@
 							<span class="settingInfo">Colors</span>
 						</div>
 						<div class="settingCell">
-							<input id="badgeGradientColorStart" type="text" data-coloris value="#777777ff"/><i class="fas fa-long-arrow-alt-right"></i><input id="badgeGradientColorEnd" type="text" data-coloris value="#000000ff"/>
+							<input id="badgeGradientColorStart" type="text" data-coloris value="#000000"/><i class="fas fa-long-arrow-alt-right"></i><input id="badgeGradientColorEnd" type="text" data-coloris value="#505050"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="twitchBadgesGradients">
@@ -997,7 +997,7 @@
 							<span class="settingInfo">Angle</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="badgeGradientAngle" min="-360" max="360" step="1" value="150"/><span class="settingCellMeasurement">deg</span>
+							<input type="number" id="badgeGradientAngle" min="-360" max="360" step="1" value="180"/><span class="settingCellMeasurement">deg</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="twitchBadgesGradients">
@@ -1005,7 +1005,7 @@
 							<span class="settingInfo">Gradient runs from</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="badgeGradientStart" min="-300" max="300" step="1" value="0"/><span class="settingCellMeasurement">%</span><i class="fas fa-long-arrow-alt-right"></i><input type="number" id="badgeGradientEnd" min="-300" max="300" step="1" value="80"/><span class="settingCellMeasurement">%</span>
+							<input type="number" id="badgeGradientStart" min="-300" max="300" step="1" value="10"/><span class="settingCellMeasurement">%</span><i class="fas fa-long-arrow-alt-right"></i><input type="number" id="badgeGradientEnd" min="-300" max="300" step="1" value="100"/><span class="settingCellMeasurement">%</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="twitchBadgesGradients">
@@ -1577,12 +1577,12 @@
 							<span class="settingInfo">Color</span>
 						</div>
 						<div class="settingCell">
-							<input id="pronounsColor" type="text" data-coloris value="#808080"/>
+							<input id="pronounsColor" type="text" data-coloris value="#404040"/>
 						</div>
 					</div>
 					<div class="setting">
 						<div class="settingCell">
-							<input id="pronounsReflectUserColor" type="checkbox"/> <span class="settingInfo">Color fades into the chatter's own color</span>
+							<input checked id="pronounsReflectUserColor" type="checkbox"/> <span class="settingInfo">Color fades into the chatter's own color</span>
 						</div>
 					</div>
 					<div class="setting">
@@ -1590,7 +1590,7 @@
 							<span class="settingInfo">Fading amount</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="pronounsUserColorAmount" min="0" max="100" step="0.5" value="50"/><span class="settingCellMeasurement">%</span>
+							<input type="number" id="pronounsUserColorAmount" min="0" max="100" step="0.5" value="8"/><span class="settingCellMeasurement">%</span>
 						</div>
 					</div>
 					<hr/>
@@ -1612,7 +1612,7 @@
 							<span class="settingInfo">Gradient angle</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="pronounsGradientAngle" min="0" max="360" step="1" value="170"/><span class="settingCellMeasurement">deg</span>
+							<input type="number" id="pronounsGradientAngle" min="0" max="360" step="1" value="0"/><span class="settingCellMeasurement">deg</span>
 						</div>
 					</div>
 					<hr/>
@@ -6188,8 +6188,8 @@
 							<select id="chatNameTransform">
 								<option value="capitalize">Capitalize</option>
 								<option value="lowercase">Lowercase</option>
-								<option selected value="uppercase">Uppercase</option>
-								<option value="none">Do not transform</option>
+								<option value="uppercase">Uppercase</option>
+								<option selected value="none">Do not transform</option>
 							</select>
 						</div>
 					</div>
@@ -6519,6 +6519,111 @@
 					</div>
 				</div>
 				<div class="part">
+					<h1>Replies</h1>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Opacity</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatReplyOpacity" min="0" max="100" step="1" value="67"/><span class="settingCellMeasurement">%</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="chatReplyItalicize" type="checkbox"/> <span class="settingInfo">Force italics on message text</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Scale</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatReplyScale" min="0" max="200" step="1" value="60"/><span class="settingCellMeasurement">%</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Indentation</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatReplyIndentation" min="0" max="64" step="0.5" value="10"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Element spacing</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatReplyElementSpacing" min="0" max="64" step="0.5" value="6"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Icon spacing</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatReplyIconSpacing" min="0" max="64" step="0.5" value="8"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Block spacing</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatReplyBlockSpacing" min="0" max="64" step="0.5" value="0"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Reply icon</span>
+						</div>
+						<div class="settingCell">
+							<select id="chatReplyIcon">
+								<option data-icon="fontawesome-free-6.5.1-web/sprites/solid.svg#arrow-right" value="fa-arrow-right">arrow-right</option>
+								<option data-icon="fontawesome-free-6.5.1-web/sprites/solid.svg#arrow-right-long" value="fa-arrow-right-long">arrow-right-long</option>
+								<option data-icon="fontawesome-free-6.5.1-web/sprites/solid.svg#right-long" value="fa-right-long">right-long</option>
+								<option data-icon="fontawesome-free-6.5.1-web/sprites/solid.svg#circle-right" value="fa-circle-right">circle-right</option>
+								<option data-icon="fontawesome-free-6.5.1-web/sprites/solid.svg#circle-arrow-right" value="fa-circle-arrow-right">circle-arrow-right</option>
+
+								<option data-icon="fontawesome-free-6.5.1-web/sprites/solid.svg#arrows-turn-right" value="fa-arrows-turn-right">arrows-turn-right</option>
+
+								<option data-icon="fontawesome-free-6.5.1-web/sprites/solid.svg#caret-right" value="fa-caret-right">caret-right</option>
+								<option data-icon="fontawesome-free-6.5.1-web/sprites/solid.svg#square-caret-right" value="fa-square-caret-right">square-caret-right</option>
+
+								<option data-icon="fontawesome-free-6.5.1-web/sprites/solid.svg#angle-right" value="fa-angle-right">angle-right</option>
+
+								<option data-icon="fontawesome-free-6.5.1-web/sprites/solid.svg#chevron-right" value="fa-chevron-right">chevron-right</option>
+								<option data-icon="fontawesome-free-6.5.1-web/sprites/solid.svg#circle-chevron-right" value="fa-circle-chevron-right">circle-chevron-right</option>
+
+								<option data-icon="fontawesome-free-6.5.1-web/sprites/solid.svg#angles-right" value="fa-angles-right">angles-right</option>
+
+								<option data-icon="fontawesome-free-6.5.1-web/sprites/solid.svg#arrow-trend-up" value="fa-arrow-trend-up">arrow-trend-up</option>
+								
+								<option data-icon="fontawesome-free-6.5.1-web/sprites/solid.svg#square-up-right" value="fa-square-up-right">square-up-right</option>
+								<option data-icon="fontawesome-free-6.5.1-web/sprites/solid.svg#square-arrow-up-right" value="fa-square-arrow-up-right">square-arrow-up-right</option>
+
+								<option data-icon="fontawesome-free-6.5.1-web/sprites/solid.svg#forward" value="fa-forward">forward</option>
+								<option selected data-icon="fontawesome-free-6.5.1-web/sprites/solid.svg#share" value="fa-share">share</option>
+								<option data-icon="fontawesome-free-6.5.1-web/sprites/solid.svg#reply" value="fa-reply">reply</option>
+								<option data-icon="fontawesome-free-6.5.1-web/sprites/solid.svg#comment-dots" value="fa-comment-dots">comment-dots</option>
+								<option data-icon="fontawesome-free-6.5.1-web/sprites/solid.svg#location-arrow" value="fa-location-arrow">location-arrow</option>
+							</select>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Icon vertical offset</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatReplyIconVerticalOffset" min="-64" max="64" step="0.5" value="2"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+				</div>
+				<div class="part">
 					<h1>Event Tags</h1>
 					<div class="setting">
 						<div class="settingCell">
@@ -6768,7 +6873,7 @@
 							<span class="settingInfo">Color</span>
 						</div>
 						<div class="settingCell">
-							<input id="timestampColor" type="text" data-coloris value="#808080"/>
+							<input id="timestampColor" type="text" data-coloris value="#404040"/>
 						</div>
 					</div>
 					<div class="setting" data-dependent="timestamps">
@@ -6789,7 +6894,7 @@
 							<span class="settingInfo">Gradient angle</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="timestampGradientAngle" min="0" max="360" step="1" value="170"/><span class="settingCellMeasurement">deg</span>
+							<input type="number" id="timestampGradientAngle" min="0" max="360" step="1" value="0"/><span class="settingCellMeasurement">deg</span>
 						</div>
 					</div>
 					<hr/>
@@ -6807,7 +6912,7 @@
 							<span class="settingInfo">Size</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="timestampFontSize" min="4" max="64" step="0.25" value="12"/><span class="settingCellMeasurement">pt</span>
+							<input type="number" id="timestampFontSize" min="4" max="64" step="0.25" value="10"/><span class="settingCellMeasurement">pt</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="timestamps">
@@ -6823,7 +6928,7 @@
 							<span class="settingInfo">Additional weight</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="timestampFontWeightExtra" min="0" max="8" step="0.1" value="0.5"/><span class="settingCellMeasurement">px</span>
+							<input type="number" id="timestampFontWeightExtra" min="0" max="8" step="0.1" value="0.3"/><span class="settingCellMeasurement">px</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="timestamps">
@@ -6831,7 +6936,7 @@
 							<span class="settingInfo">Letter spacing</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="timestampLetterSpacing" min="-12" max="12" step="0.2" value="0"/><span class="settingCellMeasurement">px</span>
+							<input type="number" id="timestampLetterSpacing" min="-12" max="12" step="0.2" value="-0.4"/><span class="settingCellMeasurement">px</span>
 						</div>
 					</div>
 					<hr/>
@@ -6840,7 +6945,7 @@
 							<span class="settingInfo">Horizontal margin</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="timestampPadding" min="-50" max="50" step="0.5" value="10"/><span class="settingCellMeasurement">px</span>
+							<input type="number" id="timestampPadding" min="-50" max="50" step="0.5" value="8"/><span class="settingCellMeasurement">px</span>
 						</div>
 					</div>
 				</div>
@@ -7451,7 +7556,9 @@
 			loadSettings();
 			settingsCheck();
 
-			FancySelect.update($("#beatSaberDataMod")[0]);
+			$("select").each(function(idx) {
+				FancySelect.update($(this)[0]);
+			})
 
 			checkTimeoutSetting();
 			$.ajaxSetup({ timeout: parseFloat(localStorage.getItem("setting_ajaxTimeout")) * 1000 || 7000 });

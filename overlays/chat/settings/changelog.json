@@ -1,4 +1,46 @@
 {
+	"1724886038717": {
+		"updates": {
+			"chat": {
+				"revision": 64,
+				"notes": [
+					[
+						"badge block elements now attempt to hide individual badges before outright hiding the parent container when clipping user info elements"
+					],
+					[
+						"fixed occasional flicker from user info element clipping"
+					],
+					[
+						"added support for chat message replies",
+						{"anchor": "chatReplyOpacity"}
+					],
+					[
+						"adjusted a few default settings",
+						["biggest change is names no longer being capitalized by default, thought maybe names were taking up a bit *too* much space. especially with the new reply stuff"]
+					],
+					[
+						"fixed custom font settings from viewers applying to mentions even if individuality settings are disabled while font reflection is on"
+					],
+					[
+						"updated Font Awesome to version 6.5.1"
+					],
+					[
+						"fixed user chat colors not applying to user objects if they're hidden"
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 65,
+				"notes": [
+					[
+						"fixed multiple other dropdowns not initializing on the right setting values"
+					]
+				]
+			}
+		}
+	},
+
 	"1724671935043": {
 		"updates": {
 			"chat": {

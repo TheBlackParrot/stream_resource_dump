@@ -50,7 +50,7 @@ body {
 	margin-bottom: var(--chatBlockSpacing);
 	margin-top: 0px;	
 }
-.badges, .pronouns, .message, .pfp, .flags, .displayName, .internationalName, .extraInfo {
+.badges, .pronouns, .message, .pfp, .flags, .displayName, .internationalName, .extraInfo, .replyIcon {
 	filter: var(--effectFilters);
 }
 
@@ -179,6 +179,8 @@ body {
 	display: inline-block;
 	padding-right: 12px;
 	margin-right: -12px;
+	padding-left: 12px;
+	margin-left: -12px;
 }
 
 .pronouns {
@@ -819,4 +821,52 @@ img.emoji {
 
 .forceHide {
 	display: none !important;
+}
+
+.replyContainer {
+	display: flex;
+	opacity: var(--replyOpacity);
+	padding-top: var(--replyBlockSpacing);
+	padding-bottom: var(--replyBlockSpacing);
+}
+.reply {
+	font-size: var(--replyFontSize) !important;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	text-wrap: nowrap;
+	align-self: center;
+	font-style: var(--replyFontStyle) !important;
+}
+.replyName {
+	font-size: calc(1em * (var(--replyScale) + 0.07)) !important;
+	line-height: 1em;
+	height: auto !important;
+	display: inline-flex !important;
+	margin-right: var(--replyElementSpacing);
+}
+.replyName .displayName, .replyName .internationalName {
+	-webkit-text-stroke: calc(var(--nameFontWeightExtra) * var(--replyScale)) transparent;
+    padding-top: 0.25em;
+    margin-top: -0.25em;
+    padding-bottom: 0.25em;
+    margin-bottom: -0.25em;
+}
+.replyIcon {
+	color: var(--messageColor);
+	font-size: var(--replyFontSize);
+	margin-right: var(--replyIconSpacing);
+	opacity: var(--replyOpacity);
+	align-self: center;
+
+	position: relative;
+	top: var(--replyIconVerticalOffset); /* i'm tired of fighting this, whatever */
+}
+
+.left .replyContainer {
+	justify-content: start;
+	margin-left: var(--replyIndentation);
+}
+.right .replyContainer {
+	justify-content: end;
+	margin-right: var(--replyIndentation);
 }

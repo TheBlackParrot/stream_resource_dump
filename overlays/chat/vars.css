@@ -220,4 +220,14 @@
 	--displayBTTVBadges: initial;
 	--displayAffiliateBadges: initial;
 	--displayBotBadges: initial;
+
+	--replyScale: 0.6;
+	--replyFontSize: calc(var(--messageFontSize) * (var(--replyScale) + 0.07));
+	--replyOpacity: 0.6;
+	--replyElementSpacing: 6px;
+	--replyIconSpacing: 10px;
+	--replyBlockSpacing: 0px;
+	--replyIndentation: 10px;
+	--replyFontStyle: normal;
+	--replyIconVerticalOffset: 2px;
 }

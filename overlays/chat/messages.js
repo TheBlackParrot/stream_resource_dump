@@ -17,6 +17,25 @@ async function prepareMessage(tags, message, self, forceHighlight) {
 	console.log(tags);
 
 	let userData = await twitchUsers.getUser(tags['user-id']);
+
+	userData.entitlements.twitch.badges.list = tags['badges'];
+	userData.entitlements.twitch.badges.info = tags['badge-info'];
+	userData.entitlements.twitch.color = tags['color'];
+
+	userData.userBlock.updateBadgeBlock();
+
+	let isOverlayMessage = false;
+	if('is-overlay-message' in tags) {
+		isOverlayMessage = tags['is-overlay-message'];
+	}
+
+	if(!userData.fetchedCustomSettings && !isOverlayMessage) {
+		console.log("waiting for custom settings to set");
+		await userData.customSettingsFetchPromise;
+	}
+
+	userData.userBlock.initUserSettingsValues();
+	
 	console.log(userData);
 
 	if(hideAccounts.indexOf(userData.username) !== -1) {
@@ -41,24 +60,6 @@ async function prepareMessage(tags, message, self, forceHighlight) {
 			}
 		}
 	}
-
-	userData.entitlements.twitch.badges.list = tags['badges'];
-	userData.entitlements.twitch.badges.info = tags['badge-info'];
-	userData.entitlements.twitch.color = tags['color'];
-
-	userData.userBlock.updateBadgeBlock();
-
-	let isOverlayMessage = false;
-	if('is-overlay-message' in tags) {
-		isOverlayMessage = tags['is-overlay-message'];
-	}
-
-	if(!userData.fetchedCustomSettings && !isOverlayMessage) {
-		console.log("waiting for custom settings to set");
-		await userData.customSettingsFetchPromise;
-	}
-
-	userData.userBlock.initUserSettingsValues();
 
 	let hasMetThreshold = true;
 	if(localStorage.getItem("setting_chatHideUntilThresholdMet") === "true" && !isOverlayMessage) {
@@ -105,8 +106,28 @@ async function prepareMessage(tags, message, self, forceHighlight) {
 		emotes: tags['emotes'],
 		uuid: tags['id'],
 		parseCheermotes: ('bits' in tags),
-		user: userData
+		user: userData,
+		reply: false
 	};
+
+	if("reply-parent-msg-id" in tags) {
+		if(tags['reply-parent-msg-id']) {
+			let repliedUserData = await twitchUsers.getUser(tags['reply-parent-user-id']);
+
+			if(!repliedUserData.fetchedCustomSettings) {
+				console.log("waiting for custom settings to set on replied user");
+				await repliedUserData.customSettingsFetchPromise;
+			}
+
+			repliedUserData.userBlock.initUserSettingsValues();
+
+			outObject.reply = {
+				uuid: tags["reply-parent-msg-id"],
+				user: repliedUserData,
+				message: tags["reply-parent-msg-body"]
+			}
+		}
+	}
 
 	if('first-msg' in tags) {
 		if(tags['first-msg']) {
@@ -527,18 +548,50 @@ async function cacheEmote(url) {
 	return twitchEmoteCache[url];
 }
 
-async function renderMessageBlock(data, rootElement) {
+async function renderMessageBlock(data, rootElement, isReply) {
 	let messageBlock = $('<div class="message"></div>');
 
-	initMessageBlockCustomizations(data, {
-		rootElement: rootElement,
-		messageBlock: messageBlock
-	});
+	if(isReply) {
+		// twitch doesn't send data on emotes in reply parents, so we gotta clone stuff, honestly probably more efficient to do it anyways
+		const wantedMessage = $(`.effectWrapper[data-msguuid="${data.reply.uuid}"]`);
+		if(wantedMessage.length) {
+			const replyBlock = $('<div class="replyContainer"></div>');
+
+			const nameBlock = data.reply.user.userBlock.nameBlock.clone(true);
+			nameBlock.addClass("replyName");
+
+			const clonedMessage = wantedMessage.children(".message").clone(true);
+			clonedMessage.addClass("reply");
+			clonedMessage.attr("style", "");
+			clonedMessage.children(".bigEmote").removeClass("bigEmote");
+			clonedMessage.children(".timestamp").remove();
+
+			replyBlock.append($(`<i class="fas ${localStorage.getItem("setting_chatReplyIcon")} replyIcon"></i>`));
+			replyBlock.append(nameBlock);
+			replyBlock.append(clonedMessage);
+
+			return replyBlock;
+		}
+
+		data = $.extend(true, {}, data);
+
+		data.message = data.reply.message;
+		data.emotes = null;
+
+		data.user = data.reply.user;
+		data.uuid = data.reply.uuid;
+	} else {
+		initMessageBlockCustomizations(data, {
+			rootElement: rootElement,
+			messageBlock: messageBlock
+		});
+	}
 
 	let originalMessage = Array.from(data.message.trim().normalize());
 
 	let hasBigEmotes = false;
 	let useLQImages = (localStorage.getItem("setting_useLowQualityImages") === "true");
+
 	if(localStorage.getItem("setting_enableEmotes") === "true" && !data.isOverlayMessage) {
 		let checkExternalEmotes = Array.from(data.message.trim().normalize());
 
@@ -635,6 +688,7 @@ async function renderMessageBlock(data, rootElement) {
 
 		let cheermotePrefixes = Object.keys(cheermotes);
 		let lastWordWasEmote = false;
+		let skippedMentionInReply = false;
 		for(let wordIdx in words) {
 			let word = words[wordIdx];
 			
@@ -675,10 +729,17 @@ async function renderMessageBlock(data, rootElement) {
 			}
 
 			if(word[0] === "@" && word !== "@") {
+				if(data.reply && !skippedMentionInReply && !isReply) {
+					skippedMentionInReply = true;
+					words[wordIdx] = "";
+					eprww[0] = "";
+					continue;
+				}
+
 				let wordElement = $(`<strong>${word}</strong>`);
 				let target = word.substr(1);
 
-				if(target in twitchUsers.usernames) {
+				if(target in twitchUsers.usernames && !isReply) {
 					const targetUser = twitchUsers.usernames[target];
 
 					if(localStorage.getItem("setting_chatMessageMentionsReflectTargetColor") === "true") {
@@ -696,7 +757,11 @@ async function renderMessageBlock(data, rootElement) {
 						wordElement.css("background-color", col);
 					}
 
-					if(localStorage.getItem("setting_chatMessageMentionsReflectTargetFont") === "true") {
+					if(
+						localStorage.getItem("setting_chatMessageMentionsReflectTargetFont") === "true" &&
+						localStorage.getItem("setting_allowUserCustomizations") === "true" &&
+						localStorage.getItem("setting_allowUserCustomNameFonts") === "true"
+					) {
 						const customSettings = targetUser.entitlements.overlay.customSettings;
 
 						if(customSettings) {
@@ -719,7 +784,7 @@ async function renderMessageBlock(data, rootElement) {
 				words[wordIdx] = wordElement[0].outerHTML;
 			}
 
-			if(data.parseCheermotes && localStorage.getItem("setting_chatShowCheermotes") === "true") {
+			if(data.parseCheermotes && localStorage.getItem("setting_chatShowCheermotes") === "true" && !isReply) {
 				messageBlock.addClass("highlighted");
 
 				for(let prefix of cheermotePrefixes) {
@@ -763,7 +828,7 @@ async function renderMessageBlock(data, rootElement) {
 		// what i'm doing here to fix in-line seamless emotes is stupid but it works yay
 		messageBlock.html(words.join(" ").replaceAll("</span> <span", "</span><span"));
 
-		if(data.type === "action") {
+		if(data.type === "action" && !isReply) {
 			let col;
 			if(localStorage.getItem("setting_chatNameUsesProminentColor") === "true") {
 				col = data.user.entitlements.overlay.prominentColor;
@@ -790,7 +855,7 @@ async function renderMessageBlock(data, rootElement) {
 			}));
 		}
 
-		hasBigEmotes = (eprww.join("") === "" && localStorage.getItem("setting_chatShowBigEmotes") === "true");
+		hasBigEmotes = (eprww.join("") === "" && localStorage.getItem("setting_chatShowBigEmotes") === "true" && !isReply);
 		if(hasBigEmotes) {
 			messageBlock.addClass("isBigEmoteMode");
 			messageBlock.children(".emote").addClass("bigEmote");
@@ -890,7 +955,22 @@ async function renderMessageBlock(data, rootElement) {
 		messageBlock.html(words.join(" "));
 	}
 
-	return messageBlock;
+	if(isReply) {
+		const replyBlock = $('<div class="replyContainer"></div>');
+
+		const nameBlock = data.user.userBlock.nameBlock.clone(true);
+		nameBlock.addClass("replyName");
+
+		messageBlock.addClass("reply");
+
+		replyBlock.append($(`<i class="fas ${localStorage.getItem("setting_chatReplyIcon")} replyIcon"></i>`));
+		replyBlock.append(nameBlock);
+		replyBlock.append(messageBlock);
+
+		return replyBlock;
+	} else {
+		return messageBlock;
+	}
 }
 
 function renderEventTagBlock(data, wrapperElement) {
@@ -962,6 +1042,11 @@ async function parseMessage(data) {
 	}
 
 	let eventTagBlock = renderEventTagBlock(data, wrapperElement);
+
+	if(data.reply) {
+		let replyBlock = await renderMessageBlock(data, rootElement, true);
+		wrapperElement.append(replyBlock);
+	}
 
 	let messageBlock = await renderMessageBlock(data, rootElement);
 	wrapperElement.append(messageBlock);

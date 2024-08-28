@@ -13,7 +13,8 @@ This is an example showing the schema for what the Now Playing overlay's externa
 }
 ```
 
-`data.playing` is a boolean (true if playing, false otherwise)  
+`data.playing` is a boolean (true if playing, false otherwise)
+
 `data.elapsed` is in milliseconds
 
 # track event

@@ -1071,3 +1071,7 @@ ol li ol li:before {
 .quickJumpIsActive {
 	margin-top: calc(var(--wrapper-padding) + 40px);
 }
+
+.fsb-option:focus svg {
+	fill: var(--fsb-hover-color);
+}
