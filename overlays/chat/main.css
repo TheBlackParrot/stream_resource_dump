@@ -833,7 +833,7 @@ img.emoji {
 	font-size: var(--replyFontSize) !important;
 	text-overflow: ellipsis;
 	overflow: hidden;
-	text-wrap: nowrap;
+	white-space: nowrap;
 	align-self: center;
 	font-style: var(--replyFontStyle) !important;
 }

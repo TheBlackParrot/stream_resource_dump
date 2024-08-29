@@ -52,20 +52,32 @@ var streamData = {"started_at": new Date().toISOString()};
 async function getBroadcasterData() {
 	const broadcasterName = localStorage.getItem(`setting_twitchChannel`);
 
-	const rawUserResponse = await callTwitchAsync({
-		"endpoint": "users",
-		"args": {
-			"login": broadcasterName
-		}
-	});
-	broadcasterData = rawUserResponse.data[0];
+	var rawUserResponse;
+	if(localStorage.getItem("setting_channelIsOwn") === "true") {
+		rawUserResponse = await callTwitchAsync({
+			endpoint: "users",
+			oauth: true
+		});
+	} else {
+		rawUserResponse = await callTwitchAsync({
+			endpoint: "users",
+			args: {
+				login: broadcasterName
+			}
+		});
+	}
 
-	return rawUserResponse.data[0];
+	broadcasterData = rawUserResponse.data[0];
+	return broadcasterData;
 }
 
 var nextAdBreak = Date.now();
 async function setNextAdBreak() {
 	console.log("updating time to next ad break");
+
+	if(typeof broadcasterData === "undefined") {
+		await getBroadcasterData();
+	}
 
 	const adData = await callTwitchAsync({
 		endpoint: "channels/ads",

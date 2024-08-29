@@ -30,6 +30,16 @@
 				]
 			},
 
+			"clock": {
+				"revision": 8,
+				"notes": [
+					[
+						"forcing oauth-tied broadcaster data fetching if the channel you're pulling information from is your own",
+						["i'm adding this on as a hotfix to the previous update"]
+					]
+				]
+			},
+
 			"settings": {
 				"revision": 65,
 				"notes": [
