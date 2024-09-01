@@ -1,4 +1,28 @@
 {
+	"9999999999999": {
+		"updates": {
+			"settings": {
+				"revision": 66,
+				"notes": [
+					[
+						"added support for HttpSiraStatus as a data source for Beat Saber-related overlays",
+						["just like BS+ and DataPuller, it too has some issues. guh"]
+					],
+					[
+						"moved some global variables related to Beat Saber overlays from their individual data source scripts to the main script"
+					],
+					[
+						"fixed deleted Beat Saber maps failing to update data on overlays"
+					],
+					[
+						"cleaned up the External Music Player section in the Connections tab, also added a spot for bridge scripts/media player plugins",
+						["foobar2000 is now officially supported through a bridge script utilizing foo_beefweb by the way"]
+					]
+				]
+			}
+		}
+	},
+
 	"1724886038717": {
 		"updates": {
 			"chat": {

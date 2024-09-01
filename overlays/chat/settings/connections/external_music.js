@@ -32,6 +32,8 @@ function sendOutTrackData(data) {
 }
 const musicFuncs = {
 	track: async function(data) {
+		console.log(data);
+		
 		if(data.art.data) {
 			data.art.compressed = await compressImage(`data:${data.art.type};base64,${data.art.data}`, parseInt(localStorage.getItem("setting_spotify_artImageSize")), parseInt(localStorage.getItem("setting_spotify_artImageQuality")) / 100);
 			$("#musicImageContainer").attr("src", data.art.compressed);

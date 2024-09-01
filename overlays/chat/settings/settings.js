@@ -16,6 +16,14 @@ function linearInterpolate(a, b, val) {
 	return a + (b - a) * val;
 };
 
+function colorArrayToHex(arr) {
+	let r = Math.round(arr[0]).toString(16).padStart(2, "0");
+	let g = Math.round(arr[1]).toString(16).padStart(2, "0");
+	let b = Math.round(arr[2]).toString(16).padStart(2, "0");
+
+	return `#${r}${g}${b}`;	
+}
+
 function colorObjectToHex(obj) {
 	let r = Math.round(obj.r).toString(16).padStart(2, "0");
 	let g = Math.round(obj.g).toString(16).padStart(2, "0");

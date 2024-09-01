@@ -1075,3 +1075,15 @@ ol li ol li:before {
 .fsb-option:focus svg {
 	fill: var(--fsb-hover-color);
 }
+
+.inlineSmol {
+	font-size: var(--font-size-smol);
+	opacity: 0.67;
+}
+.noHeightForce {
+	height: unset;
+}
+.allowLineBreakSettingCell {
+	display: inline-block;
+	line-height: var(--settings-text-line-height);
+}

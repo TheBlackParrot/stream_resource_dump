@@ -15,6 +15,13 @@ var currentBSState = {
 	score: 0,
 	scene: "Menu"
 };
+var oldScene;
+var currentHandColors = {
+	left: "#ffffff",
+	right: "#ffffff"
+};
+var leftHandTotal = [0, 0, 0, 0];
+var rightHandTotal = [0, 0, 0, 0];
 
 var mapPacks = {};
 async function getMapPacks() {
@@ -29,7 +36,6 @@ async function getMapPacks() {
 
 const bsEventChannel = new BroadcastChannel("bs");
 function postToBSEventChannel(data) {
-	//console.log(data);
 	if(data) {
 		bsEventChannel.postMessage(data);
 	}
@@ -105,7 +111,11 @@ async function getCachedMapData(url) {
 	}
 
 	cachedResponse = await cacheStorage.match(url);
-	return await cachedResponse.json();
+	try {
+		return await cachedResponse.json();
+	} catch(err) {
+		return null;
+	}
 }
 
 var oldHash;
@@ -250,6 +260,10 @@ function connectBeatSaber() {
 		case "datapuller":
 			startDataPullerMapInfoWebsocket();
 			startDataPullerLiveDataWebsocket();
+			break;
+
+		case "sirastatus":
+			startSiraStatusWebsocket();
 			break;
 	}
 }

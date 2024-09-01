@@ -1,11 +1,7 @@
 var dataPullerInit_MapInfo = false;
 var datapuller_ws_MapInfo;
 var dataPullerTimeout_MapInfo;
-var oldScene;
-var currentHandColors = {
-	left: "#ffffff",
-	right: "#ffffff"
-};
+
 function startDataPullerMapInfoWebsocket() {
 	if(dataPullerInit_MapInfo) {
 		return;
@@ -130,8 +126,6 @@ const liveDataEventTriggers = {
 	EnergyChange: 3,
 	ScoreChange: 4
 };
-var leftHandTotal = [0, 0, 0, 0];
-var rightHandTotal = [0, 0, 0, 0];
 function startDataPullerLiveDataWebsocket() {
 	if(dataPullerInit_LiveData) {
 		return;

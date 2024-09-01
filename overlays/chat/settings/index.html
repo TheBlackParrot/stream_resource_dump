@@ -2025,6 +2025,14 @@
 					</div>
 					<div class="setting">
 						<div class="settingCellLabel">
+							<strong>Beat Saber HttpSiraStatus</strong>
+						</div>
+						<div class="settingCell">
+							<div class="statusCircle grayCircle" id="BSSiraStatusStatus"></div> <div class="statusMessage grayMessage">inactive</div>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
 							<strong>Beat Saber Plus</strong>
 						</div>
 						<div class="settingCell">
@@ -2558,6 +2566,14 @@
 							<input type="number" id="datapuller_port" min="1" max="65536" step="1" value="2946"/>
 						</div>
 					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">HttpSiraStatus port</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="sirastatus_port" min="1" max="65536" step="1" value="6557"/>
+						</div>
+					</div>
 					<hr/>
 					<div class="setting">
 						<div class="settingCellLabel">
@@ -2567,6 +2583,7 @@
 							<select id="beatSaberDataMod">
 								<option selected value="bsplus">Beat Saber Plus</option>
 								<option value="datapuller">DataPuller</option>
+								<option value="sirastatus">HttpSiraStatus</option>
 							</select>
 						</div>
 					</div>
@@ -2651,7 +2668,30 @@
 					<h1>External Music Player</h1>
 					<div class="setting settingOnlyText">
 						<p>If you do not wish to use Spotify for currently playing music information on the Now Playing overlay, you can override what it displays with an external media player (so long as an external bridge script, or a plugin has been made for it)</p>
-						<p>I've made an example bridge script for Music Player Daemon/MPD utilizing a few Node.js libraries if you're interested in making a plugin/bridge script for other music players. Code and socket data structure can be viewed at <a href="https://github.com/TheBlackParrot/stream_resource_dump/tree/main/overlays/overlay-mpd-bridge">https://github.com/TheBlackParrot/stream_resource_dump/tree/main/overlays/overlay-mpd-bridge</a></p>
+						<p>Links to bridge scripts and media player plugins can be found down below.</p>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel noHeightForce">
+							<strong>Music Player Daemon (MPD)</strong>
+							<br/>
+							<span class="inlineSmol">maintained by <strong>TheBlackParrot</strong></span>
+						</div>
+						<div class="settingCell">
+							<a href="https://github.com/TheBlackParrot/stream_resource_dump/tree/main/overlays/overlay-mpd-bridge"><i class="fa-brands fa-github"></i> GitHub</a>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel noHeightForce">
+							<strong>foobar2000</strong>
+							<br/>
+							<span class="inlineSmol">maintained by <strong>TheBlackParrot</strong></span>
+						</div>
+						<div class="settingCell allowLineBreakSettingCell">
+							<a href="https://github.com/TheBlackParrot/stream_resource_dump/tree/main/overlays/overlay-foobar2k-bridge"><i class="fa-brands fa-github"></i> GitHub </a>
+							<br/>
+							<em class="inlineSmol">(requires the <a href="https://www.foobar2000.org/components/view/foo_beefweb">foo_beefweb</a> component)</em>
+						</div>
 					</div>
 					<hr/>
 					<div class="setting">
@@ -4371,7 +4411,7 @@
 					<hr/>
 					<div class="setting">
 						<div class="settingCell smol">
-							<strong>NOTE:</strong> FC accuracy display is only available through DataPuller. Beat Saber Plus doesn't track the stats needed to calculate FC accuracy.
+							<strong>NOTE:</strong> FC accuracy display is only available through DataPuller. Beat Saber Plus and HttpSiraStatus do not track the stats needed to calculate FC accuracy.
 						</div>
 					</div>
 				</div>
@@ -4649,13 +4689,15 @@
 					</div>
 					<div class="setting">
 						<div class="settingCell smol">
-							<strong>NOTE:</strong> Swing average display is only available through DataPuller. Beat Saber Plus doesn't track the stats needed to calculate swing statistics.
+							<strong>NOTE:</strong> Swing average display is only available through DataPuller and HttpSiraStatus. Beat Saber Plus doesn't track the stats needed to calculate swing statistics.
 						</div>
 					</div>
 					<hr/>
 					<div class="setting">
 						<div class="settingCell smol">
-							<strong>NOTE:</strong> DataPuller values may not reflect actual swing average statistics currently, it's occasionally not properly tracking cuts on the correct hands, and chains are untrackable. (bug has been reported)
+							<strong>NOTE:</strong> Values from DataPuller and HttpSiraStatus may not reflect actual swing average statistics currently. DataPuller occasionally fails to properly track cuts on the correct hands, and chains are untrackable. (bug has been reported)
+							<br/>
+							HttpSiraStatus sometimes reports values as 0 on pre-swing, post-swing, and accuracy, as well as firing events off twice for cuts.
 						</div>
 					</div>
 				</div>
@@ -7540,6 +7582,7 @@
 	<script defer type="text/javascript" src="connections/beatsaber.js"></script>
 	<script defer type="text/javascript" src="connections/bsplus.js"></script>
 	<script defer type="text/javascript" src="connections/bs_datapuller.js"></script>
+	<script defer type="text/javascript" src="connections/bs_sirastatus.js"></script>
 	<script defer type="text/javascript" src="connections/streamlabs.js"></script>
 	<script defer type="text/javascript" src="connections/streamelements.js"></script>
 	<script defer type="text/javascript" src="connections/spotify.js"></script>
