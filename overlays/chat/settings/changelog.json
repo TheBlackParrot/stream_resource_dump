@@ -1,5 +1,5 @@
 {
-	"9999999999999": {
+	"1725243469981": {
 		"updates": {
 			"settings": {
 				"revision": 66,
@@ -12,11 +12,15 @@
 						"moved some global variables related to Beat Saber overlays from their individual data source scripts to the main script"
 					],
 					[
-						"fixed deleted Beat Saber maps failing to update data on overlays"
+						"fixed Beat Saber maps deleted from BeatSaver failing to display data on overlays"
 					],
 					[
 						"cleaned up the External Music Player section in the Connections tab, also added a spot for bridge scripts/media player plugins",
 						["foobar2000 is now officially supported through a bridge script utilizing foo_beefweb by the way"]
+					],
+					[
+						"hid everything related to the clip overlay until further notice",
+						["stuff i was doing has been patched and i'm tired and mad and pissed fuck amazon"]
 					]
 				]
 			}

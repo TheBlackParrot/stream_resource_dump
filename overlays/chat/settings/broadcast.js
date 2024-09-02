@@ -173,6 +173,7 @@ broadcastFuncs = {
 	},
 
 	ClipsOverlayExists: function(data) {
+		/*
 		data = data.data;
 		console.log("Clips overlay is active");
 		changeStatusCircle("ClipsOverlayStatus", "green", `loaded (r${data.version})`);
@@ -187,6 +188,8 @@ broadcastFuncs = {
 		let settingsKeys = Object.keys(defaultConfig);
 		let settingsKeysExclude = settingsKeys.filter((key) => key.substr(0, 6) === "clips_");
 		postToChannel("settingsKeysClips", settingsKeysExclude);
+		*/
+		addNotification("Clip overlay has been sunsetted until further notice, sorry! Thanks Twitch!", {duration: 10});
 	},
 
 	HROverlayExists: function(data) {
