@@ -1,5 +1,5 @@
-const overlayRevision = 64;
-const overlayRevisionTimestamp = 1724886038717;
+const overlayRevision = 65;
+const overlayRevisionTimestamp = 1725675533945;
 
 const enums = {
 	weight: {
@@ -42,7 +42,7 @@ var twitchBadgeTypes = {
 		is_solid: true
 	},
 	staff: {
-		badges: ["admin", "global_mod", "staff", "twitchbot", "user-anniversary"],
+		badges: ["admin", "global_mod", "staff", "twitchbot", "user-anniversary", "twitch-intern-2023", "twitch-intern-2024"],
 		setting: "enableTwitchStaffBadges",
 		is_solid: true
 	},
@@ -74,7 +74,8 @@ var twitchBadgeTypes = {
 	convention: {
 		badges: ["glitchcon2020", "twitchcon2017", "twitchcon2018", "twitchconAmsterdam2020", "twitchconEU2019", 
 				 "twitchconEU2022", "twitchconEU2023", "twitchconNA2019", "twitchconNA2020", "twitchconNA2022",
-				 "superultracombo-2023", "twitchconNA2023"],
+				 "superultracombo-2023", "twitchconNA2023", "dreamcon-2024", "twitchcon-2024---rotterdam",
+				 "twitchcon-2024---san-diego"],
 		setting: "enableTwitchConBadges",
 		is_solid: false
 	},
@@ -119,8 +120,14 @@ var twitchBadgeTypes = {
 		is_solid: true
 	},
 	event: {
-		badges: ["rplace-2023", "twitch-recap-2023"],
+		badges: ["rplace-2023", "twitch-recap-2023", "streamer-awards-2024", "the-game-awards-2023",
+				 "the-golden-predictor-of-the-game-awards-2023", "zevent-2024"],
 		setting: "enableTwitchEventBadges",
+		is_solid: true
+	},
+	dj: {
+		badges: ["twitch-dj"],
+		setting: "enableTwitchDJBadges",
 		is_solid: true
 	}
 };

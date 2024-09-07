@@ -1,4 +1,57 @@
 {
+	"1725675533945": {
+		"updates": {
+			"chat": {
+				"revision": 65,
+				"notes": [
+					[
+						"fixed renamed 7TV emotes taking on their original name instead of the new name if added mid-session"
+					],
+					[
+						"moved external emote service functions to their own separate scripts"
+					],
+					[
+						"fixed messages sticking sometimes (hopefully) (again)"
+					],
+					[
+						"changing message decay time to 0 now clears existing decay timers"
+					],
+					[
+						"added support for toggling Twitch DJ Program badges",
+						{"anchor": "enableTwitchDJBadges"}
+					],
+					[
+						"updated organization of Twitch badges with recent events/cons/etc."
+					],
+					[
+						"decreased default indentation of replies from 10px to 4px"
+					]
+				]
+			},
+
+			"customizer": {
+				"revision": 7,
+				"notes": [
+					[
+						"added a toggle to show what name color settings will look like against default color brightness thresholds/limits"
+					],
+					[
+						"added some gradient palette presets"
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 67,
+				"notes": [
+					[
+						"(update only contains new settings)"
+					]
+				]
+			}
+		}
+	},
+
 	"1725243469981": {
 		"updates": {
 			"settings": {

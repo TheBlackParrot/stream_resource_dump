@@ -111,20 +111,6 @@ function setHistoryOpacity() {
 			return;
 		}
 
-		if(Date.now() > parseInt($(this).attr("data-ensureClear"))) {
-			console.log("message stuck around longer than it should have, force removing");
-			if(localStorage.getItem("setting_chatAnimationsOut") === "true") {
-				const blugh = $(this);
-				blugh.removeClass("slideIn").addClass("slideOut");
-				blugh.one("animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd", function() {
-					blugh.remove();
-				});
-			} else {
-				blugh.remove();
-			}
-			return;
-		}
-
 		if(localStorage.getItem("setting_chatBlurHistory") === "true") {
 			let step = parseFloat(localStorage.getItem("setting_chatBlurHistoryStep"));
 			let blur = ((combinedCount - thisIdx) - startAfter) * step;
@@ -1386,6 +1372,15 @@ const settingUpdaters = {
 	},
 	chatReplyIconVerticalOffset: function(value) {
 		rootCSS().setProperty("--replyIconVerticalOffset", `${value}px`);
+	},
+
+	chatRemoveMessageDelay: function(value) {
+		if(parseInt(value) === 0) {
+			for(const rootKey in messageDecayTimeouts) {
+				const timerHandle = messageDecayTimeouts[rootKey];
+				clearTimeout(timerHandle);
+			}
+		}
 	}
 };
 settingUpdaters["chatHideAccounts"](localStorage.getItem("setting_chatHideAccounts"));

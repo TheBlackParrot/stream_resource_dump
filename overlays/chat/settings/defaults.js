@@ -148,7 +148,8 @@ const nonPublicSettings = [
 	"mus_port",
 	"mus_ip",
 	"mus_timeoutWait",
-	"mus_overrideSpotify"
+	"mus_overrideSpotify",
+	"enableTwitchDJBadges"
 ];
 
 const defaultConfig = {
@@ -1029,9 +1030,10 @@ const defaultConfig = {
 	"chatReplyBlockSpacing": "0",
 	"chatReplyIconSpacing": "8",
 	"chatReplyItalicize": "false",
-	"chatReplyIndentation": "10",
+	"chatReplyIndentation": "4",
 	"chatReplyIcon": "fa-share",
-	"chatReplyIconVerticalOffset": "2"
+	"chatReplyIconVerticalOffset": "2",
+	"enableTwitchDJBadges": "true"
 };
 // i typed out the bigNoNoWords so you don't have to, i'm sorry :(
 // it's gotta know what to remove
