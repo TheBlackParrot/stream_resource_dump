@@ -22,8 +22,6 @@ async function prepareMessage(tags, message, self, forceHighlight) {
 	userData.entitlements.twitch.badges.info = tags['badge-info'];
 	userData.entitlements.twitch.color = tags['color'];
 
-	userData.userBlock.updateBadgeBlock();
-
 	let isOverlayMessage = false;
 	if('is-overlay-message' in tags) {
 		isOverlayMessage = tags['is-overlay-message'];
@@ -228,6 +226,8 @@ async function prepareMessage(tags, message, self, forceHighlight) {
 		}
 	});
 
+	userData.userBlock.updateBadgeBlock();
+
 	setTimeout(async function() { await parseMessage(outObject); }, parseDelay);
 }
 
@@ -293,17 +293,42 @@ const chatFuncs = {
 				infoElement.html(`<i class="fas fa-times"></i> <span class="loadingMsg"><strong>(${args[0]})</strong> uploader doesn't exist according to API response</span>`);
 				return;
 			}
+		}
 
-			if("firstUpload" in mapData.uploader.stats) {
-				let firstUploadTimestamp = new Date(mapData.uploader.stats.firstUpload).getTime();
-				if(Date.now() - firstUploadTimestamp > (15552000000)) {
-					canShowInfo = true;
-				}
+		let accountIsTooNew = false;
+		if("firstUpload" in mapData.uploader.stats && localStorage.getItem("setting_chatBSRHideIfAccountTooNew") === "true") {
+			const firstUploadTimestamp = new Date(mapData.uploader.stats.firstUpload).getTime();
+			const firstUploadThreshold = parseFloat(localStorage.getItem("setting_chatBSRAccountAgeThreshold")) * 24 * 60 * 60 * 1000;
+			if(Date.now() - firstUploadTimestamp < firstUploadThreshold) {
+				accountIsTooNew = true;
 			}
 		}
 
-		if(!canShowInfo) {
-			infoElement.html(`<i class="fas fa-times"></i> <span class="loadingMsg"><strong>(${args[0]})</strong> mapper's first published map is too recent, not showing map information</span>`);
+		let mapIsTooNew = false;
+		let dateString;
+		for(const checkKey of ["lastPublishedAt", "createdAt", "uploaded"]) {
+			if(checkKey in mapData) {
+				dateString = mapData[checkKey];
+
+				if(localStorage.getItem("setting_chatBSRHideIfMapTooNew") === "true") {
+					const checkTimestamp = new Date(mapData[checkKey]).getTime();
+					const checkThreshold = parseFloat(localStorage.getItem("setting_chatBSRMapAgeThreshold")) * 24 * 60 * 60 * 1000;
+					if(Date.now() - checkTimestamp < checkThreshold) {
+						mapIsTooNew = true;
+					}
+				}
+
+				break;
+			}
+		}
+
+		if(accountIsTooNew) {
+			infoElement.html(`<i class="fas fa-times"></i> <span class="loadingMsg"><strong>(${args[0]})</strong> mapper's first published map is too recent</span>`);
+			return;
+		}
+
+		if(mapIsTooNew) {
+			infoElement.html(`<i class="fas fa-times"></i> <span class="loadingMsg"><strong>(${args[0]})</strong> map is too new</span>`);
 			return;
 		}
 
@@ -325,13 +350,50 @@ const chatFuncs = {
 		let titleElement = $(`<div class="songTitle">${mapData.metadata.songName}${mapData.metadata.songSubName === "" ? "" : ` - ${mapData.metadata.songSubName}`}</div>`);
 		let artistElement = $(`<div class="songArtist">${mapData.metadata.songAuthorName}</div>`);
 		let mapperElement = $(`<div class="mapper">${mapData.metadata.levelAuthorName}</div>`);
+		if(localStorage.getItem("setting_chatBSRUseBeatSaverInformation") === "true" && "uploader" in mapData) {
+			mapperElement.empty();
+			
+			let mappers = [mapData.uploader.name];
+			if("collaborators" in mapData) {
+				for(const collaborator of mapData.collaborators) {
+					mappers.push(collaborator.name);
+				}
+			}
+
+			mappers.map(function(x) {
+				if(!isStringSafe(x)) {
+					return "[REDACTED]";
+				} else {
+					return x;
+				}
+			});
+
+			mapperElement.text(mappers.join(", "));
+		}
 		metadataElement.append(titleElement).append(artistElement).append(mapperElement);
 
 		let extraDataElement = $(`<div class="bsrExtraInfo"></div>`);
 		let idElement = $(`<div class="bsrCode">${mapData.id}</div>`);
 		let statsElement = $(`<div class="bsrStats"></div>`);
 		statsElement.append($(`<span class="songTime"><i class="fas fa-clock"></i> ${formatTime(mapData.metadata.duration)}</span>`));
-		statsElement.append($(`<span class="songRating"><i class="fas fa-thumbs-up"></i> ${mapData.stats.upvotes.toLocaleString()} <i class="fas fa-thumbs-down"></i> ${mapData.stats.downvotes.toLocaleString()}</span>`));
+
+		const ageContainer = $(`<span class="songAge" data-dateString="${dateString}"></span>`);
+		const ageData = luxon.DateTime.fromISO(dateString);
+		var ageString;
+		if(localStorage.getItem("setting_chatBSRMapAgeUsePrecise") === "true") {
+			ageString = ageData.toFormat(localStorage.getItem("setting_chatBSRMapAgeFormat"));
+		} else {
+			ageString = ageData.toRelative({unit: ["years", "months", "days", "hours", "minutes"]});
+		}
+		ageContainer.append(`<i class="fas fa-calendar-days"></i> ${ageString}`);
+		statsElement.append(ageContainer);
+
+		const ratingContainer = $(`<span class="songRating"></span>`);
+		ratingContainer.append(`<i class="fas fa-thumbs-up"></i> ${mapData.stats.upvotes.toLocaleString()}`);
+		ratingContainer.append(`<i class="fas fa-thumbs-down"></i> ${mapData.stats.downvotes.toLocaleString()}`);
+		ratingContainer.append(`<i class="songRatingPercentage">(${parseInt(mapData.stats.score * 100)}<i style="font-size: 0.85em;">%</i>)</i>`);
+		statsElement.append(ratingContainer);
+
 		extraDataElement.append(idElement).append(statsElement);
 
 		infoElement.empty();
@@ -1065,6 +1127,12 @@ async function parseMessage(data) {
 
 	if(data.reply) {
 		let replyBlock = await renderMessageBlock(data, rootElement, true);
+		if(!replyBlock.find(".message").length) {
+			console.log("couldn't find message being replied to?");
+			delete data.reply.uuid;
+			replyBlock = await renderMessageBlock(data, rootElement, true);
+		}
+
 		wrapperElement.append(replyBlock);
 	}
 

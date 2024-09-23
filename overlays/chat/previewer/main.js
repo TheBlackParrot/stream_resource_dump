@@ -335,7 +335,60 @@ window.addEventListener("load", async function(event) {
 		}, 250);
 	}
 
+	const paletteNames = Object.keys(gradientPresets).sort();
+
+	for(const presetName of paletteNames) {
+		const presetData = gradientPresets[presetName];
+
+		const option = $(`<option value="${presetName}">${presetName}</option>`);
+		$("#nameGradientPreset").append(option);
+	}
+
 	setNameGradient();
+});
+
+$("#nameGradientPreset").on("change", function(event) {
+	const presetData = gradientPresets[this.value];
+
+	localStorage.setItem("clientSetting_nameGradientType", presetData.type);
+	$("#nameGradientType").val(presetData.type).trigger("update").trigger("change");
+	
+	localStorage.setItem("clientSetting_nameGradientRepeats", (presetData.repeats ? "true" : "false"));
+	$("#nameGradientRepeats").prop("checked", presetData.repeats).trigger("update").trigger("change");
+
+	localStorage.setItem("clientSetting_nameColorStops", presetData.gradient.length);
+	$("#nameColorStops").val(presetData.gradient.length).trigger("update").trigger("change");
+
+	for(const which in presetData.options) {
+		switch(which) {
+			case "x":
+				localStorage.setItem("clientSetting_nameGradientXPos", presetData.options.x);
+				$("#nameGradientXPos").val(presetData.options.x).trigger("update").trigger("change");
+				break;
+
+			case "y":
+				localStorage.setItem("clientSetting_nameGradientYPos", presetData.options.y);
+				$("#nameGradientYPos").val(presetData.options.y).trigger("update").trigger("change");
+				break;
+
+			case "angle":
+				localStorage.setItem("clientSetting_nameGradientAngle", presetData.options.angle);
+				$("#nameGradientAngle").val(presetData.options.angle).trigger("update").trigger("change");
+				break;
+		}
+	}
+
+	for(let idx = 0; idx < presetData.gradient.length; idx++) {
+		localStorage.setItem(`clientSetting_nameColorStop${idx+1}_color`, presetData.gradient[idx][0]);
+		localStorage.setItem(`clientSetting_nameColorStop${idx+1}_percentage`, presetData.gradient[idx][1]);
+		localStorage.setItem(`clientSetting_nameColorStop${idx+1}_isHard`, (presetData.gradient[idx][2] ? "true" : "false"));
+
+		$(`#nameColorStop${idx+1}_color`).val(presetData.gradient[idx][0]).trigger("update").trigger("change");
+		$(`#nameColorStop${idx+1}_percentage`).val(presetData.gradient[idx][1]).trigger("update").trigger("change");
+		$(`#nameColorStop${idx+1}_isHard`).prop("checked", presetData.gradient[idx][2]).trigger("update").trigger("change");
+
+		$(`#nameColorStop${idx+1}_color`)[0].dispatchEvent(new Event('input', { bubbles: true }));
+	}
 });
 
 $("#nameFont, #messageFont").on("change", function(event) {

@@ -44,6 +44,13 @@
 
 				<hr class="extraHR"/>
 
+				<div class="rowCollapsable extraRow" data-tab="ns"><i class="fas fa-angle-right treeIcon"></i> <i class="fas fa-droplet"></i>Blood Glucose</div>
+				<div class="rowEntries" data-tab="ns">
+					<div class="row" data-tab="ns_appearance"><i class="fas fa-palette"></i>Appearance</div>
+					<div class="row" data-tab="ns_effects"><i class="fas fa-magic"></i>Effects</div>
+					<div class="row" data-tab="ns_layout"><i class="fas fa-table-cells-large"></i>Layout</div>
+				</div>
+
 				<div class="rowCollapsable extraRow" data-tab="bsinfo"><i class="fas fa-angle-right treeIcon"></i> <i class="icon bs"></i>BS Overlay</div>
 				<div class="rowEntries" data-tab="bsinfo">
 					<div class="row" data-tab="bsinfo_layout"><i class="fas fa-table-cells-large"></i>Layout</div>
@@ -79,8 +86,9 @@
 					<div class="row" data-tab="flags"><i class="fas fa-flag"></i>Flags</div>
 					<div class="row" data-tab="pronouns"><i class="fas fa-user"></i>Pronouns</div>
 					<hr/>
-					<div class="row" data-tab="individuality"><i class="fas fa-brush"></i>Individuality</div>
 					<div class="row" data-tab="external"><i class="fas fa-cubes"></i>External Services</div>
+					<div class="row" data-tab="individuality"><i class="fas fa-brush"></i>Individuality</div>
+					<div class="row" data-tab="bsrequests"><i class="icon bs"></i>Request Information</div>
 				</div>
 
 				<!--
@@ -861,20 +869,6 @@
 							<input type="number" id="delayChat" min="0" max="30" step="0.5" value="2"/><span class="settingCellMeasurement">seconds</span>
 						</div>
 					</div>					
-				</div>
-				<div class="part">
-					<h1>Commands</h1>
-					<div class="setting">
-						<div class="settingCell">
-							<input checked id="cmdEnableBSR" type="checkbox"/> <span class="settingInfo">Show metadata for Beat Saber map requests</span>
-						</div>
-					</div>
-					<hr/>
-					<div class="setting">
-						<div class="settingCell smol">
-							<tt>bsr</tt> will be automatically disabled if your stream category is not set to <em>Beat Saber</em> when the chat overlay loads.
-						</div>
-					</div>
 				</div>
 				<div class="part">
 					<h1>Debug</h1>
@@ -1962,6 +1956,14 @@
 					</div>
 					<div class="setting">
 						<div class="settingCellLabel">
+							<strong>Blood Glucose Overlay</strong>
+						</div>
+						<div class="settingCell">
+							<div class="statusCircle grayCircle" id="NSOverlayStatus"></div> <div class="statusMessage grayMessage">inactive</div>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
 							<strong>Chat Overlay</strong>
 						</div>
 						<div class="settingCell">
@@ -2054,6 +2056,14 @@
 						</div>
 						<div class="settingCell">
 							<div class="statusCircle grayCircle" id="HRBStatus"></div> <div class="statusMessage grayMessage">inactive</div>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<strong>Nightscout</strong>
+						</div>
+						<div class="settingCell">
+							<div class="statusCircle grayCircle" id="NightscoutStatus"></div> <div class="statusMessage grayMessage">inactive</div>
 						</div>
 					</div>
 					<div class="setting">
@@ -2659,6 +2669,11 @@
 					</div>
 					<hr/>
 					<div class="setting">
+						<div class="settingCell">
+							<input checked id="hr_timeoutFunctionUseUpdates" type="checkbox"/> <span class="settingInfo">Timeouts use value updates rather than static connect/disconnect events</span>
+						</div>
+					</div>
+					<div class="setting">
 						<div class="settingCellLabel">
 							<span class="settingInfo">Timeout after</span>
 						</div>
@@ -2732,6 +2747,34 @@
 						</div>
 						<div class="settingCell">
 							<input type="number" id="mus_timeoutWait" min="4" max="60" step="0.5" value="7.5"/><span class="settingCellMeasurement">seconds</span>
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Nightscout</h1>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Instance URL</span>
+						</div>
+						<div class="settingCell">
+							<input id="ns_url" type="text" value="http://127.0.0.1"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Access token</span>
+						</div>
+						<div class="settingCell">
+							<input id="ns_token" type="text" value="subjectname-1234567890abcdef"/>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Update every</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="ns_updateInterval" min="1" max="60" step="1" value="5"/><span class="settingCellMeasurement">minutes</span>
 						</div>
 					</div>
 				</div>
@@ -7546,6 +7589,488 @@
 					</div>
 				</div>
 			</div>
+			<div class="section" data-content="bsrequests">
+				<div class="part">
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="cmdEnableBSR" type="checkbox"/> <span class="settingInfo">Show metadata for Beat Saber map requests</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell smol">
+							<tt>bsr</tt> will be automatically disabled if your stream category is not set to <em>Beat Saber</em>.
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Thresholds</h1>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="chatBSRHideIfAccountTooNew" type="checkbox" data-dependent="chatBSRHideIfAccountTooNew"/> <span class="settingInfo">Hide map information if the uploader's first map is too recent</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="chatBSRHideIfAccountTooNew">
+						<div class="settingCellLabel">
+							<span class="settingInfo">First uploaded map age</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatBSRAccountAgeThreshold" min="1" max="720" step="1" value="90"/><span class="settingCellMeasurement">days</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="chatBSRHideIfMapTooNew" type="checkbox" data-dependent="chatBSRHideIfMapTooNew"/> <span class="settingInfo">Hide map information if the map itself is too recent</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="chatBSRHideIfMapTooNew">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Map age</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatBSRMapAgeThreshold" min="1" max="720" step="1" value="3"/><span class="settingCellMeasurement">days</span>
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Metadata</h1>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="chatBSRUseBeatSaverInformation" type="checkbox"/> <span class="settingInfo">Use BeatSaver's provided mapper and collaborator data rather than internal mapper data</span>
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Stats Panel</h1>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="chatBSRShowStatsPanel" type="checkbox"/> <span class="settingInfo">Display some basic stats about requested maps</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="chatBSRUseTabularNumsInStatsPanel" type="checkbox"/> <span class="settingInfo">Force tabular numbers in the stats panel (if available)</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="chatBSRShowCode" type="checkbox"/> <span class="settingInfo">Show map key in the stats panel</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="chatBSRShowDuration" type="checkbox"/> <span class="settingInfo">Show song duration in the stats panel</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="chatBSRShowAge" type="checkbox"/> <span class="settingInfo">Show map age in the stats panel</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="chatBSRShowRating" type="checkbox"/> <span class="settingInfo">Show map rating in the stats panel</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="chatBSRShowRatingPercentage" type="checkbox"/> <span class="settingInfo">Show rating percentage next to the map rating in the stats panel</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="chatBSRMapAgeUsePrecise" type="checkbox" data-dependent="chatBSRMapAgeUsePrecise"/> <span class="settingInfo">Use precise date over relative time for map age display</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="chatBSRMapAgeUsePrecise">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Date format</span>
+						</div>
+						<div class="settingCell">
+							<input id="chatBSRMapAgeFormat" type="text" value="DD"/>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell smol">
+							Time formatting available: <a href="https://moment.github.io/luxon/#/formatting?id=table-of-tokens">here</a><br/>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section" data-content="ns_appearance">
+				<div class="part">
+					<h1>Header</h1>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Text</span>
+						</div>
+						<div class="settingCell">
+							<input id="ns_headerText" type="text" value="GLUCOSE"/>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Color</span>
+						</div>
+						<div class="settingCell">
+							<input id="ns_headerColor" type="text" data-coloris value="#cbadff"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="ns_headerAdaptColor" type="checkbox"/> <span class="settingInfo">Header reflects the Now Playing overlay primary color</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="ns_headerUsesGradient" type="checkbox"/> <span class="settingInfo">Apply a gradient to the header</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Gradient color</span>
+						</div>
+						<div class="settingCell">
+							<input id="ns_headerGradientColor" type="text" data-coloris value="#ffffff"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Gradient angle</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="ns_headerGradientAngle" min="0" max="360" step="1" value="170"/><span class="settingCellMeasurement">deg</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Font</span>
+						</div>
+						<div class="settingCell">
+							<input id="ns_headerFont" type="text" value="Manrope"/>
+							<input id="ns_headerFontItalic" type="checkbox"/> <span class="settingInfo">Italic</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="ns_headerFontSize" min="4" max="64" step="0.25" value="12"/><span class="settingCellMeasurement">pt</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="ns_headerFontWeight" min="100" max="900" step="25" value="900"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Additional weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="ns_headerFontWeightExtra" min="0" max="8" step="0.1" value="0.7"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Character spacing</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="ns_headerLetterSpacing" min="-12" max="12" step="0.2" value="0"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Value Display</h1>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Icon size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="ns_valueIconSize" min="0.01" max="3" step="0.01" value="0.8"/><span class="settingCellMeasurement">em</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Icon color</span>
+						</div>
+						<div class="settingCell">
+							<input id="ns_valueIconColor" type="text" data-coloris value="#CBADFF"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="ns_valueAdaptColor" type="checkbox"/> <span class="settingInfo">Icon reflects the Now Playing overlay primary color</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="ns_valueIconUsesGradient" type="checkbox"/> <span class="settingInfo">Apply a gradient to icons</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Gradient color</span>
+						</div>
+						<div class="settingCell">
+							<input id="ns_valueIconGradientColor" type="text" data-coloris value="#FFFFFF"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Gradient angle</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="ns_valueIconGradientAngle" min="0" max="360" step="1" value="170"/><span class="settingCellMeasurement">deg</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Color</span>
+						</div>
+						<div class="settingCell">
+							<input id="ns_valueColor" type="text" data-coloris value="#FFFFFF"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Font</span>
+						</div>
+						<div class="settingCell">
+							<input id="ns_valueFont" type="text" value="Manrope"/>
+							<input id="ns_valueFontItalic" type="checkbox"/> <span class="settingInfo">Italic</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="ns_valueFontSize" min="4" max="64" step="0.25" value="27"/><span class="settingCellMeasurement">pt</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="ns_valueFontWeight" min="100" max="900" step="25" value="900"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Additional weight</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="ns_valueFontWeightExtra" min="0" max="8" step="0.1" value="1"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Character spacing</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="ns_valueLetterSpacing" min="-12" max="12" step="0.2" value="-1"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section" data-content="ns_effects">
+				<div class="part">
+					<h1>Animations</h1>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="ns_animateRateChanges" type="checkbox" data-dependent="animateRate"/> <span class="settingInfo">Animate glucose level changes</span>
+						</div>
+					</div>	
+					<div class="setting" data-dependent="animateRate">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Interval</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="ns_animateRateInterval" min="1" max="250" step="1" value="10"/><span class="settingCellMeasurement">ms</span>
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Filters</h1>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="ns_enableShadowEffects" type="checkbox" data-dependent="ns_enableShadowEffects"/> <span class="settingInfo">Draw shadows underneath overlay content</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="ns_enableShadowEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Color</span>
+						</div>
+						<div class="settingCell">
+							<input id="ns_shadowColor" type="text" data-coloris value="#000000"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="ns_enableShadowEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">X offset</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="ns_shadowXOffset" min="-32" max="32" step="0.25" value="0"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="ns_enableShadowEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Y offset</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="ns_shadowYOffset" min="-32" max="32" step="0.25" value="1"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="ns_enableShadowEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Blur amount</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="ns_shadowBlurRadius" min="0" max="32" step="0.25" value="2"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="ns_enableOutlineEffects" type="checkbox" data-dependent="ns_enableOutlineEffects"/> <span class="settingInfo">Draw outlines underneath overlay content</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="ns_enableOutlineEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Color</span>
+						</div>
+						<div class="settingCell">
+							<input id="ns_outlineColor" type="text" data-coloris value="#000000"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="ns_enableOutlineEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Matrix Size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="ns_outlineOrder" min="0" max="64" step="1" value="5"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="ns_enableOutlineEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Divisor</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="ns_outlineDivisor" min="1" max="64" step="1" value="3"/>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting" data-dependent="ns_enableOutlineEffects">
+						<div class="settingCell">
+							<input checked id="ns_outlineStripCorners" type="checkbox"/> <span class="settingInfo">Smooth out corners of the outline matrix</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="ns_enableOutlineEffects">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Distance threshold</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="ns_outlineThreshold" min="0.01" max="0.99" step="0.01" value="0.2"/>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section" data-content="ns_layout">
+				<div class="part">
+					<h1>Display</h1>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="ns_enableIcon" type="checkbox"/> <span class="settingInfo">Show icon</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="ns_enableUnits" type="checkbox"/> <span class="settingInfo">Show data measurement units</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="ns_enableTrend" type="checkbox"/> <span class="settingInfo">Show trend arrow</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="ns_enablePadding" type="checkbox" data-dependent="nsPadding"/> <span class="settingInfo">Pad glucose level with leading zeros</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="nsPadding">
+						<div class="settingCell">
+							<input checked id="ns_fadeOutPadding" type="checkbox"/> <span class="settingInfo">Fade out leading zeros</span>
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Layout</h1>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Line spacing</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="ns_elementSpacing" min="0" max="200" step="1" value="4"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Element width</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="ns_elementWidth" min="0" max="9999" step="1" value="180"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Horizontal margin</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="ns_overlayMarginHorizontal" min="0" max="200" step="1" value="8"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Vertical margin</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="ns_overlayMarginVertical" min="0" max="200" step="1" value="8"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Horizontal alignment</span>
+						</div>
+						<div class="settingCell">
+							<select id="ns_elementJustify">
+								<option value="start">Left</option>
+								<option selected value="center">Center</option>
+								<option value="end">Right</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div id="sensitive">
 			<div class="section">
@@ -7597,6 +8122,7 @@
 	<script defer type="text/javascript" src="connections/spotify.js"></script>
 	<script defer type="text/javascript" src="connections/external_music.js"></script>
 	<script defer type="text/javascript" src="connections/heartratebroadcaster.js"></script>
+	<script defer type="text/javascript" src="connections/nightscout.js"></script>
 
 	<script type="text/javascript">
 		window.addEventListener("load", async function() {

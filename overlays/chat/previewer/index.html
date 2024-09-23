@@ -62,6 +62,18 @@
 			<p>
 				Once you finish changing settings and want to see them take affect on an already-running stream, use the <strong>!refreshcosettings</strong> command in chat.
 			</p>
+
+			<hr/>
+
+			<div class="settings">
+				<div class="content settingColumn">
+					<div class="setting">
+						<div class="settingSingle">
+							<input checked id="previewAgainstThresholds" type="checkbox"/> <span class="settingInfo">Show name preview with colors filtered through default brightness thresholds/limits</span>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		
 		<div class="cell" id="_settings_name">
@@ -183,6 +195,13 @@
 				<hr/>
 
 				<div class="content settingColumn">
+					<div class="setting">
+						<div class="settingLabel">Preset</div>
+						<div class="settingValue">
+							<select id="nameGradientPreset" data-ignoreSetting="true">
+							</select>
+						</div>
+					</div>
 					<div class="setting">
 						<div class="settingLabel">Color stops</div>
 						<div class="settingValue">
@@ -578,6 +597,7 @@
 
 	<script defer type="text/javascript" src="funcs.js"></script>
 	<script defer type="text/javascript" src="settings.js"></script>
+	<script defer type="text/javascript" src="palettes.js"></script>
 	<script defer type="text/javascript" src="main.js"></script>
 </body>
 

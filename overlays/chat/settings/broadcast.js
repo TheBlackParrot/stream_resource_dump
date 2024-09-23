@@ -205,6 +205,18 @@ broadcastFuncs = {
 		if("hasSeenFirstMessage" in hr_ws) {
 			postToHREventChannel({event: (hr_ws.hasSeenFirstMessage ? "connected" : "disconnected")});
 		}
+	},
+
+	NSOverlayExists: async function(data) {
+		changeStatusCircle("NSOverlayStatus", "green", `loaded (r${data.data.version})`);
+
+		let settingsKeys = Object.keys(defaultConfig);
+		let settingsKeysNS = settingsKeys.filter((key) => key.substr(0, 3) === "ns_");
+		postToChannel("settingsKeysNS", settingsKeysNS);
+
+		showExtraRow("ns");
+		updateNightscout();
+		updateNightscoutSettings();
 	}
 };
 

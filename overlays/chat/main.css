@@ -303,9 +303,13 @@ tt, code, pre {
 	align-items: center;
 }
 
-.bsrArt, .bsrArt img, .bsrCode {
+.bsrArt, .bsrArt img {
 	display: inline-block;
-	/* this is a totally serious thing i'm doing */
+	width: calc(var(--messageFontSize) * 4);
+	line-height: 0px; /* wtf */
+}
+.bsrCode {
+	display: var(--BSRCodeVisibility);
 	width: calc(var(--messageFontSize) * 4);
 }
 
@@ -351,13 +355,16 @@ tt, code, pre {
 	font-style: var(--messageFontStyle);
 	font-size: calc(var(--messageFontSize) / 1.25);
 	font-weight: 900;
-	margin-top: 4px;
+	margin-top: 0.5em;
 	line-height: var(--messageLineHeight);
-	display: flex;
+	display: var(--BSRStatsPanelVisibility);
 }
 .bsrStats {
 	display: flex;
 	align-self: center;
+	padding-top: 0.15em;
+	padding-bottom: 0.15em;
+	font-variant: var(--BSRStatsPanelFontVariant);
 }
 
 .bsrCode {
@@ -367,6 +374,7 @@ tt, code, pre {
 	padding-top: 0.15em;
 	padding-bottom: 0.15em;
 	color: #fff;
+	font-variant: var(--BSRStatsPanelFontVariant);
 }
 .fa-thumbs-down {
 	margin-left: 0.67em;
@@ -559,18 +567,18 @@ img.emoji {
 }
 
 .left .bsrStats span {
-	margin-right: 1.67em;
+	margin-right: 1.5em;
 }
 
 .right .bsrStats span {
-	margin-left: 1.67em;
+	margin-left: 1.5em;
 }
 
 .left .bsrArt, .left .bsrCode {
-	margin-right: calc(var(--messageFontSize) / 2);
+	margin-right: calc(var(--messageFontSize) / 1.75);
 }
 .right .bsrArt, .right .bsrCode {
-	margin-left: calc(var(--messageFontSize) / 2);
+	margin-left: calc(var(--messageFontSize) / 1.75);
 }
 
 .bsrExtraInfo {
@@ -610,6 +618,7 @@ img.emoji {
 	margin-left: 6px;
 	text-overflow: ellipsis;
 	overflow: hidden;
+	padding-right: 6px;
 }
 .right .loadingMsg {
 	margin-right: 6px;
@@ -714,6 +723,7 @@ img.emoji {
 	-webkit-text-stroke: calc(var(--nameFontWeightExtra) * var(--internationalNameWeightScaling)) transparent;
 	position: relative;
 	left: -6px;
+	filter: saturate(var(--internationalNameSaturation)) var(--effectFilters);
 }
 
 .internationalName:after {
@@ -869,4 +879,23 @@ img.emoji {
 .right .replyContainer {
 	justify-content: end;
 	margin-right: var(--replyIndentation);
+}
+
+.songTime {
+	display: var(--BSRDurationVisibility);
+}
+.songAge {
+	display: var(--BSRAgeVisibility);
+}
+.songRating {
+	display: var(--BSRRatingVisibility);
+}
+.songRatingPercentage {
+	margin-left: 0.67em;
+	font-size: 0.8em;
+	display: var(--BSRRatingPercentageVisibility);
+	line-height: 1em; /* wtf */
+}
+.fa-times {
+	margin-right: 0px;
 }

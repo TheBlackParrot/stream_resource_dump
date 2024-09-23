@@ -1,4 +1,117 @@
 {
+	"9999999999999": {
+		"updates": {
+			"nightscout": {
+				"revision": 1,
+				"notes": [
+					[
+						"new overlay that shows current blood glucose levels mirrored from a Nightscout instance",
+						["this is kinda just meant moreso for me, but i'm including it in the public suite in case anyone else is struggling to find an overlay for this lol"],
+						{"anchor": "ns_url"}
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 69,
+				"notes": [
+					[
+						"(update only contains new settings / framework stuff for the Nightscout overlay)"
+					],
+					[
+						"also, nice!"
+					]
+				]
+			}
+		}
+	},
+
+	"1726366668775": {
+		"updates": {
+			"chat": {
+				"revision": 66,
+				"notes": [
+					[
+						"fixed badge element clipping sometimes not hiding the container element"
+					],
+					[
+						"fixed badges not re-appearing if the width of the overlay increases at any point"
+					],
+					[
+						"slightly extended margins between art and stats displays in !bsr requests"
+					],
+					[
+						"added display of map age to !bsr chat requests"
+					],
+					[
+						"fixed replying to !bsr chat requests resulting in a blank message in the reply body"	
+					],
+					[
+						"added a tab for !bsr chat request settings",
+						{"anchor": "cmdEnableBSR"}
+					],
+					[
+						"added the ability to show rating percentage display in !bsr chat requests",
+						{"anchor": "chatBSRShowRatingPercentage"}
+					],
+					[
+						"lowered default minimum BeatSaver account age threshold for map information display from 180 days to 90 days"
+					],
+					[
+						"map information for !bsr requests can now be hidden on new maps",
+						{"anchor": "chatBSRMapAgeThreshold"}
+					],
+					[
+						"mapper information in !bsr request output can now use data provided by BeatSaver over internal map data",
+						{"anchor": "chatBSRUseBeatSaverInformation"}
+					],
+					[
+						"stats panel in !bsr request information can now be toggled on/off",
+						{"anchor": "chatBSRShowStatsPanel"}
+					],
+					[
+						"stats panel elements in !bsr request information can now be toggled on/off",
+						{"anchor": "chatBSRShowCode"}
+					],
+					[
+						"removed some unnecessary vertical alignment shenanigans with metadata in !bsr request information"
+					],
+					[
+						"fixed clipping and alignment issues with !bsr request information rejection messages"
+					],
+					[
+						"fixed saturation effects not being applied to international names"
+					]
+				]
+			},
+
+			"customizer": {
+				"revision": 8,
+				"notes": [
+					[
+						"fixed loading stalling on new users due to some null color setting values, also ensured a fallback is set just in case",
+						["my bad my bad i sorry"]
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 68,
+				"notes": [
+					[
+						"HeartRateBroadcaster connections now consider not receving value updates within a timeframe as a timeout by default, rather than static connect/disconnect events",
+						["this was causing some issues with mirror scripts (namely mine) never triggering \"connection lost\" events, because technically, it never did lose connection"],
+						{"anchor": "hr_timeoutFunctionUseUpdates"}
+					],
+					[
+						"fixed ordering of the final section of chat settings in the sidebar",
+						["I comes before E right? yeah. mhm mhm"]
+					]
+				]
+			}
+		}
+	},
+
 	"1725675533945": {
 		"updates": {
 			"chat": {

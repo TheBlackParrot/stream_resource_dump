@@ -1381,6 +1381,49 @@ const settingUpdaters = {
 				clearTimeout(timerHandle);
 			}
 		}
+	},
+
+	chatBSRShowDuration: function(value) {
+		rootCSS().setProperty("--BSRDurationVisibility", (value === "true" ? "inline-block" : "none"));
+	},
+	chatBSRShowAge: function(value) {
+		rootCSS().setProperty("--BSRAgeVisibility", (value === "true" ? "inline-block" : "none"));
+	},
+	chatBSRShowRating: function(value) {
+		rootCSS().setProperty("--BSRRatingVisibility", (value === "true" ? "inline-block" : "none"));
+	},
+	chatBSRShowRatingPercentage: function(value) {
+		rootCSS().setProperty("--BSRRatingPercentageVisibility", (value === "true" ? "inline" : "none"));
+	},
+	chatBSRShowStatsPanel: function(value) {
+		rootCSS().setProperty("--BSRStatsPanelVisibility", (value === "true" ? "flex" : "none"));
+	},
+	chatBSRShowCode: function(value) {
+		rootCSS().setProperty("--BSRCodeVisibility", (value === "true" ? "inline-block" : "none"));
+	},
+	chatBSRMapAgeFormat: function(value) {
+		if(localStorage.getItem("setting_chatBSRMapAgeUsePrecise") === "true") {
+			$(".songAge").each(function(idx) {
+				const timestamp = $(this).attr("data-dateString");
+				const ageData = luxon.DateTime.fromISO(timestamp);
+
+				$(this).empty();
+				$(this).append(`<i class="fas fa-calendar-days"></i> ${ageData.toFormat(value)}`);
+			});
+		}
+	},
+	chatBSRMapAgeUsePrecise: function(value) {
+		$(".songAge").each(function(idx) {
+			const timestamp = $(this).attr("data-dateString");
+			const ageData = luxon.DateTime.fromISO(timestamp);
+			const dateString = (value === "true" ? ageData.toFormat(localStorage.getItem("setting_chatBSRMapAgeFormat")) : ageData.toRelative({unit: ["years", "months", "days", "hours", "minutes"]}));
+
+			$(this).empty();
+			$(this).append(`<i class="fas fa-calendar-days"></i> ${dateString}`);
+		});
+	},
+	chatBSRUseTabularNumsInStatsPanel: function(value) {
+		rootCSS().setProperty("--BSRStatsPanelFontVariant", (value === "true" ? "tabular-nums" : "normal"));
 	}
 };
 settingUpdaters["chatHideAccounts"](localStorage.getItem("setting_chatHideAccounts"));

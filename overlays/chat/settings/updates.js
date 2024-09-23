@@ -9,7 +9,8 @@ const properOverlayNames = {
 	"clips": "Twitch Clip Overlay",
 	"all": "All Overlays",
 	"customizer": "Chat Customizer",
-	"heartrate": "Heart Rate Overlay"
+	"heartrate": "Heart Rate Overlay",
+	"nightscout": "Blood Gluclose Overlay"
 };
 
 var mostRecentUpdate = 0;

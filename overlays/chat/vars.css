@@ -230,4 +230,12 @@
 	--replyIndentation: 10px;
 	--replyFontStyle: normal;
 	--replyIconVerticalOffset: 2px;
+
+	--BSRDurationVisibility: inline-block;
+	--BSRAgeVisibility: inline-block;
+	--BSRRatingVisibility: inline-block;
+	--BSRRatingPercentageVisibility: inline;
+	--BSRStatsPanelVisibility: flex;
+	--BSRCodeVisibility: inline-block;
+	--BSRStatsPanelFontVariant: normal;
 }

@@ -111,7 +111,7 @@ function widthTest(user, callback) {
 
 	const testIdentifier = `testRoot-${Date.now()}`;
 	const testRoot = user.userBlock.render();
-	testRoot.children().removeClass("forceHide");
+	testRoot.find(".forceHide").removeClass("forceHide");
 	const testChatBlock = $(`<div class="chatBlock ${testIdentifier}"></div>`);
 	testChatBlock.append(testRoot);
 	$("#testWrapper").append(testChatBlock);

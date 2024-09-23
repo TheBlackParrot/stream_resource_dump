@@ -6,10 +6,19 @@ function postToHREventChannel(data) {
 	}
 }
 
+var hrDisconnectTimeout;
+function resetHRTimeout() {
+	clearTimeout(hrDisconnectTimeout);
+	hrDisconnectTimeout = setTimeout(function() {
+		postToHREventChannel({
+			event: "disconnected"
+		});
+	}, parseFloat(localStorage.getItem("setting_hr_timeoutWait")) * 1000);
+}
+
 var hrInit = false;
 var hr_ws;
 var hrTimeout;
-var hrDisconnectTimeout;
 function startHRWebsocket() {
 	if(hrInit) {
 		return;
@@ -26,14 +35,11 @@ function startHRWebsocket() {
 	hr_ws.addEventListener("message", function(msg) {
 		hr_ws.hasSeenFirstMessage = true;
 
-		clearTimeout(hrDisconnectTimeout);
-		hrDisconnectTimeout = setTimeout(function() {
-			postToHREventChannel({
-				event: "disconnected"
-			});
-		}, parseFloat(localStorage.getItem("setting_hr_timeoutWait")) * 1000);
-
 		new Response(msg.data).arrayBuffer().then(function(arrayBuf) {
+			if(localStorage.getItem("setting_hr_timeoutFunctionUseUpdates") === "true") {
+				resetHRTimeout();
+			}
+
 			const value = new DataView(arrayBuf);
 
 			postToHREventChannel({
@@ -52,9 +58,11 @@ function startHRWebsocket() {
 
 		addNotification("Connected to HeartRateBroadcaster", {bgColor: "var(--notif-color-success)", duration: 5});
 
-		postToHREventChannel({
-			event: "connected"
-		});
+		if(localStorage.getItem("setting_hr_timeoutFunctionUseUpdates") === "false") {
+			postToHREventChannel({
+				event: "connected"
+			});
+		}
 	});
 
 	hr_ws.addEventListener("close", function() {
