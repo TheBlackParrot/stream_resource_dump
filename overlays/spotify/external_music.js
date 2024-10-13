@@ -12,6 +12,7 @@ const musicFuncs = {
 			medium: (enableAnimations ? 250 : 0),
 			large: (enableAnimations ? 500 : 0)
 		};
+		const artistGradientEnabled = (localStorage.getItem("setting_spotify_artistGradient") === "true");
 
 		currentSong = data;
 
@@ -26,7 +27,33 @@ const musicFuncs = {
 
 			setTimeout(function() {
 				$("#titleString").text(data.title);
-				$("#artistString").text(data.artists.join(", "));
+				
+				$("#artistString").empty();
+				if(data.artists) {
+					if(typeof data.artists[0] === "string") {
+						$("#artistString").text(data.artists.join(", "));
+					} else {
+						for(let artist of data.artists) {
+							const artistElement = $(`<div class="individualArtist"></div>`);
+
+							if(artist.image) {
+								const artistImage = $(`<img class="artistImage"/>`);
+								artistImage.attr("src", artist.image);
+								artistElement.append(artistImage);
+							}
+
+							const artistName = $(`<span class="artistName"></span>`).text(artist.name);
+							if(artistGradientEnabled) {
+								artistName.addClass("artistStringGradient");
+							}
+							artistElement.append(artistName);
+
+							$("#artistString").append(artistElement);
+						}
+						$(".individualArtist:not(:last)").addClass("showComma");
+					}
+				}
+				
 				$("#albumString").text(data.album.name);
 				
 				if(data.labels.length) {

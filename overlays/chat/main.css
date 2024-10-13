@@ -899,3 +899,11 @@ img.emoji {
 .fa-times {
 	margin-right: 0px;
 }
+
+#messageCloneContainer {
+	display: none;
+}
+
+.messageDeleted {
+	opacity: var(--messageDeletedOpacity);
+}

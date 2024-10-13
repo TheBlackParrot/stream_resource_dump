@@ -642,11 +642,13 @@ async function renderMessageBlock(data, rootElement, isReply) {
 			const nameBlock = data.reply.user.userBlock.nameBlock.clone(true);
 			nameBlock.addClass("replyName");
 
-			const clonedMessage = wantedMessage.children(".message").clone(true);
+			const clonedMessage = wantedMessage.eq(0).children(".message").clone(true);
 			clonedMessage.addClass("reply");
 			clonedMessage.attr("style", "");
 			clonedMessage.children(".bigEmote").removeClass("bigEmote");
 			clonedMessage.children(".timestamp").remove();
+			clonedMessage.attr("data-msguuid", data.reply.uuid);
+			clonedMessage.attr("data-userid", data.reply.user.id);
 
 			replyBlock.append($(`<i class="fas ${localStorage.getItem("setting_chatReplyIcon")} replyIcon"></i>`));
 			replyBlock.append(nameBlock);
@@ -689,7 +691,6 @@ async function renderMessageBlock(data, rootElement, isReply) {
 
 					if(parseInt(i) === 0) {
 						let ignoreCheck = data.message.substr(startAt, stopAt - startAt + 1);
-						console.log(ignoreCheck);
 						if(isEmoteIgnored(ignoreCheck)) {
 							console.log(`ignoring emote ${ignoreCheck}`);
 							continue;
@@ -1218,5 +1219,13 @@ async function parseMessage(data) {
 	}
 	if(doSound) {
 		playSound("newMsg");
+	}
+
+	if(parseInt(data.user.id) > 0) {
+		$("#messageCloneContainer").append(wrapperElement.clone(true).removeClass("slideIn"));
+
+		while($("#messageCloneContainer").children().length > 250) {
+			$("#messageCloneContainer").children().eq(0).remove();
+		}
 	}
 }

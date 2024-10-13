@@ -60,6 +60,7 @@
 	--messagePaddingVertical: 0px;
 	--messagePaddingHorizontal: 0px;
 	--messageBorderRadius: 0px;
+	--messageDeletedOpacity: 0.67;
 
 	--messageOutlineColor: rgba(255, 255, 255, 1);
 	--messageOutlineSize: 0px;

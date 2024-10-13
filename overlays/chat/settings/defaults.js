@@ -166,7 +166,8 @@ const nonPublicSettings = [
 	"chatBSRMapAgeFormat",
 	"ns_url",
 	"ns_token",
-	"ns_updateInterval"
+	"ns_updateInterval",
+	"ns_headerText"
 ];
 
 const defaultConfig = {
@@ -1117,7 +1118,10 @@ const defaultConfig = {
 	"ns_headerUsesGradient": "true",
 	"ns_headerGradientColor": "#ffffff",
 	"ns_headerGradientAngle": "170",
-	"ns_headerText": "GLUCOSE"
+	"ns_headerText": "GLUCOSE",
+	"spotify_showArtistImages": "false",
+	"spotify_artistImageBorderRadius": "10",
+	"spotify_artistImageSize": "1.25"
 };
 // i typed out the bigNoNoWords so you don't have to, i'm sorry :(
 // it's gotta know what to remove

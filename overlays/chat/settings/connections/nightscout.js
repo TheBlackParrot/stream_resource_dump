@@ -5,11 +5,11 @@ function postToNightscoutEventChannel(data) {
 	}
 }
 
-async function getNightscoutState() {
+async function queryNightscout(query) {
 	const accessToken = localStorage.getItem("setting_ns_token");
 	const instanceURL = localStorage.getItem("setting_ns_url");
 
-	const response = await fetch(`${instanceURL}/api/v1/entries.json?token=${accessToken}&count=1`);
+	const response = await fetch(`${instanceURL}/api/v1/${query}.json?token=${accessToken}&count=1`);
 
 	if(response.status === 401) {
 		// invalid token?
@@ -22,38 +22,21 @@ async function getNightscoutState() {
 		return {};
 	}
 
+	changeStatusCircle("NightscoutStatus", "green", `reachable`);
+
 	const data = await response.json();
+	return data;
+}
+
+async function getNightscoutState() {
+	const data = await queryNightscout("entries");
 
 	if(!data.length) {
 		changeStatusCircle("NightscoutStatus", "yellow", `no data`);
 		return {};
 	}
 
-	changeStatusCircle("NightscoutStatus", "green", `reachable`);
 	return data[0];
-}
-
-async function getNightscoutSettings() {
-	const accessToken = localStorage.getItem("setting_ns_token");
-	const instanceURL = localStorage.getItem("setting_ns_url");
-
-	const response = await fetch(`${instanceURL}/api/v1/status.json?token=${accessToken}`);
-
-	if(response.status === 401) {
-		// invalid token?
-		changeStatusCircle("NightscoutStatus", "red", `authentication failed`);
-		return {};
-	}
-	
-	if(!response.ok) {
-		changeStatusCircle("NightscoutStatus", "red", `bad HTTP response ${response.status}`);
-		return {};
-	}
-
-	const data = await response.json();
-
-	changeStatusCircle("NightscoutStatus", "green", `reachable`);
-	return data;
 }
 
 var currentNightscoutState;
@@ -77,7 +60,7 @@ async function updateNightscout() {
 
 var currentNightscoutSettings;
 async function updateNightscoutSettings() {
-	currentNightscoutSettings = await getNightscoutSettings();
+	currentNightscoutSettings = await queryNightscout("status");
 
 	postToNightscoutEventChannel({
 		event: "status",

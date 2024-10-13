@@ -1,4 +1,4 @@
-const trendEnums = {
+const trendClassNames = {
 	DoubleDown: "trendSingleDown",
 	SingleDown: "trendSingleDown",
 	FortyFiveDown: "trendFortyFiveDown",
@@ -19,7 +19,7 @@ function updateValue(rate) {
 
 function updateTrend(trend) {
 	$("#trendArrowWrapper i").removeClass("trendSingleDown trendFortyFiveDown trendFlat trendFortyFiveUp trendSingleUp");
-	$("#trendArrowWrapper i").addClass(`${trendEnums[trend]}`);
+	$("#trendArrowWrapper i").addClass(`${trendClassNames[trend]}`);
 }
 
 function setValueDisplay() {

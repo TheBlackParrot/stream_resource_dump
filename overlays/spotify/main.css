@@ -195,6 +195,10 @@
 	--cssScrollAmount: 0px;
 	--cssScrollDelay: 7s;
 	--cssScrollDuration: 1s;
+
+	--artist-image-display: inline-flex;
+	--artist-image-size: 1.25em;
+	--artist-image-border-radius: 10px;
 }
 
 body {
@@ -224,6 +228,8 @@ body {
 	width: 100%;
 	position: relative;
 	align-self: stretch;
+	padding-bottom: 4px;
+	margin-bottom: -4px;
 }
 .left #detailsWrapper {
 	left: -4px;
@@ -370,6 +376,9 @@ body {
 
 .artistStringGradient {
 	background-image: var(--artist-gradient);
+	-webkit-text-stroke: var(--artist-additional-weight) transparent;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 
 #artist, #albumString, #albumString:before, .isSingle:after, #labelString, #labelString:before, #yearString {
@@ -569,4 +578,25 @@ body {
 	position: fixed;
 	top: -100vh;
 	left: -100vw;
+}
+
+#artistString {
+	display: flex;
+	flex-direction: row;
+}
+.individualArtist {
+	display: inline-flex;
+	align-items: center;
+}
+.showComma:after {
+	content: ", ";
+	margin-right: 0.333em;
+}
+.artistImage {
+	border-radius: var(--artist-image-border-radius);
+	width: var(--artist-image-size);
+	height: var(--artist-image-size);
+	display: var(--artist-image-display);
+	margin-right: 0.4em;
+	align-self: center;
 }

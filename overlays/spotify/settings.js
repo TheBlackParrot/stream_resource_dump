@@ -1,4 +1,4 @@
-const overlayRevision = 25;
+const overlayRevision = 26;
 const overlayRevisionTimestamp = 1724671935043;
 
 const settingsChannel = new BroadcastChannel("settings_overlay");
@@ -228,12 +228,12 @@ const settingUpdaters = {
 
 	artistGradient: function(value) {
 		if(value === "true") {
-			$("#artist").addClass("artistStringGradient");
+			$(".artistName").addClass("artistStringGradient");
 			$("#albumString").addClass("artistStringGradient");
 			$("#labelString").addClass("artistStringGradient");
 			$("#yearString").addClass("artistStringGradient");
 		} else {
-			$("#artist").removeClass("artistStringGradient");
+			$(".artistName").removeClass("artistStringGradient");
 			$("#albumString").removeClass("artistStringGradient");
 			$("#labelString").removeClass("artistStringGradient");
 			$("#yearString").removeClass("artistStringGradient");
@@ -374,6 +374,7 @@ const settingUpdaters = {
 
 		$("#extraStringWrapper").hide();
 		$("#artistString").show();
+		cycleAlbumArtist("artist");
 
 		if(value === "true") {
 			albumArtistCycleTO = setTimeout(function() {
@@ -586,6 +587,18 @@ const settingUpdaters = {
 		}
 
 		settingUpdaters["scannableFGDark"](localStorage.getItem("setting_spotify_scannableFGDark"));
+	},
+
+	showArtistImages: function(value) {
+		rootCSS().setProperty("--artist-image-display", (value === "true" ? "inline-flex" : "none"));
+		updateSecondaryMarquee();
+	},
+	artistImageSize: function(value) {
+		rootCSS().setProperty("--artist-image-size", `${value}em`);
+		updateSecondaryMarquee();
+	},
+	artistImageBorderRadius: function(value) {
+		rootCSS().setProperty("--artist-image-border-radius", `${value}px`);
 	}
 };
 

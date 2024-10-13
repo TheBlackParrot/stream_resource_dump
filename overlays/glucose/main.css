@@ -51,7 +51,7 @@
 	--valuePaddingOpacity: 0.33;
 	--valueIconDisplay: inline-block;
 
-	--unitsSize: 9pt;
+	--unitsSize: calc(var(--valueFontSize) / 3);
 	--unitsWeight: 900;
 	--unitsColor: #FFFFFF;
 	--unitsFontWeightExtra: 0px;
@@ -85,12 +85,10 @@ body {
 	left: -100vw;
 }
 
-#peak, #cur {
+#header, #cur {
 	display: flex;
 	padding-top: var(--verticalSpacing);
 	padding-bottom: var(--verticalSpacing);
-	padding-left: 4px;
-	padding-right: 4px;
 
 	justify-content: var(--elementJustify);
 	align-items: center;
@@ -119,8 +117,11 @@ body {
 	opacity: var(--valuePaddingOpacity);
 }
 
-#peak {
+#header {
+	padding-left: 3px;
 	padding-right: 3px;
+	margin-right: -3px;
+	margin-left: -3px;
 	background-color: var(--headerBackgroundColor);
 	background-image: var(--headerBackgroundImage);
 	-webkit-text-stroke: var(--headerFontWeightExtra) transparent;
@@ -152,6 +153,7 @@ body {
 	animation-duration: 1s;
 	animation-iteration-count: infinite;
 	padding: 0.1em;
+	margin-left: -0.1em;
 	filter: var(--outlineStuff) var(--shadowStuff);
 }
 
@@ -209,6 +211,7 @@ body {
 	height: 1em;
 	display: inline-flex;
 	align-items: center;
+	margin-left: 0.1em;
 }
 
 #trendArrowWrapper i {
@@ -221,6 +224,8 @@ body {
 	transition: .5s;
 	padding-left: 0.25em;
 	padding-right: 0.25em;
+	margin-left: -0.25em;
+	margin-right: -0.25em !important;
 }
 
 .trendDoubleDown { transform: rotate(180deg); }

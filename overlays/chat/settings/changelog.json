@@ -1,6 +1,78 @@
 {
 	"9999999999999": {
 		"updates": {
+			"chat": {
+				"revision": 68,
+				"notes": [
+					[
+						"messages being replied to now hide the message being replied to if it was deleted, or if the user was timed out or banned",
+						["this was an oversight, my bad!"]
+					],
+					[
+						"attempted to fix avatar display not updating if the viewer starts a subscription"
+					]
+				]
+			},
+
+			"spotify": {
+				"revision": 26,
+				"notes": [
+					[
+						"added support for showing artist images beside artist names",
+						{"anchor": "spotify_showArtistImages"}
+					],
+					[
+						"fixed secondary metadata field remaining blank if album metadata is toggled off while it's visible"
+					],
+					[
+						"fixed secondary metadata field getting stuck once done scrolling if album metadata is disabled"
+					],
+					[
+						"gradient on the artist field no longer stretches across the entire element, but will now apply to each individual artist",
+						["this was actually a by-product of the artist image addition, but it really improves legibility too so i'm calling this a feature and not a bug lol"]
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 70,
+				"notes": [
+					[
+						"spotify artist data schema is now an array of objects rather than an array of strings",
+						["i've put in a failsafe on the frontend code in case bridge scripts/plugins for external media players don't update and are still using only strings"]
+					],
+					[
+						"spotify image data is now stored in a CacheStorage object",
+						["artists have a good chance of getting requested multiple times now. think it's about time to do the optimize of thingies"]
+					]
+				]
+			}
+		}
+	},
+
+	"1727485621896": {
+		"updates": {
+			"chat": {
+				"revision": 67,
+				"notes": [
+					[
+						"message body elements are now cloned to a not-visible container for use in reply elements",
+						[
+							"should allow emotes to always render in replies if the reply is from a message that has decayed already"
+						]
+					],
+					[
+						"removed additional font weight on mentions in chat messages from viewers that have custom name settings"
+					],
+					[
+						"actually fixed the badge container not disappearing when all badges were hidden/clipped this time"
+					],
+					[
+						"removed a debug console log woops"
+					]
+				]
+			},
+
 			"nightscout": {
 				"revision": 1,
 				"notes": [

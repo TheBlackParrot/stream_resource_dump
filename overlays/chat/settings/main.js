@@ -9,8 +9,8 @@ function changeStatusCircle(which, status, msg) {
 
 $("#sensitive .section").show();
 
-const overlayRevision = 69;
-const overlayRevisionTimestamp = 1726366668775;
+const overlayRevision = 70;
+const overlayRevisionTimestamp = 1727485621896;
 $("#revision").text(`revision ${overlayRevision}`);
 
 function resetEverything() {
@@ -407,8 +407,10 @@ $.get(`version.json?sigh=${Date.now()}`, function(data) {
 	}
 });
 
-async function compressImage(url, size, quality) {
-	if(url.substr(0, 4) === "http") {
+async function compressImage(url, size, quality, cacheStorageName, cacheExpireDaysAfter) {
+	const isRemote = (url.substr(0, 4) === "http");
+
+	if(isRemote) {
 		console.log(`compressing image ${url} to ${size}x${size} at quality ${quality*100}`);
 	} else {
 		console.log(`compressing raw image to ${size}x${size} at quality ${quality*100}`);
@@ -418,11 +420,15 @@ async function compressImage(url, size, quality) {
 	const timedOutID = setTimeout(() => controller.abort(), parseFloat(localStorage.getItem("setting_ajaxTimeout")) * 1000);
 
 	var response;
-	try {
-		response = await fetch(url, { signal: controller.signal });
-	} catch(err) {
-		console.log("failed to fetch image");
-		return "placeholder.png";
+	if(cacheStorageName === "spotify") {
+		response = await getCachedSpotifyImage(url, cacheExpireDaysAfter);
+	} else {
+		try {
+			response = await fetch(url, { signal: controller.signal });
+		} catch(err) {
+			console.log("failed to fetch image");
+			return "placeholder.png";
+		}
 	}
 
 	if(!response.ok) {

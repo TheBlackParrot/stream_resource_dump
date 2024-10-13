@@ -30,6 +30,23 @@ async function getState() {
 	return data;
 }
 
+async function getArtistInfos(id_arr) {
+	let accessToken = localStorage.getItem("spotify_accessToken");
+
+	const artistIDs = new URLSearchParams({
+		ids: id_arr.join(",")
+	});
+
+	const response = await fetch(`https://api.spotify.com/v1/artists?${artistIDs.toString()}`, {
+		headers: {
+			Authorization: `Bearer ${accessToken}`
+		}
+	});
+
+	const data = await response.json();
+	return data;
+}
+
 var updateTrackTO;
 var currentSong;
 var lastUpdateDelay = -1;
@@ -176,16 +193,42 @@ async function updateTrack() {
 			
 			currentSong = response.item;
 
-			let artists = [];
-			for(let i in response.item.artists) {
-				let artistItem = response.item.artists[i];
-				artists.push(artistItem.name);
-			}
-
 			let art = response.item.album.images[Math.ceil(response.item.album.images.length / 2) - 1].url;
 
 			if(oldID !== response.item.id) {
+				let artists = [];
+				let artistIDs = [];
+				for(let i in response.item.artists) {
+					if(i >= 50) {
+						// API parameter limit
+						continue;
+					}
+
+					artistIDs.push(response.item.artists[i].id);
+				}
+
+				const artistInfos = await getArtistInfos(artistIDs);
+				console.log(artistInfos);
+				if(artistInfos) {
+					for(let i in artistInfos.artists) {
+						let artist = artistInfos.artists[i];
+
+						let image = null;
+						if(artist.images.length) {
+							let size = ((parseInt(localStorage.getItem("setting_spotify_lineHeight")) * 2) || 32);
+							image = await compressImage(artist.images[artist.images.length - 1].url, size, parseInt(localStorage.getItem("setting_spotify_artImageQuality")) / 100, "spotify", 30);
+						}
+
+						artists.push({
+							name: artist.name,
+							image: image
+						});
+					}
+				}
+
 				persistentData = {
+					artists: artists,
+
 					colors: {
 						light: localStorage.getItem("setting_spotify_scannableCustomBGColor"),
 						dark: localStorage.getItem("setting_spotify_scannableCustomBGColor")
@@ -193,7 +236,7 @@ async function updateTrack() {
 
 					labels: [],
 					isrc: null,
-					art: await compressImage(art, parseInt(localStorage.getItem("setting_spotify_artImageSize")), parseInt(localStorage.getItem("setting_spotify_artImageQuality")) / 100),
+					art: await compressImage(art, parseInt(localStorage.getItem("setting_spotify_artImageSize")), parseInt(localStorage.getItem("setting_spotify_artImageQuality")) / 100, "spotify", 180),
 					year: null
 				};
 
@@ -209,7 +252,7 @@ async function updateTrack() {
 
 			var trackData = {
 				title: response.item.name,
-				artists: artists,
+				artists: persistentData.artists,
 				album: {
 					name: response.item.album.name,
 					type: (response.item.album.total_tracks > 2 ? "album" : "single"),
@@ -240,6 +283,38 @@ async function updateTrack() {
 			updateTrack();
 		}
 	});
+}
+
+async function getCachedSpotifyImage(url, expireDaysAfter) {
+	const cacheStorage = await caches.open("spotifyCache");
+
+	var cachedResponse = await cacheStorage.match(url);
+	if(!cachedResponse) {
+		console.log("cache not hit");
+		const newResponse = await fetch(url);
+		if(!newResponse.ok) {
+			return null;
+		}
+
+		cachedResponse = new Response(await newResponse.blob(), {
+			headers: {
+				'X-Cache-Timestamp': Date.now()
+			}
+		});
+		await cacheStorage.put(url, cachedResponse);
+	} else {
+		console.log("cache hit");
+		const cacheTimestamp = parseInt(cachedResponse.headers.get("X-Cache-Timestamp"));
+		const staleThreshold = expireDaysAfter * 24 * 60 * 60 * 1000;
+		if(Date.now() - cacheTimestamp > staleThreshold) {
+			console.log(`cached image for ${url} is stale, re-fetching...`);
+			cacheStorage.delete(url);
+			return await getCachedSpotifyImage(url, expireDaysAfter);
+		}
+	}
+
+	response = await cacheStorage.match(url);
+	return response;
 }
 
 if(localStorage.getItem('spotify_refreshToken')) {

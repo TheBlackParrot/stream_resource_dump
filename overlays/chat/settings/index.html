@@ -3096,6 +3096,28 @@
 					<h1>Secondary Metadata</h1>
 					<div class="setting">
 						<div class="settingCell">
+							<input id="spotify_showArtistImages" type="checkbox" data-dependent="spotify_showArtistImages"/> <span class="settingInfo">Show artist images beside names</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_showArtistImages">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Image size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_artistImageSize" min="0" max="99" step="0.05" value="1.25"/><span class="settingCellMeasurement">em</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_showArtistImages">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Border radius</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="spotify_artistImageBorderRadius" min="0" max="64" step="1" value="10"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
 							<input checked id="spotify_enableArtistAlbumCycle" type="checkbox" data-dependent="spotify_enableArtistAlbumCycle"/> <span class="settingInfo">Show album metadata along with artist metadata</span>
 						</div>
 					</div>

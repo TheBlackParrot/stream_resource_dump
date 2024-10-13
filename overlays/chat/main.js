@@ -497,6 +497,7 @@ const twitchEventFuncs = {
 
 	subscription: async function(data) {
 		await prepareMessage(data.tags, data.message, false, true);
+		await twitchUsers.getUser(data.tags['user-id']).userBlock.updateAvatarBlock();
 	},
 
 	resub: async function(data) {
@@ -506,20 +507,33 @@ const twitchEventFuncs = {
 	ban: function(data) {
 		let id = data.tags['target-user-id'];
 		$(`.chatBlock[data-userid="${id}"]`).remove();
+
+		$(`.reply[data-userid="${id}"]`).each(function() {
+			$(this).text("[message deleted]");
+			$(this).addClass("messageDeleted");
+		});
+		
 		setHistoryOpacity();
 	},
 
 	messagedeleted: function(data) {
 		let id = data.tags['target-msg-id'];
-		let elem = $(`.effectWrapper[data-msguuid="${id}"]`);
-
 		deleteMessages.push(id);
 
-		if(elem.parent().children(".effectWrapper").length === 1) {
-			$(`.chatBlock[data-rootidx="${elem.attr("data-rootidx")}"]`).remove();
-		} else {
-			elem.remove();
-		}
+		$(`.effectWrapper[data-msguuid="${id}"]`).each(function() {
+			const elem = $(this);
+
+			if(elem.parent().children(".effectWrapper").length === 1) {
+				$(`.chatBlock[data-rootidx="${elem.attr("data-rootidx")}"]`).remove();
+			} else {
+				elem.remove();
+			}
+		});
+
+		$(`.reply[data-msguuid="${id}"]`).each(function() {
+			$(this).text("[message deleted]");
+			$(this).addClass("messageDeleted");
+		});
 		
 		setHistoryOpacity();
 	},
@@ -527,11 +541,18 @@ const twitchEventFuncs = {
 	timeout: function(data) {
 		let id = data.tags["target-user-id"];
 		$(`.chatBlock[data-userid="${id}"]`).remove();
+
+		$(`.reply[data-userid="${id}"]`).each(function() {
+			$(this).text("[message deleted]");
+			$(this).addClass("messageDeleted");
+		});
+
 		setHistoryOpacity();
 	},
 
 	clearchat: function(data) {
 		$("#wrapper").empty();
+		$("#messageCloneContainer").empty();
 		lastUser = "-1";
 	},
 

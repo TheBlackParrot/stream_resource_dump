@@ -170,7 +170,7 @@ function widthTest(user, callback) {
 					}
 				}
 
-				if(testRoot.width() > parentWidth) {
+				if(!badgeBlock.children(":visible").length) {
 					badgeBlock.addClass("forceHide");
 					originalBlocks.badgeBlock.addClass("forceHide");
 				}
@@ -1290,10 +1290,7 @@ class User {
 			rootCSS().setProperty(`--nameMentionScalar${this.id}`, `calc(${data.messageSize} / var(--nameSizeRaw${this.id}))`);
 		}
 		rootCSS().setProperty(`--nameMentionSpacing${this.id}`, `calc(var(--nameSpacing${this.id}) * var(--nameMentionScalar${this.id}))`);
-		//rootCSS().setProperty(`--nameMentionExtraWeight${this.id}`, `calc(var(--nameExtraWeight${this.id}) + ((var(--messageBoldAmount) / 2) * var(--nameMentionScalar${this.id})))`);
-		rootCSS().setProperty(`--nameMentionExtraWeight${this.id}`, `calc((var(--messageBoldAmount) * var(--nameMentionScalar${this.id})) + (var(--nameExtraWeight${this.id}) * var(--nameMentionScalar${this.id})))`);
-
-		//(var(--messageBoldAmount) * var(--nameMentionScalar${this.id})) + var(--nameExtraWeight${this.id})
+		rootCSS().setProperty(`--nameMentionExtraWeight${this.id}`, `calc(var(--nameExtraWeight${this.id}) * var(--nameMentionScalar${this.id}))`);
 
 		this.userBlock.initUserBlockCustomizations();
 		this.userBlock.updateFlagBlock();

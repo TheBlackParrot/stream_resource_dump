@@ -10,7 +10,7 @@ const properOverlayNames = {
 	"all": "All Overlays",
 	"customizer": "Chat Customizer",
 	"heartrate": "Heart Rate Overlay",
-	"nightscout": "Blood Gluclose Overlay"
+	"nightscout": "Blood Glucose Overlay"
 };
 
 var mostRecentUpdate = 0;

@@ -228,7 +228,7 @@ const settingUpdaters = {
 	},
 
 	headerText: function(value) {
-		$("#peak").text(value);
+		$("#header").text(value);
 	}
 };
 
