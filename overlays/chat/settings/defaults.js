@@ -1121,7 +1121,10 @@ const defaultConfig = {
 	"ns_headerText": "GLUCOSE",
 	"spotify_showArtistImages": "false",
 	"spotify_artistImageBorderRadius": "10",
-	"spotify_artistImageSize": "1.25"
+	"spotify_artistImageSize": "1.25",
+	"spotify_artistImageZoom": "175",
+	"spotify_artistImageXPos": "50",
+	"spotify_artistImageYPos": "30"
 };
 // i typed out the bigNoNoWords so you don't have to, i'm sorry :(
 // it's gotta know what to remove

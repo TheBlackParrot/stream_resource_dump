@@ -10,7 +10,7 @@ function changeStatusCircle(which, status, msg) {
 $("#sensitive .section").show();
 
 const overlayRevision = 70;
-const overlayRevisionTimestamp = 1727485621896;
+const overlayRevisionTimestamp = 1728870202542;
 $("#revision").text(`revision ${overlayRevision}`);
 
 function resetEverything() {

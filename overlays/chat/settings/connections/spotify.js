@@ -216,7 +216,18 @@ async function updateTrack() {
 						let image = null;
 						if(artist.images.length) {
 							let size = ((parseInt(localStorage.getItem("setting_spotify_lineHeight")) * 2) || 32);
-							image = await compressImage(artist.images[artist.images.length - 1].url, size, parseInt(localStorage.getItem("setting_spotify_artImageQuality")) / 100, "spotify", 30);
+
+							let selectedImageURL = artist.images[artist.images.length - 1].url;
+							for(let imageIdx in artist.images) {
+								let checkingImage = artist.images[imageIdx];
+
+								if(checkingImage.width < size) {
+									continue;
+								}
+								selectedImageURL = checkingImage.url;
+							}
+
+							image = await compressImage(selectedImageURL, size, parseInt(localStorage.getItem("setting_spotify_artImageQuality")) / 100, "spotify", 30);
 						}
 
 						artists.push({

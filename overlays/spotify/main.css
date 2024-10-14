@@ -199,6 +199,9 @@
 	--artist-image-display: inline-flex;
 	--artist-image-size: 1.25em;
 	--artist-image-border-radius: 10px;
+	--artist-image-zoom: 150%;
+	--artist-image-x-pos: 50%;
+	--artist-image-y-pos: 30%;
 }
 
 body {
@@ -599,4 +602,7 @@ body {
 	display: var(--artist-image-display);
 	margin-right: 0.4em;
 	align-self: center;
+	background-image: url('placeholder.png');
+	background-position: var(--artist-image-x-pos) var(--artist-image-y-pos);
+	background-size: var(--artist-image-zoom);
 }

@@ -197,6 +197,7 @@ async function getTwitchStreamData() {
 	console.log(streamResponse);
 	if(streamResponse.data.length) {
 		streamData = streamResponse.data[0];
+		streamData.lastUpdate = Date.now();
 	} else {
 		console.log("stream is not live, checking again in 30 seconds");
 		streamDataTimeout = setTimeout(getTwitchStreamData, 30000);

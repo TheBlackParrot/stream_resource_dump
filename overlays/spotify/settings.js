@@ -1,5 +1,5 @@
 const overlayRevision = 26;
-const overlayRevisionTimestamp = 1724671935043;
+const overlayRevisionTimestamp = 1728870202542;
 
 const settingsChannel = new BroadcastChannel("settings_overlay");
 
@@ -599,6 +599,15 @@ const settingUpdaters = {
 	},
 	artistImageBorderRadius: function(value) {
 		rootCSS().setProperty("--artist-image-border-radius", `${value}px`);
+	},
+	artistImageZoom: function(value) {
+		rootCSS().setProperty("--artist-image-zoom", `${value}%`);
+	},
+	artistImageXPos: function(value) {
+		rootCSS().setProperty("--artist-image-x-pos", `${value}%`);
+	},
+	artistImageYPos: function(value) {
+		rootCSS().setProperty("--artist-image-y-pos", `${value}%`);
 	}
 };
 

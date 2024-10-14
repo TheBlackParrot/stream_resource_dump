@@ -1,5 +1,5 @@
 {
-	"9999999999999": {
+	"1728870202542": {
 		"updates": {
 			"chat": {
 				"revision": 68,
@@ -10,6 +10,10 @@
 					],
 					[
 						"attempted to fix avatar display not updating if the viewer starts a subscription"
+					],
+					[
+						"fixed beat saber request information never displaying if the stream did not start in the beat saber category",
+						["if someone !bsr's and the overlay detects you're not in the beat saber category, it will trigger a stream info update so long as it's been 5 minutes since the last one"]
 					]
 				]
 			},

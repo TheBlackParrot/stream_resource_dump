@@ -240,7 +240,14 @@ const chatFuncs = {
 
 		if("game_id" in streamData) {
 			if(streamData.game_id !== "503116") {
-				return;
+				if(Date.now() - streamData.lastUpdate > 300000) {
+					await getTwitchStreamData();
+					if(streamData.game_id !== "503116") {
+						return;
+					}
+				} else {
+					return;
+				}
 			}
 		}
 
