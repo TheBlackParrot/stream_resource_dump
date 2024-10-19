@@ -50,7 +50,7 @@ body {
 	margin-bottom: var(--chatBlockSpacing);
 	margin-top: 0px;	
 }
-.badges, .pronouns, .message, .pfp, .flags, .displayName, .internationalName, .extraInfo, .replyIcon {
+.badges, .pronouns, .message, .pfp, .flags, .displayName, .internationalName, .extraInfo, .replyIcon, .sharedChatAvatarWrap {
 	filter: var(--effectFilters);
 }
 
@@ -906,4 +906,44 @@ img.emoji {
 
 .messageDeleted {
 	opacity: var(--messageDeletedOpacity);
+}
+
+.sharedChatAvatar {
+	width: 100%;
+	height: 100%;
+	display: block;
+
+	border-radius: var(--sharedChatAvatarBorderRadius);
+
+	filter: var(--sharedChatAvatarFilters);
+}
+
+.sharedChatAvatarImageWrap {
+	width: var(--sharedChatAvatarSize);
+	min-width: var(--sharedChatAvatarSize);
+	max-width: var(--sharedChatAvatarSize);
+	height: var(--sharedChatAvatarSize);
+	min-height: var(--sharedChatAvatarSize);
+	max-height: var(--sharedChatAvatarSize);
+	
+	align-self: center;
+
+	border-radius: var(--sharedChatAvatarBorderRadius);
+
+	outline: var(--sharedChatSameRoomBorderSizeActual) var(--sharedChatSameRoomBorderStyle) transparent;
+	outline-offset: var(--sharedChatSameRoomBorderOffset);	
+}
+
+.sharedChatAvatarWrap {
+	display: var(--sharedChatAvatarDisplay) !important;
+	padding-left: 4px;
+	margin-left: calc(var(--sharedChatAvatarOffset) * -1);
+	margin-right: calc(var(--messageUserInfoElementSpacing) + var(--sharedChatSameRoomBorderSizeActual) + var(--sharedChatSameRoomBorderOffset)) !important;
+}
+
+.sharedChatIsInSameRoom {
+	display: var(--sharedChatAvatarSameRoomDisplay) !important;
+}
+.sharedChatIsInSameRoom .sharedChatAvatarImageWrap {
+	outline-color: var(--sharedChatSameRoomBorderColor);
 }

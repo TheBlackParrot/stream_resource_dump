@@ -23,6 +23,7 @@ $.get("fonts.json", function(data) {
 });
 
 var broadcasterData = {};
+var sharedChatData = {};
 var channelData = {};
 var streamData = {"started_at": new Date().toISOString()};
 var twitchBadges = {};
@@ -489,6 +490,26 @@ function postToTwitchEventChannel(event, data) {
 var deleteMessages = [];
 const twitchEventFuncs = {
 	message: async function(data) {
+		if("source-room-id" in data.tags) {
+			const sourceUserID = parseInt(data.tags['source-room-id']);
+
+			if(!(sourceUserID in sharedChatData)) {
+				console.log(`getting shared broadcaster information for ID ${sourceUserID}...`);
+
+				const rawUserResponse = await callTwitchAsync({
+					"endpoint": "users",
+					"args": {
+						"id": sourceUserID
+					}
+				});
+
+				console.log(rawUserResponse);
+				sharedChatData[sourceUserID] = rawUserResponse.data[0];
+
+				console.log(`got broadcaster information for ${sharedChatData[sourceUserID].display_name} (${sharedChatData[sourceUserID].id})`);				
+			}
+		}
+		
 		await prepareMessage(data.tags, data.message, data.self, false);
 	},
 

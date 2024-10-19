@@ -239,4 +239,19 @@
 	--BSRStatsPanelVisibility: flex;
 	--BSRCodeVisibility: inline-block;
 	--BSRStatsPanelFontVariant: normal;
+
+	--sharedChatAvatarDisplay: flex;
+	--sharedChatAvatarSize: 20px;
+	--sharedChatAvatarBorderRadius: 4px;
+	--sharedChatAvatarOffset: 0px;
+	--sharedChatAvatarBrightness: 135%;
+	--sharedChatAvatarContrast: 107%;
+	--sharedChatAvatarSaturation: 0%;
+	--sharedChatAvatarFilters: saturate(var(--sharedChatAvatarSaturation));
+
+	--sharedChatSameRoomBorderSize: 2px;
+	--sharedChatSameRoomBorderStyle: solid;
+	--sharedChatSameRoomBorderColor: #9146FF;
+	--sharedChatSameRoomBorderOffset: 2px;
+	--sharedChatSameRoomBorderSizeActual: var(--sharedChatSameRoomBorderSize);
 }

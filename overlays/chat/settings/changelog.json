@@ -1,4 +1,31 @@
 {
+	"9999999999999": {
+		"updates": {
+			"chat": {
+				"revision": 69,
+				"notes": [
+					[
+						"(basic) support for shared chat",
+						[
+							"still figuring out how i'm gonna get sub badges for messages not from the broadcaster, may require some small internal rewrites. FFZ does it, so it's possible",
+							"currently thinking maybe making separate badge blocks that render depending on what channel the message comes from, and adding broadcaster IDs to subs/bits badge objects. simplest solution i think"
+						],
+						{"anchor": "enabledSharedChatAvatar"}
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 71,
+				"notes": [
+					[
+						"(update only contains new settings)"
+					]
+				]
+			}
+		}
+	},
+
 	"1728870202542": {
 		"updates": {
 			"chat": {

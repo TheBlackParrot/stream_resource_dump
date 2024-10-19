@@ -1424,9 +1424,89 @@ const settingUpdaters = {
 	},
 	chatBSRUseTabularNumsInStatsPanel: function(value) {
 		rootCSS().setProperty("--BSRStatsPanelFontVariant", (value === "true" ? "tabular-nums" : "normal"));
+	},
+
+	enabledSharedChatAvatar: function(value) {
+		rootCSS().setProperty("--sharedChatAvatarDisplay", (value === "true" ? "flex" : "none"));
+	},
+
+	sharedChatAvatarSize: function(value) {
+		rootCSS().setProperty("--sharedChatAvatarSize", `${value}px`);
+	},
+	sharedChatAvatarBorderRadius: function(value) {
+		rootCSS().setProperty("--sharedChatAvatarBorderRadius", `${value}px`);
+	},
+	sharedChatAvatarOffset: function(value) {
+		rootCSS().setProperty("--sharedChatAvatarOffset", `${value}px`);
+	},
+
+	sharedChatAvatarBrightness: function(value) {
+		rootCSS().setProperty("--sharedChatAvatarBrightness", `${value}%`);
+		checkSharedChatAvatarFilters();
+	},
+	sharedChatAvatarContrast: function(value) {
+		rootCSS().setProperty("--sharedChatAvatarContrast", `${value}%`);
+		checkSharedChatAvatarFilters();
+	},
+	sharedChatAvatarSaturation: function(value) {
+		rootCSS().setProperty("--sharedChatAvatarSaturation", `${value}%`);
+		checkSharedChatAvatarFilters();
+	},
+
+	sharedChatSameRoomBorderSize: function(value) {
+		rootCSS().setProperty("--sharedChatSameRoomBorderSize", `${value}px`);
+	},
+	sharedChatSameRoomBorderStyle: function(value) {
+		rootCSS().setProperty("--sharedChatSameRoomBorderStyle", value);
+	},
+	sharedChatSameRoomBorderColor: function(value) {
+		rootCSS().setProperty("--sharedChatSameRoomBorderColor", value);
+	},
+	sharedChatSameRoomBorderOffset: function(value) {
+		rootCSS().setProperty("--sharedChatSameRoomBorderOffset", `${value}px`);
+	},
+
+	enableSharedChatAvatarBorderIfSameRoom: function(value) {
+		rootCSS().setProperty("--sharedChatSameRoomBorderSizeActual", (value === "true" ? "var(--sharedChatSameRoomBorderSize)" : "0px"));
+	},
+	sharedChatAvatarHideIfSameRoom: function(value) {
+		rootCSS().setProperty("--sharedChatAvatarSameRoomDisplay", (value === "true" ? "none" : "var(--sharedChatAvatarDisplay)"));
 	}
 };
 settingUpdaters["chatHideAccounts"](localStorage.getItem("setting_chatHideAccounts"));
+
+function checkSharedChatAvatarFilters() {
+	const brightness = parseFloat(localStorage.getItem("setting_sharedChatAvatarBrightness"));
+	const contrast = parseFloat(localStorage.getItem("setting_sharedChatAvatarContrast"));
+	const saturation = parseFloat(localStorage.getItem("setting_sharedChatAvatarSaturation"));
+
+	let out = [];
+
+	if(brightness !== 100) { out.push(`brightness(var(--sharedChatAvatarBrightness))`); }
+	if(contrast !== 100) { out.push(`contrast(var(--sharedChatAvatarContrast))`); }
+	if(saturation !== 100) { out.push(`saturate(var(--sharedChatAvatarSaturation))`); }
+
+	if(out.length) {
+		rootCSS().setProperty("--sharedChatAvatarFilters", out.join(" "));
+	} else {
+		rootCSS().setProperty("--sharedChatAvatarFilters", "none");
+	}
+}
+
+/*
+	--sharedChatAvatarSize: 20px;
+	--sharedChatAvatarBorderRadius: 4px;
+	--sharedChatAvatarOffset: 0px;
+	--sharedChatAvatarBrightness: 100%;
+	--sharedChatAvatarContrast: 100%;
+	--sharedChatAvatarSaturation: 0%;
+	--sharedChatAvatarFilters: saturate(var(--sharedChatAvatarSaturation));
+
+	--sharedChatSameRoomBorderSize: 2px;
+	--sharedChatSameRoomBorderStyle: solid;
+	--sharedChatSameRoomBorderColor: #9146FF;
+	--sharedChatSameRoomBorderOffset: 2px;
+*/
 
 function checkAvatarPermissions() {
 	for(const id in twitchUsers) {

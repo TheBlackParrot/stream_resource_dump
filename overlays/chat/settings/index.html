@@ -85,6 +85,7 @@
 					<div class="row" data-tab="emotes"><i class="fas fa-grin-squint-tears"></i>Emotes</div>
 					<div class="row" data-tab="flags"><i class="fas fa-flag"></i>Flags</div>
 					<div class="row" data-tab="pronouns"><i class="fas fa-user"></i>Pronouns</div>
+					<div class="row" data-tab="shared"><i class="fas fa-users"></i>Shared Chat</div>
 					<hr/>
 					<div class="row" data-tab="external"><i class="fas fa-cubes"></i>External Services</div>
 					<div class="row" data-tab="individuality"><i class="fas fa-brush"></i>Individuality</div>
@@ -8113,6 +8114,118 @@
 								<option selected value="center">Center</option>
 								<option value="end">Right</option>
 							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section" data-content="shared">
+				<div class="part">
+					<h1>Shared Chat</h1>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="enabledSharedChatAvatar" type="checkbox"/> <span class="settingInfo">Show broadcaster avatar from the source message's channel</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="sharedChatAvatarHideIfSameRoom" type="checkbox"/> <span class="settingInfo">Hide broadcaster's own avatar if the message is from their own channel</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="sharedChatAvatarSize" min="0" max="200" step="1" value="20"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Border radius</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="sharedChatAvatarBorderRadius" min="0" max="100" step="1" value="4"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Horizontal offset</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="sharedChatAvatarOffset" min="-100" max="100" step="1" value="0"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="enableSharedChatAvatarBorderIfSameRoom" type="checkbox" data-dependent="enableSharedChatAvatarBorderIfSameRoom"/> <span class="settingInfo">Show border around the broadcaster's own avatar if the message is from their own channel</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="enableSharedChatAvatarBorderIfSameRoom">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Border size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="sharedChatSameRoomBorderSize" min="0" max="16" step="1" value="2"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="enableSharedChatAvatarBorderIfSameRoom">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Border offset</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="sharedChatSameRoomBorderOffset" min="0" max="16" step="1" value="2"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="enableSharedChatAvatarBorderIfSameRoom">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Border color</span>
+						</div>
+						<div class="settingCell">
+							<input id="sharedChatSameRoomBorderColor" type="text" data-coloris value="#9146ff"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="enableSharedChatAvatarBorderIfSameRoom">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Border style</span>
+						</div>
+						<div class="settingCell">
+							<select id="sharedChatSameRoomBorderStyle">
+								<option value="dashed">Dashed</option>
+								<option value="dotted">Dotted</option>
+								<option value="double">Double</option>
+								<option value="groove">Groove</option>
+								<option value="inset">Inset</option>
+								<option value="outset">Outset</option>
+								<option value="ridge">Ridge</option>
+								<option selected value="solid">Solid</option>
+							</select>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Brightness</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="sharedChatAvatarBrightness" min="0" max="500" step="1" value="100"/><span class="settingCellMeasurement">%</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Contrast</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="sharedChatAvatarContrast" min="0" max="500" step="1" value="100"/><span class="settingCellMeasurement">%</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Saturation</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="sharedChatAvatarSaturation" min="0" max="500" step="1" value="0"/><span class="settingCellMeasurement">%</span>
 						</div>
 					</div>
 				</div>

@@ -197,6 +197,10 @@ async function prepareMessage(tags, message, self, forceHighlight) {
 			break;
 	}
 
+	if("source-room-id" in tags) {
+		outObject.sourceRoomID = tags['source-room-id'];
+	}
+
 	if(userData.avatarImage === null && userData.id !== -1) {
 		await userData.cacheAvatar();
 	}
@@ -519,6 +523,39 @@ async function getRootElement(data) {
 	let messageWrapper = $('<div class="messageWrapper"></div>');
 
 	let userBlock = data.user.userBlock.render();
+
+	if(data.sourceRoomID) {
+		const sourceUser = await twitchUsers.getUser(data.sourceRoomID);
+
+		if(sourceUser.avatarImage === null && sourceUser.id !== -1) {
+			await sourceUser.cacheAvatar();
+		}
+		
+		if(!sourceUser.fetchedCustomSettings) {
+			console.log("waiting for custom settings to set on shared user");
+			await sourceUser.customSettingsFetchPromise;
+		}
+
+		sourceUser.userBlock.initUserSettingsValues();
+
+		console.log(data.sourceRoomID);
+		console.log(sourceUser);
+
+		const sourceAvatarContainer = $(`<div class="sharedChatAvatarWrap"></div>`);
+		sourceAvatarContainer.attr("source-room-id", data.sourceRoomID);
+
+		const sourceAvatarImageWrap = $(`<span class="sharedChatAvatarImageWrap"></span>`);
+		const sourceAvatar = $(`<img class="sharedChatAvatar" src="${sourceUser.avatarImage}"/>`);
+		sourceAvatarImageWrap.append(sourceAvatar);
+
+		if(data.sourceRoomID === broadcasterData.id) {
+			sourceAvatarContainer.addClass("sharedChatIsInSameRoom");
+		}
+
+		sourceAvatarContainer.append(sourceAvatarImageWrap);
+
+		userBlock.prepend(sourceAvatarContainer);
+	}
 
 	let colorToUse = `color_${data.user.id}`;
 	if(localStorage.getItem("setting_chatDefaultNameColorForced") === "true") {

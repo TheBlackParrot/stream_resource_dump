@@ -1124,7 +1124,20 @@ const defaultConfig = {
 	"spotify_artistImageSize": "1.25",
 	"spotify_artistImageZoom": "175",
 	"spotify_artistImageXPos": "50",
-	"spotify_artistImageYPos": "30"
+	"spotify_artistImageYPos": "30",
+	"enabledSharedChatAvatar": "true",
+	"sharedChatAvatarSize": "20",
+	"sharedChatAvatarBorderRadius": "4",
+	"sharedChatAvatarOffset": "0",
+	"sharedChatAvatarBrightness": "135",
+	"sharedChatAvatarContrast": "107",
+	"sharedChatAvatarSaturation": "0",
+	"sharedChatSameRoomBorderSize": "2",
+	"sharedChatSameRoomBorderOffset": "2",
+	"sharedChatSameRoomBorderColor": "#9146ff",
+	"sharedChatSameRoomBorderStyle": "solid",
+	"enableSharedChatAvatarBorderIfSameRoom": "true",
+	"sharedChatAvatarHideIfSameRoom": "false"
 };
 // i typed out the bigNoNoWords so you don't have to, i'm sorry :(
 // it's gotta know what to remove
