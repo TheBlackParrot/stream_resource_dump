@@ -40,6 +40,39 @@ function setTwitchHelixReachable(state) {
 }
 
 var notActuallyCustomBadges = [];
+async function getChannelChatBadges(broadcasterID) {
+	console.log(`getting channel chat badges for ${broadcasterID}...`);
+	const channelBadgeResponse = await callTwitchAsync({
+		"endpoint": "chat/badges",
+		"args": {
+			"broadcaster_id": broadcasterID
+		}		
+	});
+	console.log(channelBadgeResponse);
+	for(const badgeSet of channelBadgeResponse.data) {
+		if(localStorage.getItem(`setting_enableCustomBadges_${badgeSet.set_id}`) === "true") {
+			const oldBadgeSetID = badgeSet.set_id.substr(0);
+			const newBadgeSetID = `${oldBadgeSetID}${broadcasterID}`
+
+			if(oldBadgeSetID === "bits") {
+				for(const version of badgeSet.versions) {
+					if(notActuallyCustomBadges.indexOf(version.image_url_1x) === -1) {
+						twitchBadgeTypes[oldBadgeSetID].is_solid = false;
+						twitchBadges[newBadgeSetID] = badgeSet;
+						twitchBadges[newBadgeSetID].set_id = newBadgeSetID;
+						break;
+					}
+				}
+			} else {
+				twitchBadges[newBadgeSetID] = badgeSet;
+				twitchBadges[newBadgeSetID].set_id = newBadgeSetID;
+				twitchBadgeTypes[oldBadgeSetID].is_solid = false;
+			}
+		}
+	}
+	console.log(`got channel chat badges for ${broadcasterID}`);
+}
+
 async function getStuffReady() {
 	console.log(`getting broadcaster information for ${broadcasterName}...`);
 	const rawUserResponse = await callTwitchAsync({
@@ -69,32 +102,7 @@ async function getStuffReady() {
 	}
 	console.log("got global chat badges");
 
-	console.log("getting channel chat badges...");
-	const channelBadgeResponse = await callTwitchAsync({
-		"endpoint": "chat/badges",
-		"args": {
-			"broadcaster_id": broadcasterData.id
-		}		
-	});
-	console.log(channelBadgeResponse);
-	for(const badgeSet of channelBadgeResponse.data) {
-		if(localStorage.getItem(`setting_enableCustomBadges_${badgeSet.set_id}`) === "true") {
-			if(badgeSet.set_id === "bits") {
-				// see above
-				for(const version of badgeSet.versions) {
-					if(notActuallyCustomBadges.indexOf(version.image_url_1x) === -1) {
-						twitchBadgeTypes[badgeSet.set_id].is_solid = false;
-						twitchBadges[badgeSet.set_id] = badgeSet;
-						break;
-					}
-				}
-			} else {
-				twitchBadges[badgeSet.set_id] = badgeSet;
-				twitchBadgeTypes[badgeSet.set_id].is_solid = false;
-			}
-		}
-	}
-	console.log("got channel chat badges");
+	await getChannelChatBadges(broadcasterData.id);
 
 	console.log("getting cheermotes...");
 	const cheermoteResponse = await callTwitchAsync({
@@ -310,8 +318,8 @@ async function getGlobalChannelEmotes(broadcasterData) {
 	getExternalChannelEmotes(broadcasterData);
 }
 
-var sevenTVEmoteSetID;
-async function getExternalChannelEmotes(broadcasterData) {
+var sevenTVEmoteSetIDs = {};
+async function getExternalChannelEmotes(streamerData, isShared) {
 	if(!allowedToProceed) {
 		console.log("No Client ID or Secret is set.");
 		return;
@@ -322,11 +330,11 @@ async function getExternalChannelEmotes(broadcasterData) {
 	if(localStorage.getItem("setting_enableBTTV") === "true") {
 		console.log("getting bttv channel emotes...");
 
-		const response = await fetch(`https://api.betterttv.net/3/cached/users/twitch/${broadcasterData.id}?sigh=${Date.now()}`);
+		const response = await fetch(`https://api.betterttv.net/3/cached/users/twitch/${streamerData.id}?sigh=${Date.now()}`);
 		if(response.ok) {
 			const data = await response.json();
 			console.log("got bttv emotes");
-			systemMessage("*Fetched channel's BetterTTV emotes*");
+			systemMessage(`*Fetched ${(isShared ? streamerData.display_name : "channel")}'s BetterTTV emotes*`);
 
 			let addEmoteFunction = function(emote) {
 				chatEmotes.addEmote(new Emote({
@@ -346,7 +354,7 @@ async function getExternalChannelEmotes(broadcasterData) {
 			for(const emote of data.channelEmotes) { addEmoteFunction(emote); }
 		} else {
 			console.log("could not fetch bttv channel emotes");
-			systemMessage("*Unable to fetch channel's BetterTTV emotes*");			
+			systemMessage(`*Unable to fetch ${(isShared ? streamerData.display_name : "channel")}'s BetterTTV emotes*`);
 		}
 	} else {
 		console.log("skipping bttv channel emotes, not enabled");
@@ -355,11 +363,11 @@ async function getExternalChannelEmotes(broadcasterData) {
 	if(localStorage.getItem("setting_enableFFZ") === "true") {
 		console.log("getting ffz channel emotes...");
 
-		const response = await fetch(`https://api.frankerfacez.com/v1/room/id/${broadcasterData.id}?sigh=${Date.now()}`);
+		const response = await fetch(`https://api.frankerfacez.com/v1/room/id/${streamerData.id}?sigh=${Date.now()}`);
 		if(response.ok) {
 			const data = await response.json();
 			console.log("got ffz emotes");
-			systemMessage("*Fetched channel's FrankerFaceZ emotes*");
+			systemMessage(`*Fetched ${(isShared ? streamerData.display_name : "channel")}'s FrankerFaceZ emotes*`);
 
 			for(let setIdx in data.sets) {
 				const emotes = data.sets[setIdx].emoticons;
@@ -379,7 +387,7 @@ async function getExternalChannelEmotes(broadcasterData) {
 			}
 		} else {
 			console.log("could not fetch ffz channel emotes");
-			systemMessage("*Unable to fetch channel's FrankerFaceZ emotes*");			
+			systemMessage(`*Unable to fetch ${(isShared ? streamerData.display_name : "channel")}'s FrankerFaceZ emotes*`);
 		}
 	} else {
 		console.log("skipping ffz channel emotes, not enabled");
@@ -389,31 +397,31 @@ async function getExternalChannelEmotes(broadcasterData) {
 	if(localStorage.getItem("setting_enable7TV") === "true") {
 		console.log("getting 7tv channel emotes...");
 
-		const response = await fetch(`https://7tv.io/v3/users/twitch/${broadcasterData.id}?sigh=${Date.now()}`);
+		const response = await fetch(`https://7tv.io/v3/users/twitch/${streamerData.id}?sigh=${Date.now()}`);
 		if(response.ok) {
 			const data = await response.json();
 			console.log("got 7tv emotes");
-			systemMessage("*Fetched channel's 7TV emotes*");
+			systemMessage(`*Fetched ${(isShared ? streamerData.display_name : "channel")}'s 7TV emotes*`);
 			console.log(data);
 
 			let isOK = true; // god i hate 7tv
 
 			if(data.emote_set === null) {
-				systemMessage("*Unable to fetch channel's 7TV emotes, active emote set is... empty?*");
+				systemMessage(`*Unable to fetch ${(isShared ? streamerData.display_name : "channel")}'s 7TV emotes, active emote set is... empty?*`);
 				isOK = false;
 			}
 
 			if(isOK) {
 				// for fucks sake
 				if(!("emotes" in data.emote_set)) {
-					systemMessage("*Unable to fetch channel's 7TV emotes, emotes aren't in the emote set (this is 7TV's fault)*");
+					systemMessage(`*Unable to fetch ${(isShared ? streamerData.display_name : "channel")}'s 7TV emotes, emotes aren't in the emote set (this is 7TV's fault)*`);
 					isOK = false;
 				}
 			}
 
 			if(isOK) {
-				sevenTVEmoteSetID = data.emote_set.id;
-				subscribe7TV("emote_set.*", sevenTVEmoteSetID);
+				sevenTVEmoteSetIDs[streamerData.id] = data.emote_set.id;
+				subscribe7TV("emote_set.*", streamerData.id, sevenTVEmoteSetIDs[streamerData.id]);
 
 				for(const emote of data.emote_set.emotes) {
 					const emoteData = emote.data;
@@ -434,7 +442,7 @@ async function getExternalChannelEmotes(broadcasterData) {
 			}
 		} else {
 			console.log("could not fetch 7tv channel emotes");
-			systemMessage("*Unable to fetch channel's 7TV emotes*");
+			systemMessage(`*Unable to fetch ${(isShared ? streamerData.display_name : "channel")}'s 7TV emotes*`);
 		}
 	} else {
 		console.log("skipping 7tv channel emotes, not enabled");
@@ -506,7 +514,45 @@ const twitchEventFuncs = {
 				console.log(rawUserResponse);
 				sharedChatData[sourceUserID] = rawUserResponse.data[0];
 
-				console.log(`got broadcaster information for ${sharedChatData[sourceUserID].display_name} (${sharedChatData[sourceUserID].id})`);				
+				console.log(`got broadcaster information for ${sharedChatData[sourceUserID].display_name} (${sharedChatData[sourceUserID].id})`);
+
+				if(data.tags['source-room-id'] !== broadcasterData.id) {
+					await getChannelChatBadges(sourceUserID);
+					
+					if(localStorage.getItem("setting_sharedChatMergeExternalEmotes") === "true") {
+						await getExternalChannelEmotes(sharedChatData[sourceUserID], true);
+					}
+				}
+			}
+
+			if(bttvWS) {
+				try {
+					if(localStorage.getItem("setting_enableBTTV") === "true" && bttvWS.attemptedJoins.indexOf(sourceUserID) === -1) {
+						console.log(`trying to join BTTV channel for ${sharedChatData[sourceUserID].display_name}`);
+						bttvWS.attemptedJoins.push(sourceUserID);
+
+						let msg = {
+							name: "join_channel",
+							data: {
+								name: `twitch:${sourceUserID}`
+							}
+						}
+
+						bttvWS.send(JSON.stringify(msg));
+					}
+				} catch {
+					// do nothing
+				}
+			}
+
+			if(sevenTVWS) {
+				if(localStorage.getItem("setting_enable7TV") === "true" && sevenTVWS.attemptedJoins.indexOf(data.tags['source-room-id']) === -1) {
+					console.log(`trying to sub to 7TV entitlements in ${sharedChatData[sourceUserID].display_name}`);
+					sevenTVWS.attemptedJoins.push(data.tags['source-room-id']);
+
+					subscribe7TV("cosmetic.*", data.tags['source-room-id']);
+					subscribe7TV("entitlement.*", data.tags['source-room-id']);
+				}
 			}
 		}
 		

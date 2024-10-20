@@ -18,8 +18,89 @@ async function prepareMessage(tags, message, self, forceHighlight) {
 
 	let userData = await twitchUsers.getUser(tags['user-id']);
 
-	userData.entitlements.twitch.badges.list = tags['badges'];
-	userData.entitlements.twitch.badges.info = tags['badge-info'];
+	//userData.entitlements.twitch.badges.list = tags['badges'];
+	//userData.entitlements.twitch.badges.info = tags['badge-info'];
+	if("source-room-id" in tags) {
+		tags = parseComplexTag(tags, "source-badges");
+		tags = parseComplexTag(tags, "source-badge-info");
+
+		for(const badgeKey in tags['source-badges']) {
+			let newBadgeKey = badgeKey;
+			switch(badgeKey) {
+				case "subscriber":
+					newBadgeKey = `subscriber${tags['source-room-id']}`;
+					break;
+
+				case "bits":
+					newBadgeKey = `bits${tags['source-room-id']}`;
+					break;
+			}
+
+			if(newBadgeKey in twitchBadges) {
+				userData.entitlements.twitch.badges.list[newBadgeKey] = tags['source-badges'][badgeKey];
+				if(tags['source-badge-info']) {
+					if(badgeKey in tags['source-badge-info']) {
+						userData.entitlements.twitch.badges.info[newBadgeKey] = tags['source-badge-info'][badgeKey];
+					}
+				}
+			} else {
+				userData.entitlements.twitch.badges.list[badgeKey] = tags['source-badges'][badgeKey];
+				if(tags['source-badge-info']) {
+					if(badgeKey in tags['source-badge-info']) {
+						userData.entitlements.twitch.badges.info[badgeKey] = tags['source-badge-info'][badgeKey];
+					}
+				}
+			}
+		}
+
+		/*
+		for(const badgeKey in tags['source-badges']) {
+			console.log(badgeKey);
+			if(badgeKey === "subscriber") {
+				const newBadgeKey = `subscriber${tags['source-room-id']}`;
+
+				userData.entitlements.twitch.badges.list[newBadgeKey] = tags['source-badges']['subscriber'];
+				userData.entitlements.twitch.badges.info[newBadgeKey] = tags['source-badge-info']['subscriber'];
+			} else {
+				userData.entitlements.twitch.badges.list[badgeKey] = tags['source-badges'][badgeKey];
+				if(tags['source-badge-info']) {
+					if(badgeKey in tags['source-badge-info']) {
+						userData.entitlements.twitch.badges.info[badgeKey] = tags['source-badge-info'][badgeKey];
+					}
+				}
+			}
+		}
+		*/
+	} else {
+		for(const badgeKey in tags['badges']) {
+			let newBadgeKey = badgeKey;
+			switch(badgeKey) {
+				case "subscriber":
+					newBadgeKey = `subscriber${tags['room-id']}`;
+					break;
+
+				case "bits":
+					newBadgeKey = `bits${tags['room-id']}`;
+					break;
+			}
+
+			if(newBadgeKey in twitchBadges) {
+				userData.entitlements.twitch.badges.list[newBadgeKey] = tags['badges'][badgeKey];
+				if(tags['badge-info']) {
+					if(badgeKey in tags['badge-info']) {
+						userData.entitlements.twitch.badges.info[newBadgeKey] = tags['badge-info'][badgeKey];
+					}
+				}
+			} else {
+				userData.entitlements.twitch.badges.list[badgeKey] = tags['badges'][badgeKey];
+				if(tags['badge-info']) {
+					if(badgeKey in tags['badge-info']) {
+						userData.entitlements.twitch.badges.info[badgeKey] = tags['badge-info'][badgeKey];
+					}
+				}
+			}
+		}
+	}
 	userData.entitlements.twitch.color = tags['color'];
 
 	let isOverlayMessage = false;

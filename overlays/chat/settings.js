@@ -1476,14 +1476,14 @@ const settingUpdaters = {
 settingUpdaters["chatHideAccounts"](localStorage.getItem("setting_chatHideAccounts"));
 
 function checkSharedChatAvatarFilters() {
-	const brightness = parseFloat(localStorage.getItem("setting_sharedChatAvatarBrightness"));
 	const contrast = parseFloat(localStorage.getItem("setting_sharedChatAvatarContrast"));
+	const brightness = parseFloat(localStorage.getItem("setting_sharedChatAvatarBrightness"));
 	const saturation = parseFloat(localStorage.getItem("setting_sharedChatAvatarSaturation"));
 
 	let out = [];
 
-	if(brightness !== 100) { out.push(`brightness(var(--sharedChatAvatarBrightness))`); }
 	if(contrast !== 100) { out.push(`contrast(var(--sharedChatAvatarContrast))`); }
+	if(brightness !== 100) { out.push(`brightness(var(--sharedChatAvatarBrightness))`); }
 	if(saturation !== 100) { out.push(`saturate(var(--sharedChatAvatarSaturation))`); }
 
 	if(out.length) {

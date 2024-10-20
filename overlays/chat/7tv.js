@@ -1,5 +1,5 @@
 var sevenTVWS;
-function subscribe7TV(type, objectID) {
+function subscribe7TV(type, roomID, objectID) {
 	let conditions = {};
 
 	if(objectID) {
@@ -9,7 +9,7 @@ function subscribe7TV(type, objectID) {
 	} else {
 		conditions = {
 			ctx: 'channel',
-			id: broadcasterData.id,
+			id: roomID,
 			platform: 'TWITCH'	
 		};
 	}
@@ -36,6 +36,7 @@ function start7TVWebsocket() {
 	}
 
 	sevenTVWS = new WebSocket('wss://events.7tv.io/v3');
+	sevenTVWS.attemptedJoins = [broadcasterData.id];
 
 	const dispatchFuncs = {
 		"entitlement.create": async function(data) {
@@ -184,6 +185,7 @@ function start7TVWebsocket() {
 	});
 
 	sevenTVWS.addEventListener("open", function() {
+		sevenTVWS.attemptedJoins = [broadcasterData.id];
 		console.log("Successfully connected to 7TV");
 
 		let waitForBroadcasterData = function() {
@@ -210,10 +212,10 @@ function start7TVWebsocket() {
 				subscribe("entitlement.*");
 			}*/
 
-			subscribe7TV("cosmetic.*");
-			subscribe7TV("entitlement.*");
-			if(sevenTVEmoteSetID) {
-				subscribe7TV("emote_set.*", sevenTVEmoteSetID);
+			subscribe7TV("cosmetic.*", broadcasterData.id);
+			subscribe7TV("entitlement.*", broadcasterData.id);
+			if(sevenTVEmoteSetIDs[broadcasterData.id]) {
+				subscribe7TV("emote_set.*", broadcasterData.id, sevenTVEmoteSetIDs[broadcasterData.id]);
 			}
 		};
 		waitForBroadcasterData();

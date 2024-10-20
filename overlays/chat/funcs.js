@@ -595,3 +595,29 @@ function isEmoteIgnored(emote) {
 
 	return false;
 }
+
+function parseComplexTag(tags, tagKey, splA = ",", splB = "/", splC) {
+	const raw = tags[tagKey];
+	if (raw === void 0) {
+		return tags;
+	}
+	const tagIsString = typeof raw === "string";
+	tags[`${tagKey}-raw`] = tagIsString ? raw : null;
+	if (raw === true) {
+		tags[tagKey] = null;
+		return tags;
+	}
+	tags[tagKey] = {};
+	if (tagIsString) {
+		const spl = raw.split(splA);
+		for (let i = 0; i < spl.length; i++) {
+			const parts = spl[i].split(splB);
+			let [, val] = parts;
+			if (splC !== void 0 && val) {
+	  			val = val.split(splC);
+			}
+			tags[tagKey][parts[0]] = val || null;
+		}
+	}
+	return tags;
+}

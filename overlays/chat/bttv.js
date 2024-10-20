@@ -71,6 +71,7 @@ function startBTTVWebsocket() {
 
 	if(typeof bttvWS === "undefined") {
 		bttvWS = new WebSocket("wss://sockets.betterttv.net/ws");
+		bttvWS.attemptedJoins = [];
 	} else {
 		try {
 			bttvWS.close();

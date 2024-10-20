@@ -2,6 +2,49 @@
 	"9999999999999": {
 		"updates": {
 			"chat": {
+				"revision": 70,
+				"notes": [
+					[
+						"chat badges from shared chat channels now render together with the broadcaster's badges",
+						["this did in fact require some internal rewrites, decided to just combine chat badges from all channels as needed"]
+					],
+					[
+						"fixed BTTV and 7TV entitlements not applying from shared chatrooms that are not the broadcaster's own chatroom"
+					],
+					[
+						"increased default shared chat border size from 2px to 3px",
+						{"anchor": "sharedChatSameRoomBorderSize"}
+					],
+					[
+						"flipped order of brightness and contrast filters on shared chat avatars",
+						["it's now contrast first, brightness second, defaults were adjusted"],
+						{"anchor": "sharedChatAvatarBrightness"}
+					],
+					[
+						"fixed global variable name re-use in external emote fetching",
+						["woops!"]
+					],
+					[
+						"external emotes from shared chats can now merge with the streamer's",
+						{"anchor": "sharedChatMergeExternalEmotes"}
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 72,
+				"notes": [
+					[
+						"(update only contains new settings)"
+					]
+				]
+			}
+		}
+	},
+
+	"1729302564000": {
+		"updates": {
+			"chat": {
 				"revision": 69,
 				"notes": [
 					[

@@ -1172,8 +1172,20 @@ class User {
 			return true;
 		} else if(localStorage.getItem("setting_avatarAllowedVIPs") === "true" && "vip" in badges.list) {
 			return true;
-		} else if(localStorage.getItem("setting_avatarAllowedSubscribers") === "true" && ("subscriber" in badges.list || "founder" in badges.list)) {
-			return true;
+		} else if(localStorage.getItem("setting_avatarAllowedSubscribers") === "true") {
+			if("founder" in badges.list) {
+				return true;
+			}
+
+			if(`subscriber${broadcasterData.id}` in badges.list) {
+				return true;
+			}
+
+			for(const roomID in sharedChatData) {
+				if(`subscriber${roomID}` in badges.list) {
+					return true;
+				}
+			}
 		} else if(localStorage.getItem("setting_avatarAllowedTurbo") === "true" && "turbo" in badges.list) {
 			return true;
 		} else if(localStorage.getItem("setting_avatarAllowedPrime") === "true" && "premium" in badges.list) {

@@ -1129,15 +1129,16 @@ const defaultConfig = {
 	"sharedChatAvatarSize": "20",
 	"sharedChatAvatarBorderRadius": "4",
 	"sharedChatAvatarOffset": "0",
-	"sharedChatAvatarBrightness": "135",
-	"sharedChatAvatarContrast": "107",
+	"sharedChatAvatarBrightness": "107",
+	"sharedChatAvatarContrast": "135",
 	"sharedChatAvatarSaturation": "0",
-	"sharedChatSameRoomBorderSize": "2",
+	"sharedChatSameRoomBorderSize": "3",
 	"sharedChatSameRoomBorderOffset": "2",
 	"sharedChatSameRoomBorderColor": "#9146ff",
 	"sharedChatSameRoomBorderStyle": "solid",
 	"enableSharedChatAvatarBorderIfSameRoom": "true",
-	"sharedChatAvatarHideIfSameRoom": "false"
+	"sharedChatAvatarHideIfSameRoom": "false",
+	"sharedChatMergeExternalEmotes": "true"
 };
 // i typed out the bigNoNoWords so you don't have to, i'm sorry :(
 // it's gotta know what to remove
