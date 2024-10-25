@@ -72,6 +72,7 @@ body {
 	min-width: 0;	
 	position: relative;
 	z-index: 2;
+	flex-direction: var(--userInfoElementDirection);
 }
 
 .userInfo {
@@ -90,13 +91,18 @@ body {
 	border-style: var(--userInfoOutlineStyle);
 }
 .userInfo div {
-	margin-right: var(--messageUserInfoElementSpacing);
+	margin-right: var(--messageUserInfoElementSpacingForwards);
+	margin-left: var(--messageUserInfoElementSpacingBackwards);
 	display: flex;
 	align-self: stretch;
 	align-items: center;
+	flex-direction: var(--userInfoElementDirection);
 }
-.userInfo div:last-child {
+.userInfoForwards div:last-child {
 	margin-right: 0px;
+}
+.userInfoBackwards div:last-child {
+	margin-left: 0px;
 }
 
 .chatBlock:last-child .userInfo {
@@ -153,8 +159,11 @@ body {
 	border-radius: var(--flagsBorderRadius);
 	margin-right: var(--flagsSpacing);
 }
-.flag:last-child {
+.userInfoForwards .flag:last-child {
 	margin-right: 0px;
+}
+.userInfoBackwards .flag:first-child {
+	margin-right: calc(var(--flagSpacing) * -1);
 }
 
 .name {
@@ -272,7 +281,8 @@ tt, code, pre {
 	height: var(--avatarSize);
 	min-height: var(--avatarSize);
 	max-height: var(--avatarSize);
-	margin-right: 10px;
+	margin-right: var(--messageUserInfoElementSpacingForwards);
+	margin-left: var(--messageUserInfoElementSpacingBackwards);
 	border-radius: var(--avatarBorderRadius);
 	align-self: center;
 }
@@ -556,7 +566,11 @@ img.emoji {
 	margin-bottom: var(--bigEmoteMarginVertical);
 	display: inline-flex;
 	align-items: center;
+	flex-wrap: wrap;
 }
+
+.right .isBigEmoteMode { justify-content: end; }
+.left .isBigEmoteMode { justify-content: start; }
 
 .left .bsrInfo, .left .bsrStats {
 	flex-direction: row;

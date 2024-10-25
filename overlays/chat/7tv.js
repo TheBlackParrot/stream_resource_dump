@@ -127,9 +127,10 @@ function start7TVWebsocket() {
 
 					chatEmotes.addEmote(new Emote({
 						service: "7tv",
+						animated: emoteData.animated,
 						urls: {
-							high: `https:${emoteData.host.url}/${urls[urls.length-1].name}`,
-							low: `https:${emoteData.host.url}/${urls[0].name}`
+							high: `https:${emoteData.host.url}/4x.###`,
+							low: `https:${emoteData.host.url}/1x.###`
 						},
 						emoteID: emoteData.id,
 						emoteName: (objectData.value.name || emoteData.name),

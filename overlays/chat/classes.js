@@ -60,6 +60,7 @@ class Emote {
 		this.isZeroWidth = ("isZeroWidth" in opts ? opts.isZeroWidth : false);
 		this.modifiers = ("modifiers" in opts ? opts.modifiers : []);
 		this.global = opts.global || false;
+		this.animated = opts.animated || false;
 
 		return this;
 	}
@@ -74,8 +75,22 @@ class Emote {
 				return;
 			}
 
-			if(argh.service === "bttv" || argh.service === "7tv") {
+			if(argh.service === "bttv") {
 				resolve(url);
+				return;
+			}
+
+			if(argh.service === "7tv") {
+				if(argh.animated) {
+					resolve(url.replace(".###", `.${localStorage.getItem("setting_emoteFormat7TV")}`));
+				} else {
+					let format = localStorage.getItem("setting_emoteFormat7TV");
+					if(format === "gif") {
+						format = "png";
+					}
+
+					resolve(url.replace(".###", `.${format}`));
+				}
 				return;
 			}
 
@@ -275,6 +290,13 @@ class UserBlock {
 		this.initUserBlockCustomizations();
 	}
 
+	updateUserInfoBlockDirection() {
+		this.rootBlock.removeClass("userInfoBackwards");
+		this.rootBlock.removeClass("userInfoForwards");
+		
+		this.rootBlock.addClass((localStorage.getItem("setting_reverseChatMessageUserInfo") === "true" ? "userInfoBackwards" : "userInfoForwards"));
+	}
+
 	async updateUserInfoBlock() {
 		await this.user.customSettingsFetchPromise;
 
@@ -285,6 +307,8 @@ class UserBlock {
 		} else {
 			this.rootBlock.removeClass("userInfoIn");
 		}
+
+		this.updateUserInfoBlockDirection();
 
 		this.updateNameBlock();
 	}
@@ -1489,6 +1513,15 @@ class UserSet {
 				user.entitlements.overlay.badges = user.entitlements.overlay.badges.filter(function(badge) {
 					return badge.type !== "bot";
 				});
+			}
+		}
+	}
+
+	refreshUserInfoBlockDirections() {
+		for(const idx in this) {
+			const user = this[idx];
+			if(user.userBlock) {
+				user.userBlock.updateUserInfoBlockDirection();
 			}
 		}
 	}

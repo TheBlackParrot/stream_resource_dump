@@ -118,6 +118,32 @@ async function getCachedMapData(url) {
 	}
 }
 
+const qrCodeECLevelEnum = {
+	qrcode: {
+		lowest: "L",
+		low: "L",
+		medium: "M",
+		high: "Q",
+		highest: "H"
+	},
+
+	azteccode: {
+		lowest: 5,
+		low: 23,
+		medium: 67,
+		high: 80,
+		highest: 95
+	},
+
+	pdf417: {
+		lowest: 1,
+		low: 2,
+		medium: 3,
+		high: 4,
+		highest: 5
+	}
+}
+
 var oldHash;
 async function updateBeatSaberMapData() {
 	const curHash = `${currentBSSong.map.hash}.${currentBSSong.song.title}`;
@@ -164,6 +190,10 @@ async function updateBeatSaberMapData() {
 	let bsData = null;
 	if(currentBSSong.map.hash.indexOf("wip") === -1 && currentBSSong.map.hash.length === 40) {
 		bsData = await getCachedMapData(`https://api.beatsaver.com/maps/hash/${currentBSSong.map.hash}`);
+
+		if(!Object.keys(bsData).length) {
+			bsData = null;
+		}
 	}
 
 	if(bsData !== null) {
@@ -245,10 +275,46 @@ async function updateBeatSaberMapData() {
 		currentBSSong.cover.colors.light = `#${colors.light[0].map(function(x) { return Math.floor(x).toString(16).padStart(2, "0"); }).join("")}`;
 	}
 
+	const codeType = localStorage.getItem("setting_bs_qrCodeGlyph");
+	const codeECLevel = localStorage.getItem("setting_bs_qrCodeECLevel");
+	const codeECLevelFixed = qrCodeECLevelEnum[codeType][codeECLevel];
+
+	currentBSSong.qrCode = btoa(bwipjs.toSVG({
+		bcid: codeType,
+		text: `https://beatsaver.com/maps/${currentBSSong.map.bsr}`,
+		eclevel: codeECLevelFixed,
+		barcolor: "#ffffff"
+	}));
+
 	postToBSEventChannel({
 		type: "map",
 		data: currentBSSong
 	});
+}
+
+var oldQR;
+function updateQRCode() {
+	const codeType = localStorage.getItem("setting_bs_qrCodeGlyph");
+	const codeECLevel = localStorage.getItem("setting_bs_qrCodeECLevel");
+	const codeECLevelFixed = qrCodeECLevelEnum[codeType][codeECLevel];
+
+	const qrCodeString = `${codeType}${codeECLevelFixed}`;
+	if(oldQR === qrCodeString) {
+		return;
+	}
+	oldQR = qrCodeString;
+
+	currentBSSong.qrCode = btoa(bwipjs.toSVG({
+		bcid: codeType,
+		text: `https://beatsaver.com/maps/${currentBSSong.map.bsr}`,
+		eclevel: codeECLevelFixed,
+		barcolor: "#ffffff"
+	}));
+
+	postToBSEventChannel({
+		type: "qr",
+		data: currentBSSong.qrCode
+	});	
 }
 
 function connectBeatSaber() {

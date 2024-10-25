@@ -167,7 +167,8 @@ const nonPublicSettings = [
 	"ns_url",
 	"ns_token",
 	"ns_updateInterval",
-	"ns_headerText"
+	"ns_headerText",
+	"emoteFormat7TV"
 ];
 
 const defaultConfig = {
@@ -1138,7 +1139,19 @@ const defaultConfig = {
 	"sharedChatSameRoomBorderStyle": "solid",
 	"enableSharedChatAvatarBorderIfSameRoom": "true",
 	"sharedChatAvatarHideIfSameRoom": "false",
-	"sharedChatMergeExternalEmotes": "true"
+	"sharedChatMergeExternalEmotes": "true",
+	"reverseChatMessageUserInfo": "false",
+	"bs_qrCodeGlyph": "qrcode",
+	"bs_qrCodeECLevel": "lowest",
+	"bs_qrHeight": "50",
+	"bs_qrPadding": "3",
+	"bs_qrBorderRadius": "4",
+	"bs_qrBrightness": "0",
+	"bs_qrBackgroundColor": "#bbbbbb",
+	"bs_qrOpacity": "67",
+	"bs_qrBGColorReflectsArtColor": "true",
+	"bs_qrBGColorReflectsArtColorDarker": "false",
+	"emoteFormat7TV": "gif"
 };
 // i typed out the bigNoNoWords so you don't have to, i'm sorry :(
 // it's gotta know what to remove

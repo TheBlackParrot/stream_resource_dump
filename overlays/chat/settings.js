@@ -1471,6 +1471,26 @@ const settingUpdaters = {
 	},
 	sharedChatAvatarHideIfSameRoom: function(value) {
 		rootCSS().setProperty("--sharedChatAvatarSameRoomDisplay", (value === "true" ? "none" : "var(--sharedChatAvatarDisplay)"));
+	},
+
+	reverseChatMessageUserInfo: function(value) {
+		if(value === "true") {
+			$(".userInfo").addClass("userInfoBackwards").removeClass("userInfoForwards");
+
+			rootCSS().setProperty("--userInfoElementDirection", "row-reverse");
+
+			rootCSS().setProperty("--messageUserInfoElementSpacingForwards", "0px");
+			rootCSS().setProperty("--messageUserInfoElementSpacingBackwards", "var(--messageUserInfoElementSpacing)");
+		} else {
+			$(".userInfo").addClass("userInfoForwards").removeClass("userInfoBackwards");
+
+			rootCSS().setProperty("--userInfoElementDirection", "row");
+
+			rootCSS().setProperty("--messageUserInfoElementSpacingForwards", "var(--messageUserInfoElementSpacing)");
+			rootCSS().setProperty("--messageUserInfoElementSpacingBackwards", "0px");
+		}
+
+		twitchUsers.refreshUserInfoBlockDirections();
 	}
 };
 settingUpdaters["chatHideAccounts"](localStorage.getItem("setting_chatHideAccounts"));

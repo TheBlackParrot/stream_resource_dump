@@ -87,6 +87,13 @@ const settingUpdaters = {
 	}
 };
 
+const settingUpdatersTrigger = {
+	bs_qrCodeGlyph: function() {
+		updateQRCode();
+	}
+};
+settingUpdatersTrigger.bs_qrCodeECLevel = settingUpdatersTrigger.bs_qrCodeGlyph;
+
 function updateSetting(which, value, oldValue) {
 	if(which.indexOf("setting_panel_") === -1) {
 		return;

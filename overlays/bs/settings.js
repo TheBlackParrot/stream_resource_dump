@@ -1,5 +1,5 @@
-const overlayRevision = 12;
-const overlayRevisionTimestamp = 1724245024068;
+const overlayRevision = 13;
+const overlayRevisionTimestamp = 1729884011089;
 
 const settingsChannel = new BroadcastChannel("settings_overlay");
 
@@ -22,7 +22,8 @@ const elementMap = {
 	"hitMissCell": ["hit", "miss", "hitmiss", "hits", "misses", "correct", "wrong", "errors", "error"],
 	"accCell": ["acc", "accuracy", "combo", "percent", "percentage", "score"],
 	"ppCell": ["pp", "rank", "ranked", "points", "rankpoints", "rankedpoints", "performancepoints", "rankpp"],
-	"handValueCell": ["hand", "hands", "swing", "swings", "avg", "average", "pre", "post", "swingacc", "swingaccuracy", "avgs", "averages"]
+	"handValueCell": ["hand", "hands", "swing", "swings", "avg", "average", "pre", "post", "swingacc", "swingaccuracy", "avgs", "averages"],
+	"qrCell": ["qr", "qrcode", "scannable", "scan", "aztec", "pdf", "pdf417"]
 };
 
 const diffMap = {
@@ -812,7 +813,48 @@ const settingUpdaters = {
 	},
 	ensureHandsColorIsBrightEnough: function(value) { settingUpdaters.handsColorReflectsSaberColors(localStorage.getItem("setting_bs_handsColorReflectsSaberColors")); },
 	handsColorMinBrightness: function(value) { settingUpdaters.handsColorReflectsSaberColors(localStorage.getItem("setting_bs_handsColorReflectsSaberColors")); },
-	handsColorMaxBrightness: function(value) { settingUpdaters.handsColorReflectsSaberColors(localStorage.getItem("setting_bs_handsColorReflectsSaberColors")); }
+	handsColorMaxBrightness: function(value) { settingUpdaters.handsColorReflectsSaberColors(localStorage.getItem("setting_bs_handsColorReflectsSaberColors")); },
+
+	qrHeight: function(value) {
+		rootCSS().setProperty("--qrSize", `${value}px`);
+	},
+	qrPadding: function(value) {
+		rootCSS().setProperty("--qrPadding", `${value}px`);
+	},
+	qrBorderRadius: function(value) {
+		rootCSS().setProperty("--qrBorderRadius", `${value}px`);
+	},
+	qrBrightness: function(value) {
+		rootCSS().setProperty("--qrFilters", `invert(${100 - parseFloat(value)}%)`);
+	},
+	qrOpacity: function(value) {
+		rootCSS().setProperty("--qrOpacity", `${value}%`);
+	},
+	qrBackgroundColor: function(value) {
+		rootCSS().setProperty("--qrBGColorStatic", value);
+	},
+	qrBGColorReflectsArtColor: function(value) {
+		if(value === "true") {
+			if(localStorage.getItem("setting_bs_qrBGColorReflectsArtColorDarker") === "true") {
+				rootCSS().setProperty("--qrBackgroundColor", "var(--colorDark)");
+			} else {
+				rootCSS().setProperty("--qrBackgroundColor", "var(--colorLight)");
+			}
+		} else {
+			rootCSS().setProperty("--qrBackgroundColor", "var(--qrBGColorStatic)");
+		}
+	},
+	qrBGColorReflectsArtColorDarker: function(value) {
+		if(localStorage.getItem("setting_bs_qrBGColorReflectsArtColor") === "false") {
+			return;
+		}
+
+		if(value === "true") {
+			rootCSS().setProperty("--qrBackgroundColor", "var(--colorDark)");
+		} else {
+			rootCSS().setProperty("--qrBackgroundColor", "var(--colorLight)");
+		}
+	},
 };
 
 function updateSetting(which, value, oldValue) {

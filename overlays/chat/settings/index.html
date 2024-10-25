@@ -29,6 +29,7 @@
 	<script defer type="text/javascript" src="obs-ws-5.0.5.min.js"></script>
 	<script defer type="text/javascript" src="vibrant.min.js"></script>
 	<script defer type="text/javascript" src="forge.min.js"></script>
+	<script defer type="text/javascript" src="bwip-js-min.js"></script>
 </head>
 <body>
 	<div id="wrapper">
@@ -59,6 +60,7 @@
 					<div class="row" data-tab="bsinfo_art"><i class="fas fa-image"></i>Cover Art Cell</div>
 					<div class="row" data-tab="bsinfo_hitmiss"><i class="fas fa-xmark"></i>Hit / Miss Cell</div>
 					<div class="row" data-tab="bsinfo_misc"><i class="fas fa-circle-info"></i>Miscellaneous Info Cell</div>
+					<div class="row" data-tab="bsinfo_qr"><i class="fas fa-qrcode"></i>Scannable Map URL Cell</div>
 					<div class="row" data-tab="bsinfo_pp"><i class="fas fa-ranking-star"></i>Ranked PP Cell</div>
 					<div class="row" data-tab="bsinfo_metadata"><i class="fas fa-compact-disc"></i>Song Metadata Cell</div>
 					<div class="row" data-tab="bsinfo_hands"><i class="fas fa-hands"></i>Swing Averages Cell</div>
@@ -1701,6 +1703,19 @@
 					<div class="setting" data-dependent="7tv">
 						<div class="settingCell">
 							<input checked id="enable7TVUserPaints" type="checkbox"/> <span class="settingInfo">Enable username paints</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Emote file format</span>
+						</div>
+						<div class="settingCell">
+							<select id="emoteFormat7TV">
+								<option selected value="gif">GIF / PNG</option>
+								<option value="avif">AVIF</option>
+								<option value="webp">WEBP</option>
+							</select>
 						</div>
 					</div>
 				</div>
@@ -4287,7 +4302,7 @@
 					</div>
 					<div class="setting">
 						<div class="settingCell smol">
-							<strong>Available elements:</strong> acc, art, hitmiss, metadata, misc, pp, hands
+							<strong>Available elements:</strong> acc, art, hitmiss, metadata, misc, pp, qrcode, hands
 						</div>
 					</div>
 					<div class="setting">
@@ -6076,6 +6091,12 @@
 			</div>
 			<div class="section" data-content="viewerinfo">
 				<div class="part">
+					<div class="setting">
+						<div class="settingCell">
+							<input id="reverseChatMessageUserInfo" type="checkbox"/> <span class="settingInfo">Reverse order of chatter information elements</span>
+						</div>
+					</div>
+					<hr/>
 					<div class="setting">
 						<div class="settingCellLabel">
 							<span class="settingInfo">Background color</span>
@@ -8233,7 +8254,106 @@
 					<h1>Emotes</h1>
 					<div class="setting">
 						<div class="settingCell">
-							<input checked id="sharedChatMergeExternalEmotes" type="checkbox"/> <span class="settingInfo">Merge third-party emote sets with the broadcaster's third-party emote sets</span>
+							<input checked id="sharedChatMergeExternalEmotes" type="checkbox"/> <span class="settingInfo">Merge third-party emote sets from shared chats with the broadcaster's third-party emote sets</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section" data-content="bsinfo_qr">
+				<div class="part">
+					<h1>Scannable Map URL Cell</h1>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Code type</span>
+						</div>
+						<div class="settingCell">
+							<select id="bs_qrCodeGlyph">
+								<option value="azteccode">Aztec Code</option>
+								<option value="pdf417">PDF417</option>
+								<option selected value="qrcode">QR Code</option>
+							</select>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Error correction</span>
+						</div>
+						<div class="settingCell">
+							<select id="bs_qrCodeECLevel">
+								<option selected value="lowest">Lowest</option>
+								<option value="low">Low</option>
+								<option value="medium">Medium</option>
+								<option value="high">High</option>
+								<option value="highest">Highest</option>
+							</select>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Height</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_qrHeight" min="1" max="300" step="1" value="50"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Padding</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_qrPadding" min="0" max="99" step="1" value="3"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Border radius</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_qrBorderRadius" min="0" max="99" step="1" value="4"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Foreground brightness</span>
+						</div>
+						<div class="settingCell">
+							<datalist id="bs_qrBrightnessTicks">
+								<option value="0"></option>
+								<option value="25"></option>
+								<option value="50"></option>
+								<option value="75"></option>
+								<option value="100"></option>
+							</datalist>
+							<input type="range" id="bs_qrBrightness" min="0" max="100" step="1" value="0" list="bs_qrBrightnessTicks"/>
+							<span class="rangeValue">25</span><span class="settingCellMeasurement">%</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Foreground opacity</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_qrOpacity" min="0" max="100" step="1" value="67"/><span class="settingCellMeasurement">%</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Background color</span>
+						</div>
+						<div class="settingCell">
+							<input id="bs_qrBackgroundColor" type="text" data-coloris value="#bbbbbb"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="bs_qrBGColorReflectsArtColor" type="checkbox"/> <span class="settingInfo">Background color reflects album art/cover art color</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="bs_qrBGColorReflectsArtColorDarker" type="checkbox"/> <span class="settingInfo">Use darker album art/cover art color</span>
 						</div>
 					</div>
 				</div>

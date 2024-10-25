@@ -9,8 +9,8 @@ function changeStatusCircle(which, status, msg) {
 
 $("#sensitive .section").show();
 
-const overlayRevision = 72;
-const overlayRevisionTimestamp = 1729302564000;
+const overlayRevision = 73;
+const overlayRevisionTimestamp = 1729884011089;
 $("#revision").text(`revision ${overlayRevision}`);
 
 function resetEverything() {
@@ -275,6 +275,11 @@ $("input, select, textarea").on("change", function(e) {
 
 	if(setting.substring(0, 6) === "panel_") {
 		updateSetting(`setting_${setting}`, value);
+	}
+
+	if(setting in settingUpdatersTrigger) {
+		console.log(`wanted trigger for ${setting}`);
+		settingUpdatersTrigger[setting]();
 	}
 });
 

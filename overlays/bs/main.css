@@ -622,6 +622,22 @@ body {
 .flashLeft { animation-name: flashLeft; }
 .flashRight { animation-name: flashRight; }
 
+#qrWrapper, #qr {
+	border-radius: var(--qrBorderRadius);
+}
+#qrWrapper {
+	display: var(--show-qr);
+	background-color: var(--qrBackgroundColor);
+	height: calc(var(--qrSize) + (var(--qrPadding) * 2));
+}
+#qr {
+	width: auto;
+	height: var(--qrSize);
+	filter: var(--qrFilters);
+	padding: var(--qrPadding);
+	opacity: var(--qrOpacity);
+}
+
 /* uncomment after OBS updates CEF to a recent chrome version
 :nth-child(1 of div.cell) {
 	padding-left: 0px;

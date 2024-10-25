@@ -1,5 +1,51 @@
 {
-	"9999999999999": {
+	"1729884011089": {
+		"updates": {
+			"bs": {
+				"revision": 13,
+				"notes": [
+					[
+						"added a QR code generator for map links",
+						["went ahead and allowed QR codes, Aztec codes, and PDF417 codes. the reader i'm using seems to support these just fine at all error correction levels"],
+						{"anchor": "bs_elementOrder"}
+					],
+					[
+						"fixed bug with beatleader ranked data causing null read errors on custom beat saber maps not uploaded to beatsaver"
+					]
+				]
+			},
+
+			"chat": {
+				"revision": 71,
+				"notes": [
+					[
+						"added a setting to reverse the order of user information elements",
+						{"anchor": "reverseChatMessageUserInfo"}
+					],
+					[
+						"big emotes on layouts with narrow widths now wrap to the next line instead of clipping on outer edges",
+						["this was especially apparent on right-aligned layouts, but easily dismissable on left-aligned ones as it would just... look normal"]
+					],
+					[
+						"added a setting to switch 7TV emote formats between GIF/PNG, WEBP, and AVIF",
+						["by default it will use GIF/PNG (this is what it's been using), AVIF seems to offer the lowest filesizes"],
+						{"anchor": "emoteFormat7TV"}
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 73,
+				"notes": [
+					[
+						"fixed custom beat saber maps not uploaded to beatsaver causing undefined variable errors on beat saber overlays"
+					]
+				]
+			}
+		}
+	},
+
+	"1729564411882": {
 		"updates": {
 			"chat": {
 				"revision": 70,

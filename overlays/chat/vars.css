@@ -39,6 +39,7 @@
 	--userInfoOutlineStyle: solid;
 	--userInfoOutline: none;
 	--userInfoBottomMargin: 0px;
+	--userInfoElementDirection: row;
 
 	--messageColor: rgba(255, 255, 255, 1);
 	--messageFont: "Manrope";
@@ -47,6 +48,8 @@
 	--messageLetterSpacing: 0px;
 	--messageLineHeight: 30px;
 	--messageUserInfoElementSpacing: 14px;
+	--messageUserInfoElementSpacingBackwards: 0px;
+	--messageUserInfoElementSpacingForwards: var(--messageUserInfoElementSpacing);
 	--messageTransform: none;
 	--messageBoldAmount: 1.25px;
 	--messageSeparatorColor: #ffffff20;

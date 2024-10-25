@@ -44,6 +44,7 @@ function addBTTVEmote(data) {
 
 	chatEmotes.addEmote(new Emote({
 		service: "bttv",
+		animated: emote.animated,
 		urls: {
 			high: `https://cdn.betterttv.net/emote/${emote.id}/3x.${emote.imageType}`,
 			low: `https://cdn.betterttv.net/emote/${emote.id}/1x.${emote.imageType}`

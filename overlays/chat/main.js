@@ -334,11 +334,13 @@ async function getExternalChannelEmotes(streamerData, isShared) {
 		if(response.ok) {
 			const data = await response.json();
 			console.log("got bttv emotes");
+			console.log(data);
 			systemMessage(`*Fetched ${(isShared ? streamerData.display_name : "channel")}'s BetterTTV emotes*`);
 
 			let addEmoteFunction = function(emote) {
 				chatEmotes.addEmote(new Emote({
 					service: "bttv",
+					animated: emote.animated,
 					urls: {
 						high: `https://cdn.betterttv.net/emote/${emote.id}/3x.${emote.imageType}`,
 						low: `https://cdn.betterttv.net/emote/${emote.id}/1x.${emote.imageType}`
@@ -367,6 +369,7 @@ async function getExternalChannelEmotes(streamerData, isShared) {
 		if(response.ok) {
 			const data = await response.json();
 			console.log("got ffz emotes");
+			console.log(data);
 			systemMessage(`*Fetched ${(isShared ? streamerData.display_name : "channel")}'s FrankerFaceZ emotes*`);
 
 			for(let setIdx in data.sets) {
@@ -374,6 +377,7 @@ async function getExternalChannelEmotes(streamerData, isShared) {
 				for(const emote of emotes) {
 					chatEmotes.addEmote(new Emote({
 						service: "ffz",
+						animated: ("animated" in emote),
 						urls: {
 							high: ("animated" in emote ? (emote.animated[4] || emote.animated[1]) : (emote.urls[4] || emote.urls[1])),
 							low: ("animated" in emote ? emote.animated[1] : emote.urls[1])
@@ -427,11 +431,13 @@ async function getExternalChannelEmotes(streamerData, isShared) {
 					const emoteData = emote.data;
 					const urls = emoteData.host.files;
 
+					// 7TV seems to provide all formats at all sizes, so i'm hardcoding 4x/1x and determining file format on the fly now
 					chatEmotes.addEmote(new Emote({
 						service: "7tv",
+						animated: emoteData.animated,
 						urls: {
-							high: `https:${emoteData.host.url}/${urls[urls.length-1].name}`,
-							low: `https:${emoteData.host.url}/${urls[0].name}`
+							high: `https:${emoteData.host.url}/4x.###`,
+							low: `https:${emoteData.host.url}/1x.###`
 						},
 						emoteID: emoteData.id,
 						emoteName: emote.name || emoteData.name,

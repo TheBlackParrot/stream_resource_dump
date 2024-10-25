@@ -185,4 +185,12 @@
 	--handsFontWeight: 900;
 	--handsLineHeight: 20px;
 	--handsFlashDuration: 0.1s;
+
+	--qrSize: 52px;
+	--qrPadding: 2px;
+	--qrBorderRadius: 4px;
+	--qrFilters: invert(75%);
+	--qrOpacity: 100%;
+	--show-qr: block;
+	--qrBGColorStatic: #bbbbbb;
 }

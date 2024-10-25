@@ -74,6 +74,24 @@ function setArt() {
 	$(":root").get(0).style.setProperty("--colorLight", lightColor);
 }
 
+function setQR() {
+	if(!("qrCode" in activeMap)) {
+		$("#qrCell").hide();
+		return;
+	}
+
+	if(activeMap.map.bsr === null) {
+		$("#qrCell").hide();
+		return;
+	}
+
+	$("#qr").attr("src", `data:image/svg+xml;base64,${activeMap.qrCode}`);
+
+	if($("#qrCell").attr("data-enabled") === "true") {
+		$("#qrCell").show();
+	}
+}
+
 function updateMarquee() {
 	if($("#titleString").text() === "") {
 		return;
@@ -251,6 +269,7 @@ const eventFuncs = {
 		activeMap = map;
 
 		setArt();
+		setQR();
 
 		$(":root").get(0).style.setProperty("--diffIconURL", `url("icons/${map.map.characteristic}.svg")`);
 		$(":root").get(0).style.setProperty("--currentDiffColor", `var(--color${map.map.difficulty})`);
@@ -329,6 +348,11 @@ const eventFuncs = {
 		element[0].style.animation = 'none';
 		element[0].offsetHeight;
 		element[0].style.animation = null; 
+	},
+
+	"qr": function(qr) {
+		activeMap.qrCode = qr;
+		setQR();
 	}
 };
 function processMessage(data) {

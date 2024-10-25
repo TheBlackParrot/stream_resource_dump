@@ -127,7 +127,12 @@ async function getBeatLeaderLeaderboardData(difficulty, characteristic, hash) {
 		return null;
 	}
 
+	if(!data.data) {
+		return null;
+	}
+
 	let foundData;
+
 	for(const check of data.data.difficulties) {
 		if(check.modeName !== characteristic || check.difficultyName !== difficulty) {
 			continue;
