@@ -353,11 +353,6 @@ body {
 	display: var(--show-art-outline);
 	overflow: hidden;
 }
-#art {
-	position: relative;
-	display: block;
-	left: var(--art-outline-size);
-}
 
 #artWrapper, #artOutline, #artBG {
 	width: calc(var(--art-size) + (var(--art-outline-size) * 2));
@@ -374,7 +369,7 @@ body {
 
 #artOutline {
 	z-index: 3;
-	filter: contrast(50%) brightness(var(--art-outline-brightness));
+	filter: var(--artFilters) contrast(50%) brightness(var(--art-outline-brightness));
 	-webkit-mask-image: conic-gradient(black 0deg var(--currentProgressAngle), transparent var(--currentProgressAngle));
 }
 
@@ -392,7 +387,7 @@ body {
 
 #artBG {
 	z-index: 2;
-	filter: contrast(120%) brightness(0.75);
+	filter: var(--artFilters) contrast(120%) brightness(0.75);
 }
 
 #art {
@@ -401,6 +396,11 @@ body {
 	height: var(--art-size);
 	border-radius: var(--art-border-radius);
 	z-index: 4;
+
+	position: relative;
+	display: block;
+	left: var(--art-outline-size);
+	filter: var(--artFilters);
 }
 .showBoxShadow {
 	box-shadow: var(--box-shadow-effects-actual);
@@ -429,7 +429,7 @@ body {
 #artBGWrap .artContainer {
 	height: var(--background-art-size);
 	width: calc(100vw + var(--background-art-blur-amount) * 16);
-	filter: blur(var(--background-art-blur-amount));
+	filter: var(--artFilters) blur(var(--background-art-blur-amount));
 	background-size: cover;
 	top: calc(var(--background-art-size) * -1 / 2);
 	left: calc(var(--background-art-blur-amount) * 8 * -1);
@@ -628,7 +628,10 @@ body {
 #qrWrapper {
 	display: var(--show-qr);
 	background-color: var(--qrBackgroundColor);
+	background-image: var(--qrGradientActual);
+	background-origin: border-box;
 	height: calc(var(--qrSize) + (var(--qrPadding) * 2));
+	border: var(--qrBorderActual);
 }
 #qr {
 	width: auto;

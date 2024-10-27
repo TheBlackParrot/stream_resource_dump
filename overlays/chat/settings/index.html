@@ -4937,6 +4937,12 @@
 					</div>
 					<hr/>
 					<div class="setting">
+						<div class="settingCell">
+							<input id="bs_ppIsProgressive" type="checkbox"/> <span class="settingInfo">Use performance point values based on the current score, instead of the current accuracy</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
 						<div class="settingCellLabel">
 							<span class="settingInfo">Width</span>
 						</div>
@@ -8354,6 +8360,67 @@
 					<div class="setting">
 						<div class="settingCell">
 							<input id="bs_qrBGColorReflectsArtColorDarker" type="checkbox"/> <span class="settingInfo">Use darker album art/cover art color</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="bs_qrGradient" type="checkbox" data-dependent="bs_qrGradient"/> <span class="settingInfo">Apply a gradient to the background</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="bs_qrGradient">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Gradient color</span>
+						</div>
+						<div class="settingCell">
+							<input id="bs_qrGradientColor" type="text" data-coloris value="#ffffff80"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="bs_qrGradient">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Gradient angle</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_qrGradientAngle" min="0" max="360" step="1" value="315"/><span class="settingCellMeasurement">deg</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="bs_qrBorder" type="checkbox" data-dependent="bs_qrBorder"/> <span class="settingInfo">Enable borders around the scannable cell</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="bs_qrBorder">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Border size</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_qrBorderSize" min="0" max="16" step="1" value="1"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="bs_qrBorder">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Border color</span>
+						</div>
+						<div class="settingCell">
+							<input id="bs_qrBorderColor" type="text" data-coloris value="#ffffff40"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="bs_qrBorder">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Border style</span>
+						</div>
+						<div class="settingCell">
+							<select id="bs_qrBorderStyle">
+								<option value="dashed">Dashed</option>
+								<option value="dotted">Dotted</option>
+								<option value="double">Double</option>
+								<option value="groove">Groove</option>
+								<option value="inset">Inset</option>
+								<option value="outset">Outset</option>
+								<option value="ridge">Ridge</option>
+								<option selected value="solid">Solid</option>
+							</select>
 						</div>
 					</div>
 				</div>

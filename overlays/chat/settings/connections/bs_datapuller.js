@@ -147,8 +147,6 @@ function startDataPullerLiveDataWebsocket() {
 	datapuller_ws_LiveData.addEventListener("message", function(msg) {
 		var data = JSON.parse(msg.data);
 
-		console.log(data);
-
 		currentBSState.acc = data.Accuracy / 100;
 		currentBSState.combo = data.Combo;
 		currentBSState.elapsed = data.TimeElapsed;

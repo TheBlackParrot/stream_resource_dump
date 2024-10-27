@@ -1,4 +1,54 @@
 {
+	"1730029623853": {
+		"updates": {
+			"bs": {
+				"revision": 14,
+				"notes": [
+					[
+						"moved ranked pp curve data to an external JSON file"
+					],
+					[
+						"added a setting to show ranked pp amounts based on current score instead of current accuracy",
+						{"anchor": "bs_ppIsProgressive"}
+					],
+					[
+						"added some filters for BS+'s internal art texture due to *something* using the wrong color space for image data",
+						["don't know if this is Unity or Beat Saber or BS+ or what causing this issue"]
+					],
+					[
+						"fixed QR code cell showing up when loading the overlay even when no code has been generated yet"
+					],
+					[
+						"added a gradient to the QR code cell's background",
+						{"anchor": "bs_qrGradient"}
+					],
+					[
+						"added an option to add a border to the QR code cell",
+						{"anchor": "bs_qrBorder"}
+					]
+				]
+			},
+
+			"chat": {
+				"revision": 72,
+				"notes": [
+					[
+						"stats on Beat Saber request information now hide if they extend outside the message block"
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 74,
+				"notes": [
+					[
+						"removed some console log spamming from the DataPuller live data endpoint"
+					]
+				]
+			}
+		}
+	},
+
 	"1729884011089": {
 		"updates": {
 			"bs": {

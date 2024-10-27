@@ -168,7 +168,8 @@ const nonPublicSettings = [
 	"ns_token",
 	"ns_updateInterval",
 	"ns_headerText",
-	"emoteFormat7TV"
+	"emoteFormat7TV",
+	"bs_ppIsProgressive"
 ];
 
 const defaultConfig = {
@@ -1151,7 +1152,15 @@ const defaultConfig = {
 	"bs_qrOpacity": "67",
 	"bs_qrBGColorReflectsArtColor": "true",
 	"bs_qrBGColorReflectsArtColorDarker": "false",
-	"emoteFormat7TV": "gif"
+	"emoteFormat7TV": "gif",
+	"bs_ppIsProgressive": "false",
+	"bs_qrGradient": "true",
+	"bs_qrGradientColor": "#ffffff80",
+	"bs_qrGradientAngle": "315",
+	"bs_qrBorder": "false",
+	"bs_qrBorderSize": "1",
+	"bs_qrBorderColor": "#ffffff40",
+	"bs_qrBorderStyle": "solid"
 };
 // i typed out the bigNoNoWords so you don't have to, i'm sorry :(
 // it's gotta know what to remove

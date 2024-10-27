@@ -49,6 +49,13 @@ function setArt() {
 		artData = 'placeholder.png';
 	}
 
+	if(localStorage.getItem("setting_beatSaberDataMod") === "bsplus" && localStorage.getItem("setting_bs_useRemoteArtURL") === "false" && artData !== null) {
+		//rootCSS().setProperty("--artFilters", "saturate(75%) contrast(67%) brightness(133%)");
+		rootCSS().setProperty("--artFilters", "saturate(75%) contrast(80%) brightness(133%)")
+	} else {
+		rootCSS().setProperty("--artFilters", "opacity(1)");
+	}
+
 	rootCSS().setProperty("--art-url", `url('${artData}')`);
 	$("#art, #artDoppleganger").attr("src", artData);
 

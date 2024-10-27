@@ -13,6 +13,7 @@ var currentBSState = {
 	hits: 0,
 	misses: 0,
 	score: 0,
+	maxScore: 0,
 	scene: "Menu"
 };
 var oldScene;
@@ -233,6 +234,12 @@ async function updateBeatSaberMapData() {
 					name: collaborator.name,
 					avatar: (showCollaboratorAvatar && !("suspendedAt" in collaborator) ? collaborator.avatar : null)
 				});
+			}
+		}
+
+		for(const diffData of bsData.versions[0].diffs) {
+			if(diffData.characteristic === currentBSSong.map.characteristic && diffData.difficulty === currentBSSong.map.difficulty) {
+				currentBSState.maxScore = diffData.maxScore;
 			}
 		}
 	}

@@ -193,4 +193,15 @@
 	--qrOpacity: 100%;
 	--show-qr: block;
 	--qrBGColorStatic: #bbbbbb;
+	--qrGradientAngle: 315deg;
+	--qrGradientColor: #ffffff80;
+	--qrGradient: linear-gradient(var(--qrGradientAngle), var(--qrGradientColor) 0%, transparent 100%);
+	--qrGradientActual: var(--qrGradient);
+	--qrBorderColor: #ffffff40;
+	--qrBorderSize: 1px;
+	--qrBorderStyle: solid;
+	--qrBorder: var(--qrBorderSize) var(--qrBorderStyle) var(--qrBorderColor);
+	--qrBorderActual: 0px;
+
+	--artFilters: saturate(75%) contrast(75%) brightness(133%);
 }

@@ -188,7 +188,8 @@
 	<script defer type="text/javascript" src="broadcast.js"></script>
 	<script defer type="text/javascript" src="rankpp.js"></script>
 	<script type="text/javascript">
-		window.addEventListener("load", function() {
+		window.addEventListener("load", async function() {
+			await getCurveData();
 			changeMiscInfoDisplay();
 
 			postToSettingsEventChannel("BSStatsOverlayExists", {version: overlayRevision});

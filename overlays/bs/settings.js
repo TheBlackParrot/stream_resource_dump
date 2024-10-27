@@ -1,5 +1,5 @@
-const overlayRevision = 13;
-const overlayRevisionTimestamp = 1729884011089;
+const overlayRevision = 14;
+const overlayRevisionTimestamp = 1730029623853;
 
 const settingsChannel = new BroadcastChannel("settings_overlay");
 
@@ -69,6 +69,7 @@ function getSmoothMatrix(size, threshold) {
 	return matrix;
 }
 
+var progressivePP = false;
 const settingUpdaters = {
 	easyDiffName: function(value) {
 		diffMap["Easy"] = value;
@@ -122,12 +123,26 @@ const settingUpdaters = {
 			if(foundElement) {
 				$("#wrapper").append($(`#${foundElement}`))
 				$(`#${foundElement}`).attr("data-enabled", "true");
-				if(foundElement === "ppCell") {
-					if(leaderboardData.BeatLeader.ranked || leaderboardData.ScoreSaber.ranked) {
+				switch(foundElement) {
+					case "ppCell":
+						if(leaderboardData.BeatLeader.ranked || leaderboardData.ScoreSaber.ranked) {
+							$(`#${foundElement}`).show();
+						}
+						break;
+
+					case "qrCell":
+						if(activeMap) {
+							if("qrCode" in activeMap) {
+								if(activeMap.qrCode) {
+									$(`#${foundElement}`).show();
+								}
+							}
+						}
+						break;
+
+					default:
 						$(`#${foundElement}`).show();
-					}
-				} else {
-					$(`#${foundElement}`).show();
+						break;
 				}
 			}
 		}
@@ -855,6 +870,42 @@ const settingUpdaters = {
 			rootCSS().setProperty("--qrBackgroundColor", "var(--colorLight)");
 		}
 	},
+
+	ppIsProgressive: function(value) {
+		progressivePP = (value === "true");
+		updatePPValues(currentState.acc);
+	},
+
+	qrGradient: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--qrGradientActual", `var(--qrGradient)`);
+		} else {
+			rootCSS().setProperty("--qrGradientActual", `unset`);
+		}
+	},
+	qrGradientColor: function(value) {
+		rootCSS().setProperty("--qrGradientColor", value);
+	},
+	qrGradientAngle: function(value) {
+		rootCSS().setProperty("--qrGradientAngle", `${value}deg`);
+	},
+
+	qrBorder: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--qrBorderActual", "var(--qrBorder)");
+		} else {
+			rootCSS().setProperty("--qrBorderActual", "0px");
+		}
+	},
+	qrBorderColor: function(value) {
+		rootCSS().setProperty("--qrBorderColor", value);
+	},
+	qrBorderSize: function(value) {
+		rootCSS().setProperty("--qrBorderSize", `${value}px`);
+	},
+	qrBorderStyle: function(value) {
+		rootCSS().setProperty("--qrBorderStyle", value);
+	}
 };
 
 function updateSetting(which, value, oldValue) {

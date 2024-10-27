@@ -486,13 +486,21 @@ const chatFuncs = {
 		ratingContainer.append(`<i class="songRatingPercentage">(${parseInt(mapData.stats.score * 100)}<i style="font-size: 0.85em;">%</i>)</i>`);
 		statsElement.append(ratingContainer);
 
-		extraDataElement.append(idElement).append(statsElement);
+		extraDataElement.append(idElement);
+		extraDataElement.append(statsElement);
 
 		infoElement.empty();
 		if(canShowArt) {
 			infoElement.append(artElement);
 		}
 		infoElement.append(metadataElement).append(extraDataElement);
+
+		const statsChildren = statsElement.children();
+		if(statsChildren.length) {
+			for(let idx = statsChildren.length - 1; extraDataElement.width() > infoElement.width() && idx >= 0; idx--) {
+				$(statsChildren[idx]).hide();
+			}
+		}
 	},
 
 	refreshpronouns: async function(data, callback) {
