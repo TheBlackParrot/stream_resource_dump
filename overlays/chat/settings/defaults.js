@@ -169,7 +169,10 @@ const nonPublicSettings = [
 	"ns_updateInterval",
 	"ns_headerText",
 	"emoteFormat7TV",
-	"bs_ppIsProgressive"
+	"bs_ppIsProgressive",
+	"bs_enableHealthOutline",
+	"bs_healthOutlineShowsOnAllChanges",
+	"bs_healthOutlineTimeout"
 ];
 
 const defaultConfig = {
@@ -1160,7 +1163,17 @@ const defaultConfig = {
 	"bs_qrBorder": "false",
 	"bs_qrBorderSize": "1",
 	"bs_qrBorderColor": "#ffffff40",
-	"bs_qrBorderStyle": "solid"
+	"bs_qrBorderStyle": "solid",
+	"spotify_scannableUseAlbum": "false",
+	"spotify_albumDataFromString": "from",
+	"bs_enableHealthOutline": "true",
+	"bs_healthOutlineFGReflectsArtColor": "true",
+	"bs_healthOutlineBGReflectsArtColor": "true",
+	"bs_healthOutlineInverted": "false",
+	"bs_healthOutlineFGColor": "#ffffff",
+	"bs_healthOutlineBGColor": "#888888",
+	"bs_healthOutlineShowsOnAllChanges": "false",
+	"bs_healthOutlineTimeout": "5"
 };
 // i typed out the bigNoNoWords so you don't have to, i'm sorry :(
 // it's gotta know what to remove

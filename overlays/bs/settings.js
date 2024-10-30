@@ -1,5 +1,5 @@
-const overlayRevision = 14;
-const overlayRevisionTimestamp = 1730029623853;
+const overlayRevision = 15;
+const overlayRevisionTimestamp = 1730283704485;
 
 const settingsChannel = new BroadcastChannel("settings_overlay");
 
@@ -905,6 +905,45 @@ const settingUpdaters = {
 	},
 	qrBorderStyle: function(value) {
 		rootCSS().setProperty("--qrBorderStyle", value);
+	},
+
+	enableHealthOutline: function(value) {
+		showHealth = (value === "true");
+		if(!showHealth) {
+			$("#healthOutline").hide();
+		}
+	},
+	healthOutlineFGReflectsArtColor: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--healthColorForeground", "var(--healthColorForegroundReflected)");
+		} else {
+			rootCSS().setProperty("--healthColorForeground", "var(--healthColorForegroundStatic)");
+		}
+	},
+	healthOutlineBGReflectsArtColor: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--healthColorBackground", "var(--healthColorBackgroundReflected)");
+		} else {
+			rootCSS().setProperty("--healthColorBackground", "var(--healthColorBackgroundStatic)");
+		}
+	},
+	healthOutlineInverted: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--healthColorForegroundReflected", "var(--colorDark)");
+			rootCSS().setProperty("--healthColorBackgroundReflected", "var(--colorLight)");
+		} else {
+			rootCSS().setProperty("--healthColorForegroundReflected", "var(--colorLight)");
+			rootCSS().setProperty("--healthColorBackgroundReflected", "var(--colorDark)");
+		}
+	},
+	healthOutlineFGColor: function(value) {
+		rootCSS().setProperty("--healthColorForegroundStatic", value);
+	},
+	healthOutlineBGColor: function(value) {
+		rootCSS().setProperty("--healthColorBackgroundStatic", value);
+	},
+	healthOutlineShowsOnAllChanges: function(value) {
+		alwaysShowHealth = (value === "true");
 	}
 };
 

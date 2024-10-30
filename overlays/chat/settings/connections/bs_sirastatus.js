@@ -51,6 +51,7 @@ function parseSiraPerformanceStatus(data) {
 	currentBSState.hits = data.hitNotes;
 	currentBSState.misses = data.missedNotes;
 	currentBSState.score = data.score;
+	currentBSState.health = data.energy;
 
 	postToBSEventChannel({
 		type: "state",

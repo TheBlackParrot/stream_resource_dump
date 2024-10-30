@@ -267,7 +267,8 @@ async function updateTrack() {
 				album: {
 					name: response.item.album.name,
 					type: (response.item.album.total_tracks > 2 ? "album" : "single"),
-					released: (persistentData.year ? persistentData.year : new Date(response.item.album.release_date).getUTCFullYear())
+					released: (persistentData.year ? persistentData.year : new Date(response.item.album.release_date).getUTCFullYear()),
+					uri: response.item.album.uri
 				},
 				art: persistentData.art,
 				artURL: art,

@@ -135,6 +135,60 @@ function hideStuff() {
 	}
 }
 
+async function fetchScannable(data) {
+	if(!data.uri) {
+		return;
+	}
+
+	const enableAnimations = (localStorage.getItem("setting_spotify_enableAnimations") === "true");
+	const timespans = {
+		small: (enableAnimations ? 100 : 0),
+		medium: (enableAnimations ? 250 : 0),
+		large: (enableAnimations ? 500 : 0)
+	};
+
+	const scannableURI = (localStorage.getItem("setting_spotify_scannableUseAlbum") === "true" && data.album.uri ? data.album.uri : data.uri);
+	const scannableImage = `https://scannables.scdn.co/uri/plain/svg/000000/white/400/${scannableURI}`;
+
+	const controller = new AbortController();
+	const timedOutID = setTimeout(() => controller.abort(), parseInt(localStorage.getItem("setting_ajaxTimeout")) * 1000);
+
+	var response;
+	try {
+		response = await fetch(scannableImage, { signal: controller.signal });
+	} catch(err) {
+		console.log("failed to fetch scannable");
+		$("#scannableWrapper").hide();
+		return;
+	}
+
+	if(!response.ok) {
+		$("#scannableWrapper").hide();
+		return;					
+	}
+
+	var initialSVG = await response.text();
+	let parser = new DOMParser();
+	let svgDOM = parser.parseFromString(initialSVG, "image/svg+xml");
+	svgDOM.getElementsByTagName("rect")[0].style.fill = "transparent";
+
+	const serializer = new XMLSerializer();
+	const svg = btoa(serializer.serializeToString(svgDOM));
+
+	$("#scannable")[0].setAttribute("src", `data:image/svg+xml;base64,${svg}`);
+	rootCSS().setProperty("--scannable-image", `url('data:image/svg+xml;base64,${svg}')`);
+
+	$("#scannable").one({
+		load: function() {
+			determineScannableFGColor(data);
+			$("#scannableShadow").fadeIn(timespans.large);
+		},
+		error: function() {
+			$("#scannableWrapper").hide();
+		}
+	});
+}
+
 const spotifyFuncs = {
 	trackData: function(data) {
 		elapsed = data.elapsed;
@@ -282,45 +336,7 @@ const spotifyFuncs = {
 
 		setTimeout(async function() {
 			$("#scannableShadow").fadeOut(timespans.medium, async function() {
-				let scannableImage = `https://scannables.scdn.co/uri/plain/svg/000000/white/400/${data.uri}`;
-
-				const controller = new AbortController();
-				const timedOutID = setTimeout(() => controller.abort(), parseInt(localStorage.getItem("setting_ajaxTimeout")) * 1000);
-
-				var response;
-				try {
-					response = await fetch(scannableImage, { signal: controller.signal });
-				} catch(err) {
-					console.log("failed to fetch scannable");
-					$("#scannableWrapper").hide();
-					return;
-				}
-
-				if(!response.ok) {
-					$("#scannableWrapper").hide();
-					return;					
-				}
-
-				var initialSVG = await response.text();
-				let parser = new DOMParser();
-				let svgDOM = parser.parseFromString(initialSVG, "image/svg+xml");
-				svgDOM.getElementsByTagName("rect")[0].style.fill = "transparent";
-
-				const serializer = new XMLSerializer();
-				const svg = btoa(serializer.serializeToString(svgDOM));
-
-				$("#scannable")[0].setAttribute("src", `data:image/svg+xml;base64,${svg}`);
-				rootCSS().setProperty("--scannable-image", `url('data:image/svg+xml;base64,${svg}')`);
-
-				$("#scannable").one({
-					load: function() {
-						determineScannableFGColor(data);
-						$("#scannableShadow").fadeIn(timespans.large);
-					},
-					error: function() {
-						$("#scannableWrapper").hide();
-					}
-				});
+				await fetchScannable(data);
 			});
 		}, timespans.large)
 

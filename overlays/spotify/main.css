@@ -123,7 +123,8 @@
 	--artist-additional-weight: 0px;
 	--artist-font-style: normal;
 	--artist-color-static: #aaa;
-	--artist-color: var(--colorLight);
+	--artist-color: var(--artist-color-reflected);
+	--artist-color-reflected: var(--colorLight);
 	--artist-gradient-angle: 170deg;
 	--artist-gradient-color: #FFF;
 	--artist-gradient: linear-gradient(var(--artist-gradient-angle), var(--artist-gradient-color) 20%, transparent 100%);
@@ -202,6 +203,8 @@
 	--artist-image-zoom: 150%;
 	--artist-image-x-pos: 50%;
 	--artist-image-y-pos: 30%;
+
+	--album-from-string: "from";
 }
 
 body {
@@ -499,7 +502,7 @@ body {
 }
 
 #albumString:before {
-	content: "from ";
+	content: var(--album-from-string)" ";
 	margin-right: 2px;
 }
 .right #albumString:before {

@@ -1,4 +1,51 @@
 {
+	"1730283704485": {
+		"updates": {
+			"bs": {
+				"revision": 15,
+				"notes": [
+					[
+						"fixed the QR code cell remaining visible if the option to hide the overlay in the menu was enabled",
+						["(this was silently patched on the 29th, was a 2 line fix)"]
+					],
+					[
+						"added health display around the cover art",
+						{"anchor": "bs_enableHealthOutline"}
+					],
+					[
+						"added icons for map characteristics added by Chirality"
+					]
+				]
+			},
+
+			"spotify": {
+				"revision": 27,
+				"notes": [
+					[
+						"fixed secondary metadata color reflecting the art color overriding the static color, even if that setting is disabled"
+					],
+					[
+						"added a setting to generate a spotify scannable code for the album the playing track is on, rather than the track itself",
+						{"anchor": "spotify_scannableUseAlbum"}
+					],
+					[
+						"the \"from\" in album data display can now be changed",
+						{"anchor": "spotify_albumDataFromString"}
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 75,
+				"notes": [
+					[
+						"(update only contains new settings)"
+					]
+				]
+			}
+		}
+	},
+
 	"1730029623853": {
 		"updates": {
 			"bs": {

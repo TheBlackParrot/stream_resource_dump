@@ -1,5 +1,6 @@
 :root {
 	--currentProgressAngle: 0deg;
+	--currentHealthAngle: 135deg;
 
 	--colorExpertPlus: #A695FF;
 	--colorExpert: #FF95A6;
@@ -204,4 +205,11 @@
 	--qrBorderActual: 0px;
 
 	--artFilters: saturate(75%) contrast(75%) brightness(133%);
+
+	--healthColorForeground: var(--healthColorForegroundReflected);
+	--healthColorBackground: var(--healthColorBackgroundReflected);
+	--healthColorForegroundStatic: #ffffff;
+	--healthColorBackgroundStatic: #666666;
+	--healthColorForegroundReflected: var(--colorLight);
+	--healthColorForegroundReflected: var(--colorDark);
 }

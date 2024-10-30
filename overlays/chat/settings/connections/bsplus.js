@@ -66,6 +66,7 @@ const BSPlusMessageHandlers = {
 		currentBSState.elapsed = data.scoreEvent.time;
 		currentBSState.score = data.scoreEvent.score;
 		currentBSState.timestamp = Date.now();
+		currentBSState.health = data.scoreEvent.currentHealth;
 
 		if(!currentBSState.misses) {
 			currentBSState.fcacc = data.scoreEvent.accuracy;

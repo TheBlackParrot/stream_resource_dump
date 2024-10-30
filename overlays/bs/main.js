@@ -175,7 +175,7 @@ function toggleOverlay(show) {
 	}
 
 	if(show) {
-		$("#miscInfoCell, #hitMissCell, #accCell, #ppCell").removeClass("fadeOut").addClass("fadeIn");
+		$("#miscInfoCell, #hitMissCell, #accCell, #ppCell, #qrCell").removeClass("fadeOut").addClass("fadeIn");
 		$("#bgWrapper").removeClass("fadeOut").addClass("fadeInLong");
 		$("#title").removeClass("slideOut").addClass("slideIn");
 
@@ -184,7 +184,7 @@ function toggleOverlay(show) {
 			$("#artWrapper").removeClass("fadeOut").addClass("fadeIn");
 		}, 100);
 	} else {
-		$("#miscInfoCell, #hitMissCell, #accCell, #ppCell").removeClass("fadeIn").addClass("fadeOut");
+		$("#miscInfoCell, #hitMissCell, #accCell, #ppCell, #qrCell").removeClass("fadeIn").addClass("fadeOut");
 		$("#bgWrapper").removeClass("fadeInLong").addClass("fadeOut");
 		$("#title").removeClass("slideIn").addClass("slideOut");
 
@@ -194,6 +194,43 @@ function toggleOverlay(show) {
 		}, 100);
 	}
 }
+
+var oldHealth = 0;
+var healthFadeTO;
+var showHealth = true;
+var alwaysShowHealth = false;
+function setHealth(health, forced) {
+	if(health > 1) {
+		health = 1;
+	}
+
+	$(":root").get(0).style.setProperty("--currentHealthAngle", `${health * 360}deg`);
+
+	if(oldHealth !== health) {
+		if((health < oldHealth || alwaysShowHealth) && !forced && showHealth) {
+			clearTimeout(healthFadeTO);
+
+			$("#healthOutline").fadeIn(100, function() {
+				healthFadeTO = setTimeout(function() {
+					$("#healthOutline").fadeOut(250);
+				}, parseFloat(localStorage.getItem("setting_bs_healthOutlineTimeout")) * 1000);
+			});
+		}
+	}
+
+	oldHealth = health;
+}
+
+const externalModCharacteristics = {
+	InvertedStandard: "inverted.png",
+	HorizontalStandard: "horizontal.png",
+	VerticalStandard: "vertical.png",
+	InverseStandard: "inverse.png",
+	InvertedLawless: "inverted.png",
+	HorizontalLawless: "horizontal.png",
+	VerticalLawless: "vertical.png",
+	InverseLawless: "inverse.png"
+};
 
 currentState = {};
 const eventFuncs = {
@@ -241,6 +278,8 @@ const eventFuncs = {
 			setHitMiss(data);
 		}
 
+		setHealth(data.health || 0);
+
 		timerFunction();
 
 		if(data.state === "stopped") {
@@ -249,6 +288,8 @@ const eventFuncs = {
 	},
 
 	"hash": function(hash) {
+		setHealth(0.5, true);
+
 		toggleOverlay(true);
 		switchSecondary(true);
 
@@ -278,7 +319,11 @@ const eventFuncs = {
 		setArt();
 		setQR();
 
-		$(":root").get(0).style.setProperty("--diffIconURL", `url("icons/${map.map.characteristic}.svg")`);
+		if(map.map.characteristic in externalModCharacteristics) {
+			$(":root").get(0).style.setProperty("--diffIconURL", `url("icons/${externalModCharacteristics[map.map.characteristic]}")`);
+		} else {
+			$(":root").get(0).style.setProperty("--diffIconURL", `url("icons/${map.map.characteristic}.svg")`);
+		}
 		$(":root").get(0).style.setProperty("--currentDiffColor", `var(--color${map.map.difficulty})`);
 		setDiff();
 

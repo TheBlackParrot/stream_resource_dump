@@ -1,5 +1,5 @@
-const overlayRevision = 26;
-const overlayRevisionTimestamp = 1728870202542;
+const overlayRevision = 27;
+const overlayRevisionTimestamp = 1730283704485;
 
 const settingsChannel = new BroadcastChannel("settings_overlay");
 
@@ -220,7 +220,7 @@ const settingUpdaters = {
 	},
 	artistColorReflectsArtColor: function(value) {
 		if(value === "true") {
-			rootCSS().setProperty("--artist-color", "var(--colorLight)");
+			rootCSS().setProperty("--artist-color", "var(--artist-color-reflected)");
 		} else {
 			rootCSS().setProperty("--artist-color", "var(--artist-color-static)");
 		}
@@ -314,9 +314,9 @@ const settingUpdaters = {
 
 	artistColorReflectsArtColorDarker: function(value) {
 		if(value === "true") {
-			rootCSS().setProperty("--artist-color", "var(--colorDark)");
+			rootCSS().setProperty("--artist-color-reflected", "var(--colorDark)");
 		} else {
-			rootCSS().setProperty("--artist-color", "var(--colorLight)");
+			rootCSS().setProperty("--artist-color-reflected", "var(--colorLight)");
 		}
 	},
 
@@ -608,6 +608,18 @@ const settingUpdaters = {
 	},
 	artistImageYPos: function(value) {
 		rootCSS().setProperty("--artist-image-y-pos", `${value}%`);
+	},
+
+	scannableUseAlbum: async function(value) {
+		await fetchScannable(currentSong);
+	},
+
+	albumDataFromString: function(value) {
+		$("#fromStringStyle").remove();
+		
+		let style = document.head.appendChild(document.createElement("style"));
+		style.setAttribute("id", "fromStringStyle");
+		style.innerHTML = `:root { --album-from-string: "${value} "; } #albumString:before { content: var(--album-from-string); }`;
 	}
 };
 

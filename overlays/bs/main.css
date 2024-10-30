@@ -164,6 +164,7 @@ body {
 	-webkit-mask-image: var(--diffIconURL);
 	-webkit-mask-repeat: no-repeat;
 	-webkit-mask-position: center;
+	-webkit-mask-size: contain;
 }
 
 #duration, #time, #combo, #acc, #hitValue, #missValue, #ssValue, #blValue, #fcAcc, .handCellContainer {
@@ -348,13 +349,13 @@ body {
 	-webkit-text-stroke: var(--fcAccFontAdditionalWeight) transparent;		
 }
 
-#artOutline, #artBG {
+#artOutline, #artBG, #healthOutline {
 	position: absolute;
 	display: var(--show-art-outline);
 	overflow: hidden;
 }
 
-#artWrapper, #artOutline, #artBG {
+#artWrapper, #artOutline, #artBG, #healthOutline {
 	width: calc(var(--art-size) + (var(--art-outline-size) * 2));
 	height: calc(var(--art-size) + (var(--art-outline-size) * 2));
 }
@@ -363,7 +364,7 @@ body {
 	display: var(--show-art);
 }
 
-#artOutline, #artBG {
+#artOutline, #artBG, #healthOutline {
 	border-radius: var(--art-border-radius);
 }
 
@@ -371,6 +372,12 @@ body {
 	z-index: 3;
 	filter: var(--artFilters) contrast(50%) brightness(var(--art-outline-brightness));
 	-webkit-mask-image: conic-gradient(black 0deg var(--currentProgressAngle), transparent var(--currentProgressAngle));
+}
+
+#healthOutline {
+	display: none;
+	z-index: 4;
+	background-image: conic-gradient(var(--healthColorForeground) 0deg var(--currentHealthAngle), var(--healthColorBackground) var(--currentHealthAngle));
 }
 
 .artContainer {

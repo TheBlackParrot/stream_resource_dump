@@ -154,6 +154,7 @@ function startDataPullerLiveDataWebsocket() {
 		currentBSState.misses = data.Misses;
 		currentBSState.scene = (currentBSState.state === "playing" ? "Playing" : "Menu");
 		currentBSState.score = data.Score;
+		currentBSState.health = data.PlayerHealth / 100;
 
 		if(data.FullCombo) {
 			currentBSState.fcacc = currentBSState.acc;

@@ -3170,6 +3170,14 @@
 						</div>
 					</div>
 					<div class="setting" data-dependent="spotify_enableArtistAlbumCycle">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Text behind data</span>
+						</div>
+						<div class="settingCell">
+							<input id="spotify_albumDataFromString" type="text" value="from"/>
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableArtistAlbumCycle">
 						<div class="settingCell">
 							<input checked id="spotify_showSingleIfSingle" type="checkbox"/> <span class="settingInfo">Mention if the track an album is on is a single</span>
 						</div>
@@ -3308,6 +3316,11 @@
 					<div class="setting">
 						<div class="settingCell">
 							<input checked id="spotify_enableScannable" type="checkbox" data-dependent="spotify_enableScannable"/> <span class="settingInfo">Display a scannable code linking directly to the currently playing track</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="spotify_enableScannable">
+						<div class="settingCell">
+							<input id="spotify_scannableUseAlbum" type="checkbox"/> <span class="settingInfo">Use the album a track is on, instead of the track itself</span>
 						</div>
 					</div>
 					<hr/>
@@ -4580,6 +4593,59 @@
 						</div>
 						<div class="settingCell">
 							<input type="number" id="bs_artOutlineBrightness" min="0" max="500" step="1" value="155"/><span class="settingCellMeasurement">%</span>
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Health Outline</h1>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="bs_enableHealthOutline" type="checkbox"/> <span class="settingInfo">Display current health on top of the album/cover art outline</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="bs_healthOutlineShowsOnAllChanges" type="checkbox"/> <span class="settingInfo">Show health outline even when health is increasing</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Show for</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_healthOutlineTimeout" min="0" max="30" step="0.5" value="5"/><span class="settingCellMeasurement">seconds</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="bs_healthOutlineFGReflectsArtColor" type="checkbox"/> <span class="settingInfo">Foreground color reflects cover art color</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="bs_healthOutlineBGReflectsArtColor" type="checkbox"/> <span class="settingInfo">Background color reflects cover art color</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="bs_healthOutlineInverted" type="checkbox"/> <span class="settingInfo">Swap reflected foreground/background colors</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Foreground color</span>
+						</div>
+						<div class="settingCell">
+							<input id="bs_healthOutlineFGColor" type="text" data-coloris value="#ffffff"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Background color</span>
+						</div>
+						<div class="settingCell">
+							<input id="bs_healthOutlineBGColor" type="text" data-coloris value="#888888"/>
 						</div>
 					</div>
 				</div>
