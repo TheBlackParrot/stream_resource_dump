@@ -1491,6 +1491,13 @@ const settingUpdaters = {
 		}
 
 		twitchUsers.refreshUserInfoBlockDirections();
+	},
+
+	chatMaxBigEmoteLines: function(value) {
+		rootCSS().setProperty("--bigEmoteMaxLines", `${value}em`);
+	},
+	chatReplyMaxWidth: function(value) {
+		rootCSS().setProperty("--replyMaxWidth", `${value}px`);
 	}
 };
 settingUpdaters["chatHideAccounts"](localStorage.getItem("setting_chatHideAccounts"));

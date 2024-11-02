@@ -229,7 +229,11 @@ const externalModCharacteristics = {
 	InvertedLawless: "inverted.png",
 	HorizontalLawless: "horizontal.png",
 	VerticalLawless: "vertical.png",
-	InverseLawless: "inverse.png"
+	InverseLawless: "inverse.png",
+	ReBeat_Standard: "ReBeat.png",
+	ReBeat_OneSaber: "ReBeat.png",
+	ReBeat_Lawless: "ReBeat.png",
+	ReBeat_Legacy: "ReBeat.png"
 };
 
 currentState = {};

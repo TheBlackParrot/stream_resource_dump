@@ -172,7 +172,8 @@ const nonPublicSettings = [
 	"bs_ppIsProgressive",
 	"bs_enableHealthOutline",
 	"bs_healthOutlineShowsOnAllChanges",
-	"bs_healthOutlineTimeout"
+	"bs_healthOutlineTimeout",
+	"panel_disableErrorNotifications"
 ];
 
 const defaultConfig = {
@@ -1167,13 +1168,16 @@ const defaultConfig = {
 	"spotify_scannableUseAlbum": "false",
 	"spotify_albumDataFromString": "from",
 	"bs_enableHealthOutline": "true",
-	"bs_healthOutlineFGReflectsArtColor": "true",
+	"bs_healthOutlineFGReflectsArtColor": "false",
 	"bs_healthOutlineBGReflectsArtColor": "true",
 	"bs_healthOutlineInverted": "false",
 	"bs_healthOutlineFGColor": "#ffffff",
 	"bs_healthOutlineBGColor": "#888888",
 	"bs_healthOutlineShowsOnAllChanges": "false",
-	"bs_healthOutlineTimeout": "5"
+	"bs_healthOutlineTimeout": "5",
+	"panel_disableErrorNotifications": "false",
+	"chatMaxBigEmoteLines": "1",
+	"chatReplyMaxWidth": "512"
 };
 // i typed out the bigNoNoWords so you don't have to, i'm sorry :(
 // it's gotta know what to remove

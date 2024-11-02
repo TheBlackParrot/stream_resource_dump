@@ -4,10 +4,11 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<link rel="stylesheet" type="text/css" href="reset.css">
+	<link rel="stylesheet" type="text/css" href="../shared/assets/fonts/fonts.css">
+	<link rel="stylesheet" type="text/css" href="../shared/assets/reset.css">
 
-	<link rel="stylesheet" type="text/css" href="coloris.min.css"/>
-	<script src="coloris.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="../shared/libs/coloris.min.css"/>
+	<script src="../shared/libs/coloris.min.js"></script>
 	<script>
 		Coloris({
 			theme: "polaroid",
@@ -17,19 +18,19 @@
 		});
 	</script>
 
-	<link rel="stylesheet" type="text/css" href="fancyselect.min.css"/>
-	<script src="fancyselect.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="../shared/libs/fancyselect.min.css"/>
+	<script src="../shared/libs/fancyselect.min.js"></script>
 
-	<link rel="stylesheet" type="text/css" href="fontawesome-free-6.5.1-web/css/all.min.css">
+	<link rel="stylesheet" type="text/css" href="../shared/assets/fontawesome/css/all.min.css">
 	<link rel="stylesheet" type="text/css" href="main.css">
 
-	<script defer type="text/javascript" src="jquery-3.7.1.min.js"></script>
-	<script defer type="text/javascript" src="socket.io.js"></script>
-	<script defer type="text/javascript" src="tmi.min.js"></script>
-	<script defer type="text/javascript" src="obs-ws-5.0.5.min.js"></script>
-	<script defer type="text/javascript" src="vibrant.min.js"></script>
-	<script defer type="text/javascript" src="forge.min.js"></script>
-	<script defer type="text/javascript" src="bwip-js-min.js"></script>
+	<script defer type="text/javascript" src="../shared/libs/jquery.min.js"></script>
+	<script defer type="text/javascript" src="../shared/libs/socket.io.js"></script>
+	<script defer type="text/javascript" src="../shared/libs/tmi.min.js"></script>
+	<script defer type="text/javascript" src="../shared/libs/obs-ws.min.js"></script>
+	<script defer type="text/javascript" src="../shared/libs/vibrant.min.js"></script>
+	<script defer type="text/javascript" src="../shared/libs/forge.min.js"></script>
+	<script defer type="text/javascript" src="../shared/libs/bwip-js-min.js"></script>
 </head>
 <body>
 	<div id="wrapper">
@@ -814,12 +815,12 @@
 					<h1>Overlay Management</h1>
 					<div class="setting">
 						<div class="settingCell">
-							<input id="allowModeratorsToRefresh" type="checkbox"/> <span class="settingInfo">Allow moderators to refresh the overlays</span>
+							<input id="allowModeratorsToRefresh" type="checkbox" data-noDefaultValue/> <span class="settingInfo">Allow moderators to refresh the overlays</span>
 						</div>
 					</div>
 					<div class="setting">
 						<div class="settingCell">
-							<input id="allowParrotToRefresh" type="checkbox"/> <span class="settingInfo">Allow Parrot to refresh the overlays</span>
+							<input id="allowParrotToRefresh" type="checkbox" data-noDefaultValue/> <span class="settingInfo">Allow Parrot to refresh the overlays</span>
 						</div>
 					</div>
 					<hr/>
@@ -877,18 +878,18 @@
 					<h1>Debug</h1>
 					<div class="setting">
 						<div class="settingCell">
-							<input id="allowConsoleMessages" type="checkbox"/> <span class="settingInfo">Allow console output</span>
+							<input id="allowConsoleMessages" type="checkbox" data-noDefaultValue/> <span class="settingInfo">Allow console output</span>
 						</div>
 					</div>
 					<div class="setting">
 						<div class="settingCell">
-							<input id="debugRawMessages" type="checkbox"/> <span class="settingInfo">Log raw Twitch IRC messages to the DevTools console</span>
+							<input id="debugRawMessages" type="checkbox" data-noDefaultValue/> <span class="settingInfo">Log raw Twitch IRC messages to the DevTools console</span>
 						</div>
 					</div>
 					<hr/>
 					<div class="setting">
 						<div class="settingCell">
-							<input id="allowSampleMessages" type="checkbox" data-dependent="sampleMessages"/> <span class="settingInfo">Send a constant stream of sample messages</span>
+							<input id="allowSampleMessages" type="checkbox" data-dependent="sampleMessages" data-noDefaultValue/> <span class="settingInfo">Send a constant stream of sample messages</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="sampleMessages">
@@ -1856,7 +1857,7 @@
 					<h1>OBS</h1>
 					<div class="setting">
 						<div class="settingCell">
-							<input id="obs_usePassword" type="checkbox" data-dependent="obsPassword"/> <span class="settingInfo">Authenticate using a password</span>
+							<input id="obs_usePassword" type="checkbox" data-dependent="obsPassword" data-noDefaultValue/> <span class="settingInfo">Authenticate using a password</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="obsPassword">
@@ -2135,7 +2136,12 @@
 					<h1>Panel Settings</h1>
 					<div class="setting">
 						<div class="settingCell">
-							<input id="panel_disableSuccessNotifications" type="checkbox"/> <span class="settingInfo">Disable success notifications</span>
+							<input id="panel_disableSuccessNotifications" type="checkbox" data-noDefaultValue/> <span class="settingInfo">Disable success notifications</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="panel_disableErrorNotifications" type="checkbox" data-noDefaultValue/> <span class="settingInfo">Disable error notifications</span>
 						</div>
 					</div>
 					<hr/>
@@ -2172,7 +2178,7 @@
 							<span class="settingInfo">Backups to keep</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="keepAmountOfBackups" min="0" max="9999" step="1" value="100"/><span class="settingCellMeasurement">backups</span>
+							<input type="number" id="keepAmountOfBackups" min="0" max="9999" step="1" value="100" data-noDefaultValue/><span class="settingCellMeasurement">backups</span>
 						</div>
 					</div>
 					<hr/>
@@ -2251,7 +2257,15 @@
 							<span class="settingInfo">Max emotes to show</span>
 						</div>
 						<div class="settingCell">
-							<input type="number" id="chatMaxBigEmotes" min="0" max="100" step="1" value="8"/>
+							<input type="number" id="chatMaxBigEmotes" min="0" max="100" step="1" value="8"/><span class="settingCellMeasurement">emotes</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="bigEmotes">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Max lines of emotes</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatMaxBigEmoteLines" min="1" max="50" step="1" value="1"/><span class="settingCellMeasurement">lines</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="bigEmotes">
@@ -2536,7 +2550,7 @@
 							<span class="settingInfo">Custom sound URLs<br/><span style="font-size: var(--font-size-smol); opacity: 0.67;">(One URL per line)</span></span>
 						</div>
 						<div class="settingCell">
-							<textarea id="sound_newMsg_CustomURLs"></textarea>
+							<textarea id="sound_newMsg_CustomURLs" data-noDefaultValue></textarea>
 						</div>
 					</div>
 					<hr/>
@@ -2555,12 +2569,12 @@
 							<span class="settingInfo">Twitch channel to join</span>
 						</div>
 						<div class="settingCell">
-							<input id="twitchChannel" type="text" value=""/>
+							<input id="twitchChannel" type="text" value="" data-noDefaultValue/>
 						</div>
 					</div>
 					<div class="setting">
 						<div class="settingCell">
-							<input id="channelIsOwn" type="checkbox"/> <span class="settingInfo">Channel connected to is your own Twitch account</span>
+							<input id="channelIsOwn" type="checkbox" data-noDefaultValue/> <span class="settingInfo">Channel connected to is your own Twitch account</span>
 						</div>
 					</div>
 				</div>
@@ -2736,7 +2750,7 @@
 					<hr/>
 					<div class="setting">
 						<div class="settingCell">
-							<input id="mus_overrideSpotify" type="checkbox"/> <span class="settingInfo">Override music information with external player information</span>
+							<input id="mus_overrideSpotify" type="checkbox" data-noDefaultValue/> <span class="settingInfo">Override music information with external player information</span>
 						</div>
 					</div>
 					<hr/>
@@ -2781,7 +2795,7 @@
 							<span class="settingInfo">Access token</span>
 						</div>
 						<div class="settingCell">
-							<input id="ns_token" type="text" value="subjectname-1234567890abcdef"/>
+							<input id="ns_token" type="text" value="subjectname-1234567890abcdef" data-noDefaultValue/>
 						</div>
 					</div>
 					<hr/>
@@ -4619,7 +4633,7 @@
 					<hr/>
 					<div class="setting">
 						<div class="settingCell">
-							<input checked id="bs_healthOutlineFGReflectsArtColor" type="checkbox"/> <span class="settingInfo">Foreground color reflects cover art color</span>
+							<input id="bs_healthOutlineFGReflectsArtColor" type="checkbox"/> <span class="settingInfo">Foreground color reflects cover art color</span>
 						</div>
 					</div>
 					<div class="setting">
@@ -6813,38 +6827,47 @@
 					<hr/>
 					<div class="setting">
 						<div class="settingCellLabel">
+							<span class="settingInfo">Maximum width</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatReplyMaxWidth" min="0" max="4096" step="1" value="512"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
 							<span class="settingInfo">Reply icon</span>
 						</div>
 						<div class="settingCell">
 							<select id="chatReplyIcon">
-								<option data-icon="fontawesome-free-6.5.1-web/sprites/solid.svg#arrow-right" value="fa-arrow-right">arrow-right</option>
-								<option data-icon="fontawesome-free-6.5.1-web/sprites/solid.svg#arrow-right-long" value="fa-arrow-right-long">arrow-right-long</option>
-								<option data-icon="fontawesome-free-6.5.1-web/sprites/solid.svg#right-long" value="fa-right-long">right-long</option>
-								<option data-icon="fontawesome-free-6.5.1-web/sprites/solid.svg#circle-right" value="fa-circle-right">circle-right</option>
-								<option data-icon="fontawesome-free-6.5.1-web/sprites/solid.svg#circle-arrow-right" value="fa-circle-arrow-right">circle-arrow-right</option>
+								<option data-icon="../shared/assets/fontawesome/sprites/solid.svg#arrow-right" value="fa-arrow-right">arrow-right</option>
+								<option data-icon="../shared/assets/fontawesome/sprites/solid.svg#arrow-right-long" value="fa-arrow-right-long">arrow-right-long</option>
+								<option data-icon="../shared/assets/fontawesome/sprites/solid.svg#right-long" value="fa-right-long">right-long</option>
+								<option data-icon="../shared/assets/fontawesome/sprites/solid.svg#circle-right" value="fa-circle-right">circle-right</option>
+								<option data-icon="../shared/assets/fontawesome/sprites/solid.svg#circle-arrow-right" value="fa-circle-arrow-right">circle-arrow-right</option>
 
-								<option data-icon="fontawesome-free-6.5.1-web/sprites/solid.svg#arrows-turn-right" value="fa-arrows-turn-right">arrows-turn-right</option>
+								<option data-icon="../shared/assets/fontawesome/sprites/solid.svg#arrows-turn-right" value="fa-arrows-turn-right">arrows-turn-right</option>
 
-								<option data-icon="fontawesome-free-6.5.1-web/sprites/solid.svg#caret-right" value="fa-caret-right">caret-right</option>
-								<option data-icon="fontawesome-free-6.5.1-web/sprites/solid.svg#square-caret-right" value="fa-square-caret-right">square-caret-right</option>
+								<option data-icon="../shared/assets/fontawesome/sprites/solid.svg#caret-right" value="fa-caret-right">caret-right</option>
+								<option data-icon="../shared/assets/fontawesome/sprites/solid.svg#square-caret-right" value="fa-square-caret-right">square-caret-right</option>
 
-								<option data-icon="fontawesome-free-6.5.1-web/sprites/solid.svg#angle-right" value="fa-angle-right">angle-right</option>
+								<option data-icon="../shared/assets/fontawesome/sprites/solid.svg#angle-right" value="fa-angle-right">angle-right</option>
 
-								<option data-icon="fontawesome-free-6.5.1-web/sprites/solid.svg#chevron-right" value="fa-chevron-right">chevron-right</option>
-								<option data-icon="fontawesome-free-6.5.1-web/sprites/solid.svg#circle-chevron-right" value="fa-circle-chevron-right">circle-chevron-right</option>
+								<option data-icon="../shared/assets/fontawesome/sprites/solid.svg#chevron-right" value="fa-chevron-right">chevron-right</option>
+								<option data-icon="../shared/assets/fontawesome/sprites/solid.svg#circle-chevron-right" value="fa-circle-chevron-right">circle-chevron-right</option>
 
-								<option data-icon="fontawesome-free-6.5.1-web/sprites/solid.svg#angles-right" value="fa-angles-right">angles-right</option>
+								<option data-icon="../shared/assets/fontawesome/sprites/solid.svg#angles-right" value="fa-angles-right">angles-right</option>
 
-								<option data-icon="fontawesome-free-6.5.1-web/sprites/solid.svg#arrow-trend-up" value="fa-arrow-trend-up">arrow-trend-up</option>
+								<option data-icon="../shared/assets/fontawesome/sprites/solid.svg#arrow-trend-up" value="fa-arrow-trend-up">arrow-trend-up</option>
 								
-								<option data-icon="fontawesome-free-6.5.1-web/sprites/solid.svg#square-up-right" value="fa-square-up-right">square-up-right</option>
-								<option data-icon="fontawesome-free-6.5.1-web/sprites/solid.svg#square-arrow-up-right" value="fa-square-arrow-up-right">square-arrow-up-right</option>
+								<option data-icon="../shared/assets/fontawesome/sprites/solid.svg#square-up-right" value="fa-square-up-right">square-up-right</option>
+								<option data-icon="../shared/assets/fontawesome/sprites/solid.svg#square-arrow-up-right" value="fa-square-arrow-up-right">square-arrow-up-right</option>
 
-								<option data-icon="fontawesome-free-6.5.1-web/sprites/solid.svg#forward" value="fa-forward">forward</option>
-								<option selected data-icon="fontawesome-free-6.5.1-web/sprites/solid.svg#share" value="fa-share">share</option>
-								<option data-icon="fontawesome-free-6.5.1-web/sprites/solid.svg#reply" value="fa-reply">reply</option>
-								<option data-icon="fontawesome-free-6.5.1-web/sprites/solid.svg#comment-dots" value="fa-comment-dots">comment-dots</option>
-								<option data-icon="fontawesome-free-6.5.1-web/sprites/solid.svg#location-arrow" value="fa-location-arrow">location-arrow</option>
+								<option data-icon="../shared/assets/fontawesome/sprites/solid.svg#forward" value="fa-forward">forward</option>
+								<option selected data-icon="../shared/assets/fontawesome/sprites/solid.svg#share" value="fa-share">share</option>
+								<option data-icon="../shared/assets/fontawesome/sprites/solid.svg#reply" value="fa-reply">reply</option>
+								<option data-icon="../shared/assets/fontawesome/sprites/solid.svg#comment-dots" value="fa-comment-dots">comment-dots</option>
+								<option data-icon="../shared/assets/fontawesome/sprites/solid.svg#location-arrow" value="fa-location-arrow">location-arrow</option>
 							</select>
 						</div>
 					</div>
@@ -7230,7 +7253,7 @@
 							<span class="settingInfo">Hide accounts<br/><span style="font-size: var(--font-size-smol); opacity: 0.67;">(One account per line)</span></span>
 						</div>
 						<div class="settingCell">
-							<textarea id="chatHideAccounts"></textarea>
+							<textarea id="chatHideAccounts" data-noDefaultValue></textarea>
 						</div>
 					</div>
 					<hr/>
@@ -7285,7 +7308,7 @@
 							<span class="settingInfo">Users to add to the list<br/><span style="font-size: var(--font-size-smol); opacity: 0.67;">(One account per line)</span></span>
 						</div>
 						<div class="settingCell">
-							<textarea id="chatUsersThatAreBots"></textarea>
+							<textarea id="chatUsersThatAreBots" data-noDefaultValue></textarea>
 						</div>
 					</div>
 					<div class="setting">
@@ -7293,7 +7316,7 @@
 							<span class="settingInfo">Users to remove from the list<br/><span style="font-size: var(--font-size-smol); opacity: 0.67;">(One account per line)</span></span>
 						</div>
 						<div class="settingCell">
-							<textarea id="chatUsersThatAreNotBots"></textarea>
+							<textarea id="chatUsersThatAreNotBots" data-noDefaultValue></textarea>
 						</div>
 					</div>
 					<hr/>

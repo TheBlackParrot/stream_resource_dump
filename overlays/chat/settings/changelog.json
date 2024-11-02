@@ -1,4 +1,94 @@
 {
+	"1730554830132": {
+		"updates": {
+			"all": {
+				"notes": [
+					[
+						"centralized all shared libraries and assets into a shared path"
+					],
+					[
+						"updated Font Awesome to version 6.6.0"
+					],
+					[
+						"updated coloris to version 0.24.0"	
+					],
+					[
+						"updated FancySelect to version 0.7.0",
+						["had to remove a conditional check to get this version working, wtf"]
+					],
+					[
+						"updated markdown-it to version 14.1.0"	
+					],
+					[
+						"updated obs-websocket-js to version 5.0.6"	
+					],
+					[
+						"updated socket.io to version 4.8.1"	
+					],
+					[
+						"ensured all overlays have access to self-hosted mirrors of Google webfonts",
+						["there were a bunch that didn't, woops"]
+					]
+				]
+			},
+
+			"bs": {
+				"revision": 16,
+				"notes": [
+					[
+						"fixed health outlines not appearing due to z-index conflicts with the song progress outline",
+						["(this was silently patched on the 31st)"]
+					],
+					[
+						"disabled health outline foreground color reflection by default",
+						{"anchor": "bs_healthOutlineFGReflectsArtColor"}
+					],
+					[
+						"added icon for map characteristics added by ReBeat",
+						["can't verify if the icons show up as the mod is... very, very broken on 1.37 unfortunately. should be fine"]
+					]
+				]
+			},
+
+			"chat": {
+				"revision": 73,
+				"notes": [
+					[
+						"ensured management-related chat commands are only triggerable from the broadcaster's chatroom in shared chats"
+					],
+					[
+						"added a setting to limit big emote messages by line count",
+						{"anchor": "chatMaxBigEmoteLines"}
+					],
+					[
+						"added a setting to limit reply block widths",
+						{"anchor": "chatReplyMaxWidth"}
+					],
+					[
+						"externalized badge category data"
+					],
+					[
+						"cleaned up some class functions",
+						["ty DJDavid98 for pointing some stuff out a little while back, haven't gotten around to looking at things until now"]
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 76,
+				"notes": [
+					[
+						"added a setting flag to indicate a default value is not needed"
+					],
+					[
+						"added a toggle to enable/disable error notifications",
+						{"anchor": "panel_disableErrorNotifications"}
+					]
+				]
+			}
+		}
+	},
+
 	"1730283704485": {
 		"updates": {
 			"bs": {

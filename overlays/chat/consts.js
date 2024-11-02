@@ -1,5 +1,5 @@
-const overlayRevision = 72;
-const overlayRevisionTimestamp = 1730029623853;
+const overlayRevision = 73;
+const overlayRevisionTimestamp = 1730554830132;
 
 const enums = {
 	weight: {
@@ -35,102 +35,16 @@ const entityMap = {
 	'=': '&#x3D;'
 };
 
-var twitchBadgeTypes = {
-	role: {
-		badges: ["artist-badge", "broadcaster", "extension", "moderator", "vip"],
-		setting: "enableTwitchRoleBadges",
-		is_solid: true
-	},
-	staff: {
-		badges: ["admin", "global_mod", "staff", "twitchbot", "user-anniversary", "twitch-intern-2023", "twitch-intern-2024"],
-		setting: "enableTwitchStaffBadges",
-		is_solid: true
-	},
-	partner: {
-		badges: ["ambassador", "partner"],
-		setting: "enableTwitchPartnerBadges",
-		is_solid: true
-	},
-	bits: {
-		badges: ["anonymous-cheerer", "bits"],
-		setting: "enableTwitchBitsBadges",
-		is_solid: true
-	},
-	leaderboard: {
-		badges: ["bits-leader", "clip-champ", "sub-gift-leader"],
-		setting: "enableTwitchLeaderboardBadges",
-		is_solid: false
-	},
-	founder: {
-		badges: ["founder"],
-		setting: "enableTwitchFounderBadges",
-		is_solid: false
-	},
-	charity: {
-		badges: ["glhf-pledge", "bits-charity", "gold-pixel-heart"],
-		setting: "enableTwitchCharityBadges",
-		is_solid: false
-	},
-	convention: {
-		badges: ["glitchcon2020", "twitchcon2017", "twitchcon2018", "twitchconAmsterdam2020", "twitchconEU2019", 
-				 "twitchconEU2022", "twitchconEU2023", "twitchconNA2019", "twitchconNA2020", "twitchconNA2022",
-				 "superultracombo-2023", "twitchconNA2023", "dreamcon-2024", "twitchcon-2024---rotterdam",
-				 "twitchcon-2024---san-diego"],
-		setting: "enableTwitchConBadges",
-		is_solid: false
-	},
-	hypetrain: {
-		badges: ["hype-train"],
-		setting: "enableTwitchHypeTrainBadges",
-		is_solid: false
-	},
-	moments: {
-		badges: ["moments"],
-		setting: "enableTwitchMomentsBadges",
-		is_solid: false
-	},
-	status: {
-		badges: ["no_audio", "no_video"],
-		setting: "enableTwitchStatusBadges",
-		is_solid: true
-	},
-	predictions: {
-		badges: ["predictions"],
-		setting: "enableTwitchPredictionsBadges",
-		is_solid: false
-	},
-	prime: {
-		badges: ["premium", "samusoffer_beta"],
-		setting: "enableTwitchPrimeGamingBadges",
-		is_solid: true
-	},
-	gifter: {
-		badges: ["sub-gifter"],
-		setting: "enableTwitchSubGiftsBadges",
-		is_solid: false
-	},
-	subscriber: {
-		badges: ["subscriber"],
-		setting: "enableTwitchSubscriberBadges",
-		is_solid: true
-	},
-	turbo: {
-		badges: ["turbo"],
-		setting: "enableTwitchTurboBadges",
-		is_solid: true
-	},
-	event: {
-		badges: ["rplace-2023", "twitch-recap-2023", "streamer-awards-2024", "the-game-awards-2023",
-				 "the-golden-predictor-of-the-game-awards-2023", "zevent-2024"],
-		setting: "enableTwitchEventBadges",
-		is_solid: true
-	},
-	dj: {
-		badges: ["twitch-dj"],
-		setting: "enableTwitchDJBadges",
-		is_solid: true
+var twitchBadgeTypes;
+async function getTwitchBadges() {
+	const response = await fetch("./badges.json");
+	if(!response.ok) {
+		console.warn("couldn't get twitch badge category data");
+		return;
 	}
-};
+
+	twitchBadgeTypes = await response.json();
+}
 
 const commonEmotes = {
 	"catJAM": {service: "default", url: "emotes/catJAM/3x.gif"},

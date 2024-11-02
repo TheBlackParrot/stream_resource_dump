@@ -567,6 +567,8 @@ img.emoji {
 	display: inline-flex;
 	align-items: center;
 	flex-wrap: wrap;
+	overflow: hidden;
+	max-height: var(--bigEmoteMaxLines);
 }
 
 .right .isBigEmoteMode { justify-content: end; }
@@ -852,6 +854,7 @@ img.emoji {
 	opacity: var(--replyOpacity);
 	padding-top: var(--replyBlockSpacing);
 	padding-bottom: var(--replyBlockSpacing);
+	max-width: var(--replyMaxWidth);
 }
 .reply {
 	font-size: var(--replyFontSize) !important;

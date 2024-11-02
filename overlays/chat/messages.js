@@ -512,6 +512,12 @@ const chatFuncs = {
 	},
 
 	refreshemotes: function(data, args) {
+		if("sourceRoomID" in data) {
+			if(data.sourceRoomID !== broadcasterData.id) {
+				return;
+			}
+		}
+
 		if(!data.user.moderator) {
 			return;
 		}
@@ -523,6 +529,12 @@ const chatFuncs = {
 	},
 
 	overlayversion: function(data, args) {
+		if("sourceRoomID" in data) {
+			if(data.sourceRoomID !== broadcasterData.id) {
+				return;
+			}
+		}
+
 		if(!data.user.moderator) {
 			if(parseInt(data.user.id) !== 43464015) {
 				return;

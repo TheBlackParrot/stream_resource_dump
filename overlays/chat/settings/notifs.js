@@ -16,6 +16,12 @@ function addNotification(message, settings) {
 		}
 	}
 
+	if(localStorage.getItem("setting_panel_disableErrorNotifications") === "true") {
+		if(actualSettings.bgColor === "var(--notif-color-fail)") {
+			return;
+		}
+	}
+
 	let notifElement = $(`<div class="notif" style="display: none;"></div>`);
 	notifElement.css("background-color", actualSettings.bgColor);
 	notifElement.css("color", actualSettings.textColor);

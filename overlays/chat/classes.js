@@ -71,27 +71,24 @@ class Emote {
 
 		return new Promise(async function(resolve, reject) {
 			if(argh.cacheObject) {
-				resolve(argh.cacheObject);
-				return;
+				return resolve(argh.cacheObject);
 			}
 
 			if(argh.service === "bttv") {
-				resolve(url);
-				return;
+				return resolve(url);
 			}
 
 			if(argh.service === "7tv") {
 				if(argh.animated) {
-					resolve(url.replace(".###", `.${localStorage.getItem("setting_emoteFormat7TV")}`));
+					return resolve(url.replace(".###", `.${localStorage.getItem("setting_emoteFormat7TV")}`));
 				} else {
 					let format = localStorage.getItem("setting_emoteFormat7TV");
 					if(format === "gif") {
 						format = "png";
 					}
 
-					resolve(url.replace(".###", `.${format}`));
+					return resolve(url.replace(".###", `.${format}`));
 				}
-				return;
 			}
 
 			const cacheStorage = await caches.open("emoteCache");
@@ -323,8 +320,6 @@ class UserBlock {
 			return;
 		}
 
-		const actuallyThis = this;
-
 		if(localStorage.getItem("setting_enableTwitchBadges") === "true") {
 			if(localStorage.getItem("setting_enableTwitchSubscriberBadges") === "true" && localStorage.getItem(`setting_enableTwitchFounderBadges`) === "false" && badges.list) {
 				if("founder" in badges.list) {
@@ -454,8 +449,8 @@ class UserBlock {
 		this.checkBTTV();
 		this.checkFFZ();
 
-		widthTest(this.user, function() {
-			$(`.chatBlock[data-userid="${actuallyThis.user.id}"] .badges`).replaceWith(actuallyThis.badgeBlock.clone(true));
+		widthTest(this.user, () => {
+			$(`.chatBlock[data-userid="${this.user.id}"] .badges`).replaceWith(this.badgeBlock.clone(true));
 		});
 	}
 
@@ -583,8 +578,6 @@ class UserBlock {
 	}
 
 	updatePronounsBlock() {
-		const actuallyThis = this;
-
 		this.pronounsBlock.hide();
 		this.pronounsBlock.empty();
 
@@ -594,8 +587,8 @@ class UserBlock {
 			}
 		}
 
-		widthTest(this.user, function() {
-			$(`.chatBlock[data-userid="${actuallyThis.user.id}"] .pronouns`).replaceWith(actuallyThis.pronounsBlock.clone(true));
+		widthTest(this.user, () => {
+			$(`.chatBlock[data-userid="${this.user.id}"] .pronouns`).replaceWith(this.pronounsBlock.clone(true));
 		});
 	}
 
@@ -833,8 +826,6 @@ class UserBlock {
 
 class User {
 	constructor(opts) {
-		const actuallyThis = this;
-
 		this.id = opts.id;
 		this.displayName = opts.name;
 		this.username = opts.username;
@@ -845,11 +836,11 @@ class User {
 		this.broadcasterType = opts.broadcasterType;
 		this.created = new Date(opts.created).getTime();
 		this.bot = isUserBot(opts.username);
-		this.userBlock = new UserBlock({user: actuallyThis});
+		this.userBlock = new UserBlock({user: this});
 
-		this.customSettingsFetchPromise = new Promise(async function(resolve, reject) {
-			const state = await actuallyThis.getUserSettings();
-			actuallyThis.fetchedCustomSettings = true;
+		this.customSettingsFetchPromise = new Promise(async (resolve, reject) => {
+			const state = await this.getUserSettings();
+			this.fetchedCustomSettings = true;
 
 			if(state) {
 				resolve();
@@ -926,7 +917,6 @@ class User {
 	}
 
 	async refreshProminentColor() {
-		var argh = this;
 		const cacheStorage = await caches.open("avatarCache-v2");
 		var response = await cacheStorage.match(this.avatar);
 
@@ -937,15 +927,13 @@ class User {
 			});
 		}
 
-		return new Promise(async function(resolve, reject) {
-			if(parseInt(argh.id) === -1) {
-				resolve("var(--defaultNameColor)");
-				return;
+		return new Promise(async (resolve, reject) => {
+			if(parseInt(this.id) === -1) {
+				return resolve("var(--defaultNameColor)");
 			}
 
-			if(argh.entitlements.overlay.checkedForProminentColor) {
-				resolve(argh.entitlements.overlay.prominentColor);
-				return;
+			if(this.entitlements.overlay.checkedForProminentColor) {
+				return resolve(this.entitlements.overlay.prominentColor);
 			}
 
 			// hacky workaround as vibrant doesn't support loading from blob objects
@@ -955,7 +943,7 @@ class User {
 			let ctx = canvas.getContext('2d');
 			ctx.drawImage(bitmap, 0, 0);
 
-			Vibrant.from(canvas.toDataURL("image/png")).maxColorCount(80).getPalette().then(function(swatches) {
+			Vibrant.from(canvas.toDataURL("image/png")).maxColorCount(80).getPalette().then((swatches) => {
 				console.log(swatches);
 
 				let wantedSwatch = swatches["Vibrant"];
@@ -974,14 +962,14 @@ class User {
 					}
 				}
 
-				argh.entitlements.overlay.prominentColor = wantedSwatch.getHex();
-				resolve(argh.entitlements.overlay.prominentColor);
+				this.entitlements.overlay.prominentColor = wantedSwatch.getHex();
+				resolve(this.entitlements.overlay.prominentColor);
 			}).catch(function(error) {
 				console.warn(error);
 				resolve("var(--defaultNameColor)");
 			});
 
-			argh.entitlements.overlay.checkedForProminentColor = true;
+			this.entitlements.overlay.checkedForProminentColor = true;
 		});
 	}
 
@@ -1073,9 +1061,9 @@ class User {
 
 		const success = await this.cacheAvatar();
 		if(success) {
-			let argh = this;
-			$(`.chatBlock[data-userid="${argh.id}"] .pfp`).fadeOut(250, function() {
-				$(this).attr("src", argh.avatarImage).fadeIn(250);
+			let user = this;
+			$(`.chatBlock[data-userid="${user.id}"] .pfp`).fadeOut(250, function() {
+				$(this).attr("src", user.avatarImage).fadeIn(250);
 			});
 		}
 
@@ -1416,10 +1404,9 @@ class UserSet {
 			return this[id];
 		}
 
-		let actuallyThis = this;
-		this.promises[id] = new Promise(async function(resolve) {
-			if(id in actuallyThis) {
-				resolve(actuallyThis[id]);
+		this.promises[id] = new Promise(async (resolve) => {
+			if(id in this) {
+				return resolve(this[id]);
 			} else {
 				console.log(`creating new user object for ${id}`);
 
@@ -1445,7 +1432,7 @@ class UserSet {
 					}
 				}
 
-				actuallyThis[id] = new User({
+				this[id] = new User({
 					id: id,
 					name: (userDataRaw.display_name || userDataRaw.login),
 					username: userDataRaw.login,
@@ -1454,12 +1441,12 @@ class UserSet {
 					created: userDataRaw.created_at
 				});
 
-				actuallyThis.usernames[userDataRaw.login] = actuallyThis[id];
+				this.usernames[userDataRaw.login] = this[id];
 				if(userDataRaw.display_name) {
-					actuallyThis.usernames[userDataRaw.display_name] = actuallyThis[id];
+					this.usernames[userDataRaw.display_name] = this[id];
 				}
 
-				resolve(actuallyThis[id]);
+				resolve(this[id]);
 			}
 		});
 

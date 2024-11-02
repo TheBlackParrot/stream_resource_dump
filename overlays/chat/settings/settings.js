@@ -126,7 +126,7 @@ function loadSettings() {
 		}
 
 		let resetButton;
-		if(setting in defaultConfig) {
+		if(setting in defaultConfig && element.attr("data-noDefaultValue") !== "") {
 			resetButton = $(`<div class="button resetToDefaultValueButton" data-setting="${setting}"><i class="fas fa-redo-alt"></i></div>`);
 			element.before(resetButton);
 		}
@@ -207,11 +207,18 @@ function populateTimezones() {
 
 	$("#clock_timezoneValue").empty();
 
+	const timezoneOptionElement = document.getElementById("clock_timezoneValue");
+	const optionFragment = new DocumentFragment();
+
 	for(const zone of zones) {
-		const option = $(`<option value="${zone}">${zone}</option>`);
-		$("#clock_timezoneValue").append(option);
+		const option = document.createElement('option');
+		option.value = zone;
+		option.textContent = zone;
+		optionFragment.append(option);
 	}
+	timezoneOptionElement.append(optionFragment);
+	
 	$("#clock_timezoneValue").val(localStorage.getItem("setting_clock_timezoneValue"));
 	
-	FancySelect.update($("#clock_timezoneValue")[0]);
+	FancySelect.update(timezoneOptionElement);
 }

@@ -89,6 +89,7 @@
 	--bigEmoteMargin: 0px;
 	--emoteBorderRadius: 0px;
 	--bigEmoteMarginVertical: 4px;
+	--bigEmoteMaxLines: 1em;
 
 	--timingFuncLinear: cubic-bezier(0.0, 0.0, 1.0, 1.0);
 	--timingFuncEase: cubic-bezier(0.25, 0.1, 0.25, 1.0);
@@ -234,6 +235,7 @@
 	--replyIndentation: 10px;
 	--replyFontStyle: normal;
 	--replyIconVerticalOffset: 2px;
+	--replyMaxWidth: 512px;
 
 	--BSRDurationVisibility: inline-block;
 	--BSRAgeVisibility: inline-block;
