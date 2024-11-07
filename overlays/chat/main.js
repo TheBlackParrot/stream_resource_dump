@@ -245,7 +245,7 @@ async function getGlobalChannelEmotes(broadcasterData) {
 						},
 						emoteID: emoteData.id,
 						emoteName: emote.name || emoteData.name,
-						isZeroWidth: (emoteData.flags & 256 === 256),
+						isZeroWidth: ((emoteData.flags & 256) === 256),
 						global: true
 					}));
 				}
@@ -441,7 +441,7 @@ async function getExternalChannelEmotes(streamerData, isShared) {
 						},
 						emoteID: emoteData.id,
 						emoteName: emote.name || emoteData.name,
-						isZeroWidth: (emoteData.flags & 256 === 256),
+						isZeroWidth: ((emoteData.flags & 256) === 256),
 						global: false
 					}));
 				}

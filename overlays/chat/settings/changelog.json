@@ -1,4 +1,33 @@
 {
+	"1730938028623": {
+		"updates": {
+			"chat": {
+				"revision": 74,
+				"notes": [
+					[
+						"fixed emote-only replies cutting off the lower half of emotes if big emotes are enabled"
+					],
+					[
+						"reworked how twitch emotes are handled internally",
+						["they're now being treated much more similarly to emotes on external services"]
+					],
+					[
+						"fixed zero-width emotes not rendering as zero-width emotes"
+					],
+					[
+						"zero-width emotes no longer count towards emote limits in big emote messages"
+					],
+					[
+						"emotes cached URL objects are now cleared when toggling the low quality images setting"
+					],
+					[
+						"removed some old commented out code"
+					]
+				]
+			}
+		}
+	},
+
 	"1730554830132": {
 		"updates": {
 			"all": {

@@ -134,7 +134,7 @@ function start7TVWebsocket() {
 						},
 						emoteID: emoteData.id,
 						emoteName: (objectData.value.name || emoteData.name),
-						isZeroWidth: (emoteData.flags & 256 === 256),
+						isZeroWidth: ((emoteData.flags & 256) === 256),
 						global: false
 					}));
 				}

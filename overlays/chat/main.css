@@ -569,6 +569,15 @@ img.emoji {
 	flex-wrap: wrap;
 	overflow: hidden;
 	max-height: var(--bigEmoteMaxLines);
+	width: -webkit-fill-available; /* wtf */
+}
+
+.replyContainer .isBigEmoteMode {
+	flex-wrap: unset;
+	padding-top: 0.4em;
+	padding-bottom: 0.4em;
+	margin-top: -0.4em;
+	margin-bottom: -0.4em;
 }
 
 .right .isBigEmoteMode { justify-content: end; }
@@ -786,7 +795,13 @@ img.emoji {
 .zeroWidthEmote {
 	position: absolute;
 	left: 0;
+	height: 1em;
+	margin: -0.2em 0em;
+}
+
+.isBigEmoteMode .zeroWidthEmote {
 	padding: 0;
+	margin: 0em;
 }
 
 .botBadge { display: var(--displayBotBadges); }
@@ -855,6 +870,7 @@ img.emoji {
 	padding-top: var(--replyBlockSpacing);
 	padding-bottom: var(--replyBlockSpacing);
 	max-width: var(--replyMaxWidth);
+	min-height: var(--messageLineHeight);
 }
 .reply {
 	font-size: var(--replyFontSize) !important;

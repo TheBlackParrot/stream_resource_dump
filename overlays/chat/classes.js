@@ -1,5 +1,5 @@
 class GlobalEmoteSet {
-	#emoteByIDs = {};
+	emoteByIDs = {};
 
 	constructor() {
 	}
@@ -10,36 +10,44 @@ class GlobalEmoteSet {
 		}
 
 		this[emote.emoteName] = emote;
-		this.#emoteByIDs[emote.emoteID] = emote;
+		this.emoteByIDs[emote.emoteID] = emote;
 
 		return true;
 	}
 
 	deleteEmote(id) {
-		if(!(id in this.#emoteByIDs)) {
+		if(!(id in this.emoteByIDs)) {
 			return false;
 		}
 
-		let emote = this.#emoteByIDs[id];
+		let emote = this.emoteByIDs[id];
 
 		delete this[emote.emoteName];
-		delete this.#emoteByIDs[id];
+		delete this.emoteByIDs[id];
 
 		return true;
 	}
 
 	updateEmote(id, newName) {
-		if(!(id in this.#emoteByIDs)) {
+		if(!(id in this.emoteByIDs)) {
 			return false;
 		}
 
-		let emote = this.#emoteByIDs[id];
+		let emote = this.emoteByIDs[id];
 		delete this[emote.emoteName];
 
 		emote.emoteName = newName;
 		this[newName] = emote;
 
 		return true;
+	}
+
+	clearCacheObjects() {
+		for(const emoteName in this) {
+			// tHiS iS nOt ItErAbLe
+			const emote = this[emoteName];
+			delete emote.cacheObject;
+		}
 	}
 }
 
@@ -106,6 +114,10 @@ class Emote {
 	}
 
 	get enabled() {
+		if(this.service === "twitch") {
+			return true;
+		}
+
 		if(localStorage.getItem(`setting_enable${this.service.toUpperCase()}`) === "false") {
 			return false;
 		}

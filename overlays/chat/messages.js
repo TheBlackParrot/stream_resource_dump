@@ -52,25 +52,6 @@ async function prepareMessage(tags, message, self, forceHighlight) {
 				}
 			}
 		}
-
-		/*
-		for(const badgeKey in tags['source-badges']) {
-			console.log(badgeKey);
-			if(badgeKey === "subscriber") {
-				const newBadgeKey = `subscriber${tags['source-room-id']}`;
-
-				userData.entitlements.twitch.badges.list[newBadgeKey] = tags['source-badges']['subscriber'];
-				userData.entitlements.twitch.badges.info[newBadgeKey] = tags['source-badge-info']['subscriber'];
-			} else {
-				userData.entitlements.twitch.badges.list[badgeKey] = tags['source-badges'][badgeKey];
-				if(tags['source-badge-info']) {
-					if(badgeKey in tags['source-badge-info']) {
-						userData.entitlements.twitch.badges.info[badgeKey] = tags['source-badge-info'][badgeKey];
-					}
-				}
-			}
-		}
-		*/
 	} else {
 		for(const badgeKey in tags['badges']) {
 			let newBadgeKey = badgeKey;
@@ -775,6 +756,20 @@ async function cacheEmote(url) {
 	return twitchEmoteCache[url];
 }
 
+function allowedToUseTwitchEmote(name, emoteList) {
+	if(!(name in twitchEmotes)) {
+		return false; // shouldn't happen
+	}
+
+	for(const emoteID in emoteList) {
+		if(emoteID in twitchEmotes.emoteByIDs) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
 async function renderMessageBlock(data, rootElement, isReply) {
 	let messageBlock = $('<div class="message"></div>');
 
@@ -825,29 +820,26 @@ async function renderMessageBlock(data, rootElement, isReply) {
 		let checkExternalEmotes = Array.from(data.message.trim().normalize());
 
 		if(data.emotes) {
-			for(let emoteID in data.emotes) {
-				const emoteURL = `https://static-cdn.jtvnw.net/emoticons/v2/${emoteID}/default/dark/${useLQImages ? "1.0" : "3.0"}`;
-				const emoteObject = await cacheEmote(emoteURL);
+			for(const emoteID in data.emotes) {
+				const spots = data.emotes[emoteID][0].split("-");
+				const startAt = parseInt(spots[0]);
+				const stopAt = parseInt(spots[1]);
 
-				for(let i in data.emotes[emoteID]) {
-					let spots = data.emotes[emoteID][i].split("-");
-					let startAt = parseInt(spots[0]);
-					let stopAt = parseInt(spots[1]);
+				const emoteName = data.message.substr(startAt, stopAt - startAt + 1);
 
-					if(parseInt(i) === 0) {
-						let ignoreCheck = data.message.substr(startAt, stopAt - startAt + 1);
-						if(isEmoteIgnored(ignoreCheck)) {
-							console.log(`ignoring emote ${ignoreCheck}`);
-							continue;
-						}
-					}
-
-					for(let charIdx = startAt; charIdx <= stopAt; charIdx++) {
-						originalMessage[charIdx] = "";
-						checkExternalEmotes[charIdx] = "";
-					}
-
-					originalMessage[startAt] = `<span class="emote" style="background-image: url('${emoteObject}');"><img src="${emoteObject}"/></span>`;
+				if(!(emoteName in twitchEmotes)) {
+					twitchEmotes.addEmote(new Emote({
+						service: "twitch",
+						animated: false,
+						urls: {
+							high: `https://static-cdn.jtvnw.net/emoticons/v2/${emoteID}/default/dark/3.0`,
+							low: `https://static-cdn.jtvnw.net/emoticons/v2/${emoteID}/default/dark/1.0`
+						},
+						emoteID: emoteID,
+						emoteName: emoteName,
+						isZeroWidth: false,
+						global: (isNaN(parseInt(emoteID)) === false)
+					}));
 				}
 			}
 		}
@@ -877,12 +869,26 @@ async function renderMessageBlock(data, rootElement, isReply) {
 		for(let wordIdx in eprw) {
 			let word = eprw[wordIdx].trim();
 
+			const isTwitchEmote = (word in twitchEmotes);
+			let isTwitchEmoteAllowed = false;
+			if(isTwitchEmote) {
+				isTwitchEmoteAllowed = allowedToUseTwitchEmote(word, data.emotes);
+			}
+
 			if(word.length > 0) {
-				if(!(word in chatEmotes)) {
+				if(!(word in chatEmotes || (isTwitchEmote && isTwitchEmoteAllowed))) {
 					eprww.push(eprw[wordIdx]);
 				} else {
-					if(!chatEmotes[word].enabled || isEmoteIgnored(word)) {
-						eprww.push(eprw[wordIdx]);
+					if(word in chatEmotes) {
+						if(!chatEmotes[word].enabled || isEmoteIgnored(word)) {
+							eprww.push(eprw[wordIdx]);
+						}
+					} else {
+						if(isTwitchEmote && isTwitchEmoteAllowed) {
+							if(isEmoteIgnored(word)) {
+								eprww.push(eprw[wordIdx]);
+							}
+						}
 					}
 				}
 			}
@@ -951,6 +957,23 @@ async function renderMessageBlock(data, rootElement, isReply) {
 					} else {
 						lastWordWasEmote = true;
 					}
+				}
+			} else {
+				lastWordWasEmote = false;
+			}
+
+			if(word in twitchEmotes && allowedToUseTwitchEmote(word, data.emotes)) {
+				let twtEmote = twitchEmotes[word];
+
+				if(isEmoteIgnored(word)) {
+					lastWordWasEmote = false;
+				} else {
+					let classes = ["emote"];
+
+					emoteObject = await twtEmote.url;
+					words[wordIdx] = `<span class="${classes.join(" ")}" style="background-image: url('${emoteObject}');"><img src="${emoteObject}"/></span>`;
+
+					lastWordWasEmote = true;
 				}
 			} else {
 				lastWordWasEmote = false;
@@ -1091,21 +1114,20 @@ async function renderMessageBlock(data, rootElement, isReply) {
 
 			let count = 0;
 			let maxCount = parseInt(localStorage.getItem("setting_chatMaxBigEmotes"));
+			let previousEmoteWasZeroWidth = false;
 			messageBlock.children(".emote,.emoji").each(function() {
+				if($(this).hasClass("zeroWidthEmote") && !previousEmoteWasZeroWidth) {
+					previousEmoteWasZeroWidth = true;
+					return;
+				}
+
+				previousEmoteWasZeroWidth = false;
+
 				if(count >= maxCount) {
 					$(this).remove();
 				}
 				count++;
 			});
-
-			/*let htmlStuff = messageBlock.html().split(">").map(function(part) {
-				if(part[0] === "<") {
-					return part;
-				}
-				return part.trim().substring(0, 3);
-			});
-			console.log(htmlStuff);
-			messageBlock.html(htmlStuff.join(">"));*/
 		}
 
 		let emoteChildren = messageBlock.children(".emote");

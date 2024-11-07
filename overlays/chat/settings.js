@@ -261,6 +261,7 @@ function checkIfBadgesVisible() {
 	});
 }
 
+var LQImageCheck = false;
 const settingUpdaters = {
 	chatHideAccounts: function(value) {
 		hideAccounts = [];
@@ -1498,6 +1499,15 @@ const settingUpdaters = {
 	},
 	chatReplyMaxWidth: function(value) {
 		rootCSS().setProperty("--replyMaxWidth", `${value}px`);
+	},
+	useLowQualityImages: function(value) {
+		if(!LQImageCheck) {
+			LQImageCheck = true;
+			return;
+		}
+
+		twitchEmotes.clearCacheObjects();
+		chatEmotes.clearCacheObjects();
 	}
 };
 settingUpdaters["chatHideAccounts"](localStorage.getItem("setting_chatHideAccounts"));
@@ -1519,21 +1529,6 @@ function checkSharedChatAvatarFilters() {
 		rootCSS().setProperty("--sharedChatAvatarFilters", "none");
 	}
 }
-
-/*
-	--sharedChatAvatarSize: 20px;
-	--sharedChatAvatarBorderRadius: 4px;
-	--sharedChatAvatarOffset: 0px;
-	--sharedChatAvatarBrightness: 100%;
-	--sharedChatAvatarContrast: 100%;
-	--sharedChatAvatarSaturation: 0%;
-	--sharedChatAvatarFilters: saturate(var(--sharedChatAvatarSaturation));
-
-	--sharedChatSameRoomBorderSize: 2px;
-	--sharedChatSameRoomBorderStyle: solid;
-	--sharedChatSameRoomBorderColor: #9146FF;
-	--sharedChatSameRoomBorderOffset: 2px;
-*/
 
 function checkAvatarPermissions() {
 	for(const id in twitchUsers) {

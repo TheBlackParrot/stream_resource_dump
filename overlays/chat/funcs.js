@@ -405,6 +405,7 @@ function isStringSafe(data) {
 
 function initEmoteSet() {
 	chatEmotes = new GlobalEmoteSet();
+	twitchEmotes = new GlobalEmoteSet();
 
 	if(localStorage.getItem("setting_chatShowCommonEmotes") === "true") {
 		for(let emoteName in commonEmotes) {
