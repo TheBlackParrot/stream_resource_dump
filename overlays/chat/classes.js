@@ -9,7 +9,15 @@ class GlobalEmoteSet {
 			return false;
 		}
 
+		const encodedElement = document.createElement("p");
+		encodedElement.textContent = emote.emoteName;
+		const encoded = encodedElement.innerHTML.substr(0);
+		encodedElement.remove();
+
 		this[emote.emoteName] = emote;
+		if(emote.emoteName !== encoded) {
+			this[encoded] = emote;
+		}
 		this.emoteByIDs[emote.emoteID] = emote;
 
 		return true;
