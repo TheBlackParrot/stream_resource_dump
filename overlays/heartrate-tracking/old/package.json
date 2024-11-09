@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "heartrate": "^0.1.3",
-    "ws": "^8.17.0"
-  }
-}
