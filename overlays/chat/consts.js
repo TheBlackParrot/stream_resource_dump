@@ -1,5 +1,5 @@
-const overlayRevision = 74;
-const overlayRevisionTimestamp = 1730938028623;
+const overlayRevision = 75;
+const overlayRevisionTimestamp = 1731253599587;
 
 const enums = {
 	weight: {
@@ -129,6 +129,30 @@ const ffzModifiers = {
 	Cursed: 16384,
 	Jam: 32768,
 	Bounce: 65536
+};
+
+const badgeOrder = {
+	broadcaster: -10,
+	predictions: -9,
+	admin: -8,
+	staff: -8,
+	ambassador: -7,
+	partner: -7,
+	"twitch-dj": -7,
+	global_mod: -6,
+	moderator: -5,
+	vip: -5,
+	affiliate: -4,
+	subscriber: -3,
+	founder: -3,
+	turbo: -2,
+	premium: -2,
+	"bits-leader": -1,
+	"sub-gift-leader": -1,
+	"sub-gifter": -1,
+	seventv: 1,
+	bttv: 2,
+	ffz: 3
 };
 
 // https://github.com/tyxla/remove-accents/blob/181808eb89732155a3a3352b3643e523ab565594/index.js#L1C1-L461C3 with some modifications

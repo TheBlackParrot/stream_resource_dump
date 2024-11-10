@@ -27,7 +27,9 @@ async function bttvBadge(data, userData) {
 		low: data.badge.url
 	};
 
-	user.userBlock.updateBadgeBlock();
+	for(const roomID in user.userBlock.badgeBlock) {
+		user.userBlock.updateBadgeBlock(roomID);
+	}
 }
 
 function updateBTTVEmote(data) {

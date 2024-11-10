@@ -18,70 +18,52 @@ async function prepareMessage(tags, message, self, forceHighlight) {
 
 	let userData = await twitchUsers.getUser(tags['user-id']);
 
-	//userData.entitlements.twitch.badges.list = tags['badges'];
-	//userData.entitlements.twitch.badges.info = tags['badge-info'];
+	const sourceRoomID = ("source-room-id" in tags ? tags['source-room-id'] : tags['room-id'] || broadcasterData.id);
+	userData.createTwitchEntitlementsForRoom(sourceRoomID);
+
+	const userBadgeData = userData.entitlements.twitch.badges[sourceRoomID];
+
 	if("source-room-id" in tags) {
 		tags = parseComplexTag(tags, "source-badges");
 		tags = parseComplexTag(tags, "source-badge-info");
+	}
+	const badgeList = ("source-room-id" in tags ? tags['source-badges'] : tags['badges']);
+	const badgeInfo = ("source-room-id" in tags ? tags['source-badge-info'] : tags['badge-info']);
 
-		for(const badgeKey in tags['source-badges']) {
-			let newBadgeKey = badgeKey;
-			switch(badgeKey) {
-				case "subscriber":
-					newBadgeKey = `subscriber${tags['source-room-id']}`;
-					break;
+	let fixedBadgeKeys = {};
 
-				case "bits":
-					newBadgeKey = `bits${tags['source-room-id']}`;
-					break;
-			}
+	for(const badgeKey in badgeList) {
+		let newBadgeKey = badgeKey;
+		switch(badgeKey) {
+			case "subscriber":
+				newBadgeKey = `subscriber${sourceRoomID}`;
+				break;
 
-			if(newBadgeKey in twitchBadges) {
-				userData.entitlements.twitch.badges.list[newBadgeKey] = tags['source-badges'][badgeKey];
-				if(tags['source-badge-info']) {
-					if(badgeKey in tags['source-badge-info']) {
-						userData.entitlements.twitch.badges.info[newBadgeKey] = tags['source-badge-info'][badgeKey];
-					}
-				}
-			} else {
-				userData.entitlements.twitch.badges.list[badgeKey] = tags['source-badges'][badgeKey];
-				if(tags['source-badge-info']) {
-					if(badgeKey in tags['source-badge-info']) {
-						userData.entitlements.twitch.badges.info[badgeKey] = tags['source-badge-info'][badgeKey];
-					}
-				}
-			}
+			case "bits":
+				newBadgeKey = `bits${sourceRoomID}`;
+				break;
 		}
-	} else {
-		for(const badgeKey in tags['badges']) {
-			let newBadgeKey = badgeKey;
-			switch(badgeKey) {
-				case "subscriber":
-					newBadgeKey = `subscriber${tags['room-id']}`;
-					break;
+		fixedBadgeKeys[newBadgeKey] = badgeList[badgeKey];
 
-				case "bits":
-					newBadgeKey = `bits${tags['room-id']}`;
-					break;
-			}
-
-			if(newBadgeKey in twitchBadges) {
-				userData.entitlements.twitch.badges.list[newBadgeKey] = tags['badges'][badgeKey];
-				if(tags['badge-info']) {
-					if(badgeKey in tags['badge-info']) {
-						userData.entitlements.twitch.badges.info[newBadgeKey] = tags['badge-info'][badgeKey];
-					}
-				}
-			} else {
-				userData.entitlements.twitch.badges.list[badgeKey] = tags['badges'][badgeKey];
-				if(tags['badge-info']) {
-					if(badgeKey in tags['badge-info']) {
-						userData.entitlements.twitch.badges.info[badgeKey] = tags['badge-info'][badgeKey];
-					}
-				}
+		userBadgeData.list[newBadgeKey] = badgeList[badgeKey];
+		if(badgeInfo) {
+			if(badgeKey in badgeInfo) {
+				userBadgeData.info[newBadgeKey] = badgeInfo[badgeKey];
 			}
 		}
 	}
+
+	if(userBadgeData) { // ...uh
+		for(const badgeKey in userBadgeData.list) {
+			if(!(badgeKey in fixedBadgeKeys)) {
+				if(badgeKey in userBadgeData.info) {
+					delete userBadgeData.info[badgeKey];
+				}
+				delete userBadgeData.list[badgeKey];
+			}
+		}
+	}
+
 	userData.entitlements.twitch.color = tags['color'];
 
 	let isOverlayMessage = false;
@@ -158,6 +140,12 @@ async function prepareMessage(tags, message, self, forceHighlight) {
 		}
 	}
 
+	let gigantified = false;
+	if('msg-id' in tags) {
+		if(tags['msg-id'] === "gigantified-emote-message") {
+			gigantified = true;
+		}
+	}
 	let outObject = {
 		message: message,
 		isOverlayMessage: isOverlayMessage,
@@ -167,7 +155,9 @@ async function prepareMessage(tags, message, self, forceHighlight) {
 		uuid: tags['id'],
 		parseCheermotes: ('bits' in tags),
 		user: userData,
-		reply: false
+		reply: false,
+		roomID: sourceRoomID,
+		gigantified: gigantified
 	};
 
 	if("reply-parent-msg-id" in tags) {
@@ -292,7 +282,7 @@ async function prepareMessage(tags, message, self, forceHighlight) {
 		}
 	});
 
-	userData.userBlock.updateBadgeBlock();
+	userData.userBlock.updateBadgeBlock(sourceRoomID);
 
 	setTimeout(async function() { await parseMessage(outObject); }, parseDelay);
 }
@@ -564,7 +554,7 @@ var messageCount = 0;
 var combinedCount = 0;
 var testNameBlock;
 async function getRootElement(data) {
-	if($(`.chatBlock[data-rootIdx="${combinedCount}"]`).length) {
+	if($(`.chatBlock[data-rootIdx="${combinedCount}"][data-roomid="${data.roomID}"]`).length) {
 		if(lastUser === data.user.id && !lastRootElement[0].hasClass("slideOut")) {
 			if(localStorage.getItem("setting_chatRemoveMessageDelay") !== "0") {
 				const ensureClear = Date.now() + (parseFloat(localStorage.getItem("setting_chatRemoveMessageDelay")) * 1.5 * 1000);
@@ -578,7 +568,7 @@ async function getRootElement(data) {
 	combinedCount++;
 	lastUser = data.user.id;
 
-	let rootElement = $(`<div class="chatBlock slideIn" data-rootIdx="${combinedCount}" data-userID="${data.user.id}"></div>`);
+	let rootElement = $(`<div class="chatBlock slideIn" data-rootIdx="${combinedCount}" data-userID="${data.user.id}" data-roomID="${data.roomID}"></div>`);
 
 	if(localStorage.getItem("setting_chatRemoveMessageDelay") !== "0") {
 		const ensureClear = Date.now() + (parseFloat(localStorage.getItem("setting_chatRemoveMessageDelay")) * 1.5 * 1000);
@@ -604,7 +594,7 @@ async function getRootElement(data) {
 
 	let messageWrapper = $('<div class="messageWrapper"></div>');
 
-	let userBlock = data.user.userBlock.render();
+	let userBlock = data.user.userBlock.render("sourceRoomID" in data ? data.sourceRoomID : broadcasterData.id);
 
 	if(data.sourceRoomID) {
 		const sourceUser = await twitchUsers.getUser(data.sourceRoomID);
@@ -785,10 +775,29 @@ async function renderMessageBlock(data, rootElement, isReply) {
 			const clonedMessage = wantedMessage.eq(0).children(".message").clone(true);
 			clonedMessage.addClass("reply");
 			clonedMessage.attr("style", "");
-			clonedMessage.children(".bigEmote").removeClass("bigEmote");
+			clonedMessage.children(".emoteWrapper").children(".bigEmote").removeClass("bigEmote");
+			clonedMessage.removeClass("isBigEmoteMode");
 			clonedMessage.children(".timestamp").remove();
 			clonedMessage.attr("data-msguuid", data.reply.uuid);
 			clonedMessage.attr("data-userid", data.reply.user.id);
+			clonedMessage.removeClass("highlighted");
+			clonedMessage.removeClass("gigantified");
+
+			clonedMessage.waitForImages({
+				finished: function() {
+					clonedMessage.children(".emoteWrapper").each(function() {
+						const wrapper = $(this);
+						wrapper.css("width", "");
+
+						wrapper.children(".emote, .emoji").each(function() {
+							if($(this).outerWidth() > wrapper.width()) {
+								wrapper.css("width", `${$(this).outerWidth()}px`);
+							}
+						})
+					})
+				},
+				waitForAll: true
+			});
 
 			replyBlock.append($(`<i class="fas ${localStorage.getItem("setting_chatReplyIcon")} replyIcon"></i>`));
 			replyBlock.append(nameBlock);
@@ -921,63 +930,25 @@ async function renderMessageBlock(data, rootElement, isReply) {
 		let words = stuff.split(" ");
 
 		let cheermotePrefixes = Object.keys(cheermotes);
-		let lastWordWasEmote = false;
 		let skippedMentionInReply = false;
+		let lastEmoteWasZeroWidth = false;
+		let currentEmoteWrapper = $('<span class="emoteWrapper"></span>');
+		let wordsFinal = [];
+
+		const pushEmoteWrapper = function() {
+			const count = currentEmoteWrapper.children().length;
+			if(count) {
+				if(count > 1) {
+					currentEmoteWrapper.addClass("hasMultipleEmotes");
+				}
+				wordsFinal.push(currentEmoteWrapper[0].outerHTML);
+			}
+
+			currentEmoteWrapper = $('<span class="emoteWrapper"></span>');
+		}
+
 		for(let wordIdx in words) {
-			let word = words[wordIdx];
-			
-			if(word in chatEmotes) {
-				let externalEmote = chatEmotes[word];
-				let modifiers = [];
-
-				if(!externalEmote.enabled || isEmoteIgnored(word)) {
-					lastWordWasEmote = false;
-				} else {
-					if("modifiers" in externalEmote) {
-						modifiers = externalEmote.modifiers;
-					}
-
-					let classes = ["emote"];
-					if(externalEmote.isZeroWidth) {
-						if(lastWordWasEmote) {
-							classes.push("zeroWidthEmote");
-						}
-					}
-
-					emoteObject = await externalEmote.url;
-					words[wordIdx] = `<span class="${classes.join(" ")}" style="background-image: url('${emoteObject}');"${modifiers.length ? `data-emotemods="${modifiers.join(" ")}"` : ""}><img src="${emoteObject}"/></span>`;
-
-					if(lastWordWasEmote) {
-						if(externalEmote.isZeroWidth) {
-							let tempEmote = $(words[wordIdx - 1]).append(words[wordIdx]);
-							words[wordIdx - 1] = tempEmote.prop('outerHTML');
-							words[wordIdx] = "";
-							lastWordWasEmote = false;
-						}
-					} else {
-						lastWordWasEmote = true;
-					}
-				}
-			} else {
-				lastWordWasEmote = false;
-			}
-
-			if(word in twitchEmotes && allowedToUseTwitchEmote(word, data.emotes)) {
-				let twtEmote = twitchEmotes[word];
-
-				if(isEmoteIgnored(word)) {
-					lastWordWasEmote = false;
-				} else {
-					let classes = ["emote"];
-
-					emoteObject = await twtEmote.url;
-					words[wordIdx] = `<span class="${classes.join(" ")}" style="background-image: url('${emoteObject}');"><img src="${emoteObject}"/></span>`;
-
-					lastWordWasEmote = true;
-				}
-			} else {
-				lastWordWasEmote = false;
-			}
+			let word = words[wordIdx].trim();
 
 			if(word[0] === "@" && word !== "@") {
 				if(data.reply && !skippedMentionInReply && !isReply) {
@@ -1032,11 +1003,87 @@ async function renderMessageBlock(data, rootElement, isReply) {
 					}
 				}
 
-				words[wordIdx] = wordElement[0].outerHTML;
+				wordsFinal.push(wordElement[0].outerHTML);
+				continue;
+			}
+
+			if(localStorage.getItem("setting_emotesParseToImage") === "true") {
+				if(twemoji.test(word)) {
+					if(!lastEmoteWasZeroWidth) {
+						pushEmoteWrapper();
+					}
+
+					currentEmoteWrapper.append(twemoji.parse(word, {
+						folder: 'twemoji/svg',
+						ext: '.svg'
+					}));
+
+					lastEmoteWasZeroWidth = false;
+					continue;
+				}
+			}
+			
+			if(word in chatEmotes) {
+				let externalEmote = chatEmotes[word];
+				let modifiers = [];
+
+				if(!externalEmote.enabled || isEmoteIgnored(word)) {
+					pushEmoteWrapper();
+					wordsFinal.push(word);
+					continue;
+				} else {
+					if("modifiers" in externalEmote) {
+						modifiers = externalEmote.modifiers;
+					}
+
+					let classes = ["emote"];
+					if(externalEmote.isZeroWidth) {
+						lastEmoteWasZeroWidth = true;
+						classes.push("zeroWidthEmote");
+					} else {
+						lastEmoteWasZeroWidth = false;
+						pushEmoteWrapper();
+					}
+
+					emoteObject = await externalEmote.url;
+					let emoteElement = $(`<span class="${classes.join(" ")}" style="background-image: url('${emoteObject}');"${modifiers.length ? `data-emotemods="${modifiers.join(" ")}"` : ""}><img src="${emoteObject}"/></span>`);
+
+					currentEmoteWrapper.append(emoteElement);
+				}
+			}
+
+			if(word in twitchEmotes && allowedToUseTwitchEmote(word, data.emotes)) {
+				let twtEmote = twitchEmotes[word];
+
+				if(isEmoteIgnored(word)) {
+					pushEmoteWrapper();
+					wordsFinal.push(word);
+					continue;
+				} else {
+					lastEmoteWasZeroWidth = false;
+					pushEmoteWrapper();
+
+					let classes = ["emote"];
+
+					emoteObject = await twtEmote.url;
+					let emoteElement = $(`<span class="${classes.join(" ")}" style="background-image: url('${emoteObject}');"><img src="${emoteObject}"/></span>`);
+
+					currentEmoteWrapper.append(emoteElement);
+				}
+			} else {
+				if(!(word in chatEmotes)) {
+					pushEmoteWrapper();
+					if(!data.parseCheermotes) {
+						wordsFinal.push(word);
+					}
+				}
 			}
 
 			if(data.parseCheermotes && localStorage.getItem("setting_chatShowCheermotes") === "true" && !isReply) {
 				messageBlock.addClass("highlighted");
+
+				let wasCheermote = false;
+				lastEmoteWasZeroWidth = false;
 
 				for(let prefix of cheermotePrefixes) {
 					if(word.toLowerCase().substring(0, prefix.length) === prefix) {
@@ -1061,15 +1108,25 @@ async function renderMessageBlock(data, rootElement, isReply) {
 						let type = (localStorage.getItem("setting_chatShowCheermotesAnimated") === "true" ? "animated" : "static");
 
 						let cheermoteColorString = (localStorage.getItem("setting_chatShowCheermotesColor") === "true" ? ` style="background-color: ${mote.color};"` : "");
-						words[wordIdx] = `<span class="cheerWrap"><span class="emote cheermote" style="background-image: url('${mote.images[type]}');"><img src="${mote.images[type]}"/></span><span${cheermoteColorString} class="cheerAmount">${amount}</span></span>`;
+						wordsFinal.push(`<span class="cheerWrap"><span class="emoteWrapper"><span class="emote cheermote" style="background-image: url('${mote.images[type]}');"><img src="${mote.images[type]}"/></span></span><span${cheermoteColorString} class="cheerAmount">${amount}</span></span>`);
+						wasCheermote = true;
+						break;
 					}
+				}
+
+				if(!wasCheermote) {
+					wordsFinal.push(word);
 				}
 			}
 		}
 
+		if(currentEmoteWrapper.children().length) {
+			pushEmoteWrapper();
+		}
+
 		//console.log(` 9: ${words}`);
 
-		words = words.map(function(word) {
+		words = wordsFinal.map(function(word) {
 			if(!isWordSafe(word)) {
 				return "[REDACTED]";
 			}
@@ -1099,30 +1156,32 @@ async function renderMessageBlock(data, rootElement, isReply) {
 			messageBlock.css("background-image", `linear-gradient(170deg, #fff -50%, ${col} 150%)`);
 		}
 
-		if(localStorage.getItem("setting_emotesParseToImage") === "true") {
+		/*if(localStorage.getItem("setting_emotesParseToImage") === "true") {
 			messageBlock = $(twemoji.parse(messageBlock[0], {
 				folder: 'svg',
 				ext: '.svg'
 			}));
-		}
+
+			messageBlock.children(".emoji").each(function() {
+				const cloned = $(this).clone(true);
+				const wrapped = $('<span class="emoteWrapper"></span>');
+				$(this).replaceWith()
+			});
+		}*/
 
 		hasBigEmotes = (eprww.join("") === "" && localStorage.getItem("setting_chatShowBigEmotes") === "true" && !isReply);
 		if(hasBigEmotes) {
 			messageBlock.addClass("isBigEmoteMode");
-			messageBlock.children(".emote").addClass("bigEmote");
-			messageBlock.children(".emoji").addClass("bigEmoji");
+
+			const emoteWrappers = messageBlock.children(".emoteWrapper");
+
+			emoteWrappers.children(".emote").addClass("bigEmote");
+			emoteWrappers.children(".emoji").addClass("bigEmoji");
 
 			let count = 0;
-			let maxCount = parseInt(localStorage.getItem("setting_chatMaxBigEmotes"));
-			let previousEmoteWasZeroWidth = false;
-			messageBlock.children(".emote,.emoji").each(function() {
-				if($(this).hasClass("zeroWidthEmote") && !previousEmoteWasZeroWidth) {
-					previousEmoteWasZeroWidth = true;
-					return;
-				}
+			const maxCount = parseInt(localStorage.getItem("setting_chatMaxBigEmotes"));
 
-				previousEmoteWasZeroWidth = false;
-
+			emoteWrappers.each(function() {
 				if(count >= maxCount) {
 					$(this).remove();
 				}
@@ -1130,6 +1189,7 @@ async function renderMessageBlock(data, rootElement, isReply) {
 			});
 		}
 
+		/*
 		let emoteChildren = messageBlock.children(".emote");
 		let lastValidEmote = null;
 		if(emoteChildren.length) {
@@ -1160,6 +1220,7 @@ async function renderMessageBlock(data, rootElement, isReply) {
 				}
 			}
 		}
+		*/
 	} else {
 		let parsedMessage = [];
 
@@ -1204,6 +1265,22 @@ async function renderMessageBlock(data, rootElement, isReply) {
 
 		messageBlock.html(words.join(" "));
 	}
+
+	messageBlock.waitForImages({
+		finished: function() {
+			messageBlock.children(".emoteWrapper").each(function() {
+				const wrapper = $(this);
+				wrapper.css("width", "");
+
+				wrapper.children(".emote, .emoji").each(function() {
+					if($(this).outerWidth() > wrapper.width()) {
+						wrapper.css("width", `${$(this).outerWidth()}px`);
+					}
+				})
+			})
+		},
+		waitForAll: true
+	});
 
 	if(isReply) {
 		const replyBlock = $('<div class="replyContainer"></div>');
@@ -1322,6 +1399,10 @@ async function parseMessage(data) {
 		}
 	}
 
+	if(data.gigantified && localStorage.getItem("setting_enableGigantifiedMessageEffect") === "true") {
+		messageBlock.addClass("gigantified");
+	}
+
 	setHistoryOpacity();
 
 	if(localStorage.getItem("setting_chatMessageReflectUserColor") === "true" && !data.isOverlayMessage) {
@@ -1367,7 +1448,8 @@ async function parseMessage(data) {
 
 		messageDecayTimeouts[combinedCount] = setTimeout(function() {
 			if(localStorage.getItem("setting_chatAnimationsOut") === "true") {
-				rootElement.removeClass("slideIn").addClass("slideOut");
+				rootElement.removeClass("slideIn");
+				rootElement.addClass("slideOut");
 				rootElement.one("animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd", function() {
 					$(rootElement).remove();
 				});

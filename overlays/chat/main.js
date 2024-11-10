@@ -18,7 +18,7 @@ if(twitchClientId === "null" || twitchClientSecret === "null" || !twitchClientId
 }
 
 var fonts;
-$.get("fonts.json", function(data) {
+$.get("../shared/assets/fonts/fonts.json", function(data) {
 	fonts = data;
 });
 

@@ -1508,6 +1508,13 @@ const settingUpdaters = {
 
 		twitchEmotes.clearCacheObjects();
 		chatEmotes.clearCacheObjects();
+	},
+	emotesInlineVerticalOffset: function(value) {
+		rootCSS().setProperty("--emoteInlineVerticalOffset", `${value}em`);
+	},
+	emotesGigantifiedScale: function(value) {
+		value = parseFloat(value) / 100;
+		rootCSS().setProperty("--gigantifiedScalar", value);
 	}
 };
 settingUpdaters["chatHideAccounts"](localStorage.getItem("setting_chatHideAccounts"));

@@ -90,6 +90,8 @@
 	--emoteBorderRadius: 0px;
 	--bigEmoteMarginVertical: 4px;
 	--bigEmoteMaxLines: 1em;
+	--emoteInlineVerticalOffset: 0.16em;
+	--gigantifiedScalar: 2.5;
 
 	--timingFuncLinear: cubic-bezier(0.0, 0.0, 1.0, 1.0);
 	--timingFuncEase: cubic-bezier(0.25, 0.1, 0.25, 1.0);

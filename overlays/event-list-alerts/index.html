@@ -4,12 +4,13 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<link rel="stylesheet" type="text/css" href="reset.css">
+	<link rel="stylesheet" type="text/css" href="../shared/assets/reset.css">
+	<link rel="stylesheet" type="text/css" href="../shared/assets/fonts/fonts.css">
 	<link rel="stylesheet" type="text/css" href="main.css">
-	<!-- websockets are standardized pretty much everywhere. wtf is this. what are you doing. -->
-	<script type="text/javascript" src="socket.io.js"></script>
-	<script type="text/javascript" src="jquery-3.6.0.min.js"></script>
-	<script type="text/javascript" src="tmi.min.js"></script>
+
+	<script defer type="text/javascript" src="../shared/libs/socket.io.js"></script>
+	<script defer type="text/javascript" src="../shared/libs/jquery.min.js"></script>
+	<script defer type="text/javascript" src="../shared/libs/tmi.min.js"></script>
 </head>
 <body>
 	<div id="wrapper">
@@ -17,7 +18,28 @@
 
 	<div id="alert_wrapper" style="display: none;">
 	</div>
-	<script type="text/javascript" src="broadcast.js"></script>
-	<script type="text/javascript" src="main.js"></script>
+
+	<div id="filterWrapper">
+		<svg xmlns="http://www.w3.org/2000/svg">
+			<filter id="outlineEffect" color-interpolation-filters="sRGB">
+				<feConvolveMatrix in="SourceAlpha" result="OutlineAlpha" divisor="4" order="5,5" kernelMatrix="0 1 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 0"/>
+				<feFlood flood-color="var(--overlayOutlineColor)" result="OutlineColor" />
+				<feComposite in="OutlineColor" in2="OutlineAlpha" operator="in" result="Outline" />
+
+				<feMerge>
+					<feMergeNode in="Outline"/>
+					<feMergeNode in="SourceGraphic"/>
+				</feMerge>
+			</filter>
+
+			<filter id="shadowEffect" color-interpolation-filters="sRGB">
+				<feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="var(--overlayShadowColor)"/>
+			</filter>
+			<filter id="blankEffect"></filter>
+		</svg>
+	</div>
+
+	<script defer type="text/javascript" src="broadcast.js"></script>
+	<script defer type="text/javascript" src="main.js"></script>
 </body>
 </html>

@@ -1156,7 +1156,7 @@ const defaultConfig = {
 	"bs_qrOpacity": "67",
 	"bs_qrBGColorReflectsArtColor": "true",
 	"bs_qrBGColorReflectsArtColorDarker": "false",
-	"emoteFormat7TV": "gif",
+	"emoteFormat7TV": "webp",
 	"bs_ppIsProgressive": "false",
 	"bs_qrGradient": "true",
 	"bs_qrGradientColor": "#ffffff80",
@@ -1177,7 +1177,10 @@ const defaultConfig = {
 	"bs_healthOutlineTimeout": "5",
 	"panel_disableErrorNotifications": "false",
 	"chatMaxBigEmoteLines": "1",
-	"chatReplyMaxWidth": "512"
+	"chatReplyMaxWidth": "512",
+	"emotesInlineVerticalOffset": "0",
+	"emotesGigantifiedScale": "250",
+	"enableGigantifiedMessageEffect": "true"
 };
 // i typed out the bigNoNoWords so you don't have to, i'm sorry :(
 // it's gotta know what to remove

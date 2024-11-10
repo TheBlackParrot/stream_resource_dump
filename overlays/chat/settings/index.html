@@ -1713,9 +1713,9 @@
 						</div>
 						<div class="settingCell">
 							<select id="emoteFormat7TV">
-								<option selected value="gif">GIF / PNG</option>
+								<option value="gif">GIF / PNG</option>
 								<option value="avif">AVIF</option>
-								<option value="webp">WEBP</option>
+								<option selected value="webp">WEBP</option>
 							</select>
 						</div>
 					</div>
@@ -2246,6 +2246,14 @@
 							<input type="number" id="emotesBorderRadius" min="0" max="64" step="1" value="0"/><span class="settingCellMeasurement">px</span>
 						</div>
 					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Inline vertical offset</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="emotesInlineVerticalOffset" min="-5" max="5" step="0.01" value="0"/><span class="settingCellMeasurement">em</span>
+						</div>
+					</div>
 					<hr/>
 					<div class="setting">
 						<div class="settingCell">
@@ -2290,6 +2298,20 @@
 						</div>
 						<div class="settingCell">
 							<input type="number" id="chatBigEmoteMarginVertical" min="0" max="64" step="1" value="4"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="enableGigantifiedMessageEffect" type="checkbox"/> <span class="settingInfo">Enable support for the "Gigantified Emote" message effect</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Gigantified effect scaling</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="emotesGigantifiedScale" min="100" max="1000" step="25" value="250"/><span class="settingCellMeasurement">%</span>
 						</div>
 					</div>
 					<hr/>

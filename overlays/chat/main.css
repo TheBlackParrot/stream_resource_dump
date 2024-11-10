@@ -143,10 +143,6 @@ body {
 	mix-blend-mode: var(--badgeGradientBlendMode);
 }
 
-.badgeWrap:last-child {
-	margin-right: 0px;
-}
-
 .flag {
 	width: var(--flagsSize);
 	min-width: var(--flagsSize);
@@ -205,20 +201,6 @@ body {
 	background-image: var(--pronounsGradient);
 	flex: none; /* wtf */
 	font-style: var(--pronounsFontStyle);
-}
-
-.emote {
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: contain;
-	padding: 0.4em 0.3em;
-	backdrop-filter: opacity(0);
-}
-.emote img {
-	opacity: 0;
-	display: inline-block;
-	height: 1em;
-	backdrop-filter: opacity(0);
 }
 
 .message, .extraInfo {
@@ -452,13 +434,6 @@ tt, code, pre {
 	-webkit-text-fill-color: white;
 }
 
-img.emoji {
-   height: 1.1em;
-   width: 1.1em;
-   font-size: 1.1em;
-   vertical-align: text-bottom;
-}
-
 .clip {
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -534,54 +509,6 @@ img.emoji {
 	border-bottom-right-radius: var(--chatBlockBorderRadius);
 	border-top: 0px;
 }
-
-.bigEmote {
-	font-size: var(--bigEmoteSize);
-	padding: 0px;
-	display: inline-flex;
-	vertical-align: unset !important;
-	border-radius: var(--emoteBorderRadius);
-}
-
-.bigEmoji {
-	height: 1em !important;
-	width: 1em !important;
-	font-size: var(--bigEmoteSize) !important;
-	border-radius: var(--emoteBorderRadius);
-	vertical-align: unset !important;
-}
-
-.left .bigEmote {
-	margin-right: var(--bigEmoteMargin);
-}
-.right .bigEmote {
-	margin-left: var(--bigEmoteMargin);
-}
-
-.isBigEmoteMode {
-	font-size: var(--bigEmoteSize) !important;
-	letter-spacing: 0px !important;
-	line-height: 1em !important;
-	margin-top: var(--bigEmoteMarginVertical);
-	margin-bottom: var(--bigEmoteMarginVertical);
-	display: inline-flex;
-	align-items: center;
-	flex-wrap: wrap;
-	overflow: hidden;
-	max-height: var(--bigEmoteMaxLines);
-	width: -webkit-fill-available; /* wtf */
-}
-
-.replyContainer .isBigEmoteMode {
-	flex-wrap: unset;
-	padding-top: 0.4em;
-	padding-bottom: 0.4em;
-	margin-top: -0.4em;
-	margin-bottom: -0.4em;
-}
-
-.right .isBigEmoteMode { justify-content: end; }
-.left .isBigEmoteMode { justify-content: start; }
 
 .left .bsrInfo, .left .bsrStats {
 	flex-direction: row;
@@ -792,18 +719,6 @@ img.emoji {
 .top .userInfo { top: var(--userInfoOffsetVertical); }
 .bottom .userInfo { bottom: var(--userInfoOffsetVertical); }
 
-.zeroWidthEmote {
-	position: absolute;
-	left: 0;
-	height: 1em;
-	margin: -0.2em 0em;
-}
-
-.isBigEmoteMode .zeroWidthEmote {
-	padding: 0;
-	margin: 0em;
-}
-
 .botBadge { display: var(--displayBotBadges); }
 .affiliateBadge { display: var(--displayAffiliateBadges); }
 .sevenTVBadge { display: var(--display7TVBadges); }
@@ -979,4 +894,82 @@ img.emoji {
 }
 .sharedChatIsInSameRoom .sharedChatAvatarImageWrap {
 	outline-color: var(--sharedChatSameRoomBorderColor);
+}
+
+.emoteWrapper {
+	display: inline-flex;
+	height: 1em;
+	align-items: center;
+	justify-content: center;
+}
+.emoteWrapper .emote {
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+	backdrop-filter: opacity(0);
+	line-height: 1em;
+	max-height: 1em;
+}
+.emoteWrapper:not(.hasMultipleEmotes) .emote:not(.bigEmote) {
+	padding: 0.3em 0.2em;
+	margin: -0.3em 0em;
+}
+.emote img {
+	height: 1em;
+	opacity: 0;
+	backdrop-filter: opacity(0);
+}
+.emote:not(.bigEmote) img {
+	vertical-align: middle;
+}
+
+.isBigEmoteMode {
+	font-size: var(--bigEmoteSize);
+	letter-spacing: 0px !important;
+	line-height: 1em !important;
+	margin-top: var(--bigEmoteMarginVertical);
+	margin-bottom: var(--bigEmoteMarginVertical);
+	align-items: center;
+	flex-wrap: wrap;
+	overflow: hidden;
+	max-height: var(--bigEmoteMaxLines);
+}
+.bigEmote {
+	padding: 0px !important;
+	border-radius: var(--emoteBorderRadius);
+}
+.left .bigEmote {
+	margin-right: var(--bigEmoteMargin);
+}
+.right .bigEmote {
+	margin-left: var(--bigEmoteMargin);
+}
+.bigEmoji {
+	height: 1em !important;
+	width: 1em !important;
+	font-size: var(--bigEmoteSize) !important;
+	border-radius: var(--emoteBorderRadius);
+	vertical-align: unset !important;
+}
+.zeroWidthEmote {
+	position: absolute;
+}
+
+.message:not(.isBigEmoteMode) .emoteWrapper {
+	position: relative;
+	top: var(--emoteInlineVerticalOffset);
+}
+
+img.emoji {
+	height: 1em;
+	width: 1em;
+	font-size: 1em;
+}
+
+.gigantified:is(.isBigEmoteMode) {
+	font-size: calc(var(--bigEmoteSize) * var(--gigantifiedScalar)) !important;
+}
+.gigantified:not(.isBigEmoteMode) {
+	font-size: calc(var(--messageFontSize) * var(--gigantifiedScalar));
+	line-height: calc(var(--messageLineHeight) * var(--gigantifiedScalar));
 }

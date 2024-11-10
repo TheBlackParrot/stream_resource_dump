@@ -1,4 +1,69 @@
 {
+	"1731253599587": {
+		"updates": {
+			"all": {
+				"notes": [
+					[
+						"ensured all overlays now use shared asset paths"
+					]
+				]
+			},
+
+			"chat": {
+				"revision": 75,
+				"notes": [
+					[
+						"added support for \"Gigantify an Emote\" message effects",
+						["most of the other implementations i've seen of this effect also enlarge text, so the whole message will enlarge on the overlay. not just the emote"],
+						{"anchor": "enableGigantifiedMessageEffect"}
+					],
+					[
+						"fixed twitch badges remaining visible in viewer information even after the viewer or twitch has removed them"
+					],
+					[
+						"badge blocks in viewer information are now separated per-chatroom in shared chats"
+					],
+					[
+						"badges are now forced to render in a specific order, no matter how they're ordered in the DOM"
+					],
+					[
+						"fixed avatars not rendering even if a cheering threshold was met",
+						["removing all of the else if's in the avatarEnabled getter fixed this and i'm... yeah. i'm clueless. no idea."]
+					],
+					[
+						"completely overhauled emote rendering",
+						["this should pretty much completely fix zero-width emotes, there were originally 5 bugs in the changelog concerning zero-width emotes, but completely re-doing it fixed all of those + more. so."]
+					],
+					[
+						"added a setting to manually adjust vertical offsets of inline emotes",
+						{"anchor": "emotesInlineVerticalOffset"}
+					],
+					[
+						"changed default 7TV emote format from GIF/PNG to WEBP",
+						["discovered during testing that GIFs don't quite render opacity correctly compared to WEBP and AVIF"],
+						{"anchor": "emoteFormat7TV"}
+					],
+					[
+						"fixed reply bodies remaining highlighted if the message being replied to was highlighted"
+					],
+					[
+						"attempted to fix initial system messages sometimes failing to decay",
+						["i've only seen this come up a few times, ever? i think what i moved around should fix it."]
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 77,
+				"notes": [
+					[
+						"(update only contains new settings)"
+					]
+				]
+			}
+		}
+	},
+
 	"1730938028623": {
 		"updates": {
 			"chat": {

@@ -137,12 +137,12 @@ class Emote {
 	}
 }
 
-function widthTest(user, callback) {
+function widthTest(user, roomID, callback) {
 	console.log("width test called");
 	const parentWidth = $("#wrapper").innerWidth();
 
 	const testIdentifier = `testRoot-${Date.now()}`;
-	const testRoot = user.userBlock.render();
+	const testRoot = user.userBlock.render(roomID);
 	testRoot.find(".forceHide").removeClass("forceHide");
 	const testChatBlock = $(`<div class="chatBlock ${testIdentifier}"></div>`);
 	testChatBlock.append(testRoot);
@@ -171,8 +171,8 @@ function widthTest(user, callback) {
 				nameBlock.children().removeClass("clip");
 
 				originalBlocks.flagBlock.removeClass("forceHide");
-				originalBlocks.badgeBlock.removeClass("forceHide");
-				originalBlocks.badgeBlock.children(".badgeWrap").removeClass("forceHide");
+				originalBlocks.badgeBlock[roomID].removeClass("forceHide");
+				originalBlocks.badgeBlock[roomID].children(".badgeWrap").removeClass("forceHide");
 				originalBlocks.pfpBlock.removeClass("forceHide");
 				originalBlocks.pronounsBlock.removeClass("forceHide");
 				originalBlocks.displayNameBlock.removeClass("clip");
@@ -186,7 +186,7 @@ function widthTest(user, callback) {
 				badgeBlock.children(".badgeWrap").each(function(idx) {
 					badges.push($(this));
 				});
-				originalBlocks.badgeBlock.children(".badgeWrap").each(function(idx) {
+				originalBlocks.badgeBlock[roomID].children(".badgeWrap").each(function(idx) {
 					originalBadges.push($(this));
 				});
 
@@ -204,7 +204,7 @@ function widthTest(user, callback) {
 
 				if(!badgeBlock.children(":visible").length) {
 					badgeBlock.addClass("forceHide");
-					originalBlocks.badgeBlock.addClass("forceHide");
+					originalBlocks.badgeBlock[roomID].addClass("forceHide");
 				}
 			} else {
 				badgeBlock.removeClass("forceHide");
@@ -213,8 +213,8 @@ function widthTest(user, callback) {
 				pronounsBlock.removeClass("forceHide");
 				nameBlock.children().removeClass("clip");
 
-				originalBlocks.badgeBlock.removeClass("forceHide");
-				originalBlocks.badgeBlock.children(".badgeWrap").removeClass("forceHide");
+				originalBlocks.badgeBlock[roomID].removeClass("forceHide");
+				originalBlocks.badgeBlock[roomID].children(".badgeWrap").removeClass("forceHide");
 				originalBlocks.pfpBlock.removeClass("forceHide");
 				originalBlocks.pronounsBlock.removeClass("forceHide");
 				originalBlocks.displayNameBlock.removeClass("clip");
@@ -268,8 +268,8 @@ function widthTest(user, callback) {
 				const _displayNameBlock = root.children(".displayName");
 				const _internationalNameBlock = root.children(".internationalName");
 
-				if(originalBlocks.badgeBlock.hasClass("forceHide")) { _badgeBlock.addClass("forceHide"); }
-				originalBlocks.badgeBlock.children(".badgeWrap").each(function(idx) {
+				if(originalBlocks.badgeBlock[roomID].hasClass("forceHide")) { _badgeBlock.addClass("forceHide"); }
+				originalBlocks.badgeBlock[roomID].children(".badgeWrap").each(function(idx) {
 					if($(this).hasClass("forceHide")) {
 						$(_badges[idx]).addClass("forceHide");
 					}
@@ -295,7 +295,8 @@ class UserBlock {
 	constructor(opts) {
 		this.user = opts.user;
 		this.rootBlock = $('<div class="userInfo"></div>');
-		this.badgeBlock = $('<div class="badges" style="display: none;"></div>');
+		this.badgeBlock = {};
+		this.badgeBlock[broadcasterData.id] = $('<div class="badges" style="display: none;"></div>');
 		this.flagBlock = $('<div class="flags" style="display: none;"></div>');
 		this.pronounsBlock = $('<div class="pronouns" style="display: none;"></div>');
 		this.pfpBlock = $('<img class="pfp" src="" style="display: none;"/>');
@@ -330,11 +331,16 @@ class UserBlock {
 		this.updateNameBlock();
 	}
 
-	updateBadgeBlock() {
-		let badges = this.user.entitlements.twitch.badges;
+	updateBadgeBlock(roomID) {
+		this.user.createTwitchEntitlementsForRoom(roomID);
+		let badges = this.user.entitlements.twitch.badges[roomID];
 
-		this.badgeBlock.empty();
-		this.badgeBlock.hide();
+		if(!(roomID in this.badgeBlock)) {
+			this.badgeBlock[roomID] = $('<div class="badges" style="display: none;"></div>');
+		}
+
+		this.badgeBlock[roomID].empty();
+		this.badgeBlock[roomID].hide();
 
 		if(this.user.id === "-1") {
 			return;
@@ -425,8 +431,17 @@ class UserBlock {
 					}
 				}
 
+				let order = 0;
+				if(badgeType in badgeOrder) {
+					order = badgeOrder[badgeType];
+				}
+				if(badgeType.indexOf("subscriber") === 0) {
+					order = badgeOrder.subscriber;
+				}
+
 				let badgeElem = $(`<span class="badgeWrap"></span>`);
 				badgeElem.css("background-image", `url('${url}')`);
+				badgeElem.css("order", order);
 				if(badgeType === "subscriber") {
 					badgeElem.addClass("sub_badge");
 				} else {
@@ -436,8 +451,8 @@ class UserBlock {
 					}
 				}
 
-				this.badgeBlock.append(badgeElem);
-				this.badgeBlock.show();
+				this.badgeBlock[roomID].append(badgeElem);
+				this.badgeBlock[roomID].show();
 			}
 		}
 
@@ -458,23 +473,27 @@ class UserBlock {
 					badgeElem.css("background-color", badge.color);
 				}
 
-				this.badgeBlock.prepend(badgeElem);
+				if(badge.type in badgeOrder) {
+					badgeElem.css("order", badgeOrder[badge.type]);
+				}
+
+				this.badgeBlock[roomID].prepend(badgeElem);
 				if(badgeElem.is(":visible")) {
-					this.badgeBlock.show();
+					this.badgeBlock[roomID].show();
 				}
 			}	
 		}
 
-		this.check7TV();
-		this.checkBTTV();
-		this.checkFFZ();
+		this.check7TV(roomID);
+		this.checkBTTV(roomID);
+		this.checkFFZ(roomID);
 
-		widthTest(this.user, () => {
-			$(`.chatBlock[data-userid="${this.user.id}"] .badges`).replaceWith(this.badgeBlock.clone(true));
+		widthTest(this.user, roomID, () => {
+			$(`.chatBlock[data-userid="${this.user.id}"][data-roomid="${roomID}"] .badges`).replaceWith(this.badgeBlock[roomID].clone(true));
 		});
 	}
 
-	check7TV() {
+	check7TV(roomID) {
 		const entitlements = this.user.entitlements;
 		const customSettings = entitlements.overlay.customSettings;
 
@@ -495,17 +514,17 @@ class UserBlock {
 					badgeElem.css("background-image", `url('${badge.urls.high}')`);
 				}
 
-				this.badgeBlock.append(badgeElem);
+				badgeElem.css("order", badgeOrder.seventv);
 
-				if(!badgeElem.is(":visible")) {
-					this.badgeBlock.show();
-					//checkBadgeBlockWidth(this.badgeBlock);
+				this.badgeBlock[roomID].prepend(badgeElem);
+				if(badgeElem.is(":visible")) {
+					this.badgeBlock[roomID].show();
 				}
 			}
 		}
 	}
 
-	checkBTTV() {
+	checkBTTV(roomID) {
 		const entitlements = this.user.entitlements;
 		const customSettings = entitlements.overlay.customSettings;
 
@@ -525,15 +544,16 @@ class UserBlock {
 				badgeElem.css("background-image", `url('${badge.high}')`);
 			}
 
-			this.badgeBlock.append(badgeElem);
+			badgeElem.css("order", badgeOrder.bttv);
+
+			this.badgeBlock[roomID].prepend(badgeElem);
 			if(badgeElem.is(":visible")) {
-				this.badgeBlock.show();
-				//checkBadgeBlockWidth(badgeBlock);
+				this.badgeBlock[roomID].show();
 			}
 		}
 	}
 
-	checkFFZ() {
+	checkFFZ(roomID) {
 		const entitlements = this.user.entitlements;
 		const customSettings = entitlements.overlay.customSettings;
 
@@ -558,11 +578,11 @@ class UserBlock {
 					badgeElem.css("background-color", badge.color);
 				}
 
-				this.badgeBlock.append(badgeElem);
+				badgeElem.css("order", badgeOrder.ffz);
 
+				this.badgeBlock[roomID].prepend(badgeElem);
 				if(badgeElem.is(":visible")) {
-					this.badgeBlock.show();
-					//checkBadgeBlockWidth(badgeBlock);
+					this.badgeBlock[roomID].show();
 				}
 			}
 		}
@@ -607,9 +627,11 @@ class UserBlock {
 			}
 		}
 
-		widthTest(this.user, () => {
-			$(`.chatBlock[data-userid="${this.user.id}"] .pronouns`).replaceWith(this.pronounsBlock.clone(true));
-		});
+		for(const roomID in this.badgeBlock) {
+			widthTest(this.user, roomID, () => {
+				$(`.chatBlock[data-userid="${this.user.id}"] .pronouns`).replaceWith(this.pronounsBlock.clone(true));
+			});
+		}
 	}
 
 	updateAvatarBlock() {
@@ -634,9 +656,12 @@ class UserBlock {
 			}
 		}
 
+		console.log(this.user);
 		if(this.user.avatarEnabled) {
+			console.log("avatar is allowed");
 			this.pfpBlock.show();
 		} else {
+			console.log("avatar is not allowed");
 			this.pfpBlock.hide();
 		}
 
@@ -825,10 +850,10 @@ class UserBlock {
 		}
 	}
 
-	render() {
+	render(roomID) {
 		const root = this.rootBlock.clone(true);
 
-		const badgeBlock = this.badgeBlock.clone(true);
+		const badgeBlock = this.badgeBlock[roomID].clone(true);
 		const flagBlock = this.flagBlock.clone(true);
 		const pronounsBlock = this.pronounsBlock.clone(true);
 		const pfpBlock = this.pfpBlock.clone(true);
@@ -873,10 +898,7 @@ class User {
 
 		this.entitlements = {
 			twitch: {
-				badges: {
-					list: {},
-					info: []
-				},
+				badges: {},
 				color: opts.color || null
 			},
 			sevenTV: {
@@ -901,6 +923,11 @@ class User {
 				secondary: null,
 				string: null
 			}
+		};
+
+		this.entitlements.twitch.badges[broadcasterData.id] = {
+			list: {},
+			info: []
 		};
 
 		if(this.bot) {
@@ -1058,7 +1085,9 @@ class User {
 			}
 		}
 
-		await this.userBlock.updateBadgeBlock();
+		for(const roomID in this.userBlock.badgeBlock) {
+			await this.userBlock.updateBadgeBlock(roomID);
+		}
 	}
 
 	async refreshCachedAvatar() {
@@ -1194,56 +1223,61 @@ class User {
 			return true;
 		}
 
-		let badges = this.entitlements.twitch.badges;
+		for(const mainRoomID in this.userBlock.badgeBlock) {
+			const badges = this.entitlements.twitch.badges[mainRoomID];
 
-		if(typeof badges.list !== "object" || badges.list === null) {
-			return false;
-		}
-
-		if(localStorage.getItem("setting_avatarAllowedModerators") === "true" && ("broadcaster" in badges.list || "moderator" in badges.list)) {
-			return true;
-		} else if(localStorage.getItem("setting_avatarAllowedVIPs") === "true" && "vip" in badges.list) {
-			return true;
-		} else if(localStorage.getItem("setting_avatarAllowedSubscribers") === "true") {
-			if("founder" in badges.list) {
-				return true;
+			if(typeof badges.list !== "object" || badges.list === null) {
+				return false;
 			}
 
-			if(`subscriber${broadcasterData.id}` in badges.list) {
+			if(localStorage.getItem("setting_avatarAllowedModerators") === "true" && ("broadcaster" in badges.list || "moderator" in badges.list)) {
 				return true;
 			}
+			if(localStorage.getItem("setting_avatarAllowedVIPs") === "true" && "vip" in badges.list) {
+				return true;
+			}
+			if(localStorage.getItem("setting_avatarAllowedSubscribers") === "true") {
+				if("founder" in badges.list) {
+					return true;
+				}
 
-			for(const roomID in sharedChatData) {
-				if(`subscriber${roomID}` in badges.list) {
+				if(`subscriber${mainRoomID}` in badges.list) {
 					return true;
 				}
 			}
-		} else if(localStorage.getItem("setting_avatarAllowedTurbo") === "true" && "turbo" in badges.list) {
-			return true;
-		} else if(localStorage.getItem("setting_avatarAllowedPrime") === "true" && "premium" in badges.list) {
-			return true;
-		} else if(localStorage.getItem("setting_avatarAllowedArtist") === "true" && "artist-badge" in badges.list) {
-			return true;
-		} else if(localStorage.getItem("setting_avatarAllowedPartner") === "true" && (this.broadcasterType === "partner" || this.broadcasterType === "ambassador")) {
-			return true;
-		} else if(localStorage.getItem("setting_avatarAllowedStaff") === "true" && ("staff" in badges.list || "admin" in badges.list || "global_mod" in badges.list)) {
-			return true;
-		} else if(localStorage.getItem("setting_avatarAllowedIncludeBits") === "true" && ("bits" in badges.list || "bits-leader" in badges.list)) {
-			if("bits-leader" in badges.list) {
+			if(localStorage.getItem("setting_avatarAllowedTurbo") === "true" && "turbo" in badges.list) {
 				return true;
-			} else if("bits" in badges.list) {
-				let bitAmount = parseInt(badges.list.bits);
-				if(bitAmount >= parseInt(localStorage.getItem("setting_avatarAllowedBitsMinimum"))) {
+			}
+			if(localStorage.getItem("setting_avatarAllowedPrime") === "true" && "premium" in badges.list) {
+				return true;
+			}
+			if(localStorage.getItem("setting_avatarAllowedArtist") === "true" && "artist-badge" in badges.list) {
+				return true;
+			}
+			if(localStorage.getItem("setting_avatarAllowedPartner") === "true" && (this.broadcasterType === "partner" || this.broadcasterType === "ambassador")) {
+				return true;
+			}
+			if(localStorage.getItem("setting_avatarAllowedStaff") === "true" && ("staff" in badges.list || "admin" in badges.list || "global_mod" in badges.list)) {
+				return true;
+			}
+			if(localStorage.getItem("setting_avatarAllowedIncludeBits") === "true" && (`bits${mainRoomID}` in badges.list || "bits-leader" in badges.list)) {
+				if("bits-leader" in badges.list) {
 					return true;
+				} else if(`bits${mainRoomID}` in badges.list) {
+					let bitAmount = parseInt(badges.list[`bits${mainRoomID}`]);
+					if(bitAmount >= parseInt(localStorage.getItem("setting_avatarAllowedBitsMinimum"))) {
+						return true;
+					}
 				}
 			}
-		} else if(localStorage.getItem("setting_avatarAllowedIncludeGifts") === "true" && ("sub-gifter" in badges.list || "sub-gift-leader" in badges.list)) {
-			if("sub-gift-leader" in badges.list) {
-				return true;
-			} else if("sub-gifter" in badges.list) {
-				let giftAmount = parseInt(badges.list['sub-gifter']);
-				if(giftAmount >= parseInt(localStorage.getItem("setting_avatarAllowedGiftsMinimum"))) {
+			if(localStorage.getItem("setting_avatarAllowedIncludeGifts") === "true" && ("sub-gifter" in badges.list || "sub-gift-leader" in badges.list)) {
+				if("sub-gift-leader" in badges.list) {
 					return true;
+				} else if("sub-gifter" in badges.list) {
+					let giftAmount = parseInt(badges.list['sub-gifter']);
+					if(giftAmount >= parseInt(localStorage.getItem("setting_avatarAllowedGiftsMinimum"))) {
+						return true;
+					}
 				}
 			}
 		}
@@ -1405,6 +1439,15 @@ class User {
 
 		if(localStorage.getItem("setting_allowUserCustomizations") === "true" && !settings.useDefaultNameSettings) {
 			$(`.name[data-userid="${this.id}"]`).children().css("background-image", `--nameGradient${this.id}`);
+		}
+	}
+
+	createTwitchEntitlementsForRoom(roomID) {
+		if(!(roomID in this.entitlements.twitch.badges)) {
+			this.entitlements.twitch.badges[roomID] = {
+				list: {},
+				info: []
+			}
 		}
 	}
 }

@@ -58,7 +58,9 @@ function start7TVWebsocket() {
 				case "BADGE":
 					if(user.entitlements.sevenTV.badges.indexOf(data.ref_id) === -1) {
 						user.entitlements.sevenTV.badges.push(data.ref_id);
-						user.userBlock.updateBadgeBlock();
+						for(const roomID in user.userBlock.badgeBlock) {
+							user.userBlock.updateBadgeBlock(roomID);
+						}
 					}
 					break;
 
