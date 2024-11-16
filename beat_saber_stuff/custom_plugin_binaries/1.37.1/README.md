@@ -12,3 +12,6 @@ BetterSongList is based on commit 88771bf of https://github.com/kinsi55/BeatSabe
 
 
 ScorePercentage is based on commit 85b2b1c of https://github.com/daniel-chambers/ScorePercentage/commit/85b2b1c5768e72f4a3692534371cbba1246d8ad8
+
+SoundReplacer is based on commit 6ddf462 of https://github.com/Meivyn/SoundReplacer/commit/6ddf46230d885666339c6cf0b7fc217647199cd7
+	- renamed "defaultAudioClip" variables to "_defaultAudioClip" to fix some non-existant variable errors

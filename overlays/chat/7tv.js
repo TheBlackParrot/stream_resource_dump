@@ -65,16 +65,7 @@ function start7TVWebsocket() {
 					break;
 
 				case "PAINT":
-					let changePaint = true;
-					if(user.entitlements.overlay.customSettings) {
-						if("use7TVPaint" in user.entitlements.overlay.customSettings) {
-							if(!user.entitlements.overlay.customSettings.use7TVPaint) {
-								changePaint = false;
-							}
-						}
-					}
-
-					if(changePaint) {
+					if(user.allowSevenTVPaint) {
 						user.setSevenTVPaint(data.ref_id);
 						set7TVPaint($(`.name[data-userid="${user.id}"]`), data.ref_id, user.id);
 					}
@@ -122,6 +113,10 @@ function start7TVWebsocket() {
 		},
 
 		"emote_set.update": function(data) {
+			if(allowedSevenTVEmoteSets.indexOf(data.id) === -1 && localStorage.getItem("setting_enable7TVPersonalEmoteSets") === "false") {
+				return;
+			}
+
 			if("pushed" in data) {
 				for(const objectData of data.pushed) {
 					const emoteData = objectData.value.data;
@@ -129,6 +124,7 @@ function start7TVWebsocket() {
 
 					chatEmotes.addEmote(new Emote({
 						service: "7tv",
+						setID: data.id,
 						animated: emoteData.animated,
 						urls: {
 							high: `https:${emoteData.host.url}/4x.###`,
@@ -145,7 +141,7 @@ function start7TVWebsocket() {
 				for(const objectData of data.pulled) {
 					console.log(objectData);
 					const emoteData = objectData.old_value;
-					chatEmotes.deleteEmote(emoteData.id);
+					chatEmotes.deleteEmote(emoteData.id, data.id);
 				}
 			}
 		}

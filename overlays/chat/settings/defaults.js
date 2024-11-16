@@ -173,7 +173,9 @@ const nonPublicSettings = [
 	"bs_enableHealthOutline",
 	"bs_healthOutlineShowsOnAllChanges",
 	"bs_healthOutlineTimeout",
-	"panel_disableErrorNotifications"
+	"panel_disableErrorNotifications",
+	"enable7TVPersonalEmoteSets",
+	"emoteFormatBTTV"
 ];
 
 const defaultConfig = {
@@ -1180,7 +1182,9 @@ const defaultConfig = {
 	"chatReplyMaxWidth": "512",
 	"emotesInlineVerticalOffset": "0",
 	"emotesGigantifiedScale": "250",
-	"enableGigantifiedMessageEffect": "true"
+	"enableGigantifiedMessageEffect": "true",
+	"enable7TVPersonalEmoteSets": "false",
+	"emoteFormatBTTV": "webp"
 };
 // i typed out the bigNoNoWords so you don't have to, i'm sorry :(
 // it's gotta know what to remove

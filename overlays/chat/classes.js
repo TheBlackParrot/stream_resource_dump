@@ -23,15 +23,19 @@ class GlobalEmoteSet {
 		return true;
 	}
 
-	deleteEmote(id) {
+	deleteEmote(id, setID) {
 		if(!(id in this.emoteByIDs)) {
 			return false;
 		}
 
 		let emote = this.emoteByIDs[id];
 
-		delete this[emote.emoteName];
-		delete this.emoteByIDs[id];
+		console.log(setID, emote.setID);
+
+		if(setID === emote.setID) {
+			delete this[emote.emoteName];
+			delete this.emoteByIDs[id];
+		}
 
 		return true;
 	}
@@ -72,6 +76,7 @@ class Emote {
 		this.emoteName = opts.emoteName;
 
 		this.emoteID = ("emoteID" in opts ? opts.emoteID : null);
+		this.setID = ("setID" in opts ? opts.setID : null);
 		this.service = ("service" in opts ? opts.service : null);
 		this.isZeroWidth = ("isZeroWidth" in opts ? opts.isZeroWidth : false);
 		this.modifiers = ("modifiers" in opts ? opts.modifiers : []);
@@ -91,7 +96,16 @@ class Emote {
 			}
 
 			if(argh.service === "bttv") {
-				return resolve(url);
+				if(argh.animated) {
+					return resolve(url.replace(".###", `.${localStorage.getItem("setting_emoteFormatBTTV")}`));
+				} else {
+					let format = localStorage.getItem("setting_emoteFormatBTTV");
+					if(format === "gif") {
+						format = "png";
+					}
+
+					return resolve(url.replace(".###", `.${format}`));
+				}
 			}
 
 			if(argh.service === "7tv") {
@@ -955,6 +969,26 @@ class User {
 			this.setPronouns();
 			this.#setFFZBadges();
 		}
+	}
+
+	get allowSevenTVPaint() {
+		if(localStorage.getItem("setting_enable7TVUserPaints") === "false") {
+			return false;
+		}
+
+		if(localStorage.getItem("setting_allowUserCustomizations") === "true") {
+			if(localStorage.getItem("setting_allowUserCustomNameColors") === "true") {
+				if(this.entitlements.overlay.customSettings) {
+					if("use7TVPaint" in this.entitlements.overlay.customSettings) {
+						if(!this.entitlements.overlay.customSettings.use7TVPaint) {
+							return false;
+						}
+					}
+				}
+			}
+		}
+
+		return true;
 	}
 
 	setSevenTVPaint(ref_id) {

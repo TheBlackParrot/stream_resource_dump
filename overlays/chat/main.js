@@ -231,7 +231,7 @@ async function getGlobalChannelEmotes(broadcasterData) {
 			console.log(data);
 
 			if(!("emotes" in data)) {
-				systemMessage("*Unable to fetch global 7TV emotes - this specific error is 7TV's fault as they didn't actually give us any emotes to parse. Great service you got here, guys.*");
+				systemMessage("*Unable to fetch global 7TV emotes - this specific error is 7TV's fault as they didn't actually give us any emotes to parse*");
 			} else {
 				for(const emote of data.emotes) {
 					const emoteData = emote.data;
@@ -239,6 +239,7 @@ async function getGlobalChannelEmotes(broadcasterData) {
 
 					chatEmotes.addEmote(new Emote({
 						service: "7tv",
+						setID: data.id,
 						urls: {
 							high: `https:${emoteData.host.url}/${urls[urls.length-1].name}`,
 							low: `https:${emoteData.host.url}/${urls[0].name}`
@@ -268,9 +269,10 @@ async function getGlobalChannelEmotes(broadcasterData) {
 			for(const emote of data) {
 				chatEmotes.addEmote(new Emote({
 					service: "bttv",
+					setID: "bttv-global",
 					urls: {
-						high: `https://cdn.betterttv.net/emote/${emote.id}/3x.${emote.imageType}`,
-						low: `https://cdn.betterttv.net/emote/${emote.id}/1x.${emote.imageType}`
+						high: `https://cdn.betterttv.net/emote/${emote.id}/3x.###`,
+						low: `https://cdn.betterttv.net/emote/${emote.id}/1x.###`
 					},
 					emoteID: emote.id,
 					emoteName: emote.code,
@@ -299,6 +301,7 @@ async function getGlobalChannelEmotes(broadcasterData) {
 				for(const emote of emotes) {
 					chatEmotes.addEmote(new Emote({
 						service: "ffz",
+						setID: setIdx,
 						urls: {
 							high: (emote.urls[4] || emote.urls[1]),
 							low: emote.urls[1]
@@ -319,6 +322,7 @@ async function getGlobalChannelEmotes(broadcasterData) {
 }
 
 var sevenTVEmoteSetIDs = {};
+var allowedSevenTVEmoteSets = [];
 async function getExternalChannelEmotes(streamerData, isShared) {
 	if(!allowedToProceed) {
 		console.log("No Client ID or Secret is set.");
@@ -337,13 +341,15 @@ async function getExternalChannelEmotes(streamerData, isShared) {
 			console.log(data);
 			systemMessage(`*Fetched ${(isShared ? streamerData.display_name : "channel")}'s BetterTTV emotes*`);
 
+			// so BTTV provides a set id, but doesn't use it. ok :thumbsup:
 			let addEmoteFunction = function(emote) {
 				chatEmotes.addEmote(new Emote({
 					service: "bttv",
+					setID: `twitch:${broadcasterData.id}`,
 					animated: emote.animated,
 					urls: {
-						high: `https://cdn.betterttv.net/emote/${emote.id}/3x.${emote.imageType}`,
-						low: `https://cdn.betterttv.net/emote/${emote.id}/1x.${emote.imageType}`
+						high: `https://cdn.betterttv.net/emote/${emote.id}/3x.###`,
+						low: `https://cdn.betterttv.net/emote/${emote.id}/1x.###`
 					},
 					emoteID: emote.id,
 					emoteName: emote.code,
@@ -377,6 +383,7 @@ async function getExternalChannelEmotes(streamerData, isShared) {
 				for(const emote of emotes) {
 					chatEmotes.addEmote(new Emote({
 						service: "ffz",
+						setID: setIdx,
 						animated: ("animated" in emote),
 						urls: {
 							high: ("animated" in emote ? (emote.animated[4] || emote.animated[1]) : (emote.urls[4] || emote.urls[1])),
@@ -424,6 +431,7 @@ async function getExternalChannelEmotes(streamerData, isShared) {
 			}
 
 			if(isOK) {
+				allowedSevenTVEmoteSets.push(data.emote_set.id);
 				sevenTVEmoteSetIDs[streamerData.id] = data.emote_set.id;
 				subscribe7TV("emote_set.*", streamerData.id, sevenTVEmoteSetIDs[streamerData.id]);
 
@@ -434,6 +442,7 @@ async function getExternalChannelEmotes(streamerData, isShared) {
 					// 7TV seems to provide all formats at all sizes, so i'm hardcoding 4x/1x and determining file format on the fly now
 					chatEmotes.addEmote(new Emote({
 						service: "7tv",
+						setID: data.emote_set.id,
 						animated: emoteData.animated,
 						urls: {
 							high: `https:${emoteData.host.url}/4x.###`,

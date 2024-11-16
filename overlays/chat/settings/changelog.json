@@ -1,4 +1,39 @@
 {
+	"1731375866256": {
+		"updates": {
+			"chat": {
+				"revision": 76,
+				"notes": [
+					[
+						"prevented viewers' personal 7TV emote sets from appearing in the overlay and modifying the channel's active emote sets, unless toggled on",
+						{"anchor": "enable7TVPersonalEmoteSets"}
+					],
+					[
+						"dynamic emote create/remove events now ensure it's only affecting emote sets mirroring the event's attached emote set ID",
+						["this only affects BTTV and 7TV. no live data interface/endpoint exists for FFZ"]
+					],
+					[
+						"added a setting to switch BTTV emote formats between GIF/PNG and WEBP",
+						["by default it will now use WEBP. was completely unaware this format was supported on there woops"],
+						{"anchor": "emoteFormatBTTV"}
+					],
+					[
+						"fixed 7TV paints not setting if the broadcaster disables individuality settings on name blocks, but still allows 7TV paints"
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 78,
+				"notes": [
+					[
+						"(update only contains new settings)"
+					]
+				]
+			}
+		}
+	},
+
 	"1731253599587": {
 		"updates": {
 			"all": {

@@ -924,7 +924,7 @@ tt, code, pre {
 }
 
 .isBigEmoteMode {
-	font-size: var(--bigEmoteSize);
+	font-size: var(--bigEmoteSize) !important;
 	letter-spacing: 0px !important;
 	line-height: 1em !important;
 	margin-top: var(--bigEmoteMarginVertical);

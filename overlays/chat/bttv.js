@@ -38,7 +38,8 @@ function updateBTTVEmote(data) {
 }
 
 function deleteBTTVEmote(data) {
-	chatEmotes.deleteEmote(data.emoteId)
+	console.log(data);
+	chatEmotes.deleteEmote(data.emoteId, data.channel)
 }
 
 function addBTTVEmote(data) {
@@ -46,10 +47,11 @@ function addBTTVEmote(data) {
 
 	chatEmotes.addEmote(new Emote({
 		service: "bttv",
+		setID: data.channel,
 		animated: emote.animated,
 		urls: {
-			high: `https://cdn.betterttv.net/emote/${emote.id}/3x.${emote.imageType}`,
-			low: `https://cdn.betterttv.net/emote/${emote.id}/1x.${emote.imageType}`
+			high: `https://cdn.betterttv.net/emote/${emote.id}/3x.###`,
+			low: `https://cdn.betterttv.net/emote/${emote.id}/1x.###`
 		},
 		emoteID: emote.id,
 		emoteName: emote.code,
