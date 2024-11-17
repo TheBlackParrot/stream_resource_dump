@@ -1,5 +1,5 @@
-const overlayRevision = 16;
-const overlayRevisionTimestamp = 1730554830132;
+const overlayRevision = 17;
+const overlayRevisionTimestamp = 1731824299925;
 
 const settingsChannel = new BroadcastChannel("settings_overlay");
 
@@ -23,7 +23,8 @@ const elementMap = {
 	"accCell": ["acc", "accuracy", "combo", "percent", "percentage", "score"],
 	"ppCell": ["pp", "rank", "ranked", "points", "rankpoints", "rankedpoints", "performancepoints", "rankpp"],
 	"handValueCell": ["hand", "hands", "swing", "swings", "avg", "average", "pre", "post", "swingacc", "swingaccuracy", "avgs", "averages"],
-	"qrCell": ["qr", "qrcode", "scannable", "scan", "aztec", "pdf", "pdf417"]
+	"qrCell": ["qr", "qrcode", "scannable", "scan", "aztec", "pdf", "pdf417"],
+	"pbCell": ["pb", "best", "personalbest", "personal_best", "highscore"]
 };
 
 const diffMap = {
@@ -944,6 +945,232 @@ const settingUpdaters = {
 	},
 	healthOutlineShowsOnAllChanges: function(value) {
 		alwaysShowHealth = (value === "true");
+	},
+
+	enableSkullOnDeath: function(value) {
+		rootCSS().setProperty("--skullIconDisplay", (value === "true" ? "flex" : "none"));
+		settingUpdaters["fadeArtOnFailure"](value === "true" ? localStorage.getItem("setting_bs_fadeArtOnFailure") : "false");
+
+		if(currentState.health <= 0) {
+			$("#art").addClass("isDead");
+		}
+	},
+	skullIcon: function(value) {
+		$("#skullIcon i").attr("class", "");
+
+		var isRegularKind = false;
+		if(value.indexOf("_reg") !== -1) {
+			isRegularKind = true;
+			value = value.substr(0, value.indexOf("_reg"));
+		}
+
+		$("#skullIcon i").addClass(isRegularKind ? "fa-regular" : "fa-solid");
+		$("#skullIcon i").addClass(value);
+	},
+	skullIconSize: function(value) {
+		rootCSS().setProperty("--skullIconSize", parseInt(value) / 100);
+	},
+	skullIconReflectsArtColor: function(value) {
+		rootCSS().setProperty("--skullIconColor", `var(${(value === "true" ? "--skullIconColorReflected" : "--skullIconColorStatic")})`);
+	},
+	skullIconUseDarkerArtColor: function(value) {
+		rootCSS().setProperty("--skullIconColorReflected", `var(--color${(value === "true" ? "Dark" : "Light")})`);
+	},
+	skullIconColor: function(value) {
+		rootCSS().setProperty("--skullIconColorStatic", value);
+	},
+	fadeArtOnFailure: function(value) {
+		rootCSS().setProperty("--deathFilters", (value === "true" ? "var(--deathFiltersActual)" : "opacity(1)"));
+	},
+	fadeArtOnFailureBrightness: function(value) {
+		rootCSS().setProperty("--skullBrightnessArtAmount", `${value}%`);
+	},
+	fadeArtOnFailureContrast: function(value) {
+		rootCSS().setProperty("--skullContrastArtAmount", `${value}%`);
+	},
+	fadeArtOnFailureSaturation: function(value) {
+		rootCSS().setProperty("--skullSaturateArtAmount", `${value}%`);
+	},
+	skullIconUsesOutlineEffect: function(value) {
+		rootCSS().setProperty("--skullIconOutlineFilter", (value === "true" ? "url(#outlineEffect)" : "opacity(1)"));
+	},
+	skullIconUsesShadowEffect: function(value) {
+		rootCSS().setProperty("--skullIconShadowFilter", (value === "true" ? "url(#shadowEffect)" : "opacity(1)"));
+	},
+
+	pbPlayerIdentifier: function(value) {
+		if(!value) {
+			setPBDisplay(0);
+			return;
+		}
+
+		if("personalBest" in activeMap) {
+			// if it's present, that means a map has been played
+			getPersonalBest(activeMap.map.hash, diffEnum[activeMap.map.difficulty], activeMap.map.characteristic).then((data) => {
+				activeMap.personalBest = data;
+				setPBDisplay(activeMap.personalBest);
+			});
+		}
+	},
+	pbHeaderText: function(value) {
+		$("#pbHeaderText").text(value);
+	},
+	pbHeaderColor: function(value) {
+		rootCSS().setProperty("--pbHeaderColorStatic", value);
+	},
+	pbHeaderUsesGradient: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--pbHeaderGradient", `var(--pbHeaderGradientActual)`);
+		} else {
+			rootCSS().setProperty("--pbHeaderGradient", `var(--pbHeaderColor)`);
+		}
+	},
+	pbHeaderGradientColor: function(value) {
+		rootCSS().setProperty("--pbHeaderGradientColor", value);
+	},
+	pbHeaderGradientAngle: function(value) {
+		rootCSS().setProperty("--pbHeaderGradientAngle", `${value}deg`);
+	},
+	pbHeaderReflectsArtColor: function(value) {
+		rootCSS().setProperty("--pbHeaderColor", `var(${(value === "true" ? "--pbHeaderColorReflected" : "--pbHeaderColorStatic")})`);
+	},
+	pbHeaderReflectsArtColorDarker: function(value) {
+		rootCSS().setProperty("--pbHeaderColorReflected", `var(--color${(value === "true" ? "Dark" : "Light")})`);
+	},
+	hidePBCellIfNoScore: function(value) {
+		if($("#pbCell").attr("data-enabled") === "true") {
+			if(value === "false") {
+				$("#pbCell").show();
+			}
+
+			if("personalBest" in activeMap) {
+				setPBDisplay(activeMap.personalBest);
+			}
+		}
+	},
+	pbDisplayGlobalRank: function(value) {
+		if(value === "true") {
+			$("#pbCell .basicHeader .fa-globe").show();
+			$("#pbRankValue").show();
+		} else {
+			$("#pbCell .basicHeader .fa-globe").hide();
+			$("#pbRankValue").hide();			
+		}
+	},
+	pbHeaderGlobeSeparation: function(value) {
+		rootCSS().setProperty("--pbHeaderGlobeSeparation", `${value}px`);
+	},
+	pbWidth: function(value) {
+		rootCSS().setProperty("--pbWidth", `${value}px`);
+	},
+	pbLineHeight: function(value) {
+		rootCSS().setProperty("--pbLineHeight", `${value}px`);
+	},
+	flipPBDetails: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--pbVerticalAlignment", "column-reverse");
+			rootCSS().setProperty("--pbVerticalOffset", '1px');
+		} else {
+			rootCSS().setProperty("--pbVerticalAlignment", "column");
+			rootCSS().setProperty("--pbVerticalOffset", '-1px');
+		}		
+	},
+	pbAlignment: function(value) {
+		rootCSS().setProperty("--pbAlignment", value);
+	},
+	pbPrecision: function(value) {
+		if("personalBest" in activeMap) {
+			setPBDisplay(activeMap.personalBest);
+		} else {
+			setPBDisplay(0);
+		}		
+	},
+	pbAccColor: function(value) {
+		rootCSS().setProperty("--pbAccColor", value);
+	},
+	pbAccFontFamily: function(value) {
+		rootCSS().setProperty("--pbAccFontFamily", value);
+	},
+	pbAccFontItalic: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--pbAccFontStyle", "italic");
+		} else {
+			rootCSS().setProperty("--pbAccFontStyle", "normal");
+		}
+	},
+	pbAccFontSize: function(value) {
+		rootCSS().setProperty("--pbAccFontSize", `${value}pt`);
+	},
+	pbAccFontWeight: function(value) {
+		rootCSS().setProperty("--pbAccFontWeight", value);
+	},
+	pbAccFontAdditionalWeight: function(value) {
+		rootCSS().setProperty("--pbAccFontAdditionalWeight", `${value}px`);
+	},
+	pbAccLetterSpacing: function(value) {
+		rootCSS().setProperty("--pbAccLetterSpacing", `${value}px`);
+	},
+	pbHeaderFontFamily: function(value) {
+		rootCSS().setProperty("--pbHeaderFontFamily", value);
+	},
+	pbHeaderFontItalic: function(value) {
+		if(value === "true") {
+			rootCSS().setProperty("--pbHeaderFontStyle", "italic");
+		} else {
+			rootCSS().setProperty("--pbHeaderFontStyle", "normal");
+		}
+	},
+	pbHeaderFontSize: function(value) {
+		rootCSS().setProperty("--pbHeaderFontSize", `${value}pt`);
+	},
+	pbHeaderFontWeight: function(value) {
+		rootCSS().setProperty("--pbHeaderFontWeight", value);
+	},
+	pbHeaderFontAdditionalWeight: function(value) {
+		rootCSS().setProperty("--pbHeaderFontAdditionalWeight", `${value}px`);
+	},
+	pbLeaderboardContext: function(value) {
+		if("personalBest" in activeMap) {
+			// if it's present, that means a map has been played
+			getPersonalBest(activeMap.map.hash, diffEnum[activeMap.map.difficulty], activeMap.map.characteristic).then((data) => {
+				activeMap.personalBest = data;
+				setPBDisplay(activeMap.personalBest);
+			});
+		}		
+	},
+	pbRankIcon: function(value) {
+		if(!("personalBest" in activeMap) && value === "avatar") {
+			// we goin too fast
+			setTimeout(() => {
+				settingUpdaters.pbRankIcon(value);
+			}, 1000);
+			return;
+		}
+
+		$("#pbCell .basicHeader i").attr("class", "");
+		$("#pbCell .basicHeader i").hide();
+		$("#pbCell .basicHeader .blAvatar").hide();
+
+		if(value === "none") {
+			return;
+		}
+
+		if(value === "avatar") {
+			$("#pbCell .basicHeader .blAvatar").show();
+			rootCSS().setProperty("--blAvatar", `url("${activeMap.personalBest.avatarURL}")`)
+			return;
+		}
+
+		$("#pbCell .basicHeader i").show();
+
+		var isRegularKind = false;
+		if(value.indexOf("_reg") !== -1) {
+			isRegularKind = true;
+			value = value.substr(0, value.indexOf("_reg"));
+		}
+
+		$("#pbCell .basicHeader i").addClass(isRegularKind ? "fa-regular" : "fa-solid");
+		$("#pbCell .basicHeader i").addClass(value);
 	}
 };
 

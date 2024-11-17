@@ -261,4 +261,21 @@
 	--sharedChatSameRoomBorderColor: #9146FF;
 	--sharedChatSameRoomBorderOffset: 2px;
 	--sharedChatSameRoomBorderSizeActual: var(--sharedChatSameRoomBorderSize);
+
+	--chatPerspectiveTransform: none;
+	--chatPerspective2DTranslatePart: translate(var(--chatPerspectivePreTranslateX), var(--chatPerspectivePreTranslateY));
+	--chatPerspective3DTranslatePart: translate3d(var(--chatPerspectivePostTranslateX), var(--chatPerspectivePostTranslateY), var(--chatPerspectivePostTranslateZ));
+	--chatPerspectiveRotationPart: perspective(var(--chatPerspectiveDistance)) rotateX(var(--chatPerspectiveRotX)) rotateY(var(--chatPerspectiveRotY)) rotateZ(var(--chatPerspectiveRotZ));
+	--chatPerspectiveTransformActual: var(--chatPerspective2DTranslatePart) var(--chatPerspectiveRotationPart) var(--chatPerspective3DTranslatePart);
+	--chatPerspectiveDistance: 30cm;
+	--chatPerspectiveOriginPointX: bottom;
+	--chatPerspectiveOriginPointY: left;
+	--chatPerspectiveRotX: 0deg;
+	--chatPerspectiveRotY: 15deg;
+	--chatPerspectiveRotZ: 0deg;
+	--chatPerspectivePreTranslateX: 0mm;
+	--chatPerspectivePreTranslateY: 0mm;
+	--chatPerspectivePostTranslateX: 0mm;
+	--chatPerspectivePostTranslateY: 0mm;
+	--chatPerspectivePostTranslateZ: 0mm;
 }

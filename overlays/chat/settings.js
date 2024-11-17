@@ -250,14 +250,24 @@ var subTiers = {
 function checkIfBadgesVisible() {
 	$(".badges").each(function(rootIdx) {
 		let rootElem = $(this);
+		rootElem.show();
+
+		let badgesArePresent = false;
 
 		rootElem.children(".badgeWrap").each(function(badgeIdx) {
 			let badgeElem = $(this);
 
 			if(badgeElem.is(":visible")) {
+				badgesArePresent = true;
 				rootElem.show();
 			}
 		});
+
+		if(badgesArePresent) {
+			rootElem.show();
+		} else {
+			rootElem.hide();
+		}
 	});
 }
 
@@ -1515,6 +1525,43 @@ const settingUpdaters = {
 	emotesGigantifiedScale: function(value) {
 		value = parseFloat(value) / 100;
 		rootCSS().setProperty("--gigantifiedScalar", value);
+	},
+
+	chatShiftPerspective: function(value) {
+		rootCSS().setProperty("--chatPerspectiveTransform", (value === "true" ? "var(--chatPerspectiveTransformActual)" : "none"));
+	},
+	chatPerspectiveDistance: function(value) {
+		rootCSS().setProperty("--chatPerspectiveDistance", `${value}cm`);
+	},
+	chatPerspectiveOriginPointX: function(value) {
+		rootCSS().setProperty("--chatPerspectiveOriginPointX", value);
+	},
+	chatPerspectiveOriginPointY: function(value) {
+		rootCSS().setProperty("--chatPerspectiveOriginPointY", value);
+	},
+	chatPerspectiveRotX: function(value) {
+		rootCSS().setProperty("--chatPerspectiveRotX", `${value}deg`);
+	},
+	chatPerspectiveRotY: function(value) {
+		rootCSS().setProperty("--chatPerspectiveRotY", `${value}deg`);
+	},
+	chatPerspectiveRotZ: function(value) {
+		rootCSS().setProperty("--chatPerspectiveRotZ", `${value}deg`);
+	},
+	chatPerspectivePreTranslateX: function(value) {
+		rootCSS().setProperty("--chatPerspectivePreTranslateX", `${value}mm`);
+	},
+	chatPerspectivePreTranslateY: function(value) {
+		rootCSS().setProperty("--chatPerspectivePreTranslateY", `${value}mm`);
+	},
+	chatPerspectivePostTranslateX: function(value) {
+		rootCSS().setProperty("--chatPerspectivePostTranslateX", `${value}mm`);
+	},
+	chatPerspectivePostTranslateY: function(value) {
+		rootCSS().setProperty("--chatPerspectivePostTranslateY", `${value}mm`);
+	},
+	chatPerspectivePostTranslateZ: function(value) {
+		rootCSS().setProperty("--chatPerspectivePostTranslateZ", `${value}mm`);
 	}
 };
 settingUpdaters["chatHideAccounts"](localStorage.getItem("setting_chatHideAccounts"));

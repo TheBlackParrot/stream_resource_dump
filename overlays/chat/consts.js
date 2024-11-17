@@ -1,5 +1,5 @@
-const overlayRevision = 76;
-const overlayRevisionTimestamp = 1731375866256;
+const overlayRevision = 77;
+const overlayRevisionTimestamp = 1731824299925;
 
 const enums = {
 	weight: {
@@ -44,6 +44,27 @@ async function getTwitchBadges() {
 	}
 
 	twitchBadgeTypes = await response.json();
+
+	const style = document.createElement('style');
+	style.type = 'text/css';
+
+	let typeDefinitions = [];
+	for(const badgeType in twitchBadgeTypes) {
+		const badgeData = twitchBadgeTypes[badgeType];
+
+		rootCSS().setProperty(`--displayBadge_${badgeType}`, "initial");
+		typeDefinitions.push(`.${badgeType}_badge { display: var(--displayBadge_${badgeType}); }`);
+
+		settingUpdaters[badgeData.setting] = (value) => {
+			rootCSS().setProperty(`--displayBadge_${badgeType}`, (value === "true" ? "initial" : "none"));
+			checkIfBadgesVisible();
+		}
+	}
+	style.innerHTML = `${typeDefinitions.join("\n")}`;
+	document.getElementsByTagName('head')[0].appendChild(style);
+
+	// me realizing i could just. use a class. just now. after i wrote all this.
+	// .....hhhhh
 }
 
 const commonEmotes = {

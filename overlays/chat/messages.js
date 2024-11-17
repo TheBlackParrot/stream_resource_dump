@@ -1114,7 +1114,8 @@ async function renderMessageBlock(data, rootElement, isReply) {
 					}
 				}
 
-				if(!wasCheermote) {
+				// checks are here too as they were pushing the text forms
+				if(!wasCheermote && !(word in chatEmotes) && !(word in twitchEmotes && allowedToUseTwitchEmote(word, data.emotes))) {
 					wordsFinal.push(word);
 				}
 			}

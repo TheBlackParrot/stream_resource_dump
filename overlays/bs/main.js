@@ -175,7 +175,7 @@ function toggleOverlay(show) {
 	}
 
 	if(show) {
-		$("#miscInfoCell, #hitMissCell, #accCell, #ppCell, #qrCell").removeClass("fadeOut").addClass("fadeIn");
+		$("#miscInfoCell, #hitMissCell, #accCell, #ppCell, #qrCell, #pbCell").removeClass("fadeOut").addClass("fadeIn");
 		$("#bgWrapper").removeClass("fadeOut").addClass("fadeInLong");
 		$("#title").removeClass("slideOut").addClass("slideIn");
 
@@ -184,7 +184,7 @@ function toggleOverlay(show) {
 			$("#artWrapper").removeClass("fadeOut").addClass("fadeIn");
 		}, 100);
 	} else {
-		$("#miscInfoCell, #hitMissCell, #accCell, #ppCell, #qrCell").removeClass("fadeIn").addClass("fadeOut");
+		$("#miscInfoCell, #hitMissCell, #accCell, #ppCell, #qrCell, #pbCell").removeClass("fadeIn").addClass("fadeOut");
 		$("#bgWrapper").removeClass("fadeInLong").addClass("fadeOut");
 		$("#title").removeClass("slideIn").addClass("slideOut");
 
@@ -216,6 +216,22 @@ function setHealth(health, forced) {
 				}, parseFloat(localStorage.getItem("setting_bs_healthOutlineTimeout")) * 1000);
 			});
 		}
+	}
+
+	if(health <= 0) {
+		if(localStorage.getItem("setting_bs_enableSkullOnDeath") === "true") {
+			$("#skullIcon").fadeIn(250);
+
+			if(localStorage.getItem("setting_bs_fadeArtOnFailure") === "true") {
+				$("#art").addClass("isDead");
+			}
+		}
+
+		clearTimeout(healthFadeTO);
+		$("#healthOutline").fadeOut(250);
+	} else {
+		$("#skullIcon").hide();
+		$("#art").removeClass("isDead");
 	}
 
 	oldHealth = health;
@@ -379,6 +395,9 @@ const eventFuncs = {
 
 		updateSecondaryMarquee();
 		refreshLeaderboardData(map.map.difficulty, map.map.characteristic, map.map.hash);
+
+		map.personalBest = await getPersonalBest(map.map.hash, diffEnum[map.map.difficulty], map.map.characteristic);
+		setPBDisplay(map.personalBest);
 
 		checkCustomColors();
 	},

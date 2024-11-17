@@ -1,4 +1,61 @@
 {
+	"1731824299925": {
+		"updates": {
+			"bs": {
+				"revision": 17,
+				"notes": [
+					[
+						"failing while playing a map will now add an icon indicating failure on top of the cover art",
+						{"anchor": "bs_enableSkullOnDeath"}
+					],
+					[
+						"fixed a duplicate CSS variable name"
+					],
+					[
+						"added the ability to display personal bests from BeatLeader",
+						{"anchor": "bs_elementOrder"}
+					]
+				]
+			},
+
+			"chat": {
+				"revision": 77,
+				"notes": [
+					[
+						"added the ability to shift perspective of the overlay as a whole",
+						{"anchor": "chatShiftPerspective"}
+					],
+					[
+						"fixed default subscriber badges not reflecting their proper subscription amount"
+					],
+					[
+						"fixed default bits badges not showing up"
+					],
+					[
+						"removed old badge show/hide code and migrated toggles to CSS definitions",
+						["i broke toggles in the shared chat refactor, they now work again. sorry! didn't catch it until recently"]
+					],
+					[
+						"fixed non-twitch emotes in cheer messages doubling as their text form"
+					],
+					[
+						"fixed new subscribers who haven't chatted in a session yet triggering a non-breaking undefined exception",
+						["this is so specific that i probably just caught a rare event happening lol, that never happens"]
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 79,
+				"notes": [
+					[
+						"fixed setting cell labels with multiple lines not being vertically centered"
+					]
+				]
+			}
+		}
+	},
+
 	"1731375866256": {
 		"updates": {
 			"chat": {

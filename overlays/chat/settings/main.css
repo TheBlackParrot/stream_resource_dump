@@ -379,7 +379,6 @@ border-bottom: 1px solid #ffffff99;
 	width: calc(380px - var(--settings-padding));
 	border-right: 1px solid var(--primary-color-brighter-desat);
 	line-height: var(--input-height);
-	height: var(--input-height);
 	cursor: default;
 }
 .settingCell {

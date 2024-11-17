@@ -49,6 +49,18 @@ async function getChannelChatBadges(broadcasterID) {
 		}		
 	});
 	console.log(channelBadgeResponse);
+	
+	// make default copies Just In Case:tm:, we'll overwrite these if need be
+	if(!(`bits${broadcasterID}` in twitchBadges)) {
+		twitchBadges[`bits${broadcasterID}`] = structuredClone(twitchBadges["bits"]);
+		twitchBadges[`bits${broadcasterID}`].set_id = `bits${broadcasterID}`;
+		twitchBadges[`bits${broadcasterID}`].is_default = true;
+
+		twitchBadges[`subscriber${broadcasterID}`] = structuredClone(twitchBadges["subscriber"]);
+		twitchBadges[`subscriber${broadcasterID}`].set_id = `subscriber${broadcasterID}`;
+		twitchBadges[`subscriber${broadcasterID}`].is_default = true;
+	}
+
 	for(const badgeSet of channelBadgeResponse.data) {
 		if(localStorage.getItem(`setting_enableCustomBadges_${badgeSet.set_id}`) === "true") {
 			const oldBadgeSetID = badgeSet.set_id.substr(0);
@@ -580,7 +592,11 @@ const twitchEventFuncs = {
 
 	subscription: async function(data) {
 		await prepareMessage(data.tags, data.message, false, true);
-		await twitchUsers.getUser(data.tags['user-id']).userBlock.updateAvatarBlock();
+		const user = await twitchUsers.getUser(data.tags['user-id']);
+		
+		if(user) {
+			user.userBlock.updateAvatarBlock();
+		}
 	},
 
 	resub: async function(data) {

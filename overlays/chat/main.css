@@ -11,6 +11,10 @@ body {
 	position: fixed;
 	width: calc(var(--overlayWidth) - (var(--chatBlockPaddingHorizontal) * 2));
 	display: flex;
+
+	transform: var(--chatPerspectiveTransform);
+	transform-origin: var(--chatPerspectiveOriginPointX) var(--chatPerspectiveOriginPointY);
+	transform-style: flat;
 }
 
 #testWrapper {

@@ -369,43 +369,45 @@ class UserBlock {
 						founderInt -= founderInt % 6;
 					}
 
-					badges.list["subscriber"] = founderInt.toString();			
+					badges.list[`subscriber${roomID}`] = founderInt.toString();
 				}
 			}
 
 			let useLQImages = (localStorage.getItem("setting_useLowQualityImages") === "true");
 			for(let badgeType in badges.list) {
-				let showBadge = true;
+				let badgeTypeRaw = badgeType.substr(0);
+				if(badgeType === `subscriber${roomID}` || badgeType === `bits${roomID}`) {
+					badgeType = badgeType.replace(/[0-9]/g, "");
+				}
+
 				let foundBadge = false;
-				let addGradient = false;
+
+				let badgeElem = $(`<span class="badgeWrap"></span>`);
 
 				for(let checkAgainst in twitchBadgeTypes) {
 					let badgeTypeData = twitchBadgeTypes[checkAgainst];
 					if(badgeTypeData.badges.indexOf(badgeType) !== -1) {
 						foundBadge = true;
-						if(localStorage.getItem(`setting_${badgeTypeData.setting}`) === "false") {
-							showBadge = false;
-							break;
+
+						badgeElem.addClass(`${checkAgainst}_badge`);
+						if(badgeTypeData.is_solid) {
+							badgeElem.addClass("badgeGradient");
 						}
 
-						if(badgeTypeData.is_solid) {
-							addGradient = true;
+						if("is_default" in twitchBadges[badgeTypeRaw]) {
+							if(twitchBadges[badgeTypeRaw].is_default) {
+								badgeElem.addClass("normal_badge");
+							}
 						}
 					}
 				}
 
 				if(!foundBadge) {
 					// assume it's a game-related badge
-					if(localStorage.getItem("setting_enableTwitchGameBadges") === "false") {
-						showBadge = false;
-					}
+					badgeElem.addClass("game_badge");
 				}
 
-				if(!showBadge) {
-					continue;
-				}
-
-				let badgeData = getBadgeData(badgeType, badges.list[badgeType]);
+				let badgeData = getBadgeData(badgeTypeRaw, badges.list[badgeTypeRaw]);
 				let url;
 
 				if(!badgeData) {
@@ -416,7 +418,7 @@ class UserBlock {
 				if(typeof badgeData === "undefined" && badges.info) {
 					// this should only trigger on channels that have founders badges off, and do not have custom sub badges set
 					// twitch ID's these differently compared to custom sub badges
-					const monthInt = parseInt(badges.info.subscriber);
+					const monthInt = parseInt(badges.info[`subscriber${roomID}`]);
 					var chosenDefaultLength = 0;
 					for(const lengthIdx in defaultSubBadgeLengths) {
 						if(monthInt >= defaultSubBadgeLengths[lengthIdx]) {
@@ -449,20 +451,22 @@ class UserBlock {
 				if(badgeType in badgeOrder) {
 					order = badgeOrder[badgeType];
 				}
-				if(badgeType.indexOf("subscriber") === 0) {
-					order = badgeOrder.subscriber;
-				}
 
-				let badgeElem = $(`<span class="badgeWrap"></span>`);
 				badgeElem.css("background-image", `url('${url}')`);
 				badgeElem.css("order", order);
-				if(badgeType === "subscriber") {
-					badgeElem.addClass("sub_badge");
-				} else {
-					badgeElem.addClass("normal_badge");
-					if(addGradient) {
-						badgeElem.addClass("badgeGradient");
-					}
+
+				switch(badgeType) {
+					case "subscriber":
+						badgeElem.addClass("sub_badge");
+						break;
+
+					case "bits":
+						badgeElem.addClass("bits_badge");
+						break;
+
+					default:
+						badgeElem.addClass("normal_badge");
+						break;
 				}
 
 				this.badgeBlock[roomID].append(badgeElem);

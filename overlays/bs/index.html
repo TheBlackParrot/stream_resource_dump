@@ -60,6 +60,9 @@
 				</div>
 				<div id="healthOutline">
 				</div>
+				<div id="skullIcon">
+					<i class="fa-solid fa-face-dizzy"></i>
+				</div>
 				<div id="artBG" class="showBoxShadow">
 					<div class="artContainer"></div>
 				</div>
@@ -108,7 +111,20 @@
 			</div>
 
 			<div id="accWrap">
-				<span id="acc">97.81</span><span id="accPerc">%</span>
+				<span id="acc">97.81</span><span class="accPerc">%</span>
+			</div>
+		</div>
+
+		<div class="cell" id="pbCell">
+			<div class="basicHeader">
+				<span id="pbHeaderText">PB</span>
+				<i class="fas fa-globe"></i>
+				<div class="blAvatar" style="display: none;"></div>
+				<span id="pbRankSymbol">#</span>
+				<span id="pbRankValue">2463</span>
+			</div>
+			<div id="pbAccWrap">
+				<span id="pbAcc">--.--</span><span class="accPerc">%</span>
 			</div>
 		</div>
 
@@ -188,6 +204,7 @@
 	<script defer type="text/javascript" src="main.js"></script>
 	<script defer type="text/javascript" src="broadcast.js"></script>
 	<script defer type="text/javascript" src="rankpp.js"></script>
+	<script defer type="text/javascript" src="personal_best.js"></script>
 	<script type="text/javascript">
 		window.addEventListener("load", async function() {
 			await getCurveData();

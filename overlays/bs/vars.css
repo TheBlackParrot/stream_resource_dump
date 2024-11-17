@@ -211,5 +211,47 @@
 	--healthColorForegroundStatic: #ffffff;
 	--healthColorBackgroundStatic: #666666;
 	--healthColorForegroundReflected: var(--colorLight);
-	--healthColorForegroundReflected: var(--colorDark);
+	--healthColorBackgroundReflected: var(--colorDark);
+
+	--skullIconDisplay: flex;
+	--skullIconColor: var(--skullIconColorReflected);
+	--skullIconColorStatic: #ffffff;
+	--skullIconColorReflected: var(--colorLight);
+	--skullIconSize: 0.5;
+	--skullSaturateArtAmount: 0%;
+	--skullBrightnessArtAmount: 50%;
+	--skullContrastArtAmount: 150%;
+	--skullIconFilters: var(--skullIconOutlineFilter) var(--skullIconShadowFilter);
+	--skullIconOutlineFilter: url(#outlineEffect);
+	--skullIconShadowFilter: opacity(1);
+	--deathFilters: opacity(1);
+	--deathFiltersActual: saturate(var(--skullSaturateArtAmount)) contrast(var(--skullContrastArtAmount)) brightness(var(--skullBrightnessArtAmount));
+
+	--pbHeaderColor: var(--pbHeaderColorReflected);
+	--pbHeaderColorStatic: #cbadff;
+	--pbHeaderColorReflected: var(--colorLight);
+	--pbHeaderGradientColor: #ffffff;
+	--pbHeaderGradientAngle: 170deg;
+	--pbHeaderGradient: var(--pbHeaderGradientActual);
+	--pbHeaderGradientActual: linear-gradient(var(--pbHeaderGradientAngle), var(--pbHeaderGradientColor) 20%, transparent 100%);
+	--pbHeaderGlobeSeparation: 6px;
+	--pbWidth: 130px;
+	--pbLineHeight: 21px;
+	--pbVerticalAlignment: column;
+	--pbVerticalOffset: -1px;
+	--pbAlignment: center;
+	--pbAccColor: #ffffff;
+	--pbAccFontFamily: "Manrope";
+	--pbAccFontStyle: normal;
+	--pbAccFontSize: 27pt;
+	--pbAccFontWeight: 900;
+	--pbAccFontAdditionalWeight: 0px;
+	--pbAccLetterSpacing: -1px;
+	--pbHeaderFontFamily: "Manrope";
+	--pbHeaderFontStyle: normal;
+	--pbHeaderFontSize: 12pt;
+	--pbHeaderFontWeight: 900;
+	--pbHeaderFontAdditionalWeight: 0px;
+
+	--blAvatar: url("../shared/assets/placeholder.png");
 }

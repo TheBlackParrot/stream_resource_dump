@@ -98,7 +98,8 @@ body {
 #hitMissCell,
 #accWrap, #fcAcc, #fcAccHead, #comboWrap,
 #ppCell, #ssStarsWrap, #blStarsWrap,
-#handValueCellLeft, #handValueCellRight {
+#handValueCellLeft, #handValueCellRight,
+#pbAccWrap, .basicHeader {
 	filter:	var(--effects);
 }
 #diffWrap, #title, #artist, .mapper, .basePack {
@@ -167,17 +168,17 @@ body {
 	-webkit-mask-size: contain;
 }
 
-#duration, #time, #combo, #acc, #hitValue, #missValue, #ssValue, #blValue, #fcAcc, .handCellContainer {
+#duration, #time, #combo, #acc, #hitValue, #missValue, #ssValue, #blValue, #fcAcc, .handCellContainer, #pbAcc {
 	font-variant: tabular-nums;
 }
-#miscInfoCell, #metadataCell, #hitMissCell, #accCell, #ppCell, #handValueCell {
+#miscInfoCell, #metadataCell, #hitMissCell, #accCell, #ppCell, #handValueCell, #pbCell {
 	white-space: nowrap;
 	overflow-x: clip;
 }
 #metadataCell {
 	overflow: hidden; /* ????? */
 }
-#diffWrap, #codeWrap, #hitCell, #FCCell, #missCell, #comboWrap, #accWrap, #ssCell, #blCell, #ssStarsWrap, #blStarsWrap, #fcAccWrap, .handCellContainer {
+#diffWrap, #codeWrap, #hitCell, #FCCell, #missCell, #comboWrap, #accWrap, #ssCell, #blCell, #ssStarsWrap, #blStarsWrap, #fcAccWrap, .handCellContainer, #pbAccWrap, .basicHeader {
 	padding-top: var(--verticalSpacing);
 	padding-bottom: var(--verticalSpacing);
 }
@@ -307,9 +308,11 @@ body {
 	position: relative;
 	top: var(--accVerticalOffset);
 }
-#accPerc {
-	font-size: calc(var(--accFontSize) / 1.67);
+.accPerc {
 	margin-left: 0.1em;
+}
+#accWrap .accPerc {
+	font-size: calc(var(--accFontSize) / 1.67);
 }
 #acc {
 	display: inline-block;
@@ -349,13 +352,13 @@ body {
 	-webkit-text-stroke: var(--fcAccFontAdditionalWeight) transparent;		
 }
 
-#artOutline, #artBG, #healthOutline {
+#artOutline, #artBG, #healthOutline, #skullIcon {
 	position: absolute;
 	display: var(--show-art-outline);
 	overflow: hidden;
 }
 
-#artWrapper, #artOutline, #artBG, #healthOutline {
+#artWrapper, #artOutline, #artBG, #healthOutline, #skullIcon {
 	width: calc(var(--art-size) + (var(--art-outline-size) * 2));
 	height: calc(var(--art-size) + (var(--art-outline-size) * 2));
 }
@@ -364,7 +367,7 @@ body {
 	display: var(--show-art);
 }
 
-#artOutline, #artBG, #healthOutline {
+#artOutline, #artBG, #healthOutline, #skullIcon {
 	border-radius: var(--art-border-radius);
 }
 
@@ -646,6 +649,106 @@ body {
 	filter: var(--qrFilters);
 	padding: var(--qrPadding);
 	opacity: var(--qrOpacity);
+}
+
+#skullIcon {
+	display: var(--skullIconDisplay);
+	z-index: 6;
+	font-size: calc((var(--art-size) + (var(--art-outline-size) * 2)) * var(--skullIconSize));
+	line-height: 0px;
+	align-items: center;
+	justify-content: center;
+
+	color: var(--skullIconColor);
+	filter: var(--skullIconFilters);
+}
+
+.isDead {
+	filter: var(--artFilters) var(--deathFilters) !important;
+}
+
+#pbCell {
+	min-width: var(--pbWidth);
+	text-align: var(--pbAlignment);
+	font-weight: var(--primaryFontWeight);
+	overflow-x: visible;
+	flex-direction: var(--pbVerticalAlignment);
+	line-height: var(--pbLineHeight);
+}
+#pbAccWrap {
+	font-family: var(--pbAccFontFamily);
+	font-size: var(--pbAccFontSize);
+	font-weight: var(--pbAccFontWeight);
+	font-style: var(--pbAccFontStyle);
+	letter-spacing: var(--pbAccLetterSpacing);
+	background-color: var(--pbAccColor);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-webkit-text-stroke: var(--pbAccFontAdditionalWeight) transparent;
+}
+#pbAcc {
+	display: inline-block;
+	line-height: calc(var(--pbLineHeight) + 3px);
+}
+
+.basicHeader {
+	position: relative;
+}
+#pbCell .basicHeader {
+	top: var(--pbVerticalOffset);
+	font-family: var(--pbHeaderFontFamily);
+	font-weight: var(--pbHeaderFontWeight);
+	font-size: var(--pbHeaderFontSize);
+	font-style: var(--pbHeaderFontStyle);
+}
+#pbHeaderText, #pbCell .basicHeader i {
+	background-color: var(--pbHeaderColor);
+	background-image: var(--pbHeaderGradient);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-webkit-text-stroke: var(--pbHeaderFontAdditionalWeight) transparent;
+}
+
+#pbRankValue {
+	background-color: var(--pbAccColor);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-webkit-text-stroke: var(--pbHeaderFontAdditionalWeight) transparent;
+	padding-right: 6px;
+	margin-right: -6px;
+}
+#pbRankSymbol {
+	background-color: var(--pbAccColor);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-webkit-text-stroke: var(--pbHeaderFontAdditionalWeight) transparent;
+	font-size: 0.8em;
+	line-height: 0px;
+	opacity: 0.8;
+	margin-right: -0.25em; /* idk */
+}
+
+#pbHeaderText {
+	padding-right: 6px;
+	margin-right: calc(-6px + var(--pbHeaderGlobeSeparation));
+}
+
+.blAvatar {
+	display: inline-block;
+	width: 1em;
+	height: 1em;
+	border-radius: 50%;
+	padding: 2px;
+	background-image: var(--blAvatar);
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+	vertical-align: middle;
+	line-height: 0px;
+}
+
+#pbAccWrap .accPerc {
+	font-size: calc(var(--pbAccFontSize) / 1.67);
 }
 
 /* uncomment after OBS updates CEF to a recent chrome version
