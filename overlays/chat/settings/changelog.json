@@ -1,4 +1,31 @@
 {
+	"1731996059215": {
+		"updates": {
+			"chat": {
+				"revision": 78,
+				"notes": [
+					[
+						"moderators and VIPs can now bypass ASCII art filtering",
+						{"anchor": "chatModsBypassASCIIArtFilter"}
+					],
+					[
+						"messages shorter than 3 characters now bypass ASCII art filtering",
+						{"anchor": "chatMessageLengthASCIIArtFilterMinimum"}
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 80,
+				"notes": [
+					[
+						"(update only contains new settings)"
+					]
+				]
+			}
+		}
+	},
+
 	"1731824299925": {
 		"updates": {
 			"bs": {

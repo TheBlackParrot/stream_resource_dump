@@ -7476,6 +7476,24 @@
 							<input type="number" id="chatHideASCIIArtThreshold" min="1" max="100" step="1" value="10"/><span class="settingCellMeasurement">%</span>
 						</div>
 					</div>
+					<div class="setting" data-dependent="chatHideASCIIArt">
+						<div class="settingCell">
+							<input checked id="chatModsBypassASCIIArtFilter" type="checkbox"/> <span class="settingInfo">Filter ignores messages from moderators</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="chatHideASCIIArt">
+						<div class="settingCell">
+							<input checked id="chatVIPBypassASCIIArtFilter" type="checkbox"/> <span class="settingInfo">Filter ignores messages from VIPs</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="chatHideASCIIArt">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Minimum message length</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatMessageLengthASCIIArtFilterMinimum" min="0" max="999" step="1" value="3"/><span class="settingCellMeasurement">characters</span>
+						</div>
+					</div>
 					<hr/>
 					<div class="setting">
 						<div class="settingCellLabel">

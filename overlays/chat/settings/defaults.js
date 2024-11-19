@@ -175,7 +175,10 @@ const nonPublicSettings = [
 	"bs_healthOutlineTimeout",
 	"panel_disableErrorNotifications",
 	"enable7TVPersonalEmoteSets",
-	"emoteFormatBTTV"
+	"emoteFormatBTTV",
+	"chatModsBypassASCIIArtFilter",
+	"chatVIPBypassASCIIArtFilter",
+	"chatMessageLengthASCIIArtFilterMinimum"
 ];
 
 const defaultConfig = {
@@ -1238,8 +1241,10 @@ const defaultConfig = {
 	"bs_pbHeaderFontWeight": "900",
 	"bs_pbHeaderFontAdditionalWeight": "0",
 	"bs_pbLeaderboardContext": "general",
-	"bs_pbRankIcon": "fa-globe"
-
+	"bs_pbRankIcon": "fa-globe",
+	"chatModsBypassASCIIArtFilter": "true",
+	"chatVIPBypassASCIIArtFilter": "true",
+	"chatMessageLengthASCIIArtFilterMinimum": "3"
 };
 // i typed out the bigNoNoWords so you don't have to, i'm sorry :(
 // it's gotta know what to remove

@@ -104,6 +104,7 @@ async function prepareMessage(tags, message, self, forceHighlight) {
 	}
 
 	let hasMetThreshold = true;
+	let isVIP = false;
 	if(localStorage.getItem("setting_chatHideUntilThresholdMet") === "true" && !isOverlayMessage) {
 		hasMetThreshold = false;
 		
@@ -115,6 +116,7 @@ async function prepareMessage(tags, message, self, forceHighlight) {
 					if(tags.badges) {
 						let roles = Object.keys(tags.badges);
 						if(roles.indexOf("vip") !== -1) {
+							isVIP = true;
 							hasMetThreshold = true;
 						}
 					}
@@ -129,14 +131,22 @@ async function prepareMessage(tags, message, self, forceHighlight) {
 	}
 
 	if(localStorage.getItem("setting_chatHideASCIIArt") === "true") {
-		const brailleAmount = (message.match(brailleTest) || []).length;
-		const messageLength = message.length;
-		const asciiThreshold = (parseInt(localStorage.getItem("setting_chatHideASCIIArtThreshold")) || 0) / 100;
+		if((userData.moderator && localStorage.getItem("setting_chatModsBypassASCIIArtFilter") === "true") || (isVIP && localStorage.getItem("setting_chatVIPBypassASCIIArtFilter") === "true")) {
+			// all good :)
+		} else {
+			const brailleAmount = (message.match(brailleTest) || []).length;
+			const messageLength = message.length;
 
-		if(brailleAmount / messageLength >= asciiThreshold) {
-			message = "[REDACTED]";
-			tags['emotes'] = null;
-			tags['emotes-raw'] = null;
+			if(messageLength <= parseInt(localStorage.getItem("setting_chatMessageLengthASCIIArtFilterMinimum"))) {
+				// all good :)
+			} else {
+				const asciiThreshold = (parseInt(localStorage.getItem("setting_chatHideASCIIArtThreshold")) || 0) / 100;
+				if(brailleAmount / messageLength >= asciiThreshold) {
+					message = "[REDACTED]";
+					tags['emotes'] = null;
+					tags['emotes-raw'] = null;
+				}
+			}
 		}
 	}
 
