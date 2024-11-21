@@ -266,7 +266,6 @@ const twitchFuncs = {
 			return;
 		}
 
-		gettingAccessToken = true;
 		console.log("refreshing oauth access token...");
 
 		regenTwitchCodes();

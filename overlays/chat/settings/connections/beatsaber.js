@@ -199,9 +199,17 @@ async function updateBeatSaberMapData() {
 
 	if(bsData !== null) {
 		console.log(bsData);
-		if(!("verifiedMapper" in bsData.uploader)) { bsData.uploader.verifiedMapper = false; }
+		if(!("verifiedMapper" in bsData.uploader)) {
+			bsData.uploader.verifiedMapper = false;
+		} else {
+			currentBSSong.status.verified = bsData.uploader.verifiedMapper;
+		}
 
 		const showAvatar = (bsData.uploader.curator || bsData.uploader.seniorCurator || bsData.uploader.verifiedMapper || bsData.ranked || bsData.qualified || "curator" in bsData);
+
+		if(bsData.ranked || bsData.blRanked) { currentBSSong.status.ranked = true; }
+		if(bsData.qualified || bsData.blQualified) { currentBSSong.status.qualified = true; }
+		if("curator" in bsData) { currentBSSong.status.curated = true; }
 
 		currentBSSong.map.bsr = bsData.id;
 		currentBSSong.map.uploaders = [{

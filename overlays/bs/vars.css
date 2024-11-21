@@ -143,6 +143,8 @@
 
 	--box-shadow-effects: var(--box-shadow-effects-offset-x) var(--box-shadow-effects-offset-y) var(--box-shadow-effects-blur-radius) var(--box-shadow-effects-inset) var(--box-shadow-effects-color);
 	--box-shadow-effects-actual: var(--box-shadow-effects);
+	--box-shadow-effects-not-slim: var(--box-shadow-effects-offset-x) calc(var(--box-shadow-effects-offset-y) + var(--box-shadow-effects-inset)) var(--box-shadow-effects-blur-radius) var(--box-shadow-effects-color);
+	--box-shadow-effects-not-slim-actual: var(--box-shadow-effects-not-slim);
 
 	--animation-duration: 0.5s;
 	--fadeInDurationLong: 5s;
@@ -212,6 +214,7 @@
 	--healthColorBackgroundStatic: #666666;
 	--healthColorForegroundReflected: var(--colorLight);
 	--healthColorBackgroundReflected: var(--colorDark);
+	--healthOutlinePadding: 1px;
 
 	--skullIconDisplay: flex;
 	--skullIconColor: var(--skullIconColorReflected);
@@ -254,4 +257,14 @@
 	--pbHeaderFontAdditionalWeight: 0px;
 
 	--blAvatar: url("../shared/assets/placeholder.png");
+
+	--mapStatusWidth: 6px;
+	--mapStatusBorderRadius: 2px;
+	--mapStatusCuratedColor: #00bc8c;
+	--mapStatusVerifiedColor: #7646af;
+	--mapStatusRankedColor: #f39c12;
+	--mapStatusQualifiedColor: #3498db;
+	--mapStatusGradientAngle: 90deg;
+	--mapStatusDefaultColor: #666666;
+	--mapStatusGradient: linear-gradient(var(--mapStatusGradientAngle), var(--mapStatusDefaultColor), var(--mapStatusDefaultColor));
 }

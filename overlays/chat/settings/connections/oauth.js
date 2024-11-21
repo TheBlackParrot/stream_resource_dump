@@ -137,6 +137,8 @@ async function regenTwitchCodes() {
 		return;
 	}
 
+	gettingOAuthAccessToken = true;
+
 	let refreshToken = localStorage.getItem("twitch_oauthRefreshToken");
 
 	if(refreshToken) {
@@ -174,6 +176,7 @@ async function regenTwitchCodes() {
 		postToTwitchEventChannel("OAuthTokenRefreshed");
 		lastOAuthRefresh = Date.now();
 
+		gettingOAuthAccessToken = false;
 		onTwitchReady();
 	} else {
 		let state = getRandomString(16);
@@ -230,6 +233,8 @@ async function setTwitchTokens() {
 	console.log("got twitch tokens");
 	localStorage.setItem('twitch_oauthAccessToken', data.access_token);
 	localStorage.setItem('twitch_oauthRefreshToken', data.refresh_token);
+
+	gettingOAuthAccessToken = false;
 	onTwitchReady();
 }
 

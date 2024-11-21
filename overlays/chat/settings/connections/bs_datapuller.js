@@ -88,6 +88,12 @@ function startDataPullerMapInfoWebsocket() {
 			colors: {
 				left: data.ColorScheme.SaberAColor.HexCode,
 				right: data.ColorScheme.SaberBColor.HexCode
+			},
+			status: {
+				ranked: false,
+				qualified: false,
+				curated: false,
+				verified: false
 			}
 		};
 

@@ -60,6 +60,7 @@
 					<div class="row" data-tab="bsinfo_acc"><i class="fas fa-bullseye"></i>Accuracy Cell</div>
 					<div class="row" data-tab="bsinfo_art"><i class="fas fa-image"></i>Cover Art Cell</div>
 					<div class="row" data-tab="bsinfo_hitmiss"><i class="fas fa-xmark"></i>Hit / Miss Cell</div>
+					<div class="row" data-tab="bsinfo_mapstatus"><i class="fas fa-lines-leaning"></i>Map Status Cell</div>
 					<div class="row" data-tab="bsinfo_misc"><i class="fas fa-circle-info"></i>Miscellaneous Info Cell</div>
 					<div class="row" data-tab="bsinfo_pb"><i class="fas fa-trophy"></i>Personal Best Cell</div>
 					<div class="row" data-tab="bsinfo_qr"><i class="fas fa-qrcode"></i>Scannable Map URL Cell</div>
@@ -4456,7 +4457,7 @@
 					</div>
 					<div class="setting">
 						<div class="settingCell smol">
-							<strong>Available elements:</strong> acc, art, best, hands, hitmiss, metadata, misc, pp, qrcode
+							<strong>Available elements:</strong> acc, art, best, hands, hitmiss, mapstatus, metadata, misc, pp, qrcode
 						</div>
 					</div>
 					<div class="setting">
@@ -4755,6 +4756,15 @@
 						</div>
 						<div class="settingCell">
 							<input type="number" id="bs_healthOutlineTimeout" min="0" max="30" step="0.5" value="5"/><span class="settingCellMeasurement">seconds</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Additional padding</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_healthOutlinePadding" min="0" max="30" step="1" value="1"/><span class="settingCellMeasurement">px</span>
 						</div>
 					</div>
 					<hr/>
@@ -8942,6 +8952,7 @@
 							<select id="bs_pbRankIcon">
 								<option value="none">None</option>
 								<option value="avatar">BeatLeader Avatar</option>
+								<option value="blicon">BeatLeader Icon</option>
 								<option data-icon="../shared/assets/fontawesome/sprites/solid.svg#award" value="fa-award">award</option>
 								<option data-icon="../shared/assets/fontawesome/sprites/solid.svg#crown" value="fa-crown">crown</option>
 								<option selected data-icon="../shared/assets/fontawesome/sprites/solid.svg#globe" value="fa-globe">globe</option>
@@ -9024,6 +9035,113 @@
 						</div>
 						<div class="settingCell">
 							<input type="number" id="bs_pbAccLetterSpacing" min="-20" max="20" step="0.1" value="-1"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="section" data-content="bsinfo_mapstatus">
+				<div class="part">
+					<h1>Map Status Cell</h1>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="bs_mapStatusHideIfNone" type="checkbox"/> <span class="settingInfo">Hide cell if map has no status</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Width</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_mapStatusWidth" min="0" max="64" step="1" value="8"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Border radius</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_mapStatusBorderRadius" min="0" max="99" step="1" value="4"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Gradient angle</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="bs_mapStatusGradientAngle" min="0" max="360" step="1" value="180"/><span class="settingCellMeasurement">deg</span>
+						</div>
+					</div>
+				</div>
+				<div class="part">
+					<h1>Status Display</h1>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Default color</span>
+						</div>
+						<div class="settingCell">
+							<input id="bs_mapStatusDefaultColor" type="text" data-coloris value="#666666"/>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="bs_mapStatusShowCurated" type="checkbox"/> <span class="settingInfo">Show curation status</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Color</span>
+						</div>
+						<div class="settingCell">
+							<input id="bs_mapStatusCuratedColor" type="text" data-coloris value="#00bc8c"/>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="bs_mapStatusShowVerified" type="checkbox"/> <span class="settingInfo">Show verified mapper status</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="bs_mapStatusIncludeVerifiedIfOthers" type="checkbox"/> <span class="settingInfo">Show verified mapper status even if other statuses are present</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Color</span>
+						</div>
+						<div class="settingCell">
+							<input id="bs_mapStatusVerifiedColor" type="text" data-coloris value="#7646af"/>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="bs_mapStatusShowRanked" type="checkbox"/> <span class="settingInfo">Show ranked status</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Color</span>
+						</div>
+						<div class="settingCell">
+							<input id="bs_mapStatusRankedColor" type="text" data-coloris value="#f39c12"/>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="bs_mapStatusShowQualified" type="checkbox"/> <span class="settingInfo">Show qualified (for rank) status</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Color</span>
+						</div>
+						<div class="settingCell">
+							<input id="bs_mapStatusQualifiedColor" type="text" data-coloris value="#3498db"/>
 						</div>
 					</div>
 				</div>

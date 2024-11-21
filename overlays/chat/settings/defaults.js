@@ -1244,7 +1244,22 @@ const defaultConfig = {
 	"bs_pbRankIcon": "fa-globe",
 	"chatModsBypassASCIIArtFilter": "true",
 	"chatVIPBypassASCIIArtFilter": "true",
-	"chatMessageLengthASCIIArtFilterMinimum": "3"
+	"chatMessageLengthASCIIArtFilterMinimum": "3",
+	"bs_healthOutlinePadding": "1",
+	"bs_mapStatusHideIfNone": "true",
+	"bs_mapStatusWidth": "6",
+	"bs_mapStatusBorderRadius": "2",
+	"bs_mapStatusShowCurated": "true",
+	"bs_mapStatusCuratedColor": "#00bc8c",
+	"bs_mapStatusShowVerified": "true",
+	"bs_mapStatusIncludeVerifiedIfOthers": "false",
+	"bs_mapStatusVerifiedColor": "#7646af",
+	"bs_mapStatusShowRanked": "true",
+	"bs_mapStatusRankedColor": "#f39c12",
+	"bs_mapStatusShowQualified": "true",
+	"bs_mapStatusQualifiedColor": "#3498db",
+	"bs_mapStatusGradientAngle": "180",
+	"bs_mapStatusDefaultColor": "#666666"
 };
 // i typed out the bigNoNoWords so you don't have to, i'm sorry :(
 // it's gotta know what to remove

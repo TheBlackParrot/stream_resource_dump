@@ -1,5 +1,5 @@
-const overlayRevision = 17;
-const overlayRevisionTimestamp = 1731824299925;
+const overlayRevision = 18;
+const overlayRevisionTimestamp = 1732171425145;
 
 const settingsChannel = new BroadcastChannel("settings_overlay");
 
@@ -24,7 +24,8 @@ const elementMap = {
 	"ppCell": ["pp", "rank", "ranked", "points", "rankpoints", "rankedpoints", "performancepoints", "rankpp"],
 	"handValueCell": ["hand", "hands", "swing", "swings", "avg", "average", "pre", "post", "swingacc", "swingaccuracy", "avgs", "averages"],
 	"qrCell": ["qr", "qrcode", "scannable", "scan", "aztec", "pdf", "pdf417"],
-	"pbCell": ["pb", "best", "personalbest", "personal_best", "highscore"]
+	"pbCell": ["pb", "best", "personalbest", "personal_best", "highscore"],
+	"bsStatusCell": ["mapstatus", "rankstatus", "curationstatus", "verifiedstatus", "curated", "mapcard", "line", "mapcardline", "cardline"]
 };
 
 const diffMap = {
@@ -135,6 +136,16 @@ const settingUpdaters = {
 						if(activeMap) {
 							if("qrCode" in activeMap) {
 								if(activeMap.qrCode) {
+									$(`#${foundElement}`).show();
+								}
+							}
+						}
+						break;
+
+					case "pbCell":
+						if(activeMap) {
+							if("personalBest" in activeMap) {
+								if(activeMap.personalBest !== -1) {
 									$(`#${foundElement}`).show();
 								}
 							}
@@ -380,8 +391,10 @@ const settingUpdaters = {
 	enableBoxShadowEffects: function(value) {
 		if(value === "true") {
 			rootCSS().setProperty("--box-shadow-effects-actual", "var(--box-shadow-effects)");
+			rootCSS().setProperty("--box-shadow-effects-not-slim-actual", "var(--box-shadow-effects-not-slim)");
 		} else {
 			rootCSS().setProperty("--box-shadow-effects-actual", "none");
+			rootCSS().setProperty("--box-shadow-effects-not-slim-actual", "none");
 		}
 	},
 	boxShadowColor: function(value) {
@@ -1149,16 +1162,23 @@ const settingUpdaters = {
 
 		$("#pbCell .basicHeader i").attr("class", "");
 		$("#pbCell .basicHeader i").hide();
-		$("#pbCell .basicHeader .blAvatar").hide();
+		$("#pbCell .basicHeader #blAvatar").hide();
+		$("#pbCell .basicHeader #blIcon").hide();
 
-		if(value === "none") {
-			return;
-		}
+		switch(value) {
+			case "none":
+				return;
+				break;
 
-		if(value === "avatar") {
-			$("#pbCell .basicHeader .blAvatar").show();
-			rootCSS().setProperty("--blAvatar", `url("${activeMap.personalBest.avatarURL}")`)
-			return;
+			case "avatar":
+				$("#pbCell .basicHeader #blAvatar").show();
+				return;
+				break;
+
+			case "blicon":
+				$("#pbCell .basicHeader #blIcon").show();
+				return;
+				break;
 		}
 
 		$("#pbCell .basicHeader i").show();
@@ -1171,7 +1191,41 @@ const settingUpdaters = {
 
 		$("#pbCell .basicHeader i").addClass(isRegularKind ? "fa-regular" : "fa-solid");
 		$("#pbCell .basicHeader i").addClass(value);
-	}
+	},
+	healthOutlinePadding: function(value) {
+		rootCSS().setProperty("--healthOutlinePadding", `${value}px`);
+	},
+	mapStatusHideIfNone: function(value) { setMapStatus(); },
+	mapStatusShowCurated: function(value) { setMapStatus(); },
+	mapStatusShowVerified: function(value) { setMapStatus(); },
+	mapStatusIncludeVerifiedIfOthers: function(value) { setMapStatus(); },
+	mapStatusShowRanked: function(value) { setMapStatus(); },
+	mapStatusShowQualified: function(value) { setMapStatus(); },
+	mapStatusWidth: function(value) {
+		rootCSS().setProperty("--mapStatusWidth", `${value}px`);
+		updateMarquee();
+	},
+	mapStatusBorderRadius: function(value) {
+		rootCSS().setProperty("--mapStatusBorderRadius", `${value}px`);
+	},
+	mapStatusGradientAngle: function(value) {
+		rootCSS().setProperty("--mapStatusGradientAngle", `${value}deg`);
+	},
+	mapStatusDefaultColor: function(value) {
+		rootCSS().setProperty("--mapStatusDefaultColor", value);
+	},
+	mapStatusCuratedColor: function(value) {
+		rootCSS().setProperty("--mapStatusCuratedColor", value);
+	},
+	mapStatusVerifiedColor: function(value) {
+		rootCSS().setProperty("--mapStatusVerifiedColor", value);
+	},
+	mapStatusRankedColor: function(value) {
+		rootCSS().setProperty("--mapStatusRankedColor", value);
+	},
+	mapStatusQualifiedColor: function(value) {
+		rootCSS().setProperty("--mapStatusQualifiedColor", value);
+	},
 };
 
 function updateSetting(which, value, oldValue) {

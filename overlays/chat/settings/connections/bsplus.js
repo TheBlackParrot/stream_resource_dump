@@ -49,6 +49,12 @@ const BSPlusMessageHandlers = {
 					image: null,
 					url: null
 				}
+			},
+			status: {
+				ranked: false,
+				qualified: false,
+				curated: false,
+				verified: false
 			}
 		};
 

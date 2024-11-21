@@ -32,7 +32,10 @@ function setPBDisplay(data) {
 			accuracy: 0,
 			rank: 0
 		}
+	} else {
+		rootCSS().setProperty("--blAvatar", `url("${data.avatarURL}")`);
 	}
+
 	if(localStorage.getItem("setting_bs_hidePBCellIfNoScore") === "true" && data.accuracy === 0) {
 		if($("#pbCell").is(":visible")) {
 			$("#pbCell").hide();

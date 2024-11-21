@@ -175,7 +175,7 @@ function toggleOverlay(show) {
 	}
 
 	if(show) {
-		$("#miscInfoCell, #hitMissCell, #accCell, #ppCell, #qrCell, #pbCell").removeClass("fadeOut").addClass("fadeIn");
+		$("#miscInfoCell, #hitMissCell, #accCell, #ppCell, #qrCell, #pbCell, #bsStatusCell").removeClass("fadeOut").addClass("fadeIn");
 		$("#bgWrapper").removeClass("fadeOut").addClass("fadeInLong");
 		$("#title").removeClass("slideOut").addClass("slideIn");
 
@@ -184,7 +184,7 @@ function toggleOverlay(show) {
 			$("#artWrapper").removeClass("fadeOut").addClass("fadeIn");
 		}, 100);
 	} else {
-		$("#miscInfoCell, #hitMissCell, #accCell, #ppCell, #qrCell, #pbCell").removeClass("fadeIn").addClass("fadeOut");
+		$("#miscInfoCell, #hitMissCell, #accCell, #ppCell, #qrCell, #pbCell, #bsStatusCell").removeClass("fadeIn").addClass("fadeOut");
 		$("#bgWrapper").removeClass("fadeInLong").addClass("fadeOut");
 		$("#title").removeClass("slideIn").addClass("slideOut");
 
@@ -235,6 +235,45 @@ function setHealth(health, forced) {
 	}
 
 	oldHealth = health;
+}
+
+function setMapStatus() {
+	const status = activeMap.status;
+	let finalGradient = [];
+
+	if(!status) {
+		return;
+	}
+
+	if(localStorage.getItem("setting_bs_mapStatusShowVerified") === "true" && status.verified) { finalGradient.push("var(--mapStatusVerifiedColor)"); }
+	if(localStorage.getItem("setting_bs_mapStatusShowCurated") === "true" && status.curated) { finalGradient.push("var(--mapStatusCuratedColor)"); }
+	if(localStorage.getItem("setting_bs_mapStatusShowRanked") === "true" && status.ranked) { finalGradient.push("var(--mapStatusRankedColor)"); }
+	if(localStorage.getItem("setting_bs_mapStatusShowQualified") === "true" && status.qualified) { finalGradient.push("var(--mapStatusQualifiedColor)"); }
+
+	if(!finalGradient.length) {
+		finalGradient.push("var(--mapStatusDefaultColor)");
+	}
+	if(localStorage.getItem("setting_bs_mapStatusIncludeVerifiedIfOthers") === "false" && finalGradient[0] === "var(--mapStatusVerifiedColor)" && finalGradient.length > 1) {
+		finalGradient.splice(0, 1);
+	}
+
+	if(finalGradient.length === 1) {
+		finalGradient.push(finalGradient[0]); // i love css
+	}
+
+	rootCSS().setProperty("--mapStatusGradient", `linear-gradient(var(--mapStatusGradientAngle), ${finalGradient.join(", ")})`);
+
+	if($("#bsStatusCell").attr("data-enabled") === "true") {
+		$("#bsStatusCell").show();
+
+		if(finalGradient[0] === "var(--mapStatusDefaultColor)") {
+			if(localStorage.getItem("setting_bs_mapStatusHideIfNone") === "true") {
+				$("#bsStatusCell").hide();
+			}
+		}
+	} else {
+		$("#bsStatusCell").hide();
+	}
 }
 
 const externalModCharacteristics = {
@@ -336,6 +375,7 @@ const eventFuncs = {
 	"map": async function(map) {
 		activeMap = map;
 
+		setMapStatus();
 		setArt();
 		setQR();
 

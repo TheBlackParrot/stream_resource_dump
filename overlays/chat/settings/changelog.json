@@ -1,4 +1,46 @@
 {
+	"1732171425145": {
+		"updates": {
+			"bs": {
+				"revision": 18,
+				"notes": [
+					[
+						"fixed BeatLeader avatars not showing up on initialization of the overlay if no map is being played at the time of initialization"
+					],
+					[
+						"added the ability to add additional padding to the health outline",
+						["seeing some confusion about the health outline and progress outline being in the same spot showing similar things, hopefully this differentiates it enough?"],
+						{"anchor": "bs_healthOutlinePadding"}
+					],
+					[
+						"added a BeatLeader icon option for rank icon display",
+						{"anchor": "bs_pbRankIcon"}
+					],
+					[
+						"fixed vertical alignment issue with BeatLeader icons and avatars in the Personal Best cell"
+					],
+					[
+						"added the ability to display ranked and curation status lines akin to status lines on BeatSaver map cards",
+						{"anchor": "bs_elementOrder"}
+					],
+					[
+						"fixed personal best cell reappearing on layout change even if a personal best was not set and the setting to hide it if so was enabled"
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 81,
+				"notes": [
+					[
+						"fixed incorrect state check in Twitch oauth token fetching",
+						["this might? fix auth errors for one particular streamer? (sorry xav, hopefully this fixes it)"]
+					]
+				]
+			}
+		}
+	},
+
 	"1731996059215": {
 		"updates": {
 			"chat": {

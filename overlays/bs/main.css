@@ -381,6 +381,8 @@ body {
 	display: block;
 	z-index: 4;
 	background-image: conic-gradient(var(--healthColorForeground) 0deg var(--currentHealthAngle), var(--healthColorBackground) var(--currentHealthAngle));
+	padding: var(--healthOutlinePadding);
+	margin: calc(var(--healthOutlinePadding) * -1);
 }
 
 .artContainer {
@@ -414,6 +416,9 @@ body {
 }
 .showBoxShadow {
 	box-shadow: var(--box-shadow-effects-actual);
+}
+.showBoxShadowNotSlim {
+	box-shadow: var(--box-shadow-effects-not-slim-actual);
 }
 
 #bgWrapper {
@@ -733,22 +738,43 @@ body {
 	margin-right: calc(-6px + var(--pbHeaderGlobeSeparation));
 }
 
-.blAvatar {
+#blAvatar, #blIcon {
 	display: inline-block;
 	width: 1em;
 	height: 1em;
-	border-radius: 50%;
 	padding: 2px;
-	background-image: var(--blAvatar);
+	margin-top: -2px;
+	margin-bottom: -2px;
 	background-size: contain;
 	background-position: center;
 	background-repeat: no-repeat;
 	vertical-align: middle;
 	line-height: 0px;
+	position: relative;
+	bottom: 2px;
+}
+#blAvatar {
+	background-image: var(--blAvatar);
+	border-radius: 50%;
+}
+#blIcon {
+	background-image: url("icons/bl_logo.png");
 }
 
 #pbAccWrap .accPerc {
 	font-size: calc(var(--pbAccFontSize) / 1.67);
+}
+
+#bsStatusCell {
+	display: flex;
+	height: 100%;
+	width: var(--mapStatusWidth);
+}
+#bsStatusWrap {
+	width: var(--mapStatusWidth);
+	border-radius: var(--mapStatusBorderRadius);
+	height: 100%;
+	background-image: var(--mapStatusGradient);
 }
 
 /* uncomment after OBS updates CEF to a recent chrome version

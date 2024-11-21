@@ -35,6 +35,12 @@ async function parseSiraBeatmapStatus(data) {
 		colors: {
 			left: colorArrayToHex(data.color.saberA),
 			right: colorArrayToHex(data.color.saberB)
+		},
+		status: {
+			ranked: false,
+			qualified: false,
+			curated: false,
+			verified: false
 		}
 	};
 
