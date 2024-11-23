@@ -59,6 +59,8 @@ body {
 }
 
 .overallWrapper {
+	display: var(--elementFlowDisplay);
+	align-items: start;
 	border-radius: var(--chatBlockBorderRadius);
 	background-color: var(--backgroundColor);
 	border-color: var(--chatBlockOutlineColor);
@@ -69,14 +71,23 @@ body {
 	padding-top: var(--chatBlockIndividualPaddingVertical);
 	padding-bottom: var(--chatBlockIndividualPaddingVertical);
 	transform-origin: var(--chatHistoryOriginPoint);
+	flex-direction: var(--elementFlowHorizontalAlignment);
 }
 
 #wrapper .userInfo {
-	flex: 1;
+	flex: var(--elementFlowUserBlockFlexValue); /* tbh i forget why this is here */
 	min-width: 0;	
 	position: relative;
 	z-index: 2;
 	flex-direction: var(--userInfoElementDirection);
+	width: var(--elementFlowViewerInfoWidth);
+	align-self: var(--elementFlowViewerInfoVerticalAlignment);
+}
+#wrapper .left .userInfo {
+	justify-content: var(--elementFlowViewerInfoAlignment);
+}
+#wrapper .right .userInfo {
+	justify-content: var(--elementFlowViewerInfoAlignmentOpposite);
 }
 
 .userInfo {
@@ -219,6 +230,7 @@ body {
 	position: relative;
 	z-index: 2;
 	font-style: var(--messageFontStyle);
+	word-break: break-word;
 }
 .extraInfo {
 	background-color: var(--eventTagsColor);
@@ -449,7 +461,7 @@ tt, code, pre {
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow-x: clip;
-	width: calc(var(--overlayWidth) - calc(var(--chatBlockPaddingHorizontal) * 2) - (var(--messageFontSize) * 5));
+	width: var(--BSRInfoElementsWidth);
 }
 
 .timestamp {
@@ -700,6 +712,8 @@ tt, code, pre {
 
 .messageWrapper {
 	display: flex;
+	flex-grow: 1;
+	flex-basis: min-content;
 	flex-direction: var(--messageBlockDirection);
 	position: relative;
 	background-color: var(--messageBackgroundColor);
@@ -711,10 +725,17 @@ tt, code, pre {
 	border-color: var(--messageOutlineColor);
 	border-width: var(--messageOutlineSize);
 	border-style: var(--messageOutlineStyle);
+	align-self: center;
 }
 
-.left .messageWrapper { left: var(--messageOffsetHorizontal); }
-.right .messageWrapper { right: var(--messageOffsetHorizontal); }
+.left .messageWrapper {
+	left: var(--messageOffsetHorizontal);
+	margin-left: var(--elementFlowMessageSpacing);
+}
+.right .messageWrapper {
+	right: var(--messageOffsetHorizontal);
+	margin-right: var(--elementFlowMessageSpacing);
+}
 .top .messageWrapper { top: var(--messageOffsetVertical); }
 .bottom .messageWrapper { bottom: var(--messageOffsetVertical); }
 

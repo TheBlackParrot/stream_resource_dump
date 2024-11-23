@@ -494,9 +494,11 @@ const settingUpdaters = {
 			if(pos[1] === "left") {
 				$(".chatBlock").addClass("left");
 				rootCSS().setProperty("--bsrInfoDirection", "ltr");
+				rootCSS().setProperty("--elementFlowHorizontalAlignmentValue", "row");
 			} else {
 				$(".chatBlock").addClass("right");
 				rootCSS().setProperty("--bsrInfoDirection", "rtl");
+				rootCSS().setProperty("--elementFlowHorizontalAlignmentValue", "row-reverse");
 			}
 		}
 	},
@@ -1562,6 +1564,31 @@ const settingUpdaters = {
 	},
 	chatPerspectivePostTranslateZ: function(value) {
 		rootCSS().setProperty("--chatPerspectivePostTranslateZ", `${value}mm`);
+	},
+	chatOverlayIsTraditional: function(value) {
+		rootCSS().setProperty("--elementFlowDisplay", (value === "true" ? "flex" : "block"));
+		rootCSS().setProperty("--elementFlowUserBlockFlexValue", (value === "true" ? "unset" : 1));
+		rootCSS().setProperty("--elementFlowMessageSpacing", (value === "true" ? "var(--elementFlowMessageSpacingValue)" : "unset"));
+		rootCSS().setProperty("--elementFlowViewerInfoVerticalAlignment", (value === "true" ? "var(--elementFlowViewerInfoVerticalAlignmentValue)" : "unset"));
+		rootCSS().setProperty("--elementFlowHorizontalAlignment", (value === "true" ? "var(--elementFlowHorizontalAlignmentValue)" : "unset"));
+		rootCSS().setProperty("--BSRInfoElementsWidth", (value === "true" ? "unset" : "var(--BSRInfoElementsWidthValue)"));
+
+		settingUpdaters.elementFlowForceMoreTradition(localStorage.getItem("setting_elementFlowForceMoreTradition"));
+	},
+	horizontalMessageSpacing: function(value) {
+		rootCSS().setProperty("--elementFlowMessageSpacingValue", `${value}px`);
+	},
+	elementFlowForceMoreTradition: function(value) {
+		const isTraditional = (localStorage.getItem("setting_chatOverlayIsTraditional") === "true");
+		rootCSS().setProperty("--elementFlowViewerInfoWidth", (value === "true" && isTraditional ? "var(--elementFlowViewerInfoWidthValue)" : "unset"));
+		rootCSS().setProperty("--elementFlowViewerInfoAlignment", (value === "true" && isTraditional ? "end" : "unset"));
+		rootCSS().setProperty("--elementFlowViewerInfoAlignmentOpposite", (value === "true" && isTraditional ? "start" : "unset"));
+	},
+	chatOverlayViewerInfoWidth: function(value) {
+		rootCSS().setProperty("--elementFlowViewerInfoWidthValue", `${value}px`);
+	},
+	chatOverlayViewerInfoVerticalAlignment: function(value) {
+		rootCSS().setProperty("--elementFlowViewerInfoVerticalAlignmentValue", value);
 	}
 };
 settingUpdaters["chatHideAccounts"](localStorage.getItem("setting_chatHideAccounts"));

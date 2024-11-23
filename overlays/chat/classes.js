@@ -153,7 +153,8 @@ class Emote {
 
 function widthTest(user, roomID, callback) {
 	console.log("width test called");
-	const parentWidth = $("#wrapper").innerWidth();
+	const veryTraditional = (localStorage.getItem("setting_elementFlowForceMoreTradition") === "true" && localStorage.getItem("setting_chatOverlayIsTraditional") === "true");
+	const parentWidth = (veryTraditional ? parseInt(localStorage.getItem("setting_chatOverlayViewerInfoWidth")) : $("#wrapper").innerWidth());
 
 	const testIdentifier = `testRoot-${Date.now()}`;
 	const testRoot = user.userBlock.render(roomID);
@@ -318,8 +319,8 @@ class UserBlock {
 		this.internationalNameBlock = $(`<span class="internationalName">${this.user.username}</span>`);
 		this.nameBlock = $(`<div class="name" data-userid="${this.user.id}"></div>`);
 
-		this.updateUserInfoBlock();
 		this.initUserBlockCustomizations();
+		this.updateUserInfoBlock();
 	}
 
 	updateUserInfoBlockDirection() {

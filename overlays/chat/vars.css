@@ -246,6 +246,8 @@
 	--BSRStatsPanelVisibility: flex;
 	--BSRCodeVisibility: inline-block;
 	--BSRStatsPanelFontVariant: normal;
+	--BSRInfoElementsWidthValue: calc(var(--overlayWidth) - calc(var(--chatBlockPaddingHorizontal) * 2) - (var(--messageFontSize) * 5));
+	--BSRInfoElementsWidth: var(--BSRInfoElementsWidthValue);
 
 	--sharedChatAvatarDisplay: flex;
 	--sharedChatAvatarSize: 20px;
@@ -278,4 +280,17 @@
 	--chatPerspectivePostTranslateX: 0mm;
 	--chatPerspectivePostTranslateY: 0mm;
 	--chatPerspectivePostTranslateZ: 0mm;
+
+	--elementFlowDisplay: block; /* flex */
+	--elementFlowUserBlockFlexValue: 1; /* unset */
+	--elementFlowMessageSpacingValue: 8px;
+	--elementFlowMessageSpacing: unset; /* var(--elementFlowMessageSpacingValue) */
+	--elementFlowViewerInfoWidthValue: 300px;
+	--elementFlowViewerInfoWidth: unset; /* var(--elementFlowViewerInfoWidthValue) */
+	--elementFlowViewerInfoAlignment: unset; /* end */
+	--elementFlowViewerInfoAlignmentOpposite: unset;
+	--elementFlowViewerInfoVerticalAlignmentValue: center;
+	--elementFlowViewerInfoVerticalAlignment: unset; /* var(--elementFlowViewerInfoVerticalAlignmentValue) */
+	--elementFlowHorizontalAlignmentValue: row;
+	--elementFlowHorizontalAlignment: unset; /* var(--elementFlowHorizontalAlignmentValue) */
 }

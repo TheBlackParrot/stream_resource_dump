@@ -6315,6 +6315,45 @@
 				<div class="part">
 					<div class="setting">
 						<div class="settingCell">
+							<input id="chatOverlayIsTraditional" type="checkbox" data-dependent="chatOverlayIsTraditional"/> <span class="settingInfo">Use "name: message" styled layout instead of separating viewer information and messages into separate lines</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="chatOverlayIsTraditional">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Element spacing</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="horizontalMessageSpacing" min="0" max="999" step="1" value="10"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="chatOverlayIsTraditional">
+						<div class="settingCell">
+							<input checked id="elementFlowForceMoreTradition" type="checkbox"/> <span class="settingInfo">Right-align and force viewer information widths</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="chatOverlayIsTraditional">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Viewer info width</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatOverlayViewerInfoWidth" min="0" max="9999" step="1" value="300"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="chatOverlayIsTraditional">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Vertical alignment</span>
+						</div>
+						<div class="settingCell">
+							<select id="chatOverlayViewerInfoVerticalAlignment">
+								<option value="start">Top</option>
+								<option selected value="center">Center</option>
+								<option value="end">Bottom</option>
+							</select>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
 							<input id="overlayForceWidth" type="checkbox" data-dependent="forceWidth"/> <span class="settingInfo">Force the overlay to a set width</span>
 						</div>
 					</div>
@@ -6327,6 +6366,11 @@
 						</div>
 					</div>
 					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="combineMessagesIntoOneBlock" type="checkbox"/> <span class="settingInfo">Combine back-to-back messages from the same chatter into one overall block</span>
+						</div>
+					</div>
 					<div class="setting">
 						<div class="settingCell">
 							<input id="messageBlockDirection" type="checkbox"/> <span class="settingInfo">Reverse the order of messages within message blocks</span>

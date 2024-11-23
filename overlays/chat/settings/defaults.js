@@ -178,7 +178,8 @@ const nonPublicSettings = [
 	"emoteFormatBTTV",
 	"chatModsBypassASCIIArtFilter",
 	"chatVIPBypassASCIIArtFilter",
-	"chatMessageLengthASCIIArtFilterMinimum"
+	"chatMessageLengthASCIIArtFilterMinimum",
+	"combineMessagesIntoOneBlock"
 ];
 
 const defaultConfig = {
@@ -1259,7 +1260,13 @@ const defaultConfig = {
 	"bs_mapStatusShowQualified": "true",
 	"bs_mapStatusQualifiedColor": "#3498db",
 	"bs_mapStatusGradientAngle": "180",
-	"bs_mapStatusDefaultColor": "#666666"
+	"bs_mapStatusDefaultColor": "#666666",
+	"chatOverlayIsTraditional": "false",
+	"horizontalMessageSpacing": "10",
+	"elementFlowForceMoreTradition": "true",
+	"chatOverlayViewerInfoWidth": "300",
+	"chatOverlayViewerInfoVerticalAlignment": "center",
+	"combineMessagesIntoOneBlock": "true"
 };
 // i typed out the bigNoNoWords so you don't have to, i'm sorry :(
 // it's gotta know what to remove

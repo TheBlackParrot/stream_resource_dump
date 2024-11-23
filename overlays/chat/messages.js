@@ -564,14 +564,16 @@ var messageCount = 0;
 var combinedCount = 0;
 var testNameBlock;
 async function getRootElement(data) {
-	if($(`.chatBlock[data-rootIdx="${combinedCount}"][data-roomid="${data.roomID}"]`).length) {
-		if(lastUser === data.user.id && !lastRootElement[0].hasClass("slideOut")) {
-			if(localStorage.getItem("setting_chatRemoveMessageDelay") !== "0") {
-				const ensureClear = Date.now() + (parseFloat(localStorage.getItem("setting_chatRemoveMessageDelay")) * 1.5 * 1000);
-				lastRootElement[0].attr("data-ensureClear", ensureClear);
-			}
+	if(localStorage.getItem("setting_combineMessagesIntoOneBlock") === "true") {
+		if($(`.chatBlock[data-rootIdx="${combinedCount}"][data-roomid="${data.roomID}"]`).length) {
+			if(lastUser === data.user.id && !lastRootElement[0].hasClass("slideOut")) {
+				if(localStorage.getItem("setting_chatRemoveMessageDelay") !== "0") {
+					const ensureClear = Date.now() + (parseFloat(localStorage.getItem("setting_chatRemoveMessageDelay")) * 1.5 * 1000);
+					lastRootElement[0].attr("data-ensureClear", ensureClear);
+				}
 
-			return lastRootElement;
+				return lastRootElement;
+			}
 		}
 	}
 
@@ -830,7 +832,10 @@ async function renderMessageBlock(data, rootElement, isReply) {
 		});
 	}
 
+	const originalMessageRaw = data.message.trim().normalize();
 	let originalMessage = Array.from(data.message.trim().normalize());
+	// lord
+	const fixedMessageForEmoteParsing = originalMessageRaw.replace(emoteParsingTest, "_");
 
 	let hasBigEmotes = false;
 	let useLQImages = (localStorage.getItem("setting_useLowQualityImages") === "true");
@@ -844,7 +849,7 @@ async function renderMessageBlock(data, rootElement, isReply) {
 				const startAt = parseInt(spots[0]);
 				const stopAt = parseInt(spots[1]);
 
-				const emoteName = data.message.substr(startAt, stopAt - startAt + 1);
+				const emoteName = fixedMessageForEmoteParsing.substr(startAt, stopAt - startAt + 1);
 
 				if(!(emoteName in twitchEmotes)) {
 					twitchEmotes.addEmote(new Emote({

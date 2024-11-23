@@ -1,4 +1,38 @@
 {
+	"9999999999999": {
+		"updates": {
+			"chat": {
+				"revision": 79,
+				"notes": [
+					[
+						"fixed 7TV name paints not applying if a custom paint is present, but the viewer wants their 7TV paint to override it",
+						["this was literally just flip-flopping the order of 2 function calls lol"]
+					],
+					[
+						"added a toggle to switch to a more traditional chat layout flow",
+						{"anchor": "chatOverlayIsTraditional"}
+					],
+					[
+						"made back-to-back messages being combined into one overall block optional",
+						{"anchor": "combineMessagesIntoOneBlock"}
+					],
+					[
+						"fixed unicode emoji breaking stored Twitch emote names"
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 82,
+				"notes": [
+					[
+						"(update only contains new settings)"
+					]
+				]
+			}
+		}
+	},
+
 	"1732171425145": {
 		"updates": {
 			"bs": {
