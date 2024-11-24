@@ -1,8 +1,23 @@
 {
+	"main": {
+		"debug": true
+	},
+
+	"datapuller": {
+		"ip": "127.0.0.1",
+		"port": 2946,
+		"expressOnCombo": 250,
+		"debug": {
+			"LiveData": false,
+			"MapData": false
+		}
+	},
+
 	"obs": {
+		"enabled": false,
 		"ip": "127.0.0.1",
 		"port": 4455,
-		"password": "hunter2",
+		"password": "password",
 		"scenes": {
 			"playing": "Beat Saber Gameplay",
 			"menu": "Beat Saber Menu",
@@ -10,15 +25,16 @@
 		}
 	},
 
-	"bsplus": {
-		"ip": "127.0.0.1",
-		"port": 2947,
-		"expressOnCombo": 250
-	},
-
 	"vnyan": {
+		"enabled": false,
 		"ip": "127.0.0.1",
 		"port": 4570,
 		"camSwitchDelay": 200
+	},
+
+	"warudo": {
+		"enabled": false,
+		"ip": "127.0.0.1",
+		"port": 19190
 	}
 }
