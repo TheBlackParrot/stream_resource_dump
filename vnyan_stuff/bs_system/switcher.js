@@ -55,14 +55,31 @@ async function changeScene(scene) {
 }
 
 var oldHash;
+var oldKey;
 async function handleMapDataMessage(data) {
 	const oldScene = state.scene.substr(0);
 	state.scene = (data.InLevel ? "playing" : "menu");
 
-	if(state.scene !== oldScene && ((data.LevelQuit || data.LevelFinished) || (!data.LevelQuit && !data.LevelFinished && data.InLevel))) {
-		console.log(`${data.BSRKey ? `[${data.BSRKey}] ` : ""}[${data.InLevel ? "START" : "END"}] ${data.SongAuthor ? `${data.SongAuthor} - ` : ""}${data.SongName}${data.SongSubName ? ` - ${data.SongSubName}` : ""}${data.Mapper ? ` (${data.Mapper})` : ""}`);
-		await changeScene(settings.obs.scenes[state.scene]);
+	const hashChanged = (data.Hash !== oldHash);
+	oldHash = data.Hash;
+
+	let keyChanged = false;
+	if(data.BSRKey) {
+		if(data.BSRKey !== oldKey) {
+			keyChanged = true;
+		}
 	}
+	if(data.LevelID) {
+		if(data.LevelID !== oldKey) {
+			keyChanged = true;
+		}		
+	}
+	oldKey = (data.BSRKey ? data.BSRKey : data.LevelID);
+
+	const sceneChanged = (state.scene !== oldScene);
+
+	const oldPaused = (state.paused === true);
+	state.paused = (data.LevelPaused && data.InLevel);
 
 	if(data.LevelFinished && !data.LevelQuit && !data.InLevel) {
 		log(`MAP ${data.LevelFailed ? "FAILED" : "PASSED"}`);
@@ -74,9 +91,6 @@ async function handleMapDataMessage(data) {
 		}
 	}
 
-	const oldPaused = (state.paused === true);
-	state.paused = (data.LevelPaused && data.InLevel);
-
 	if(oldPaused !== state.paused) {
 		log(state.paused ? "PAUSED" : "RESUMED");
 
@@ -84,8 +98,13 @@ async function handleMapDataMessage(data) {
 		sendWarudoData({"action": "Paused", "data": state.paused});
 	}
 
+	if(sceneChanged && ((data.LevelQuit || data.LevelFinished) || (!data.LevelQuit && !data.LevelFinished && data.InLevel))) {
+		console.log(`${data.BSRKey ? `[${data.BSRKey}] ` : ""}[${data.InLevel ? "START" : "END"}] ${data.SongAuthor ? `${data.SongAuthor} - ` : ""}${data.SongName}${data.SongSubName ? ` - ${data.SongSubName}` : ""}${data.Mapper ? ` (${data.Mapper})` : ""}`);
+		await changeScene(settings.obs.scenes[state.scene]);
+	}
+
 	if(settings.mapdetails.enabled) {
-		if(data.Hash !== oldHash) {
+		if(keyChanged) {
 			try {
 				if(settings.mapdetails.writePreviousMap) {
 					try {
@@ -97,7 +116,7 @@ async function handleMapDataMessage(data) {
 						log(`COPIED PREVIOUS MAP DETAILS TO ${settings.mapdetails.previousPath}`);
 					}
 				}
-				
+
 				await writeFile(settings.mapdetails.path, JSON.stringify(data, null, "\t"));
 			} catch(err) {
 				log(`FAILED TO WRITE MAP DETAILS TO ${settings.mapdetails.path}`, true);
@@ -106,8 +125,6 @@ async function handleMapDataMessage(data) {
 				log(`WROTE MAP DETAILS TO ${settings.mapdetails.path}`);
 			}
 		}
-
-		oldHash = data.Hash;
 	}
 }
 
