@@ -1,6 +1,16 @@
-const ws = require("ws");
+import { writeFile } from 'node:fs/promises';
+import * as ws from "ws";
+import { OBSWebSocket } from 'obs-websocket-js';
+import * as settingsData from "./settings.json" with { type: "json" };
+const settings = settingsData.default;
+/*const ws = require("ws");
 const OBSWebSocket = require('obs-websocket-js').default;
-const settings = require("./settings.json");
+const settings = require("./settings.json");*/
+
+var dataPullerConnections = {
+	MapData: null,
+	LiveData: null
+};
 
 var state = {
 	paused: false,
@@ -44,11 +54,12 @@ async function changeScene(scene) {
 	}
 }
 
+var oldHash;
 async function handleMapDataMessage(data) {
 	const oldScene = state.scene.substr(0);
 	state.scene = (data.InLevel ? "playing" : "menu");
 
-	if(state.scene !== oldScene) {
+	if(state.scene !== oldScene && ((data.LevelQuit || data.LevelFinished) || (!data.LevelQuit && !data.LevelFinished && data.InLevel))) {
 		console.log(`${data.BSRKey ? `[${data.BSRKey}] ` : ""}[${data.InLevel ? "START" : "END"}] ${data.SongAuthor ? `${data.SongAuthor} - ` : ""}${data.SongName}${data.SongSubName ? ` - ${data.SongSubName}` : ""}${data.Mapper ? ` (${data.Mapper})` : ""}`);
 		await changeScene(settings.obs.scenes[state.scene]);
 	}
@@ -72,6 +83,21 @@ async function handleMapDataMessage(data) {
 		sendVNyanData(state.paused ? "Paused" : "Resumed");
 		sendWarudoData({"action": "Paused", "data": state.paused});
 	}
+
+	if(settings.mapdetails.enabled) {
+		if(data.Hash !== oldHash) {
+			try {
+				await writeFile(settings.mapdetails.path, JSON.stringify(data, null, "\t"));
+			} catch(err) {
+				log(`FAILED TO WRITE MAP DETAILS TO ${settings.mapdetails.path}`, true);
+				console.error(err);
+			} finally {
+				log(`WROTE MAP DETAILS TO ${settings.mapdetails.path}`);
+			}
+		}
+
+		oldHash = data.Hash;
+	}
 }
 
 function handleLiveDataMessage(data) {
@@ -91,28 +117,31 @@ function handleLiveDataMessage(data) {
 	state.health = data.currentHealth;
 }
 
-var dataPullerMapDataConnection;
 var dataPullerMapDataConnection_reconTO = null;
 function dataPullerMapDataConnection_recon() {
 	if(dataPullerMapDataConnection_reconTO) { 
 		return;
 	}
 
-	delete dataPullerMapDataConnection;
+	delete dataPullerConnections.MapData;
 	log("Connection to DataPuller (MapData) failed, reconnecting in 15 seconds", true);
 	dataPullerMapDataConnection_reconTO = setTimeout(startDataPullerMapDataConnection, 15000);
 }
 
 function startDataPullerMapDataConnection() {
 	dataPullerMapDataConnection_reconTO = null;
-	dataPullerMapDataConnection = new ws.WebSocket(`ws://${settings.datapuller.ip}:${settings.datapuller.port}/BSDataPuller/MapData`);
+	dataPullerConnections.MapData = new ws.WebSocket(`ws://${settings.datapuller.ip}:${settings.datapuller.port}/BSDataPuller/MapData`);
 
-	dataPullerMapDataConnection.on("open", function() {
+	dataPullerConnections.MapData.on("open", function() {
 		log("Connected to DataPuller (MapData)");
 	});
 
-	dataPullerMapDataConnection.on('message', async function(raw) {
+	dataPullerConnections.MapData.on('message', async function(raw) {
 		let data = JSON.parse(raw);
+		if("CoverImage" in data) {
+			delete data.CoverImage;
+		}
+
 		if(settings.datapuller.debug.MapData) {
 			console.log(data);
 		}
@@ -120,31 +149,30 @@ function startDataPullerMapDataConnection() {
 		await handleMapDataMessage(data);
 	});
 
-	dataPullerMapDataConnection.on('close', dataPullerMapDataConnection_recon);
-	dataPullerMapDataConnection.on('error', dataPullerMapDataConnection_recon);
+	dataPullerConnections.MapData.on('close', dataPullerMapDataConnection_recon);
+	dataPullerConnections.MapData.on('error', dataPullerMapDataConnection_recon);
 }
 
-var dataPullerLiveDataConnection;
 var dataPullerLiveDataConnection_reconTO = null;
 function dataPullerLiveDataConnection_recon() {
 	if(dataPullerLiveDataConnection_reconTO) { 
 		return;
 	}
 
-	delete dataPullerLiveDataConnection;
+	delete dataPullerConnections.LiveData;
 	log("Connection to DataPuller (LiveData) failed, reconnecting in 15 seconds", true);
 	dataPullerLiveDataConnection_reconTO = setTimeout(startDataPullerLiveDataConnection, 15000);
 }
 
 function startDataPullerLiveDataConnection() {
 	dataPullerLiveDataConnection_reconTO = null;
-	dataPullerLiveDataConnection = new ws.WebSocket(`ws://${settings.datapuller.ip}:${settings.datapuller.port}/BSDataPuller/LiveData`);
+	dataPullerConnections.LiveData = new ws.WebSocket(`ws://${settings.datapuller.ip}:${settings.datapuller.port}/BSDataPuller/LiveData`);
 
-	dataPullerLiveDataConnection.on("open", function() {
+	dataPullerConnections.LiveData.on("open", function() {
 		log("Connected to DataPuller (LiveData)");
 	});
 
-	dataPullerLiveDataConnection.on('message', async function(raw) {
+	dataPullerConnections.LiveData.on('message', async function(raw) {
 		let data = JSON.parse(raw);
 		if(settings.datapuller.debug.LiveData) {
 			console.log(data);
@@ -153,8 +181,8 @@ function startDataPullerLiveDataConnection() {
 		handleLiveDataMessage(data);
 	});
 
-	dataPullerLiveDataConnection.on('close', dataPullerLiveDataConnection_recon);
-	dataPullerLiveDataConnection.on('error', dataPullerLiveDataConnection_recon);
+	dataPullerConnections.LiveData.on('close', dataPullerLiveDataConnection_recon);
+	dataPullerConnections.LiveData.on('error', dataPullerLiveDataConnection_recon);
 }
 
 try { 

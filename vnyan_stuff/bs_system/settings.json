@@ -36,5 +36,10 @@
 		"enabled": false,
 		"ip": "127.0.0.1",
 		"port": 19190
+	},
+
+	"mapdetails": {
+		"enabled": true,
+		"path": "/tmp/BSMapInformation.txt"
 	}
 }
