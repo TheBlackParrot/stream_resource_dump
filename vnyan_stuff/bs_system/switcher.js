@@ -1,4 +1,4 @@
-import { writeFile } from 'node:fs/promises';
+import { writeFile, copyFile } from 'node:fs/promises';
 import * as ws from "ws";
 import { OBSWebSocket } from 'obs-websocket-js';
 import * as settingsData from "./settings.json" with { type: "json" };
@@ -87,6 +87,17 @@ async function handleMapDataMessage(data) {
 	if(settings.mapdetails.enabled) {
 		if(data.Hash !== oldHash) {
 			try {
+				if(settings.mapdetails.writePreviousMap) {
+					try {
+						await copyFile(settings.mapdetails.path, settings.mapdetails.previousPath);
+					} catch(err) {
+						log(`FAILED TO COPY PREVIOUS MAP DETAILS FROM ${settings.mapdetails.path} TO ${settings.mapdetails.previousPath}`, true);
+						console.error(err);
+					} finally {
+						log(`COPIED PREVIOUS MAP DETAILS TO ${settings.mapdetails.previousPath}`);
+					}
+				}
+				
 				await writeFile(settings.mapdetails.path, JSON.stringify(data, null, "\t"));
 			} catch(err) {
 				log(`FAILED TO WRITE MAP DETAILS TO ${settings.mapdetails.path}`, true);

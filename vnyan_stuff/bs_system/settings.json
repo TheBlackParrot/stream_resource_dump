@@ -40,6 +40,8 @@
 
 	"mapdetails": {
 		"enabled": true,
-		"path": "/tmp/BSMapInformation.txt"
+		"path": "/tmp/BSMapInformation.txt",
+		"writePreviousMap": true,
+		"previousPath": "/tmp/BSMapInformation-Previous.txt",
 	}
 }
