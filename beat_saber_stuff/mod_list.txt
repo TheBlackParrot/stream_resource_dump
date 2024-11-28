@@ -1,42 +1,36 @@
 Unless otherwise noted with a URL, these mods should be found in BeatMods's repositories (via ModAssistant).
 Naluluna mods are available through her own mod manager.
 
-I'm currently using version 1.37.1 of the game.
+I'm currently using version 1.39.1 of the game.
+
+My queue manager is externally controlled through Firebot and dynamically generated playlists; there is no in-game mod.
 
 AdBlocker
 AssetBundleLoadingTools
 AudioLink
 BeatmapInformation
  - https://github.com/denpadokei/BeatmapInformation
-BeatSaberPlus
- - https://github.com/hardcpp/BeatSaberPlus
-BeatSaverDownloader
 BeatSaverUpdater
- - https://github.com/ibillingsley/BeatSaverUpdater
 BeatSaverVoting
-BetterSongList (latest 1.36.1 version with some formatting patches)
- - https://github.com/TheBlackParrot/stream_resource_dump/tree/main/beat_saber_stuff/custom_plugin_binaries/1.37.1
+BetterSongList
 BetterSongSearch
 BSExtraColorPresets
  - https://github.com/DJDavid98/BSExtraColorPresets
 BSNightcore
  - https://github.com/Puplip/BSNightcore
+Bugsmash
 Camera2
+CameraUtils
 Chroma
-ClockAndVolume
- - https://github.com/iPixelGalaxy/ClockAndVolume
-CustomBackgrounds
- - https://github.com/Redageddon/CustomBackgrounds
 CustomJSONData
 CustomMenuText
- - https://github.com/Saeraphinx/CustomMenuText
+ - https://github.com/TheBlackParrot/CustomMenuText
 CustomNotes
 CustomPlatforms
- - https://github.com/TheBlackParrot/stream_resource_dump/tree/main/beat_saber_stuff/custom_plugin_binaries/1.37.1
-CustomWalls
- - https://github.com/qqrz997/BeatSaberCustomWalls
 DataPuller
+DiTails
 EasyOffset
+Enhancements
 GottaGoFast
 Heck
 HitsoundTweaks
@@ -44,37 +38,37 @@ ImageFactory
  - https://github.com/DJDavid98/ImageFactory
 LocalLeaderboard
  - https://github.com/speecil/LocalLeaderboard-PC
+ - https://github.com/TheBlackParrot/stream_resource_dump/tree/main/beat_saber_stuff/custom_plugin_binaries/1.39.1
 LookupID
 MappingExtensions
 MenuSaberColors
 NalulunaRewinder
-NalulunaSkybox
+ - ! awaiting port to 1.39.1, currently unavailable
 NalulunaSongTag
+ - ! awaiting port to 1.39.1, currently unavailable
 NalulunaTweaks
+ - ! awaiting port to 1.39.1, currently unavailable
 NoodleExtensions
 NoteMovementFix
  - https://github.com/Loloppe/BeatSaber_NoteMovementFix
 OffsetFixer
  - https://github.com/Loloppe/BeatSaber_OffsetFixer
+ - https://github.com/TheBlackParrot/stream_resource_dump/tree/main/beat_saber_stuff/custom_plugin_binaries/1.39.1
 ParticleOverdrive
 PauseMusic
- - https://github.com/Futuremappermydud/PauseMusic
+ - https://github.com/TheBlackParrot/PauseMusic
 PlaylistManager
 PrioritySetter
  - https://github.com/Arimodu/PrioritySetter (Light, AboveNormal)
 ReeSabers
  - https://www.beatleader.xyz/supporting-project/link
 ScorePercentage
- - https://github.com/TheBlackParrot/stream_resource_dump/tree/main/beat_saber_stuff/custom_plugin_binaries/1.37.1
+ - https://github.com/ibillingsley/ScorePercentage
 SmoothedController
- - https://github.com/kinsi55/BeatSaber_SmoothedController
+ - https://github.com/TheBlackParrot/BeatSaber_SmoothedController
 SongCore
 SongDetailsCache
 SoundReplacer
-TimeSyncStutterFix
- - https://github.com/nicoco007/BeatSaber-TimeSyncStutterFix
 Tweaks55
 Unfunny
  - https://github.com/kaitlyndotmoe/Unfunny
-wipbot
- - https://github.com/catsethecat/wipbot

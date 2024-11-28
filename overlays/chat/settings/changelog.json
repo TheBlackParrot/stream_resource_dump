@@ -1,4 +1,30 @@
 {
+	"1732713884785": {
+		"updates": {
+			"chat": {
+				"revision": 80,
+				"notes": [
+					[
+						"added a structuredClone polyfill to fix a breaking error on Chromium 95 (OBS 27)"
+					],
+					[
+						"fixed badges not rendering properly if the gradient blending mode is plus-lighter on Chromium 95 (OBS 27)",
+						["plus-lighter wasn't a valid option until Chromium 100"]
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 83,
+				"notes": [
+					[
+						"added a timezone array polyfill to fix a breaking error on Chromium 95 (OBS 27)"
+					]
+				]
+			}
+		}
+	},
+
 	"1732437853357": {
 		"updates": {
 			"chat": {

@@ -1114,6 +1114,11 @@ const settingUpdaters = {
 		rootCSS().setProperty("--badgeGradientEnd", `${value}%`);
 	},
 	badgeGradientBlendMode: function(value) {
+		const browserVersion = parseInt(navigator.userAgent.substring(navigator.userAgent.indexOf("Chrome")+7));
+		if(browserVersion < 100 && value === "plus-lighter") {
+			value = "screen";
+		}
+		
 		rootCSS().setProperty("--badgeGradientBlendMode", value);
 	},
 

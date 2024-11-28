@@ -200,7 +200,13 @@ function loadSettings() {
 }
 
 function populateTimezones() {
-	let zones = Intl.supportedValuesOf("timeZone");
+	let zones;
+	if(Intl.supportedValuesOf === undefined) {
+		zones = Intl.getSupportedTimeZones();
+	} else {
+		zones = Intl.supportedValuesOf("timeZone");
+	}
+
 	zones.sort(function(a, b) {
 		return b - a;
 	});

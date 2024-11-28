@@ -17,11 +17,16 @@ Files:
 	libs/socket.io.*
 	libs/tmi.min.js
 	libs/vibrant.min.js
+	libs/polyfills/timeZones.js
 License: MIT
 
 Files:
 	libs/forge.min.*
 License: BSD-3-clause or GPL-2+
+
+Files:
+	libs/polyfills/structuredClone/*
+License: ISC
 
 Files:
 	assets/reset.css

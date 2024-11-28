@@ -18,6 +18,13 @@
 	<script defer type="text/javascript" src="../shared/assets/twemoji/twemoji.min.js"></script>
 	<script defer type="text/javascript" src="../shared/libs/luxon.min.js"></script>
 	<script defer type="text/javascript" src="../shared/libs/vibrant.min.js"></script>
+	<script defer type="module">
+		import { default as pfStructuredClone } from '../shared/libs/polyfills/structuredClone/index.js';
+		if(typeof structuredClone === "undefined") {
+			console.warn("polyfill needed for structuredClone");
+			window.structuredClone = pfStructuredClone;
+		}
+	</script>
 </head>
 <body>
 	<div id="maskWrapper">
