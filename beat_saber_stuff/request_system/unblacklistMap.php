@@ -40,7 +40,7 @@ if($errCode) {
 	$out['message'] = "SQLite error code {$errCode}";
 } else {
 	$out['OK'] = true;
-	$out['message'] = "Map {$mapData['id']} has been removed from the blacklist.";
+	$out['message'] = "Map {$data['key']} has been removed from the blacklist.";
 }
 
 die(json_encode($out));
