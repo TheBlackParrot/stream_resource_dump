@@ -39,7 +39,8 @@ $settings = array(
 		'rankedBeatLeaderMapsOnly' => false
 	),
 	'open' => true,
-	'rootURL' => 'https://theblackparrot.me'
+	'rootURL' => 'https://theblackparrot.me',
+	'timezone' => 'America/Chicago'
 );
 
 function getQueueRequestLimit($requestData) {

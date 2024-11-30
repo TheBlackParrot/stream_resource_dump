@@ -4,12 +4,12 @@ if(!defined('__ROOTDIR__')) {
 	die();
 }
 
-function getBeatSaverData($key) {
+function getBeatSaverData($key, $keyIsHash = false) {
 	if(empty($key)) {
 		return null;
 	}
 
-	$raw = file_get_contents("https://api.beatsaver.com/maps/id/{$key}");
+	$raw = file_get_contents("https://api.beatsaver.com/maps/" . ($keyIsHash ? "hash" : "id") . "/{$key}");
 
 	if(!json_validate($raw)) {
 		die('{ "OK": false, "reason": "Bad BeatSaver response, this map probably doesn\'t exist." }');
