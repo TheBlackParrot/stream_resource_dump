@@ -43,5 +43,11 @@
 		"path": "/tmp/BSMapInformation.txt",
 		"writePreviousMap": true,
 		"previousPath": "/tmp/BSMapInformation-Previous.txt"
+	},
+
+	"remotesession": {
+		"enabled": true,
+		"URL": "http://127.0.0.1/requests/addToSession.php",
+		"accessKey": "abc123"
 	}
 }

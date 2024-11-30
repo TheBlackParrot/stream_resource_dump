@@ -39,7 +39,7 @@ $settings = array(
 		'rankedBeatLeaderMapsOnly' => false
 	),
 	'open' => true,
-	'rootURL' => 'https://theblackparrot.me',
+	'rootURL' => 'http://127.0.0.1',
 	'timezone' => 'America/Chicago'
 );
 

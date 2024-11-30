@@ -3,9 +3,6 @@ import * as ws from "ws";
 import { OBSWebSocket } from 'obs-websocket-js';
 import * as settingsData from "./settings.json" with { type: "json" };
 const settings = settingsData.default;
-/*const ws = require("ws");
-const OBSWebSocket = require('obs-websocket-js').default;
-const settings = require("./settings.json");*/
 
 var dataPullerConnections = {
 	MapData: null,
@@ -123,6 +120,31 @@ async function handleMapDataMessage(data) {
 				console.error(err);
 			} finally {
 				log(`WROTE MAP DETAILS TO ${settings.mapdetails.path}`);
+			}
+		}
+	}
+
+	if(settings.remotesession.enabled) {
+		if(hashChanged && data.Hash) {
+			const response = await fetch(settings.remotesession.URL, {
+				method: "POST",
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					'accessKey': settings.remotesession.accessKey,
+					'hash': data.Hash
+				})
+			});
+			if(!response.ok) {
+				log(`FAILED TO ADD MAP TO SESSION TRACKING, BAD RESPONSE`, true);
+			}
+
+			const responseJSON = await response.json();
+
+			if(responseJSON.OK) {
+				log("ADDED MAP TO SESSION TRACKING");
 			}
 		}
 	}
