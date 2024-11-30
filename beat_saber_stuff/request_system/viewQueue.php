@@ -68,7 +68,7 @@ $entryCount = count($entries);
 
 $out = array(
 	'OK' => true,
-	'message' => ($entryCount ? "There are currently {$entryCount} map" . ($entryCount == 1 ? "" : "s") . " in the queue." : "No maps have been queued.")
+	'message' => ($entryCount ? "There " . ($entryCount == 1 ? "is" : "are") . " currently {$entryCount} map" . ($entryCount == 1 ? "" : "s") . " in the queue." : "No maps have been queued.")
 );
 
 $selfEntryCount = count($selfEntries);
