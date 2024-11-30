@@ -55,7 +55,9 @@ while($entry = $allEntries->fetchArray()) {
 		'key' => $entry['mapKey'],
 		'hash' => $entry['mapHash'],
 		'songName' => $entry['mapTitle'],
-		'timePlayed' => $entry['timePlayed']
+		'songArtist' => $entry['mapArtist'],
+		'levelAuthorName' => $entry['mapAuthor'],
+		'timePlayed' => $entry['timePlayed'],
 	);
 }
 
