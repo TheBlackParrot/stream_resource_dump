@@ -7,10 +7,10 @@ function checkAccessKey($data, $simple = false) {
 
 	if(!$simple) {
 		if(!array_key_exists("accessKey", $data)) {
-			die('{ "OK": false, "reason": "No access key" }');
+			die('{ "OK": false, "message": "No access key" }');
 		}
 		if(trim($data['accessKey']) != $access_key) {
-			die('{ "OK": false, "reason": "Access key is incorrect" }');
+			die('{ "OK": false, "message": "Access key is incorrect" }');
 		}
 	} else {
 		if(trim($data) == $access_key) {

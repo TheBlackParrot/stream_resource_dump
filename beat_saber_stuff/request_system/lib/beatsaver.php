@@ -12,7 +12,7 @@ function getBeatSaverData($key, $keyIsHash = false) {
 	$raw = file_get_contents("https://api.beatsaver.com/maps/" . ($keyIsHash ? "hash" : "id") . "/{$key}");
 
 	if(!json_validate($raw)) {
-		die('{ "OK": false, "reason": "Bad BeatSaver response, this map probably doesn\'t exist." }');
+		die('{ "OK": false, "message": "Bad BeatSaver response, this map probably doesn\'t exist." }');
 	}
 
 	return json_decode($raw, true);
