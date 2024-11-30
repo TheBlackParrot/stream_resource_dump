@@ -85,4 +85,4 @@ viewQueue.php?user=43464015
 # In-game setup
 Navigate to `https://your.webserver.here/path/to/folder/getPlaylist.php?key=youraccesskeyhere`, and save the resulting JSON file as a .bplist file in your `Beat Saber/Playlists` directory. Once in-game, press the refresh icon in the top-right corner of the playlist cover view, and it will automatically pull down the next map in queue. Every time this is pressed, it will move to the next map, so press carefully.
 
-To pull down the *entire* queue, use `https://your.webserver.here/path/to/folder/getEntireQueue.php` (no key needed). This will not do any destructive changes.
+To pull down the *entire* queue, use `https://your.webserver.here/path/to/folder/getEntireQueue.php` (no key needed). This will not execute any destructive changes.
