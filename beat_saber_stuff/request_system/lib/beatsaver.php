@@ -29,8 +29,19 @@ function checkIfRequestAllowed($requestData, $mapData) {
 	global $settings;
 	global $db;
 
+	if($requestData['flags']['modadd']) {
+		if((int)$db->querySingle("SELECT COUNT(1) FROM queue WHERE mapKey='{$mapData['id']}'") >= 1) {
+			return array(false, "This map is already in the queue.");
+		}
+		return array(true, "Map {$mapData['id']} added to the queue.");
+	}
+
 	if(!$settings['open']) {
 		return array(false, "The queue is currently closed.");
+	}
+
+	if((int)$db->querySingle("SELECT COUNT(1) FROM blacklist WHERE mapKey='{$mapData['id']}'") >= 1) {
+		return array(false, "This map is blacklisted, it cannot be requested.");
 	}
 
 	$limits = $settings['queue'];
