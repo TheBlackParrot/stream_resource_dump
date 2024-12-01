@@ -23,7 +23,7 @@ if(!ctype_xdigit($data['hash'])) {
 include __ROOTDIR__ . "/lib/db.php";
 include __ROOTDIR__ . "/lib/beatsaver.php";
 
-$session = (int)$db->querySingle("SELECT * FROM sessions ORDER BY unixTimestamp DESC LIMIT 1");
+$session = (int)$db->querySingle("SELECT unixTimestamp FROM sessions ORDER BY unixTimestamp DESC LIMIT 1");
 
 function prepareQueryStatement($requestData, $mapData) {
 	global $db;
@@ -37,24 +37,34 @@ function prepareQueryStatement($requestData, $mapData) {
 		'mapTitle' => $metadata['songName'] . (empty($metadata['songSubName']) ? "" : " - " . $metadata['songSubName']),
 		'mapArtist' => $metadata['songAuthorName'],
 		'mapAuthor' => $metadata['levelAuthorName'],
-		'timePlayed' => time(),
+		'accuracy' => 0,
+		'timePlayed' => time()
 	);
 
 	$vals = array_values($outData);
+	$keys = array_keys($outData);
+	$isStrings = array('accuracy', 'mapKey');
+
 	for ($i = 0; $i < count($vals); $i++) { 
-		if(is_numeric($vals[$i])) {
+		if(!in_array($keys[$i], $isStrings)) {
+			if(is_numeric($vals[$i])) {
+				continue;
+			}
+		} else {
+			$vals[$i] = "'" . $vals[$i] . "'";
 			continue;
 		}
+
 		$vals[$i] = "'" . $db->escapeString($vals[$i]) . "'";
 	}
 
-	return "(" . implode(", ", array_keys($outData)) . ") VALUES (" . implode(", ", $vals) . ")";
+	return array("(" . implode(", ", array_keys($outData)) . ") VALUES (" . implode(", ", $vals) . ")", $outData['timePlayed']);
 }
 
 $mapData = getBeatSaverData($data['hash'], true);
 if($mapData) {
 	$queryParams = prepareQueryStatement($data, $mapData);
-	$query = "INSERT INTO session_{$session} {$queryParams}";
+	$query = "INSERT INTO session_{$session} {$queryParams[0]}";
 	$statement = $db->exec($query);
 } else {
 	die('{ "OK": false, "message": "Could not find hash ' . $data['hash'] . ' on BeatSaver." }');	
@@ -62,7 +72,8 @@ if($mapData) {
 
 $out = array(
 	'OK' => true,
-	'message' => "Added map {$mapData['id']} to session {$session}"
+	'message' => "Added map {$mapData['id']} to session {$session}",
+	'timePlayedValue' => $queryParams[1]
 );
 $errCode = $db->lastErrorCode();
 if($errCode) {

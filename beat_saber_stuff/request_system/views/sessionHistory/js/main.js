@@ -81,10 +81,23 @@ async function getSessions() {
 
 			cellElement.append(mapDetailsElement);
 
+			const extraInfoElement = $('<div class="part mapExtraInfo"></div>');
+
+			const accElement = $('<span class="mapAcc"></span>');
+			if(!songDetails.accuracy) {
+				accElement.text("DNF");
+				accElement.addClass("DNF");
+			} else {
+				accElement.text(songDetails.accuracy.toFixed(1));
+			}
+			extraInfoElement.append(accElement);
+
 			const dateObject = new Date(songDetails.timePlayed * 1000);
-			const timePlayedElement = $('<div class="part timePlayed"></div>');
+			const timePlayedElement = $('<span class="timePlayed"></div>');
 			timePlayedElement.text(`${dateObject.getHours()}:${dateObject.getMinutes().toString().padStart(2, "0")}`);
-			cellElement.append(timePlayedElement);
+			extraInfoElement.append(timePlayedElement);
+
+			cellElement.append(extraInfoElement);
 
 			pageElement.append(cellElement);
 		}
@@ -94,7 +107,7 @@ async function getSessions() {
 }
 
 function windowResized() {
-	document.querySelector("html").style.setProperty("--max-width", `${window.innerWidth - 244}px`);
+	document.querySelector("html").style.setProperty("--max-width", `${window.innerWidth - 279}px`);
 }
 windowResized();
 window.onresize = windowResized;

@@ -5,10 +5,12 @@
 	--border-color-lighter: #ffffffc0;
 	--padding: 8px;
 	--border-radius: 8px;
+	--cover-border-radius: 4px;
+	--text-shadow: 0px 1px 3px #000;
 }
 
 body {
-	background-color: #25292d;
+	background-color: #121416;
 	color: #fff;
 	font-family: "Sarabun";
 	scrollbar-width: none;
@@ -20,7 +22,7 @@ body {
 #wrapper {
 	margin: auto;
 	display: flex;
-	width: 600px;
+	width: 800px;
 	flex-direction: column;
 }
 
@@ -36,13 +38,14 @@ body {
 
 .header {
 	background-color: #141618;
-	background-image: linear-gradient(to bottom, #ffffff30, transparent);
+	background-image: linear-gradient(to bottom, #ffffff20, transparent);
 	padding: calc(var(--padding) + 8px);
 	border-top-left-radius: var(--border-radius);
 	border-top-right-radius: var(--border-radius);
 	font-size: 16pt;
 	font-weight: 800;
 	z-index: 1;
+	text-shadow: var(--text-shadow);
 }
 
 .cell {
@@ -82,10 +85,11 @@ body {
 }
 .mapArtist {
 	font-size: 10pt;
-	opacity: 0.85;
+	opacity: 0.75;
 	line-height: 18px;
 	padding: 4px;
 	margin: -4px;
+	text-shadow: var(--text-shadow);
 }
 .mapTitle {
 	font-weight: 700;
@@ -93,6 +97,7 @@ body {
 	line-height: 20px;
 	padding: 4px;
 	margin: -4px;
+	text-shadow: var(--text-shadow);
 }
 .mapAuthor {
 	font-size: 9pt;
@@ -110,21 +115,60 @@ body {
 
 .mapKey {
 	border-right: 1px solid var(--border-color-dark);
-	width: 45px;
+	width: 60px;
 	text-align: center;
 	font-weight: 700;
+	font-size: 14pt;
+	text-shadow: var(--text-shadow);
 }
 .mapKey a {
 	color: #ffffff;
 	text-decoration: none;
+	line-height: 22px;
 }
 .mapKey a:hover {
 	color: #ff008f;
 }
-.timePlayed {
+.mapExtraInfo {
 	border-left: 1px solid var(--border-color-dark);
-	width: 40px;
+	width: 60px;
 	text-align: center;
+	display: flex;
+	flex-direction: column;
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+.timePlayed {
+	font-size: 9pt;
+	font-weight: 700;
+	opacity: 0.6;
+	line-height: 14px;
+	padding: 4px;
+	margin: -4px;
+}
+.mapAcc {
+	font-size: 14pt;
+	line-height: 18px;
+	padding: 4px;
+	margin: -4px;
+	text-shadow: var(--text-shadow);
+	font-weight: 500;
+}
+.mapAcc:after {
+	content: "%";
+	font-size: 0.7em;
+	opacity: 0.67;
+	margin-left: 2px;
+	margin-right: -3px; /* ???? */
+	font-weight: 400;
+}
+.DNF {
+	color: #f46;
+	line-height: 24px; /* wtf */
+	font-weight: 400;
+}
+.DNF:after {
+	content: unset;
 }
 
 .page .cell:last-child, .page .cell:last-child .mapBG {
@@ -142,12 +186,12 @@ body {
 	margin-left: calc(var(--padding) * 2);
 	background-size: cover;
 	box-shadow: 0px 3px 7px -2px #000;
-	border-radius: calc(var(--border-radius) / 2);
+	border-radius: var(--cover-border-radius);
 	min-width: 3em;
 }
 
 .mapBG {
-	width: 600px;
+	width: 800px;
 	position: absolute;
 	z-index: -1;
 	opacity: 0.4;
@@ -167,7 +211,7 @@ body {
 	top: -30%;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 800px) {
 	:root {
 		--border-radius: 0px;
 		--max-width: 0px;
@@ -185,5 +229,8 @@ body {
 	}
 	.mapDetails {
 		max-width: var(--max-width);
+	}
+	.header {
+		text-align: center;
 	}
 }

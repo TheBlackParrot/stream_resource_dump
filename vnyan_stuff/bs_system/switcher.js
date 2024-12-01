@@ -53,11 +53,14 @@ async function changeScene(scene) {
 
 var oldHash;
 var oldKey;
+var oldAcc = 0;
+var oldTimePlayedID = 0;
 async function handleMapDataMessage(data) {
 	const oldScene = state.scene.substr(0);
 	state.scene = (data.InLevel ? "playing" : "menu");
 
 	const hashChanged = (data.Hash !== oldHash);
+	const olderHash = (oldHash ? oldHash.substr(0) : false);
 	oldHash = data.Hash;
 
 	let keyChanged = false;
@@ -98,6 +101,58 @@ async function handleMapDataMessage(data) {
 	if(sceneChanged && ((data.LevelQuit || data.LevelFinished) || (!data.LevelQuit && !data.LevelFinished && data.InLevel))) {
 		console.log(`${data.BSRKey ? `[${data.BSRKey}] ` : ""}[${data.InLevel ? "START" : "END"}] ${data.SongAuthor ? `${data.SongAuthor} - ` : ""}${data.SongName}${data.SongSubName ? ` - ${data.SongSubName}` : ""}${data.Mapper ? ` (${data.Mapper})` : ""}`);
 		await changeScene(settings.obs.scenes[state.scene]);
+
+		if(settings.remotesession.enabled && !data.InLevel && !data.LevelQuit && olderHash) {
+			console.log(olderHash, oldAcc);
+			const accUpdateResponse = await fetch(`${settings.remotesession.URL}/updateAccuracy.php`, {
+				method: "POST",
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					'accessKey': settings.remotesession.accessKey,
+					'hash': olderHash,
+					'accuracy': oldAcc
+				})
+			});
+			if(!accUpdateResponse.ok) {
+				log(`FAILED TO UPDATE PREVIOUS MAP'S ACCURACY VALUE, BAD RESPONSE`, true);
+			}
+
+			const accUpdateResponseJSON = await accUpdateResponse.json();
+
+			if(accUpdateResponseJSON.OK) {
+				log("UPDATED PREVIOUS MAP'S ACCURACY VALUE");
+				log(accUpdateResponseJSON.message);
+				log(accUpdateResponseJSON.query);
+				log(accUpdateResponseJSON.guh);
+			}
+		}
+
+		if(settings.remotesession.enabled && data.InLevel) {
+			const response = await fetch(`${settings.remotesession.URL}/addToSession.php`, {
+				method: "POST",
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					'accessKey': settings.remotesession.accessKey,
+					'hash': data.Hash
+				})
+			});
+			if(!response.ok) {
+				log(`FAILED TO ADD MAP TO SESSION TRACKING, BAD RESPONSE`, true);
+			}
+
+			const responseJSON = await response.json();
+
+			if(responseJSON.OK) {
+				log("ADDED MAP TO SESSION TRACKING");
+				oldTimePlayedID = responseJSON.timePlayedValue;
+			}
+		}
 	}
 
 	if(settings.mapdetails.enabled) {
@@ -123,31 +178,6 @@ async function handleMapDataMessage(data) {
 			}
 		}
 	}
-
-	if(settings.remotesession.enabled) {
-		if(hashChanged && data.Hash) {
-			const response = await fetch(settings.remotesession.URL, {
-				method: "POST",
-				headers: {
-					'Accept': 'application/json',
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({
-					'accessKey': settings.remotesession.accessKey,
-					'hash': data.Hash
-				})
-			});
-			if(!response.ok) {
-				log(`FAILED TO ADD MAP TO SESSION TRACKING, BAD RESPONSE`, true);
-			}
-
-			const responseJSON = await response.json();
-
-			if(responseJSON.OK) {
-				log("ADDED MAP TO SESSION TRACKING");
-			}
-		}
-	}
 }
 
 function handleLiveDataMessage(data) {
@@ -165,6 +195,8 @@ function handleLiveDataMessage(data) {
 
 	state.misses = data.Misses;
 	state.health = data.currentHealth;
+
+	oldAcc = data.Accuracy;
 }
 
 var dataPullerMapDataConnection_reconTO = null;

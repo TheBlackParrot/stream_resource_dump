@@ -47,7 +47,7 @@
 
 	"remotesession": {
 		"enabled": true,
-		"URL": "http://127.0.0.1/requests/addToSession.php",
+		"URL": "http://127.0.0.1/requests",
 		"accessKey": "abc123"
 	}
 }
