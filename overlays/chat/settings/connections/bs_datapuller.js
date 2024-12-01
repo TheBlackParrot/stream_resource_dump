@@ -2,6 +2,8 @@ var dataPullerInit_MapInfo = false;
 var datapuller_ws_MapInfo;
 var dataPullerTimeout_MapInfo;
 
+var dataPullerVersion = [];
+
 function startDataPullerMapInfoWebsocket() {
 	if(dataPullerInit_MapInfo) {
 		return;
@@ -29,6 +31,14 @@ function startDataPullerMapInfoWebsocket() {
 
 			console.log(`Connected to Beat Saber v${data.GameVersion} (DataPuller v${data.PluginVersion})`);
 			changeStatusCircle("BSDataPullerMapDataStatus", "green", `MapData connected (v${data.GameVersion.split("_")[0]}, mod v${data.PluginVersion})`);
+
+			dataPullerVersion = data.PluginVersion.split(".");
+
+			if(dataPullerVersion[0] >= 2 && dataPullerVersion[1] >= 1 && dataPullerVersion[2] <= 10) {
+				setTimeout(function() {
+					addNotification(`Combo display will remain stuck at 0 with this version of DataPuller (${data.PluginVersion}), please check DataPuller's GitHub repository (https://github.com/DJDavid98/BSDataPuller) for a version newer than or equal to 2.1.10 to fix this bug.`, {bgColor: "var(--notif-color-warning)", textColor: "#000", duration: 30});
+				}, 1000)
+			}
 		}
 		console.log(data);
 
@@ -56,6 +66,15 @@ function startDataPullerMapInfoWebsocket() {
 
 		if(!data.InLevel) { return; }
 
+		var hash = (data.Hash ? data.Hash.toLowerCase() : null);
+		if(!hash) {
+			if("LevelID" in data) {
+				hash = data.LevelID.toLowerCase();
+			} else {
+				hash = data.SongName.replace(/[^A-Za-z0-9]/g, '').toLowerCase();
+			}
+		}
+
 		currentBSSong = {
 			song: {
 				title: data.SongName,
@@ -66,7 +85,7 @@ function startDataPullerMapInfoWebsocket() {
 			map: {
 				characteristic: data.MapType,
 				difficulty: data.Difficulty,
-				hash: (data.Hash ? data.Hash.toLowerCase() : (data.LevelID.toLowerCase() || null)),
+				hash: hash,
 				author: data.Mapper,
 				bsr: null,
 				uploaders: [],
@@ -85,10 +104,6 @@ function startDataPullerMapInfoWebsocket() {
 					url: data.CoverImage
 				}
 			},
-			colors: {
-				left: data.ColorScheme.SaberAColor.HexCode,
-				right: data.ColorScheme.SaberBColor.HexCode
-			},
 			status: {
 				ranked: false,
 				qualified: false,
@@ -96,6 +111,13 @@ function startDataPullerMapInfoWebsocket() {
 				verified: false
 			}
 		};
+
+		if(dataPullerVersion[0] >= 2 && dataPullerVersion[1] >= 1 && dataPullerVersion[2] >= 9) {
+			currentBSSong.colors = {
+				left: data.ColorScheme.SaberAColor.HexCode,
+				right: data.ColorScheme.SaberBColor.HexCode				
+			}
+		}
 
 		await updateBeatSaberMapData();
 	});

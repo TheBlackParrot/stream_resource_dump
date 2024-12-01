@@ -1,3 +1,4 @@
+var beatleaderQueries = {};
 async function getPersonalBest(hash, diff, mode) {
 	const playerID = localStorage.getItem("setting_bs_pbPlayerIdentifier");
 	if(!playerID || playerID === null) {
@@ -13,7 +14,23 @@ async function getPersonalBest(hash, diff, mode) {
 		context: localStorage.getItem("setting_bs_pbLeaderboardContext")
 	});
 
-	const response = await fetch(`proxies/beatleader_score.php?${query.toString()}`);
+	const url = `proxies/beatleader_score.php?${query.toString()}`;
+	var response;
+	if(url in beatleaderQueries) {
+		if(Date.now() - beatleaderQueries[url].at < 10000) {
+			response = await beatleaderQueries[url].fetch;
+		} else {
+			beatleaderQueries[url].at = Date.now();
+			beatleaderQueries[url].fetch = await fetch(`proxies/beatleader_score.php?${query.toString()}`);
+		}
+	} else {
+		beatleaderQueries[url] = {
+			at: Date.now(),
+			fetch: await fetch(`proxies/beatleader_score.php?${query.toString()}`)
+		};
+	}
+	
+	response = beatleaderQueries[url].fetch;
 	if(!response.ok) {
 		return -1;
 	}

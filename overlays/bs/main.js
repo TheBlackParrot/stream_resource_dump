@@ -60,8 +60,10 @@ function setArt() {
 	$("#art, #artDoppleganger").attr("src", artData);
 
 	$("#artDoppleganger").on("load", function() {
-		$("#artWrapper").removeClass("fadeOut").addClass("fadeIn");
-		$("#bgWrapper").removeClass("fadeOut").addClass("fadeInLong");
+		if(artState) {
+			$("#artWrapper").removeClass("fadeOut").addClass("fadeIn");
+			$("#bgWrapper").removeClass("fadeOut").addClass("fadeInLong");
+		}
 	});
 
 	let darkColor = activeMap.cover.colors.dark;
@@ -169,28 +171,35 @@ function updateSecondaryMarquee() {
 	}
 }
 
+var hideShowTO;
+var artState = true;
 function toggleOverlay(show) {
 	if(localStorage.getItem("setting_bs_hideOnMenu") === "false") {
 		show = true;
 	}
 
+	clearTimeout(hideShowTO);
 	if(show) {
-		$("#miscInfoCell, #hitMissCell, #accCell, #ppCell, #qrCell, #pbCell, #bsStatusCell").removeClass("fadeOut").addClass("fadeIn");
+		$("#miscInfoCell, #hitMissCell, #accCell, #ppCell, #qrCell, #pbCell, #bsStatusCell, #handValueCell").removeClass("fadeOut").addClass("fadeIn");
 		$("#bgWrapper").removeClass("fadeOut").addClass("fadeInLong");
 		$("#title").removeClass("slideOut").addClass("slideIn");
 
-		setTimeout(function() {
+		hideShowTO = setTimeout(function() {
+			artState = true;
 			$("#secondaryWrap").addClass("slideIn").removeClass("slideOut");
-			$("#artWrapper").removeClass("fadeOut").addClass("fadeIn");
+			$("#artWrapper").addClass("fadeIn");
+			$("#artWrapper").removeClass("fadeOut");
 		}, 100);
 	} else {
-		$("#miscInfoCell, #hitMissCell, #accCell, #ppCell, #qrCell, #pbCell, #bsStatusCell").removeClass("fadeIn").addClass("fadeOut");
+		$("#miscInfoCell, #hitMissCell, #accCell, #ppCell, #qrCell, #pbCell, #bsStatusCell, #handValueCell").removeClass("fadeIn").addClass("fadeOut");
 		$("#bgWrapper").removeClass("fadeInLong").addClass("fadeOut");
 		$("#title").removeClass("slideIn").addClass("slideOut");
 
-		setTimeout(function() {
+		hideShowTO = setTimeout(function() {
+			artState = false;
 			$("#secondaryWrap").addClass("slideOut").removeClass("slideIn");
-			$("#artWrapper").removeClass("fadeIn").addClass("fadeOut");
+			$("#artWrapper").addClass("fadeOut");
+			$("#artWrapper").removeClass("fadeIn");
 		}, 100);
 	}
 }

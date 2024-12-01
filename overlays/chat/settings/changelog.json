@@ -1,4 +1,46 @@
 {
+	"1733071037986": {
+		"updates": {
+			"bs": {
+				"revision": 19,
+				"notes": [
+					[
+						"fixed hand scoring cell not disappearing along with the rest of the overlay"
+					],
+					[
+						"fixed multiple exceptions being thrown on OST maps concerning map rank status"
+					],
+					[
+						"prevented duplicate leaderboard fetch requests triggering within milliseconds of each other",
+						["i lvoe async porgrmaing"]
+					],
+					[
+						"fixed cover art visibility state not quite lining up with the rest of the overlay"
+					],
+					[
+						"fixed overlay always being hidden if refreshing with the \"hide if not in a map\" setting was enabled"
+					],
+					[
+						"added warning concerning combo display with versions of DataPuller older than 2.1.10"
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 84,
+				"notes": [
+					[
+						"added conditional for color schemes in Beat Saber map information for versions of DataPuller older than 2.1.9"
+					],
+					[
+						"LevelID fields in Beat Saber map information are now dynamically generated for versions of DataPuller that did not provide it already",
+						["*most of the time* it's just the title in lowercase with symbols and white-space stripped out"]
+					]
+				]
+			}
+		}
+	},
+
 	"1732713884785": {
 		"updates": {
 			"chat": {

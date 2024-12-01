@@ -1,5 +1,5 @@
-const overlayRevision = 18;
-const overlayRevisionTimestamp = 1732171425145;
+const overlayRevision = 19;
+const overlayRevisionTimestamp = 1733071037986;
 
 const settingsChannel = new BroadcastChannel("settings_overlay");
 
@@ -127,8 +127,15 @@ const settingUpdaters = {
 				$(`#${foundElement}`).attr("data-enabled", "true");
 				switch(foundElement) {
 					case "ppCell":
-						if(leaderboardData.BeatLeader.ranked || leaderboardData.ScoreSaber.ranked) {
-							$(`#${foundElement}`).show();
+						if(leaderboardData.BeatLeader) {
+							if(leaderboardData.BeatLeader.ranked) {
+								$(`#${foundElement}`).show();
+							}
+						}
+						if(leaderboardData.ScoreSaber) {
+							if(leaderboardData.ScoreSaber.ranked) {
+								$(`#${foundElement}`).show();
+							}
 						}
 						break;
 
@@ -528,7 +535,9 @@ const settingUpdaters = {
 		rootCSS().setProperty("--desaturateFadeOutDuration", `${value}s`);
 	},
 	hideOnMenu: function(value) {
-		toggleOverlay(value === "false");
+		if("scene" in currentState) {
+			toggleOverlay(value === "false" && currentScene === "Menu");
+		}
 	},
 
 	miscInfoAlignment: function(value) {
@@ -720,8 +729,10 @@ const settingUpdaters = {
 	},
 	ppDisplaySS: function(value) {
 		if(value === "true") {
-			if(leaderboardData.ScoreSaber.ranked) {
-				$("#ssCell").show();
+			if(leaderboardData.ScoreSaber) {
+				if(leaderboardData.ScoreSaber.ranked) {
+					$("#ssCell").show();
+				}
 			}
 		} else {
 			$("#ssCell").hide();
@@ -729,8 +740,10 @@ const settingUpdaters = {
 	},
 	ppDisplayBL: function(value) {
 		if(value === "true") {
-			if(leaderboardData.BeatLeader.ranked) {
-				$("#blCell").show();
+			if(leaderboardData.BeatLeader) {
+				if(leaderboardData.BeatLeader.ranked) {
+					$("#blCell").show();
+				}
 			}
 		} else {
 			$("#blCell").hide();
