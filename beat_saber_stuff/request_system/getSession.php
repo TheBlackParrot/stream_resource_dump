@@ -53,7 +53,8 @@ $out = array(
 	'playlistTitle' => "Session for {$formattedTime}",
 	'playlistAuthor' => '',
 	'customData' => array(
-		'syncURL' => $settings['rootURL'] . $_SERVER['REQUEST_URI']
+		'syncURL' => $settings['rootURL'] . $_SERVER['REQUEST_URI'],
+		'ReadOnly' => true
 	),
 	'songs' => array(),
 	'image' => ''

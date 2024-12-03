@@ -28,7 +28,8 @@ $out = array(
 	'playlistTitle' => 'Next Request',
 	'playlistAuthor' => '',
 	'customData' => array(
-		'syncURL' => $settings['rootURL'] . $_SERVER['REQUEST_URI']
+		'syncURL' => $settings['rootURL'] . $_SERVER['REQUEST_URI'],
+		'ReadOnly' => true
 	),
 	'songs' => array(),
 	'image' => ''
