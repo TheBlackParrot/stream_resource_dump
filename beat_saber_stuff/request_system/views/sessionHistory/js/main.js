@@ -41,8 +41,15 @@ async function getSessions() {
 
 		const pageElement = $('<div class="page"></div>');
 
+		const queryNoDupes = new URLSearchParams({
+			session: timestamp,
+			duplicates: false
+		});
 		const headerElement = $('<div class="header"></div>');
-		headerElement.text(formatTime(new Date(timestamp * 1000)));
+		const headerLink = $('<a></a>');
+		headerLink.text(formatTime(new Date(timestamp * 1000)));
+		headerLink.attr("href", `../../getSession.php?${queryNoDupes.toString()}`);
+		headerElement.append(headerLink);
 		pageElement.append(headerElement);
 
 		for(const songDetails of stuff.songs) {

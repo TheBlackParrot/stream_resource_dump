@@ -17,6 +17,15 @@ if(!is_numeric($_GET['session']) && $_GET['session'] != "latest") {
 	}
 }
 
+$duplicates = true;
+if(isset($_GET['duplicates'])) {
+	$duplicates = filter_var($_GET['duplicates'], FILTER_VALIDATE_BOOLEAN);
+}
+$includeDNF = true;
+if(isset($_GET['includeDNF'])) {
+	$includeDNF = filter_var($_GET['includeDNF'], FILTER_VALIDATE_BOOLEAN);
+}
+
 include __ROOTDIR__ . "/lib/settings.php";
 include __ROOTDIR__ . "/lib/db.php";
 
@@ -50,7 +59,21 @@ $out = array(
 	'image' => ''
 );
 
+$seen = array();
 while($entry = $allEntries->fetchArray()) {
+	if(!$duplicates) {
+		if(in_array($entry['mapHash'], $seen)) {
+			continue;
+		}
+		$seen[] = $entry['mapHash'];
+	}
+
+	if(!$includeDNF) {
+		if($entry['accuracy'] == 0) {
+			continue;
+		}
+	}
+
 	$out['songs'][] = array(
 		'key' => $entry['mapKey'],
 		'hash' => $entry['mapHash'],

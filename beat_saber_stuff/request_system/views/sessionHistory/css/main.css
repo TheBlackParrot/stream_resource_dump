@@ -47,6 +47,13 @@ body {
 	z-index: 1;
 	text-shadow: var(--text-shadow);
 }
+.header a {
+	color: #fff;
+	text-decoration: none;
+}
+.header a:hover {
+	color: #cbadff;
+}
 
 .cell {
 	display: flex;
