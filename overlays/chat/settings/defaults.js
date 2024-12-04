@@ -179,7 +179,8 @@ const nonPublicSettings = [
 	"chatModsBypassASCIIArtFilter",
 	"chatVIPBypassASCIIArtFilter",
 	"chatMessageLengthASCIIArtFilterMinimum",
-	"combineMessagesIntoOneBlock"
+	"combineMessagesIntoOneBlock",
+	"forceDefaultSubBadgeToFirstTier"
 ];
 
 const defaultConfig = {
@@ -1266,7 +1267,8 @@ const defaultConfig = {
 	"elementFlowForceMoreTradition": "true",
 	"chatOverlayViewerInfoWidth": "300",
 	"chatOverlayViewerInfoVerticalAlignment": "center",
-	"combineMessagesIntoOneBlock": "true"
+	"combineMessagesIntoOneBlock": "true",
+	"forceDefaultSubBadgeToFirstTier": "false"
 };
 // i typed out the bigNoNoWords so you don't have to, i'm sorry :(
 // it's gotta know what to remove

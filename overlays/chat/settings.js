@@ -1594,6 +1594,9 @@ const settingUpdaters = {
 	},
 	chatOverlayViewerInfoVerticalAlignment: function(value) {
 		rootCSS().setProperty("--elementFlowViewerInfoVerticalAlignmentValue", value);
+	},
+	enableFlags: function(value) {
+		rootCSS().setProperty("--flagsContainerDisplay", (value === "true" ? "flex" : "none"));
 	}
 };
 settingUpdaters["chatHideAccounts"](localStorage.getItem("setting_chatHideAccounts"));

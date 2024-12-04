@@ -179,6 +179,7 @@
 	--flagsBorderRadius: 4px;
 	--flagsSize: 22px;
 	--flagsSpacing: 2px;
+	--flagsContainerDisplay: flex;
 
 	--timestampColor: rgba(128, 128, 128, 1);
 	--timestampColorSecondary: rgba(255, 255, 255, 1);

@@ -1,4 +1,48 @@
 {
+	"9999999999999": {
+		"updates": {
+			"chat": {
+				"revision": 81,
+				"notes": [
+					[
+						"fixed badge containers remaining visible and adding an outer gap if the chatter has badges, even if none of which are enabled on the overlay"
+					],
+					[
+						"fixed unicode emoji remaining big in replies if big emotes are enabled"
+					],
+					[
+						"fixed identity flags toggle doing nothing"
+					],
+					[
+						"fixed impossibly rare thrown exception on a yet-to-be-defined badge variable",
+						["literally the only way you can run into this is by refreshing the overlay the *exact* second a message is rendered. funny initialization issue"]
+					],
+					[
+						"fixed default sub badges always remaining at the first streak level (the purple 1 month badge)",
+						["i've also added a toggle to force it to the one month badge, since twitch only uses that one by default"],
+						{"anchor": "forceDefaultSubBadgeToFirstTier"}
+					],
+					[
+						"simplified some badge conditionals"
+					],
+					[
+						"re-added support for hidden modifiers on emotes",
+						["think i can figure out stuff like BetterTTV's v! and h! modifiers eventually, i'm tired. the emote refactoring should make this a bit easier"]
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 85,
+				"notes": [
+					[
+						"organized the badge toggles a bit"
+					]
+				]
+			}
+		}
+	},
+
 	"1733071037986": {
 		"updates": {
 			"bs": {

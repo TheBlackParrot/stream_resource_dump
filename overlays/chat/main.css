@@ -105,13 +105,18 @@ body {
 	border-width: var(--userInfoOutlineSize);
 	border-style: var(--userInfoOutlineStyle);
 }
-.userInfo div {
+.badges, .flags, .pronouns, .name {
 	margin-right: var(--messageUserInfoElementSpacingForwards);
 	margin-left: var(--messageUserInfoElementSpacingBackwards);
-	display: flex;
 	align-self: stretch;
 	align-items: center;
 	flex-direction: var(--userInfoElementDirection);
+}
+.badges, .pronouns, .name {
+	display: flex;
+}
+.flags {
+	display: var(--flagsContainerDisplay);
 }
 .userInfoForwards div:last-child {
 	margin-right: 0px;

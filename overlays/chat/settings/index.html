@@ -1192,29 +1192,10 @@
 							<input checked id="enableTwitchRoleBadges" type="checkbox"/> <span class="settingInfo">Role badges</span>
 						</div>
 					</div>
+					<hr/>
 					<div class="setting" data-dependent="twitchBadges">
 						<div class="settingCell">
-							<input checked id="enableTwitchGameBadges" type="checkbox"/> <span class="settingInfo">Game-related badges</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="twitchBadges">
-						<div class="settingCell">
-							<input checked id="enableTwitchPartnerBadges" type="checkbox"/> <span class="settingInfo">Partner/Ambassador badges</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="twitchBadges">
-						<div class="settingCell">
-							<input checked id="enableTwitchBitsBadges" type="checkbox"/> <span class="settingInfo">Cheering/bits badges</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="twitchBadges">
-						<div class="settingCell">
-							<input checked id="enableTwitchSubGiftsBadges" type="checkbox"/> <span class="settingInfo">Sub gifter badges</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="twitchBadges">
-						<div class="settingCell">
-							<input checked id="enableTwitchLeaderboardBadges" type="checkbox"/> <span class="settingInfo">Leaderboard-related badges</span>
+							<input checked id="enableTwitchSubscriberBadges" type="checkbox"/> <span class="settingInfo">Channel Subscriber badges</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="twitchBadges">
@@ -1224,24 +1205,30 @@
 					</div>
 					<div class="setting" data-dependent="twitchBadges">
 						<div class="settingCell">
-							<input checked id="enableTwitchStaffBadges" type="checkbox"/> <span class="settingInfo">Staff badges</span>
+							<input checked id="enableTwitchSubGiftsBadges" type="checkbox"/> <span class="settingInfo">Sub gifter badges</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="twitchBadges">
 						<div class="settingCell">
-							<input id="enableTwitchMomentsBadges" type="checkbox"/> <span class="settingInfo">Moments badges</span>
+							<input checked id="enableTwitchBitsBadges" type="checkbox"/> <span class="settingInfo">Cheering/bits badges</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="twitchBadges">
 						<div class="settingCell">
-							<input id="enableTwitchStatusBadges" type="checkbox"/> <span class="settingInfo">Status (no video/no audio) badges</span>
+							<input checked id="enableCustomBadges_subscriber" type="checkbox"/> <span class="settingInfo">Enable broadcaster's custom Channel Subscriber badges</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="twitchBadges">
 						<div class="settingCell">
-							<input checked id="enableTwitchPredictionsBadges" type="checkbox"/> <span class="settingInfo">Predictions-related badges</span>
+							<input checked id="enableCustomBadges_bits" type="checkbox"/> <span class="settingInfo">Enable broadcaster's custom Cheering/bits badges</span>
 						</div>
 					</div>
+					<div class="setting" data-dependent="twitchBadges">
+						<div class="settingCell">
+							<input id="forceDefaultSubBadgeToFirstTier" type="checkbox"/> <span class="settingInfo">If using the default subscriber badge, force it to the purple (1 month) badge</span>
+						</div>
+					</div>
+					<hr/>
 					<div class="setting" data-dependent="twitchBadges">
 						<div class="settingCell">
 							<input checked id="enableTwitchPrimeGamingBadges" type="checkbox"/> <span class="settingInfo">Prime Gaming badge</span>
@@ -1252,26 +1239,7 @@
 							<input checked id="enableTwitchTurboBadges" type="checkbox"/> <span class="settingInfo">Twitch Turbo badge</span>
 						</div>
 					</div>
-					<div class="setting" data-dependent="twitchBadges">
-						<div class="settingCell">
-							<input checked id="enableTwitchSubscriberBadges" type="checkbox"/> <span class="settingInfo">Channel Subscriber badges</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="twitchBadges">
-						<div class="settingCell">
-							<input checked id="enableTwitchConBadges" type="checkbox"/> <span class="settingInfo">TwitchCon badges</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="twitchBadges">
-						<div class="settingCell">
-							<input checked id="enableTwitchCharityBadges" type="checkbox"/> <span class="settingInfo">Charity badges</span>
-						</div>
-					</div>
-					<div class="setting" data-dependent="twitchBadges">
-						<div class="settingCell">
-							<input checked id="enableTwitchHypeTrainBadges" type="checkbox"/> <span class="settingInfo">Hype Train badges</span>
-						</div>
-					</div>
+					<hr/>
 					<div class="setting" data-dependent="twitchBadges">
 						<div class="settingCell">
 							<input checked id="enableTwitchEventBadges" type="checkbox"/> <span class="settingInfo">Event-based badges</span>
@@ -1279,18 +1247,61 @@
 					</div>
 					<div class="setting" data-dependent="twitchBadges">
 						<div class="settingCell">
-							<input checked id="enableTwitchDJBadges" type="checkbox"/> <span class="settingInfo">DJ Program badge</span>
+							<input checked id="enableTwitchConBadges" type="checkbox"/> <span class="settingInfo">TwitchCon badges</span>
 						</div>
 					</div>
 					<hr/>
 					<div class="setting" data-dependent="twitchBadges">
 						<div class="settingCell">
-							<input checked id="enableCustomBadges_subscriber" type="checkbox"/> <span class="settingInfo">Enable broadcaster's custom Channel Subscriber badges</span>
+							<input checked id="enableTwitchPartnerBadges" type="checkbox"/> <span class="settingInfo">Partner/Ambassador badges</span>
 						</div>
 					</div>
 					<div class="setting" data-dependent="twitchBadges">
 						<div class="settingCell">
-							<input checked id="enableCustomBadges_bits" type="checkbox"/> <span class="settingInfo">Enable broadcaster's custom Cheering/bits badges</span>
+							<input checked id="enableTwitchDJBadges" type="checkbox"/> <span class="settingInfo">DJ Program badge</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="twitchBadges">
+						<div class="settingCell">
+							<input checked id="enableTwitchStaffBadges" type="checkbox"/> <span class="settingInfo">Staff badges</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting" data-dependent="twitchBadges">
+						<div class="settingCell">
+							<input checked id="enableTwitchHypeTrainBadges" type="checkbox"/> <span class="settingInfo">Hype Train badges</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="twitchBadges">
+						<div class="settingCell">
+							<input checked id="enableTwitchLeaderboardBadges" type="checkbox"/> <span class="settingInfo">Leaderboard-related badges</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting" data-dependent="twitchBadges">
+						<div class="settingCell">
+							<input id="enableTwitchMomentsBadges" type="checkbox"/> <span class="settingInfo">Moments badges</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="twitchBadges">
+						<div class="settingCell">
+							<input checked id="enableTwitchPredictionsBadges" type="checkbox"/> <span class="settingInfo">Predictions-related badges</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="twitchBadges">
+						<div class="settingCell">
+							<input id="enableTwitchStatusBadges" type="checkbox"/> <span class="settingInfo">Status (no video/no audio) badges</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting" data-dependent="twitchBadges">
+						<div class="settingCell">
+							<input checked id="enableTwitchCharityBadges" type="checkbox"/> <span class="settingInfo">Charity badges</span>
+						</div>
+					</div>
+					<div class="setting" data-dependent="twitchBadges">
+						<div class="settingCell">
+							<input checked id="enableTwitchGameBadges" type="checkbox"/> <span class="settingInfo">Game-related badges</span>
 						</div>
 					</div>
 					<hr/>

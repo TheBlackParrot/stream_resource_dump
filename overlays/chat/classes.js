@@ -174,6 +174,19 @@ function widthTest(user, roomID, callback) {
 		finished: function() {
 			console.log("render: images loaded");
 
+			badgesArePresent = false;
+			badgeBlock.children(".badgeWrap").each(function(badgeIdx) {
+				let badgeElem = $(this);
+				if(badgeElem.is(":visible")) {
+					badgesArePresent = true;
+				}
+			});
+
+			if(!badgesArePresent) {
+				badgeBlock.hide();
+				originalBlocks.badgeBlock[roomID].hide();
+			}
+
 			if(testRoot.width() > parentWidth) {
 				flagBlock.addClass("forceHide");
 				originalBlocks.flagBlock.addClass("forceHide");
@@ -395,9 +408,11 @@ class UserBlock {
 							badgeElem.addClass("badgeGradient");
 						}
 
-						if("is_default" in twitchBadges[badgeTypeRaw]) {
-							if(twitchBadges[badgeTypeRaw].is_default) {
-								badgeElem.addClass("normal_badge");
+						if(badgeTypeRaw in twitchBadges) { // wtf
+							if("is_default" in twitchBadges[badgeTypeRaw]) {
+								if(twitchBadges[badgeTypeRaw].is_default) {
+									badgeElem.addClass("normal_badge");
+								}
 							}
 						}
 					}
@@ -415,36 +430,31 @@ class UserBlock {
 					// uh, wtf
 					continue;
 				}
-				
-				if(typeof badgeData === "undefined" && badges.info) {
-					// this should only trigger on channels that have founders badges off, and do not have custom sub badges set
-					// twitch ID's these differently compared to custom sub badges
-					const monthInt = parseInt(badges.info[`subscriber${roomID}`]);
+
+				if(twitchBadges[badgeTypeRaw].is_default && badgeType === "subscriber") {
 					var chosenDefaultLength = 0;
-					for(const lengthIdx in defaultSubBadgeLengths) {
-						if(monthInt >= defaultSubBadgeLengths[lengthIdx]) {
-							chosenDefaultLength = lengthIdx;
-						} else {
-							break;
+
+					if(localStorage.getItem("setting_forceDefaultSubBadgeToFirstTier") === "false") {
+						const monthInt = parseInt(badges.info[badgeTypeRaw]);
+						
+						for(const lengthIdx in defaultSubBadgeLengths) {
+							if(monthInt >= defaultSubBadgeLengths[lengthIdx]) {
+								chosenDefaultLength = lengthIdx;
+							} else {
+								break;
+							}
 						}
 					}
 
-					if(useLQImages) {
-						url = twitchBadges["subscriber"].versions[chosenDefaultLength].image_url_1x;
-					} else {
-						url = twitchBadges["subscriber"].versions[chosenDefaultLength].image_url_4x;
-						if(typeof url === "undefined") {
-							url = twitchBadges["subscriber"].versions[chosenDefaultLength].image_url_1x;
-						}
-					}
+					badgeData = twitchBadges[badgeTypeRaw].versions[chosenDefaultLength];
+				}
+
+				if(useLQImages) {
+					url = badgeData.image_url_1x;
 				} else {
-					if(useLQImages) {
+					url = badgeData.image_url_4x;
+					if(typeof url === "undefined") {
 						url = badgeData.image_url_1x;
-					} else {
-						url = badgeData.image_url_4x;
-						if(typeof url === "undefined") {
-							url = badgeData.image_url_1x;
-						}
 					}
 				}
 

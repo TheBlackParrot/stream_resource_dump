@@ -279,6 +279,10 @@ async function getGlobalChannelEmotes(broadcasterData) {
 			console.log(data);
 
 			for(const emote of data) {
+				let modifiers = [];
+				if(emote.code === "v!") { modifiers = ["Hidden", "FlipV"]; }
+				if(emote.code === "h!") { modifiers = ["Hidden", "FlipH"]; }
+
 				chatEmotes.addEmote(new Emote({
 					service: "bttv",
 					setID: "bttv-global",
@@ -288,7 +292,7 @@ async function getGlobalChannelEmotes(broadcasterData) {
 					},
 					emoteID: emote.id,
 					emoteName: emote.code,
-					modifiers: (emote.modifier ? ["Hidden"] : []),
+					modifiers: modifiers,
 					global: true
 				}));
 			}

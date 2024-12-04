@@ -788,6 +788,7 @@ async function renderMessageBlock(data, rootElement, isReply) {
 			clonedMessage.addClass("reply");
 			clonedMessage.attr("style", "");
 			clonedMessage.children(".emoteWrapper").children(".bigEmote").removeClass("bigEmote");
+			clonedMessage.children(".emoteWrapper").children(".bigEmoji").removeClass("bigEmoji");
 			clonedMessage.removeClass("isBigEmoteMode");
 			clonedMessage.children(".timestamp").remove();
 			clonedMessage.attr("data-msguuid", data.reply.uuid);
@@ -1040,17 +1041,12 @@ async function renderMessageBlock(data, rootElement, isReply) {
 			
 			if(word in chatEmotes) {
 				let externalEmote = chatEmotes[word];
-				let modifiers = [];
 
 				if(!externalEmote.enabled || isEmoteIgnored(word)) {
 					pushEmoteWrapper();
 					wordsFinal.push(word);
 					continue;
 				} else {
-					if("modifiers" in externalEmote) {
-						modifiers = externalEmote.modifiers;
-					}
-
 					let classes = ["emote"];
 					if(externalEmote.isZeroWidth) {
 						lastEmoteWasZeroWidth = true;
@@ -1061,7 +1057,13 @@ async function renderMessageBlock(data, rootElement, isReply) {
 					}
 
 					emoteObject = await externalEmote.url;
-					let emoteElement = $(`<span class="${classes.join(" ")}" style="background-image: url('${emoteObject}');"${modifiers.length ? `data-emotemods="${modifiers.join(" ")}"` : ""}><img src="${emoteObject}"/></span>`);
+					let emoteElement = $(`<span class="${classes.join(" ")}" style="background-image: url('${emoteObject}');"><img src="${emoteObject}"/></span>`);
+
+					if("modifiers" in externalEmote) {
+						if(externalEmote.modifiers.indexOf("Hidden") !== -1) {
+							currentEmoteWrapper.addClass("mod_Hidden");
+						}
+					}
 
 					currentEmoteWrapper.append(emoteElement);
 				}
@@ -1205,38 +1207,15 @@ async function renderMessageBlock(data, rootElement, isReply) {
 			});
 		}
 
-		/*
-		let emoteChildren = messageBlock.children(".emote");
 		let lastValidEmote = null;
-		if(emoteChildren.length) {
-			for(let i in emoteChildren) {
-				let emote = emoteChildren.eq(i); // what the fuck
-				let emoteMods = emote.attr("data-emotemods");
+		messageBlock.children(".emoteWrapper").each(function(emoteIdx) {
+			const emoteWrap = $(this);
+			const emoteMods = (emoteWrap.attr("data-emotemods") ? emoteWrap.attr("data-emotemods").split(" ") : []);
 
-				if(typeof emoteMods === "undefined") {
-					lastValidEmote = emote;
-					continue;
-				}
-
-				emoteMods = emoteMods.split(" ");
-				if(emoteMods.indexOf("Hidden") !== -1) {
-					emote.addClass("mod_Hidden");
-				}
-
-				if(lastValidEmote === null) {
-					continue;
-				}
-
-				for(let mod of emoteMods) {
-					if(mod === "Hidden") {
-						continue;
-					}
-
-					lastValidEmote.addClass(`mod_${mod}`);
-				}
+			if(emoteMods.indexOf("Hidden") !== -1) {
+				emoteWrap.addClass("mod_Hidden");
 			}
-		}
-		*/
+		});
 	} else {
 		let parsedMessage = [];
 
