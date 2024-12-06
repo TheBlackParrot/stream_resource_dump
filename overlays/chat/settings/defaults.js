@@ -1268,7 +1268,18 @@ const defaultConfig = {
 	"chatOverlayViewerInfoWidth": "300",
 	"chatOverlayViewerInfoVerticalAlignment": "center",
 	"combineMessagesIntoOneBlock": "true",
-	"forceDefaultSubBadgeToFirstTier": "false"
+	"forceDefaultSubBadgeToFirstTier": "false",
+	"chatBSRMapArtBorderRadius": "4",
+	"chatBSRMapCodeBorderRadius": "4",
+	"chatBSRMapCodeBGColor1": "#333333",
+	"chatBSRMapCodeBGColor2": "#000000",
+	"chatBSRMapCodeFGColor": "#ffffff",
+	"chatBSRMapCodeBGAngle": "170",
+	"chatBSREnableCoverArt": "true",
+	"chatBSRAlwaysShowCoverArt": "false",
+	"chatBSRShowCoverArtIfRanked": "true",
+	"chatBSRShowCoverArtIfCurated": "true",
+	"chatBSRShowCoverArtIfVerified": "true"
 };
 // i typed out the bigNoNoWords so you don't have to, i'm sorry :(
 // it's gotta know what to remove

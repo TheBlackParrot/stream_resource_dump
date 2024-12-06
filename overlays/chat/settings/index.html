@@ -8116,6 +8116,42 @@
 							<input id="chatBSRUseBeatSaverInformation" type="checkbox"/> <span class="settingInfo">Use BeatSaver's provided mapper and collaborator data rather than internal mapper data</span>
 						</div>
 					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="chatBSREnableCoverArt" type="checkbox" data-dependent="chatBSREnableCoverArt"/> <span class="settingInfo">Display cover art next to request metadata</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="chatBSRAlwaysShowCoverArt" type="checkbox" data-dependent="chatBSREnableCoverArt"/> <span class="settingInfo">Show cover art for all requests</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="chatBSRShowCoverArtIfRanked" type="checkbox" data-dependent="chatBSREnableCoverArt"/> <span class="settingInfo">Show cover art for ranked maps</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="chatBSRShowCoverArtIfCurated" type="checkbox" data-dependent="chatBSREnableCoverArt"/> <span class="settingInfo">Show cover art for curated maps</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input checked id="chatBSRShowCoverArtIfVerified" type="checkbox" data-dependent="chatBSREnableCoverArt"/> <span class="settingInfo">Show cover art for maps uploaded by verified mappers</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Cover art border radius</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatBSRMapArtBorderRadius" min="0" max="999" step="1" value="4"/><span class="settingCellMeasurement">px</span>
+						</div>
+					</div>
 				</div>
 				<div class="part">
 					<h1>Stats Panel</h1>
@@ -8174,6 +8210,41 @@
 					<div class="setting">
 						<div class="settingCell smol">
 							Time formatting available: <a href="https://moment.github.io/luxon/#/formatting?id=table-of-tokens">here</a><br/>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Map key color</span>
+						</div>
+						<div class="settingCell">
+							<input id="chatBSRMapCodeFGColor" type="text" data-coloris value="#ffffff"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Map key background</span>
+						</div>
+						<div class="settingCell">
+							<input id="chatBSRMapCodeBGColor1" type="text" data-coloris value="#333333"/>
+							<i class="fas fa-long-arrow-alt-right"></i>
+							<input id="chatBSRMapCodeBGColor2" type="text" data-coloris value="#000000"/>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Gradient angle</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatBSRMapCodeBGAngle" min="0" max="360" step="1" value="170"/><span class="settingCellMeasurement">deg</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel">
+							<span class="settingInfo">Map key border radius</span>
+						</div>
+						<div class="settingCell">
+							<input type="number" id="chatBSRMapCodeBorderRadius" min="0" max="999" step="1" value="4"/><span class="settingCellMeasurement">px</span>
 						</div>
 					</div>
 				</div>

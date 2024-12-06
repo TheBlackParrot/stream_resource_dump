@@ -460,7 +460,7 @@ input[type="checkbox"]:checked:before {
 }
 
 input[data-coloris] {
-	width: 120px;
+	width: 80px;
 	text-align: left !important;
 	margin-left: 2.75em;
 }

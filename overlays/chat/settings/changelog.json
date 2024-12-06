@@ -1,5 +1,5 @@
 {
-	"9999999999999": {
+	"1733519932164": {
 		"updates": {
 			"chat": {
 				"revision": 81,
@@ -27,7 +27,23 @@
 					],
 					[
 						"re-added support for hidden modifiers on emotes",
-						["think i can figure out stuff like BetterTTV's v! and h! modifiers eventually, i'm tired. the emote refactoring should make this a bit easier"]
+						["think i can figure out stuff like BetterTTV's v! and h! modifiers eventually. the emote refactoring should make this a bit easier"]
+					],
+					[
+						"cover art's border radius in Beat Saber request information can now be changed",
+						{"anchor": "chatBSRMapArtBorderRadius"}
+					],
+					[
+						"added various appearance settings in relation to the map key for Beat Saber request information",
+						{"anchor": "chatBSRMapCodeFGColor"}
+					],
+					[
+						"cover art can now be toggled in Beat Saber request information",
+						{"anchor": "chatBSREnableCoverArt"}
+					],
+					[
+						"added cover art display permissions for Beat Saber request information",
+						{"anchor": "chatBSRAlwaysShowCoverArt"}
 					]
 				]
 			},
@@ -36,7 +52,11 @@
 				"revision": 85,
 				"notes": [
 					[
-						"organized the badge toggles a bit"
+						"organized the badge toggles a bit in Chat > Badges"
+					],
+					[
+						"made color input fields narrower",
+						["...why did i make them so wide anyways?"]
 					]
 				]
 			}

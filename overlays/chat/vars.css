@@ -249,6 +249,13 @@
 	--BSRStatsPanelFontVariant: normal;
 	--BSRInfoElementsWidthValue: calc(var(--overlayWidth) - calc(var(--chatBlockPaddingHorizontal) * 2) - (var(--messageFontSize) * 5));
 	--BSRInfoElementsWidth: var(--BSRInfoElementsWidthValue);
+	--BSRMapArtBorderRadius: 4px;
+	--BSRMapCodeBorderRadius: 4px;
+	--BSRMapCodeBGAngle: 170deg;
+	--BSRMapCodeBGColor1: #333333;
+	--BSRMapCodeBGColor2: #000000;
+	--BSRMapCodeFGColor: #ffffff;
+	--BSRMapCoverArtDisplay: inline-block;
 
 	--sharedChatAvatarDisplay: flex;
 	--sharedChatAvatarSize: 20px;

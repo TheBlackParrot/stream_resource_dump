@@ -317,9 +317,10 @@ tt, code, pre {
 }
 
 .bsrArt, .bsrArt img {
-	display: inline-block;
+	display: var(--BSRMapCoverArtDisplay);
 	width: calc(var(--messageFontSize) * 4);
 	line-height: 0px; /* wtf */
+	align-self: center;
 }
 .bsrCode {
 	display: var(--BSRCodeVisibility);
@@ -327,7 +328,7 @@ tt, code, pre {
 }
 
 .bsrArt img {
-	border-radius: var(--badgeBorderRadius);
+	border-radius: var(--BSRMapArtBorderRadius);
 }
 
 .bsrMapInfo {
@@ -381,12 +382,12 @@ tt, code, pre {
 }
 
 .bsrCode {
-	background-image: linear-gradient(170deg, #333, #000);
-	border-radius: var(--badgeBorderRadius);
+	background-image: linear-gradient(var(--BSRMapCodeBGAngle), var(--BSRMapCodeBGColor1), var(--BSRMapCodeBGColor2));
+	border-radius: var(--BSRMapCodeBorderRadius);
 	text-align: center;
 	padding-top: 0.15em;
 	padding-bottom: 0.15em;
-	color: #fff;
+	color: var(--BSRMapCodeFGColor);
 	font-variant: var(--BSRStatsPanelFontVariant);
 }
 .fa-thumbs-down {

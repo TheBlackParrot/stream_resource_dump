@@ -354,7 +354,21 @@ const chatFuncs = {
 			infoElement.addClass("STREAMER_CAN_YOU_PLAY_REALITY_CHECK_ITS_MY_FAVORITE_MAP");
 		}
 
-		let canShowArt = (mapData.ranked || mapData.qualified || mapData.uploader.verifiedMapper || "curatedAt" in mapData);
+		let canShowArt = (localStorage.getItem("setting_chatBSRAlwaysShowCoverArt") === "true");
+		if(!canShowArt) {
+			const checks = [
+				(localStorage.getItem("setting_chatBSRShowCoverArtIfRanked") === "true" && (mapData.ranked || mapData.qualified || mapData.blRanked || mapData.blQualified)),
+				(localStorage.getItem("setting_chatBSRShowCoverArtIfCurated") === "true" && "curatedAt" in mapData),
+				(localStorage.getItem("setting_chatBSRShowCoverArtIfVerified") === "true" && mapData.uploader.verifiedMapper)
+			];
+
+			for(const check of checks) {
+				if(check) {
+					canShowArt = check;
+					break;
+				}
+			}
+		}
 
 		let canShowInfo = canShowArt;
 		if(!canShowInfo) {

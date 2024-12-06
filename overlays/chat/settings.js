@@ -1597,6 +1597,27 @@ const settingUpdaters = {
 	},
 	enableFlags: function(value) {
 		rootCSS().setProperty("--flagsContainerDisplay", (value === "true" ? "flex" : "none"));
+	},
+	chatBSRMapArtBorderRadius: function(value) {
+		rootCSS().setProperty("--BSRMapArtBorderRadius", `${value}px`);
+	},
+	chatBSRMapCodeBorderRadius: function(value) {
+		rootCSS().setProperty("--BSRMapCodeBorderRadius", `${value}px`);
+	},
+	chatBSRMapCodeBGAngle: function(value) {
+		rootCSS().setProperty("--BSRMapCodeBGAngle", `${value}deg`);
+	},
+	chatBSRMapCodeBGColor1: function(value) {
+		rootCSS().setProperty("--BSRMapCodeBGColor1", value);
+	},
+	chatBSRMapCodeBGColor2: function(value) {
+		rootCSS().setProperty("--BSRMapCodeBGColor2", value);
+	},
+	chatBSRMapCodeFGColor: function(value) {
+		rootCSS().setProperty("--BSRMapCodeFGColor", value);
+	},
+	chatBSREnableCoverArt: function(value) {
+		rootCSS().setProperty("--BSRMapCoverArtDisplay", (value === "true" ? "inline-block" : "none"));
 	}
 };
 settingUpdaters["chatHideAccounts"](localStorage.getItem("setting_chatHideAccounts"));
