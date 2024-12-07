@@ -29,7 +29,8 @@
 		"enabled": false,
 		"ip": "127.0.0.1",
 		"port": 4570,
-		"camSwitchDelay": 200
+		"camSwitchDelay": 200,
+		"stopMissEventsIfDead": true
 	},
 
 	"warudo": {
@@ -46,8 +47,26 @@
 	},
 
 	"remotesession": {
+		"enabled": false,
+		"URL": "http://127.0.0.1/requests",
+		"accessKey": "abc123",
+		"submitOnRestarts": false
+	},
+
+	"remotequeue": {
 		"enabled": true,
 		"URL": "http://127.0.0.1/requests",
-		"accessKey": "abc123"
+		"accessKey": "abc123",
+		"tts": {
+			"voice": "voice_cmu_us_slt_cg",
+			"speed": 0.8,
+			"say": {
+				"formatString": "There (irreg) ### (word) in the queue.",
+				"replacers": {
+					"word": ["map", "maps"],
+					"irreg": ["is", "are"]
+				}
+			}
+		}
 	}
 }

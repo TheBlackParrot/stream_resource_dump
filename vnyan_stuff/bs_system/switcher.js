@@ -1,6 +1,7 @@
 import { writeFile, copyFile } from 'node:fs/promises';
 import * as ws from "ws";
 import { OBSWebSocket } from 'obs-websocket-js';
+import * as say from "say";
 import * as settingsData from "./settings.json" with { type: "json" };
 const settings = settingsData.default;
 
@@ -52,6 +53,7 @@ async function changeScene(scene) {
 }
 
 var oldHash;
+var oldSubmittedHash;
 var oldKey;
 var oldAcc = 0;
 var oldTimePlayedID = 0;
@@ -87,6 +89,7 @@ async function handleMapDataMessage(data) {
 		if(data.LevelFailed) {
 			sendVNyanData("Failed");
 		} else {
+			oldSubmittedHash = null;
 			sendVNyanData("Passed");
 		}
 	}
@@ -101,6 +104,43 @@ async function handleMapDataMessage(data) {
 	if(sceneChanged && ((data.LevelQuit || data.LevelFinished) || (!data.LevelQuit && !data.LevelFinished && data.InLevel))) {
 		console.log(`${data.BSRKey ? `[${data.BSRKey}] ` : ""}[${data.InLevel ? "START" : "END"}] ${data.SongAuthor ? `${data.SongAuthor} - ` : ""}${data.SongName}${data.SongSubName ? ` - ${data.SongSubName}` : ""}${data.Mapper ? ` (${data.Mapper})` : ""}`);
 		await changeScene(settings.obs.scenes[state.scene]);
+
+		if(!data.InLevel && settings.remotequeue.enabled) {
+			const queueResponse = await fetch(`${settings.remotequeue.URL}/getEntireQueue.php`, {
+				method: "GET",
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
+				}
+			});
+			if(!queueResponse.ok) {
+				log(`FAILED TO GET CURRENT REQUEST QUEUE`, true);
+			}
+
+			const queueResponseJSON = await queueResponse.json();
+
+			let sayWords = settings.remotequeue.tts.say.formatString.split(" ");
+			const isPlural = (queueResponseJSON.songs.length !== 1 ? 1 : 0);
+			for(let idx in sayWords) {
+				let word = sayWords[idx];
+				switch(word) {
+					case "(irreg)":
+						sayWords[idx] = settings.remotequeue.tts.say.replacers.irreg[isPlural];
+						break;
+
+					case "(word)":
+						sayWords[idx] = settings.remotequeue.tts.say.replacers.word[isPlural];
+						break;
+
+					case "###":
+						sayWords[idx] = queueResponseJSON.songs.length;
+						break;
+				}
+			}
+
+			log(`TTS: "${sayWords.join(" ")}"`);
+			say.default.speak(sayWords.join(" "), settings.remotequeue.tts.voice, settings.remotequeue.tts.speed);
+		}
 
 		if(settings.remotesession.enabled && !data.InLevel && !data.LevelQuit && olderHash) {
 			console.log(olderHash, oldAcc);
@@ -124,33 +164,40 @@ async function handleMapDataMessage(data) {
 
 			if(accUpdateResponseJSON.OK) {
 				log("UPDATED PREVIOUS MAP'S ACCURACY VALUE");
-				log(accUpdateResponseJSON.message);
-				log(accUpdateResponseJSON.query);
-				log(accUpdateResponseJSON.guh);
 			}
 		}
 
 		if(settings.remotesession.enabled && data.InLevel) {
-			const response = await fetch(`${settings.remotesession.URL}/addToSession.php`, {
-				method: "POST",
-				headers: {
-					'Accept': 'application/json',
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({
-					'accessKey': settings.remotesession.accessKey,
-					'hash': data.Hash
-				})
-			});
-			if(!response.ok) {
-				log(`FAILED TO ADD MAP TO SESSION TRACKING, BAD RESPONSE`, true);
+			let doSubmission = true;
+			if(!settings.remotesession.submitOnRestart) {
+				if(data.Hash === oldSubmittedHash) {
+					doSubmission = false;
+				}
 			}
 
-			const responseJSON = await response.json();
+			if(doSubmission) {
+				const response = await fetch(`${settings.remotesession.URL}/addToSession.php`, {
+					method: "POST",
+					headers: {
+						'Accept': 'application/json',
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						'accessKey': settings.remotesession.accessKey,
+						'hash': data.Hash
+					})
+				});
+				if(!response.ok) {
+					log(`FAILED TO ADD MAP TO SESSION TRACKING, BAD RESPONSE`, true);
+				}
 
-			if(responseJSON.OK) {
-				log("ADDED MAP TO SESSION TRACKING");
-				oldTimePlayedID = responseJSON.timePlayedValue;
+				const responseJSON = await response.json();
+
+				if(responseJSON.OK) {
+					log("ADDED MAP TO SESSION TRACKING");
+					oldTimePlayedID = responseJSON.timePlayedValue;
+					oldSubmittedHash = data.Hash;
+				}
 			}
 		}
 	}
@@ -187,7 +234,7 @@ function handleLiveDataMessage(data) {
 	}
 	state.comboMod = data.Combo % settings.datapuller.expressOnCombo;
 
-	if(data.Misses > state.misses && data.PlayerHealth > 0) {
+	if(data.Misses > state.misses && (data.PlayerHealth > 0 || !settings.vnyan.stopMissEventsIfDead)) {
 		log(`MISSED: ${data.Misses - state.misses}`);
 		sendVNyanData("Angry");
 		sendVNyanData(`Miss${data.Misses - state.misses}`);
