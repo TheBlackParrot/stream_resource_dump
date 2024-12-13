@@ -138,8 +138,14 @@ async function handleMapDataMessage(data) {
 				}
 			}
 
-			log(`TTS: "${sayWords.join(" ")}"`);
-			say.default.speak(sayWords.join(" "), settings.remotequeue.tts.voice, settings.remotequeue.tts.speed);
+			let ttsIsActive = true;
+			if(settings.remotequeue.remainSilentOnEmptyQueue && !queueResponseJSON.songs.length) {
+				ttsIsActive = false;
+			}
+			if(ttsIsActive) {
+				log(`TTS: "${sayWords.join(" ")}"`);
+				say.default.speak(sayWords.join(" "), settings.remotequeue.tts.voice, settings.remotequeue.tts.speed);
+			}
 		}
 
 		if(settings.remotesession.enabled && !data.InLevel && !data.LevelQuit && olderHash) {

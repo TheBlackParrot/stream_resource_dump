@@ -1,4 +1,36 @@
 {
+	"9999999999999": {
+		"updates": {
+			"chat": {
+				"revision": 82,
+				"notes": [
+					[
+						"fixed minor vertical alignment issue with map codes in Beat Saber request information if using smaller fonts"
+					],
+					[
+						"fixed mentions sometimes appearing in the wrong place if next to multiple emotes"
+					],
+					[
+						"added additional font settings for map codes in Beat Saber request information",
+						{"anchor": "chatBSRMapCodeVerticalOffset"}
+					],
+					[
+						"simplified various true/false conditionals in setting setters into inline conditionals"
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 86,
+				"notes": [
+					[
+						"(update only contains new settings)"
+					]
+				]
+			}
+		}
+	},
+
 	"1733519932164": {
 		"updates": {
 			"chat": {

@@ -256,6 +256,21 @@
 	--BSRMapCodeBGColor2: #000000;
 	--BSRMapCodeFGColor: #ffffff;
 	--BSRMapCoverArtDisplay: inline-block;
+	--BSRMapCodeFont: "Manrope";
+	--BSRMapCodeFontStyle: normal;
+	--BSRMapCodeFontVariant: normal;
+	--BSRMapCodeFontSize: 12pt;
+	--BSRMapCodeFontWeight: 900;
+	--BSRMapCodeCharacterSpacing: 0px;
+	--BSRMapCodeFontWeightExtra: 0.2px;
+	--BSRMapCodeFontActual: inherit;
+	--BSRMapCodeFontStyleActual: inherit;
+	--BSRMapCodeFontVariantActual: inherit;
+	--BSRMapCodeFontSizeActual: inherit;
+	--BSRMapCodeFontWeightActual: inherit;
+	--BSRMapCodeCharacterSpacingActual: inherit;
+	--BSRMapCodeFontWeightExtraActual: inherit;
+	--BSRMapCodeVerticalOffset: 0px;
 
 	--sharedChatAvatarDisplay: flex;
 	--sharedChatAvatarSize: 20px;

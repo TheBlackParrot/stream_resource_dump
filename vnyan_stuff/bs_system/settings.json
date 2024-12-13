@@ -57,6 +57,7 @@
 		"enabled": true,
 		"URL": "http://127.0.0.1/requests",
 		"accessKey": "abc123",
+		"remainSilentOnEmptyQueue": true,
 		"tts": {
 			"voice": "voice_cmu_us_slt_cg",
 			"speed": 0.8,

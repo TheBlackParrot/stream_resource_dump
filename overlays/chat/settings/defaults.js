@@ -1279,7 +1279,16 @@ const defaultConfig = {
 	"chatBSRAlwaysShowCoverArt": "false",
 	"chatBSRShowCoverArtIfRanked": "true",
 	"chatBSRShowCoverArtIfCurated": "true",
-	"chatBSRShowCoverArtIfVerified": "true"
+	"chatBSRShowCoverArtIfVerified": "true",
+	"chatBSRMapCodeFontUsesMessageSettings": "true",
+	"chatBSRMapCodeFont": "Manrope",
+	"chatBSRMapCodeFontItalic": "false",
+	"chatBSRUseTabularNumsInMapCode": "false",
+	"chatBSRMapCodeFontSize": "12",
+	"chatBSRMapCodeFontWeight": "900",
+	"chatBSRMapCodeCharacterSpacing": "0",
+	"chatBSRMapCodeFontWeightExtra": "0.2",
+	"chatBSRMapCodeVerticalOffset": "0"
 };
 // i typed out the bigNoNoWords so you don't have to, i'm sorry :(
 // it's gotta know what to remove

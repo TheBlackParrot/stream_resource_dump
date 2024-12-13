@@ -460,7 +460,7 @@ const chatFuncs = {
 		metadataElement.append(titleElement).append(artistElement).append(mapperElement);
 
 		let extraDataElement = $(`<div class="bsrExtraInfo"></div>`);
-		let idElement = $(`<div class="bsrCode">${mapData.id}</div>`);
+		let idElement = $(`<div class="bsrCode"><span class="bsrCodeValue">${mapData.id}</span></div>`);
 		let statsElement = $(`<div class="bsrStats"></div>`);
 		statsElement.append($(`<span class="songTime"><i class="fas fa-clock"></i> ${formatTime(mapData.metadata.duration)}</span>`));
 
@@ -1033,6 +1033,10 @@ async function renderMessageBlock(data, rootElement, isReply) {
 					}
 				}
 
+				if(currentEmoteWrapper.children().length) {
+					pushEmoteWrapper();
+				}
+
 				wordsFinal.push(wordElement[0].outerHTML);
 				continue;
 			}
@@ -1187,19 +1191,6 @@ async function renderMessageBlock(data, rootElement, isReply) {
 			messageBlock.addClass("actionMessage");
 			messageBlock.css("background-image", `linear-gradient(170deg, #fff -50%, ${col} 150%)`);
 		}
-
-		/*if(localStorage.getItem("setting_emotesParseToImage") === "true") {
-			messageBlock = $(twemoji.parse(messageBlock[0], {
-				folder: 'svg',
-				ext: '.svg'
-			}));
-
-			messageBlock.children(".emoji").each(function() {
-				const cloned = $(this).clone(true);
-				const wrapped = $('<span class="emoteWrapper"></span>');
-				$(this).replaceWith()
-			});
-		}*/
 
 		hasBigEmotes = (eprww.join("") === "" && localStorage.getItem("setting_chatShowBigEmotes") === "true" && !isReply);
 		if(hasBigEmotes) {

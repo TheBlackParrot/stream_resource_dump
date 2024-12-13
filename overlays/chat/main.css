@@ -325,6 +325,8 @@ tt, code, pre {
 .bsrCode {
 	display: var(--BSRCodeVisibility);
 	width: calc(var(--messageFontSize) * 4);
+	line-height: var(--messageLineHeight);
+	align-self: center;
 }
 
 .bsrArt img {
@@ -382,13 +384,25 @@ tt, code, pre {
 }
 
 .bsrCode {
+	font-family: var(--BSRMapCodeFontActual);
+	font-style: var(--BSRMapCodeFontStyleActual);
+	font-variant: var(--BSRMapCodeFontVariantActual);
+	font-size: var(--BSRMapCodeFontSizeActual);
+	font-weight: var(--BSRMapCodeFontWeightActual);
+	letter-spacing: var(--BSRMapCodeCharacterSpacingActual);
 	background-image: linear-gradient(var(--BSRMapCodeBGAngle), var(--BSRMapCodeBGColor1), var(--BSRMapCodeBGColor2));
 	border-radius: var(--BSRMapCodeBorderRadius);
 	text-align: center;
-	padding-top: 0.15em;
-	padding-bottom: 0.15em;
-	color: var(--BSRMapCodeFGColor);
-	font-variant: var(--BSRStatsPanelFontVariant);
+}
+.bsrCodeValue {
+	-webkit-text-stroke: var(--BSRMapCodeFontWeightExtra) transparent;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-color: var(--BSRMapCodeFGColor);
+	vertical-align: middle;
+	position: relative;
+	top: var(--BSRMapCodeVerticalOffset);
+	line-height: 0px;
 }
 .fa-thumbs-down {
 	margin-left: 0.67em;

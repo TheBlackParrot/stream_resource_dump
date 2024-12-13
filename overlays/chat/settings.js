@@ -282,11 +282,7 @@ const settingUpdaters = {
 
 	enable7TV: function(value) {
 		if(value === "true") {
-			if(localStorage.getItem("setting_enable7TVBadges") === "true") {
-				rootCSS().setProperty("--display7TVBadges", "initial");
-			} else {
-				rootCSS().setProperty("--display7TVBadges", "none");
-			}
+			rootCSS().setProperty("--display7TVBadges", (localStorage.getItem("setting_enable7TVBadges") === "true" ? "initial" : "none"));
 		} else {
 			rootCSS().setProperty("--display7TVBadges", "none");
 		}
@@ -295,11 +291,7 @@ const settingUpdaters = {
 	},
 	enableBTTV: function(value) {
 		if(value === "true") {
-			if(localStorage.getItem("setting_enableBTTVBadges") === "true") {
-				rootCSS().setProperty("--displayBTTVBadges", "initial");
-			} else {
-				rootCSS().setProperty("--displayBTTVBadges", "none");
-			}
+			rootCSS().setProperty("--displayBTTVBadges", (localStorage.getItem("setting_enableBTTVBadges") === "true" ? "initial" : "none"));
 		} else {
 			rootCSS().setProperty("--displayBTTVBadges", "none");
 		}
@@ -308,11 +300,7 @@ const settingUpdaters = {
 	},
 	enableFFZ: function(value) {
 		if(value === "true") {
-			if(localStorage.getItem("setting_enableFFZBadges") === "true") {
-				rootCSS().setProperty("--displayFFZBadges", "initial");
-			} else {
-				rootCSS().setProperty("--displayFFZBadges", "none");
-			}
+			rootCSS().setProperty("--displayFFZBadges", (localStorage.getItem("setting_enableFFZBadges") === "true" ? "initial" : "none"));
 		} else {
 			rootCSS().setProperty("--displayFFZBadges", "none");
 		}
@@ -321,11 +309,7 @@ const settingUpdaters = {
 	},
 	enable7TVBadges: function(value) {
 		if(value === "true") {
-			if(localStorage.getItem("setting_enable7TV") === "true") {
-				rootCSS().setProperty("--display7TVBadges", "initial");
-			} else {
-				rootCSS().setProperty("--display7TVBadges", "none");
-			}
+			rootCSS().setProperty("--display7TVBadges", (localStorage.getItem("setting_enable7TV") === "true" ? "initial" : "none"));
 		} else {
 			rootCSS().setProperty("--display7TVBadges", "none");
 		}
@@ -334,11 +318,7 @@ const settingUpdaters = {
 	},
 	enableBTTVBadges: function(value) {
 		if(value === "true") {
-			if(localStorage.getItem("setting_enableBTTV") === "true") {
-				rootCSS().setProperty("--displayBTTVBadges", "initial");
-			} else {
-				rootCSS().setProperty("--displayBTTVBadges", "none");
-			}
+			rootCSS().setProperty("--displayBTTVBadges", (localStorage.getItem("setting_enableBTTV") === "true" ? "initial" : "none"));
 		} else {
 			rootCSS().setProperty("--displayBTTVBadges", "none");
 		}
@@ -347,11 +327,7 @@ const settingUpdaters = {
 	},
 	enableFFZBadges: function(value) {
 		if(value === "true") {
-			if(localStorage.getItem("setting_enableFFZ") === "true") {
-				rootCSS().setProperty("--displayFFZBadges", "initial");
-			} else {
-				rootCSS().setProperty("--displayFFZBadges", "none");
-			}
+			rootCSS().setProperty("--displayFFZBadges", (localStorage.getItem("setting_enableFFZ") === "true" ? "initial" : "none"));
 		} else {
 			rootCSS().setProperty("--displayFFZBadges", "none");
 		}
@@ -359,21 +335,11 @@ const settingUpdaters = {
 		checkIfBadgesVisible();
 	},
 	enableBotBadges: function(value) {
-		if(value === "true") {
-			rootCSS().setProperty("--displayBotBadges", "initial");
-		} else {
-			rootCSS().setProperty("--displayBotBadges", "none");
-		}
-
+		rootCSS().setProperty("--displayBotBadges", (value === "true" ? "initial" : "none"));
 		checkIfBadgesVisible();
 	},
 	enableAffiliateBadges: function(value) {
-		if(value === "true") {
-			rootCSS().setProperty("--displayAffiliateBadges", "initial");
-		} else {
-			rootCSS().setProperty("--displayAffiliateBadges", "none");
-		}
-
+		rootCSS().setProperty("--displayAffiliateBadges", (value === "true" ? "initial" : "none"));
 		checkIfBadgesVisible();
 	},
 
@@ -429,11 +395,7 @@ const settingUpdaters = {
 	},
 
 	chatOutlines: function(value) {
-		if(value === "true") {
-			rootCSS().setProperty("--chatBlockOutlineSize", "var(--chatBlockOutlineSizeActual)");
-		} else {
-			rootCSS().setProperty("--chatBlockOutlineSize", "0px");
-		}
+		rootCSS().setProperty("--chatBlockOutlineSize", (value === "true" ? "var(--chatBlockOutlineSizeActual)" : "0px"));
 	},
 	chatOutlinesColor: function(value) {
 		rootCSS().setProperty("--chatBlockOutlineColor", value);
@@ -446,18 +408,10 @@ const settingUpdaters = {
 	},
 
 	chatShadows: function(value) {
-		if(value === "true") {
-			rootCSS().setProperty("--shadowStuff", "url(#shadowEffect)");
-		} else {
-			rootCSS().setProperty("--shadowStuff", "url(#blankEffect)");
-		}
+		rootCSS().setProperty("--shadowStuff", (value === "true" ? "url(#shadowEffect)" : "url(#blankEffect)"));
 	},
 	chatOutlinesFilter: function(value) {
-		if(value === "true") {
-			rootCSS().setProperty("--outlineStuff", "url(#outlineEffect)");
-		} else {
-			rootCSS().setProperty("--outlineStuff", "url(#blankEffect)");
-		}
+		rootCSS().setProperty("--outlineStuff", (value === "true" ? "url(#outlineEffect)" : "url(#blankEffect)"));
 	},
 
 	chatFadeHistory: setHistoryOpacity,
@@ -595,11 +549,7 @@ const settingUpdaters = {
 		rootCSS().setProperty("--pronounsColor", value);
 	},
 	pronounsUsesGradient: function(value) {
-		if(value === "true") {
-			rootCSS().setProperty("--pronounsGradient", "linear-gradient(var(--pronounsGradientAngle), var(--pronounsColorSecondary) -20%, transparent 100%)");
-		} else {
-			rootCSS().setProperty("--pronounsGradient", "none");
-		}
+		rootCSS().setProperty("--pronounsGradient", (value === "true" ? "linear-gradient(var(--pronounsGradientAngle), var(--pronounsColorSecondary) -20%, transparent 100%)" : "none"));
 	},
 	pronounsColorSecondary: function(value) {
 		rootCSS().setProperty("--pronounsColorSecondary", value);
@@ -656,11 +606,7 @@ const settingUpdaters = {
 		rootCSS().setProperty("--timestampColor", value);
 	},
 	timestampUsesGradient: function(value) {
-		if(value === "true") {
-			rootCSS().setProperty("--timestampGradient", "linear-gradient(var(--timestampGradientAngle), var(--timestampColorSecondary) -20%, transparent 100%)");
-		} else {
-			rootCSS().setProperty("--timestampGradient", "none");
-		}
+		rootCSS().setProperty("--timestampGradient", (value === "true" ? "linear-gradient(var(--timestampGradientAngle), var(--timestampColorSecondary) -20%, transparent 100%)" : "none"));
 	},
 	timestampColorSecondary: function(value) {
 		rootCSS().setProperty("--timestampColorSecondary", value);
@@ -704,19 +650,11 @@ const settingUpdaters = {
 		rootCSS().setProperty("--chatBlockWidth", value);
 	},
 	applyBorderRadiusToSubBadges: function(value) {
-		if(value === "true") {
-			rootCSS().setProperty("--subBadgeBorderRadius", "var(--badgeBorderRadius)");
-		} else {
-			rootCSS().setProperty("--subBadgeBorderRadius", "0px");
-		}
+		rootCSS().setProperty("--subBadgeBorderRadius", (value === "true" ? "var(--badgeBorderRadius)" : "0px"));
 	},
 
 	chatMessageUserInfoOutlines: function(value) {
-		if(value === "true") {
-			rootCSS().setProperty("--userInfoOutlineSize", "var(--userInfoOutlineSizeActual)");
-		} else {
-			rootCSS().setProperty("--userInfoOutlineSize", "0px");
-		}
+		rootCSS().setProperty("--userInfoOutlineSize", (value === "true" ? "var(--userInfoOutlineSizeActual)" : "0px"));
 	},
 	chatMessageUserInfoOutlinesColor: function(value) {
 		rootCSS().setProperty("--userInfoOutlineColor", value);
@@ -743,24 +681,15 @@ const settingUpdaters = {
 	},
 
 	overlayForceWidth: function(value) {
-		if(value === "true") {
-			rootCSS().setProperty("--overlayWidth", "var(--overlayWidthActual)");
-		} else {
-			rootCSS().setProperty("--overlayWidth", "100vw");
-		}
+		rootCSS().setProperty("--overlayWidth", (value === "true" ? "var(--overlayWidthActual)" : "100vw"));
 	},
 	overlayWidth: function(value) {
 		rootCSS().setProperty("--overlayWidthActual", `${value}px`);
 	},
 
 	chatMessageEnableSeparators: function(value) {
-		if(value === "true") {
-			rootCSS().setProperty("--messageSeparatorWidth", "var(--messageSeparatorWidthActual)");
-			rootCSS().setProperty("--messageSeparatorSpacing", "var(--messageSeparatorSpacingActual)");
-		} else {
-			rootCSS().setProperty("--messageSeparatorWidth", "0px");
-			rootCSS().setProperty("--messageSeparatorSpacing", "0px");
-		}		
+		rootCSS().setProperty("--messageSeparatorWidth", (value === "true" ? "var(--messageSeparatorWidthActual)" : "0px"));
+		rootCSS().setProperty("--messageSeparatorSpacing", (value === "true" ? "var(--messageSeparatorSpacingActual)" : "0px"));
 	},
 	chatMessageSeparatorColor: function(value) {
 		rootCSS().setProperty("--messageSeparatorColor", value);
@@ -1004,11 +933,7 @@ const settingUpdaters = {
 		rootCSS().setProperty("--chatHistoryOriginPoint", value);
 	},
 	chatNameUsesGradient: function(value) {
-		if(value === "true") {
-			rootCSS().setProperty("--nameBackground", "var(--nameBackgroundDefault)");
-		} else {
-			rootCSS().setProperty("--nameBackground", "var(--nameBackgroundNoGradientDefault)");
-		}		
+		rootCSS().setProperty("--nameBackground", (value === "true" ? "var(--nameBackgroundDefault)" : "var(--nameBackgroundNoGradientDefault)"));	
 	},
 
 	sound_newMsg_Volume: function(value) {
@@ -1092,11 +1017,7 @@ const settingUpdaters = {
 	},
 
 	applyGradientToBadges: function(value) {
-		if(value === "true") {
-			rootCSS().setProperty("--badgeGradientDisplay", "block");
-		} else {
-			rootCSS().setProperty("--badgeGradientDisplay", "none");
-		}
+		rootCSS().setProperty("--badgeGradientDisplay", (value === "true" ? "block" : "none"));
 	},
 	badgeGradientColorStart: function(value) {
 		rootCSS().setProperty("--badgeGradientColorStart", value);
@@ -1158,10 +1079,7 @@ const settingUpdaters = {
 	},
 
 	use3dTransformsOnAnimations: function(value) {
-		let which = 2;
-		if(value === "true") {
-			which = 3;
-		}
+		let which = (value === "true" ? 3 : 2);
 
 		rootCSS().setProperty("--currentMessageInTranslateFunctionStart", `var(--messageInTranslate${which}dFunctionStart)`);
 		rootCSS().setProperty("--currentMessageInTranslateFunctionEnd", `var(--messageInTranslate${which}dFunctionEnd)`);
@@ -1170,13 +1088,8 @@ const settingUpdaters = {
 	},
 
 	avatarsBGBorder: function(value) {
-		if(value === "true") {
-			rootCSS().setProperty("--avatarsBGBorderSize", "var(--avatarsBGBorderSizeActual)");
-			rootCSS().setProperty("--avatarsBGBorderOffset", "calc(var(--avatarsBGBorderSizeActual) * -1)");
-		} else {
-			rootCSS().setProperty("--avatarsBGBorderSize", "0px");
-			rootCSS().setProperty("--avatarsBGBorderOffset", "0px");
-		}
+		rootCSS().setProperty("--avatarsBGBorderSize", (value === "true" ? "var(--avatarsBGBorderSizeActual)" : "0px"));
+		rootCSS().setProperty("--avatarsBGBorderOffset", (value === "true" ? "calc(var(--avatarsBGBorderSizeActual) * -1)" : "0px"));
 	},
 	avatarsBGBorderColor: function(value) {
 		rootCSS().setProperty("--avatarsBGBorderColor", value);
@@ -1236,13 +1149,7 @@ const settingUpdaters = {
 	},
 
 	messageBlockDirection: function(value) {
-		let which = "column";
-		
-		if(value === "true") {
-			which = "column-reverse";
-		}
-
-		rootCSS().setProperty("--messageBlockDirection", which);
+		rootCSS().setProperty("--messageBlockDirection", (value === "true" ? "column-reverse" : "column"));
 	},
 
 	eventTagsPlanNamePrime: function(value) { subTiers["Prime"] = value; },
@@ -1264,39 +1171,19 @@ const settingUpdaters = {
 	},
 
 	chatNameFontItalic: function(value) {
-		if(value === "true") {
-			rootCSS().setProperty("--nameFontStyle", "italic");
-		} else {
-			rootCSS().setProperty("--nameFontStyle", "normal");
-		}
+		rootCSS().setProperty("--nameFontStyle", (value === "true" ? "italic" : "normal"));
 	},
 	chatMessageFontItalic: function(value) {
-		if(value === "true") {
-			rootCSS().setProperty("--messageFontStyle", "italic");
-		} else {
-			rootCSS().setProperty("--messageFontStyle", "normal");
-		}
+		rootCSS().setProperty("--messageFontStyle", (value === "true" ? "italic" : "normal"));
 	},
 	eventTagsFontItalic: function(value) {
-		if(value === "true") {
-			rootCSS().setProperty("--eventTagsFontStyle", "italic");
-		} else {
-			rootCSS().setProperty("--eventTagsFontStyle", "normal");
-		}
+		rootCSS().setProperty("--eventTagsFontStyle", (value === "true" ? "italic" : "normal"));
 	},
 	pronounsFontItalic: function(value) {
-		if(value === "true") {
-			rootCSS().setProperty("--pronounsFontStyle", "italic");
-		} else {
-			rootCSS().setProperty("--pronounsFontStyle", "normal");
-		}
+		rootCSS().setProperty("--pronounsFontStyle", (value === "true" ? "italic" : "normal"));
 	},
 	timestampFontItalic: function(value) {
-		if(value === "true") {
-			rootCSS().setProperty("--timestampFontStyle", "italic");
-		} else {
-			rootCSS().setProperty("--timestampFontStyle", "normal");
-		}
+		rootCSS().setProperty("--timestampFontStyle", (value === "true" ? "italic" : "normal"));
 	},
 	chatMessageBackgroundColor: function(value) {
 		rootCSS().setProperty("--messageBackgroundColor", value);
@@ -1313,11 +1200,7 @@ const settingUpdaters = {
 	},
 
 	chatMessageOutlines: function(value) {
-		if(value === "true") {
-			rootCSS().setProperty("--messageOutlineSize", "var(--messageOutlineSizeActual)");
-		} else {
-			rootCSS().setProperty("--messageOutlineSize", "0px");
-		}
+		rootCSS().setProperty("--messageOutlineSize", (value === "true" ? "var(--messageOutlineSizeActual)" : "0px"));
 	},
 	chatMessageOutlinesColor: function(value) {
 		rootCSS().setProperty("--messageOutlineColor", value);
@@ -1330,11 +1213,7 @@ const settingUpdaters = {
 	},
 
 	enableBadgeBorder: function(value) {
-		if(value === "true") {
-			rootCSS().setProperty("--badgeBorderSize", "var(--badgeBorderSizeActual)");
-		} else {
-			rootCSS().setProperty("--badgeBorderSize", "0px");
-		}		
+		rootCSS().setProperty("--badgeBorderSize", (value === "true" ? "var(--badgeBorderSizeActual)" : "0px"));	
 	},
 	badgeBorderSize: function(value) {
 		rootCSS().setProperty("--badgeBorderSizeActual", `${value}px`);
@@ -1379,11 +1258,7 @@ const settingUpdaters = {
 		rootCSS().setProperty("--replyIndentation", `${value}px`);
 	},
 	chatReplyItalicize: function(value) {
-		if(value === "true") {
-			rootCSS().setProperty("--replyFontStyle", "italic");
-		} else {
-			rootCSS().setProperty("--replyFontStyle", "normal");
-		}		
+		rootCSS().setProperty("--replyFontStyle", (value === "true" ? "italic" : "normal"));
 	},
 	chatReplyIcon: function(value) {
 		$(".replyIcon").attr("class", `fas ${value} replyIcon`);
@@ -1618,6 +1493,39 @@ const settingUpdaters = {
 	},
 	chatBSREnableCoverArt: function(value) {
 		rootCSS().setProperty("--BSRMapCoverArtDisplay", (value === "true" ? "inline-block" : "none"));
+	},
+	chatBSRMapCodeFontUsesMessageSettings: function(value) {
+		rootCSS().setProperty("--BSRMapCodeFontActual", (value === "true" ? "inherit" : "var(--BSRMapCodeFont)"));
+		rootCSS().setProperty("--BSRMapCodeFontStyleActual", (value === "true" ? "inherit" : "var(--BSRMapCodeFontStyle)"));
+		rootCSS().setProperty("--BSRMapCodeFontVariantActual", (value === "true" ? "inherit" : "var(--BSRMapCodeFontVariant)"));
+		rootCSS().setProperty("--BSRMapCodeFontSizeActual", (value === "true" ? "inherit" : "var(--BSRMapCodeFontSize)"));
+		rootCSS().setProperty("--BSRMapCodeFontWeightActual", (value === "true" ? "inherit" : "var(--BSRMapCodeFontWeight)"));
+		rootCSS().setProperty("--BSRMapCodeCharacterSpacingActual", (value === "true" ? "inherit" : "var(--BSRMapCodeCharacterSpacing)"));
+		rootCSS().setProperty("--BSRMapCodeFontWeightExtraActual", (value === "true" ? "inherit" : "var(--BSRMapCodeFontWeightExtra)"));
+	},
+	chatBSRMapCodeFont: function(value) {
+		rootCSS().setProperty("--BSRMapCodeFont", value);
+	},
+	chatBSRMapCodeFontItalic: function(value) {
+		rootCSS().setProperty("--BSRMapCodeFontStyle", (value === "true" ? "italic" : "normal"));
+	},
+	chatBSRUseTabularNumsInMapCode: function(value) {
+		rootCSS().setProperty("--BSRMapCodeFontVariant", (value === "true" ? "tabular-nums" : "normal"));
+	},
+	chatBSRMapCodeFontSize: function(value) {
+		rootCSS().setProperty("--BSRMapCodeFontSize", `${value}pt`);
+	},
+	chatBSRMapCodeFontWeight: function(value) {
+		rootCSS().setProperty("--BSRMapCodeFontWeight", value);
+	},
+	chatBSRMapCodeCharacterSpacing: function(value) {
+		rootCSS().setProperty("--BSRMapCodeCharacterSpacing", `${value}px`);
+	},
+	chatBSRMapCodeFontWeightExtra: function(value) {
+		rootCSS().setProperty("--BSRMapCodeFontWeightExtra", `${value}px`);
+	},
+	chatBSRMapCodeVerticalOffset: function(value) {
+		rootCSS().setProperty("--BSRMapCodeVerticalOffset", `${value}px`);
 	}
 };
 settingUpdaters["chatHideAccounts"](localStorage.getItem("setting_chatHideAccounts"));
