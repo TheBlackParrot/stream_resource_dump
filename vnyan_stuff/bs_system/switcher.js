@@ -114,10 +114,17 @@ async function handleMapDataMessage(data) {
 				}
 			});
 			if(!queueResponse.ok) {
-				log(`FAILED TO GET CURRENT REQUEST QUEUE`, true);
+				log(`FAILED TO GET CURRENT REQUEST QUEUE (BAD RESPONSE)`, true);
 			}
 
-			const queueResponseJSON = await queueResponse.json();
+			var queueResponseJSON = {
+				songs: []
+			};
+			try {
+				queueResponseJSON = await queueResponse.json();
+			} catch(e) {
+				log(`FAILED TO GET CURRENT REQUEST QUEUE (INVALID JSON)`, true);
+			}
 
 			let sayWords = settings.remotequeue.tts.say.formatString.split(" ");
 			const isPlural = (queueResponseJSON.songs.length !== 1 ? 1 : 0);
@@ -163,13 +170,17 @@ async function handleMapDataMessage(data) {
 				})
 			});
 			if(!accUpdateResponse.ok) {
-				log(`FAILED TO UPDATE PREVIOUS MAP'S ACCURACY VALUE, BAD RESPONSE`, true);
+				log(`FAILED TO UPDATE PREVIOUS MAP'S ACCURACY VALUE (BAD RESPONSE)`, true);
 			}
 
-			const accUpdateResponseJSON = await accUpdateResponse.json();
+			try {
+				const accUpdateResponseJSON = await accUpdateResponse.json();
 
-			if(accUpdateResponseJSON.OK) {
-				log("UPDATED PREVIOUS MAP'S ACCURACY VALUE");
+				if(accUpdateResponseJSON.OK) {
+					log("UPDATED PREVIOUS MAP'S ACCURACY VALUE");
+				}
+			} catch(e) {
+				log(`FAILED TO UPDATE PREVIOUS MAP'S ACCURACY VALUE (INVALID JSON)`, true);
 			}
 		}
 
@@ -194,15 +205,19 @@ async function handleMapDataMessage(data) {
 					})
 				});
 				if(!response.ok) {
-					log(`FAILED TO ADD MAP TO SESSION TRACKING, BAD RESPONSE`, true);
+					log(`FAILED TO ADD MAP TO SESSION TRACKING (BAD RESPONSE)`, true);
 				}
 
-				const responseJSON = await response.json();
+				try {
+					const responseJSON = await response.json();
 
-				if(responseJSON.OK) {
-					log("ADDED MAP TO SESSION TRACKING");
-					oldTimePlayedID = responseJSON.timePlayedValue;
-					oldSubmittedHash = data.Hash;
+					if(responseJSON.OK) {
+						log("ADDED MAP TO SESSION TRACKING");
+						oldTimePlayedID = responseJSON.timePlayedValue;
+						oldSubmittedHash = data.Hash;
+					}
+				} catch(e) {
+					log(`FAILED TO ADD MAP TO SESSION TRACKING (INVALID JSON)`, true);
 				}
 			}
 		}

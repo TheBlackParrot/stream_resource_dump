@@ -1,5 +1,5 @@
-const overlayRevision = 8;
-const overlayRevisionTimestamp = 1724886038717;
+const overlayRevision = 9;
+const overlayRevisionTimestamp = 1735257421730;
 
 const settingsEventChannel = new BroadcastChannel("settings_overlay");
 
@@ -48,7 +48,9 @@ async function onTwitchReady() {
 	currentClock = -1;
 	switchClock();
 	
-	await getBroadcasterData();
+	if(!broadcasterData) {
+		await getBroadcasterData();
+	}
 	await getTwitchStreamData();
 	await adTimer();
 }

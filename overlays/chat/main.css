@@ -266,6 +266,8 @@ strong {
 	-webkit-text-stroke: var(--messageBoldAmount) transparent;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
+	padding: 6px;
+	margin: -6px;
 }
 pre {
 	display: inline;
@@ -610,10 +612,6 @@ tt, code, pre {
 }
 .right .loadingMsg {
 	margin-right: 6px;
-}
-
-.loadingMsg strong {
-	padding-right: 5px;
 }
 
 .cheermote {

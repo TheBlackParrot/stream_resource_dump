@@ -1,3 +1,5 @@
+const delay = ms => new Promise(res => setTimeout(res, ms));
+
 async function callTwitchAsync(data) {
 	const twitchClientId = localStorage.getItem("setting_twitchClientID");
 
@@ -68,6 +70,11 @@ async function getBroadcasterData() {
 	}
 
 	broadcasterData = rawUserResponse.data[0];
+	if(!("data" in broadcasterData)) {
+		// erm
+		await delay(1000);
+		return await getBroadcasterData();
+	}
 	return broadcasterData;
 }
 

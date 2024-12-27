@@ -1,5 +1,5 @@
 {
-	"9999999999999": {
+	"1735257421730": {
 		"updates": {
 			"chat": {
 				"revision": 82,
@@ -16,8 +16,20 @@
 					],
 					[
 						"simplified various true/false conditionals in setting setters into inline conditionals"
+					],
+					[
+						"fixed mentions using custom name fonts sometimes clipping"
 					]
 				]
+			},
+
+			"clock": {
+				"revision": 9,
+				"notes": [
+					[
+						"fixed issue with broadcaster data sometimes coming back empty, causing errors involving undefined variables"
+					]
+				]				
 			},
 
 			"settings": {
