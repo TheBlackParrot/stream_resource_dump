@@ -7,6 +7,13 @@
 	--border-radius: 8px;
 	--cover-border-radius: 4px;
 	--text-shadow: 0px 1px 3px #000;
+	
+	--header-font-size: 16pt;
+	--artist-font-size: 10pt;
+	--title-font-size: 12pt;
+	--mapper-font-size: 9pt;
+	--key-font-size: 14pt;
+	--row-height: 5em;
 }
 
 body {
@@ -39,13 +46,17 @@ body {
 .header {
 	background-color: #141618;
 	background-image: linear-gradient(to bottom, #ffffff20, transparent);
-	padding: calc(var(--padding) + 8px);
+	padding: calc(var(--padding) * 2);
 	border-top-left-radius: var(--border-radius);
 	border-top-right-radius: var(--border-radius);
-	font-size: 16pt;
+	font-size: var(--header-font-size);
 	font-weight: 800;
 	z-index: 1;
 	text-shadow: var(--text-shadow);
+	position: sticky;
+	top: -1px;
+	border-bottom: 1px solid;
+	border-image: linear-gradient(to right, var(--border-color-darker), var(--border-color-lighter), var(--border-color-darker)) 30;
 }
 .header a {
 	color: #fff;
@@ -53,6 +64,13 @@ body {
 }
 .header a:hover {
 	color: #cbadff;
+}
+.isPinned {
+	background-color: #000000b0;
+	box-shadow: 0px -6px 16px 8px #000;
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+	backdrop-filter: blur(8px);
 }
 
 .cell {
@@ -65,7 +83,9 @@ body {
 	z-index: 0;
 	border-bottom: 1px solid;
 	border-image: linear-gradient(to right, var(--border-color-darker), var(--border-color-lighter), var(--border-color-darker)) 30;
-	height: 5em;
+	height: var(--row-height);
+	align-self: stretch;
+	justify-content: space-evenly;
 }
 /*.page .cell:nth-child(odd) { background-color: #2f353a; }
 .page .cell:nth-child(even) { background-color: #25292d; }*/
@@ -91,7 +111,7 @@ body {
 	text-overflow: ellipsis;
 }
 .mapArtist {
-	font-size: 10pt;
+	font-size: var(--artist-font-size);
 	opacity: 0.75;
 	line-height: 18px;
 	padding: 4px;
@@ -100,14 +120,14 @@ body {
 }
 .mapTitle {
 	font-weight: 700;
-	font-size: 12pt;
+	font-size: var(--title-font-size);
 	line-height: 20px;
 	padding: 4px;
 	margin: -4px;
 	text-shadow: var(--text-shadow);
 }
 .mapAuthor {
-	font-size: 9pt;
+	font-size: var(--mapper-font-size);
 	opacity: 0.6;
 	font-weight: 600;
 	line-height: 16px;
@@ -125,7 +145,7 @@ body {
 	width: 60px;
 	text-align: center;
 	font-weight: 700;
-	font-size: 14pt;
+	font-size: var(--key-font-size);
 	text-shadow: var(--text-shadow);
 }
 .mapKey a {
@@ -146,7 +166,7 @@ body {
 	padding-bottom: 0px;
 }
 .timePlayed {
-	font-size: 9pt;
+	font-size: var(--mapper-font-size);
 	font-weight: 700;
 	opacity: 0.6;
 	line-height: 14px;
@@ -154,7 +174,7 @@ body {
 	margin: -4px;
 }
 .mapAcc {
-	font-size: 14pt;
+	font-size: var(--key-font-size);
 	line-height: 18px;
 	padding: 4px;
 	margin: -4px;
@@ -182,7 +202,7 @@ body {
 	border-bottom-left-radius: var(--border-radius);
 	border-bottom-right-radius: var(--border-radius);
 	border-bottom: 0px;
-	height: 5em;
+	height: var(--row-height);
 }
 
 .mapCover {
@@ -203,7 +223,7 @@ body {
 	z-index: -1;
 	opacity: 0.4;
 	overflow: hidden;
-	height: calc(5em + 1px);
+	height: calc(var(--row-height) + 1px);
 }
 .mapBG div {
 	width: 160%;
@@ -222,6 +242,9 @@ body {
 	:root {
 		--border-radius: 0px;
 		--max-width: 0px;
+
+		--padding: 6px;
+		--row-height: 4.5em;
 	}
 	#wrapper {
 		width: 100%;
@@ -236,8 +259,13 @@ body {
 	}
 	.mapDetails {
 		max-width: var(--max-width);
+		padding-left: var(--padding);
 	}
 	.header {
 		text-align: center;
+		border-bottom: 1px solid #777;
+	}
+	.mapCover {
+		margin-left: calc(var(--padding) * 1.5);
 	}
 }

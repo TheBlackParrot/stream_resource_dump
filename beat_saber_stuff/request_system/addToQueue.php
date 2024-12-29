@@ -49,7 +49,7 @@ function prepareQueryStatement($requestData, $mapData) {
 	$metadata = $mapData['metadata'];
 
 	$outData = array(
-		'mapKey' => $mapData['id'],
+		'mapKey' => "" . $mapData['id'] . "",
 		'mapHash' => $diffData['hash'],
 		'mapTitle' => $metadata['songName'] . (empty($metadata['songSubName']) ? "" : " - " . $metadata['songSubName']),
 		'mapArtist' => $metadata['songAuthorName'],
@@ -66,7 +66,7 @@ function prepareQueryStatement($requestData, $mapData) {
 
 	$vals = array_values($outData);
 	for ($i = 0; $i < count($vals); $i++) { 
-		if(is_numeric($vals[$i])) {
+		if(is_numeric($vals[$i]) && $i != 0) {
 			continue;
 		}
 		$vals[$i] = "'" . $db->escapeString($vals[$i]) . "'";

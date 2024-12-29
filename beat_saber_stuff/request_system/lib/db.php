@@ -1,7 +1,7 @@
 <?php
 if(!defined('__ROOTDIR__')) {
 	http_response_code(403);
-	die();
+	die("{}");
 }
 
 if(!isset($db)) {

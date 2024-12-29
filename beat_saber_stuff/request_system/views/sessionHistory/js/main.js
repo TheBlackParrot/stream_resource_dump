@@ -20,6 +20,7 @@ async function getSessions() {
 	}
 
 	const timestamps = data.data;
+	timestamps.reverse();
 
 	for(const timestamp of timestamps) {
 		sessionData[timestamp] = {};
@@ -110,6 +111,14 @@ async function getSessions() {
 		}
 
 		$("#wrapper").append(pageElement);
+
+		const el = headerElement[0];
+		const observer = new IntersectionObserver( 
+			([e]) => e.target.classList.toggle("isPinned", e.intersectionRatio < 1),
+			{ threshold: [1] }
+		);
+
+		observer.observe(el);
 	}
 }
 
