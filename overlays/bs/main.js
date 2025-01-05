@@ -285,6 +285,20 @@ function setMapStatus() {
 	}
 }
 
+function getModifierString(modifiers, concatenator = ",") {
+	let out = [];
+	for(const modifierKey in modifiers) {
+		if(modifierKey == "NF") {
+			continue;
+		}
+
+		if(modifiers[modifierKey]) {
+			out.push(modifierKey);
+		}
+	}
+	return out.join(concatenator);
+}
+
 const externalModCharacteristics = {
 	InvertedStandard: "inverted.png",
 	HorizontalStandard: "horizontal.png",
@@ -408,6 +422,8 @@ const eventFuncs = {
 			$("#bsrCode").text(map.map.bsr);
 		}
 
+		$("#mapModifiersValue").text(getModifierString(map.map.modifiers, ", "));
+
 		hideMiscInfoDisplayElements();
 		changeMiscInfoDisplay();
 
@@ -520,7 +536,8 @@ const miscInfoWrapElements = [
 	"#diffWrap",
 	"#codeWrap",
 	"#ssStarsWrap",
-	"#blStarsWrap"
+	"#blStarsWrap",
+	"#mapModifiersWrap"
 ];
 
 function hideMiscInfoDisplayElements() {
@@ -537,7 +554,8 @@ function changeMiscInfoDisplay() {
 		(localStorage.getItem("setting_bs_miscInfoShowDifficulty") === "true"),
 		(localStorage.getItem("setting_bs_miscInfoShowBSR") === "true"),
 		(localStorage.getItem("setting_bs_miscInfoShowScoreSaberStars") === "true"),
-		(localStorage.getItem("setting_bs_miscInfoShowBeatLeaderStars") === "true")
+		(localStorage.getItem("setting_bs_miscInfoShowBeatLeaderStars") === "true"),
+		(localStorage.getItem("setting_bs_miscInfoShowMapModifiers") === "true")
 	]
 
 	if("map" in activeMap) {
@@ -560,6 +578,14 @@ function changeMiscInfoDisplay() {
 				}
 			} else {
 				allowedToDisplay[3] = false;
+			}
+		}
+	}
+
+	if("map" in activeMap) {
+		if("modifiers" in activeMap.map) {
+			if(!getModifierString(activeMap.map.modifiers, "").length) {
+				allowedToDisplay[4] = false;
 			}
 		}
 	}

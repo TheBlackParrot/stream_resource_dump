@@ -180,7 +180,8 @@ const nonPublicSettings = [
 	"chatVIPBypassASCIIArtFilter",
 	"chatMessageLengthASCIIArtFilterMinimum",
 	"combineMessagesIntoOneBlock",
-	"forceDefaultSubBadgeToFirstTier"
+	"forceDefaultSubBadgeToFirstTier",
+	"bs_miscInfoShowMapModifiers"
 ];
 
 const defaultConfig = {
@@ -1288,7 +1289,8 @@ const defaultConfig = {
 	"chatBSRMapCodeFontWeight": "900",
 	"chatBSRMapCodeCharacterSpacing": "0",
 	"chatBSRMapCodeFontWeightExtra": "0.2",
-	"chatBSRMapCodeVerticalOffset": "0"
+	"chatBSRMapCodeVerticalOffset": "0",
+	"bs_miscInfoShowMapModifiers": "true"
 };
 // i typed out the bigNoNoWords so you don't have to, i'm sorry :(
 // it's gotta know what to remove

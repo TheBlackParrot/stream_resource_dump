@@ -930,6 +930,7 @@ tt, code, pre {
 	padding-left: 4px;
 	margin-left: calc(var(--sharedChatAvatarOffset) * -1);
 	margin-right: calc(var(--messageUserInfoElementSpacing) + var(--sharedChatSameRoomBorderSizeActual) + var(--sharedChatSameRoomBorderOffset)) !important;
+	align-self: center;
 }
 
 .sharedChatIsInSameRoom {

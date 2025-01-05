@@ -145,9 +145,19 @@ const qrCodeECLevelEnum = {
 	}
 }
 
+function getModifierString(modifiers, concatenator = ",") {
+	let out = [];
+	for(const modifierKey in modifiers) {
+		if(modifiers[modifierKey]) {
+			out.push(modifierKey);
+		}
+	}
+	return out.join(concatenator);
+}
+
 var oldHash;
 async function updateBeatSaberMapData() {
-	const curHash = `${currentBSSong.map.hash}.${currentBSSong.song.title}`;
+	const curHash = `${currentBSSong.map.hash}.${currentBSSong.song.title}.${getModifierString(currentBSSong.map.modifiers)}`;
 	if(oldHash === curHash) {
 		console.log(`old hash is current hash, not updating map data (old: ${oldHash}, new: ${curHash})`);
 		return;

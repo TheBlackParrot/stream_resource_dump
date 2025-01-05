@@ -2,7 +2,7 @@ var siraStatusInit = false;
 var siraStatus_ws;
 var siraStatusTimeout;
 
-async function parseSiraBeatmapStatus(data) {
+async function parseSiraBeatmapStatus(data, modifiers) {
 	currentBSSong = {
 		song: {
 			title: data.songName,
@@ -17,7 +17,23 @@ async function parseSiraBeatmapStatus(data) {
 			author: data.levelAuthorName,
 			bsr: null,
 			uploaders: [],
-			pack: null
+			pack: null,
+			modifiers: {
+				DA: modifiers.disappearingArrows,
+				FS: modifiers.songSpeed === "Faster",
+				BE: modifiers.batteryEnergy,
+				GN: modifiers.ghostNotes,
+				NA: modifiers.noArrows,
+				NB: modifiers.noBombs,
+				NF: modifiers.noFail,
+				NO: !modifiers.obstacles,
+				IF: modifiers.instaFail,
+				PM: modifiers.proMode,
+				SS: modifiers.songSpeed === "Slower",
+				SC: modifiers.smallNotes,
+				SA: modifiers.strictAngles,
+				SF: modifiers.songSpeed === "SuperFast"
+			}
 		},
 		cover: {
 			colors: {
@@ -148,7 +164,7 @@ const siraStatusFunctions = {
 			setGameSceneSira(data.game.scene);
 			if(data.beatmap) {
 				setGameStateSira(data.beatmap.paused);
-				parseSiraBeatmapStatus(data.beatmap);
+				parseSiraBeatmapStatus(data.beatmap, data.mod);
 			}
 		}
 		if("performance" in data) { 
@@ -162,7 +178,7 @@ const siraStatusFunctions = {
 		setGameSceneSira("Song");
 
 		if("beatmap" in data) {
-			parseSiraBeatmapStatus(data.beatmap);
+			parseSiraBeatmapStatus(data.beatmap, data.mod);
 			setGameStateSira(data.beatmap.paused);
 		}
 	},

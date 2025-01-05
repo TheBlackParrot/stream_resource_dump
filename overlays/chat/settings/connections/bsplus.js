@@ -35,7 +35,23 @@ const BSPlusMessageHandlers = {
 				author: data.mapper,
 				bsr: null,
 				uploaders: [],
-				pack: null
+				pack: null,
+				modifiers: {
+					DA: false,
+					FS: (data.timeMultiplier === 1.2),
+					BE: false,
+					GN: false,
+					NA: false,
+					NB: false,
+					NF: false,
+					NO: false,
+					IF: false,
+					PM: false,
+					SS: (data.timeMultiplier === 0.85),
+					SC: false,
+					SA: false,
+					SF: (data.timeMultiplier === 1.5)
+				}
 			},
 			cover: {
 				colors: {
@@ -155,6 +171,7 @@ function startBSPlusWebsocket() {
 
 	bsplus_ws.addEventListener("message", async function(msg) {
 		var data = JSON.parse(msg.data);
+		console.log(data);
 
 		if(!bsplus_ws.hasSeenFirstMessage) {
 			bsplus_ws.hasSeenFirstMessage = true;

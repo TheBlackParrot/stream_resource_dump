@@ -116,7 +116,8 @@ async function refreshLeaderboardData(difficulty, characteristic, hash) {
 	$("#blValue").text(`0${ppDecimalPrecision ? `.${"".padStart(ppDecimalPrecision, "0")}` : ""}`);
 	$("#ssValue").text(`0${ppDecimalPrecision ? `.${"".padStart(ppDecimalPrecision, "0")}` : ""}`);
 
-	if(hash === previousRankedHashCheck) {
+	const hashCheckString = hash + characteristic + difficulty;
+	if(hashCheckString === previousRankedHashCheck) {
 		return;
 	}
 
@@ -124,7 +125,7 @@ async function refreshLeaderboardData(difficulty, characteristic, hash) {
 	$("#blCell").hide();
 	$("#ssCell").hide();
 
-	previousRankedHashCheck = hash;
+	previousRankedHashCheck = hashCheckString;
 
 	let isRanked = false;
 
@@ -153,7 +154,16 @@ async function refreshLeaderboardData(difficulty, characteristic, hash) {
 			}
 			isRanked = true;
 
-			$("#blStarsValue").text(beatLeaderData.stars.toFixed(2));
+			let stars = beatLeaderData.stars;
+			if(activeMap.map.modifiers.FS) {
+				stars = beatLeaderData.modifiersRating.fsStars;
+			} else if(activeMap.map.modifiers.SF) {
+				stars = beatLeaderData.modifiersRating.sfStars;
+			} else if(activeMap.map.modifiers.SS) {
+				stars = beatLeaderData.modifiersRating.ssStars;
+			}
+
+			$("#blStarsValue").text(stars.toFixed(2));
 		}
 	}
 
@@ -322,7 +332,25 @@ function updatePPValues(acc) {
 
 	if(leaderboardData.BeatLeader) {
 		if(leaderboardData.BeatLeader.ranked) {
-			const value = getBeatLeaderPP(acc, bl.stars.acc, bl.stars.pass, bl.stars.tech)[3];
+			let accStars = bl.stars.acc;
+			let passStars = bl.stars.pass;
+			let techStars = bl.stars.tech;
+
+			if(activeMap.map.modifiers.FS) {
+				accStars = beatLeaderData.modifiersRating.fsAccRating;
+				passStars = beatLeaderData.modifiersRating.fsPassRating;
+				techStars = beatLeaderData.modifiersRating.fsTechRating;
+			} else if(activeMap.map.modifiers.SF) {
+				accStars = beatLeaderData.modifiersRating.sfAccRating;
+				passStars = beatLeaderData.modifiersRating.sfPassRating;
+				techStars = beatLeaderData.modifiersRating.sfTechRating;
+			} else if(activeMap.map.modifiers.SS) {
+				accStars = beatLeaderData.modifiersRating.ssAccRating;
+				passStars = beatLeaderData.modifiersRating.ssPassRating;
+				techStars = beatLeaderData.modifiersRating.ssTechRating;
+			}
+
+			const value = getBeatLeaderPP(acc, accStars, passStars, techStars)[3];
 			const parts = value.toFixed(ppDecimalPrecision).split(".");
 
 			$("#blValue").text(`${parseInt(parts[0]).toLocaleString()}${ppDecimalPrecision ? `.${parts[1]}` : ""}`);

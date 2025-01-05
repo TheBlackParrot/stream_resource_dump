@@ -54,7 +54,6 @@ function startDataPullerMapInfoWebsocket() {
 			data: currentBSState
 		});
 		if(oldScene !== currentBSState.scene) {
-			oldHash = null;
 			postToBSEventChannel({
 				type: "scene",
 				data: currentBSState.scene
@@ -89,7 +88,23 @@ function startDataPullerMapInfoWebsocket() {
 				author: data.Mapper,
 				bsr: null,
 				uploaders: [],
-				pack: null
+				pack: null,
+				modifiers: {
+					DA: data.Modifiers.DisappearingArrows,
+					FS: data.Modifiers.FasterSong,
+					BE: data.Modifiers.FourLives,
+					GN: data.Modifiers.GhostNotes,
+					NA: data.Modifiers.NoArrows,
+					NB: data.Modifiers.NoBombs,
+					NF: data.Modifiers.NoFailOn0Energy,
+					NO: data.Modifiers.NoWalls,
+					IF: data.Modifiers.OneLife,
+					PM: data.Modifiers.ProMode,
+					SS: data.Modifiers.SlowerSong,
+					SC: data.Modifiers.SmallNotes,
+					SA: data.Modifiers.StrictAngles,
+					SF: data.Modifiers.SuperFastSong
+				}
 			},
 			cover: {
 				colors: {

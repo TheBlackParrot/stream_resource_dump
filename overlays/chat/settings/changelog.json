@@ -1,4 +1,49 @@
 {
+	"1736096349162": {
+		"updates": {
+			"bs": {
+				"revision": 20,
+				"notes": [
+					[
+						"fixed ranking info always using the first played difficulty of a map if swapping to a difficulty within the same map"
+					],
+					[
+						"added support for map modifiers in PP calculation",
+						["BS+ only supports speed modifiers; if you use GN/DA/etc. it may not line up with actual PP values"]
+					],
+					[
+						"added ability to display active map modifiers in the miscellaneous info cell",
+						["NF is skipped over, kinda useless information"],
+						{"anchor": "bs_miscInfoShowMapModifiers"}
+					]
+				]
+			},
+
+			"chat": {
+				"revision": 83,
+				"notes": [
+					[
+						"fixed positioning issues with shared chat broadcaster avatars",
+						["this was a 1 line CSS fix lol, certified web dev moment"]
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 87,
+				"notes": [
+					[
+						"added support for sending Beat Saber map modifier data",
+						["BS+ will only get the SS/FS/SF modifiers, as it does not provide any modifier data except for song speed data"]
+					],
+					[
+						"removed erroneous map hash check being set to null in DataPuller stuff"
+					]
+				]
+			}
+		}
+	},
+
 	"1735257421730": {
 		"updates": {
 			"chat": {
