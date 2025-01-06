@@ -1,1846 +1,3410 @@
 {
-  "Enabled": true,
-  "SelectedPresetId": "7b617efd-396d-4454-b019-75250da33bf4",
+  "Enabled": false,
+  "SelectedPresetId": "random",
   "ExtraColorPresets": null,
   "ExtraColorPresetsV2": [
     {
-      "colorSchemeId": "ee3bb9dc-9bfe-4368-a7af-3d2f07970082",
+      "colorSchemeId": "8b9225d4-b1f5-46ee-8bb3-0bffd692b787",
       "name": "1f1e33",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
       "saberAColor": {
         "red": 120,
         "green": 38,
         "blue": 236,
-        "alpha": 1.0
+        "alpha": 1
       },
       "saberBColor": {
         "red": 31,
         "green": 30,
         "blue": 51,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0": {
         "red": 184,
         "green": 175,
         "blue": 219,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1": {
         "red": 120,
         "green": 38,
         "blue": 236,
-        "alpha": 1.0
-      },
-      "obstaclesColor": {
-        "red": 0,
-        "green": 0,
-        "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0Boost": {
         "red": 217,
         "green": 210,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1Boost": {
         "red": 204,
         "green": 157,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       }
     },
     {
-      "colorSchemeId": "7b617efd-396d-4454-b019-75250da33bf4",
+      "colorSchemeId": "cfeae923-ec75-4ec4-99b5-a547f3cdbe21",
+      "name": "Antique",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
+      "saberAColor": {
+        "red": 174,
+        "green": 212,
+        "blue": 220,
+        "alpha": 1
+      },
+      "saberBColor": {
+        "red": 174,
+        "green": 58,
+        "blue": 58,
+        "alpha": 1
+      },
+      "environmentColor0": {
+        "red": 219,
+        "green": 182,
+        "blue": 146,
+        "alpha": 1
+      },
+      "environmentColor1": {
+        "red": 157,
+        "green": 218,
+        "blue": 231,
+        "alpha": 1
+      },
+      "environmentColor0Boost": {
+        "red": 232,
+        "green": 137,
+        "blue": 120,
+        "alpha": 1
+      },
+      "environmentColor1Boost": {
+        "red": 207,
+        "green": 223,
+        "blue": 255,
+        "alpha": 1
+      }
+    },
+    {
+      "colorSchemeId": "613c3222-c49d-4082-8116-07530e5f4c72",
       "name": "Aquamarine",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
       "saberAColor": {
         "red": 114,
         "green": 242,
         "blue": 235,
-        "alpha": 1.0
+        "alpha": 1
       },
       "saberBColor": {
         "red": 128,
         "green": 128,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0": {
         "red": 185,
         "green": 252,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1": {
         "red": 146,
         "green": 151,
         "blue": 255,
-        "alpha": 1.0
-      },
-      "obstaclesColor": {
-        "red": 0,
-        "green": 0,
-        "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0Boost": {
         "red": 0,
         "green": 255,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1Boost": {
         "red": 56,
         "green": 66,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       }
     },
     {
-      "colorSchemeId": "9c65ae83-4455-4f5e-96e9-b92faa433104",
+      "colorSchemeId": "2fb01817-25b6-408c-8289-299fe4fb2719",
       "name": "Artisan",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
       "saberAColor": {
-        "red": 198,
-        "green": 204,
-        "blue": 220,
-        "alpha": 1.0
+        "red": 211,
+        "green": 218,
+        "blue": 236,
+        "alpha": 1
       },
       "saberBColor": {
         "red": 213,
         "green": 145,
         "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0": {
         "red": 255,
         "green": 245,
         "blue": 194,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1": {
         "red": 182,
         "green": 126,
         "blue": 107,
-        "alpha": 1.0
-      },
-      "obstaclesColor": {
-        "red": 0,
-        "green": 0,
-        "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0Boost": {
         "red": 255,
         "green": 188,
         "blue": 64,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1Boost": {
         "red": 255,
         "green": 96,
         "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       }
     },
     {
-      "colorSchemeId": "911dd386-5d6f-46f0-afd8-0d96a1baa0d7",
+      "colorSchemeId": "39cdc064-5959-4877-9b41-501b1031c658",
       "name": "Atomic-6",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
       "saberAColor": {
         "red": 255,
         "green": 32,
         "blue": 80,
-        "alpha": 1.0
+        "alpha": 1
       },
       "saberBColor": {
         "red": 74,
         "green": 64,
         "blue": 89,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0": {
         "red": 255,
         "green": 150,
         "blue": 179,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1": {
         "red": 183,
         "green": 174,
         "blue": 213,
-        "alpha": 1.0
-      },
-      "obstaclesColor": {
-        "red": 0,
-        "green": 0,
-        "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0Boost": {
         "red": 255,
         "green": 32,
         "blue": 80,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1Boost": {
         "red": 96,
         "green": 224,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       }
     },
     {
-      "colorSchemeId": "95850a2f-e92a-43a4-8c56-58cd941c7eec",
+      "colorSchemeId": "31dfb339-5ff9-4a6e-94ec-bbe71d6d218c",
+      "name": "Aubergine",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
+      "saberAColor": {
+        "red": 175,
+        "green": 255,
+        "blue": 65,
+        "alpha": 1
+      },
+      "saberBColor": {
+        "red": 78,
+        "green": 9,
+        "blue": 89,
+        "alpha": 1
+      },
+      "environmentColor0": {
+        "red": 178,
+        "green": 255,
+        "blue": 158,
+        "alpha": 1
+      },
+      "environmentColor1": {
+        "red": 8,
+        "green": 99,
+        "blue": 117,
+        "alpha": 1
+      },
+      "environmentColor0Boost": {
+        "red": 175,
+        "green": 255,
+        "blue": 65,
+        "alpha": 1
+      },
+      "environmentColor1Boost": {
+        "red": 159,
+        "green": 121,
+        "blue": 165,
+        "alpha": 1
+      }
+    },
+    {
+      "colorSchemeId": "9645fe4d-bdc2-4dc8-be98-ea36369d5b7b",
+      "name": "Autumn",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
+      "saberAColor": {
+        "red": 247,
+        "green": 146,
+        "blue": 13,
+        "alpha": 1
+      },
+      "saberBColor": {
+        "red": 69,
+        "green": 69,
+        "blue": 90,
+        "alpha": 1
+      },
+      "environmentColor0": {
+        "red": 224,
+        "green": 24,
+        "blue": 64,
+        "alpha": 1
+      },
+      "environmentColor1": {
+        "red": 255,
+        "green": 145,
+        "blue": 0,
+        "alpha": 1
+      },
+      "environmentColor0Boost": {
+        "red": 255,
+        "green": 208,
+        "blue": 85,
+        "alpha": 1
+      },
+      "environmentColor1Boost": {
+        "red": 179,
+        "green": 216,
+        "blue": 225,
+        "alpha": 1
+      }
+    },
+    {
+      "colorSchemeId": "c42cfed6-8574-453a-8429-f5d46b039c44",
+      "name": "Beach",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
+      "saberAColor": {
+        "red": 235,
+        "green": 223,
+        "blue": 185,
+        "alpha": 1
+      },
+      "saberBColor": {
+        "red": 113,
+        "green": 114,
+        "blue": 119,
+        "alpha": 1
+      },
+      "environmentColor0": {
+        "red": 255,
+        "green": 239,
+        "blue": 190,
+        "alpha": 1
+      },
+      "environmentColor1": {
+        "red": 255,
+        "green": 183,
+        "blue": 87,
+        "alpha": 1
+      },
+      "environmentColor0Boost": {
+        "red": 203,
+        "green": 253,
+        "blue": 255,
+        "alpha": 1
+      },
+      "environmentColor1Boost": {
+        "red": 134,
+        "green": 193,
+        "blue": 255,
+        "alpha": 1
+      }
+    },
+    {
+      "colorSchemeId": "b9bb9da7-9ccb-46ee-81a4-7543c16bae0b",
       "name": "Big Dragon",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
       "saberAColor": {
         "red": 25,
         "green": 206,
         "blue": 100,
-        "alpha": 1.0
+        "alpha": 1
       },
       "saberBColor": {
         "red": 162,
         "green": 52,
         "blue": 158,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0": {
         "red": 92,
         "green": 255,
         "blue": 160,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1": {
         "red": 218,
         "green": 77,
         "blue": 213,
-        "alpha": 1.0
-      },
-      "obstaclesColor": {
-        "red": 0,
-        "green": 0,
-        "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0Boost": {
         "red": 239,
         "green": 255,
         "blue": 188,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1Boost": {
         "red": 195,
         "green": 194,
         "blue": 224,
-        "alpha": 1.0
+        "alpha": 1
       }
     },
     {
-      "colorSchemeId": "20112c64-4464-40f3-a0ce-94e3d9d49f59",
+      "colorSchemeId": "5781d44e-37c9-4c94-8fe2-a5b5fffd4b82",
+      "name": "Binary",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
+      "saberAColor": {
+        "red": 220,
+        "green": 220,
+        "blue": 220,
+        "alpha": 1
+      },
+      "saberBColor": {
+        "red": 66,
+        "green": 66,
+        "blue": 66,
+        "alpha": 1
+      },
+      "environmentColor0": {
+        "red": 255,
+        "green": 126,
+        "blue": 92,
+        "alpha": 1
+      },
+      "environmentColor1": {
+        "red": 220,
+        "green": 48,
+        "blue": 60,
+        "alpha": 1
+      },
+      "environmentColor0Boost": {
+        "red": 32,
+        "green": 212,
+        "blue": 255,
+        "alpha": 1
+      },
+      "environmentColor1Boost": {
+        "red": 32,
+        "green": 86,
+        "blue": 255,
+        "alpha": 1
+      }
+    },
+    {
+      "colorSchemeId": "3e1fa835-0e93-43e6-91fb-44737a4c6100",
+      "name": "Blueberries & Cream",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
+      "saberAColor": {
+        "red": 231,
+        "green": 230,
+        "blue": 242,
+        "alpha": 1
+      },
+      "saberBColor": {
+        "red": 133,
+        "green": 115,
+        "blue": 239,
+        "alpha": 1
+      },
+      "environmentColor0": {
+        "red": 196,
+        "green": 196,
+        "blue": 255,
+        "alpha": 1
+      },
+      "environmentColor1": {
+        "red": 84,
+        "green": 59,
+        "blue": 231,
+        "alpha": 1
+      },
+      "environmentColor0Boost": {
+        "red": 255,
+        "green": 238,
+        "blue": 221,
+        "alpha": 1
+      },
+      "environmentColor1Boost": {
+        "red": 255,
+        "green": 183,
+        "blue": 135,
+        "alpha": 1
+      }
+    },
+    {
+      "colorSchemeId": "72497819-437e-4c4b-a9ec-866e2b50beed",
+      "name": "Bravery",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
+      "saberAColor": {
+        "red": 218,
+        "green": 223,
+        "blue": 226,
+        "alpha": 1
+      },
+      "saberBColor": {
+        "red": 30,
+        "green": 154,
+        "blue": 122,
+        "alpha": 1
+      },
+      "environmentColor0": {
+        "red": 226,
+        "green": 246,
+        "blue": 255,
+        "alpha": 1
+      },
+      "environmentColor1": {
+        "red": 36,
+        "green": 213,
+        "blue": 168,
+        "alpha": 1
+      },
+      "environmentColor0Boost": {
+        "red": 150,
+        "green": 196,
+        "blue": 255,
+        "alpha": 1
+      },
+      "environmentColor1Boost": {
+        "red": 8,
+        "green": 255,
+        "blue": 192,
+        "alpha": 1
+      }
+    },
+    {
+      "colorSchemeId": "7b7faae9-b016-40d1-88f5-3e18bb7436b4",
+      "name": "Bubbly Flame",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
+      "saberAColor": {
+        "red": 255,
+        "green": 157,
+        "blue": 227,
+        "alpha": 1
+      },
+      "saberBColor": {
+        "red": 56,
+        "green": 89,
+        "blue": 104,
+        "alpha": 1
+      },
+      "environmentColor0": {
+        "red": 255,
+        "green": 157,
+        "blue": 227,
+        "alpha": 1
+      },
+      "environmentColor1": {
+        "red": 65,
+        "green": 66,
+        "blue": 144,
+        "alpha": 1
+      },
+      "environmentColor0Boost": {
+        "red": 255,
+        "green": 64,
+        "blue": 144,
+        "alpha": 1
+      },
+      "environmentColor1Boost": {
+        "red": 255,
+        "green": 122,
+        "blue": 48,
+        "alpha": 1
+      }
+    },
+    {
+      "colorSchemeId": "e984e3cf-4e6b-4bba-ab35-51135ef1dd1b",
       "name": "CGA",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
       "saberAColor": {
         "red": 85,
         "green": 255,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       },
       "saberBColor": {
         "red": 255,
         "green": 85,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0": {
         "red": 85,
         "green": 255,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1": {
         "red": 255,
         "green": 85,
         "blue": 255,
-        "alpha": 1.0
-      },
-      "obstaclesColor": {
-        "red": 0,
-        "green": 0,
-        "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0Boost": {
         "red": 85,
         "green": 255,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1Boost": {
         "red": 255,
         "green": 85,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       }
     },
     {
-      "colorSchemeId": "000e5637-082c-449c-b1b7-95e7dcc9ad5e",
+      "colorSchemeId": "3e9dd802-1f3b-45c3-bc4d-6ce5ba4905d2",
       "name": "Carbon",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
       "saberAColor": {
         "red": 91,
         "green": 157,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       },
       "saberBColor": {
         "red": 74,
         "green": 64,
         "blue": 89,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0": {
         "red": 150,
         "green": 178,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1": {
         "red": 183,
         "green": 174,
         "blue": 213,
-        "alpha": 1.0
-      },
-      "obstaclesColor": {
-        "red": 0,
-        "green": 0,
-        "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0Boost": {
         "red": 0,
         "green": 128,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1Boost": {
         "red": 80,
         "green": 0,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       }
     },
     {
-      "colorSchemeId": "42a401f5-b78b-480f-ab5a-538037c74223",
+      "colorSchemeId": "b0af6f11-01e8-4122-a073-c344558d8ba2",
       "name": "Casual",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
       "saberAColor": {
         "red": 255,
         "green": 148,
         "blue": 72,
-        "alpha": 1.0
+        "alpha": 1
       },
       "saberBColor": {
         "red": 20,
         "green": 171,
         "blue": 156,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0": {
         "red": 199,
         "green": 149,
         "blue": 101,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1": {
         "red": 127,
         "green": 182,
         "blue": 176,
-        "alpha": 1.0
-      },
-      "obstaclesColor": {
-        "red": 0,
-        "green": 0,
-        "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0Boost": {
         "red": 255,
         "green": 124,
         "blue": 32,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1Boost": {
         "red": 76,
         "green": 255,
         "blue": 241,
-        "alpha": 1.0
+        "alpha": 1
       }
     },
     {
-      "colorSchemeId": "9281f852-eb62-4219-9a32-602afb77f480",
+      "colorSchemeId": "9d69dfe2-14e9-41e3-abcb-e566ab26d198",
+      "name": "Citrus",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
+      "saberAColor": {
+        "red": 255,
+        "green": 235,
+        "blue": 120,
+        "alpha": 1
+      },
+      "saberBColor": {
+        "red": 231,
+        "green": 128,
+        "blue": 71,
+        "alpha": 1
+      },
+      "environmentColor0": {
+        "red": 255,
+        "green": 220,
+        "blue": 108,
+        "alpha": 1
+      },
+      "environmentColor1": {
+        "red": 231,
+        "green": 106,
+        "blue": 71,
+        "alpha": 1
+      },
+      "environmentColor0Boost": {
+        "red": 224,
+        "green": 255,
+        "blue": 170,
+        "alpha": 1
+      },
+      "environmentColor1Boost": {
+        "red": 255,
+        "green": 198,
+        "blue": 141,
+        "alpha": 1
+      }
+    },
+    {
+      "colorSchemeId": "877a5b58-9c9b-44b8-a3a6-024bb1d0332f",
       "name": "Classic",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
       "saberAColor": {
         "red": 255,
         "green": 64,
         "blue": 48,
-        "alpha": 1.0
+        "alpha": 1
       },
       "saberBColor": {
         "red": 46,
         "green": 142,
         "blue": 211,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0": {
         "red": 255,
         "green": 64,
         "blue": 48,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1": {
         "red": 49,
         "green": 161,
         "blue": 242,
-        "alpha": 1.0
-      },
-      "obstaclesColor": {
-        "red": 0,
-        "green": 0,
-        "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0Boost": {
         "red": 255,
         "green": 128,
         "blue": 128,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1Boost": {
         "red": 128,
         "green": 192,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       }
     },
     {
-      "colorSchemeId": "b1018b66-2ad1-4636-b19c-3365eac6d7d6",
+      "colorSchemeId": "e2a97cb9-11c3-453c-8db2-15b4deb5c49a",
+      "name": "Color Vomit",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
+      "saberAColor": {
+        "red": 48,
+        "green": 240,
+        "blue": 255,
+        "alpha": 1
+      },
+      "saberBColor": {
+        "red": 224,
+        "green": 0,
+        "blue": 36,
+        "alpha": 1
+      },
+      "environmentColor0": {
+        "red": 48,
+        "green": 255,
+        "blue": 104,
+        "alpha": 1
+      },
+      "environmentColor1": {
+        "red": 255,
+        "green": 96,
+        "blue": 224,
+        "alpha": 1
+      },
+      "environmentColor0Boost": {
+        "red": 255,
+        "green": 230,
+        "blue": 48,
+        "alpha": 1
+      },
+      "environmentColor1Boost": {
+        "red": 80,
+        "green": 128,
+        "blue": 255,
+        "alpha": 1
+      }
+    },
+    {
+      "colorSchemeId": "9ed712bf-e60e-4885-8a38-7651fd2c4b53",
+      "name": "Construct",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
+      "saberAColor": {
+        "red": 252,
+        "green": 163,
+        "blue": 17,
+        "alpha": 1
+      },
+      "saberBColor": {
+        "red": 20,
+        "green": 82,
+        "blue": 110,
+        "alpha": 1
+      },
+      "environmentColor0": {
+        "red": 255,
+        "green": 213,
+        "blue": 145,
+        "alpha": 1
+      },
+      "environmentColor1": {
+        "red": 165,
+        "green": 227,
+        "blue": 255,
+        "alpha": 1
+      },
+      "environmentColor0Boost": {
+        "red": 252,
+        "green": 140,
+        "blue": 17,
+        "alpha": 1
+      },
+      "environmentColor1Boost": {
+        "red": 49,
+        "green": 148,
+        "blue": 193,
+        "alpha": 1
+      }
+    },
+    {
+      "colorSchemeId": "e0ae774c-8327-4785-b78e-a377795c10b4",
       "name": "Coral",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
       "saberAColor": {
         "red": 235,
         "green": 206,
         "blue": 203,
-        "alpha": 1.0
+        "alpha": 1
       },
       "saberBColor": {
         "red": 222,
         "green": 103,
         "blue": 103,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0": {
         "red": 255,
         "green": 215,
         "blue": 211,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1": {
         "red": 244,
         "green": 125,
         "blue": 125,
-        "alpha": 1.0
-      },
-      "obstaclesColor": {
-        "red": 0,
-        "green": 0,
-        "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0Boost": {
         "red": 217,
         "green": 208,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1Boost": {
         "red": 255,
         "green": 162,
         "blue": 234,
-        "alpha": 1.0
+        "alpha": 1
       }
     },
     {
-      "colorSchemeId": "4145b30a-3cb0-4a19-981f-4f5619b24cde",
+      "colorSchemeId": "2e283521-053e-4264-b5c7-5c9ea8097f4b",
       "name": "Courage",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
       "saberAColor": {
         "red": 225,
         "green": 225,
         "blue": 236,
-        "alpha": 1.0
+        "alpha": 1
       },
       "saberBColor": {
         "red": 200,
         "green": 43,
         "blue": 43,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0": {
         "red": 236,
         "green": 225,
         "blue": 225,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1": {
         "red": 232,
         "green": 43,
         "blue": 43,
-        "alpha": 1.0
-      },
-      "obstaclesColor": {
-        "red": 0,
-        "green": 0,
-        "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0Boost": {
         "red": 255,
         "green": 142,
         "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1Boost": {
         "red": 255,
         "green": 111,
         "blue": 111,
-        "alpha": 1.0
+        "alpha": 1
       }
     },
     {
-      "colorSchemeId": "05574454-2c7e-47f0-ac3f-92c88e70dd21",
+      "colorSchemeId": "e215828a-442d-4bb9-a004-6b91b619ae33",
       "name": "Cutecute",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
       "saberAColor": {
-        "red": 230,
-        "green": 177,
-        "blue": 230,
-        "alpha": 1.0
+        "red": 240,
+        "green": 205,
+        "blue": 240,
+        "alpha": 1
       },
       "saberBColor": {
-        "red": 72,
-        "green": 171,
-        "blue": 220,
-        "alpha": 1.0
+        "red": 108,
+        "green": 206,
+        "blue": 255,
+        "alpha": 1
       },
       "environmentColor0": {
         "red": 255,
         "green": 164,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1": {
         "red": 146,
         "green": 191,
         "blue": 255,
-        "alpha": 1.0
-      },
-      "obstaclesColor": {
-        "red": 0,
-        "green": 0,
-        "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0Boost": {
         "red": 255,
         "green": 41,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1Boost": {
         "red": 0,
         "green": 170,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       }
     },
     {
-      "colorSchemeId": "00220383-2074-45f2-9030-d37770124132",
+      "colorSchemeId": "6f281146-31c7-4750-996b-0ffaa9f1d9b9",
+      "name": "Desire",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
+      "saberAColor": {
+        "red": 255,
+        "green": 222,
+        "blue": 215,
+        "alpha": 1
+      },
+      "saberBColor": {
+        "red": 140,
+        "green": 64,
+        "blue": 84,
+        "alpha": 1
+      },
+      "environmentColor0": {
+        "red": 255,
+        "green": 214,
+        "blue": 220,
+        "alpha": 1
+      },
+      "environmentColor1": {
+        "red": 191,
+        "green": 112,
+        "blue": 130,
+        "alpha": 1
+      },
+      "environmentColor0Boost": {
+        "red": 255,
+        "green": 230,
+        "blue": 202,
+        "alpha": 1
+      },
+      "environmentColor1Boost": {
+        "red": 226,
+        "green": 28,
+        "blue": 85,
+        "alpha": 1
+      }
+    },
+    {
+      "colorSchemeId": "e8272885-c955-46ed-b8b4-98ebd8cc0b63",
+      "name": "Distant Lights",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
+      "saberAColor": {
+        "red": 255,
+        "green": 231,
+        "blue": 110,
+        "alpha": 1
+      },
+      "saberBColor": {
+        "red": 26,
+        "green": 51,
+        "blue": 101,
+        "alpha": 1
+      },
+      "environmentColor0": {
+        "red": 104,
+        "green": 124,
+        "blue": 142,
+        "alpha": 1
+      },
+      "environmentColor1": {
+        "red": 65,
+        "green": 59,
+        "blue": 95,
+        "alpha": 1
+      },
+      "environmentColor0Boost": {
+        "red": 255,
+        "green": 245,
+        "blue": 151,
+        "alpha": 1
+      },
+      "environmentColor1Boost": {
+        "red": 119,
+        "green": 142,
+        "blue": 200,
+        "alpha": 1
+      }
+    },
+    {
+      "colorSchemeId": "fff1b889-13f6-46d3-8803-614ddfa78c20",
+      "name": "Diva",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
+      "saberAColor": {
+        "red": 255,
+        "green": 40,
+        "blue": 128,
+        "alpha": 1
+      },
+      "saberBColor": {
+        "red": 91,
+        "green": 111,
+        "blue": 146,
+        "alpha": 1
+      },
+      "environmentColor0": {
+        "red": 255,
+        "green": 169,
+        "blue": 205,
+        "alpha": 1
+      },
+      "environmentColor1": {
+        "red": 146,
+        "green": 172,
+        "blue": 226,
+        "alpha": 1
+      },
+      "environmentColor0Boost": {
+        "red": 255,
+        "green": 120,
+        "blue": 255,
+        "alpha": 1
+      },
+      "environmentColor1Boost": {
+        "red": 144,
+        "green": 48,
+        "blue": 246,
+        "alpha": 1
+      }
+    },
+    {
+      "colorSchemeId": "d6a38bed-a4c1-45b5-b141-a1e19284e26d",
+      "name": "Dull",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
+      "saberAColor": {
+        "red": 231,
+        "green": 226,
+        "blue": 218,
+        "alpha": 1
+      },
+      "saberBColor": {
+        "red": 119,
+        "green": 113,
+        "blue": 105,
+        "alpha": 1
+      },
+      "environmentColor0": {
+        "red": 255,
+        "green": 249,
+        "blue": 229,
+        "alpha": 1
+      },
+      "environmentColor1": {
+        "red": 202,
+        "green": 178,
+        "blue": 160,
+        "alpha": 1
+      },
+      "environmentColor0Boost": {
+        "red": 255,
+        "green": 73,
+        "blue": 16,
+        "alpha": 1
+      },
+      "environmentColor1Boost": {
+        "red": 163,
+        "green": 87,
+        "blue": 57,
+        "alpha": 1
+      }
+    },
+    {
+      "colorSchemeId": "9de23cac-3b2b-4038-8237-e0b7b92d227d",
+      "name": "Easter",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
+      "saberAColor": {
+        "red": 255,
+        "green": 190,
+        "blue": 232,
+        "alpha": 1
+      },
+      "saberBColor": {
+        "red": 76,
+        "green": 165,
+        "blue": 178,
+        "alpha": 1
+      },
+      "environmentColor0": {
+        "red": 255,
+        "green": 190,
+        "blue": 232,
+        "alpha": 1
+      },
+      "environmentColor1": {
+        "red": 177,
+        "green": 241,
+        "blue": 249,
+        "alpha": 1
+      },
+      "environmentColor0Boost": {
+        "red": 255,
+        "green": 166,
+        "blue": 255,
+        "alpha": 1
+      },
+      "environmentColor1Boost": {
+        "red": 139,
+        "green": 206,
+        "blue": 255,
+        "alpha": 1
+      }
+    },
+    {
+      "colorSchemeId": "67b1993c-fefa-453b-86c5-922509a21100",
+      "name": "Edge",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
+      "saberAColor": {
+        "red": 255,
+        "green": 40,
+        "blue": 72,
+        "alpha": 1
+      },
+      "saberBColor": {
+        "red": 116,
+        "green": 127,
+        "blue": 145,
+        "alpha": 1
+      },
+      "environmentColor0": {
+        "red": 230,
+        "green": 236,
+        "blue": 253,
+        "alpha": 1
+      },
+      "environmentColor1": {
+        "red": 116,
+        "green": 127,
+        "blue": 145,
+        "alpha": 1
+      },
+      "environmentColor0Boost": {
+        "red": 255,
+        "green": 40,
+        "blue": 72,
+        "alpha": 1
+      },
+      "environmentColor1Boost": {
+        "red": 151,
+        "green": 167,
+        "blue": 195,
+        "alpha": 1
+      }
+    },
+    {
+      "colorSchemeId": "911b050a-0827-4e7d-902a-f392cff461bd",
+      "name": "Evening",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
+      "saberAColor": {
+        "red": 255,
+        "green": 184,
+        "blue": 90,
+        "alpha": 1
+      },
+      "saberBColor": {
+        "red": 159,
+        "green": 96,
+        "blue": 180,
+        "alpha": 1
+      },
+      "environmentColor0": {
+        "red": 255,
+        "green": 205,
+        "blue": 138,
+        "alpha": 1
+      },
+      "environmentColor1": {
+        "red": 228,
+        "green": 147,
+        "blue": 255,
+        "alpha": 1
+      },
+      "environmentColor0Boost": {
+        "red": 255,
+        "green": 83,
+        "blue": 0,
+        "alpha": 1
+      },
+      "environmentColor1Boost": {
+        "red": 255,
+        "green": 162,
+        "blue": 237,
+        "alpha": 1
+      }
+    },
+    {
+      "colorSchemeId": "c00644de-13d5-4f4d-b45d-0ef04408053a",
       "name": "Familiar",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
       "saberAColor": {
         "red": 186,
         "green": 172,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       },
       "saberBColor": {
         "red": 75,
         "green": 73,
         "blue": 122,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0": {
         "red": 231,
         "green": 226,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1": {
         "red": 133,
         "green": 132,
         "blue": 162,
-        "alpha": 1.0
-      },
-      "obstaclesColor": {
-        "red": 0,
-        "green": 0,
-        "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0Boost": {
         "red": 186,
         "green": 172,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1Boost": {
         "red": 75,
         "green": 73,
         "blue": 122,
-        "alpha": 1.0
+        "alpha": 1
       }
     },
     {
-      "colorSchemeId": "10b6b472-7b0b-489b-aeee-355393d28870",
+      "colorSchemeId": "fa9ec384-645d-46e3-921e-fc23454a411c",
+      "name": "Fiction",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
+      "saberAColor": {
+        "red": 158,
+        "green": 255,
+        "blue": 234,
+        "alpha": 1
+      },
+      "saberBColor": {
+        "red": 171,
+        "green": 150,
+        "blue": 205,
+        "alpha": 1
+      },
+      "environmentColor0": {
+        "red": 152,
+        "green": 245,
+        "blue": 225,
+        "alpha": 1
+      },
+      "environmentColor1": {
+        "red": 207,
+        "green": 186,
+        "blue": 240,
+        "alpha": 1
+      },
+      "environmentColor0Boost": {
+        "red": 73,
+        "green": 255,
+        "blue": 216,
+        "alpha": 1
+      },
+      "environmentColor1Boost": {
+        "red": 194,
+        "green": 156,
+        "blue": 255,
+        "alpha": 1
+      }
+    },
+    {
+      "colorSchemeId": "74132716-90f4-4e96-a4ed-91998fa23958",
       "name": "Frosty",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
       "saberAColor": {
         "red": 205,
         "green": 232,
         "blue": 237,
-        "alpha": 1.0
+        "alpha": 1
       },
       "saberBColor": {
         "red": 88,
         "green": 112,
         "blue": 153,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0": {
         "red": 164,
         "green": 220,
         "blue": 228,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1": {
         "red": 118,
         "green": 142,
         "blue": 203,
-        "alpha": 1.0
-      },
-      "obstaclesColor": {
-        "red": 0,
-        "green": 0,
-        "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0Boost": {
         "red": 128,
         "green": 255,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1Boost": {
         "red": 96,
         "green": 140,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       }
     },
     {
-      "colorSchemeId": "4e8aa16c-7e83-4130-98b2-a0d73278fefa",
+      "colorSchemeId": "7e176878-6bea-4c1e-8e50-f0abc0fd524b",
+      "name": "Gamer",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
+      "saberAColor": {
+        "red": 96,
+        "green": 240,
+        "blue": 48,
+        "alpha": 1
+      },
+      "saberBColor": {
+        "red": 48,
+        "green": 64,
+        "blue": 72,
+        "alpha": 1
+      },
+      "environmentColor0": {
+        "red": 96,
+        "green": 240,
+        "blue": 48,
+        "alpha": 1
+      },
+      "environmentColor1": {
+        "red": 48,
+        "green": 160,
+        "blue": 255,
+        "alpha": 1
+      },
+      "environmentColor0Boost": {
+        "red": 160,
+        "green": 255,
+        "blue": 48,
+        "alpha": 1
+      },
+      "environmentColor1Boost": {
+        "red": 255,
+        "green": 64,
+        "blue": 24,
+        "alpha": 1
+      }
+    },
+    {
+      "colorSchemeId": "d05f5b96-737a-48b5-b7bb-44061ea2fcd7",
+      "name": "Glacial",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
+      "saberAColor": {
+        "red": 215,
+        "green": 242,
+        "blue": 255,
+        "alpha": 1
+      },
+      "saberBColor": {
+        "red": 67,
+        "green": 98,
+        "blue": 150,
+        "alpha": 1
+      },
+      "environmentColor0": {
+        "red": 203,
+        "green": 229,
+        "blue": 255,
+        "alpha": 1
+      },
+      "environmentColor1": {
+        "red": 90,
+        "green": 131,
+        "blue": 221,
+        "alpha": 1
+      },
+      "environmentColor0Boost": {
+        "red": 229,
+        "green": 253,
+        "blue": 255,
+        "alpha": 1
+      },
+      "environmentColor1Boost": {
+        "red": 40,
+        "green": 223,
+        "blue": 255,
+        "alpha": 1
+      }
+    },
+    {
+      "colorSchemeId": "755075db-4713-45f7-95b6-a84a80002451",
       "name": "Golden",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
       "saberAColor": {
         "red": 241,
         "green": 202,
         "blue": 68,
-        "alpha": 1.0
+        "alpha": 1
       },
       "saberBColor": {
         "red": 75,
         "green": 75,
         "blue": 90,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0": {
         "red": 253,
         "green": 200,
         "blue": 109,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1": {
         "red": 160,
         "green": 160,
         "blue": 170,
-        "alpha": 1.0
-      },
-      "obstaclesColor": {
-        "red": 0,
-        "green": 0,
-        "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0Boost": {
         "red": 255,
         "green": 226,
         "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1Boost": {
         "red": 109,
         "green": 188,
         "blue": 66,
-        "alpha": 1.0
+        "alpha": 1
       }
     },
     {
-      "colorSchemeId": "a271de0d-bbb3-432a-87b5-44905e9e9c5b",
+      "colorSchemeId": "156050f6-500e-4ee9-8742-c1cd4fbbae41",
+      "name": "Grape",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
+      "saberAColor": {
+        "red": 178,
+        "green": 213,
+        "blue": 154,
+        "alpha": 1
+      },
+      "saberBColor": {
+        "red": 100,
+        "green": 56,
+        "blue": 158,
+        "alpha": 1
+      },
+      "environmentColor0": {
+        "red": 132,
+        "green": 192,
+        "blue": 132,
+        "alpha": 1
+      },
+      "environmentColor1": {
+        "red": 104,
+        "green": 77,
+        "blue": 198,
+        "alpha": 1
+      },
+      "environmentColor0Boost": {
+        "red": 255,
+        "green": 204,
+        "blue": 110,
+        "alpha": 1
+      },
+      "environmentColor1Boost": {
+        "red": 169,
+        "green": 141,
+        "blue": 217,
+        "alpha": 1
+      }
+    },
+    {
+      "colorSchemeId": "84db5939-5702-475a-acb0-16611ae135e9",
       "name": "Heat",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
       "saberAColor": {
         "red": 255,
         "green": 215,
         "blue": 25,
-        "alpha": 1.0
+        "alpha": 1
       },
       "saberBColor": {
         "red": 200,
         "green": 16,
         "blue": 32,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0": {
         "red": 255,
         "green": 238,
         "blue": 185,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1": {
         "red": 255,
         "green": 185,
         "blue": 185,
-        "alpha": 1.0
-      },
-      "obstaclesColor": {
-        "red": 0,
-        "green": 0,
-        "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0Boost": {
         "red": 255,
         "green": 215,
         "blue": 25,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1Boost": {
         "red": 200,
         "green": 16,
         "blue": 32,
-        "alpha": 1.0
+        "alpha": 1
       }
     },
     {
-      "colorSchemeId": "1f732e94-f883-4968-b497-0e55fb4980d4",
+      "colorSchemeId": "c719f7ac-9c66-42ec-b764-2bb70f73c264",
       "name": "Hellspawn",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
       "saberAColor": {
         "red": 217,
         "green": 36,
         "blue": 36,
-        "alpha": 1.0
+        "alpha": 1
       },
       "saberBColor": {
         "red": 82,
         "green": 50,
         "blue": 50,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0": {
         "red": 255,
         "green": 73,
         "blue": 55,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1": {
         "red": 255,
         "green": 150,
         "blue": 131,
-        "alpha": 1.0
-      },
-      "obstaclesColor": {
-        "red": 0,
-        "green": 0,
-        "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0Boost": {
         "red": 255,
         "green": 0,
         "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1Boost": {
         "red": 255,
         "green": 128,
         "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       }
     },
     {
-      "colorSchemeId": "b9e3e590-9046-4317-8aab-57e33cea6fd6",
-      "name": "Inversion",
+      "colorSchemeId": "6b30200f-8649-44e6-a5f0-78598cc94320",
+      "name": "Highlighter",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
       "saberAColor": {
-        "red": 126,
-        "green": 169,
-        "blue": 255,
-        "alpha": 1.0
+        "red": 233,
+        "green": 255,
+        "blue": 112,
+        "alpha": 1
       },
       "saberBColor": {
-        "red": 203,
+        "red": 255,
+        "green": 112,
+        "blue": 166,
+        "alpha": 1
+      },
+      "environmentColor0": {
+        "red": 233,
+        "green": 255,
+        "blue": 112,
+        "alpha": 1
+      },
+      "environmentColor1": {
+        "red": 255,
+        "green": 112,
+        "blue": 166,
+        "alpha": 1
+      },
+      "environmentColor0Boost": {
+        "red": 192,
+        "green": 255,
+        "blue": 0,
+        "alpha": 1
+      },
+      "environmentColor1Boost": {
+        "red": 255,
         "green": 0,
-        "blue": 22,
-        "alpha": 1.0
+        "blue": 192,
+        "alpha": 1
+      }
+    },
+    {
+      "colorSchemeId": "302199a7-2d2d-4100-9b85-c1c2be2e04cf",
+      "name": "Infraction",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
+      "saberAColor": {
+        "red": 0,
+        "green": 255,
+        "blue": 180,
+        "alpha": 1
+      },
+      "saberBColor": {
+        "red": 74,
+        "green": 96,
+        "blue": 131,
+        "alpha": 1
+      },
+      "environmentColor0": {
+        "red": 79,
+        "green": 239,
+        "blue": 192,
+        "alpha": 1
+      },
+      "environmentColor1": {
+        "red": 114,
+        "green": 157,
+        "blue": 225,
+        "alpha": 1
+      },
+      "environmentColor0Boost": {
+        "red": 65,
+        "green": 240,
+        "blue": 255,
+        "alpha": 1
+      },
+      "environmentColor1Boost": {
+        "red": 183,
+        "green": 133,
+        "blue": 208,
+        "alpha": 1
+      }
+    },
+    {
+      "colorSchemeId": "9a885d3e-92f7-403e-92ef-81fe41ab90c7",
+      "name": "Inversion",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
+      "saberAColor": {
+        "red": 171,
+        "green": 199,
+        "blue": 255,
+        "alpha": 1
+      },
+      "saberBColor": {
+        "red": 224,
+        "green": 0,
+        "blue": 24,
+        "alpha": 1
       },
       "environmentColor0": {
         "red": 102,
         "green": 149,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1": {
         "red": 255,
         "green": 96,
         "blue": 96,
-        "alpha": 1.0
-      },
-      "obstaclesColor": {
-        "red": 0,
-        "green": 0,
-        "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0Boost": {
         "red": 175,
         "green": 203,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1Boost": {
         "red": 255,
         "green": 0,
         "blue": 16,
-        "alpha": 1.0
+        "alpha": 1
       }
     },
     {
-      "colorSchemeId": "e4b29175-968b-4824-822e-6186505af7d4",
+      "colorSchemeId": "4b35db67-b67c-4793-8955-95bc94a92540",
       "name": "Jester",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
       "saberAColor": {
         "red": 255,
         "green": 213,
         "blue": 50,
-        "alpha": 1.0
+        "alpha": 1
       },
       "saberBColor": {
         "red": 164,
         "green": 0,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0": {
         "red": 255,
         "green": 236,
         "blue": 141,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1": {
         "red": 208,
         "green": 124,
         "blue": 255,
-        "alpha": 1.0
-      },
-      "obstaclesColor": {
-        "red": 0,
-        "green": 0,
-        "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0Boost": {
         "red": 255,
         "green": 170,
         "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1Boost": {
         "red": 164,
         "green": 0,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       }
     },
     {
-      "colorSchemeId": "28f3f9be-6313-45ab-986a-0cf7398dd202",
+      "colorSchemeId": "ca0f4a00-ce42-4e00-8b4d-fada9ef25948",
+      "name": "Justification",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
+      "saberAColor": {
+        "red": 170,
+        "green": 185,
+        "blue": 232,
+        "alpha": 1
+      },
+      "saberBColor": {
+        "red": 100,
+        "green": 83,
+        "blue": 58,
+        "alpha": 1
+      },
+      "environmentColor0": {
+        "red": 183,
+        "green": 201,
+        "blue": 255,
+        "alpha": 1
+      },
+      "environmentColor1": {
+        "red": 219,
+        "green": 193,
+        "blue": 153,
+        "alpha": 1
+      },
+      "environmentColor0Boost": {
+        "red": 160,
+        "green": 195,
+        "blue": 255,
+        "alpha": 1
+      },
+      "environmentColor1Boost": {
+        "red": 255,
+        "green": 223,
+        "blue": 171,
+        "alpha": 1
+      }
+    },
+    {
+      "colorSchemeId": "1b718a4d-565c-4954-9a8a-f2881e6b41ec",
       "name": "Lilypad",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
       "saberAColor": {
         "red": 133,
         "green": 240,
         "blue": 92,
-        "alpha": 1.0
+        "alpha": 1
       },
       "saberBColor": {
         "red": 227,
         "green": 48,
         "blue": 180,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0": {
         "red": 195,
         "green": 255,
         "blue": 172,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1": {
         "red": 87,
         "green": 213,
         "blue": 40,
-        "alpha": 1.0
-      },
-      "obstaclesColor": {
-        "red": 0,
-        "green": 0,
-        "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0Boost": {
         "red": 255,
         "green": 168,
         "blue": 229,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1Boost": {
         "red": 255,
         "green": 0,
         "blue": 180,
-        "alpha": 1.0
+        "alpha": 1
       }
     },
     {
-      "colorSchemeId": "80fb7933-53d0-4c13-9079-27086d82bfe7",
-      "name": "Meadow",
-      "saberAColor": {
-        "red": 178,
-        "green": 210,
-        "blue": 164,
-        "alpha": 1.0
-      },
-      "saberBColor": {
-        "red": 37,
-        "green": 110,
-        "blue": 66,
-        "alpha": 1.0
-      },
-      "environmentColor0": {
-        "red": 208,
-        "green": 228,
-        "blue": 181,
-        "alpha": 1.0
-      },
-      "environmentColor1": {
-        "red": 74,
-        "green": 200,
-        "blue": 147,
-        "alpha": 1.0
-      },
+      "colorSchemeId": "ff031a0e-1841-4eb1-b44f-6cd8c0f43c07",
+      "name": "Luxurious",
       "obstaclesColor": {
         "red": 0,
         "green": 0,
         "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
+      },
+      "saberAColor": {
+        "red": 255,
+        "green": 210,
+        "blue": 180,
+        "alpha": 1
+      },
+      "saberBColor": {
+        "red": 144,
+        "green": 96,
+        "blue": 128,
+        "alpha": 1
+      },
+      "environmentColor0": {
+        "red": 255,
+        "green": 210,
+        "blue": 180,
+        "alpha": 1
+      },
+      "environmentColor1": {
+        "red": 255,
+        "green": 138,
+        "blue": 218,
+        "alpha": 1
+      },
+      "environmentColor0Boost": {
+        "red": 203,
+        "green": 210,
+        "blue": 255,
+        "alpha": 1
+      },
+      "environmentColor1Boost": {
+        "red": 236,
+        "green": 8,
+        "blue": 36,
+        "alpha": 1
+      }
+    },
+    {
+      "colorSchemeId": "232cf491-0fbc-480c-b818-9250534e6420",
+      "name": "Meadow",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
+      "saberAColor": {
+        "red": 212,
+        "green": 237,
+        "blue": 201,
+        "alpha": 1
+      },
+      "saberBColor": {
+        "red": 26,
+        "green": 86,
+        "blue": 68,
+        "alpha": 1
+      },
+      "environmentColor0": {
+        "red": 212,
+        "green": 237,
+        "blue": 201,
+        "alpha": 1
+      },
+      "environmentColor1": {
+        "red": 74,
+        "green": 200,
+        "blue": 164,
+        "alpha": 1
       },
       "environmentColor0Boost": {
         "red": 191,
         "green": 255,
         "blue": 213,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1Boost": {
         "red": 255,
         "green": 150,
         "blue": 80,
-        "alpha": 1.0
+        "alpha": 1
       }
     },
     {
-      "colorSchemeId": "374f0ade-e475-42ee-9525-e3631922fddc",
+      "colorSchemeId": "acbf9abf-e471-4674-ac6b-ae87c3352729",
       "name": "Muted",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
       "saberAColor": {
         "red": 233,
         "green": 137,
         "blue": 142,
-        "alpha": 1.0
+        "alpha": 1
       },
       "saberBColor": {
         "red": 101,
         "green": 142,
         "blue": 169,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0": {
         "red": 232,
         "green": 130,
         "blue": 135,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1": {
         "red": 125,
         "green": 172,
         "blue": 203,
-        "alpha": 1.0
-      },
-      "obstaclesColor": {
-        "red": 0,
-        "green": 0,
-        "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0Boost": {
         "red": 255,
         "green": 107,
         "blue": 112,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1Boost": {
         "red": 114,
         "green": 194,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       }
     },
     {
-      "colorSchemeId": "829372db-5531-4202-8ff0-bfa8c488ed9c",
+      "colorSchemeId": "71e3a240-4dee-47fc-9356-de6aedf8ee5b",
+      "name": "Natural",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
+      "saberAColor": {
+        "red": 211,
+        "green": 150,
+        "blue": 108,
+        "alpha": 1
+      },
+      "saberBColor": {
+        "red": 74,
+        "green": 95,
+        "blue": 77,
+        "alpha": 1
+      },
+      "environmentColor0": {
+        "red": 255,
+        "green": 229,
+        "blue": 211,
+        "alpha": 1
+      },
+      "environmentColor1": {
+        "red": 189,
+        "green": 217,
+        "blue": 234,
+        "alpha": 1
+      },
+      "environmentColor0Boost": {
+        "red": 224,
+        "green": 245,
+        "blue": 224,
+        "alpha": 1
+      },
+      "environmentColor1Boost": {
+        "red": 160,
+        "green": 195,
+        "blue": 255,
+        "alpha": 1
+      }
+    },
+    {
+      "colorSchemeId": "edc85642-efed-4f3f-83f8-9395d73bffcf",
       "name": "Noir",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
       "saberAColor": {
         "red": 207,
         "green": 207,
         "blue": 207,
-        "alpha": 1.0
+        "alpha": 1
       },
       "saberBColor": {
         "red": 98,
         "green": 90,
         "blue": 83,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0": {
         "red": 207,
         "green": 207,
         "blue": 207,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1": {
         "red": 212,
         "green": 186,
         "blue": 163,
-        "alpha": 1.0
-      },
-      "obstaclesColor": {
-        "red": 0,
-        "green": 0,
-        "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0Boost": {
         "red": 255,
         "green": 201,
         "blue": 136,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1Boost": {
         "red": 222,
         "green": 176,
         "blue": 64,
-        "alpha": 1.0
+        "alpha": 1
       }
     },
     {
-      "colorSchemeId": "ad7decb0-d9a9-41f1-9221-86beac73947f",
+      "colorSchemeId": "0e441a58-2093-4f8c-a49b-492f7e32af5b",
+      "name": "Oblique",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
+      "saberAColor": {
+        "red": 255,
+        "green": 49,
+        "blue": 49,
+        "alpha": 1
+      },
+      "saberBColor": {
+        "red": 95,
+        "green": 142,
+        "blue": 179,
+        "alpha": 1
+      },
+      "environmentColor0": {
+        "red": 255,
+        "green": 49,
+        "blue": 49,
+        "alpha": 1
+      },
+      "environmentColor1": {
+        "red": 137,
+        "green": 183,
+        "blue": 220,
+        "alpha": 1
+      },
+      "environmentColor0Boost": {
+        "red": 234,
+        "green": 183,
+        "blue": 110,
+        "alpha": 1
+      },
+      "environmentColor1Boost": {
+        "red": 180,
+        "green": 112,
+        "blue": 231,
+        "alpha": 1
+      }
+    },
+    {
+      "colorSchemeId": "165d25b1-44e6-4ec0-828c-c36e2ac8fbd1",
+      "name": "Offset",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
+      "saberAColor": {
+        "red": 114,
+        "green": 238,
+        "blue": 190,
+        "alpha": 1
+      },
+      "saberBColor": {
+        "red": 131,
+        "green": 67,
+        "blue": 219,
+        "alpha": 1
+      },
+      "environmentColor0": {
+        "red": 201,
+        "green": 255,
+        "blue": 234,
+        "alpha": 1
+      },
+      "environmentColor1": {
+        "red": 206,
+        "green": 184,
+        "blue": 255,
+        "alpha": 1
+      },
+      "environmentColor0Boost": {
+        "red": 84,
+        "green": 255,
+        "blue": 189,
+        "alpha": 1
+      },
+      "environmentColor1Boost": {
+        "red": 152,
+        "green": 61,
+        "blue": 255,
+        "alpha": 1
+      }
+    },
+    {
+      "colorSchemeId": "1d8ec074-8b54-4140-89ac-20a88e90868e",
       "name": "Orang",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
       "saberAColor": {
         "red": 255,
         "green": 135,
         "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "saberBColor": {
         "red": 0,
         "green": 153,
         "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0": {
         "red": 164,
         "green": 0,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1": {
         "red": 31,
         "green": 31,
         "blue": 198,
-        "alpha": 1.0
-      },
-      "obstaclesColor": {
-        "red": 0,
-        "green": 0,
-        "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0Boost": {
         "red": 191,
         "green": 134,
         "blue": 197,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1Boost": {
         "red": 85,
         "green": 157,
         "blue": 201,
-        "alpha": 1.0
+        "alpha": 1
       }
     },
     {
-      "colorSchemeId": "75ee9510-ad91-4898-bb31-93f9ec71e3e4",
+      "colorSchemeId": "0c986abf-cf96-4bfc-9d47-0465d0232ac9",
       "name": "Orange Denim",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
       "saberAColor": {
         "red": 255,
         "green": 144,
         "blue": 40,
-        "alpha": 1.0
+        "alpha": 1
       },
       "saberBColor": {
         "red": 0,
         "green": 133,
         "blue": 197,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0": {
         "red": 255,
         "green": 144,
         "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1": {
         "red": 0,
         "green": 172,
         "blue": 255,
-        "alpha": 1.0
-      },
-      "obstaclesColor": {
-        "red": 0,
-        "green": 0,
-        "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0Boost": {
         "red": 255,
         "green": 169,
         "blue": 117,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1Boost": {
         "red": 119,
         "green": 189,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       }
     },
     {
-      "colorSchemeId": "6b0c649e-d544-4932-aa54-650505305f58",
+      "colorSchemeId": "2268aefa-d10d-49af-a0b8-d8673396175d",
       "name": "Overblown",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
       "saberAColor": {
         "red": 255,
         "green": 0,
         "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "saberBColor": {
         "red": 0,
         "green": 0,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0": {
         "red": 255,
         "green": 112,
         "blue": 112,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1": {
         "red": 112,
         "green": 112,
         "blue": 255,
-        "alpha": 1.0
-      },
-      "obstaclesColor": {
-        "red": 0,
-        "green": 0,
-        "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0Boost": {
         "red": 255,
         "green": 0,
         "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1Boost": {
         "red": 0,
         "green": 0,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       }
     },
     {
-      "colorSchemeId": "ad899ca6-2907-41f5-8a7c-4348f9b03742",
+      "colorSchemeId": "f8879ebc-fecd-44f4-94ee-4fb9a61e8c01",
       "name": "Overgrowth",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
       "saberAColor": {
         "red": 114,
         "green": 220,
         "blue": 40,
-        "alpha": 1.0
+        "alpha": 1
       },
       "saberBColor": {
         "red": 151,
         "green": 103,
         "blue": 62,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0": {
         "red": 92,
         "green": 219,
         "blue": 43,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1": {
         "red": 255,
         "green": 196,
         "blue": 146,
-        "alpha": 1.0
-      },
-      "obstaclesColor": {
-        "red": 0,
-        "green": 0,
-        "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0Boost": {
         "red": 162,
         "green": 255,
         "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1Boost": {
         "red": 255,
         "green": 122,
         "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       }
     },
     {
-      "colorSchemeId": "b973754c-47c6-41d6-979c-d1df0ef155e0",
+      "colorSchemeId": "3244bb9e-7024-4b9c-a70f-78b7ef2ad55c",
       "name": "Pastry Shop",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
       "saberAColor": {
         "red": 246,
         "green": 174,
         "blue": 222,
-        "alpha": 1.0
+        "alpha": 1
       },
       "saberBColor": {
         "red": 168,
         "green": 100,
         "blue": 77,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0": {
         "red": 246,
         "green": 174,
         "blue": 222,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1": {
         "red": 253,
         "green": 200,
         "blue": 170,
-        "alpha": 1.0
-      },
-      "obstaclesColor": {
-        "red": 0,
-        "green": 0,
-        "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0Boost": {
         "red": 218,
         "green": 147,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1Boost": {
         "red": 157,
         "green": 226,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       }
     },
     {
-      "colorSchemeId": "ba4130cc-3b03-421c-8c3d-a9095598619a",
+      "colorSchemeId": "8e431acd-9b7c-462c-8ea8-213b39d8c829",
+      "name": "Pina Colada",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
+      "saberAColor": {
+        "red": 229,
+        "green": 225,
+        "blue": 229,
+        "alpha": 1
+      },
+      "saberBColor": {
+        "red": 129,
+        "green": 104,
+        "blue": 92,
+        "alpha": 1
+      },
+      "environmentColor0": {
+        "red": 255,
+        "green": 238,
+        "blue": 163,
+        "alpha": 1
+      },
+      "environmentColor1": {
+        "red": 156,
+        "green": 214,
+        "blue": 255,
+        "alpha": 1
+      },
+      "environmentColor0Boost": {
+        "red": 163,
+        "green": 255,
+        "blue": 201,
+        "alpha": 1
+      },
+      "environmentColor1Boost": {
+        "red": 103,
+        "green": 150,
+        "blue": 222,
+        "alpha": 1
+      }
+    },
+    {
+      "colorSchemeId": "aa2bfa0b-7335-4b1d-a4f7-209f382a3102",
+      "name": "Relief",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
+      "saberAColor": {
+        "red": 63,
+        "green": 216,
+        "blue": 237,
+        "alpha": 1
+      },
+      "saberBColor": {
+        "red": 103,
+        "green": 110,
+        "blue": 125,
+        "alpha": 1
+      },
+      "environmentColor0": {
+        "red": 162,
+        "green": 220,
+        "blue": 228,
+        "alpha": 1
+      },
+      "environmentColor1": {
+        "red": 143,
+        "green": 143,
+        "blue": 200,
+        "alpha": 1
+      },
+      "environmentColor0Boost": {
+        "red": 129,
+        "green": 173,
+        "blue": 255,
+        "alpha": 1
+      },
+      "environmentColor1Boost": {
+        "red": 255,
+        "green": 91,
+        "blue": 164,
+        "alpha": 1
+      }
+    },
+    {
+      "colorSchemeId": "f0059497-5c41-4c5a-a6af-8be21ddca94b",
+      "name": "Rotten",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
+      "saberAColor": {
+        "red": 241,
+        "green": 50,
+        "blue": 6,
+        "alpha": 1
+      },
+      "saberBColor": {
+        "red": 63,
+        "green": 93,
+        "blue": 93,
+        "alpha": 1
+      },
+      "environmentColor0": {
+        "red": 241,
+        "green": 50,
+        "blue": 6,
+        "alpha": 1
+      },
+      "environmentColor1": {
+        "red": 109,
+        "green": 76,
+        "blue": 64,
+        "alpha": 1
+      },
+      "environmentColor0Boost": {
+        "red": 255,
+        "green": 130,
+        "blue": 81,
+        "alpha": 1
+      },
+      "environmentColor1Boost": {
+        "red": 135,
+        "green": 216,
+        "blue": 216,
+        "alpha": 1
+      }
+    },
+    {
+      "colorSchemeId": "e849c3ad-096f-4055-b7fa-1be9a1ed1b27",
       "name": "Rustic",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
       "saberAColor": {
         "red": 215,
         "green": 146,
         "blue": 104,
-        "alpha": 1.0
+        "alpha": 1
       },
       "saberBColor": {
         "red": 62,
         "green": 59,
         "blue": 90,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0": {
         "red": 234,
         "green": 139,
         "blue": 99,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1": {
         "red": 255,
         "green": 198,
         "blue": 182,
-        "alpha": 1.0
-      },
-      "obstaclesColor": {
-        "red": 0,
-        "green": 0,
-        "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0Boost": {
         "red": 253,
         "green": 48,
         "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1Boost": {
         "red": 182,
         "green": 202,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       }
     },
     {
-      "colorSchemeId": "513c3f60-4f6e-42e0-b4a4-7fdad6824a22",
+      "colorSchemeId": "f03e6174-0167-4db1-a3ba-97b5d701394d",
+      "name": "Shift",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
+      "saberAColor": {
+        "red": 251,
+        "green": 146,
+        "blue": 255,
+        "alpha": 1
+      },
+      "saberBColor": {
+        "red": 83,
+        "green": 119,
+        "blue": 213,
+        "alpha": 1
+      },
+      "environmentColor0": {
+        "red": 223,
+        "green": 34,
+        "blue": 245,
+        "alpha": 1
+      },
+      "environmentColor1": {
+        "red": 74,
+        "green": 131,
+        "blue": 255,
+        "alpha": 1
+      },
+      "environmentColor0Boost": {
+        "red": 196,
+        "green": 25,
+        "blue": 25,
+        "alpha": 1
+      },
+      "environmentColor1Boost": {
+        "red": 163,
+        "green": 193,
+        "blue": 255,
+        "alpha": 1
+      }
+    },
+    {
+      "colorSchemeId": "323a8282-4934-4875-8622-e84ff4c789ed",
       "name": "Slay Queen",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
       "saberAColor": {
         "red": 225,
         "green": 235,
         "blue": 235,
-        "alpha": 1.0
+        "alpha": 1
       },
       "saberBColor": {
         "red": 255,
         "green": 0,
         "blue": 154,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0": {
         "red": 140,
         "green": 0,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1": {
         "red": 255,
         "green": 0,
         "blue": 154,
-        "alpha": 1.0
-      },
-      "obstaclesColor": {
-        "red": 0,
-        "green": 0,
-        "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0Boost": {
         "red": 103,
         "green": 224,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1Boost": {
         "red": 255,
         "green": 117,
         "blue": 201,
-        "alpha": 1.0
+        "alpha": 1
       }
     },
     {
-      "colorSchemeId": "3e1f2792-5b2e-4e28-9474-852b69b42606",
+      "colorSchemeId": "fa14de9e-63c3-4b1d-ad62-339a35db7c81",
       "name": "Spooky",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
       "saberAColor": {
         "red": 255,
         "green": 160,
         "blue": 48,
-        "alpha": 1.0
+        "alpha": 1
       },
       "saberBColor": {
         "red": 96,
         "green": 96,
         "blue": 96,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0": {
         "red": 255,
         "green": 128,
         "blue": 48,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1": {
         "red": 196,
         "green": 48,
         "blue": 224,
-        "alpha": 1.0
-      },
-      "obstaclesColor": {
-        "red": 0,
-        "green": 0,
-        "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0Boost": {
         "red": 160,
         "green": 255,
         "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1Boost": {
         "red": 220,
         "green": 0,
         "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       }
     },
     {
-      "colorSchemeId": "2fbde1db-4808-47db-8e29-18db468566de",
+      "colorSchemeId": "6018ac1b-afe5-4439-b35e-1b5597dec122",
       "name": "Strength",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
       "saberAColor": {
         "red": 225,
         "green": 225,
         "blue": 236,
-        "alpha": 1.0
+        "alpha": 1
       },
       "saberBColor": {
         "red": 43,
         "green": 93,
         "blue": 200,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0": {
         "red": 225,
         "green": 225,
         "blue": 236,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1": {
         "red": 43,
         "green": 93,
         "blue": 200,
-        "alpha": 1.0
-      },
-      "obstaclesColor": {
-        "red": 0,
-        "green": 0,
-        "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0Boost": {
         "red": 175,
         "green": 192,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1Boost": {
         "red": 209,
         "green": 242,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       }
     },
     {
-      "colorSchemeId": "f0ce2274-f6af-48bf-ba97-968151fce65f",
+      "colorSchemeId": "b380fb17-ffb0-4054-8aa2-b353a6f8217a",
       "name": "Sulley",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
       "saberAColor": {
         "red": 56,
         "green": 199,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       },
       "saberBColor": {
         "red": 162,
         "green": 24,
         "blue": 176,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0": {
         "red": 0,
         "green": 170,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1": {
         "red": 186,
         "green": 46,
         "blue": 204,
-        "alpha": 1.0
-      },
-      "obstaclesColor": {
-        "red": 0,
-        "green": 0,
-        "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0Boost": {
         "red": 0,
         "green": 232,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1Boost": {
         "red": 164,
         "green": 85,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       }
     },
     {
-      "colorSchemeId": "cceedbed-1f67-45db-b205-1075d70e35ec",
+      "colorSchemeId": "7048ccf3-b860-4d95-a0e1-c14fda4aa0fa",
       "name": "Sunflower Fields",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
       "saberAColor": {
         "red": 255,
         "green": 210,
         "blue": 48,
-        "alpha": 1.0
+        "alpha": 1
       },
       "saberBColor": {
         "red": 55,
         "green": 96,
         "blue": 230,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0": {
         "red": 255,
         "green": 210,
         "blue": 48,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1": {
         "red": 55,
         "green": 96,
         "blue": 230,
-        "alpha": 1.0
-      },
-      "obstaclesColor": {
-        "red": 0,
-        "green": 0,
-        "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0Boost": {
         "red": 255,
         "green": 241,
         "blue": 170,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1Boost": {
         "red": 0,
         "green": 200,
         "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       }
     },
     {
-      "colorSchemeId": "076ff577-7fb7-4948-a7a5-7639963fbd36",
+      "colorSchemeId": "58bdcf13-c797-4081-9e2a-78bb657be491",
+      "name": "Taffy",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
+      "saberAColor": {
+        "red": 255,
+        "green": 175,
+        "blue": 204,
+        "alpha": 1
+      },
+      "saberBColor": {
+        "red": 132,
+        "green": 107,
+        "blue": 146,
+        "alpha": 1
+      },
+      "environmentColor0": {
+        "red": 255,
+        "green": 175,
+        "blue": 204,
+        "alpha": 1
+      },
+      "environmentColor1": {
+        "red": 205,
+        "green": 180,
+        "blue": 219,
+        "alpha": 1
+      },
+      "environmentColor0Boost": {
+        "red": 255,
+        "green": 219,
+        "blue": 201,
+        "alpha": 1
+      },
+      "environmentColor1Boost": {
+        "red": 219,
+        "green": 156,
+        "blue": 255,
+        "alpha": 1
+      }
+    },
+    {
+      "colorSchemeId": "9f6f281d-338f-4d16-b8c7-6ea0d7b2f63d",
       "name": "Touch Grass",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
       "saberAColor": {
         "red": 146,
         "green": 228,
         "blue": 21,
-        "alpha": 1.0
+        "alpha": 1
       },
       "saberBColor": {
         "red": 49,
         "green": 141,
         "blue": 234,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0": {
         "red": 176,
         "green": 255,
         "blue": 63,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1": {
         "red": 64,
         "green": 200,
         "blue": 255,
-        "alpha": 1.0
-      },
-      "obstaclesColor": {
-        "red": 0,
-        "green": 0,
-        "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0Boost": {
         "red": 0,
         "green": 255,
         "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1Boost": {
         "red": 0,
         "green": 255,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       }
     },
     {
-      "colorSchemeId": "8a9a7add-dc3d-4154-807f-8216daaeef34",
+      "colorSchemeId": "873f9660-9c68-4faf-89c0-a87de6468c54",
       "name": "Toxicity",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
       "saberAColor": {
-        "red": 188,
-        "green": 222,
-        "blue": 34,
-        "alpha": 1.0
+        "red": 205,
+        "green": 243,
+        "blue": 28,
+        "alpha": 1
       },
       "saberBColor": {
         "red": 162,
         "green": 0,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0": {
         "red": 229,
         "green": 255,
         "blue": 105,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1": {
         "red": 187,
         "green": 67,
         "blue": 255,
-        "alpha": 1.0
-      },
-      "obstaclesColor": {
-        "red": 0,
-        "green": 0,
-        "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0Boost": {
         "red": 255,
         "green": 0,
         "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1Boost": {
         "red": 224,
         "green": 0,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       }
     },
     {
-      "colorSchemeId": "ead502a8-fb90-47fd-b270-b84651254650",
+      "colorSchemeId": "137ac6e8-8eb8-4c59-bd76-33390783048a",
       "name": "Ultraviolet",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
       "saberAColor": {
-        "red": 202,
-        "green": 193,
-        "blue": 232,
-        "alpha": 1.0
+        "red": 225,
+        "green": 217,
+        "blue": 255,
+        "alpha": 1
       },
       "saberBColor": {
         "red": 130,
         "green": 0,
         "blue": 231,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0": {
         "red": 105,
         "green": 102,
         "blue": 223,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1": {
         "red": 151,
         "green": 97,
         "blue": 216,
-        "alpha": 1.0
-      },
-      "obstaclesColor": {
-        "red": 0,
-        "green": 0,
-        "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0Boost": {
         "red": 65,
         "green": 156,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1Boost": {
         "red": 209,
         "green": 125,
         "blue": 252,
-        "alpha": 1.0
+        "alpha": 1
       }
     },
     {
-      "colorSchemeId": "9692a8b5-4712-4cfb-88f3-0c78bd568470",
+      "colorSchemeId": "6149a1bc-87d4-4d36-b5f5-a01cbf526f83",
       "name": "Warm Lavender",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
       "saberAColor": {
         "red": 255,
         "green": 107,
         "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "saberBColor": {
         "red": 143,
         "green": 111,
         "blue": 240,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0": {
         "red": 255,
         "green": 151,
         "blue": 120,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1": {
         "red": 191,
         "green": 169,
         "blue": 255,
-        "alpha": 1.0
-      },
-      "obstaclesColor": {
-        "red": 0,
-        "green": 0,
-        "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0Boost": {
         "red": 255,
         "green": 107,
         "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1Boost": {
         "red": 153,
         "green": 119,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       }
     },
     {
-      "colorSchemeId": "1ca1a1ab-672c-4556-9822-ad4aab017248",
+      "colorSchemeId": "90348efc-c9eb-42d3-9ca2-f2b554e3af62",
       "name": "Wealth",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
       "saberAColor": {
         "red": 241,
         "green": 202,
         "blue": 68,
-        "alpha": 1.0
+        "alpha": 1
       },
       "saberBColor": {
         "red": 67,
         "green": 158,
         "blue": 34,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0": {
         "red": 253,
         "green": 200,
         "blue": 109,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1": {
         "red": 142,
         "green": 74,
         "blue": 207,
-        "alpha": 1.0
-      },
-      "obstaclesColor": {
-        "red": 0,
-        "green": 0,
-        "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0Boost": {
         "red": 153,
         "green": 255,
         "blue": 80,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1Boost": {
         "red": 252,
         "green": 78,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       }
     },
     {
-      "colorSchemeId": "8ece82b7-1523-4827-bf86-bf8a7b12ea89",
+      "colorSchemeId": "b0f9e3b8-d572-4378-8d12-4575f13c47c6",
       "name": "Zen",
+      "obstaclesColor": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 1
+      },
       "saberAColor": {
-        "red": 201,
-        "green": 201,
-        "blue": 201,
-        "alpha": 1.0
+        "red": 224,
+        "green": 224,
+        "blue": 224,
+        "alpha": 1
       },
       "saberBColor": {
-        "red": 48,
-        "green": 48,
-        "blue": 48,
-        "alpha": 1.0
+        "red": 80,
+        "green": 80,
+        "blue": 80,
+        "alpha": 1
       },
       "environmentColor0": {
         "red": 182,
         "green": 224,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1": {
         "red": 94,
         "green": 116,
         "blue": 255,
-        "alpha": 1.0
-      },
-      "obstaclesColor": {
-        "red": 0,
-        "green": 0,
-        "blue": 0,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor0Boost": {
         "red": 223,
         "green": 202,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       },
       "environmentColor1Boost": {
         "red": 170,
         "green": 94,
         "blue": 255,
-        "alpha": 1.0
+        "alpha": 1
       }
     }
   ]

@@ -1,0 +1,2 @@
+MappingExtensions is compiled from https://github.com/Kylemc1413/MappingExtensions/commit/4c3172785886c22934986aa9593d458f33b94368
+ - Replaced `Math.Clamp` call with `Mathf.Clamp` call in `BeatmapObjectsInTimeRowProcessor.cs` just to get it to build, seems fine enough
