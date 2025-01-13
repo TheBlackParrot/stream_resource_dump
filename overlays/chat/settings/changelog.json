@@ -1,4 +1,21 @@
 {
+	"9999999999999": {
+		"updates": {
+			"clock": {
+				"revision": 10,
+				"notes": [
+					[
+						"fixed issue with broadcaster data sometimes coming back empty, causing errors involving undefined variables (again)"
+					],
+					[
+						"prevented ad timer data loops from running if ad data ever comes back empty",
+						["this will only ever happen if you're not authorized to fetch that data"]
+					]
+				]
+			}
+		}
+	},
+
 	"1736096349162": {
 		"updates": {
 			"bs": {

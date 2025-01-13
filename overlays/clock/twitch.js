@@ -69,20 +69,29 @@ async function getBroadcasterData() {
 		});
 	}
 
-	broadcasterData = rawUserResponse.data[0];
-	if(!("data" in broadcasterData)) {
+	if(!("data" in rawUserResponse)) {
 		// erm
-		await delay(1000);
+		await delay(5000);
 		return await getBroadcasterData();
 	}
+	if(!rawUserResponse.data.length) {
+		broadcasterData = {};
+	} else {
+		broadcasterData = rawUserResponse.data[0];
+	}
+
 	return broadcasterData;
 }
 
 var nextAdBreak = Date.now();
+var allowedAdTimer = true;
 async function setNextAdBreak() {
 	console.log("updating time to next ad break");
 
-	if(typeof broadcasterData === "undefined") {
+	if(!broadcasterData || typeof broadcasterData === "undefined") {
+		await getBroadcasterData();
+	}
+	if(!("data" in broadcasterData)) {
 		await getBroadcasterData();
 	}
 
@@ -98,13 +107,19 @@ async function setNextAdBreak() {
 
 	if(!adData.data) {
 		console.log("ad data blank, probably not authorized");
+		clearTimeout(adTimerTO);
+		allowedAdTimer = false;
 		return;
 	}
 
 	if(!adData.data.length) {
 		console.log("ad data blank, probably not authorized");
+		clearTimeout(adTimerTO);
+		allowedAdTimer = false;
 		return;
 	}
+
+	allowedAdTimer = true;
 
 	const data = adData.data[0];
 	nextAdBreak = (parseInt(data.next_ad_at) || 0) * 1000;
@@ -113,7 +128,9 @@ async function setNextAdBreak() {
 var adTimerTO;
 async function adTimer() {
 	clearTimeout(adTimerTO);
-	await setNextAdBreak();
+	if(allowedAdTimer) {
+		await setNextAdBreak();
+	}
 
 	adTimerTO = setTimeout(adTimer, 15000);
 }
@@ -121,6 +138,14 @@ async function adTimer() {
 var streamDataTimeout;
 async function getTwitchStreamData() {
 	clearTimeout(streamDataTimeout);
+
+	if(!broadcasterData) {
+		await getBroadcasterData();
+	}
+
+	if(!("data" in broadcasterData)) {
+		await getBroadcasterData();
+	}
 
 	console.log("getting stream information...");
 	const streamResponse = await callTwitchAsync({
