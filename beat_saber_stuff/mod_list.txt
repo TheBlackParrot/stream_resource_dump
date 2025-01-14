@@ -11,6 +11,8 @@ AssetBundleLoadingTools
 AudioFix
  - https://github.com/Loloppe/BeatSaber_AudioFix
 AudioLink
+BeatLeader
+ - https://github.com/BeatLeader/beatleader-mod
 BeatSaverDownloader
 BeatSaverUpdater
 BeatSaverVoting
