@@ -18,29 +18,41 @@ async function getPersonalBest(hash, diff, mode) {
 	var response;
 	if(url in beatleaderQueries) {
 		if(Date.now() - beatleaderQueries[url].at < 10000) {
-			response = await beatleaderQueries[url].fetch;
+			return beatleaderQueries[url].data.data;
 		} else {
 			beatleaderQueries[url].at = Date.now();
-			beatleaderQueries[url].fetch = await fetch(`proxies/beatleader_score.php?${query.toString()}`);
+			const tempResponse = await fetch(`proxies/beatleader_score.php?${query.toString()}`);
+
+			if(!tempResponse.ok) {
+				beatleaderQueries[url].at = 0;
+				beatleaderQueries[url].data = {
+					data: {}
+				};
+				return -1;
+			} else {
+				beatleaderQueries[url].data = await tempResponse.json();
+			}
 		}
 	} else {
-		beatleaderQueries[url] = {
-			at: Date.now(),
-			fetch: await fetch(`proxies/beatleader_score.php?${query.toString()}`)
-		};
+		const tempResponse = await fetch(`proxies/beatleader_score.php?${query.toString()}`);
+			
+		if(!tempResponse.ok) {
+			beatleaderQueries[url] = {
+				at: 0,
+				data: {
+					data: {}
+				}
+			};
+			return -1;
+		} else {
+			beatleaderQueries[url] = {
+				at: Date.now(),
+				data: await tempResponse.json()
+			};
+		}
 	}
-	
-	response = beatleaderQueries[url].fetch;
-	if(!response.ok) {
-		return -1;
-	}
-	const data = await response.json();
 
-	if(data === null) {
-		return -1;
-	}
-
-	return data.data;
+	return beatleaderQueries[url].data.data;
 }
 
 function setPBDisplay(data) {

@@ -208,7 +208,8 @@
 }
 
 body {
-	background: #888;
+	background: transparent;
+	background-color: transparent;
 	overflow: hidden;
 }
 

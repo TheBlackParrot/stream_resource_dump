@@ -33,6 +33,8 @@
 	--miscInfoFontStyle: normal;
 	--miscInfoAlignment: center;
 	--miscInfoFontWeight: 900;
+	--miscInfoTopAdditionalFontWeight: 0px;
+	--miscInfoBottomAdditionalFontWeight: 0px;
 	--miscInfoLineHeight: 22px;
 
 	--timeFontSize: 12pt;

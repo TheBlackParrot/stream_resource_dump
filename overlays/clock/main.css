@@ -86,7 +86,8 @@
 .slideOut { animation-name: slideOut; }
 
 body {
-	background-color: #333;
+	background: transparent;
+	background-color: transparent;
 }
 
 #wrapper {

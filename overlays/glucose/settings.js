@@ -37,6 +37,7 @@ const settingUpdaters = {
 		} else {
 			$("#transparent_number").hide();
 		}
+		setValueDisplay();
 	},
 	fadeOutPadding: function(value) {
 		if(value === "true") {

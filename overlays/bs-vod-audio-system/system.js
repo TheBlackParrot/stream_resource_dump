@@ -68,13 +68,11 @@ bsEventChannel.onmessage = function(message) {
 	processMessage(data);
 };
 
-var gameState = "Menu";
 var mapInfo;
+var autoFixTimeout;
 var eventFuncs = {
 	"scene": async function(data) {
-		gameState = data.data;
-
-		if(gameState === "Menu") {
+		if(data.data === "Menu") {
 			if(localStorage.getItem("setting_bsvodaudio_muteOnMenu") === "true") {
 				console.log("Muting VOD audio, in menu");
 				postToOBSEventChannel("toggleVODAudio", false);
@@ -82,10 +80,18 @@ var eventFuncs = {
 				console.log("Unmuting VOD audio, in menu");
 				postToOBSEventChannel("toggleVODAudio", true);
 			}
+		} else {
+			clearTimeout(autoFixTimeout);
+			autoFixTimeout = setTimeout(function() {
+				if("map" in mapInfo) {
+					eventFuncs.hash({data: mapInfo.map.hash});
+				}
+			}, 3000);
 		}
 	},
 
 	"hash": function(data) {
+		clearTimeout(autoFixTimeout);
 		let hash = data.data;
 		let isVODSafe = 0;
 
@@ -181,11 +187,7 @@ var eventFuncs = {
 		if(map.cover.internal.image === null) {
 			$(":root").get(0).style.setProperty("--currentArt", `url(data:image/jpeg;base64,${map.cover.external.image})`);
 		} else {
-			if(localStorage.getItem("setting_beatSaberDataMod") === "datapuller") {
-				$(":root").get(0).style.setProperty("--currentArt", `url(data:image/jpeg;base64,${map.cover.internal.image})`);
-			} else {
-				$(":root").get(0).style.setProperty("--currentArt", `url(${map.cover.internal.image})`);
-			}
+			$(":root").get(0).style.setProperty("--currentArt", `url(${map.cover.internal.image})`);
 		}
 	}
 }

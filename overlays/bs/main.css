@@ -87,7 +87,8 @@
 .cssScrollClippingWorkaround { animation-name: clippingWorkaround; }
 
 body {
-	background: #333;
+	background: transparent;
+	background-color: transparent;
 	color: #fff;
 	font-family: "Manrope";
 	transition: var(--desaturateFadeOutDuration);
@@ -144,8 +145,6 @@ body {
 
 #codeWrap div:first-child, #duration {
 	background-image: linear-gradient(170deg, #FFF 20%, var(--secondaryColor) 100%);
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
 	line-height: var(--miscInfoLineHeight);
 }
 #codeWrap div:first-child {
@@ -186,7 +185,7 @@ body {
 #diffWrap, #codeWrap, #ssStarsWrap, #blStarsWrap, #mapModifiersWrap {
 	line-height: var(--miscInfoLineHeight);
 	align-items: baseline;
-	justify-content: center;
+	justify-content: var(--miscInfoAlignment);
 	display: flex;
 }
 
@@ -205,6 +204,20 @@ body {
 	margin-right: 0.1em;
 }
 
+#diff, #codeWrap div, #ssStarsValue, #blStarsValue, #mapModifiersValue {
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-webkit-text-stroke: var(--miscInfoTopAdditionalFontWeight) transparent;
+}
+#diff, #time, #bsrCode, #ssStarsValue, #blStarsValue, #mapModifiersValue {
+	background-color: var(--miscInfoColor);
+}
+#time, #duration {
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-webkit-text-stroke: var(--miscInfoBottomAdditionalFontWeight) transparent;
+}
+
 #metadataCell {
 	flex-grow: 1;
 	line-height: var(--metadataLineHeight);
@@ -212,6 +225,11 @@ body {
 	top: var(--fixWeirdMetadataAlignmentIssue); /* wtf */
 	align-self: stretch;
 	flex-direction: var(--metadataVerticalAlignment);
+	padding: 6px;
+	margin: -6px;
+	margin-left: 0px; /* ??? */
+	margin-right: 0px;
+	padding-right: 0px;
 }
 #title, #secondary {
 	width: 100%;

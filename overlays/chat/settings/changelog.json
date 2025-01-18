@@ -1,6 +1,71 @@
 {
-	"9999999999999": {
+	"1737157883622": {
 		"updates": {
+			"all": {
+				"notes": [
+					[
+						"added support for changing the page body background color value",
+						["this now adds transparency support for use in VR via Desktop+ or anything else that supports transparency natively"]
+					]
+				]
+			},
+
+			"bs": {
+				"revision": 21,
+				"notes": [
+					[
+						"fixed minor clipping issues with secondary metadata display"
+					],
+					[
+						"added missing font weight settings for miscellaneous info",
+						{"anchor": "bs_miscInfoTopAdditionalFontWeight"}
+					],
+					[
+						"fixed text alignment being forced center on the top row of miscellaneous info",
+						{"anchor": "bs_miscInfoAlignment"}
+					],
+					[
+						"refactored BeatLeader personal best data fetching to avoid \"already read\" errors if refreshing the overlay",
+						["this wasn't really breaking anything, but it looks bad and it bothered me"]
+					]
+				]
+			},
+
+			"bsvas": {
+				"revision": 7,
+				"notes": [
+					[
+						"fixed VOD audio being muted when restarting a map or when backing out and into the same map, regardless of the safe flag"
+					],
+					[
+						"fixed map hash using the wrong font"
+					],
+					[
+						"fixed cover art URL trying to use 2 different image types on the DataPuller endpoint"
+					],
+					[
+						"fixed local database trying to save every map as null"
+					],
+					[
+						"fixed undefined toggleVODAudio function being called when pressing either flag button",
+						["this was moved to a BroadcastChannel event forever ago and i never migrated it, oops"]
+					]
+				]
+			},
+
+			"chat": {
+				"revision": 84,
+				"notes": [
+					[
+						"fixed line wrapping issues with Beat Saber request information on the traditional layout",
+						["honestly this whole bsr layout is a trainwreck now, i may go back and completely re-do it at some point"]
+					],
+					[
+						"fixed widths not being forced on the traditional layout if Beat Saber request content exceeded allotted width"
+					]
+				]
+			},
+
 			"clock": {
 				"revision": 10,
 				"notes": [
@@ -9,7 +74,32 @@
 					],
 					[
 						"prevented ad timer data loops from running if ad data ever comes back empty",
-						["this will only ever happen if you're not authorized to fetch that data"]
+						["this will only ever happen if you're not authorized to fetch that data, which if you're not, that display is useless"]
+					]
+				]
+			},
+
+			"nightscout": {
+				"revision": 2,
+				"notes": [
+					[
+						"fixed the leading zero pad setting only taking effect if the \"fade\" setting for it is also enabled"
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 88,
+				"notes": [
+					[
+						"added a setting for changing the page body background color value on all overlays",
+						{"anchor": "_overall_bgColor"}
+					],
+					[
+						"fixed setting jumps going to the About tab not going to the correct setting position"
+					],
+					[
+						"extended fade out animation on settings jumped to from settings jumpers"
 					]
 				]
 			}

@@ -9,8 +9,8 @@ function changeStatusCircle(which, status, msg) {
 
 $("#sensitive .section").show();
 
-const overlayRevision = 87;
-const overlayRevisionTimestamp = 1736096349162;
+const overlayRevision = 88;
+const overlayRevisionTimestamp = 1737157883622;
 $("#revision").text(`revision ${overlayRevision}`);
 
 function resetEverything() {
@@ -275,6 +275,10 @@ $("input, select, textarea").on("change", function(e) {
 
 	if(setting.substring(0, 6) === "panel_") {
 		updateSetting(`setting_${setting}`, value);
+	}
+
+	if(setting === "_overall_bgColor") {
+		postToBGColorChannel(value);
 	}
 
 	if(setting in settingUpdatersTrigger) {

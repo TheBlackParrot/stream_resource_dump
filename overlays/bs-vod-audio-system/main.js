@@ -10,16 +10,16 @@ $("#reloadButton").on("mouseup", function(event) {
 });
 
 $("#audioSafeButton").on("mouseup", function(event) {
-	if(db.safe.indexOf(mapInfo.hash) !== -1) {
+	if(db.safe.indexOf(mapInfo.map.hash) !== -1) {
 		return;
 	}
 
-	if(db.unsafe.indexOf(mapInfo.hash) !== -1) {
-		db.unsafe.splice(db.unsafe.indexOf(mapInfo.hash), 1);
+	if(db.unsafe.indexOf(mapInfo.map.hash) !== -1) {
+		db.unsafe.splice(db.unsafe.indexOf(mapInfo.map.hash), 1);
 	}
 
-	db.safe.push(mapInfo.hash);
-	toggleVODAudio(1);
+	db.safe.push(mapInfo.map.hash);
+	postToOBSEventChannel("toggleVODAudio", true);
 
 	saveLocalHashes();
 
@@ -28,16 +28,16 @@ $("#audioSafeButton").on("mouseup", function(event) {
 });
 
 $("#audioUnsafeButton").on("mouseup", function(event) {
-	if(db.unsafe.indexOf(mapInfo.hash) !== -1) {
+	if(db.unsafe.indexOf(mapInfo.map.hash) !== -1) {
 		return;
 	}
 
-	if(db.safe.indexOf(mapInfo.hash) !== -1) {
-		db.safe.splice(db.safe.indexOf(mapInfo.hash), 1);
+	if(db.safe.indexOf(mapInfo.map.hash) !== -1) {
+		db.safe.splice(db.safe.indexOf(mapInfo.map.hash), 1);
 	}
 
-	db.unsafe.push(mapInfo.hash);
-	toggleVODAudio(0);
+	db.unsafe.push(mapInfo.map.hash);
+	postToOBSEventChannel("toggleVODAudio", false);
 
 	saveLocalHashes();
 

@@ -129,13 +129,12 @@ $("body").on("click", ".quickJumpAnchorButton", function(e) {
 	let wantedSettingParent = wantedSetting.closest(".setting");
 	let section = wantedSetting.closest(".section").attr("data-content");
 	let wantedRow = $(`.row[data-tab="${section}"]`);
-	console.log(wantedRow);
 
 	setRow(section);
 	$(".activeSection").addClass("quickJumpIsActive");
 	$("#quickJumpBar").show();
 
-	$("#settings").scrollTop(wantedSetting.position().top - ($("#quickJumpBar").height() * 2));
+	$("#settings").scrollTop(wantedSettingParent.position().top - ($("#quickJumpBar").height()));
 	wantedSettingParent.addClass("blinkAnchor");
 	wantedSettingParent.one("animationend", function() {
 		$(this).removeClass("blinkAnchor");

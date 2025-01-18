@@ -181,7 +181,8 @@ const nonPublicSettings = [
 	"chatMessageLengthASCIIArtFilterMinimum",
 	"combineMessagesIntoOneBlock",
 	"forceDefaultSubBadgeToFirstTier",
-	"bs_miscInfoShowMapModifiers"
+	"bs_miscInfoShowMapModifiers",
+	"_overall_bgColor"
 ];
 
 const defaultConfig = {
@@ -1290,7 +1291,10 @@ const defaultConfig = {
 	"chatBSRMapCodeCharacterSpacing": "0",
 	"chatBSRMapCodeFontWeightExtra": "0.2",
 	"chatBSRMapCodeVerticalOffset": "0",
-	"bs_miscInfoShowMapModifiers": "true"
+	"bs_miscInfoShowMapModifiers": "true",
+	"_overall_bgColor": "#33333300",
+	"bs_miscInfoTopAdditionalFontWeight": "0",
+	"bs_miscInfoBottomAdditionalFontWeight": "0"
 };
 // i typed out the bigNoNoWords so you don't have to, i'm sorry :(
 // it's gotta know what to remove

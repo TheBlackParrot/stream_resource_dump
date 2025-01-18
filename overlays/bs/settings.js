@@ -1,5 +1,5 @@
-const overlayRevision = 20;
-const overlayRevisionTimestamp = 1736096349162;
+const overlayRevision = 21;
+const overlayRevisionTimestamp = 1737157883622;
 
 const settingsChannel = new BroadcastChannel("settings_overlay");
 
@@ -1239,6 +1239,13 @@ const settingUpdaters = {
 	mapStatusQualifiedColor: function(value) {
 		rootCSS().setProperty("--mapStatusQualifiedColor", value);
 	},
+
+	miscInfoTopAdditionalFontWeight: function(value) {
+		rootCSS().setProperty("--miscInfoTopAdditionalFontWeight", `${value}px`);
+	},
+	miscInfoBottomAdditionalFontWeight: function(value) {
+		rootCSS().setProperty("--miscInfoBottomAdditionalFontWeight", `${value}px`);
+	}
 };
 
 function updateSetting(which, value, oldValue) {

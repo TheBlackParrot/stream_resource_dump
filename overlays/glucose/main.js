@@ -38,7 +38,11 @@ function setValueDisplay() {
 		$("#cur_value_value").text(curValue);
 	} else {
 		$("#transparent_number").empty();
-		$("#cur_value_value").text(curValue.toString().padStart(3, "0"));
+		if(localStorage.getItem("setting_ns_enablePadding") === "true") {
+			$("#cur_value_value").text(curValue.toString().padStart(3, "0"));
+		} else {
+			$("#cur_value_value").text(curValue);
+		}
 	}	
 }
 

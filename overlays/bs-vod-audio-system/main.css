@@ -108,7 +108,7 @@ body {
 #mapper:after { content: var(--currentMapper); }
 
 #mapHash {
-	font-family: "Noto Sans Mono";
+	font-family: "JetBrains Mono";
 	font-size: 11pt;
 	opacity: 0.5;
 	display: flex;

@@ -12,6 +12,12 @@ function postToChannel(event, data) {
 	settingsChannel.postMessage(message);
 }
 
+const bgChannel = new BroadcastChannel("bg_color");
+
+function postToBGColorChannel(value) {
+	bgChannel.postMessage(value);
+}
+
 $("#reloadOverlayButton").on("mouseup", function(e) {
 	postToChannel("reload");
 });
@@ -66,6 +72,8 @@ broadcastFuncs = {
 		console.log("Chat overlay is active");
 		changeStatusCircle("ChatOverlayStatus", "green", `loaded (r${data.version})`);
 
+		postToBGColorChannel(localStorage.getItem("setting__overall_bgColor"));
+
 		showExtraRow("chat");
 		$(".isChatThing").show();
 
@@ -107,6 +115,8 @@ broadcastFuncs = {
 	BSStatsOverlayExists: function(data) {
 		changeStatusCircle("BSStatsOverlayStatus", "green", `loaded (r${data.data.version})`);
 
+		postToBGColorChannel(localStorage.getItem("setting__overall_bgColor"));
+
 		let settingsKeys = Object.keys(defaultConfig);
 		let settingsKeysBS = settingsKeys.filter((key) => key.substr(0, 3) === "bs_");
 		postToChannel("settingsKeysBS", settingsKeysBS);
@@ -147,6 +157,8 @@ broadcastFuncs = {
 		console.log("Spotify overlay is active");
 		changeStatusCircle("SpotifyOverlayStatus", "green", `loaded (r${data.version})`);
 
+		postToBGColorChannel(localStorage.getItem("setting__overall_bgColor"));
+
 		showExtraRow("spotify");
 
 		if(localStorage.getItem("setting_mus_overrideSpotify") !== "true") {
@@ -168,6 +180,8 @@ broadcastFuncs = {
 
 		console.log("Clock overlay is active");
 		changeStatusCircle("ClockOverlayStatus", "green", `loaded (r${message.data.version})`);
+
+		postToBGColorChannel(localStorage.getItem("setting__overall_bgColor"));
 
 		showExtraRow("clock");
 	},
@@ -195,6 +209,8 @@ broadcastFuncs = {
 	HROverlayExists: function(data) {
 		changeStatusCircle("HROverlayStatus", "green", `loaded (r${data.data.version})`);
 
+		postToBGColorChannel(localStorage.getItem("setting__overall_bgColor"));
+
 		let settingsKeys = Object.keys(defaultConfig);
 		let settingsKeysHR = settingsKeys.filter((key) => key.substr(0, 3) === "hr_");
 		postToChannel("settingsKeysHR", settingsKeysHR);
@@ -209,6 +225,8 @@ broadcastFuncs = {
 
 	NSOverlayExists: async function(data) {
 		changeStatusCircle("NSOverlayStatus", "green", `loaded (r${data.data.version})`);
+
+		postToBGColorChannel(localStorage.getItem("setting__overall_bgColor"));
 
 		let settingsKeys = Object.keys(defaultConfig);
 		let settingsKeysNS = settingsKeys.filter((key) => key.substr(0, 3) === "ns_");

@@ -135,11 +135,13 @@
 		filter: contrast(120%) brightness(300%);
 		transform: translateX(-3px);
 	}
-	5% { transform: translateX(5px); }
-	7.5% { transform: translateX(-5px); }
-	10% { transform: translateX(7px); }
-	12.5% { transform: translateX(-7px); }
-	17.5% { transform: unset; }
+	1.5% { transform: translateX(5px); }
+	3% { transform: translateX(-5px); }
+	4.5% { transform: translateX(7px); }
+	6% { transform: translateX(-7px); }
+	7.5% { transform: translateX(5px); }
+	9% { transform: translateX(-5px); }
+	10.5% { transform: unset; }
 	100% {
 		background-color: unset;
 		filter: unset;
@@ -148,7 +150,7 @@
 
 .blinkAnchor {
 	animation-name: blinkAnchor;
-	animation-duration: 2.5s;
+	animation-duration: 6s;
 	animation-fill-mode: forwards;
 	animation-iteration-count: 1;
 }
