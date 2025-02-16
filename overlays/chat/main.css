@@ -826,7 +826,7 @@ tt, code, pre {
 }
 
 .replyContainer {
-	display: flex;
+	display: inline-flex;
 	opacity: var(--replyOpacity);
 	padding-top: var(--replyBlockSpacing);
 	padding-bottom: var(--replyBlockSpacing);

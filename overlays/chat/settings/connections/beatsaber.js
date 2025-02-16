@@ -157,7 +157,7 @@ function getModifierString(modifiers, concatenator = ",") {
 
 var oldHash;
 async function updateBeatSaberMapData() {
-	const curHash = `${currentBSSong.map.hash}.${currentBSSong.song.title}.${getModifierString(currentBSSong.map.modifiers)}`;
+	const curHash = `${currentBSSong.map.hash}.${currentBSSong.song.title}.${currentBSSong.map.difficulty}.${getModifierString(currentBSSong.map.modifiers)}`;
 	if(oldHash === curHash) {
 		console.log(`old hash is current hash, not updating map data (old: ${oldHash}, new: ${curHash})`);
 		return;

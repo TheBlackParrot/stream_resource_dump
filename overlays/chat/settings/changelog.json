@@ -1,4 +1,38 @@
 {
+	"1739740699104": {
+		"updates": {
+			"bs": {
+				"revision": 22,
+				"notes": [
+					[
+						"personal best rank display now shows score-relevant modifiers if any are present"
+					]
+				]
+			},
+
+			"chat": {
+				"revision": 85,
+				"notes": [
+					[
+						"fixed reply containers remaining left-aligned in right-aligned layouts"
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 89,
+				"notes": [
+					[
+						"fixed Beat Saber map details not updating if swapping to a different difficulty within the same map"
+					],
+					[
+						"prevented non-chat events from triggering in shared chats that are not from the host broadcaster"
+					]
+				]
+			}
+		}
+	},
+
 	"1737157883622": {
 		"updates": {
 			"all": {

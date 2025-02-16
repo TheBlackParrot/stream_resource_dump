@@ -55,11 +55,14 @@ async function getPersonalBest(hash, diff, mode) {
 	return beatleaderQueries[url].data.data;
 }
 
+const displayedModifiers = ["SF", "FS", "SS", "GN", "NF"]
+
 function setPBDisplay(data) {
 	if(data === 0 || data === -1) {
 		data = {
 			accuracy: 0,
-			rank: 0
+			rank: 0,
+			modifiers: []
 		}
 	} else {
 		rootCSS().setProperty("--blAvatar", `url("${data.avatarURL}")`);
@@ -91,5 +94,15 @@ function setPBDisplay(data) {
 		$("#pbRankValue").text("N/A");
 	} else {
 		$("#pbRankValue").text(data.rank.toLocaleString());
+	}
+
+	console.log(data);
+	let modifiers = data.modifiers.filter((modifier) => displayedModifiers.indexOf(modifier) !== -1);
+
+	if(!modifiers.length) {
+		$("#pbModifiers").hide();
+	} else {
+		$("#pbModifiers").text(modifiers.join(", "));
+		$("#pbModifiers").show();
 	}
 }

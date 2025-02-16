@@ -735,7 +735,7 @@ body {
 	-webkit-text-stroke: var(--pbHeaderFontAdditionalWeight) transparent;
 }
 
-#pbRankValue {
+#pbRankValue, #pbModifiers {
 	background-color: var(--pbAccColor);
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
@@ -796,6 +796,17 @@ body {
 	border-radius: var(--mapStatusBorderRadius);
 	height: 100%;
 	background-image: var(--mapStatusGradient);
+}
+
+#pbModifiers {
+	font-size: calc(var(--pbHeaderFontSize) * 0.8);
+	opacity: 0.8;
+}
+#pbModifiers:before {
+	content: "(";
+}
+#pbModifiers:after {
+	content: ")";
 }
 
 /* uncomment after OBS updates CEF to a recent chrome version

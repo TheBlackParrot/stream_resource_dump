@@ -130,6 +130,10 @@ if($output["status"] != "error") {
 				$output["status"] = "error";
 				$output["message"] = "Rank wasn't present in BeatLeader response";
 			}
+
+			if(array_key_exists("modifiers", $jsonData)) {
+				$output["data"]["modifiers"] = explode(",", $jsonData["modifiers"]);
+			}
 		} else {
 			if(array_key_exists("contextExtensions", $jsonData)) {
 				$foundContext = false;
@@ -147,6 +151,7 @@ if($output["status"] != "error") {
 				} else {
 					$output["data"]["accuracy"] = $leaderboardContextData["accuracy"];
 					$output["data"]["rank"] = $leaderboardContextData["rank"];
+					$output["data"]["modifiers"] = explode(",", $leaderboardContextData["modifiers"]);
 				}
 			} else {
 				$output["status"] = "error";

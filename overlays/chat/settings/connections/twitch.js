@@ -78,6 +78,12 @@ client.on('message', function(channel, tags, message, self) {
 	}
 });
 client.on("cheer", function(channel, tags, message) {
+	if("source-room-id" in tags) {
+		if(tags['source-room-id'] !== tags['room-id']) {
+			return;
+		}
+	}
+
 	postToTwitchEventChannel("cheer", {
 		channel: channel,
 		tags: tags,
@@ -85,6 +91,12 @@ client.on("cheer", function(channel, tags, message) {
 	});
 });
 client.on("resub", function(channel, username, months, message, tags, methods) {
+	if("source-room-id" in tags) {
+		if(tags['source-room-id'] !== tags['room-id']) {
+			return;
+		}
+	}
+
 	postToTwitchEventChannel("resub", {
 		channel: channel,
 		username: username,
@@ -95,6 +107,12 @@ client.on("resub", function(channel, username, months, message, tags, methods) {
 	});
 });
 client.on("subscription", function(channel, username, method, message, tags) {
+	if("source-room-id" in tags) {
+		if(tags['source-room-id'] !== tags['room-id']) {
+			return;
+		}
+	}
+
 	postToTwitchEventChannel("subscription", {
 		channel: channel,
 		username: username,
@@ -133,6 +151,12 @@ client.on("timeout", function(channel, username, reason, duration, tags) {
 });
 
 client.on("raided", function(channel, username, viewers, tags) {
+	if("source-room-id" in tags) {
+		if(tags['source-room-id'] !== tags['room-id']) {
+			return;
+		}
+	}
+
 	postToTwitchEventChannel("raided", {
 		channel: channel,
 		username: username,
@@ -142,6 +166,12 @@ client.on("raided", function(channel, username, viewers, tags) {
 });
 
 client.on("submysterygift", function(channel, username, numbOfSubs, methods, tags) {
+	if("source-room-id" in tags) {
+		if(tags['source-room-id'] !== tags['room-id']) {
+			return;
+		}
+	}
+
 	postToTwitchEventChannel("submysterygift", {
 		channel: channel,
 		username: username,
@@ -152,6 +182,12 @@ client.on("submysterygift", function(channel, username, numbOfSubs, methods, tag
 });
 
 client.on("subgift", function(channel, username, streakMonths, recipient, methods, tags) {
+	if("source-room-id" in tags) {
+		if(tags['source-room-id'] !== tags['room-id']) {
+			return;
+		}
+	}
+
 	postToTwitchEventChannel("subgift", {
 		channel: channel,
 		username: username,
@@ -170,6 +206,12 @@ const newNotices = ['announcement', 'viewermilestone'];
 client.on("usernotice", function(msgid, channel, tags, msg) {
 	if(newNotices.indexOf(tags['msg-id']) === -1) {
 		return;
+	}
+
+	if("source-room-id" in tags) {
+		if(tags['source-room-id'] !== tags['room-id']) {
+			return;
+		}
 	}
 
 	postToTwitchEventChannel(tags['msg-id'], {
