@@ -20,7 +20,6 @@ async function getSessions() {
 	}
 
 	const timestamps = data.data;
-	timestamps.reverse();
 
 	for(const timestamp of timestamps) {
 		sessionData[timestamp] = {};

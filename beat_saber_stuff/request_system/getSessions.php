@@ -10,8 +10,19 @@ $out = array(
 	'message' => 'Script error'
 );
 
+$queryString = "SELECT * FROM sessions ORDER BY unixTimestamp DESC";
+if(isset($_GET['limit'])) {
+	if(ctype_digit($_GET['limit'])) {
+		$queryString .= " LIMIT {$_GET['limit']}";
+	} else {
+		$queryString .= " LIMIT 5";
+	}
+} else {
+	$queryString .= " LIMIT 5";
+}
+
 $data = array();
-$queryObject = $db->query('SELECT * FROM sessions');
+$queryObject = $db->query($queryString);
 while($row = $queryObject->fetchArray()) {
 	$data[] = $row['unixTimestamp'];
 }

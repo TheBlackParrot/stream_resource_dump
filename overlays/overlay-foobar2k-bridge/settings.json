@@ -37,6 +37,10 @@
 		"filename": {
 			"tag": "filename_ext",
 			"type": "string"
+		},
+		"comment": {
+			"tag": "comment",
+			"type": "string"
 		}
 	},
 

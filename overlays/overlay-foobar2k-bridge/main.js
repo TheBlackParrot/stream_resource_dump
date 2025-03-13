@@ -47,7 +47,8 @@ function getSongObject() {
 			type: (state.track.art === null ? null : state.track.art.type),
 			data: (state.track.art === null ? null : state.track.art.data.toString("base64"))
 		},
-		isrc: state.track.isrc
+		isrc: state.track.isrc,
+		comment: state.track.comment
 	}
 }
 

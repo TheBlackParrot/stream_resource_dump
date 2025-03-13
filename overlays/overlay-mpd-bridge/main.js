@@ -119,6 +119,7 @@ function getSongObject() {
 			type: (metadata.art === null ? null : metadata.art.format),
 			data: (metadata.art === null ? null : metadata.art.data.toString('base64'))
 		},
+		comment: metadata.comment ? metadata.comment : null,
 		isrc: ("isrc" in currentState.song ? currentState.song.isrc : null)
 	}
 }
