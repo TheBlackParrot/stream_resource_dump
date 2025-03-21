@@ -46,11 +46,16 @@ function updateMarquee() {
 }
 
 function determineScannableFGColor(data) {
-	if(!("colors" in currentSong)) {
-		return;
-	}
 	if(currentSong.uri === null) {
 		return;
+	}
+	if(!("colors" in currentSong) && !("colors" in currentSong.album.art)) {
+		return;
+	}
+
+	let colors = ("colors" in currentSong) ? currentSong.colors : currentSong.album.art.colors;
+	if(!("colors" in data)) {
+		data.colors = colors;
 	}
 	
 	let scannableBackgroundColor = "#333333";
@@ -157,12 +162,13 @@ async function fetchScannable(data) {
 	try {
 		response = await fetch(scannableImage, { signal: controller.signal });
 	} catch(err) {
-		console.log("failed to fetch scannable");
+		console.log("failed to fetch scannable, fetch error");
 		$("#scannableWrapper").hide();
 		return;
 	}
 
 	if(!response.ok) {
+		console.log("failed to fetch scannable, response not OK");
 		$("#scannableWrapper").hide();
 		return;					
 	}
@@ -180,10 +186,14 @@ async function fetchScannable(data) {
 
 	$("#scannable").one({
 		load: function() {
+			if(localStorage.getItem("setting_spotify_enableScannable") === "true") {
+				$("#scannableWrapper").show();
+			}
 			determineScannableFGColor(data);
 			$("#scannableShadow").fadeIn(timespans.large);
 		},
 		error: function() {
+			console.log("failed to fetch scannable, image loading error");
 			$("#scannableWrapper").hide();
 		}
 	});

@@ -11,23 +11,29 @@ var currentMusicState = {
 	elapsed: 0
 };
 function sendOutTrackData(data) {
+	let out = {
+		title: data.title,
+		artists: data.artists,
+		album: {
+			name: data.album.name,
+			year: (persistentData.year ? persistentData.year : data.album.year),
+			art: {
+				data: data.art.compressed,
+				colors: persistentData.colors
+			}
+		},
+		duration: data.duration,
+		isrc: data.isrc,
+		labels: persistentData.labels
+	};
+
+	if(localStorage.getItem("setting_mus_useCommentFieldAsScannableID") === "true") {
+		out.uri = "comment" in data ? `spotify:${localStorage.getItem("setting_spotify_scannableUseAlbum") === "true" ? "album" : "track"}:${data.comment}` : null;
+	}
+
 	postToMusicEventChannel({
 		event: "track",
-		data: {
-			title: data.title,
-			artists: data.artists,
-			album: {
-				name: data.album.name,
-				year: (persistentData.year ? persistentData.year : data.album.year),
-				art: {
-					data: data.art.compressed,
-					colors: persistentData.colors
-				}
-			},
-			duration: data.duration,
-			isrc: data.isrc,
-			labels: persistentData.labels
-		}
+		data: out
 	});
 }
 const musicFuncs = {

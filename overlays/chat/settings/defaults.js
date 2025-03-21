@@ -182,7 +182,8 @@ const nonPublicSettings = [
 	"combineMessagesIntoOneBlock",
 	"forceDefaultSubBadgeToFirstTier",
 	"bs_miscInfoShowMapModifiers",
-	"_overall_bgColor"
+	"_overall_bgColor",
+	"mus_useCommentFieldAsScannableID"
 ];
 
 const defaultConfig = {
@@ -1294,7 +1295,8 @@ const defaultConfig = {
 	"bs_miscInfoShowMapModifiers": "true",
 	"_overall_bgColor": "#33333300",
 	"bs_miscInfoTopAdditionalFontWeight": "0",
-	"bs_miscInfoBottomAdditionalFontWeight": "0"
+	"bs_miscInfoBottomAdditionalFontWeight": "0",
+	"mus_useCommentFieldAsScannableID": "false"
 };
 // i typed out the bigNoNoWords so you don't have to, i'm sorry :(
 // it's gotta know what to remove

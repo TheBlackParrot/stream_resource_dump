@@ -1,4 +1,38 @@
 {
+	"1742436356571": {
+		"updates": {
+			"spotify": {
+				"revision": 28,
+				"notes": [
+					[
+						"added the ability to use comment fields in external player track data as data for spotify scannables",
+						["comments should only contain the ID/code for this to work"],
+						{"anchor": "mus_useCommentFieldAsScannableID"}
+					],
+					[
+						"quieted down logging on external music scripts"
+					],
+					[
+						"fixed gradients not being applied to the artist display if an external music player sends artist data as a string"
+					],
+					[
+						"added missing events for the playing field in external player track state"
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 90,
+				"notes": [
+					[
+						"added link to mercurialworld's external player bridge script for Cider",
+						{"anchor": "mus_overrideSpotify"}
+					]
+				]
+			}
+		}
+	},
+
 	"1739740699104": {
 		"updates": {
 			"bs": {

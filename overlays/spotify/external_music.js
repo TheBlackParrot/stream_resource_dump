@@ -3,7 +3,21 @@ const musicChannel = new BroadcastChannel("music");
 const musicFuncs = {
 	track: function(data) {
 		cycleAlbumArtist("artist");
-		$("#scannableWrapper").hide();
+
+		if(localStorage.getItem("setting_mus_useCommentFieldAsScannableID") !== "true") {
+			$("#scannableWrapper").hide();
+		} else {
+			if("uri" in data) {
+				if(data.uri.length === 36 && data.uri.indexOf("spotify:") === 0) {
+					fetchScannable(data);
+				} else {
+					$("#scannableWrapper").hide();
+				}
+			} else {
+				$("#scannableWrapper").hide();
+			}
+		}
+
 		if(localStorage.getItem("setting_spotify_enableArt") === "true") { $("#artWrapper").show(); }
 
 		const enableAnimations = (localStorage.getItem("setting_spotify_enableAnimations") === "true");
@@ -31,7 +45,15 @@ const musicFuncs = {
 				$("#artistString").empty();
 				if(data.artists) {
 					if(typeof data.artists[0] === "string") {
-						$("#artistString").text(data.artists.join(", "));
+						const artistElement = $(`<div class="individualArtist"></div>`);
+						const artistName = $(`<span class="artistName"></span>`).text(data.artists.join(", "));
+
+						if(artistGradientEnabled) {
+							artistName.addClass("artistStringGradient");
+						}
+
+						artistElement.append(artistName);
+						$("#artistString").append(artistElement);
 					} else {
 						for(let artist of data.artists) {
 							const artistElement = $(`<div class="individualArtist"></div>`);
@@ -141,13 +163,28 @@ const musicFuncs = {
 
 	state: function(data) {
 		elapsed = data.elapsed;
+
+		if(localStorage.getItem("setting_spotify_hideOnPause") === "true") {
+			if(data.playing && !currentSong.isPlaying) {
+				// previously paused, now playing
+				showStuff();
+				wasPreviouslyPlaying = true;
+			}
+			if(!data.playing && currentSong.isPlaying) {
+				// previously playing, now paused
+				hideStuff();
+				wasPreviouslyPlaying = false;
+			}
+		}
+		currentSong.isPlaying = data.playing;
+
 		updateProgress();
 	}
 };
 
 musicChannel.onmessage = function(message) {
 	message = message.data;
-	console.log(message);
+	//console.log(message);
 
 	if(message.event in musicFuncs) {
 		musicFuncs[message.event](message.data);
