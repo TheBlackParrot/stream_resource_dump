@@ -1,5 +1,6 @@
 {
   "enabled": true,
-  "fadeSpeed": 5.0,
-  "audioVolume": 0.8
+  "fadeSpeed": 1.75,
+  "audioVolume": 0.7,
+  "selectedAudioFile": "PauseMusic"
 }

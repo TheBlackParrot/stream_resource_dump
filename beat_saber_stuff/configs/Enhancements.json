@@ -1,7 +1,7 @@
 {
-  "Version": "3.0.13",
+  "Version": "3.0.18",
   "Clock": {
-    "Enabled": true,
+    "Enabled": false,
     "ShowInGame": false,
     "Format": "HH:mm",
     "Culture": "",
@@ -10,13 +10,13 @@
     "Opacity": 1.0,
     "Color": "#FFFFFF",
     "Position": {
-      "x": -2.199999,
-      "y": 2.650001,
-      "z": 3.7
+      "x": 0.0,
+      "y": 3.1,
+      "z": 3.9
     },
     "Rotation": {
-      "x": 355.0,
-      "y": 330.0,
+      "x": 325.0,
+      "y": 0.0,
       "z": 0.0
     },
     "Formats": [
@@ -25,16 +25,7 @@
       "HH:mm",
       "HH:mm:ss",
       "dddd",
-      "MMMM dd, yyyy | h:mm tt",
-      "e",
-      "e",
-      "e",
-      "e",
-      "%H %m",
-      "%H %m",
-      "%H %m",
-      "HH MM",
-      "HH MM"
+      "MMMM dd, yyyy | h:mm tt"
     ]
   },
   "Timer": {
@@ -44,8 +35,8 @@
   "Breaktime": {
     "Enabled": false,
     "RandomizeMode": "None",
-    "MinimumBreakTime": 4.0,
-    "SelectedProfile": "osu!",
+    "MinimumBreakTime": 5.0,
+    "SelectedProfile": "Default",
     "Profiles": [
       {
         "Name": "Default",
@@ -82,17 +73,17 @@
   },
   "Volume": {
     "GoodCuts": 1.0,
-    "BadCuts": 0.9999999,
-    "Music": 0.4500001,
-    "SongPreview": 0.4500001,
+    "BadCuts": 0.85,
+    "Music": 0.5000001,
+    "SongPreview": 0.4,
     "MenuBackground": 1.0,
     "Fireworks": 0.0
   },
   "Misc": {
     "BPMFixEnabled": false,
-    "ButtonLockMenu": true,
-    "ButtonLockRestart": true,
-    "ButtonLockContinue": true
+    "ButtonLockMenu": false,
+    "ButtonLockRestart": false,
+    "ButtonLockContinue": false
   },
   "Optidra": {
     "Enabled": false,

@@ -1,0 +1,3604 @@
+{
+  "ModVersion": "0.3.9",
+  "Version": 1,
+  "LocalTransform": {
+    "Position": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "Rotation": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "Scale": {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 1.0
+    }
+  },
+  "Modules": [
+    {
+      "ModuleId": "reezonate.blur-saber",
+      "Version": 1,
+      "Config": {
+        "SaberSettings": {
+          "zOffsetFrom": 0.0,
+          "zOffsetTo": 0.12,
+          "thickness": 2.142857,
+          "saberProfile": {
+            "interpolationType": 3,
+            "controlPoints": [
+              {
+                "time": 0.0,
+                "value": 0.1
+              },
+              {
+                "time": 0.0474223681,
+                "value": 0.1
+              },
+              {
+                "time": 0.1086466,
+                "value": 0.158741891
+              },
+              {
+                "time": 0.167752355,
+                "value": 1.0
+              },
+              {
+                "time": 0.31591633,
+                "value": 1.0
+              },
+              {
+                "time": 0.517494857,
+                "value": 1.0
+              },
+              {
+                "time": 1.0,
+                "value": 0.0
+              }
+            ]
+          },
+          "startCap": true,
+          "endCap": true,
+          "verticalResolution": 1,
+          "horizontalResolution": 16,
+          "renderQueue": 3002,
+          "cullMode": 0,
+          "depthWrite": true,
+          "blurFrames": 2.0,
+          "glowMultiplier": 1.0,
+          "handleRoughness": 2.0,
+          "handleColor": {
+            "r": 0.1,
+            "g": 0.1,
+            "b": 0.1,
+            "a": 0.0
+          },
+          "maskSettings": {
+            "bladeMaskResolution": 64,
+            "driversMaskResolution": 1,
+            "handleMask": {
+              "interpolationType": 2,
+              "controlPoints": [
+                {
+                  "time": 0.0,
+                  "value": 0.0
+                }
+              ]
+            },
+            "bladeMappings": {
+              "colorOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": {
+                      "r": 0.08,
+                      "g": 0.0,
+                      "b": 0.0,
+                      "a": 1.0
+                    }
+                  },
+                  {
+                    "time": 0.099,
+                    "value": {
+                      "r": 0.08,
+                      "g": 0.0,
+                      "b": 0.0,
+                      "a": 1.0
+                    }
+                  },
+                  {
+                    "time": 0.09974095,
+                    "value": {
+                      "r": 1.1,
+                      "g": 0.0,
+                      "b": 0.0,
+                      "a": 1.0
+                    }
+                  },
+                  {
+                    "time": 1.0,
+                    "value": {
+                      "r": 0.6,
+                      "g": 0.0,
+                      "b": 0.0,
+                      "a": 0.6
+                    }
+                  }
+                ]
+              },
+              "alphaOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "scaleOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "valueFrom": 0.0,
+              "valueTo": 1.0
+            },
+            "driversSampleMode": 0,
+            "viewingAngleMappings": {
+              "colorOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": {
+                      "r": 1.0,
+                      "g": 1.0,
+                      "b": 1.0,
+                      "a": 1.0
+                    }
+                  }
+                ]
+              },
+              "alphaOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "scaleOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "valueFrom": 0.0,
+              "valueTo": 1.0
+            },
+            "surfaceAngleMappings": {
+              "colorOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": {
+                      "r": 0.6,
+                      "g": 0.388804138,
+                      "b": 0.178509057,
+                      "a": 0.0
+                    }
+                  },
+                  {
+                    "time": 1.0,
+                    "value": {
+                      "r": 1.0,
+                      "g": 0.689047456,
+                      "b": 0.689047456,
+                      "a": 0.208037227
+                    }
+                  }
+                ]
+              },
+              "alphaOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "scaleOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "valueFrom": 0.0,
+              "valueTo": 1.0
+            },
+            "drivers": [
+              {
+                "valueType": 0,
+                "increaseResistance": 0.0,
+                "decreaseResistance": 0.0,
+                "mappings": {
+                  "colorOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": {
+                          "r": 1.0,
+                          "g": 1.0,
+                          "b": 1.0,
+                          "a": 1.0
+                        }
+                      }
+                    ]
+                  },
+                  "alphaOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "scaleOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "valueFrom": 0.0,
+                  "valueTo": 1.0
+                }
+              },
+              {
+                "valueType": 0,
+                "increaseResistance": 0.0,
+                "decreaseResistance": 0.0,
+                "mappings": {
+                  "colorOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": {
+                          "r": 1.0,
+                          "g": 1.0,
+                          "b": 1.0,
+                          "a": 1.0
+                        }
+                      }
+                    ]
+                  },
+                  "alphaOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "scaleOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "valueFrom": 0.0,
+                  "valueTo": 1.0
+                }
+              },
+              {
+                "valueType": 0,
+                "increaseResistance": 0.0,
+                "decreaseResistance": 0.0,
+                "mappings": {
+                  "colorOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": {
+                          "r": 1.0,
+                          "g": 1.0,
+                          "b": 1.0,
+                          "a": 1.0
+                        }
+                      }
+                    ]
+                  },
+                  "alphaOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "scaleOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "valueFrom": 0.0,
+                  "valueTo": 1.0
+                }
+              },
+              {
+                "valueType": 0,
+                "increaseResistance": 0.0,
+                "decreaseResistance": 0.0,
+                "mappings": {
+                  "colorOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": {
+                          "r": 1.0,
+                          "g": 1.0,
+                          "b": 1.0,
+                          "a": 1.0
+                        }
+                      }
+                    ]
+                  },
+                  "alphaOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "scaleOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "valueFrom": 0.0,
+                  "valueTo": 1.0
+                }
+              }
+            ]
+          }
+        },
+        "Enabled": true,
+        "Name": "Leaf 1",
+        "LocalTransform": {
+          "Position": {
+            "x": 0.0,
+            "y": -0.0425,
+            "z": 0.04
+          },
+          "Rotation": {
+            "x": 40.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "Scale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          }
+        }
+      }
+    },
+    {
+      "ModuleId": "reezonate.blur-saber",
+      "Version": 1,
+      "Config": {
+        "SaberSettings": {
+          "zOffsetFrom": 0.0,
+          "zOffsetTo": 0.08,
+          "thickness": 1.07142854,
+          "saberProfile": {
+            "interpolationType": 3,
+            "controlPoints": [
+              {
+                "time": 0.0,
+                "value": 0.1
+              },
+              {
+                "time": 0.0474223681,
+                "value": 0.1
+              },
+              {
+                "time": 0.1086466,
+                "value": 0.158741891
+              },
+              {
+                "time": 0.167752355,
+                "value": 1.0
+              },
+              {
+                "time": 0.31591633,
+                "value": 1.0
+              },
+              {
+                "time": 0.517494857,
+                "value": 1.0
+              },
+              {
+                "time": 1.0,
+                "value": 0.0
+              }
+            ]
+          },
+          "startCap": true,
+          "endCap": true,
+          "verticalResolution": 1,
+          "horizontalResolution": 16,
+          "renderQueue": 3002,
+          "cullMode": 0,
+          "depthWrite": true,
+          "blurFrames": 2.0,
+          "glowMultiplier": 1.0,
+          "handleRoughness": 2.0,
+          "handleColor": {
+            "r": 0.1,
+            "g": 0.1,
+            "b": 0.1,
+            "a": 0.0
+          },
+          "maskSettings": {
+            "bladeMaskResolution": 64,
+            "driversMaskResolution": 1,
+            "handleMask": {
+              "interpolationType": 2,
+              "controlPoints": [
+                {
+                  "time": 0.0,
+                  "value": 0.0
+                }
+              ]
+            },
+            "bladeMappings": {
+              "colorOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": {
+                      "r": 0.08,
+                      "g": 0.0,
+                      "b": 0.0,
+                      "a": 1.0
+                    }
+                  },
+                  {
+                    "time": 0.099,
+                    "value": {
+                      "r": 0.08,
+                      "g": 0.0,
+                      "b": 0.0,
+                      "a": 1.0
+                    }
+                  },
+                  {
+                    "time": 0.09974095,
+                    "value": {
+                      "r": 1.0,
+                      "g": 0.0,
+                      "b": 0.0,
+                      "a": 1.0
+                    }
+                  },
+                  {
+                    "time": 1.0,
+                    "value": {
+                      "r": 0.6,
+                      "g": 0.0,
+                      "b": 0.0,
+                      "a": 0.6
+                    }
+                  }
+                ]
+              },
+              "alphaOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "scaleOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "valueFrom": 0.0,
+              "valueTo": 1.0
+            },
+            "driversSampleMode": 0,
+            "viewingAngleMappings": {
+              "colorOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": {
+                      "r": 1.0,
+                      "g": 1.0,
+                      "b": 1.0,
+                      "a": 1.0
+                    }
+                  }
+                ]
+              },
+              "alphaOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "scaleOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "valueFrom": 0.0,
+              "valueTo": 1.0
+            },
+            "surfaceAngleMappings": {
+              "colorOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": {
+                      "r": 0.6,
+                      "g": 0.395552665,
+                      "b": 0.191977367,
+                      "a": 0.0
+                    }
+                  },
+                  {
+                    "time": 1.0,
+                    "value": {
+                      "r": 1.0,
+                      "g": 0.689047456,
+                      "b": 0.689047456,
+                      "a": 0.1
+                    }
+                  }
+                ]
+              },
+              "alphaOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "scaleOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "valueFrom": 0.0,
+              "valueTo": 1.0
+            },
+            "drivers": [
+              {
+                "valueType": 0,
+                "increaseResistance": 0.0,
+                "decreaseResistance": 0.0,
+                "mappings": {
+                  "colorOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": {
+                          "r": 1.0,
+                          "g": 1.0,
+                          "b": 1.0,
+                          "a": 1.0
+                        }
+                      }
+                    ]
+                  },
+                  "alphaOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "scaleOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "valueFrom": 0.0,
+                  "valueTo": 1.0
+                }
+              },
+              {
+                "valueType": 0,
+                "increaseResistance": 0.0,
+                "decreaseResistance": 0.0,
+                "mappings": {
+                  "colorOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": {
+                          "r": 1.0,
+                          "g": 1.0,
+                          "b": 1.0,
+                          "a": 1.0
+                        }
+                      }
+                    ]
+                  },
+                  "alphaOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "scaleOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "valueFrom": 0.0,
+                  "valueTo": 1.0
+                }
+              },
+              {
+                "valueType": 0,
+                "increaseResistance": 0.0,
+                "decreaseResistance": 0.0,
+                "mappings": {
+                  "colorOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": {
+                          "r": 1.0,
+                          "g": 1.0,
+                          "b": 1.0,
+                          "a": 1.0
+                        }
+                      }
+                    ]
+                  },
+                  "alphaOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "scaleOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "valueFrom": 0.0,
+                  "valueTo": 1.0
+                }
+              },
+              {
+                "valueType": 0,
+                "increaseResistance": 0.0,
+                "decreaseResistance": 0.0,
+                "mappings": {
+                  "colorOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": {
+                          "r": 1.0,
+                          "g": 1.0,
+                          "b": 1.0,
+                          "a": 1.0
+                        }
+                      }
+                    ]
+                  },
+                  "alphaOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "scaleOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "valueFrom": 0.0,
+                  "valueTo": 1.0
+                }
+              }
+            ]
+          }
+        },
+        "Enabled": true,
+        "Name": "Leaf 2",
+        "LocalTransform": {
+          "Position": {
+            "x": 0.011,
+            "y": 0.039,
+            "z": 0.32
+          },
+          "Rotation": {
+            "x": -43.0,
+            "y": 15.0,
+            "z": 0.0
+          },
+          "Scale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          }
+        }
+      }
+    },
+    {
+      "ModuleId": "reezonate.simple-trail",
+      "Version": 1,
+      "Config": {
+        "MeshSettings": {
+          "TrailLength": 0.3,
+          "HorizontalResolution": 4,
+          "VerticalResolution": 160
+        },
+        "MaterialSettings": {
+          "trailType": 0,
+          "materialType": 0,
+          "offset": 1.0,
+          "width": 0.07,
+          "distortionMultiplier": 1.0,
+          "generalSettings": {
+            "customTextureId": "WhitePixel.png",
+            "animationLayout": {
+              "totalFrames": 1,
+              "framesPerRow": 1,
+              "framesPerColumn": 1,
+              "frameDuration": 1.0
+            },
+            "blendingMode": 0,
+            "alwaysOnTop": true,
+            "renderQueue": 3001
+          },
+          "maskSettings": {
+            "mainMaskResolution": 128,
+            "driversMaskResolution": 16,
+            "lengthMappings": {
+              "colorOverValue": {
+                "interpolationType": 3,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": {
+                      "r": 2.0,
+                      "g": 0.0,
+                      "b": 0.0,
+                      "a": 2.0
+                    }
+                  },
+                  {
+                    "time": 0.1,
+                    "value": {
+                      "r": 1.0,
+                      "g": 0.0,
+                      "b": 0.0,
+                      "a": 0.1
+                    }
+                  },
+                  {
+                    "time": 0.75,
+                    "value": {
+                      "r": 1.0,
+                      "g": 0.0,
+                      "b": 0.0,
+                      "a": 0.0
+                    }
+                  },
+                  {
+                    "time": 1.0,
+                    "value": {
+                      "r": 1.0,
+                      "g": 0.0,
+                      "b": 0.0,
+                      "a": 0.0
+                    }
+                  }
+                ]
+              },
+              "alphaOverValue": {
+                "interpolationType": 3,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 0.0
+                  },
+                  {
+                    "time": 0.01185137,
+                    "value": 1.0
+                  },
+                  {
+                    "time": 0.05865796,
+                    "value": 1.0
+                  },
+                  {
+                    "time": 0.197222829,
+                    "value": 0.45
+                  },
+                  {
+                    "time": 0.6895667,
+                    "value": 0.0
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 0.0
+                  }
+                ]
+              },
+              "scaleOverValue": {
+                "interpolationType": 3,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 0.0
+                  },
+                  {
+                    "time": 0.01185137,
+                    "value": 1.0
+                  },
+                  {
+                    "time": 0.05865796,
+                    "value": 1.0
+                  },
+                  {
+                    "time": 0.197222829,
+                    "value": 0.6
+                  },
+                  {
+                    "time": 0.7480212,
+                    "value": 0.333
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 0.333
+                  }
+                ]
+              },
+              "valueFrom": 0.0,
+              "valueTo": 1.0
+            },
+            "widthMappings": {
+              "colorOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.2,
+                    "value": {
+                      "r": 1.0,
+                      "g": 1.0,
+                      "b": 1.0,
+                      "a": 0.0
+                    }
+                  },
+                  {
+                    "time": 0.5,
+                    "value": {
+                      "r": 1.0,
+                      "g": 1.0,
+                      "b": 1.0,
+                      "a": 2.0
+                    }
+                  },
+                  {
+                    "time": 0.8,
+                    "value": {
+                      "r": 1.0,
+                      "g": 1.0,
+                      "b": 1.0,
+                      "a": 0.0
+                    }
+                  }
+                ]
+              },
+              "alphaOverValue": {
+                "interpolationType": 3,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 0.0
+                  },
+                  {
+                    "time": 0.46,
+                    "value": 0.0
+                  },
+                  {
+                    "time": 0.49472335,
+                    "value": 1.0
+                  },
+                  {
+                    "time": 0.505,
+                    "value": 1.0
+                  },
+                  {
+                    "time": 0.54,
+                    "value": 0.0
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 0.0
+                  }
+                ]
+              },
+              "scaleOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "valueFrom": 0.0,
+              "valueTo": 1.0
+            },
+            "driversSampleMode": 0,
+            "viewingAngleMappings": {
+              "colorOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": {
+                      "r": 1.0,
+                      "g": 1.0,
+                      "b": 1.0,
+                      "a": 1.0
+                    }
+                  }
+                ]
+              },
+              "alphaOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "scaleOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "valueFrom": 0.0,
+              "valueTo": 1.0
+            },
+            "surfaceAngleMappings": {
+              "colorOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": {
+                      "r": 1.0,
+                      "g": 1.0,
+                      "b": 1.0,
+                      "a": 1.0
+                    }
+                  }
+                ]
+              },
+              "alphaOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "scaleOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "valueFrom": 0.0,
+              "valueTo": 1.0
+            },
+            "drivers": [
+              {
+                "valueType": 4,
+                "increaseResistance": 1.0,
+                "decreaseResistance": 1.0,
+                "mappings": {
+                  "colorOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": {
+                          "r": 1.0,
+                          "g": 1.0,
+                          "b": 1.0,
+                          "a": 1.0
+                        }
+                      }
+                    ]
+                  },
+                  "alphaOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 0.0
+                      },
+                      {
+                        "time": 1.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "scaleOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "valueFrom": 1.5,
+                  "valueTo": 3.0
+                }
+              },
+              {
+                "valueType": 0,
+                "increaseResistance": 0.0,
+                "decreaseResistance": 0.0,
+                "mappings": {
+                  "colorOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": {
+                          "r": 1.0,
+                          "g": 1.0,
+                          "b": 1.0,
+                          "a": 1.0
+                        }
+                      }
+                    ]
+                  },
+                  "alphaOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "scaleOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "valueFrom": 0.0,
+                  "valueTo": 1.0
+                }
+              },
+              {
+                "valueType": 0,
+                "increaseResistance": 0.0,
+                "decreaseResistance": 0.0,
+                "mappings": {
+                  "colorOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": {
+                          "r": 1.0,
+                          "g": 1.0,
+                          "b": 1.0,
+                          "a": 1.0
+                        }
+                      }
+                    ]
+                  },
+                  "alphaOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "scaleOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "valueFrom": 0.0,
+                  "valueTo": 1.0
+                }
+              },
+              {
+                "valueType": 0,
+                "increaseResistance": 0.0,
+                "decreaseResistance": 0.0,
+                "mappings": {
+                  "colorOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": {
+                          "r": 1.0,
+                          "g": 1.0,
+                          "b": 1.0,
+                          "a": 1.0
+                        }
+                      }
+                    ]
+                  },
+                  "alphaOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "scaleOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "valueFrom": 0.0,
+                  "valueTo": 1.0
+                }
+              }
+            ]
+          }
+        },
+        "Enabled": true,
+        "Name": "Trail Tip",
+        "LocalTransform": {
+          "Position": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "Rotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "Scale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          }
+        }
+      }
+    },
+    {
+      "ModuleId": "reezonate.points-vfx",
+      "Version": 1,
+      "Config": {
+        "MeshSettings": {
+          "ParticlesCount": 3000,
+          "HorizontalResolution": 1,
+          "VerticalResolution": 1
+        },
+        "MaterialSettings": {
+          "materialType": 0,
+          "particleSize": 0.07,
+          "distortionMultiplier": 1.0,
+          "generalSettings": {
+            "customTextureId": "leaves-trans.png",
+            "animationLayout": {
+              "totalFrames": 8,
+              "framesPerRow": 7,
+              "framesPerColumn": 1,
+              "frameDuration": 0.15
+            },
+            "blendingMode": 2,
+            "alwaysOnTop": false,
+            "renderQueue": 3000
+          },
+          "textureSettings": {
+            "layers": [
+              {
+                "centerOffset": {
+                  "x": 0.0,
+                  "y": 0.0
+                },
+                "scale": {
+                  "x": 1.0,
+                  "y": 1.0
+                },
+                "power": {
+                  "x": 1.0,
+                  "y": 1.0
+                },
+                "falloff": 1.0,
+                "intensity": 1.0
+              },
+              {
+                "centerOffset": {
+                  "x": 0.0,
+                  "y": 0.0
+                },
+                "scale": {
+                  "x": 1.0,
+                  "y": 1.0
+                },
+                "power": {
+                  "x": 1.0,
+                  "y": 1.0
+                },
+                "falloff": 1.0,
+                "intensity": 0.0
+              }
+            ]
+          },
+          "maskSettings": {
+            "mainMaskResolution": 32,
+            "driversMaskResolution": 16,
+            "lifetimeMappings": {
+              "colorOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.25,
+                    "value": {
+                      "r": 1.0,
+                      "g": 1.0,
+                      "b": 1.0,
+                      "a": 1.0
+                    }
+                  },
+                  {
+                    "time": 1.0,
+                    "value": {
+                      "r": 1.0,
+                      "g": 1.0,
+                      "b": 1.0,
+                      "a": 0.0
+                    }
+                  }
+                ]
+              },
+              "alphaOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "scaleOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "valueFrom": 0.0,
+              "valueTo": 1.0
+            },
+            "bladeMappings": {
+              "colorOverValue": {
+                "interpolationType": 2,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": {
+                      "r": 1.0,
+                      "g": 0.715989232,
+                      "b": 0.199999988,
+                      "a": 1.0
+                    }
+                  },
+                  {
+                    "time": 1.0,
+                    "value": {
+                      "r": 1.0,
+                      "g": 0.0,
+                      "b": 0.0,
+                      "a": 1.0
+                    }
+                  }
+                ]
+              },
+              "alphaOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "scaleOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "valueFrom": 0.0,
+              "valueTo": 1.0
+            },
+            "driversSampleMode": 0,
+            "viewingAngleMappings": {
+              "colorOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": {
+                      "r": 1.0,
+                      "g": 1.0,
+                      "b": 1.0,
+                      "a": 1.0
+                    }
+                  }
+                ]
+              },
+              "alphaOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 0.0
+                  },
+                  {
+                    "time": 0.075,
+                    "value": 0.0
+                  },
+                  {
+                    "time": 0.175,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "scaleOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "valueFrom": 0.0,
+              "valueTo": 1.0
+            },
+            "surfaceAngleMappings": {
+              "colorOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": {
+                      "r": 1.0,
+                      "g": 1.0,
+                      "b": 1.0,
+                      "a": 1.0
+                    }
+                  }
+                ]
+              },
+              "alphaOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "scaleOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "valueFrom": 0.0,
+              "valueTo": 1.0
+            },
+            "drivers": [
+              {
+                "valueType": 0,
+                "increaseResistance": 0.0,
+                "decreaseResistance": 0.0,
+                "mappings": {
+                  "colorOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": {
+                          "r": 1.0,
+                          "g": 1.0,
+                          "b": 1.0,
+                          "a": 1.0
+                        }
+                      }
+                    ]
+                  },
+                  "alphaOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "scaleOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "valueFrom": 0.0,
+                  "valueTo": 1.0
+                }
+              },
+              {
+                "valueType": 0,
+                "increaseResistance": 0.0,
+                "decreaseResistance": 0.0,
+                "mappings": {
+                  "colorOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": {
+                          "r": 1.0,
+                          "g": 1.0,
+                          "b": 1.0,
+                          "a": 1.0
+                        }
+                      }
+                    ]
+                  },
+                  "alphaOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "scaleOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "valueFrom": 0.0,
+                  "valueTo": 1.0
+                }
+              },
+              {
+                "valueType": 0,
+                "increaseResistance": 0.0,
+                "decreaseResistance": 0.0,
+                "mappings": {
+                  "colorOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": {
+                          "r": 1.0,
+                          "g": 1.0,
+                          "b": 1.0,
+                          "a": 1.0
+                        }
+                      }
+                    ]
+                  },
+                  "alphaOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "scaleOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "valueFrom": 0.0,
+                  "valueTo": 1.0
+                }
+              },
+              {
+                "valueType": 0,
+                "increaseResistance": 0.0,
+                "decreaseResistance": 0.0,
+                "mappings": {
+                  "colorOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": {
+                          "r": 1.0,
+                          "g": 1.0,
+                          "b": 1.0,
+                          "a": 1.0
+                        }
+                      }
+                    ]
+                  },
+                  "alphaOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "scaleOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "valueFrom": 0.0,
+                  "valueTo": 1.0
+                }
+              }
+            ]
+          }
+        },
+        "TriggerSettings": {
+          "type": 1,
+          "percentage": 0.01,
+          "period": 0.05,
+          "burstSpread": 0.5
+        },
+        "SpawnSettings": {
+          "MinLifetime": 1.5,
+          "MaxLifetime": 4.0,
+          "SpawningPeriod": 0.0,
+          "MinBladeOffset": 0.95,
+          "MaxBladeOffset": 1.0,
+          "MinParticleMass": 0.5,
+          "MaxParticleMass": 0.9,
+          "RandomSpawnVelocity": 4.0,
+          "BladeInertiaMultiplier": 1.0,
+          "SizeVariation": {
+            "x": 0.548824668,
+            "y": 0.0
+          },
+          "SpawnDriver": {
+            "valueType": 0,
+            "increaseResistance": 0.0,
+            "decreaseResistance": 0.0,
+            "multiplierOverValue": {
+              "interpolationType": 0,
+              "controlPoints": [
+                {
+                  "time": 0.0,
+                  "value": 1.0
+                }
+              ]
+            },
+            "valueFrom": 0.0,
+            "valueTo": 1.0
+          }
+        },
+        "PhysicsSettings": {
+          "DampingCoefficient": 1.4,
+          "TurbulenceScale": 1.2,
+          "TurbulenceTimeScale": 0.04,
+          "TurbulencePower": 1.7,
+          "Gravity": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": -2.5
+          }
+        },
+        "Enabled": true,
+        "Name": "Leaf Particles",
+        "LocalTransform": {
+          "Position": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "Rotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "Scale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          }
+        }
+      }
+    },
+    {
+      "ModuleId": "reezonate.simple-trail",
+      "Version": 1,
+      "Config": {
+        "MeshSettings": {
+          "TrailLength": 0.3,
+          "HorizontalResolution": 4,
+          "VerticalResolution": 96
+        },
+        "MaterialSettings": {
+          "trailType": 1,
+          "materialType": 0,
+          "offset": 1.0,
+          "width": 0.5,
+          "distortionMultiplier": 1.0,
+          "generalSettings": {
+            "customTextureId": "WhitePixel.png",
+            "animationLayout": {
+              "totalFrames": 1,
+              "framesPerRow": 1,
+              "framesPerColumn": 1,
+              "frameDuration": 1.0
+            },
+            "blendingMode": 0,
+            "alwaysOnTop": false,
+            "renderQueue": 3000
+          },
+          "maskSettings": {
+            "mainMaskResolution": 32,
+            "driversMaskResolution": 1,
+            "lengthMappings": {
+              "colorOverValue": {
+                "interpolationType": 3,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": {
+                      "r": 1.1,
+                      "g": 0.0,
+                      "b": 0.0,
+                      "a": 0.25
+                    }
+                  },
+                  {
+                    "time": 1.0,
+                    "value": {
+                      "r": 0.0,
+                      "g": 0.0,
+                      "b": 0.0,
+                      "a": 0.0
+                    }
+                  }
+                ]
+              },
+              "alphaOverValue": {
+                "interpolationType": 3,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 0.0
+                  },
+                  {
+                    "time": 0.01,
+                    "value": 1.0
+                  },
+                  {
+                    "time": 0.0303407516,
+                    "value": 1.0
+                  },
+                  {
+                    "time": 0.09,
+                    "value": 0.225
+                  },
+                  {
+                    "time": 0.5,
+                    "value": 0.0
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 0.0
+                  }
+                ]
+              },
+              "scaleOverValue": {
+                "interpolationType": 3,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  },
+                  {
+                    "time": 0.001,
+                    "value": 0.0
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 0.0
+                  }
+                ]
+              },
+              "valueFrom": 0.0,
+              "valueTo": 1.0
+            },
+            "widthMappings": {
+              "colorOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": {
+                      "r": 1.0,
+                      "g": 1.0,
+                      "b": 1.0,
+                      "a": 1.0
+                    }
+                  }
+                ]
+              },
+              "alphaOverValue": {
+                "interpolationType": 3,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  },
+                  {
+                    "time": 0.133,
+                    "value": 0.0
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 0.0
+                  }
+                ]
+              },
+              "scaleOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "valueFrom": 0.0,
+              "valueTo": 1.0
+            },
+            "driversSampleMode": 0,
+            "viewingAngleMappings": {
+              "colorOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": {
+                      "r": 1.0,
+                      "g": 1.0,
+                      "b": 1.0,
+                      "a": 1.0
+                    }
+                  }
+                ]
+              },
+              "alphaOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "scaleOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "valueFrom": 0.0,
+              "valueTo": 1.0
+            },
+            "surfaceAngleMappings": {
+              "colorOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": {
+                      "r": 1.0,
+                      "g": 1.0,
+                      "b": 1.0,
+                      "a": 1.0
+                    }
+                  }
+                ]
+              },
+              "alphaOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "scaleOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "valueFrom": 0.0,
+              "valueTo": 1.0
+            },
+            "drivers": []
+          }
+        },
+        "Enabled": true,
+        "Name": "Trail Flare",
+        "LocalTransform": {
+          "Position": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "Rotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "Scale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          }
+        }
+      }
+    },
+    {
+      "ModuleId": "reezonate.sparks-vfx",
+      "Version": 1,
+      "Config": {
+        "MeshSettings": {
+          "ParticlesCount": 128,
+          "HorizontalResolution": 2,
+          "VerticalResolution": 8
+        },
+        "TrailSettings": {
+          "Length": 0.3
+        },
+        "MaterialSettings": {
+          "materialType": 0,
+          "trailWidth": 0.09,
+          "distortionMultiplier": 1.0,
+          "generalSettings": {
+            "customTextureId": "",
+            "animationLayout": {
+              "totalFrames": 0,
+              "framesPerRow": 0,
+              "framesPerColumn": 0,
+              "frameDuration": 1.0
+            },
+            "blendingMode": 0,
+            "alwaysOnTop": true,
+            "renderQueue": 3010
+          },
+          "textureSettings": {
+            "layers": [
+              {
+                "centerOffset": {
+                  "x": 0.0,
+                  "y": -0.5
+                },
+                "scale": {
+                  "x": 0.7,
+                  "y": 1.0
+                },
+                "power": {
+                  "x": 0.6,
+                  "y": 0.9
+                },
+                "falloff": 0.6698072,
+                "intensity": 1.0
+              },
+              {
+                "centerOffset": {
+                  "x": 0.0,
+                  "y": -0.8
+                },
+                "scale": {
+                  "x": 0.2,
+                  "y": 1.0
+                },
+                "power": {
+                  "x": 1.0,
+                  "y": 1.0
+                },
+                "falloff": 1.0,
+                "intensity": 0.0
+              }
+            ]
+          },
+          "maskSettings": {
+            "mainMaskResolution": 32,
+            "driversMaskResolution": 8,
+            "lengthMappings": {
+              "colorOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": {
+                      "r": 1.0,
+                      "g": 1.0,
+                      "b": 1.0,
+                      "a": 1.0
+                    }
+                  }
+                ]
+              },
+              "alphaOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "scaleOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "valueFrom": 0.0,
+              "valueTo": 1.0
+            },
+            "lifetimeMappings": {
+              "colorOverValue": {
+                "interpolationType": 3,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": {
+                      "r": 5.0,
+                      "g": 4.83154249,
+                      "b": 4.45028543,
+                      "a": 3.0
+                    }
+                  },
+                  {
+                    "time": 0.1,
+                    "value": {
+                      "r": 5.0,
+                      "g": 3.74573541,
+                      "b": 0.907054245,
+                      "a": 2.0
+                    }
+                  },
+                  {
+                    "time": 0.334727973,
+                    "value": {
+                      "r": 2.0,
+                      "g": 0.6124686,
+                      "b": 0.0,
+                      "a": 0.282693744
+                    }
+                  },
+                  {
+                    "time": 0.867,
+                    "value": {
+                      "r": 1.0,
+                      "g": 0.0,
+                      "b": 0.0,
+                      "a": 0.106569037
+                    }
+                  }
+                ]
+              },
+              "alphaOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 0.0
+                  }
+                ]
+              },
+              "scaleOverValue": {
+                "interpolationType": 3,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 0.0
+                  },
+                  {
+                    "time": 0.175532535,
+                    "value": 0.0
+                  },
+                  {
+                    "time": 0.470729649,
+                    "value": 1.0
+                  },
+                  {
+                    "time": 0.7235466,
+                    "value": 1.0
+                  },
+                  {
+                    "time": 0.888655365,
+                    "value": 0.6802842
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 0.0
+                  }
+                ]
+              },
+              "valueFrom": 0.0,
+              "valueTo": 1.0
+            },
+            "bladeMappings": {
+              "colorOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": {
+                      "r": 1.0,
+                      "g": 1.0,
+                      "b": 1.0,
+                      "a": 1.0
+                    }
+                  }
+                ]
+              },
+              "alphaOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "scaleOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "valueFrom": 0.0,
+              "valueTo": 1.0
+            },
+            "driversSampleMode": 0,
+            "viewingAngleMappings": {
+              "colorOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": {
+                      "r": 1.0,
+                      "g": 1.0,
+                      "b": 1.0,
+                      "a": 1.0
+                    }
+                  }
+                ]
+              },
+              "alphaOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "scaleOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "valueFrom": 0.0,
+              "valueTo": 1.0
+            },
+            "surfaceAngleMappings": {
+              "colorOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": {
+                      "r": 1.0,
+                      "g": 1.0,
+                      "b": 1.0,
+                      "a": 1.0
+                    }
+                  }
+                ]
+              },
+              "alphaOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "scaleOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "valueFrom": 0.0,
+              "valueTo": 1.0
+            },
+            "drivers": [
+              {
+                "valueType": 4,
+                "increaseResistance": 0.0,
+                "decreaseResistance": 3.0,
+                "mappings": {
+                  "colorOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": {
+                          "r": 1.0,
+                          "g": 1.0,
+                          "b": 1.0,
+                          "a": 1.0
+                        }
+                      }
+                    ]
+                  },
+                  "alphaOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      },
+                      {
+                        "time": 1.0,
+                        "value": 0.0
+                      }
+                    ]
+                  },
+                  "scaleOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "valueFrom": 1.0,
+                  "valueTo": 2.0
+                }
+              },
+              {
+                "valueType": 0,
+                "increaseResistance": 0.0,
+                "decreaseResistance": 0.0,
+                "mappings": {
+                  "colorOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": {
+                          "r": 1.0,
+                          "g": 1.0,
+                          "b": 1.0,
+                          "a": 1.0
+                        }
+                      }
+                    ]
+                  },
+                  "alphaOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "scaleOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "valueFrom": 0.0,
+                  "valueTo": 1.0
+                }
+              },
+              {
+                "valueType": 0,
+                "increaseResistance": 0.0,
+                "decreaseResistance": 0.0,
+                "mappings": {
+                  "colorOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": {
+                          "r": 1.0,
+                          "g": 1.0,
+                          "b": 1.0,
+                          "a": 1.0
+                        }
+                      }
+                    ]
+                  },
+                  "alphaOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "scaleOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "valueFrom": 0.0,
+                  "valueTo": 1.0
+                }
+              },
+              {
+                "valueType": 0,
+                "increaseResistance": 0.0,
+                "decreaseResistance": 0.0,
+                "mappings": {
+                  "colorOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": {
+                          "r": 1.0,
+                          "g": 1.0,
+                          "b": 1.0,
+                          "a": 1.0
+                        }
+                      }
+                    ]
+                  },
+                  "alphaOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "scaleOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "valueFrom": 0.0,
+                  "valueTo": 1.0
+                }
+              }
+            ]
+          }
+        },
+        "TriggerSettings": {
+          "type": 0,
+          "percentage": 1.0,
+          "period": 0.05,
+          "burstSpread": 0.0849913061
+        },
+        "SpawnSettings": {
+          "MinLifetime": 0.01,
+          "MaxLifetime": 0.5,
+          "SpawningPeriod": 0.0,
+          "MinBladeOffset": 0.98,
+          "MaxBladeOffset": 0.99,
+          "MinParticleMass": 0.333,
+          "MaxParticleMass": 2.0,
+          "RandomSpawnVelocity": 0.03,
+          "BladeInertiaMultiplier": 0.0,
+          "SizeVariation": {
+            "x": 0.244254068,
+            "y": 0.6452188
+          },
+          "SpawnDriver": {
+            "valueType": 0,
+            "increaseResistance": 0.0,
+            "decreaseResistance": 0.0,
+            "multiplierOverValue": {
+              "interpolationType": 0,
+              "controlPoints": [
+                {
+                  "time": 0.0,
+                  "value": 1.0
+                }
+              ]
+            },
+            "valueFrom": 0.0,
+            "valueTo": 1.0
+          }
+        },
+        "PhysicsSettings": {
+          "DampingCoefficient": 1.6,
+          "TurbulenceScale": 5.0,
+          "TurbulenceTimeScale": 2.0,
+          "TurbulencePower": 0.667,
+          "Gravity": {
+            "x": 0.0,
+            "y": 1.75,
+            "z": 0.0
+          }
+        },
+        "Enabled": true,
+        "Name": "Tip Flame",
+        "LocalTransform": {
+          "Position": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "Rotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "Scale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          }
+        }
+      }
+    },
+    {
+      "ModuleId": "reezonate.points-vfx",
+      "Version": 1,
+      "Config": {
+        "MeshSettings": {
+          "ParticlesCount": 800,
+          "HorizontalResolution": 1,
+          "VerticalResolution": 1
+        },
+        "MaterialSettings": {
+          "materialType": 0,
+          "particleSize": 0.08,
+          "distortionMultiplier": 1.0,
+          "generalSettings": {
+            "customTextureId": "",
+            "animationLayout": {
+              "totalFrames": 1,
+              "framesPerRow": 1,
+              "framesPerColumn": 1,
+              "frameDuration": 1.0
+            },
+            "blendingMode": 0,
+            "alwaysOnTop": false,
+            "renderQueue": 3000
+          },
+          "textureSettings": {
+            "layers": [
+              {
+                "centerOffset": {
+                  "x": 0.0,
+                  "y": 0.0
+                },
+                "scale": {
+                  "x": 1.0,
+                  "y": 1.0
+                },
+                "power": {
+                  "x": 1.0,
+                  "y": 1.0
+                },
+                "falloff": 1.0,
+                "intensity": 0.05
+              },
+              {
+                "centerOffset": {
+                  "x": 0.0,
+                  "y": 0.0
+                },
+                "scale": {
+                  "x": 1.0,
+                  "y": 1.0
+                },
+                "power": {
+                  "x": 1.0,
+                  "y": 1.0
+                },
+                "falloff": 1.0,
+                "intensity": 0.0
+              }
+            ]
+          },
+          "maskSettings": {
+            "mainMaskResolution": 16,
+            "driversMaskResolution": 1,
+            "lifetimeMappings": {
+              "colorOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": {
+                      "r": 1.0,
+                      "g": 0.0,
+                      "b": 0.0,
+                      "a": 0.333
+                    }
+                  }
+                ]
+              },
+              "alphaOverValue": {
+                "interpolationType": 3,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  },
+                  {
+                    "time": 0.3,
+                    "value": 0.0
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 0.0
+                  }
+                ]
+              },
+              "scaleOverValue": {
+                "interpolationType": 3,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  },
+                  {
+                    "time": 0.75,
+                    "value": 1.0
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 0.0
+                  }
+                ]
+              },
+              "valueFrom": 0.0,
+              "valueTo": 1.0
+            },
+            "bladeMappings": {
+              "colorOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": {
+                      "r": 1.0,
+                      "g": 1.0,
+                      "b": 1.0,
+                      "a": 1.0
+                    }
+                  }
+                ]
+              },
+              "alphaOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "scaleOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "valueFrom": 0.0,
+              "valueTo": 1.0
+            },
+            "driversSampleMode": 0,
+            "viewingAngleMappings": {
+              "colorOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": {
+                      "r": 1.0,
+                      "g": 1.0,
+                      "b": 1.0,
+                      "a": 1.0
+                    }
+                  }
+                ]
+              },
+              "alphaOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "scaleOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "valueFrom": 0.0,
+              "valueTo": 1.0
+            },
+            "surfaceAngleMappings": {
+              "colorOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": {
+                      "r": 1.0,
+                      "g": 1.0,
+                      "b": 1.0,
+                      "a": 1.0
+                    }
+                  }
+                ]
+              },
+              "alphaOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "scaleOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "valueFrom": 0.0,
+              "valueTo": 1.0
+            },
+            "drivers": []
+          }
+        },
+        "TriggerSettings": {
+          "type": 1,
+          "percentage": 0.04,
+          "period": 0.01,
+          "burstSpread": 0.0
+        },
+        "SpawnSettings": {
+          "MinLifetime": 0.2,
+          "MaxLifetime": 0.4,
+          "SpawningPeriod": 0.0,
+          "MinBladeOffset": 1.0,
+          "MaxBladeOffset": 1.0,
+          "MinParticleMass": 0.3,
+          "MaxParticleMass": 0.6,
+          "RandomSpawnVelocity": 1.0,
+          "BladeInertiaMultiplier": 0.025,
+          "SizeVariation": {
+            "x": 0.09631173,
+            "y": 0.0
+          },
+          "SpawnDriver": {
+            "valueType": 0,
+            "increaseResistance": 0.0,
+            "decreaseResistance": 0.0,
+            "multiplierOverValue": {
+              "interpolationType": 0,
+              "controlPoints": [
+                {
+                  "time": 0.0,
+                  "value": 1.0
+                }
+              ]
+            },
+            "valueFrom": 0.0,
+            "valueTo": 1.0
+          }
+        },
+        "PhysicsSettings": {
+          "DampingCoefficient": 1.6,
+          "TurbulenceScale": 4.0,
+          "TurbulenceTimeScale": 0.2,
+          "TurbulencePower": 1.333,
+          "Gravity": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          }
+        },
+        "Enabled": true,
+        "Name": "Cut Smoke FX",
+        "LocalTransform": {
+          "Position": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "Rotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "Scale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          }
+        }
+      }
+    },
+    {
+      "ModuleId": "reezonate.points-vfx",
+      "Version": 1,
+      "Config": {
+        "MeshSettings": {
+          "ParticlesCount": 1000,
+          "HorizontalResolution": 1,
+          "VerticalResolution": 1
+        },
+        "MaterialSettings": {
+          "materialType": 0,
+          "particleSize": 0.008,
+          "distortionMultiplier": 1.0,
+          "generalSettings": {
+            "customTextureId": "",
+            "animationLayout": {
+              "totalFrames": 1,
+              "framesPerRow": 1,
+              "framesPerColumn": 1,
+              "frameDuration": 1.0
+            },
+            "blendingMode": 0,
+            "alwaysOnTop": false,
+            "renderQueue": 3000
+          },
+          "textureSettings": {
+            "layers": [
+              {
+                "centerOffset": {
+                  "x": 0.0,
+                  "y": 0.0
+                },
+                "scale": {
+                  "x": 1.0,
+                  "y": 1.0
+                },
+                "power": {
+                  "x": 1.0,
+                  "y": 1.0
+                },
+                "falloff": 1.0,
+                "intensity": 1.0
+              },
+              {
+                "centerOffset": {
+                  "x": 0.0,
+                  "y": 0.0
+                },
+                "scale": {
+                  "x": 1.0,
+                  "y": 1.0
+                },
+                "power": {
+                  "x": 1.0,
+                  "y": 1.0
+                },
+                "falloff": 1.0,
+                "intensity": 0.0
+              }
+            ]
+          },
+          "maskSettings": {
+            "mainMaskResolution": 32,
+            "driversMaskResolution": 1,
+            "lifetimeMappings": {
+              "colorOverValue": {
+                "interpolationType": 3,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": {
+                      "r": 2.5,
+                      "g": 0.0,
+                      "b": 0.0,
+                      "a": 1.5
+                    }
+                  },
+                  {
+                    "time": 0.2,
+                    "value": {
+                      "r": 1.0,
+                      "g": 0.0,
+                      "b": 0.0,
+                      "a": 1.0
+                    }
+                  },
+                  {
+                    "time": 1.0,
+                    "value": {
+                      "r": 1.0,
+                      "g": 0.0,
+                      "b": 0.0,
+                      "a": 0.0
+                    }
+                  }
+                ]
+              },
+              "alphaOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 0.0
+                  }
+                ]
+              },
+              "scaleOverValue": {
+                "interpolationType": 1,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 0.0
+                  }
+                ]
+              },
+              "valueFrom": 0.0,
+              "valueTo": 1.0
+            },
+            "bladeMappings": {
+              "colorOverValue": {
+                "interpolationType": 3,
+                "controlPoints": [
+                  {
+                    "time": 0.667,
+                    "value": {
+                      "r": 1.0,
+                      "g": 0.0,
+                      "b": 0.0,
+                      "a": 0.0
+                    }
+                  },
+                  {
+                    "time": 0.9,
+                    "value": {
+                      "r": 1.0,
+                      "g": 0.0,
+                      "b": 0.0,
+                      "a": 0.0
+                    }
+                  },
+                  {
+                    "time": 0.975,
+                    "value": {
+                      "r": 1.0,
+                      "g": 0.0,
+                      "b": 0.0,
+                      "a": 1.0
+                    }
+                  }
+                ]
+              },
+              "alphaOverValue": {
+                "interpolationType": 3,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 0.0
+                  },
+                  {
+                    "time": 0.999,
+                    "value": 0.0
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "scaleOverValue": {
+                "interpolationType": 3,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 0.0
+                  },
+                  {
+                    "time": 0.999,
+                    "value": 0.0
+                  },
+                  {
+                    "time": 1.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "valueFrom": 0.0,
+              "valueTo": 1.0
+            },
+            "driversSampleMode": 0,
+            "viewingAngleMappings": {
+              "colorOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": {
+                      "r": 1.0,
+                      "g": 1.0,
+                      "b": 1.0,
+                      "a": 1.0
+                    }
+                  }
+                ]
+              },
+              "alphaOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "scaleOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "valueFrom": 0.0,
+              "valueTo": 1.0
+            },
+            "surfaceAngleMappings": {
+              "colorOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": {
+                      "r": 1.0,
+                      "g": 1.0,
+                      "b": 1.0,
+                      "a": 1.0
+                    }
+                  }
+                ]
+              },
+              "alphaOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "scaleOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "valueFrom": 0.0,
+              "valueTo": 1.0
+            },
+            "drivers": []
+          }
+        },
+        "TriggerSettings": {
+          "type": 0,
+          "percentage": 1.0,
+          "period": 0.1,
+          "burstSpread": 1.0
+        },
+        "SpawnSettings": {
+          "MinLifetime": 0.1,
+          "MaxLifetime": 0.25,
+          "SpawningPeriod": 0.0,
+          "MinBladeOffset": 0.8,
+          "MaxBladeOffset": 0.99,
+          "MinParticleMass": 0.35,
+          "MaxParticleMass": 0.6,
+          "RandomSpawnVelocity": 0.15,
+          "BladeInertiaMultiplier": 0.0,
+          "SizeVariation": {
+            "x": 1.0,
+            "y": 0.0
+          },
+          "SpawnDriver": {
+            "valueType": 4,
+            "increaseResistance": 1.0,
+            "decreaseResistance": 2.0,
+            "multiplierOverValue": {
+              "interpolationType": 0,
+              "controlPoints": [
+                {
+                  "time": 0.0,
+                  "value": 0.0
+                },
+                {
+                  "time": 1.0,
+                  "value": 1.0
+                }
+              ]
+            },
+            "valueFrom": 5.0,
+            "valueTo": 10.0
+          }
+        },
+        "PhysicsSettings": {
+          "DampingCoefficient": 1.6,
+          "TurbulenceScale": 3.0,
+          "TurbulenceTimeScale": 0.5,
+          "TurbulencePower": 0.0,
+          "Gravity": {
+            "x": 0.0,
+            "y": -1.0,
+            "z": 0.0
+          }
+        },
+        "Enabled": true,
+        "Name": "uwu sparkles",
+        "LocalTransform": {
+          "Position": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "Rotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "Scale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          }
+        }
+      }
+    },
+    {
+      "ModuleId": "reezonate.blur-saber",
+      "Version": 1,
+      "Config": {
+        "SaberSettings": {
+          "zOffsetFrom": -0.11,
+          "zOffsetTo": -0.08,
+          "thickness": 1.24999988,
+          "saberProfile": {
+            "interpolationType": 3,
+            "controlPoints": [
+              {
+                "time": 0.0,
+                "value": 0.0
+              },
+              {
+                "time": 0.1,
+                "value": 1.0
+              },
+              {
+                "time": 0.5,
+                "value": 0.667
+              },
+              {
+                "time": 0.9,
+                "value": 1.0
+              },
+              {
+                "time": 1.0,
+                "value": 0.0
+              }
+            ]
+          },
+          "startCap": true,
+          "endCap": true,
+          "verticalResolution": 48,
+          "horizontalResolution": 32,
+          "renderQueue": 3002,
+          "cullMode": 0,
+          "depthWrite": true,
+          "blurFrames": 2.0,
+          "glowMultiplier": 1.0,
+          "handleRoughness": 1.0,
+          "handleColor": {
+            "r": 1.0,
+            "g": 1.0,
+            "b": 1.0,
+            "a": 0.0
+          },
+          "maskSettings": {
+            "bladeMaskResolution": 16,
+            "driversMaskResolution": 8,
+            "handleMask": {
+              "interpolationType": 2,
+              "controlPoints": [
+                {
+                  "time": 0.0,
+                  "value": 0.0
+                }
+              ]
+            },
+            "bladeMappings": {
+              "colorOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": {
+                      "r": 1.0,
+                      "g": 0.0,
+                      "b": 0.0,
+                      "a": 1.0
+                    }
+                  },
+                  {
+                    "time": 0.25,
+                    "value": {
+                      "r": 1.25,
+                      "g": 0.0,
+                      "b": 0.0,
+                      "a": 1.5
+                    }
+                  },
+                  {
+                    "time": 0.5,
+                    "value": {
+                      "r": 0.8,
+                      "g": 0.0,
+                      "b": 0.0,
+                      "a": 0.8
+                    }
+                  },
+                  {
+                    "time": 0.75,
+                    "value": {
+                      "r": 1.25,
+                      "g": 0.0,
+                      "b": 0.0,
+                      "a": 1.5
+                    }
+                  },
+                  {
+                    "time": 1.0,
+                    "value": {
+                      "r": 1.0,
+                      "g": 0.0,
+                      "b": 0.0,
+                      "a": 1.0
+                    }
+                  }
+                ]
+              },
+              "alphaOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "scaleOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "valueFrom": 0.0,
+              "valueTo": 1.0
+            },
+            "driversSampleMode": 0,
+            "viewingAngleMappings": {
+              "colorOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": {
+                      "r": 1.0,
+                      "g": 1.0,
+                      "b": 1.0,
+                      "a": 1.0
+                    }
+                  }
+                ]
+              },
+              "alphaOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "scaleOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "valueFrom": 0.0,
+              "valueTo": 1.0
+            },
+            "surfaceAngleMappings": {
+              "colorOverValue": {
+                "interpolationType": 3,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": {
+                      "r": 1.0,
+                      "g": 1.0,
+                      "b": 1.0,
+                      "a": 0.1
+                    }
+                  },
+                  {
+                    "time": 1.0,
+                    "value": {
+                      "r": 1.0,
+                      "g": 1.0,
+                      "b": 1.0,
+                      "a": 0.5
+                    }
+                  }
+                ]
+              },
+              "alphaOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "scaleOverValue": {
+                "interpolationType": 0,
+                "controlPoints": [
+                  {
+                    "time": 0.0,
+                    "value": 1.0
+                  }
+                ]
+              },
+              "valueFrom": 0.0,
+              "valueTo": 1.0
+            },
+            "drivers": [
+              {
+                "valueType": 0,
+                "increaseResistance": 0.0,
+                "decreaseResistance": 0.0,
+                "mappings": {
+                  "colorOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": {
+                          "r": 1.0,
+                          "g": 1.0,
+                          "b": 1.0,
+                          "a": 1.0
+                        }
+                      }
+                    ]
+                  },
+                  "alphaOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "scaleOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "valueFrom": 0.0,
+                  "valueTo": 1.0
+                }
+              },
+              {
+                "valueType": 0,
+                "increaseResistance": 0.0,
+                "decreaseResistance": 0.0,
+                "mappings": {
+                  "colorOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": {
+                          "r": 1.0,
+                          "g": 1.0,
+                          "b": 1.0,
+                          "a": 1.0
+                        }
+                      }
+                    ]
+                  },
+                  "alphaOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "scaleOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "valueFrom": 0.0,
+                  "valueTo": 1.0
+                }
+              },
+              {
+                "valueType": 0,
+                "increaseResistance": 0.0,
+                "decreaseResistance": 0.0,
+                "mappings": {
+                  "colorOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": {
+                          "r": 1.0,
+                          "g": 1.0,
+                          "b": 1.0,
+                          "a": 1.0
+                        }
+                      }
+                    ]
+                  },
+                  "alphaOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "scaleOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "valueFrom": 0.0,
+                  "valueTo": 1.0
+                }
+              },
+              {
+                "valueType": 0,
+                "increaseResistance": 0.0,
+                "decreaseResistance": 0.0,
+                "mappings": {
+                  "colorOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": {
+                          "r": 1.0,
+                          "g": 1.0,
+                          "b": 1.0,
+                          "a": 1.0
+                        }
+                      }
+                    ]
+                  },
+                  "alphaOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "scaleOverValue": {
+                    "interpolationType": 0,
+                    "controlPoints": [
+                      {
+                        "time": 0.0,
+                        "value": 1.0
+                      }
+                    ]
+                  },
+                  "valueFrom": 0.0,
+                  "valueTo": 1.0
+                }
+              }
+            ]
+          }
+        },
+        "Enabled": true,
+        "Name": "Handle Gripper",
+        "LocalTransform": {
+          "Position": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "Rotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "Scale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+          }
+        }
+      }
+    }
+  ]
+}

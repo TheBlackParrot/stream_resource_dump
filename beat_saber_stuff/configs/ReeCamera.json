@@ -1,0 +1,22 @@
+{
+  "MainMenuConfigVR": {
+    "PresetId": "YT video.json"
+  },
+  "GameplayConfigVR": {
+    "PresetId": "YT video.json"
+  },
+  "MainMenuConfigFPFC": {
+    "FramerateSettings": {
+      "VSync": false,
+      "TargetFramerate": 1
+    },
+    "PresetId": "Void.json"
+  },
+  "GameplayConfigFPFC": {
+    "FramerateSettings": {
+      "VSync": false,
+      "TargetFramerate": 1
+    },
+    "PresetId": "Void.json"
+  }
+}

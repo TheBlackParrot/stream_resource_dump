@@ -1,0 +1,43 @@
+{
+  "Groups": [
+    {
+      "GroupName": "Cats",
+      "ButtonText": "Meow",
+      "BlueskyHandles": [
+        "bodegacats.bsky.social",
+        "catworkers.bsky.social",
+        "fartycheddarcat.bsky.social",
+        "gonzo.bsky.social",
+        "ricky.baby",
+        "parkinkatt.bsky.social",
+        "karaisntactive.bsky.social",
+        "billythecat.bsky.social",
+        "harveyandpetey.bsky.social",
+        "baxtercat.bsky.social",
+        "cheesecakethecat.bsky.social",
+        "cats.blue",
+        "jumpingcat.org",
+        "weirdlilguys.bsky.social",
+        "catbraincell.bsky.social",
+        "shouldhavecat.bsky.social"
+      ]
+    },
+    {
+      "GroupName": "Dogs",
+      "ButtonText": "Woof",
+      "BlueskyHandles": [
+        "contextdogs.bsky.social",
+        "dogs.bsky.social"
+      ]
+    },
+    {
+      "GroupName": "Birds",
+      "ButtonText": "Chirp",
+      "BlueskyHandles": [
+        "birdofthedaybot.bsky.social",
+        "lynzief.bsky.social",
+        "albatrossity.bsky.social"
+      ]
+    }
+  ]
+}

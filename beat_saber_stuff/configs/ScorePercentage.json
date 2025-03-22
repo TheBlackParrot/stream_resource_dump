@@ -1,0 +1,8 @@
+{
+  "EnableMenuHighscore": true,
+  "EnableLevelEndRank": true,
+  "EnableAvarageCutScore": false,
+  "EnableScoreDifference": true,
+  "EnableScorePercentageDifference": true,
+  "EnableMultiplayerSupport": true
+}

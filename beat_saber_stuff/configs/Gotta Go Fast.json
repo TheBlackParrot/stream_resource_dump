@@ -1,12 +1,11 @@
 {
-  "SongStartTransition": 0.05,
-  "SongRestartTransition": 0.05,
-  "SongPassFailTransition": 0.3,
-  "SongFailDisplayTime": 0.25,
-  "MaxFadeInTransitionTime": 0.2,
+  "SongStartTransition": 0.1,
+  "SongRestartTransition": 0.0,
+  "SongPassFailTransition": 0.0,
+  "SongFailDisplayTime": 0.0,
+  "MaxFadeInTransitionTime": 0.1,
   "RemoveHealthWarning": true,
-  "EnableOptimizations": true,
-  "OptimizationsAlternativeMode": false,
+  "EnableOptimizations": false,
   "ExperimentalLoadTimeImprovements": false,
   "GcSkips": 2
 }

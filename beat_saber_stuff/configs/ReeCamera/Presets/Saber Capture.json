@@ -1,0 +1,92 @@
+{
+	"FormatVersion": 1,
+	"ModVersion": "0.0.1",
+	"Layouts": [
+		{
+			"IsVisible": true,
+			"ScreenRect": {
+				"x": 0.0,
+				"y": 0.0,
+				"width": 1.0,
+				"height": 1.0
+			},
+			"MainCamera": {
+				"SpoutSettings": {
+					"Enabled": false,
+					"Width": 1920,
+					"Height": 1080,
+					"ChannelName": "ReeCamera"
+				},
+				"Name": "Saber Capture Camera",
+				"QualitySettings": {
+					"AntiAliasing": 8,
+					"RenderScale": 1.0
+				},
+				"CameraSettings": {
+					"IgnoreCameraUtils": false,
+					"FieldOfView": 25.0,
+					"NearClipPlane": 0.01,
+					"FarClipPlane": 1000.0,
+					"Orthographic": false,
+					"OrthographicSize": 5.0,
+					"CenterOffset": {
+						"x": 0.0,
+						"y": 0.0
+					}
+				},
+				"MovementConfig": {
+					"MovementType": 0,
+					"OffsetType": 0,
+					"PositionOffset": {
+						"x": 0.0,
+						"y": 5.0,
+						"z": 0.0
+					},
+					"RotationOffset": {
+						"x": 90.0,
+						"y": 0.0,
+						"z": 0.0
+					},
+					"ForceUpright": false,
+					"PositionalSmoothing": 3.0,
+					"RotationalSmoothing": 2.0
+				},
+				"LayerFilter": {
+					"Layer0": true,
+					"Layer1": false,
+					"Layer2": false,
+					"Layer3": false,
+					"Layer4": false,
+					"Layer5": false,
+					"Layer6": false,
+					"Layer7": false,
+					"Layer8": false,
+					"Layer9": false,
+					"Layer10": false,
+					"Layer11": false,
+					"Layer12": false,
+					"Layer13": false,
+					"Layer14": false,
+					"Layer15": false,
+					"Layer16": false,
+					"Layer17": false,
+					"Layer18": false,
+					"Layer19": false,
+					"Layer20": false,
+					"Layer21": false,
+					"Layer22": false,
+					"Layer23": false,
+					"Layer24": false,
+					"Layer25": false,
+					"Layer26": false,
+					"Layer27": false,
+					"Layer28": false,
+					"Layer29": true,
+					"Layer30": false,
+					"Layer31": false
+				}
+			},
+			"SecondaryCameras": []
+		}
+	]
+}

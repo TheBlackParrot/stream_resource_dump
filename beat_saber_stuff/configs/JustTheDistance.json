@@ -1,0 +1,9 @@
+{
+  "Enabled": true,
+  "ReactionTime": 520,
+  "SnapToNearest": true,
+  "SnapToNearestNoteType": 8,
+  "MinRTSliderValue": 300,
+  "MaxRTSliderValue": 1000,
+  "RTSliderIncrement": 10
+}
