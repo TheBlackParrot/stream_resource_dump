@@ -183,7 +183,9 @@ const nonPublicSettings = [
 	"forceDefaultSubBadgeToFirstTier",
 	"bs_miscInfoShowMapModifiers",
 	"_overall_bgColor",
-	"mus_useCommentFieldAsScannableID"
+	"mus_useCommentFieldAsScannableID",
+	"mus_useISRCToFetchScannableID",
+	"mus_useISRCToFetchArtistMetadata"
 ];
 
 const defaultConfig = {
@@ -1296,7 +1298,9 @@ const defaultConfig = {
 	"_overall_bgColor": "#33333300",
 	"bs_miscInfoTopAdditionalFontWeight": "0",
 	"bs_miscInfoBottomAdditionalFontWeight": "0",
-	"mus_useCommentFieldAsScannableID": "false"
+	"mus_useCommentFieldAsScannableID": "false",
+	"mus_useISRCToFetchScannableID": "false",
+	"mus_useISRCToFetchArtistMetadata": "false"
 };
 // i typed out the bigNoNoWords so you don't have to, i'm sorry :(
 // it's gotta know what to remove

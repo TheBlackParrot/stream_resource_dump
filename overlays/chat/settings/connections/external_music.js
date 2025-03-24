@@ -27,8 +27,8 @@ function sendOutTrackData(data) {
 		labels: persistentData.labels
 	};
 
-	if(localStorage.getItem("setting_mus_useCommentFieldAsScannableID") === "true") {
-		out.uri = "comment" in data ? `spotify:${localStorage.getItem("setting_spotify_scannableUseAlbum") === "true" ? "album" : "track"}:${data.comment}` : null;
+	if("uri" in data) {
+		out.uri = data.uri;
 	}
 
 	postToMusicEventChannel({
@@ -57,6 +57,37 @@ const musicFuncs = {
 		persistentData.year = null;
 		if(data.isrc) {
 			await fetchMusicBrainz(data.isrc);
+		}
+
+		if(localStorage.getItem("setting_mus_useCommentFieldAsScannableID") === "true") {
+			data.uri = "comment" in data ? `spotify:${localStorage.getItem("setting_spotify_scannableUseAlbum") === "true" ? "album" : "track"}:${data.comment}` : null;
+		}
+
+		let externalData = {};
+		if(localStorage.getItem("spotify_accessToken") && localStorage.getItem("setting_spotifyClientID")) {
+			if("isrc" in data) {
+				if(data.isrc && (localStorage.getItem("setting_mus_useISRCToFetchScannableID") === "true" || localStorage.getItem("setting_mus_useISRCToFetchArtistMetadata") === "true")) {
+					if(data.isrc.length === 12) {
+						externalData = await getTrackDataFromISRC(data.isrc);
+					}
+				}
+			}
+		}
+
+		if("tracks" in externalData) {
+			if(externalData.tracks.items.length) {
+				if(localStorage.getItem("setting_mus_useISRCToFetchScannableID") === "true") {
+					if(localStorage.getItem("setting_spotify_scannableUseAlbum") === "true") {
+						data.uri = `spotify:album:${externalData.tracks.items[0].album.id}`
+					} else {
+						data.uri = `spotify:track:${externalData.tracks.items[0].id}`
+					}
+				}
+
+				if(localStorage.getItem("setting_mus_useISRCToFetchArtistMetadata") === "true") {
+					data.artists = await parseArtistInfo(externalData.tracks.items[0].artists);
+				}
+			}
 		}
 
 		currentSong = data;

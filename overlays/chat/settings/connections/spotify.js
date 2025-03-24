@@ -47,6 +47,74 @@ async function getArtistInfos(id_arr) {
 	return data;
 }
 
+async function getTrackDataFromISRC(isrc) {
+	const accessToken = localStorage.getItem("spotify_accessToken");
+
+	const params = new URLSearchParams({
+		q: `isrc:${isrc}`,
+		type: "track",
+		limit: 1
+	});
+
+	console.log(`getting spotify information for ISRC ${isrc}...`);
+
+	const response = await fetch(`https://api.spotify.com/v1/search?${params.toString()}`, {
+		headers: {
+			Authorization: `Bearer ${accessToken}`
+		}
+	});
+
+	const data = await response.json();
+	console.log(data);
+	return data;
+}
+
+async function parseArtistInfo(artistList) {
+	let artists = [];
+	let artistIDs = [];
+
+	for(let i in artistList) {
+		if(i >= 50) {
+			// API parameter limit
+			continue;
+		}
+
+		artistIDs.push(artistList[i].id);
+	}
+
+	const artistInfos = await getArtistInfos(artistIDs);
+	console.log(artistInfos);
+	if(artistInfos) {
+		for(let i in artistInfos.artists) {
+			let artist = artistInfos.artists[i];
+
+			let image = null;
+			if(artist.images.length) {
+				let size = ((parseInt(localStorage.getItem("setting_spotify_lineHeight")) * 2) || 32);
+
+				let selectedImageURL = artist.images[artist.images.length - 1].url;
+				for(let imageIdx in artist.images) {
+					let checkingImage = artist.images[imageIdx];
+
+					if(checkingImage.width < size) {
+						continue;
+					}
+					selectedImageURL = checkingImage.url;
+				}
+
+				image = await compressImage(selectedImageURL, size, parseInt(localStorage.getItem("setting_spotify_artImageQuality")) / 100, "spotify", 30);
+			}
+
+			artists.push({
+				name: artist.name,
+				image: image
+			});
+		}
+	}
+
+	return artists;
+}
+
 var updateTrackTO;
 var currentSong;
 var lastUpdateDelay = -1;
@@ -196,46 +264,7 @@ async function updateTrack() {
 			let art = response.item.album.images[Math.ceil(response.item.album.images.length / 2) - 1].url;
 
 			if(oldID !== response.item.id) {
-				let artists = [];
-				let artistIDs = [];
-				for(let i in response.item.artists) {
-					if(i >= 50) {
-						// API parameter limit
-						continue;
-					}
-
-					artistIDs.push(response.item.artists[i].id);
-				}
-
-				const artistInfos = await getArtistInfos(artistIDs);
-				console.log(artistInfos);
-				if(artistInfos) {
-					for(let i in artistInfos.artists) {
-						let artist = artistInfos.artists[i];
-
-						let image = null;
-						if(artist.images.length) {
-							let size = ((parseInt(localStorage.getItem("setting_spotify_lineHeight")) * 2) || 32);
-
-							let selectedImageURL = artist.images[artist.images.length - 1].url;
-							for(let imageIdx in artist.images) {
-								let checkingImage = artist.images[imageIdx];
-
-								if(checkingImage.width < size) {
-									continue;
-								}
-								selectedImageURL = checkingImage.url;
-							}
-
-							image = await compressImage(selectedImageURL, size, parseInt(localStorage.getItem("setting_spotify_artImageQuality")) / 100, "spotify", 30);
-						}
-
-						artists.push({
-							name: artist.name,
-							image: image
-						});
-					}
-				}
+				let artists = await parseArtistInfo(response.item.artists);
 
 				persistentData = {
 					artists: artists,

@@ -1,4 +1,43 @@
 {
+	"1742793980425": {
+		"updates": {
+			"spotify": {
+				"revision": 29,
+				"notes": [
+					[
+						"scannable data checker just checks for the presence of a uri field now"
+					],
+					[
+						"abstracted a couple of spotify-centric functions"
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 91,
+				"notes": [
+					[
+						"added the ability to use ISRCs in external player track data as data for spotify scannables",
+						["this will require Spotify API tokens, as it uses the search call on the Web API"],
+						{"anchor": "mus_useISRCToFetchScannableID"}
+					],
+					[
+						"added the ability to use ISRCs in external player track data for replacement artist metadata from Spotify",
+						["this will require Spotify API tokens, as it uses various parts of the Web API"],
+						{"anchor": "mus_useISRCToFetchArtistMetadata"}
+					],
+					[
+						"re-organized the supported external music player list"
+					],
+					[
+						"added link to mercurialworld's external player bridge script for YouTube Music (via th-ch's client)",
+						{"anchor": "mus_overrideSpotify"}
+					]
+				]
+			}
+		}
+	},
+
 	"1742436356571": {
 		"updates": {
 			"spotify": {

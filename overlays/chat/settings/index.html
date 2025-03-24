@@ -2878,22 +2878,14 @@
 					<hr/>
 					<div class="setting">
 						<div class="settingCellLabel noHeightForce">
-							<strong>Cider</strong>
+							<strong>Apple Music</strong>
 							<br/>
 							<span class="inlineSmol">maintained by <strong>mercurialworld</strong></span>
 						</div>
-						<div class="settingCell">
+						<div class="settingCell allowLineBreakSettingCell">
 							<a href="https://github.com/mercurialworld/tbp-overlay-cider-bridge"><i class="fa-brands fa-github"></i> GitHub</a>
-						</div>
-					</div>
-					<div class="setting">
-						<div class="settingCellLabel noHeightForce">
-							<strong>Music Player Daemon (MPD)</strong>
 							<br/>
-							<span class="inlineSmol">maintained by <strong>TheBlackParrot</strong></span>
-						</div>
-						<div class="settingCell">
-							<a href="https://github.com/TheBlackParrot/stream_resource_dump/tree/main/overlays/overlay-mpd-bridge"><i class="fa-brands fa-github"></i> GitHub</a>
+							<em class="inlineSmol">(via <a href="https://cider.sh">Cider</a>)</em>
 						</div>
 					</div>
 					<div class="setting">
@@ -2908,6 +2900,28 @@
 							<em class="inlineSmol">(requires the <a href="https://www.foobar2000.org/components/view/foo_beefweb">foo_beefweb</a> component)</em>
 						</div>
 					</div>
+					<div class="setting">
+						<div class="settingCellLabel noHeightForce">
+							<strong>Music Player Daemon (MPD)</strong>
+							<br/>
+							<span class="inlineSmol">maintained by <strong>TheBlackParrot</strong></span>
+						</div>
+						<div class="settingCell">
+							<a href="https://github.com/TheBlackParrot/stream_resource_dump/tree/main/overlays/overlay-mpd-bridge"><i class="fa-brands fa-github"></i> GitHub</a>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCellLabel noHeightForce">
+							<strong>YouTube Music</strong>
+							<br/>
+							<span class="inlineSmol">maintained by <strong>mercurialworld</strong></span>
+						</div>
+						<div class="settingCell allowLineBreakSettingCell">
+							<a href="https://github.com/mercurialworld/tbp-overlay-ytm"><i class="fa-brands fa-github"></i> GitHub</a>
+							<br/>
+							<em class="inlineSmol">(via <a href="https://th-ch.github.io/youtube-music">th-ch's</a> client)</em>
+						</div>
+					</div>
 					<hr/>
 					<div class="setting">
 						<div class="settingCell">
@@ -2918,6 +2932,22 @@
 					<div class="setting">
 						<div class="settingCell">
 							<input id="mus_useCommentFieldAsScannableID" type="checkbox" data-noDefaultValue/> <span class="settingInfo">Use comment field in embedded track metadata as the identifier for Spotify scannables</span>
+						</div>
+					</div>
+					<hr/>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="mus_useISRCToFetchScannableID" type="checkbox" data-noDefaultValue/> <span class="settingInfo">Use ISRC in embedded track metadata to fetch identifiers for Spotify scannables</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell">
+							<input id="mus_useISRCToFetchArtistMetadata" type="checkbox" data-noDefaultValue/> <span class="settingInfo">Use ISRC in embedded track metadata to fetch replacement artist metadata from Spotify</span>
+						</div>
+					</div>
+					<div class="setting">
+						<div class="settingCell smol">
+							Spotify API tokens are required for these settings to function
 						</div>
 					</div>
 					<hr/>
