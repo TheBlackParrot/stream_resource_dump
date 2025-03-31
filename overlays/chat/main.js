@@ -235,34 +235,42 @@ async function getGlobalChannelEmotes(broadcasterData) {
 	if(localStorage.getItem("setting_enable7TV") === "true") {
 		console.log("getting 7tv global emotes...");
 
-		const response = await fetch("https://7tv.io/v3/emote-sets/global");
-		if(response.ok) {
-			const data = await response.json();
-			console.log("got 7tv global emotes");
-			systemMessage("*Fetched global 7TV emotes*");
-			console.log(data);
+		const response = await fetch("https://7tv.io/v3/emote-sets/global").catch((err) => {
+			console.error(err);
+			systemMessage("*Unable to fetch global 7TV emotes - 7TV is probably down*");
+		});
 
-			if(!("emotes" in data)) {
-				systemMessage("*Unable to fetch global 7TV emotes - this specific error is 7TV's fault as they didn't actually give us any emotes to parse*");
-			} else {
-				for(const emote of data.emotes) {
-					const emoteData = emote.data;
-					const urls = emoteData.host.files;
+		if(response) {
+			if(response.ok) {
+				const data = await response.json();
+				console.log("got 7tv global emotes");
+				systemMessage("*Fetched global 7TV emotes*");
+				console.log(data);
 
-					chatEmotes.addEmote(new Emote({
-						service: "7tv",
-						setID: data.id,
-						urls: {
-							high: `https:${emoteData.host.url}/${urls[urls.length-1].name}`,
-							low: `https:${emoteData.host.url}/${urls[0].name}`
-						},
-						emoteID: emoteData.id,
-						emoteName: emote.name || emoteData.name,
-						isZeroWidth: ((emoteData.flags & 256) === 256),
-						global: true
-					}));
+				if(!("emotes" in data)) {
+					systemMessage("*Unable to fetch global 7TV emotes - this specific error is 7TV's fault as they didn't actually give us any emotes to parse*");
+				} else {
+					for(const emote of data.emotes) {
+						const emoteData = emote.data;
+						const urls = emoteData.host.files;
+
+						chatEmotes.addEmote(new Emote({
+							service: "7tv",
+							setID: data.id,
+							urls: {
+								high: `https:${emoteData.host.url}/${urls[urls.length-1].name}`,
+								low: `https:${emoteData.host.url}/${urls[0].name}`
+							},
+							emoteID: emoteData.id,
+							emoteName: emote.name || emoteData.name,
+							isZeroWidth: ((emoteData.flags & 256) === 256),
+							global: true
+						}));
+					}
 				}
 			}
+		} else {
+			console.log("skipping 7tv global emotes, fetch failed");
 		}
 	} else {
 		console.log("skipping 7tv global emotes, not enabled");
@@ -424,56 +432,64 @@ async function getExternalChannelEmotes(streamerData, isShared) {
 	if(localStorage.getItem("setting_enable7TV") === "true") {
 		console.log("getting 7tv channel emotes...");
 
-		const response = await fetch(`https://7tv.io/v3/users/twitch/${streamerData.id}?sigh=${Date.now()}`);
-		if(response.ok) {
-			const data = await response.json();
-			console.log("got 7tv emotes");
-			systemMessage(`*Fetched ${(isShared ? streamerData.display_name : "channel")}'s 7TV emotes*`);
-			console.log(data);
+		const response = await fetch(`https://7tv.io/v3/users/twitch/${streamerData.id}?sigh=${Date.now()}`).catch((err) => {
+			console.error(err);
+			systemMessage(`*Unable to fetch ${(isShared ? streamerData.display_name : "channel")}'s 7TV emotes - 7TV is probably down*`);
+		});
 
-			let isOK = true; // god i hate 7tv
+		if(response) {
+			if(response.ok) {
+				const data = await response.json();
+				console.log("got 7tv emotes");
+				systemMessage(`*Fetched ${(isShared ? streamerData.display_name : "channel")}'s 7TV emotes*`);
+				console.log(data);
 
-			if(data.emote_set === null) {
-				systemMessage(`*Unable to fetch ${(isShared ? streamerData.display_name : "channel")}'s 7TV emotes, active emote set is... empty?*`);
-				isOK = false;
-			}
+				let isOK = true; // god i hate 7tv
 
-			if(isOK) {
-				// for fucks sake
-				if(!("emotes" in data.emote_set)) {
-					systemMessage(`*Unable to fetch ${(isShared ? streamerData.display_name : "channel")}'s 7TV emotes, emotes aren't in the emote set (this is 7TV's fault)*`);
+				if(data.emote_set === null) {
+					systemMessage(`*Unable to fetch ${(isShared ? streamerData.display_name : "channel")}'s 7TV emotes, active emote set is... empty?*`);
 					isOK = false;
 				}
-			}
 
-			if(isOK) {
-				allowedSevenTVEmoteSets.push(data.emote_set.id);
-				sevenTVEmoteSetIDs[streamerData.id] = data.emote_set.id;
-				subscribe7TV("emote_set.*", streamerData.id, sevenTVEmoteSetIDs[streamerData.id]);
-
-				for(const emote of data.emote_set.emotes) {
-					const emoteData = emote.data;
-					const urls = emoteData.host.files;
-
-					// 7TV seems to provide all formats at all sizes, so i'm hardcoding 4x/1x and determining file format on the fly now
-					chatEmotes.addEmote(new Emote({
-						service: "7tv",
-						setID: data.emote_set.id,
-						animated: emoteData.animated,
-						urls: {
-							high: `https:${emoteData.host.url}/4x.###`,
-							low: `https:${emoteData.host.url}/1x.###`
-						},
-						emoteID: emoteData.id,
-						emoteName: emote.name || emoteData.name,
-						isZeroWidth: ((emoteData.flags & 256) === 256),
-						global: false
-					}));
+				if(isOK) {
+					// for fucks sake
+					if(!("emotes" in data.emote_set)) {
+						systemMessage(`*Unable to fetch ${(isShared ? streamerData.display_name : "channel")}'s 7TV emotes, emotes aren't in the emote set (this is 7TV's fault)*`);
+						isOK = false;
+					}
 				}
+
+				if(isOK) {
+					allowedSevenTVEmoteSets.push(data.emote_set.id);
+					sevenTVEmoteSetIDs[streamerData.id] = data.emote_set.id;
+					subscribe7TV("emote_set.*", streamerData.id, sevenTVEmoteSetIDs[streamerData.id]);
+
+					for(const emote of data.emote_set.emotes) {
+						const emoteData = emote.data;
+						const urls = emoteData.host.files;
+
+						// 7TV seems to provide all formats at all sizes, so i'm hardcoding 4x/1x and determining file format on the fly now
+						chatEmotes.addEmote(new Emote({
+							service: "7tv",
+							setID: data.emote_set.id,
+							animated: emoteData.animated,
+							urls: {
+								high: `https:${emoteData.host.url}/4x.###`,
+								low: `https:${emoteData.host.url}/1x.###`
+							},
+							emoteID: emoteData.id,
+							emoteName: emote.name || emoteData.name,
+							isZeroWidth: ((emoteData.flags & 256) === 256),
+							global: false
+						}));
+					}
+				}
+			} else {
+				console.log("could not fetch 7tv channel emotes");
+				systemMessage(`*Unable to fetch ${(isShared ? streamerData.display_name : "channel")}'s 7TV emotes*`);
 			}
 		} else {
-			console.log("could not fetch 7tv channel emotes");
-			systemMessage(`*Unable to fetch ${(isShared ? streamerData.display_name : "channel")}'s 7TV emotes*`);
+			console.log("skipping 7tv channel emotes, fetch failed");
 		}
 	} else {
 		console.log("skipping 7tv channel emotes, not enabled");

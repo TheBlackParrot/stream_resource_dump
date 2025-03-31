@@ -1,4 +1,26 @@
 {
+	"1743427856680": {
+		"updates": {
+			"chat": {
+				"revision": 86,
+				"notes": [
+					[
+						"fixed emote fetching stopping way too early if 7TV is down"
+					]
+				]
+			},
+
+			"settings": {
+				"revision": 92,
+				"notes": [
+					[
+						"fixed HTTP 401 errors not triggering a reauth when using Spotify's artist metadata on external music players"
+					]
+				]
+			}
+		}
+	},
+
 	"1742793980425": {
 		"updates": {
 			"spotify": {

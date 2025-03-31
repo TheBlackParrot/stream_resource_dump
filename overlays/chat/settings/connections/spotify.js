@@ -43,6 +43,19 @@ async function getArtistInfos(id_arr) {
 		}
 	});
 
+	if(response.status === 401) {
+		// invalid tokens? try again
+		await regenSpotifyCodes();
+		await delay(3000);
+		return getArtistInfos(id_arr);
+	}
+	
+	if(!response.ok) {
+		await regenSpotifyCodes();
+		await delay(15000);
+		return getArtistInfos(id_arr);
+	}
+
 	const data = await response.json();
 	return data;
 }
@@ -64,8 +77,20 @@ async function getTrackDataFromISRC(isrc) {
 		}
 	});
 
+	if(response.status === 401) {
+		// invalid tokens? try again
+		await regenSpotifyCodes();
+		await delay(3000);
+		return getTrackDataFromISRC(isrc);
+	}
+	
+	if(!response.ok) {
+		await regenSpotifyCodes();
+		await delay(15000);
+		return getTrackDataFromISRC(isrc);
+	}
+
 	const data = await response.json();
-	console.log(data);
 	return data;
 }
 
