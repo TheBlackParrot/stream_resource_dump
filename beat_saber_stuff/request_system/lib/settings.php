@@ -32,6 +32,7 @@ $settings = array(
 		'maximumMapDurationSeconds' => 315,
 		'minimumMapDurationSeconds' => 40,
 		'minimumMapKeyNumber' => 0x9fff,
+		'minimumMapAgeDays' => 7,
 		'minimumRating' => 70,
 		'verifiedMappersOnly' => false,
 		'curatedMapsOnly' => false,

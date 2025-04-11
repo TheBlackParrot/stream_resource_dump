@@ -77,11 +77,15 @@ function checkIfRequestAllowed($requestData, $mapData) {
 	$timeFormatted = formatTime($metadata['duration']);
 	if($limits['maximumMapDurationSeconds'] && $metadata['duration'] > $limits['maximumMapDurationSeconds']) {
 		$limitFormatted = formatTime($limits['maximumMapDurationSeconds']);
-		return array(false, "This map is too long. (map is {$timeFormatted} in length, limit is {$limitFormatted})");
+		return array(false, "This map is too long. (map is {$timeFormatted} in length, maximum is {$limitFormatted})");
 	}
 	if($limits['minimumMapDurationSeconds'] && $metadata['duration'] < $limits['minimumMapDurationSeconds']) {
 		$limitFormatted = formatTime($limits['minimumMapDurationSeconds']);
-		return array(false, "This map is too short. (map is {$timeFormatted} in length, limit is {$limitFormatted})");
+		return array(false, "This map is too short. (map is {$timeFormatted} in length, minimum is {$limitFormatted})");
+	}
+
+	if(time() - strtotime($mapData['uploaded']) < $limits['minimumMapAgeDays'] * 24 * 60 * 60) {
+		return array(false, "This map is too new. (maps must be at least {$limits['minimumMapAgeDays']} days old)");
 	}
 
 	if($limits['minimumRating'] && $stats['score'] < $limits['minimumRating']) {
