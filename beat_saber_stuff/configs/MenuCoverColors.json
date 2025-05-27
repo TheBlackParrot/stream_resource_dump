@@ -1,0 +1,9 @@
+{
+  "Enabled": true,
+  "FlipGroundAndSkyColors": true,
+  "DownsampleFactor": 1,
+  "TransitionDuration": 0.7,
+  "TransitionStartEndMethod": "InOut",
+  "TransitionMethod": "Cubic",
+  "KernelSize": 2
+}

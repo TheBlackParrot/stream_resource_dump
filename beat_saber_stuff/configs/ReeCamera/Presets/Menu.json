@@ -19,7 +19,7 @@
 				},
 				"Name": "BeatSaberMainReeCamera",
 				"QualitySettings": {
-					"AntiAliasing": 1,
+					"AntiAliasing": 2,
 					"RenderScale": 1.0
 				},
 				"CameraSettings": {
@@ -104,7 +104,7 @@
 				},
 				"Name": "BeatSaberMainReeCamera",
 				"QualitySettings": {
-					"AntiAliasing": 1,
+					"AntiAliasing": 4,
 					"RenderScale": 1.0
 				},
 				"CameraSettings": {
@@ -189,7 +189,7 @@
 				},
 				"Name": "BeatSaberMenuFirstPersonCamera",
 				"QualitySettings": {
-					"AntiAliasing": 1,
+					"AntiAliasing": 4,
 					"RenderScale": 1.0
 				},
 				"CameraSettings": {

@@ -7,5 +7,5 @@
   "RemoveHealthWarning": true,
   "EnableOptimizations": false,
   "ExperimentalLoadTimeImprovements": false,
-  "GcSkips": 2
+  "GcSkips": 20
 }

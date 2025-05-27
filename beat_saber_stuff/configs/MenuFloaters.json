@@ -1,6 +1,6 @@
 {
   "Enabled": true,
-  "NoteCount": 250,
+  "NoteCount": 300,
   "AlsoDisableDefaultPiles": true,
   "IsFullSphere": true,
   "SpawnScale": {
@@ -11,8 +11,8 @@
   "SpawnRadius": 8.0,
   "MinSpawnHeightPercentage": 0.0,
   "MaxSpawnHeightPercentage": 1.0,
-  "CoalesceAmount": 0.55,
-  "ArrowChance": 0.15,
+  "CoalesceAmount": 0.5,
+  "ArrowChance": 0.2,
   "ForceNoteColor": true,
   "NoteColor": {
     "r": 1.0,

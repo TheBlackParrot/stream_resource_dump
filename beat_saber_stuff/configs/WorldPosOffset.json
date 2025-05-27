@@ -1,0 +1,66 @@
+{
+  "Enabled": true,
+  "CurPresetIndex": 0,
+  "Presets": [
+    {
+      "LeftOffset": {
+        "x": -0.05,
+        "y": -0.13,
+        "z": -0.09
+      },
+      "RightOffset": {
+        "x": 0.01000001,
+        "y": -0.08,
+        "z": 0.01000001
+      }
+    },
+    {
+      "LeftOffset": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "RightOffset": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      }
+    },
+    {
+      "LeftOffset": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "RightOffset": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      }
+    },
+    {
+      "LeftOffset": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "RightOffset": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      }
+    },
+    {
+      "LeftOffset": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "RightOffset": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      }
+    }
+  ]
+}

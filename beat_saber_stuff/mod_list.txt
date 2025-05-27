@@ -1,22 +1,16 @@
 Unless otherwise noted with a URL, these mods should be found in BeatMods's repositories (via ModAssistant or BSManager).
-Naluluna mods are available through her own mod manager.
 
-I'm currently using version 1.40.3 of the game.
-
-My request queue manager is externally controlled through Firebot and dynamically generated playlists from my server; there is no in-game mod.
-(see: https://github.com/TheBlackParrot/stream_resource_dump/tree/main/beat_saber_stuff/request_system)
+I'm currently using version 1.40.4 of the game.
 
 AssetBundleLoadingTools
-AudioFix
- - https://github.com/Loloppe/BeatSaber_AudioFix
 AudioLink
 BeatLeader
- - https://github.com/BeatLeader/beatleader-mod
-BeatSaverDownloader
 BeatSaverUpdater
 BeatSaverVoting
 BetterSongList
  - https://github.com/TheBlackParrot/BeatSaber_BetterSongList
+BetterSongList_RandomSort
+ - https://github.com/TheBlackParrot/BetterSongList_RandomSort
 BetterSongSearch
 BSExtraColorPresets
  - https://github.com/DJDavid98/BSExtraColorPresets
@@ -24,18 +18,16 @@ BSNightcore
  - https://github.com/Puplip/BSNightcore
 CameraUtils
 Chroma
- - https://exsii.totalbs.dev
 CustomJSONData
- - https://exsii.totalbs.dev
-CustomPlatforms
- - https://github.com/qqrz997/CustomPlatforms
 DataPuller
 DiTails
+DumbRequestManager
+ - https://github.com/TheBlackParrot/DumbRequestManager
 EasyOffset
- - https://github.com/Reezonate/EasyOffset
+FontChanger
+ - https://github.com/TheBlackParrot/FontChanger
 GottaGoFast
 Heck
- - https://exsii.totalbs.dev
 HideTheLogo
  - https://github.com/TheBlackParrot/HideTheLogo
 HideThePanels
@@ -45,16 +37,12 @@ ImageFactory
 JustTheDistance
  - https://github.com/TheBlackParrot/JustTheDistance
 LookupID
- - https://exsii.totalbs.dev
 MappingExtensions
- - https://github.com/TheBlackParrot/stream_resource_dump/blob/main/beat_saber_stuff/custom_plugin_binaries/1.40.0
- - https://github.com/Kylemc1413/MappingExtensions
+MenuCoverColors
+ - https://github.com/TheBlackParrot/MenuCoverColors
 MenuFloaters
  - https://github.com/TheBlackParrot/MenuFloaters
-Meowderboard
- - https://github.com/TheBlackParrot/Meowderboard
 NoodleExtensions
- - https://exsii.totalbs.dev
 NoteMovementFix
  - https://github.com/Loloppe/BeatSaber_NoteMovementFix
 NoteTweaks
@@ -71,18 +59,19 @@ ReeSabers
  - https://www.beatleader.xyz/supporting-project/link
 SimpleSoundChanger
  - https://github.com/TheBlackParrot/SimpleSoundChanger
-SmoothedController
+SmoothedController 
  - https://github.com/kinsi55/BeatSaber_SmoothedController
 SongCore
 SongDetailsCache
-SongPlayHistory
-Synapse
- - https://exsii.totalbs.dev
 TimeSyncStutterFix
 Tweaks55
+Unfunny
+ - https://github.com/kaitlyndotmoe/Unfunny
 VerboseVolume
  - https://github.com/TheBlackParrot/VerboseVolume
 Vivify
  - https://exsii.totalbs.dev
-Unfunny
- - https://github.com/kaitlyndotmoe/Unfunny
+WaitHoldUp
+ - https://github.com/TheBlackParrot/WaitHoldUp
+WorldPosOffset
+ - https://github.com/YoLeax/BeatSaber-WorldPosOffset
