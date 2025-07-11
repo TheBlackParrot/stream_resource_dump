@@ -1,6 +1,6 @@
 Unless otherwise noted with a URL, these mods should be found in BeatMods's repositories (via ModAssistant or BSManager).
 
-I'm currently using version 1.40.4 of the game.
+I'm currently using version 1.40.6 of the game.
 
 AssetBundleLoadingTools
 AudioLink
@@ -12,8 +12,6 @@ BetterSongList
 BetterSongList_RandomSort
  - https://github.com/TheBlackParrot/BetterSongList_RandomSort
 BetterSongSearch
-BSExtraColorPresets
- - https://github.com/DJDavid98/BSExtraColorPresets
 BSNightcore
  - https://github.com/Puplip/BSNightcore
 CameraUtils
@@ -28,6 +26,8 @@ FontChanger
  - https://github.com/TheBlackParrot/FontChanger
 GottaGoFast
 Heck
+HideTheGradient
+ - https://github.com/TheBlackParrot/HideTheGradient
 HideTheLogo
  - https://github.com/TheBlackParrot/HideTheLogo
 HideThePanels
@@ -47,7 +47,6 @@ NoteMovementFix
  - https://github.com/Loloppe/BeatSaber_NoteMovementFix
 NoteTweaks
  - https://github.com/TheBlackParrot/NoteTweaks
-ParticleOverdrive
 PauseMusic
  - https://github.com/TheBlackParrot/PauseMusic
 PlaylistManager
@@ -70,7 +69,6 @@ Unfunny
 VerboseVolume
  - https://github.com/TheBlackParrot/VerboseVolume
 Vivify
- - https://exsii.totalbs.dev
 WaitHoldUp
  - https://github.com/TheBlackParrot/WaitHoldUp
 WorldPosOffset
