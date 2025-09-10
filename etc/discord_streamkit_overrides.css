@@ -1,0 +1,16 @@
+:root { --status-green: #44CCFF !important; }
+
+body { background-color: rgba(0, 0, 0, 0); margin: 0px auto; overflow: hidden; }
+
+.voice_container { line-height: 15pt !important; }
+
+.voice_avatar { height: 32px !important; width: 32px !important; margin-right: 0px !important; border-radius: 8px !important; filter: drop-shadow(0px 2px 3px #000); }
+.voice_state { height: 32px !important; }
+
+.voice_username { font-family: "Manrope" !important; font-weight: 900 !important; background: transparent !important; }
+.voice_username span { background: transparent !important; text-shadow: 0px 2px 4px #000, 0px 2px 4px #000 !important; font-size: 15pt !important; line-height: 15pt !important; position: relative !important; top: -4px; margin-left: 3px !important; }
+
+.wrapper_speaking { opacity: 1 !important; transform: scale(100%) !important; }
+.voice_state { opacity: 0.4; transform: scale(90%) translateX(-24px); transition: 0.15s; padding-top: 0px; padding-bottom: 1px; }
+
+.voice_state[data-userid="162047818234593282"] { display: none !important; }
