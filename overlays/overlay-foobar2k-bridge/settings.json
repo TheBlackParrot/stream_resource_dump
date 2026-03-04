@@ -41,6 +41,10 @@
 		"comment": {
 			"tag": "comment",
 			"type": "string"
+		},
+		"url": {
+			"tag": "website",
+			"type": "string"
 		}
 	},
 
