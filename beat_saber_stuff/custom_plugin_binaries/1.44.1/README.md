@@ -4,8 +4,17 @@
 ### HitsoundTweaks
 > Built from my pull request fixing the mod for newer versions of the game -- https://github.com/GalaxyMaster2/HitsoundTweaks/pull/9
 
+### Heck *(Chroma / Heck / NoodleExtensions / Vivify)*
+> Built from upstream against 1.42.1 with merged pull requests:
+> - https://github.com/Aeroluna/Vivify/pull/43
+> - https://github.com/Aeroluna/Heck/pull/198
+> - https://github.com/Aeroluna/Heck/pull/199
+
 ### ImageFactory
 > Built from my pull request fixing not being able to select the "on last note" mode -- https://github.com/WentTheFox/ImageFactory/pull/7
+
+### MappingExtensions
+> Built from https://github.com/AmeliaGL0w0/MappingExtensions/commit/fe7de733dd3319baabe2583744a555af6454570c
 
 ### NoteMovementFix
 > Built from my pull request fixing the auto-toggling in Noodle Extensions maps being too "sticky" -- https://github.com/Loloppe/BeatSaber_NoteMovementFix/pull/4
