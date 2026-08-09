@@ -25,6 +25,9 @@
 ### RUE/RuntimeUnityEditor
 > Same as the download pinned in BSMG's mod developer channels. Why they don't post it on the Wiki is beyond me, but whatever. Here it is outside of a Discord channel.
 
+### Tweaks55
+> Built from Hattiwatti's pull request fixing bomb colors and wall outline colors in Chroma maps -- https://github.com/kinsi55/BeatSaber_Tweaks55/pull/26
+
 ------
 
 iza also has some [custom binaries of his own](https://github.com/iza-ttv/unofficial-bs-mods/tree/main/1.44.1)
